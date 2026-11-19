@@ -1,23 +1,16 @@
 "use client";
 
-import { ToggleSwitch } from "@/components/ui/Toggle";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useMemo } from "react";
 import {
   BarChart3,
   Bookmark,
   BookOpen,
   BookPlus,
   ClipboardCheck,
-  Eye,
-  EyeOff,
   ImagePlus,
   KeyRound,
-  LogOut,
   MapPinned,
-  Menu as MenuIcon,
   MessageCircleQuestion,
   MessageSquareQuote,
   Mic,
@@ -27,55 +20,25 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   UserCog,
-  X,
   type LucideIcon
 } from "lucide-react";
 
 import { useAdminView } from "@/components/AdminViewProvider";
-import { AppSearchHeader } from "@/components/nav/AppSearchHeader";
-import { BottomIslandNav } from "@/components/nav/BottomIslandNav";
 import { useAuth } from "@/components/AuthProvider";
-import { BrandMark } from "@/components/BrandMark";
-import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
 import { usePendingAccessCount } from "@/components/hooks/usePendingAccessCount";
 import { useNotes } from "@/components/learn/useNotes";
-import { HoveredLink, MenuItem } from "@/components/ui/navbar-menu";
+import { AccountMenu, AccountPanel, type AccountView } from "@/components/nav/AccountMenu";
+import { Appbar, AppNav, currentHref } from "@/components/nav/Appbar";
+import { MenuGroup, MenuLinks, MenuSheet, type MenuEntry } from "@/components/nav/MenuSheet";
+import { PendingAccessBadge, UnreadBadge } from "@/components/nav/navBadges";
 import { canManageAccessRoster, hasAdminView, roleLabel, routeAllows } from "@/lib/permissions";
-import { SAVED_PATH, unreadText } from "@/lib/savedView";
-import { lockPageScroll, unlockPageScroll } from "@/lib/scrollLock";
-import { cn } from "@/lib/utils";
+import { SAVED_PATH } from "@/lib/savedView";
 import type { User } from "@/lib/types";
 
-export const NAV_GROUPS = ["Admin", "Account"] as const;
+export const NAV_GROUPS = ["Tools", "Admin", "Account"] as const;
 type NavGroup = (typeof NAV_GROUPS)[number];
 
-const PENDING_ACCESS_BADGE_HREF = "/admin/access";
-
-function PendingAccessBadge({ count }: { count: number }) {
-  if (count <= 0) return null;
-  const people = count === 1 ? "person is" : "people are";
-  return (
-    <span
-      title={`${count} ${people} waiting to be approved to sign in`}
-      className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800"
-    >
-      {count}
-      <span className="font-medium">waiting</span>
-      <span className="sr-only">to be approved to sign in</span>
-    </span>
-  );
-}
-
-function UnreadBadge({ count }: { count: number }) {
-  const text = unreadText(count);
-  if (!text) return null;
-  return (
-    <span className="ms-1.5 inline-flex min-w-5 items-center justify-center rounded-pill bg-ink-1 px-1.5 font-ui text-caption font-semibold leading-5 text-ground tabular-nums" data-testid="unread-notes">
-      <span aria-hidden>{count > 99 ? "99+" : count}</span>
-      <span className="sr-only">{`, ${text}`}</span>
-    </span>
-  );
-}
+export const PENDING_ACCESS_BADGE_HREF = "/admin/access";
 
 export type NavItem = {
   href: string;
@@ -94,10 +57,10 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/crafts", label: "Crafts", icon: BookOpen, group: null, can: everyone, gate: "get_current_user" },
   { href: "/map", label: "Map", icon: MapPinned, group: null, can: everyone, gate: "get_current_user" },
   { href: SAVED_PATH, label: "Saved", icon: Bookmark, group: null, can: everyone, gate: "get_current_user" },
-  { href: "/lessons", label: "Lessons", icon: Presentation, group: null, can: routeAllows("/lessons"), gate: "require(BUILD_LESSONS)" },
-  { href: "/contribute", label: "Contribute", icon: Mic, group: null, can: routeAllows("/contribute"), gate: "require(CONTRIBUTE_TESTIMONY)" },
-  { href: "/contributions/pictures", label: "Give a picture", icon: ImagePlus, group: null, can: routeAllows("/contributions/pictures"), gate: "require(PROPOSE_KNOWLEDGE)" },
-  { href: "/contributions/facts", label: "Propose knowledge", icon: BookPlus, group: null, can: routeAllows("/contributions/facts"), gate: "require(PROPOSE_KNOWLEDGE)" },
+  { href: "/lessons", label: "Lessons", icon: Presentation, group: "Tools", can: routeAllows("/lessons"), gate: "require(BUILD_LESSONS)" },
+  { href: "/contribute", label: "Contribute", icon: Mic, group: "Tools", can: routeAllows("/contribute"), gate: "require(CONTRIBUTE_TESTIMONY)" },
+  { href: "/contributions/pictures", label: "Give a picture", icon: ImagePlus, group: "Tools", can: routeAllows("/contributions/pictures"), gate: "require(PROPOSE_KNOWLEDGE)" },
+  { href: "/contributions/facts", label: "Propose knowledge", icon: BookPlus, group: "Tools", can: routeAllows("/contributions/facts"), gate: "require(PROPOSE_KNOWLEDGE)" },
 
   { href: "/admin", label: "Settings hub", icon: SlidersHorizontal, group: "Admin", can: routeAllows("/admin"), gate: "require_admin", adminSurface: true },
   { href: "/admin/access", label: "Who may sign in", icon: ShieldCheck, group: "Admin", can: routeAllows("/admin/access"), gate: "require_access_roster_manager", adminSurface: true },
@@ -118,318 +81,81 @@ export function isNavItemVisible(item: NavItem, user: User | null | undefined, a
   return true;
 }
 
-const spring = { type: "spring" as const, stiffness: 260, damping: 30 };
+export type NavCounts = { pendingAccess: number; unreadNotes: number };
 
-const NO_MOTION = { duration: 0 } as const;
+export function navEntry(item: NavItem, current: string | null, counts: NavCounts): MenuEntry {
+  const Icon = item.icon;
+  const badge = item.href === PENDING_ACCESS_BADGE_HREF ? <PendingAccessBadge count={counts.pendingAccess} /> : item.href === SAVED_PATH ? <UnreadBadge count={counts.unreadNotes} /> : null;
+  return { href: item.href, label: item.label, current: item.href.split("?")[0] === current, icon: <Icon aria-hidden />, badge };
+}
 
-export function DynamicIslandNav() {
-  const { user, logout } = useAuth();
-  const adminView = useAdminView();
-  const { adminMode, canAdmin, toggleAdminView } = adminView;
-  const adminAvailable = (adminView as { available?: boolean }).available ?? canAdmin;
-  const router = useRouter();
-  const pathname = usePathname();
-  const [active, setActive] = useState<string | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [compact, setCompact] = useState(false);
-  const { scrollY } = useScroll();
-  const sheetRef = useRef<HTMLDivElement | null>(null);
-  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
-  const sheetOpenerRef = useRef<HTMLButtonElement | null>(null);
-  const reduce = useAppReducedMotion();
-  const islandTransition = reduce ? NO_MOTION : spring;
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest < 24) setCompact(false);
-    else if (latest > previous + 2) setCompact(true);
-    else if (latest < previous - 2) setCompact(false);
-  });
-
-  useEffect(() => {
-    setSheetOpen(false);
-    setActive(null);
-  }, [pathname]);
-
-  const closeSheet = useCallback(() => {
-    setSheetOpen(false);
-    (sheetOpenerRef.current ?? menuButtonRef.current)?.focus();
-  }, []);
-
-  const toggleSheetFrom = useCallback((button: HTMLButtonElement) => {
-    sheetOpenerRef.current = button;
-    setSheetOpen((value) => !value);
-  }, []);
-
-  useEffect(() => {
-    if (!sheetOpen) return;
-    lockPageScroll();
-    return unlockPageScroll;
-  }, [sheetOpen]);
-
-  useEffect(() => {
-    if (!sheetOpen) return;
-    const panel = sheetRef.current;
-    if (!panel) return;
-
-    const focusable = () =>
-      Array.from(
-        panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
-      );
-
-    focusable()[0]?.focus();
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeSheet();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const stops = focusable();
-      if (stops.length === 0) return;
-      const first = stops[0];
-      const last = stops[stops.length - 1];
-      const focused = document.activeElement as HTMLElement | null;
-      const outside = !focused || !panel.contains(focused);
-      if (event.shiftKey && (outside || focused === first)) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && (outside || focused === last)) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [closeSheet, sheetOpen]);
-
-  const visibleItems = useMemo(
-    () => NAV_ITEMS.filter((item) => isNavItemVisible(item, user, adminMode)),
-    [user, adminMode]
-  );
-  const rootItems = visibleItems.filter((item) => item.group === null);
-  const visibleGroups = NAV_GROUPS.map((label) => ({
-    label,
-    items: visibleItems.filter((item) => item.group === label)
-  })).filter((group) => group.items.length > 0);
-
-  const hubEntryVisible = visibleItems.some((item) => item.href === PENDING_ACCESS_BADGE_HREF);
-  const pendingAccess = usePendingAccessCount(hubEntryVisible && canManageAccessRoster(user));
-  const pendingAccessCount = pendingAccess?.pending ?? 0;
-  const unreadNotes = useNotes(user?.id ?? null).list?.unread ?? 0;
-
-
-  if (!user) return null;
-
-  async function handleLogout() {
-    await logout();
-    router.replace("/login");
-  }
-
-  let activeBase: string | null = null;
-  for (const item of visibleItems) {
-    const base = item.href.split("?")[0];
-    if (pathname !== base && !pathname.startsWith(`${base}/`)) continue;
-    if (!activeBase || base.length > activeBase.length) activeBase = base;
-  }
-
-  const isActivePath = (href: string) => href.split("?")[0] === activeBase;
-
-  const islandEntry = (item: NavItem) => ({
-    label: item.label,
-    href: item.href,
-    icon: item.icon,
-    badge: item.href === PENDING_ACCESS_BADGE_HREF ? pendingAccessCount : item.href === SAVED_PATH ? unreadNotes : 0
-  });
-  const islandRoots = rootItems.map(islandEntry);
-  const islandGroups = visibleGroups.map((group) => ({ label: group.label, entries: group.items.map(islandEntry) }));
-  const currentLabel = visibleItems.find((item) => isActivePath(item.href))?.label ?? null;
-
+function GroupedEntries({ groups, onNavigate }: { groups: readonly { label: string; entries: MenuEntry[] }[]; onNavigate: () => void }) {
   return (
     <>
-      <div className="nav-island-frame pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center max-lg:hidden">
-        <motion.header
-          layout
-          transition={islandTransition}
-          onMouseLeave={() => setActive(null)}
-          className={cn(
-            "pointer-events-auto flex items-center gap-1 rounded-full border border-line-200 bg-card/85 shadow-island backdrop-blur-xl",
-            compact ? "px-3 py-1.5" : "px-4 py-2"
-          )}
-        >
-          <motion.div
-            key={compact ? "brand-compact" : "brand-full"}
-            initial={reduce ? { x: 0, opacity: 1 } : { x: -32, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={islandTransition}
-          >
-            <Link href="/ask" className="flex min-w-fit items-center gap-2 pr-2 text-ink-900">
-              <BrandMark className={cn("rounded-lg", compact ? "h-7 w-7" : "h-8 w-8")} />
-              <span className={cn("whitespace-nowrap font-display font-bold tracking-tight", compact ? "text-sm" : "text-base")}>
-                KalaVigyan
-              </span>
-            </Link>
-          </motion.div>
-
-          <AnimatePresence initial={false}>
-            {!compact ? (
-              <motion.nav
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
-                exit={{ opacity: 0, width: 0 }}
-                transition={reduce ? NO_MOTION : { duration: 0.22, ease: "easeOut" }}
-                className="hidden items-center gap-5 overflow-visible whitespace-nowrap pl-2 pr-1 lg:flex"
-                aria-label="Primary"
-              >
-                {rootItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-current={isActivePath(item.href) ? "page" : undefined}
-                    className={cn(
-                      "text-sm font-medium transition",
-                      isActivePath(item.href) ? "text-purple-700" : "text-ink-700 hover:text-ink-900"
-                    )}
-                  >
-                    {item.label}
-                    {item.href === SAVED_PATH ? <UnreadBadge count={unreadNotes} /> : null}
-                  </Link>
-                ))}
-                {visibleGroups.map((group) => (
-                  <MenuItem key={group.label} setActive={setActive} active={active} item={group.label}>
-                    <div className="flex flex-col space-y-3 text-sm">
-                      {group.items.map((item) => (
-                        <HoveredLink key={item.href} href={item.href}>
-                          <span className="inline-flex items-center gap-2">
-                            <item.icon className="h-3.5 w-3.5 text-ink-300" aria-hidden />
-                            {item.label}
-                            {item.href === PENDING_ACCESS_BADGE_HREF ? (
-                              <PendingAccessBadge count={pendingAccessCount} />
-                            ) : null}
-                          </span>
-                        </HoveredLink>
-                      ))}
-                    </div>
-                  </MenuItem>
-                ))}
-              </motion.nav>
-            ) : null}
-          </AnimatePresence>
-
-          <div className="ml-1 flex items-center gap-1.5">
-            {adminAvailable && !compact ? (
-              <span
-                data-testid="island-admin-view"
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-medium transition",
-                  adminMode ? "border-purple-300 bg-purple-50 text-purple-700" : "border-line-200 bg-card text-ink-500"
-                )}
-              >
-                {adminMode ? <Eye className="h-3.5 w-3.5" aria-hidden /> : <EyeOff className="h-3.5 w-3.5" aria-hidden />}
-                <ToggleSwitch
-                  label="Admin view"
-                  showLabel
-                  checked={adminMode}
-                  onChange={() => toggleAdminView()}
-                  className="min-h-0! gap-1.5 px-0 [&>span:last-child]:-mx-1.5 [&>span:last-child]:-my-[3.5px] [&>span:last-child]:scale-75"
-                />
-              </span>
-            ) : null}
-            <button
-              ref={menuButtonRef}
-              type="button"
-              onClick={(event) => toggleSheetFrom(event.currentTarget)}
-              aria-label="Toggle navigation menu"
-              aria-expanded={sheetOpen}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-200 bg-card text-ink-900 transition hover:bg-surface-50 pointer-coarse:h-11 pointer-coarse:w-11"
-            >
-              {sheetOpen ? <X className="h-4 w-4" aria-hidden /> : <MenuIcon className="h-4 w-4" aria-hidden />}
-            </button>
-          </div>
-        </motion.header>
-      </div>
-
-      <AnimatePresence>
-        {sheetOpen ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={reduce ? NO_MOTION : { duration: 0.18 }}
-            className="nav-sheet-overlay fixed inset-0 z-90"
-          >
-            <div
-              aria-hidden
-              onClick={closeSheet}
-              style={{ touchAction: "none" }}
-              className="absolute inset-0 bg-ink-900/20 backdrop-blur-xs"
-            />
-            <motion.div
-              ref={sheetRef}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation"
-              initial={reduce ? { y: 0, opacity: 0 } : { y: -16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={reduce ? { y: 0, opacity: 0 } : { y: -16, opacity: 0 }}
-              transition={islandTransition}
-              className="nav-sheet relative mx-auto w-[min(680px,92vw)] rounded-xl border border-line-200 bg-card shadow-pop"
-            >
-              <div className="grid gap-1 sm:grid-cols-2">
-                {visibleItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setSheetOpen(false)}
-                    aria-current={isActivePath(item.href) ? "page" : undefined}
-                    className={cn(
-                      "inline-flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium transition",
-                      isActivePath(item.href) ? "bg-purple-50 text-purple-700" : "text-ink-700 hover:bg-surface-50 hover:text-ink-900"
-                    )}
-                  >
-                    <item.icon className="h-4 w-4 shrink-0 text-ink-300" aria-hidden />
-                    {item.label}
-                    {item.href === PENDING_ACCESS_BADGE_HREF ? <PendingAccessBadge count={pendingAccessCount} /> : null}
-                    {item.href === SAVED_PATH ? <UnreadBadge count={unreadNotes} /> : null}
-                  </Link>
-                ))}
-              </div>
-              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line-200 pt-4">
-                {adminAvailable ? (
-                  <ToggleSwitch label="Admin view" showLabel checked={adminMode} onChange={() => toggleAdminView()} />
-                ) : null}
-                <div className="ml-auto text-right text-xs">
-                  <div className="font-medium text-ink-900">{user.name}</div>
-                  <div className="text-ink-500">{roleLabel(user.role)}</div>
-                </div>
-                <button onClick={handleLogout} data-danger className="field-danger">
-                  <LogOut className="h-4 w-4" aria-hidden />
-                  Logout
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-
-      <AppSearchHeader
-        appName={APP_NAME}
-        logo={(className) => <BrandMark className={className} />}
-        onOpenSearch={() => router.push("/crafts")}
-        searchOpen={false}
-      />
-      <BottomIslandNav
-        roots={islandRoots}
-        groups={islandGroups}
-        currentLabel={currentLabel}
-        onOpenMenu={toggleSheetFrom}
-        menuOpen={sheetOpen}
-        hidden={false}
-      />
+      {groups.map((group) => (
+        <MenuGroup key={group.label} label={group.label}>
+          <MenuLinks entries={group.entries} onNavigate={onNavigate} />
+        </MenuGroup>
+      ))}
     </>
   );
 }
 
-const APP_NAME = "KalaVigyan";
+function useNavModel(user: User | null, adminMode: boolean, pathname: string) {
+  const visible = useMemo(() => NAV_ITEMS.filter((item) => isNavItemVisible(item, user, adminMode)), [user, adminMode]);
+  const rosterShown = visible.some((item) => item.href === PENDING_ACCESS_BADGE_HREF);
+  const pendingAccess = usePendingAccessCount(rosterShown && canManageAccessRoster(user))?.pending ?? 0;
+  const unreadNotes = useNotes(user?.id ?? null).list?.unread ?? 0;
+  const counts: NavCounts = { pendingAccess, unreadNotes };
+  const current = currentHref(visible.map((item) => item.href), pathname);
+  const roots = visible.filter((item) => item.group === null).map((item) => navEntry(item, current, counts));
+  const groups = NAV_GROUPS.map((label) => ({ label, entries: visible.filter((item) => item.group === label).map((item) => navEntry(item, current, counts)) })).filter((group) => group.entries.length > 0);
+  return { roots, groups, pendingAccess };
+}
+
+export function DynamicIslandNav() {
+  const { user, logout } = useAuth();
+  const { adminMode, available, toggleAdminView } = useAdminView();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { roots, groups, pendingAccess } = useNavModel(user, adminMode, pathname);
+
+  if (!user) return null;
+
+  const account: AccountView = {
+    name: user.name,
+    role: roleLabel(user.role),
+    adminToggle: available ? { checked: adminMode, onChange: toggleAdminView } : null,
+    onSignOut: () => {
+      void logout().then(
+        () => router.replace("/login"),
+        () => undefined
+      );
+    }
+  };
+
+  return (
+    <Appbar brandHref="/ask">
+      <div className="kv-bar-end">
+        <AppNav links={roots}>
+          <AccountMenu count={pendingAccess}>
+            {(close) => (
+              <AccountPanel account={account}>
+                <GroupedEntries groups={groups} onNavigate={close} />
+              </AccountPanel>
+            )}
+          </AccountMenu>
+        </AppNav>
+        <MenuSheet count={pendingAccess}>
+          {(close) => (
+            <>
+              <MenuLinks entries={roots} onNavigate={close} />
+              <GroupedEntries groups={groups} onNavigate={close} />
+              <AccountPanel account={account} />
+            </>
+          )}
+        </MenuSheet>
+      </div>
+    </Appbar>
+  );
+}

@@ -82,9 +82,9 @@ export const TwoStepCodeEntry = forwardRef<
             aria-describedby={`${idPrefix}-recovery-hint`}
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            className="field-input max-w-64 font-code tracking-[0.15em]"
+            className="kv-input max-w-64 font-code tracking-[0.15em]"
           />
-          <p id={`${idPrefix}-recovery-hint`} className="text-xs leading-5 text-ink-500">
+          <p id={`${idPrefix}-recovery-hint`} className="kv-field-hint">
             One of the recovery codes you saved when you turned this on. Each one works once.
           </p>
         </div>
@@ -111,7 +111,7 @@ export const TwoStepCodeEntry = forwardRef<
             onChange("");
             onKindChange(showRecovery ? "totp" : "recovery");
           }}
-          className="inline-flex min-h-11 w-fit items-center text-sm font-medium text-purple-700 hover:underline disabled:opacity-60 dark:text-purple-300 sm:min-h-9"
+          className="kv-link inline-flex min-h-11 w-fit items-center font-ui text-ui disabled:opacity-60 sm:min-h-9"
         >
           {showRecovery ? "Use your authenticator app instead" : "Use a recovery code instead"}
         </button>

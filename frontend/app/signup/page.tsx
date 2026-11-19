@@ -3,44 +3,27 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MailCheck } from "lucide-react";
 
 import { AuthShell, OrDivider } from "@/components/auth/AuthShell";
+import { AuthLinkLine } from "@/components/auth/PasswordField";
 import { SignInRefusal } from "@/components/auth/SignInRefusal";
+import { SignUpFields, SignUpPromises } from "@/components/auth/SignUpFields";
 import { TurnstileWidget } from "@/components/auth/TurnstileWidget";
 import { useGoogleNonce } from "@/components/auth/useGoogleNonce";
 import { useAuth } from "@/components/AuthProvider";
-import { FieldBlock } from "@/components/FormControls";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
-import { Button } from "@/components/ui/button";
-import { Dropdown } from "@/components/ui/Dropdown";
+import { ActionGroup } from "@/components/ui/ActionGroup";
+import { Button, buttonLook } from "@/components/ui/button";
 import { ApiError } from "@/lib/api";
 import { ACCESS_STATUS_HEADER, accessRefusalKind, type AccessRefusalKind } from "@/lib/accessRoster";
-import { roleLabel } from "@/lib/permissions";
 import { takeSignInReturn } from "@/lib/sessionReturn";
-import { REQUESTABLE_ROLES, fetchPrivacyNotice, fetchSignUpConfig, requestAccess, type SignUpConfig } from "@/lib/signUp";
+import { fetchPrivacyNotice, fetchSignUpConfig, requestAccess, type SignUpConfig } from "@/lib/signUp";
 import { isTwoFactorChallenge } from "@/lib/twoFactor";
 import type { UserRole } from "@/lib/types";
 
-export default function SignUpPage() {
-  const router = useRouter();
-  const { loginWithGoogle, user } = useAuth();
-  const google = useGoogleNonce();
-  const [role, setRole] = useState<UserRole>("STUDENT");
-  const [agreed, setAgreed] = useState(false);
-  const [adult, setAdult] = useState(false);
+function useSignUpSetup() {
   const [config, setConfig] = useState<SignUpConfig | null>(null);
-  const [humanToken, setHumanToken] = useState<string | null>(null);
   const [noticeVersion, setNoticeVersion] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [refusal, setRefusal] = useState<AccessRefusalKind | null>(null);
-  const [requested, setRequested] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (user) router.replace(takeSignInReturn());
-  }, [router, user]);
-
   useEffect(() => {
     let cancelled = false;
     fetchPrivacyNotice()
@@ -57,6 +40,41 @@ export default function SignUpPage() {
       cancelled = true;
     };
   }, []);
+  return { config, noticeVersion };
+}
+
+function Requested({ email }: { email: string }) {
+  return (
+    <AuthShell title="Check your email" subtitle={email}>
+      <div role="status" data-testid="signup-pending" className="grid gap-6">
+        <p className="m-0 font-reading text-body text-ink-1">Open the link we sent to confirm your address and choose a password. An administrator then reviews your request.</p>
+        <ActionGroup fill>
+          <Link href="/login" {...buttonLook({ variant: "primary" })}>
+            Go to sign in
+          </Link>
+        </ActionGroup>
+      </div>
+    </AuthShell>
+  );
+}
+
+export default function SignUpPage() {
+  const router = useRouter();
+  const { loginWithGoogle, user } = useAuth();
+  const google = useGoogleNonce();
+  const { config, noticeVersion } = useSignUpSetup();
+  const [role, setRole] = useState<UserRole>("STUDENT");
+  const [agreed, setAgreed] = useState(false);
+  const [adult, setAdult] = useState(false);
+  const [humanToken, setHumanToken] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [refusal, setRefusal] = useState<AccessRefusalKind | null>(null);
+  const [requested, setRequested] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user) router.replace(takeSignInReturn());
+  }, [router, user]);
 
   const fail = useCallback((err: unknown) => {
     const status = err instanceof ApiError ? err.status : 0;
@@ -101,8 +119,7 @@ export default function SignUpPage() {
     setRefusal(null);
     try {
       const outcome = await loginWithGoogle(credential, google.nonce);
-      if (!isTwoFactorChallenge(outcome)) router.replace(takeSignInReturn());
-      else router.replace("/login");
+      router.replace(isTwoFactorChallenge(outcome) ? "/login" : takeSignInReturn());
     } catch (err) {
       fail(err);
     } finally {
@@ -110,118 +127,42 @@ export default function SignUpPage() {
     }
   }
 
-  if (requested) {
-    return (
-      <AuthShell title="Check your email" subtitle={requested}>
-        <div role="status" data-testid="signup-pending" className="grid justify-items-center gap-3 text-center">
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-success-100 text-success-600">
-            <MailCheck className="h-6 w-6" aria-hidden />
-          </span>
-          <p className="text-sm leading-6 text-ink-700">
-            Open the link we sent to confirm your address and choose a password. An administrator then reviews your request.
-          </p>
-          <Link href="/login" className="field-button mt-2">
-            Go to sign in
-          </Link>
-        </div>
-      </AuthShell>
-    );
-  }
+  if (requested) return <Requested email={requested} />;
 
-  const roleOptions = REQUESTABLE_ROLES.map((value) => ({ value, label: roleLabel(value) }));
   const emailOpen = config?.signUpOpen ?? false;
   const needsHuman = Boolean(config?.turnstileRequired && config.turnstileSiteKey);
   const ready = agreed && adult && (!needsHuman || Boolean(humanToken));
 
   return (
-    <AuthShell title="Request access" subtitle="An administrator approves each account">
+    <AuthShell title="Request access" subtitle="An administrator approves each account.">
       {error ? <SignInRefusal kind={refusal} hint={null} message={error} /> : null}
 
-      <form onSubmit={submit} className="grid gap-3">
-        {emailOpen ? (
-          <>
-            <label className="grid gap-1">
-              <span className="field-label">Full name</span>
-              <input name="name" required autoComplete="name" maxLength={120} className="field-input" />
-            </label>
-            <label className="grid gap-1">
-              <span className="field-label">Email</span>
-              <input name="email" type="email" required autoComplete="email" className="field-input" placeholder="you@institution.ac.in" />
-            </label>
-            <label className="grid gap-1">
-              <span className="field-label">Institution</span>
-              <input name="affiliation" required={role !== "ARTISAN"} autoComplete="organization" maxLength={200} className="field-input" />
-            </label>
-            <FieldBlock label="I am a">
-              <Dropdown value={role} onChange={(next) => setRole(next as UserRole)} options={roleOptions} searchable={false} advanceOnSelect={false} />
-            </FieldBlock>
-            {role !== "STUDENT" && role !== "ARTISAN" ? (
-              <label className="grid gap-1">
-                <span className="field-label">Profile page</span>
-                <input name="profileUrl" type="url" inputMode="url" className="field-input" placeholder="https://" />
-              </label>
-            ) : null}
-          </>
-        ) : null}
-
-        <div className="flex items-start gap-2.5">
-          <input
-            id="signup-adult"
-            type="checkbox"
-            required
-            checked={adult}
-            onChange={(event) => setAdult(event.target.checked)}
-            className="mt-1 h-4 w-4 shrink-0 rounded border-line-200 [accent-color:oklch(0.47_0.198_305)]"
-          />
-          <label htmlFor="signup-adult" className="text-sm leading-6 text-ink-900">
-            {role === "STUDENT" ? "I am 18 or older, or I am under 18 and my parent or guardian agrees" : "I am 18 or older"}
-          </label>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <input
-            id="signup-agree"
-            type="checkbox"
-            required
-            checked={agreed}
-            onChange={(event) => setAgreed(event.target.checked)}
-            className="mt-1 h-4 w-4 shrink-0 rounded border-line-200 [accent-color:oklch(0.47_0.198_305)]"
-          />
-          <span className="text-sm leading-6 text-ink-900">
-            <label htmlFor="signup-agree">I agree to the</label>{" "}
-            <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="font-medium text-purple-700 underline underline-offset-2 dark:text-purple-300">
-              privacy notice
-            </Link>
-          </span>
-        </div>
-
+      <form onSubmit={submit} className="grid gap-4">
+        {emailOpen ? <SignUpFields role={role} onRole={setRole} /> : null}
+        <SignUpPromises role={role} adult={adult} onAdult={setAdult} agreed={agreed} onAgreed={setAgreed} />
         {emailOpen && needsHuman && config?.turnstileSiteKey ? <TurnstileWidget siteKey={config.turnstileSiteKey} onToken={setHumanToken} /> : null}
-
         {emailOpen ? (
-          <Button type="submit" size="auth" disabled={saving || !ready} className="mt-1 w-full font-display text-base font-bold">
-            {saving ? "Sending…" : "Request access"}
-          </Button>
+          <ActionGroup fill className="mt-2">
+            <Button type="submit" variant="primary" busy={saving} busyLabel="Sending" disabled={!ready}>
+              Request access
+            </Button>
+          </ActionGroup>
         ) : null}
       </form>
 
       {google.clientId ? (
         <>
           {emailOpen ? <OrDivider /> : null}
-          <GoogleSignInButton
-            clientId={google.clientId}
-            nonce={google.nonce}
-            text="signup_with"
-            disabled={!google.nonce || !agreed || !adult}
-            onCredential={(credential) => void onGoogleCredential(credential)}
-          />
+          <GoogleSignInButton clientId={google.clientId} nonce={google.nonce} text="signup_with" disabled={!google.nonce || !agreed || !adult} onCredential={(credential) => void onGoogleCredential(credential)} />
         </>
       ) : null}
 
-      <p className="mt-5 text-center text-sm text-ink-500">
+      <AuthLinkLine>
         Already approved?{" "}
-        <Link href="/login" className="font-medium text-purple-700 hover:underline dark:text-purple-300">
+        <Link href="/login" className="kv-link">
           Sign in
         </Link>
-      </p>
+      </AuthLinkLine>
     </AuthShell>
   );
 }

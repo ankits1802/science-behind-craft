@@ -3,6 +3,8 @@ export const STAR_PATH =
 
 export const WORDMARK_VIEWBOX = "0 -6 992 134";
 
+export const WORDMARK_LATIN_VIEWBOX = "0 -6 492 134";
+
 export const WORDMARK_RULE = { x: 527.10, y: 33.5, width: 5, height: 86 };
 
 export const WORDMARK_LATIN_PATH =

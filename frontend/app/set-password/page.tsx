@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Lock } from "lucide-react";
 
+import { AuthShell } from "@/components/auth/AuthShell";
+import { FormAlert } from "@/components/auth/FormAlert";
+import { PasswordField } from "@/components/auth/PasswordField";
 import { useAuth } from "@/components/AuthProvider";
-import { BrandMark } from "@/components/BrandMark";
-import { Button } from "@/components/ui/button";
+import { ActionGroup } from "@/components/ui/ActionGroup";
+import { Button, buttonLook } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError } from "@/lib/api";
 import {
   MAX_PASSWORD_LENGTH,
@@ -18,203 +21,7 @@ import {
   takeLinkTokenFromAddress
 } from "@/lib/signIn";
 
-function AuthCard({ children }: { children: React.ReactNode }) {
-  return (
-    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-ground px-6 py-6 md:px-10">
-      <div className="relative z-10 w-full max-w-md rounded-card border border-rule bg-raised p-6 md:p-8">
-        <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <BrandMark className="h-12 w-12 rounded-xl" />
-          <h1 className="font-headline text-h3 text-ink-1">Set your password</h1>
-        </div>
-        {children}
-      </div>
-    </main>
-  );
-}
-
-function SetPasswordForm() {
-  const router = useRouter();
-  const { clearSession } = useAuth();
-
-  const [token, setToken] = useState<string | null>(null);
-  const [linkValid, setLinkValid] = useState<boolean | null>(null);
-  const [linkReason, setLinkReason] = useState<string | null>(null);
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    const taken = takeLinkTokenFromAddress(window.location.href);
-    const address = taken.address;
-    if (address !== null) {
-      queueMicrotask(() => window.history.replaceState(null, "", address));
-    }
-    setToken((previous) => previous || taken.token);
-  }, []);
-
-  useEffect(() => {
-    if (token === null) return;
-    let cancelled = false;
-    if (!token) {
-      setLinkValid(false);
-      setLinkReason("missing");
-      return;
-    }
-    checkPasswordLink(token)
-      .then((result) => {
-        if (cancelled) return;
-        setLinkValid(result.valid);
-        setLinkReason(result.reason);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setLinkValid(true);
-        setLinkReason(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [token]);
-
-  const submit = useCallback(
-    async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (!token) return;
-      if (password !== confirm) {
-        setError("The two passwords do not match.");
-        return;
-      }
-      setSaving(true);
-      setError(null);
-      try {
-        await setPasswordWithLink(token, password);
-        clearSession();
-        setDone(true);
-      } catch (err) {
-        setError(
-          err instanceof ApiError || err instanceof Error
-            ? err.message
-            : "Could not set the password."
-        );
-      } finally {
-        setSaving(false);
-      }
-    },
-    [clearSession, confirm, password, token]
-  );
-
-  if (done) {
-    return (
-      <AuthCard>
-        <div className="grid gap-4">
-          <p className="text-sm leading-6 text-ink-700">
-            Your password is set. Any other device that was signed in to this account has been signed
-            out.
-          </p>
-          <Button className="w-full font-display font-bold" onClick={() => router.replace("/login")} size="auth">
-            Go to sign in
-          </Button>
-        </div>
-      </AuthCard>
-    );
-  }
-
-  if (linkValid === null) {
-    return (
-      <AuthCard>
-        <p className="text-sm text-ink-500">Checking this link…</p>
-      </AuthCard>
-    );
-  }
-
-  if (!linkValid) {
-    return (
-      <AuthCard>
-        <div className="grid gap-4">
-          <div
-            role="alert"
-            className="rounded-md border border-red-200 bg-error-100 px-3 py-3 text-sm leading-6 text-error-600"
-          >
-            {LINK_REFUSALS[linkReason ?? ""] ?? "This password link is not valid."}
-          </div>
-          <Link href="/login" className="field-button-secondary w-full">
-            Back to sign in
-          </Link>
-        </div>
-      </AuthCard>
-    );
-  }
-
-  return (
-    <AuthCard>
-      <form onSubmit={submit} className="grid gap-3">
-        {error ? (
-          <div role="alert" className="rounded-md border border-red-200 bg-error-100 px-3 py-2 text-sm text-error-600">
-            {error}
-          </div>
-        ) : null}
-
-        <div className="grid gap-2">
-          <label htmlFor="new-password" className="text-sm font-medium text-ink-900">
-            New password
-          </label>
-          <div className="relative">
-            <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-            <input
-              id="new-password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
-              required
-              minLength={MIN_PASSWORD_LENGTH}
-              maxLength={MAX_PASSWORD_LENGTH}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="field-input h-[52px] pl-10 pr-11"
-            />
-            <button
-              type="button"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              aria-pressed={showPassword}
-              onClick={() => setShowPassword((value) => !value)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-300 hover:text-ink-500"
-            >
-              {showPassword ? <EyeOff size={22} aria-hidden /> : <Eye size={22} aria-hidden />}
-            </button>
-          </div>
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="confirm-password" className="text-sm font-medium text-ink-900">
-            Repeat password
-          </label>
-          <div className="relative">
-            <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-            <input
-              id="confirm-password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
-              required
-              minLength={MIN_PASSWORD_LENGTH}
-              maxLength={MAX_PASSWORD_LENGTH}
-              value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
-              className="field-input h-[52px] pl-10"
-            />
-          </div>
-        </div>
-
-        <p className="text-xs leading-5 text-ink-500">{passwordRuleLine("This link works once.")}</p>
-
-        <Button type="submit" size="auth" disabled={saving} className="mt-1 w-full font-display text-base font-bold">
-          {saving ? "Saving…" : "Set password"}
-        </Button>
-      </form>
-    </AuthCard>
-  );
-}
+const TITLE = "Set your password";
 
 const LINK_REFUSALS: Record<string, string> = {
   missing: "This link is incomplete. Open the whole link the administrator sent you.",
@@ -224,6 +31,138 @@ const LINK_REFUSALS: Record<string, string> = {
   spent: "This link has already been used. Sign in with the password you set.",
   "unknown-account": "This link no longer points at an account."
 };
+
+type LinkCheck = { token: string | null; valid: boolean | null; reason: string | null };
+
+function usePasswordLink(): LinkCheck {
+  const [token, setToken] = useState<string | null>(null);
+  const [valid, setValid] = useState<boolean | null>(null);
+  const [reason, setReason] = useState<string | null>(null);
+
+  useEffect(() => {
+    const taken = takeLinkTokenFromAddress(window.location.href);
+    const address = taken.address;
+    if (address !== null) queueMicrotask(() => window.history.replaceState(null, "", address));
+    setToken((previous) => previous || taken.token);
+  }, []);
+
+  useEffect(() => {
+    if (token === null) return;
+    let cancelled = false;
+    if (!token) {
+      setValid(false);
+      setReason("missing");
+      return;
+    }
+    checkPasswordLink(token)
+      .then((result) => {
+        if (cancelled) return;
+        setValid(result.valid);
+        setReason(result.reason);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setValid(true);
+        setReason(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [token]);
+
+  return { token, valid, reason };
+}
+
+function NewPasswordForm({ token, onDone }: { token: string; onDone: () => void }) {
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [shown, setShown] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (password !== confirm) {
+        setError("The two passwords do not match.");
+        return;
+      }
+      setSaving(true);
+      setError(null);
+      try {
+        await setPasswordWithLink(token, password);
+        onDone();
+      } catch (err) {
+        setError(err instanceof ApiError || err instanceof Error ? err.message : "Could not set the password.");
+      } finally {
+        setSaving(false);
+      }
+    },
+    [confirm, onDone, password, token]
+  );
+
+  return (
+    <form onSubmit={submit} className="grid gap-4">
+      {error ? <FormAlert>{error}</FormAlert> : null}
+      <PasswordField id="new-password" label="New password" autoComplete="new-password" revealed={shown} onReveal={() => setShown((value) => !value)} value={password} onChange={setPassword} minLength={MIN_PASSWORD_LENGTH} maxLength={MAX_PASSWORD_LENGTH} />
+      <PasswordField id="confirm-password" label="Repeat password" autoComplete="new-password" revealed={shown} value={confirm} onChange={setConfirm} minLength={MIN_PASSWORD_LENGTH} maxLength={MAX_PASSWORD_LENGTH} hint={passwordRuleLine("This link works once.")} />
+      <ActionGroup fill className="mt-2">
+        <Button type="submit" variant="primary" busy={saving} busyLabel="Saving">
+          Set password
+        </Button>
+      </ActionGroup>
+    </form>
+  );
+}
+
+function SetPasswordForm() {
+  const router = useRouter();
+  const { clearSession } = useAuth();
+  const link = usePasswordLink();
+  const [done, setDone] = useState(false);
+
+  if (done) {
+    return (
+      <AuthShell title={TITLE} subtitle="Your password is set. Any other device that was signed in to this account has been signed out.">
+        <ActionGroup fill>
+          <Button variant="primary" onClick={() => router.replace("/login")}>
+            Go to sign in
+          </Button>
+        </ActionGroup>
+      </AuthShell>
+    );
+  }
+  if (link.valid === null) {
+    return (
+      <AuthShell title={TITLE} subtitle="Choose the password you will sign in with.">
+        <Skeleton shape="lede" label="Checking this link" />
+      </AuthShell>
+    );
+  }
+  if (!link.valid || !link.token) {
+    return (
+      <AuthShell title={TITLE} subtitle="This link cannot set a password.">
+        <FormAlert>{LINK_REFUSALS[link.reason ?? ""] ?? "This password link is not valid."}</FormAlert>
+        <ActionGroup fill className="mt-6">
+          <Link href="/login" {...buttonLook({ variant: "quiet" })}>
+            Back to sign in
+          </Link>
+        </ActionGroup>
+      </AuthShell>
+    );
+  }
+  return (
+    <AuthShell title={TITLE} subtitle="Choose the password you will sign in with.">
+      <NewPasswordForm
+        token={link.token}
+        onDone={() => {
+          clearSession();
+          setDone(true);
+        }}
+      />
+    </AuthShell>
+  );
+}
 
 export default function SetPasswordPage() {
   return <SetPasswordForm />;

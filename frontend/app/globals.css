@@ -3,6 +3,9 @@
 @import "./motion.css";
 @import "./primitives.css";
 @import "./editorial.css";
+@import "../components/shell/shell.css";
+@import "../components/landing/landing.css";
+@import "../components/landing/sections.css";
 @config "../tailwind.config.ts";
 
 @theme {
@@ -115,7 +118,7 @@
   }
 
   html.nav-scroll-locked body {
-    padding-right: var(--nav-scroll-gutter, 0px);
+    padding-inline-end: var(--nav-scroll-gutter, 0px);
   }
 
   input[type="number"]::-webkit-inner-spin-button,
@@ -328,43 +331,6 @@
 
   .progress-fill[data-tone="done"] {
     background-color: var(--success);
-  }
-
-  .nav-sheet {
-    --nav-sheet-top: 5rem;
-    margin-top: var(--nav-sheet-top);
-    max-height: calc(100vh - var(--nav-sheet-top) - 1rem);
-    max-height: calc(100dvh - var(--nav-sheet-top) - 1rem);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    padding: 1.5rem;
-    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
-  }
-
-  @media (max-height: 560px) {
-    .nav-sheet {
-      --nav-sheet-top: 4.25rem;
-      padding: 1rem;
-      padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    }
-  }
-
-  .nav-sheet-overlay {
-    padding-right: var(--nav-scroll-gutter, 0px);
-  }
-
-  .nav-island-frame,
-  .bottom-island-frame,
-  .app-search-header-frame {
-    padding-left: 0.75rem;
-    padding-right: calc(0.75rem + var(--nav-scroll-gutter, 0px));
-  }
-
-  @media (width < 1024px) {
-    html.has-bottom-nav {
-      --bottom-nav-h: calc(62px + 0.75rem + env(safe-area-inset-bottom, 0px));
-    }
   }
 
   .fr-flash-row[data-flash="true"] {

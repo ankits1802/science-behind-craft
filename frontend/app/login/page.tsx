@@ -3,17 +3,19 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 import { AuthShell, OrDivider } from "@/components/auth/AuthShell";
 import { OidcSignInButtons } from "@/components/auth/OidcSignInButtons";
+import { AuthLinkLine, PasswordField } from "@/components/auth/PasswordField";
 import { SignInRefusal } from "@/components/auth/SignInRefusal";
 import { useGoogleNonce } from "@/components/auth/useGoogleNonce";
 import { useOidcSignIn } from "@/components/auth/useOidcSignIn";
 import { useAuth } from "@/components/AuthProvider";
 import { FirstPasswordGate } from "@/components/FirstPasswordGate";
+import { Field, TextInput } from "@/components/FormControls";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { TwoStepChallengeForm } from "@/components/TwoStepChallengeForm";
+import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/Toast";
 import { ApiError } from "@/lib/api";
@@ -23,19 +25,76 @@ import { SIGN_IN_HINT_HEADER, mustChangePassword, signInHintOf, type SignInHint 
 import { isTwoFactorChallenge, type TwoFactorChallenge } from "@/lib/twoFactor";
 import type { User } from "@/lib/types";
 
+type Failure = { message: string; refusal: AccessRefusalKind | null; hint: SignInHint };
+
+function failureOf(err: unknown): Failure {
+  const api = err instanceof ApiError ? err : null;
+  return {
+    refusal: accessRefusalKind(api?.status ?? 0, api ? api.headers?.get(ACCESS_STATUS_HEADER) : null),
+    hint: signInHintOf(api ? api.headers?.get(SIGN_IN_HINT_HEADER) : null),
+    message: api ? api.message : "Couldn't sign in. Check your connection and try again."
+  };
+}
+
+function PasswordSignIn({ loading, disabled, onSubmit }: { loading: boolean; disabled: boolean; onSubmit: (email: string, password: string) => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [shown, setShown] = useState(false);
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit(email, password);
+      }}
+      className="grid gap-4"
+    >
+      <Field label="Email">
+        <TextInput id="email" type="email" autoComplete="username" required placeholder="you@institution.ac.in" value={email} onChange={(event) => setEmail(event.target.value)} />
+      </Field>
+      <div className="grid gap-2">
+        <PasswordField id="password" label="Password" autoComplete="current-password" revealed={shown} onReveal={() => setShown((value) => !value)} value={password} onChange={setPassword} minLength={8} placeholder="Your password" />
+        <Link href="/forgot-password" className="kv-link justify-self-end font-ui text-ui">
+          Forgot your password?
+        </Link>
+      </div>
+      <ActionGroup fill className="mt-2">
+        <Button type="submit" variant="primary" busy={loading} busyLabel="Signing in" disabled={disabled}>
+          Sign in
+        </Button>
+      </ActionGroup>
+    </form>
+  );
+}
+
+function OtherWays({ google, oidc, busy, onGoogleCredential, onGoogleLoadError }: { google: ReturnType<typeof useGoogleNonce>; oidc: ReturnType<typeof useOidcSignIn>; busy: boolean; onGoogleCredential: (credential: string) => void; onGoogleLoadError: () => void }) {
+  return (
+    <>
+      {google.clientId || oidc.providers.length > 0 ? <OrDivider /> : null}
+      <div className="grid gap-2.5">
+        {google.clientId ? (
+          <>
+            <GoogleSignInButton clientId={google.clientId} nonce={google.nonce} disabled={!google.nonce} onCredential={onGoogleCredential} onLoadError={onGoogleLoadError} />
+            {google.failed ? (
+              <button type="button" onClick={google.renew} className="kv-link justify-self-center font-ui text-label">
+                Retry Google sign-in
+              </button>
+            ) : null}
+          </>
+        ) : null}
+        <OidcSignInButtons providers={oidc.providers} disabled={busy} onStart={(provider) => void oidc.start(provider)} />
+      </div>
+    </>
+  );
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const { login, loginWithGoogle, logout, markPasswordChanged, user } = useAuth();
   const { toast } = useToast();
   const google = useGoogleNonce();
   const [challenge, setChallenge] = useState<string | null>(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [doorPassword, setDoorPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [refusal, setRefusal] = useState<AccessRefusalKind | null>(null);
-  const [hint, setHint] = useState<SignInHint>(null);
+  const [failure, setFailure] = useState<Failure | null>(null);
   const [loading, setLoading] = useState(false);
   const signingIn = useRef(false);
   const passwordGate = mustChangePassword(user) ? user : null;
@@ -48,12 +107,7 @@ export default function LoginPage() {
     if (user && !signingIn.current && !passwordGate && !challenge) router.replace(takeSignInReturn());
   }, [challenge, passwordGate, router, user]);
 
-  const describeFailure = useCallback((err: unknown) => {
-    const status = err instanceof ApiError ? err.status : 0;
-    setRefusal(accessRefusalKind(status, err instanceof ApiError ? err.headers?.get(ACCESS_STATUS_HEADER) : null));
-    setHint(signInHintOf(err instanceof ApiError ? err.headers?.get(SIGN_IN_HINT_HEADER) : null));
-    setError(err instanceof ApiError ? err.message : "Couldn't sign in. Check your connection and try again.");
-  }, []);
+  const describeFailure = useCallback((err: unknown) => setFailure(failureOf(err)), []);
 
   const proceed = useCallback(
     (outcome: User | TwoFactorChallenge) => {
@@ -70,18 +124,12 @@ export default function LoginPage() {
   const oidc = useOidcSignIn({
     onStart: () => {
       setDoorPassword("");
-      setError(null);
-      setRefusal(null);
-      setHint(null);
+      setFailure(null);
       signingIn.current = true;
     },
     onSignedIn: proceed,
     onFailure: describeFailure,
-    onMessage: (message) => {
-      setRefusal(null);
-      setHint(null);
-      setError(message);
-    },
+    onMessage: (message) => setFailure({ message, refusal: null, hint: null }),
     onSettled: () => {
       signingIn.current = false;
     }
@@ -90,9 +138,7 @@ export default function LoginPage() {
   const onGoogleCredential = useCallback(
     async (credential: string) => {
       setDoorPassword("");
-      setError(null);
-      setRefusal(null);
-      setHint(null);
+      setFailure(null);
       signingIn.current = true;
       try {
         proceed(await loginWithGoogle(credential, google.nonce));
@@ -106,12 +152,9 @@ export default function LoginPage() {
     [describeFailure, google, loginWithGoogle, proceed]
   );
 
-  async function submit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function submit(email: string, password: string) {
     setLoading(true);
-    setError(null);
-    setRefusal(null);
-    setHint(null);
+    setFailure(null);
     signingIn.current = true;
     setDoorPassword(password);
     try {
@@ -139,7 +182,6 @@ export default function LoginPage() {
           }}
           onSignOut={() => {
             setDoorPassword("");
-            setPassword("");
             logout().catch(() => undefined);
           }}
         />
@@ -157,99 +199,21 @@ export default function LoginPage() {
         />
       ) : (
         <>
-          {error ? <SignInRefusal kind={refusal} hint={hint} message={error} /> : null}
-
-          <form onSubmit={submit} className="grid gap-3">
-            <div className="grid gap-2">
-              <label htmlFor="email" className="text-sm font-medium text-ink-900">
-                Email
-              </label>
-              <div className="relative">
-                <Mail aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="username"
-                  required
-                  placeholder="you@institution.ac.in"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className="field-input h-[52px] pl-10"
-                />
-              </div>
-            </div>
-
-            <div className="grid gap-2">
-              <label htmlFor="password" className="text-sm font-medium text-ink-900">
-                Password
-              </label>
-              <div className="relative">
-                <Lock aria-hidden className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" />
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  required
-                  minLength={8}
-                  placeholder="Your password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  className="field-input h-[52px] pl-10 pr-11"
-                />
-                <button
-                  type="button"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  aria-pressed={showPassword}
-                  onClick={() => setShowPassword((value) => !value)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-300 hover:text-ink-500"
-                >
-                  {showPassword ? <EyeOff size={22} aria-hidden /> : <Eye size={22} aria-hidden />}
-                </button>
-              </div>
-              <Link href="/forgot-password" className="justify-self-end text-sm font-medium text-purple-700 hover:underline dark:text-purple-300">
-                Forgot your password?
-              </Link>
-            </div>
-
-            <Button type="submit" size="auth" disabled={loading || oidc.busy} className="mt-1 w-full font-display text-base font-bold">
-              {loading ? "Signing in…" : "Sign in"}
-            </Button>
-          </form>
-
-          {google.clientId || oidc.providers.length > 0 ? <OrDivider /> : null}
-
-          <div className="grid gap-2.5">
-            {google.clientId ? (
-              <>
-                <GoogleSignInButton
-                  clientId={google.clientId}
-                  nonce={google.nonce}
-                  disabled={!google.nonce}
-                  onCredential={(credential) => void onGoogleCredential(credential)}
-                  onLoadError={() =>
-                    toast({ title: "Couldn't load Google sign-in", description: "Check your connection and reload.", tone: "error", duration: 0 })
-                  }
-                />
-                {google.failed ? (
-                  <button type="button" onClick={google.renew} className="w-full text-center text-xs font-medium text-purple-700 hover:underline dark:text-purple-300">
-                    Retry Google sign-in
-                  </button>
-                ) : null}
-              </>
-            ) : null}
-            <OidcSignInButtons
-              providers={oidc.providers}
-              disabled={loading || oidc.busy}
-              onStart={(provider) => void oidc.start(provider)}
-            />
-          </div>
-
-          <p className="mt-5 text-center text-sm text-ink-500">
+          {failure ? <SignInRefusal kind={failure.refusal} hint={failure.hint} message={failure.message} /> : null}
+          <PasswordSignIn loading={loading} disabled={oidc.busy} onSubmit={(email, password) => void submit(email, password)} />
+          <OtherWays
+            google={google}
+            oidc={oidc}
+            busy={loading || oidc.busy}
+            onGoogleCredential={(credential) => void onGoogleCredential(credential)}
+            onGoogleLoadError={() => toast({ title: "Couldn't load Google sign-in", description: "Check your connection and reload.", tone: "error", duration: 0 })}
+          />
+          <AuthLinkLine>
             New here?{" "}
-            <Link href="/signup" className="font-medium text-purple-700 hover:underline dark:text-purple-300">
+            <Link href="/signup" className="kv-link">
               Request access
             </Link>
-          </p>
+          </AuthLinkLine>
         </>
       )}
     </AuthShell>
