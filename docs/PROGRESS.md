@@ -1089,6 +1089,16 @@ Last updated: 2026-11-19.
     documents place each field in its chapter with fact grids; MCP facts and sections group by
     field; an answer-quality evaluation across all 16 fields is dispatchable (`answer-quality`).
 
+- **Releases of 2026-11-20 after rounds 4 and 5.** The first web builds after round 4 failed on
+  42 family pages (the craft route asked for a craft subject); fixing that alone would have turned
+  about 40 curated pages into the craft-without-a-monograph template, so the tabbed page was
+  restored for curated crafts as a bridge (debt), and a failed server read of a craft page now
+  draws the tabbed page instead of a cached 404. The embedding pass skips registered components.
+  **Capture screens** photographs live pages beside the master board at every width and theme;
+  Vercel builds previews from the command line and Capture and parity pass their protection, so a
+  branch is compared with its boards before it ships. Parity passes on the live site after both
+  rounds.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

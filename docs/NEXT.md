@@ -109,16 +109,22 @@ Open:
    - **Round 2, integrated on `track1`:** the unified review queue, MCP `ask` and
      `start_image_upload`, approved pictures on craft pages, contribution screens, the dossier
      export and the curation skill on the write path (`docs/PROGRESS.md`).
-   - **Round 3 (decision 0106), integrated on `round3`:** the split, the document API, `PageLayout`,
-     generated documents for every page, all 42 component kinds as specs with React views, and the
-     React renderer at a preview route. **Next:** run the **Monograph parity** workflow after the
-     release, fix what it reports until text, screenshots and interactions match, then switch
-     `/crafts/Kutch-Ajrakh` to the React page and every other craft from the tabbed screen to its
-     document; then completeness-driven research (step 6).
+   - **Round 3 (decision 0106):** the split, the document API, `PageLayout`, generated documents,
+     all 42 component kinds as specs with React views, the React renderer. The parity proof passed
+     on 2026-11-20 and `/crafts/Kutch-Ajrakh` draws its document.
+   - **Rounds 4 and 5 (2026-11-20, released):** retrieval and MCP finished, every craft as its
+     English document (decision 0107), field coverage everywhere (`docs/contracts/coverage.md`).
+     Curated crafts keep the tabbed page as a bridge until their documents carry their structure.
+   - **Round 6 (running):** curated crafts as rich documents and the bridge retired; the structure
+     write path; Kutch Ajrakh's components as native views under parity.
+   - **Then:** completeness research across every field (`docs/plans/field-completeness.md`, waits
+     for the owner's approval and a Researcher token).
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
-   - waves 1B (landing, shell, collection, category, map), 3 (answer page), 4 (the rest) and 5
-     (proof).
+   - waves 1B, 3 and 4 released in rounds 4 and 5 (landing, shell, atlas, category hub, map,
+     answer page, every signed-in screen); wave 5 (proof) runs in round 6: every screen matched to
+     its board with **Capture screens** on previews, the production E2E suite and the design guard
+     brought to the redesign.
    - The craft page is shared with track 1, step 2.
    - Match boards with screenshots, not by reading code.
    - The landing's "426 crafts" counts the master list's named crafts plus six from the portals,
