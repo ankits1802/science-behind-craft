@@ -12,15 +12,9 @@ from app.models import (
     Compound,
     Concept,
     Craft,
-    CraftLocation,
     KnowledgePiece,
     KnowledgePieceSubject as Subject,
-    Material,
-    Process,
-    ProcessStage,
-    StageMaterial,
 )
-from app.models.enums import DISTRICT_PLACE_PREFIX
 from app.research.knowledge_api import (
     COMPONENTS_LIMIT_MAX,
     ComponentSubject,
@@ -30,12 +24,18 @@ from app.research.knowledge_api import (
 from app.retrieval.statements import TEXT_SEARCH_CONFIG, lexical_rank, text_query
 from app.retrieval.text import or_tsquery
 
+from .component_library_applies import (
+    APPLIED_CRAFT,
+    APPLIED_PIECE,
+    DISTRICT_KEY_PREFIX,
+    applies_to,
+    registered_pieces,
+)
 from .knowledge_api import known_craft
 
-__all__ = ["library_components"]
+__all__ = ["APPLIED_CRAFT", "APPLIED_PIECE", "applies_to", "library_components", "registered_pieces"]
 
 OPEN_CONCEPT = "OPEN"
-DISTRICT_KEY_PREFIX = f"{DISTRICT_PLACE_PREFIX}:"
 LABEL_SEPARATORS = "/-"
 
 
@@ -48,14 +48,11 @@ async def library_components(
     query: str | None = None,
     limit: int = COMPONENTS_LIMIT_MAX,
 ) -> CraftComponents:
-    conditions = [
-        KnowledgePiece.label.is_not(None),
-        KnowledgePiece.hiddenAt.is_(None),
-        KnowledgePiece.supersededById.is_(None),
-    ]
+    conditions = registered_pieces()
     if slug is not None:
         craft = await known_craft(session, slug)
-        conditions.append(or_(KnowledgePiece.craftId == craft.id, KnowledgePiece.id.in_(_applying(craft.id))))
+        applying = applies_to([craft.id]).subquery()
+        conditions.append(KnowledgePiece.id.in_(select(applying.c[APPLIED_PIECE])))
     if field is not None:
         conditions.append(or_(KnowledgePiece.facet == field, KnowledgePiece.fields.any(field)))
     if kind is not None:
@@ -97,32 +94,6 @@ def _document() -> ColumnElement[Any]:
         KnowledgePiece.description,
     )
     return func.to_tsvector(TEXT_SEARCH_CONFIG, words)
-
-
-def _applying(craft_id: uuid.UUID) -> Select[tuple[uuid.UUID]]:
-    stages = (
-        select(ProcessStage.id)
-        .join(Process, Process.id == ProcessStage.processId)
-        .where(Process.craftId == craft_id)
-    )
-    materials = select(StageMaterial.materialId).where(StageMaterial.stageId.in_(stages))
-    concepts = (
-        select(Concept.id).where(Concept.craftId == craft_id),
-        select(ProcessStage.conceptId).where(ProcessStage.id.in_(stages)),
-        select(Material.conceptId).where(Material.id.in_(materials)),
-    )
-    compounds = select(Material.compoundId).where(Material.id.in_(materials))
-    places = select(func.concat(DISTRICT_KEY_PREFIX, CraftLocation.districtLgd)).where(
-        CraftLocation.craftId == craft_id, CraftLocation.districtLgd.is_not(None)
-    )
-    return select(Subject.pieceId).where(
-        or_(
-            Subject.craftId == craft_id,
-            *(Subject.conceptId.in_(found) for found in concepts),
-            Subject.compoundId.in_(compounds),
-            Subject.placeKey.in_(places),
-        )
-    )
 
 
 async def _subjects(
