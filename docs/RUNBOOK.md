@@ -256,6 +256,20 @@ origins; the issuer is the API origin and the consent page is `<PUBLIC_WEB_URL>/
    '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists the read, proposal and open-work tools.
 3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
 
+### Contributions at scale (round 7)
+
+- **The contribution worker** `kv-contributions` (a systemd unit beside `kv-worker` and `kv-fetcher`,
+  restarted by every deploy) takes queued proposals and runs their gates off the request
+  (`docs/contracts/knowledge-writes.md`). Read it with `journalctl -u kv-contributions`. Its
+  concurrency is `CONTRIBUTION_WORKERS` in `/opt/kalavigyan/.env` (optional). To drain the queue by
+  hand: `python -m app.scripts.contribution_worker --once` (Shell on the box).
+- **Picture screens** need an enabled CAPTION route (a vision model, Settings, Routing). Without
+  one, every picture waits for a person as `UNSCREENED`. After the deploy that adds them, run
+  `python -m app.scripts.fingerprint_pictures` once so stored pictures get their perceptual
+  hashes, and restart `kv-fetcher` if a deploy did not.
+- **Live research write-back** can be checked read-only with `python -m app.scripts.write_back_report`
+  (the runs of the last 14 days, their gate checks and states).
+
 ## Nightly upkeep and page builds
 
 `docs/contracts/nightly-upkeep.md` names the schedule, the bounds and the commands. The nightly
