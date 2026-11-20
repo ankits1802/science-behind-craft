@@ -2887,32 +2887,6 @@ Last reviewed: 2026-11-18.
 - **Clears it:** add the shadcn names to the alias count once the components that use them move
   to the semantic names; review by job stays with the skill's section 11.
 
-### The contrast preference has two states
-
-- **What:** `prefers-contrast: more` applies high contrast unless `data-high-contrast="false"`,
-  but the preference (`lib/preferences.ts`, `UserPreference.highContrast`, a non-null boolean)
-  only knows on and off, and `applyPreferences` removes the attribute when it is off. A reader
-  whose system asks for more contrast cannot choose Standard, and the High contrast switch in
-  Settings reads off while high contrast is applied.
-- **Why left:** a third state changes the backend column and route (`api/routes/me.py`) and the
-  Settings card (`components/settings/PersonalSettingsCards.tsx`), both owned by lanes running
-  now. The tokens already honour `"false"`.
-- **Clears it:** store `highContrast` as system, standard or high (a migration with `system` for
-  today's `false`), write `data-high-contrast="false"` for standard in `applyPreferences` and the
-  boot script, and show the effective state in Settings.
-
-### Two answer components still draw one cluster per source
-
-- **What:** `components/answer/AnswerSectionBlock.tsx` and `components/answer/ReactionsPanel.tsx`
-  map a sentence's sources to one `CitationChip` each. Each chip now renders a one-source cluster
-  and `app/editorial.css` joins neighbouring clusters with a comma, so the numerals read "1,4"
-  but are two buttons, each opening its own source (decision 0094).
-- **Why left:** another lane was editing the answer components; this change touched only
-  `CitationChip.tsx` and `CitationContext.tsx` in that folder. Dropping the comma rule first would
-  only make those sentences read "14".
-- **Clears it:** both render `<Cite citations={sentence.citations} …/>` (or `CitationChips`), the
-  comma rule in `editorial.css` and the per-group `CitationChip` signature go.
-
 ### The source dialog and the evidence badge outlive the new primitives
 
 - **What:** citation clusters open their own popover or sheet (`editorial/SourcePanel.tsx`, which
@@ -3212,4 +3186,34 @@ Last reviewed: 2026-11-18.
   places and the region story.
 - **Clears it:** generated documents for curated crafts with every field's sections from their
   claims and their snapshot's blocks as components (round 6), then retire `CraftScreen` again.
+
+## Round 5 (2026-11-20)
+
+### Answer figures are not numbered
+
+- **What:** the answer's figures carry their kicker but no "Fig. N": blocks render on their own and
+  the essay does not yet pass numbers down.
+- **Clears it:** the answer essay numbers its figures and passes the number to `AnswerFigure`.
+
+### Fig. 1's equation needs leucoindigo's compound record
+
+- **What:** the vat figure draws its balanced equation and atom count only when both leucoindigo
+  and indigo have a compound record; only indigo blue (CID 10215) has one, so the equation is not
+  drawn.
+- **Clears it:** a sourced leucoindigo compound in the compound library.
+
+### Old props and helpers kept for files outside a lane
+
+- **What:** `PageHeader` still accepts an `icon` it no longer draws; `NotesInbox` keeps an ignored
+  `reduce` prop for the saved page; `components/guide/guideMotion.ts` (retired springs) is still
+  imported by 16 files; `SourceDialog`, `openedSource`, `EvidenceBadge` and `TermSheet`'s
+  `onOpenCitation` stay for the restored tabbed craft page and the voice screens.
+- **Clears it:** drop each when its last caller moves (the craft bridge's retirement clears most).
+
+### The design guard baseline is not shrunk
+
+- **What:** rounds 4 and 5 brought most touched files to zero retired, alias and physical uses,
+  but `frontend/e2e/design-guard-baseline.json` still records the old counts, so a regression in
+  those files would pass until the baseline is lowered.
+- **Clears it:** run `DESIGN_GUARD_SHRINK=1` on GitHub and commit the rewritten baseline.
 

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { answerAddress, answerCitable } from "@/lib/answerCitation";
-import { citation } from "@/lib/monographCite";
+import { citation, closedTitle } from "@/lib/monographCite";
 
 const ANSWER = { explainerId: "0b1c2d3e-4f50-4617-8293-a4b5c6d7e8f9", version: 2, question: "  Why does alum hold the red on Kutch Ajrakh cloth  " };
 const SIGNED_IN = { origin: "https://kalavigyan.vercel.app/", path: null };
@@ -22,4 +22,11 @@ test("the answer's citation is the shared Cite this form: the trimmed question, 
   expect(bibtex[0]).toBe("@misc{kalavigyan_answer_0b1c2d3e_v2,");
   expect(bibtex).toContain(`  url = {${ADDRESS}},`);
   expect(bibtex).toContain("  urldate = {2026-11-18},");
+});
+
+test("a title that ends in a question or exclamation mark is not given a second full stop", () => {
+  expect(closedTitle("How does indigo turn blue on Kutch Ajrakh cloth?")).toBe("How does indigo turn blue on Kutch Ajrakh cloth?");
+  expect(closedTitle("Indigo!")).toBe("Indigo!");
+  expect(closedTitle("Kutch Ajrakh")).toBe("Kutch Ajrakh.");
+  expect(closedTitle("Kutch Ajrakh.")).toBe("Kutch Ajrakh.");
 });

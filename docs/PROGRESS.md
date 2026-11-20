@@ -1072,6 +1072,23 @@ Last updated: 2026-11-19.
     category hub, the paper map with its variables, legend, ranked list and table, and the compare
     page.
 
+- **Round 5 (2026-11-20): the answer page and every signed-in screen, and every field everywhere.**
+  Five lanes, integrated by the lead after the session stopped (one lane resumed from its branch).
+  - **The answer essay:** the question as h1, the cited three-sentence lede, Save and Cite this
+    answer as quiet buttons, the signature figure, numbered sections in the spread with margin
+    notes; citations as one cluster per sentence; the source dialog and evidence badge replaced by
+    the editorial primitives on answers.
+  - **Answer figures:** every player and figure (place, matter, insight, journey, play, learning)
+    on the chart kit, map and specimen tokens, complete at rest.
+  - **Settings and admin** on the signed-in tool template; the contrast preference has its third
+    state (system, standard, high; migration 0046).
+  - **Learning, voice, contributions** and the shared components on the system.
+  - **Every field** (`docs/contracts/coverage.md`, `answer-eval.md`): field coverage per page is
+    data (in the document, at a route, over MCP `get_coverage`); missing and thin fields are ranked
+    open work refreshed nightly; the planner seats an expert per relevant field; generated
+    documents place each field in its chapter with fact grids; MCP facts and sections group by
+    field; an answer-quality evaluation across all 16 fields is dispatchable (`answer-quality`).
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with

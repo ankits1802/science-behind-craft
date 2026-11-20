@@ -29,8 +29,12 @@ export function isoDay(day: Date): string {
   return `${day.getFullYear()}-${month}-${String(day.getDate()).padStart(2, "0")}`;
 }
 
+export function closedTitle(title: string): string {
+  return /[.?!]$/.test(title) ? title : `${title}.`;
+}
+
 export function citationText(cite: Citable, accessed: Date | null): string {
-  const text = `KalaVigyan. “${cite.title}.” ${KIND_WORDS[cite.kind]}, version ${cite.version}. ${CITE_PUBLISHER}. ${cite.url}.`;
+  const text = `KalaVigyan. “${closedTitle(cite.title)}” ${KIND_WORDS[cite.kind]}, version ${cite.version}. ${CITE_PUBLISHER}. ${cite.url}.`;
   return accessed ? `${text} Accessed ${accessDay(accessed)}.` : text;
 }
 
