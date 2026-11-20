@@ -3122,18 +3122,25 @@ Last reviewed: 2026-11-18.
 
 ### Cited passages held outside text units
 
-- **What:** 43 cited passages of the Ajrakh page sit in the template outside any text unit (each
-  stage's "Cloth after" line, sources-differ notes, comic captions, map side panels, the masthead GI
-  line). The specs carry them as held text with their source numbers, so the database's sections and
-  the sources chapter's "Supports N sentences" counts do not see them.
-- **Clears it:** make each a text unit in `content.json`, point the specs at the units, and reload.
+- **What:** 16 cited sentences of the Ajrakh page still sit outside any text unit (round 6 made 28
+  of the 43 into units `u1087` to `u1113`). Their page text writes an apostrophe as `&#x27;` while a
+  unit renders `'`, so a unit would change the approved page's bytes: the stage player's stage 11
+  "Why", four timeline card lines, the shared-science atlas's three sentences, two Suran card lines,
+  the climate map's side line and five in the shell. The answer's own sentences in the language
+  panels, the generator and the structure diagrams are held too.
+- **Clears it:** render a unit's apostrophe as the approved page writes it (or rebuild the approved
+  page with plain apostrophes), then make the 16 units and reload.
 
 ### Fragments are a bridge
 
-- **What:** a component without a spec is drawn from its legacy markup, and the kit's script drives
-  some native views by their ids and classes (decision 0106 item 3). Every Ajrakh component has a spec
-  now; a generated page reuses another monograph's fragment for a shared component without one.
-- **Clears it:** round 3c: the kit's behaviour moves into the views and fragments are retired.
+- **What:** 9 of Kutch Ajrakh's 79 components still draw from their fragments (70 are native since
+  round 6, `monographs/Kutch-Ajrakh/native.json`): the stage player (its stage 11 "Why" is held
+  text), the two structure diagrams (their descriptions are the answer's held sentences) and the six
+  page tools, whose views draw their own markup on purpose. The kit's script still drives the
+  native views' behaviour by ids and classes, and a generated page reuses another monograph's
+  fragment for a shared component without a spec.
+- **Clears it:** the stage player's held line as a unit, science specs that carry held text, then
+  the kit's behaviour moved into the views and the fragments retired.
 
 ### What the document does not carry yet
 
@@ -3176,16 +3183,37 @@ Last reviewed: 2026-11-18.
 - **Clears it:** retire the shell (round 3c: every component a native view, the kit's styles in the
   views), or prefix the kit's classes so no name can collide.
 
-### Curated crafts still draw the tabbed page
+### Curated craft documents: what they do not carry yet
 
-- **What:** a generated document is built from published sections only, and the curated crafts
-  other than Kutch Ajrakh have none, so `/crafts/<slug>` keeps the tabbed `CraftScreen` (restored
-  on 2026-11-20) for a curated craft without a document. Round 4 had retired it, which would have
-  turned about 40 curated pages into the craft-without-a-monograph template. A generated document
-  would also lack what the tabbed page draws from the dossier's structure: stages, reactions,
-  places and the region story.
-- **Clears it:** generated documents for curated crafts with every field's sections from their
-  claims and their snapshot's blocks as components (round 6), then retire `CraftScreen` again.
+- **What:** since round 6 every curated craft is drawn as its document (the tabbed `CraftScreen`
+  is retired). The key facts and the record use the passage renderer's plain term list rather than
+  the board's four-column FactGrid, and what answers and contributions added to the craft page (AI
+  media, contributed plates, field photos, relatives) is not carried into the document. Left
+  unused by the retirement: the voice call UI (`components/voice/*`, `lib/voice*.ts`,
+  `lib/elevenLabsAgent.ts`), `useHasSession`, `useRevealRow`, `IndiaMapStage`, `MapPlaceList` and
+  `MediaActionButton`.
+- **Clears it:** a FactGrid component kind for the record; contributed media as document
+  components; delete the unused files or give them a new caller.
+
+## Round 6 (2026-11-20)
+
+### The editorial stylesheet is over budget
+
+- **What:** `frontend/app/editorial.css` holds the reading templates' shared styles for the landing,
+  atlas, category hub, map and the craft without a monograph in one file of 937 lines; round 6's
+  board matching added to it.
+- **Clears it:** split it by template (landing, atlas, hub, map, craft record) and import each
+  where its template is drawn.
+
+### Small differences from the boards left after round 6
+
+- **What:** the map finding text sets about 5% narrower than the board's (the self-hosted Newsreader
+  against the board's Google Fonts copy), so it wraps in two lines where the board has three; the
+  hub's monographs shelf leaves two empty cells at 834 and 1440 with seven monographs; at 360 the
+  landing's specimen label is 13px narrower because the board's label spills into the page margin;
+  the Urdu answer keeps its interface words in English where the Urdu board shows Urdu.
+- **Clears it:** compare the font files' metrics; a shelf rule for an odd count; interface words
+  for the answer's languages.
 
 ## Round 5 (2026-11-20)
 
