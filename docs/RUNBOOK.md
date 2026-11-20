@@ -229,6 +229,13 @@ Vercel deploy hook (`/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`) by the action
 
 No watcher or manual promote is needed. The nightly build uses the same hook.
 
+Vercel never builds from Git (`frontend/vercel.json` turns Git deployments off for every branch);
+production builds come from the deploy hook. To check a branch before it ships, deploy a preview from
+the repository root (the root `.vercelignore` uploads only `frontend/`):
+`VERCEL_ORG_ID=team_pcTf4Alb2DCIwq2IZcdu00dS VERCEL_PROJECT_ID=prj_5hRNy7S9CS4fkhVVBRW5mbmAAUSd vercel deploy --yes`,
+then run **Capture screens** or **Monograph parity** with that preview's address as `base_url`; both
+pass the preview protection with `VERCEL_AUTOMATION_BYPASS_SECRET`.
+
 ## MCP server
 
 The tools of `docs/contracts/knowledge-api.md` and `docs/contracts/open-work.md` at

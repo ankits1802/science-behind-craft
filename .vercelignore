@@ -1,0 +1,8 @@
+/*
+!/frontend
+/frontend/node_modules
+/frontend/.next
+/frontend/test-results
+/frontend/parity-run
+/frontend/capture-run
+/frontend/playwright-report
