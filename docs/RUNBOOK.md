@@ -52,6 +52,11 @@ also writes the kit to `frontend/public/monographs/kit/`. After a change to the 
 rewrite the golden document with
 `python -m app.scripts.build_monograph --document Kutch-Ajrakh --out ../shared/monograph.document.golden.json`.
 
+Each curated craft's document is generated from the sections its dossier's claims publish at import
+(round 6). The backend deploy's `import_curation` writes them; to write them without a deploy, run
+`python -m app.scripts.publish_curated_sections` on the box (it prints written, unchanged, waiting
+and refused, and exits 2 only when a dossier does not parse).
+
 Each curated craft's first `PageLayout` comes from its dossier's picture placements: run
 `python -m app.scripts.backfill_layouts` on the box once after the deploy that adds migration 0042.
 
@@ -104,7 +109,7 @@ Every secret is in three places: a GitHub Actions secret, `/kalavigyan/env/<NAME
 | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `BRAVE_SEARCH_API_KEY` | GitHub secrets. The next backend deploy copies them into Parameter Store and the box. |
 | `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` | Create a Cloudflare Turnstile widget for `kalavigyan.vercel.app`. The secret is a GitHub secret and the site key a GitHub variable; each deploy copies both into Parameter Store. Until both exist, production email sign-up is closed and the page offers Google only. |
 | `WEB_PROXY_SECRET` | Re-run `seed_secrets.py` once: it generates the value and writes Parameter Store, the GitHub secret and the Vercel env (Sensitive). It also deletes the retired names `AWS_S3_BUCKET`, `BRAVE_API_KEY`, `NEXT_PUBLIC_APP_URL`, `DATABASE_USE_TRANSACTION_POOLER`, `TWO_FACTOR_KEY_REQUIRED` and `MEDIA_PRESIGNED_READS` from Parameter Store. |
-| `WEB_REVALIDATE_SECRET` | Re-run `seed_secrets.py` once: it generates the value and writes Parameter Store (the box `.env` gets it at the next render; the API sends it as `x-revalidate-secret`) and the Vercel env (Sensitive), where `frontend/app/api/revalidate/route.ts` compares it in constant time. It is not a GitHub secret. Until both sides hold it, hiding a piece or picture, retracting or rejecting a live fact, rejecting testimony and approving structure leave signed-out pages to their daily rebuild, and the API logs that the secret is not set. To rotate it, delete `/kalavigyan/env/WEB_REVALIDATE_SECRET`, re-run the script and redeploy both sides. |
+| `WEB_REVALIDATE_SECRET` | Set on 2026-11-20 (Parameter Store and the Vercel env, production and preview). To set it from scratch, re-run `seed_secrets.py` once: it generates the value and writes Parameter Store (the box `.env` gets it at the next render; the API sends it as `x-revalidate-secret`) and the Vercel env (Sensitive), where `frontend/app/api/revalidate/route.ts` compares it in constant time. It is not a GitHub secret. Until both sides hold it, hiding a piece or picture, retracting or rejecting a live fact, rejecting testimony and approving structure leave signed-out pages to their daily rebuild, and the API logs that the secret is not set. To rotate it, delete `/kalavigyan/env/WEB_REVALIDATE_SECRET`, re-run the script and redeploy both sides. |
 | `VOICE_LLM_BEARER`, `VOICE_SESSION_HMAC_KEY`, `TRANSCRIPT_ENCRYPTION_KEY` | Re-run `seed_secrets.py` once: it generates all three like the other generated keys and writes Parameter Store and the GitHub secrets; Deploy backend keeps them in sync. Voice stays hidden until `TRANSCRIPT_ENCRYPTION_KEY` and `ELEVENLABS_API_KEY` exist. |
 | `MEDIA_BUNDLE_HMAC_KEY` | Re-run `seed_secrets.py` once: it generates it like the voice keys and writes Parameter Store and the GitHub secret; Deploy backend keeps it in sync. Media stays hidden and `kv-worker` waits until it exists. |
 | `ELEVENLABS_AGENT_ID` | Only for the `AGENT` transport: after the voice agent is provisioned (Voice, below), store the printed agent id as a GitHub secret and deploy. |

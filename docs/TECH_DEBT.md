@@ -3067,27 +3067,6 @@ Last reviewed: 2026-11-18.
   novelty) were chosen without data; facts with no embedding are matched only by identical text.
 - **Clears it:** tune them on the first month of proposals and record the values in a decision.
 
-### Open work repeats three rules
-
-- **What:** `services/open_work_components.py` repeats `component_library._applying` in a grouped
-  form, `services/open_work_pages.MONOGRAPHS_DIR` repeats `scripts/build_monograph.MONOGRAPHS_DIR`,
-  and `services/open_work_subjects.is_family` repeats the family rule of the data.
-- **Clears it:** one public applies-to query in `component_library`, the monographs folder in
-  `app/data`, and one family rule, imported by both.
-
-### The design tokens are copied into the backend
-
-- **What:** `backend/app/data/design/tokens.json` is a copy of the design skill's tokens (the
-  deploy ships only `backend/`); a test holds the two equal.
-- **Clears it:** add it to `DESTINATIONS` in `tools/design_tokens.py` so the generator writes it.
-
-### Signed-out craft pages refresh nightly
-
-- **What:** `serverCraftPage` revalidates after a day, so a hidden piece or a retracted claim can
-  stay on a signed-out reader's page until the nightly build, unless an Admin builds pages now.
-- **Why left:** item 11 (pages built nightly and served from the CDN); signed-in readers reload.
-- **Clears it:** a revalidation call from the hide and retract paths.
-
 ### Small gaps in the MCP slices
 
 - **What:** a component card's kicker and title stay English in non-English answers; a failing
@@ -3096,13 +3075,6 @@ Last reviewed: 2026-11-18.
 - **Clears it:** each in the change that next touches its file.
 
 ## Track 1, round 2 (decision 0101, 2026-11-19)
-
-### Structure still enters by bulk import
-
-- **What:** the write path takes facts only, so picture placements, focal boxes, a stage's after or
-  why, native names, reactions, botanical names, the glossary, conflicts, open questions and the GI
-  record still enter through a new dossier version and its import.
-- **Clears it:** a structure write path (or the `PageLayout` record of item 14 for placements).
 
 ### The review page's picture and testimony cards use their old routes
 
@@ -3204,6 +3176,15 @@ Last reviewed: 2026-11-18.
   board matching added to it.
 - **Clears it:** split it by template (landing, atlas, hub, map, craft record) and import each
   where its template is drawn.
+
+### Structure proposals: what they do not reach yet
+
+- **What:** a category page takes no structure proposals (crafts and families only), an approved
+  glossary term has no shared glossary entry (`termKey` stays null) and an approved reaction gets
+  no stored science row until the dossier is exported and imported again (decision 0108). The
+  STRUCTURE review card has not been seen in a browser.
+- **Clears it:** category structure, glossary and science rows written at approval, and a signed-in
+  capture of the review screen.
 
 ### Small differences from the boards left after round 6
 
