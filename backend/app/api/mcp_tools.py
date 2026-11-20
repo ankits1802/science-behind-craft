@@ -26,6 +26,7 @@ from .mcp_protocol import (
 from .mcp_read_tools import READ_TOOLS
 from .mcp_resources import resource_list, resource_read, resource_templates
 from .mcp_steward_tools import STEWARD_TOOLS
+from .mcp_source_tools import SOURCE_TOOLS
 from .mcp_structure_tools import STRUCTURE_TOOLS
 from .mcp_task_tools import TASK_TOOLS
 from .mcp_tool_base import Tool, ToolContext, scope_refusal
@@ -45,6 +46,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *ASK_TOOLS,
             *LAYOUT_TOOLS,
             *STRUCTURE_TOOLS,
+            *SOURCE_TOOLS,
         )
     }
 )
