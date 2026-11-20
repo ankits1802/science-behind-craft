@@ -165,7 +165,11 @@ changes, quota), never ordinary facts.
 
 - Ramps for area fills only (choropleths, relief, legends), because they flip lightness in dark:
   `--rain-1…6`, `--density-1…6`, `--heat-1…6`, `--ph-1…5` (diverging, neutral class fixed at 6.5
-  to 7.5), `--elevation-1…7` (always with contours or spot heights).
+  to 7.5), `--elevation-1…7` (always with contours or spot heights), `--earth-1…6` (soil and bare
+  earth), `--cover-1…6` (tree cover and cropland). `--mineral-1…6` is categorical: mineral deposit
+  classes as point symbols, each class also in its own shape, never an area fill. The physical
+  layer shades relief with `--map-relief-shade` at `--map-hillshade-opacity` (off in high
+  contrast); the steps and checks are in `references/tokens.json`.
 - Series keep their hue in every theme and colour bars, lines and circles: `--series-rain`,
   `--series-heat`, `--series-count` (crafts counted: proportional circles and ranked bars).
   Anything else takes `--chart-series`; only the mark the title names takes `--chart-emph`.
