@@ -2846,33 +2846,15 @@ Last reviewed: 2026-11-18.
 
 ### Retired classes still compile through migration aliases
 
-- **What:** `frontend/tailwind.config.ts` keeps the neutral, type, radius, shadow and status
-  aliases of SYSTEM.md section 6, and `frontend/tailwind.migration.ts` re-points the retired ramps
-  that are still used (decision 0092, point 6 as amended). Purple is aliased by lightness per
-  utility: text, rings and the 300 to 700 fills to indigo, light washes to sunk, `bg-purple-200`
-  to the turmeric highlighter, edges to rule-strong. Purple fills and strokes, and the errand,
-  steward and archive ramps, go through `--legacy-<ramp>-<shade>` variables (map, density, rain
-  and heat tokens), mirrored under `[data-theme="dark"]` so a `dark:` pair keeps its order; the
-  choropleth fill has its own dark order (`DARK_APPEARANCE_RAMPS`) so its five classes stay five
-  density steps. Field, gold, evidence, amber, red and emerald map to surfaces, turmeric and the
-  status tokens; `text-white` is on-indigo because most of it sits on indigo fills; the reaction
-  player's `dye-*` palette is carried unchanged. Where lightness and job disagree the alias is
-  wrong, and the guard cannot see it: non-pressable indigo fills on `answer/LadderStageCard.tsx`
-  (reached steps) and `answer/place/StorySteps.tsx`; the What-if lab's option note
-  (`answer/play/WhatIfLab.tsx`, `text-purple-100` on the indigo fill, 1.27:1); the dark-mode
-  highlight of the spoken and caption word (`answer/ExplainerSentence.tsx`,
-  `answer/film/FilmStage.tsx`, `dark:bg-purple-800`, an indigo-hover block); plain
-  `fill-purple-700` markers on dark land (`map/MapMarks.tsx`, `answer/journey/TimelinePins.tsx`,
-  density-2 on map-land).
-- **Why left:** about 700 retired-class uses in 120 files, many in lanes being edited now;
-  migrating by job needs each file's owner. The badges, stage numbers and the sign-in screens this
-  lane owned were migrated.
-- **Clears it:** the answer lane makes the one-class changes (the note to `text-indigo-on/80`
-  when selected, the highlights to `bg-turmeric-wash text-ink-1` in both themes, reached steps to
-  the 2px ink-1 leading rule, markers to `--map-marker` with `--map-marker-ring`); every other file
-  migrates by job when touched; lower the baseline with `DESIGN_GUARD_SHRINK=1 npx playwright test
-  --project=unit e2e/design-guard-unit.spec.ts`; delete each alias when its count reaches zero,
-  then `tailwind.migration.ts`.
+- **What:** round 6 recorded the baseline (196 files down to 24) and deleted every alias whose
+  use reached zero. Still counted: the purple, evidence and red ramps of
+  `frontend/tailwind.migration.ts` and the neutral, type and radius aliases in
+  `frontend/tailwind.config.ts`, whose last users were the retired tabbed craft page (its files
+  are gone, so the next baseline run should bring them to zero); `SandboxFrame`'s `bg-white` (a
+  white canvas for sandboxed HTML, deliberate) and the two theme-colour hex values in
+  `lib/preferences.ts` that the spec requires.
+- **Clears it:** dispatch **Design guard** on `main`, commit the baseline, delete the aliases that
+  reach zero and `tailwind.migration.ts` when it is empty.
 
 ### The design guard does not see shadcn colour names or inline styles
 
@@ -3186,6 +3168,17 @@ Last reviewed: 2026-11-18.
 - **Clears it:** category structure, glossary and science rows written at approval, and a signed-in
   capture of the review screen.
 
+### Defects the production E2E suite found in round 6
+
+- **What:** on Kutch Ajrakh, the labels under the equation's species ("leucoindigo, on the fibre")
+  overflow their 15ch box (`white-space: nowrap` on `.bx-chem .eq .side` in the kit's
+  `monograph.css`), and at 360 the ion charges spill out of the formula; the Textiles category hub
+  draws no family science because the families' monographs answer 404; Kutch Ajrakh's document
+  carries aria-labels that begin "AI illustration:", which principle 9 (no AI imagery) may not
+  allow. The answer essay check waits for one paid `questions=true` run to save an answer.
+- **Clears it:** a kit fix proven by Monograph parity; family monographs for the categories; the
+  owner's ruling on the illustrations' labels.
+
 ### Small differences from the boards left after round 6
 
 - **What:** the map finding text sets about 5% narrower than the board's (the self-hosted Newsreader
@@ -3218,11 +3211,3 @@ Last reviewed: 2026-11-18.
   imported by 16 files; `SourceDialog`, `openedSource`, `EvidenceBadge` and `TermSheet`'s
   `onOpenCitation` stay for the restored tabbed craft page and the voice screens.
 - **Clears it:** drop each when its last caller moves (the craft bridge's retirement clears most).
-
-### The design guard baseline is not shrunk
-
-- **What:** rounds 4 and 5 brought most touched files to zero retired, alias and physical uses,
-  but `frontend/e2e/design-guard-baseline.json` still records the old counts, so a regression in
-  those files would pass until the baseline is lowered.
-- **Clears it:** run `DESIGN_GUARD_SHRINK=1` on GitHub and commit the rewritten baseline.
-
