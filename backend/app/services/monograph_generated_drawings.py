@@ -30,6 +30,7 @@ FRAGMENT_SUFFIX = ".html"
 MONOGRAPH_SLUG = re.compile(r"^[A-Za-z0-9-]+$")
 UNIT_SLOT = "unit"
 CITE_MARK = "cite"
+UNIT_NAME = re.compile(r"^u\d+$")
 
 
 def fragment_file_name(label: str) -> str:
@@ -86,9 +87,11 @@ class Drawings:
         return FilledFragment(render_page(raw, filling), filled.citations, filled.citation_claims)
 
     def spec_units(self, monograph: str, spec: Mapping[str, Any], book: SourceBook) -> FilledUnits:
+        named = {value for value in _strings(spec) if UNIT_NAME.fullmatch(value)}
+        if not named:
+            return FilledUnits({}, {}, {})
         content = self._content(monograph)
-        keys = sorted({value for value in _strings(spec) if value in content.units})
-        return self._filled(monograph, keys, book)
+        return self._filled(monograph, sorted(named & set(content.units)), book)
 
     def _filled(self, monograph: str, keys: Sequence[str], book: SourceBook) -> FilledUnits:
         content = self._content(monograph)

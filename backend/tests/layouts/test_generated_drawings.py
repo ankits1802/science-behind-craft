@@ -57,3 +57,7 @@ def test_a_specs_units_are_the_strings_that_name_its_monographs_units(tmp_path: 
     assert list(named.citations) == ["kutch-ajrakh:chem:q6"]
     assert named.citation_claims == {"kutch-ajrakh:chem:q6": ["C086"]}
     assert Drawings(root=root).spec_units("Kutch-Ajrakh", {"steps": [1, 2]}, SourceBook()).units == {}
+    assert (
+        Drawings(root=tmp_path / "none").spec_units("Kutch-Ajrakh", {"steps": ["vat"]}, SourceBook()).units
+        == {}
+    )
