@@ -127,6 +127,9 @@ its own kind:
 | page bundles | 10 |
 | page previews | 30 |
 
+`supply_source` counts as a fact proposal, `preview_draft` as a page preview and `submit_draft` as
+a page bundle, each of its parts also against its own kind.
+
 A spent allowance says how long to wait; nothing was stored.
 
 ## Finding and reading sources
@@ -205,6 +208,8 @@ callers share one allowance between them.
 
 ## Pages
 
+- A page built over more than one call goes in a draft (Drafts, below); a page given in one call
+  goes through `preview_page` and `propose_page`.
 - Always `preview_page` first. Give one bundle for one craft, family or category page: facts (as
   `propose_fact` takes them), structure items (as `propose_structure` takes them), components
   (each `{proposal, cites}`, the cites naming the bundle's facts a unit rests on as `fact:0`,
@@ -250,6 +255,9 @@ you read it, and its words: the passages you will quote with their locators, the
 `upload` pdf for a private slot to PUT the file to. Cite it in a fact's sources as its `cite_as` gives
 it, and copy each quote from your text exactly: the gates check your quotes against it, the review
 queue shows that the fact rests on text you supplied, and the text itself is never shown.
+`read_source` and `check_quote` read a source you supplied from your text, exactly as the gate
+will, so test every quote before you propose it. Nobody else's quotes are ever checked against
+your text, and supplying a source counts against the hour's fact proposals.
 
 ## Pictures
 

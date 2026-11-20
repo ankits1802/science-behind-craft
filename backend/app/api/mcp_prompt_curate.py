@@ -96,8 +96,8 @@ def curate_steps(values: Mapping[str, str]) -> list[str]:
         "read (a paywalled paper through your subscription, a PDF or book you hold, an archive, a site that "
         "refuses the fetcher), call `supply_source` with its identity, how and when you read it, and its "
         "passages with their locators (or the whole text, or upload pdf), with draft_id; cite it as its cite_as "
-        "gives it. Test each quote of a page KalaVigyan reads with `check_quote` before you propose it; a supplied "
-        "source's quotes are checked against your text when you propose them, so copy them from it exactly. "
+        "gives it. Test each quote with `check_quote` before you propose it: it reads a page as the QUOTES gate "
+        "fetches it, and a source you supplied from the text you gave, so copy every quote exactly. "
         "`archive_source` keeps a page at risk.",
         "Call `propose_facts` with batches of up to 25 facts for the fields the page lacks, each with its quotes, "
         "locators, an idempotency_key and the task it completes as task_key. Facts a figure or component of the "
