@@ -4,7 +4,7 @@ Where work stands and what comes next. Update it in the same change that finishe
 piece of work. The plan is `docs/PLAN.md` (section 0 overrides the rest); the build order is its
 section 17.
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-20.
 
 ## Done
 
@@ -1098,6 +1098,26 @@ Last updated: 2026-11-19.
   Vercel builds previews from the command line and Capture and parity pass their protection, so a
   branch is compared with its boards before it ships. Parity passes on the live site after both
   rounds.
+
+- **Round 6 (2026-11-20): curated crafts as documents, native Ajrakh views, the boards matched,
+  the structure write path.** Five lanes on `round6`, released backend first.
+  - **Curated documents:** the curation import publishes one cited section per field from each
+    dossier's claims (one shared section writer with `load_monograph`; backfill
+    `publish_curated_sections`); the craft page's stages, reactions, region story, places,
+    materials, market and GI record and pictures become document components (`answer_block`,
+    drawn by the answer's own renderer); the tabbed `CraftScreen` and 30 files only it used are
+    gone. Database tests prove every cited claim of the tabbed page appears in the document.
+  - **Kutch Ajrakh native:** 70 of 79 components drawn by their native views in a React shell,
+    proven element by element against the approved page; 27 more cited sentences are text units.
+  - **Visual proof:** previews captured beside the master board at 360, 834 and 1440 in both themes;
+    the landing, atlas, category hub, map, sign-in, phone appbar and the craft without a monograph
+    match their boards (what still differs is in the debt register).
+  - **Structure writes (decision 0108):** `propose_structure` and its route take a stage's after
+    and why, native names, reactions, botanical names, glossary terms, conflicts, open questions
+    and the GI record through the gates and a STRUCTURE review; approval writes a curated fact.
+    Hiding, retracting and approving refresh signed-out pages at once (`WEB_REVALIDATE_SECRET`).
+    Open work shares one applies-to query, one monographs folder and one family rule.
+  - **Proof and guard:** the production E2E suite and the design guard follow the redesign.
 
 ## Next
 

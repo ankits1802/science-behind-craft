@@ -35,7 +35,7 @@ export function motionSwitches(root: { dataset: DOMStringMap } | null, media: { 
 
 export function parseDuration(value: string): number {
   const text = value.trim();
-  const found = /^(-?\d+(?:\.\d+)?)(ms|s)$/.exec(text);
+  const found = /^(-?(?:\d+(?:\.\d*)?|\.\d+))(ms|s)$/.exec(text);
   if (!found) throw new Error(`Not a CSS duration: "${value}"`);
   const amount = Number(found[1]);
   return found[2] === "s" ? amount * 1000 : amount;

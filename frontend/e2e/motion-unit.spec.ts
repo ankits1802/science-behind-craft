@@ -56,6 +56,9 @@ test("the server and the first client render move nothing, so markup never depen
 test("the vat runs on the motion tokens: 800ms after the photograph, dip 600, hold 500, oxidise 1500, 2600ms in all", () => {
   expect(parseDuration("600ms")).toBe(600);
   expect(parseDuration("1.5s")).toBe(1500);
+  expect(parseDuration(".8s")).toBe(800);
+  expect(parseDuration("0.25s")).toBe(250);
+  expect(() => parseDuration(".s")).toThrow("Not a CSS duration");
   expect(() => parseDuration("fast")).toThrow("Not a CSS duration");
   const timings = vatTimings(token);
   expect(timings).toEqual({ delay: 800, dip: 600, hold: 500, oxidise: 1500 });

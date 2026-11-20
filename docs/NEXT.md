@@ -115,16 +115,30 @@ Open:
    - **Rounds 4 and 5 (2026-11-20, released):** retrieval and MCP finished, every craft as its
      English document (decision 0107), field coverage everywhere (`docs/contracts/coverage.md`).
      Curated crafts keep the tabbed page as a bridge until their documents carry their structure.
-   - **Round 6 (running):** curated crafts as rich documents and the bridge retired; the structure
-     write path; Kutch Ajrakh's components as native views under parity.
-   - **Then:** completeness research across every field (`docs/plans/field-completeness.md`, waits
-     for the owner's approval and a Researcher token).
+   - **Round 6 (2026-11-20, released):** every curated craft drawn as its document (the tabbed
+     page retired), the structure write path (`propose_structure`, decision 0108), signed-out pages
+     refreshed when content changes, 70 of Kutch Ajrakh's 79 components as native views under
+     parity.
+   - **Round 7 (owner, 2026-11-20: content arrives through MCP; every MCP gap is resolved):**
+     knowledge creation at scale (a gate queue off the request, batch proposals with idempotency
+     keys, my tasks and multi-claim, trust tiers, craft stewardship, a cost ledger per stream,
+     consistent argument names, a content-aware `find_crafts`); contributors deliver whole
+     components (the 42 kinds as data and general kinds for anything new) and whole pages, and
+     preview the assembled page before submitting; pictures in every format (an imaging library,
+     SVG cleaned), from the chat by URL or inline after the person confirms, screened before
+     review, picture tasks and targets; knowledge that heals itself (failed quotes held and
+     re-sourced, link rot as tasks, pages rebuilt as their facts change) and expert seats that run
+     capped live research where their field is thin (owner approved, amends decision 0099); the
+     release gate (a post-deploy check, a failed-build alert, the live retrieval evaluation, a
+     real MCP client over OAuth, Lighthouse and axe on previews).
+   - **Content:** arrives through MCP over time; the paid completeness run stays off.
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
    - waves 1B, 3 and 4 released in rounds 4 and 5 (landing, shell, atlas, category hub, map,
      answer page, every signed-in screen); wave 5 (proof) runs in round 6: every screen matched to
-     its board with **Capture screens** on previews, the production E2E suite and the design guard
-     brought to the redesign.
+     its board with **Capture screens** on previews (round 6 matched the landing, atlas, hub, map,
+     sign-in, phone appbar and the craft without a monograph); the production E2E suite and the
+     design guard brought to the redesign.
    - The craft page is shared with track 1, step 2.
    - Match boards with screenshots, not by reading code.
    - The landing's "426 crafts" counts the master list's named crafts plus six from the portals,
