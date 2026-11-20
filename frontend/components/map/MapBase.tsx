@@ -3,7 +3,8 @@
 import { memo, useEffect, useState } from "react";
 
 import { loadBasemap, RANN_PATH, type Basemap, type MapBox } from "@/components/map/basemap";
-import { indiaOutlinePath } from "@/components/map/projection";
+import { loadBorders } from "@/components/map/borderGeometry";
+import { bordersToPath, indiaOutlinePath } from "@/components/map/projection";
 
 export const SALT_PATTERN = "kv-map-salt";
 export const PLACE_PATTERN = "kv-map-place";
@@ -79,6 +80,19 @@ export const SaltFlats = memo(function SaltFlats() {
   );
 });
 
-export function StateLines(): null {
-  return null;
+export function StateLines() {
+  const [path, setPath] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    loadBorders("state")
+      .then((lines) => {
+        if (!cancelled) setPath(bordersToPath(lines));
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  if (!path) return null;
+  return <path d={path} fill="none" stroke="var(--map-border-state)" strokeWidth={0.75} strokeLinejoin="round" vectorEffect="non-scaling-stroke" className="pointer-events-none" data-testid="map-states" />;
 }

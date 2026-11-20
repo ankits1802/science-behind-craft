@@ -4,7 +4,7 @@ import { useId, useMemo, useRef, type ReactNode } from "react";
 
 import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
 import { mapFrame, viewBoxOf, type MapBox } from "@/components/map/basemap";
-import { MapCoast, MapLand, MapPatterns, SaltFlats } from "@/components/map/MapBase";
+import { MapCoast, MapLand, MapPatterns, SaltFlats, StateLines } from "@/components/map/MapBase";
 import { project } from "@/components/map/projection";
 import { cn } from "@/lib/utils";
 
@@ -108,6 +108,7 @@ export function MapCanvas({ title, description, under, over, controls, className
         <MapPatterns />
         <MapLand frame={frame} />
         {under}
+        <StateLines />
         <SaltFlats />
         <MapCoast />
         <WaterLabels />

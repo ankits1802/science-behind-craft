@@ -67,7 +67,7 @@ test("circles are drawn by area, and the key takes round values below the larges
   expect(circleKeys(0)).toEqual([]);
 });
 
-test("below 640px the map keeps its circles but drops the state labels, the Rann's name and the neighbours' names, and draws no state lines and no Kachchh", () => {
+test("below 640px the map keeps its circles but drops the state labels, the Rann's name and the neighbours' names, and draws no Kachchh", () => {
   const scene = { frame: mapFrame(), scale: 1 };
   const circles = placedCircles([{ name: "Madhya Pradesh", count: 19, longitude: 78.6, latitude: 23.5 }]);
   const states = renderToStaticMarkup(createElement("svg", null, createElement(StateCircles, { circles, emphKey: null, scene })));
@@ -77,7 +77,7 @@ test("below 640px the map keeps its circles but drops the state labels, the Rann
   const canvas = renderToStaticMarkup(createElement(MapCanvas, { title: "Map", description: "India" }));
   expect(canvas).toMatch(/<g class="max-sm:hidden" data-testid="map-place-labels"><text[^>]*>Great Rann<\/text>/);
   for (const name of ["Pakistan", "China", "Nepal", "Bhutan", "Bangladesh", "Myanmar", "Sri Lanka", "Afghanistan"]) expect(canvas).toContain(`>${name}</text>`);
-  expect(canvas).not.toMatch(/map-border-state|Kachchh, home|place this page is about|kv-map-place-board/);
+  expect(canvas).not.toMatch(/Kachchh, home|place this page is about|kv-map-place-board/);
 });
 
 test("from 1024px the map page's caption, ranked list and legend stand beside the map, as the board's landing map does", () => {

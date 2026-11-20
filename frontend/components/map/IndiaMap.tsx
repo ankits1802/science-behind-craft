@@ -3,7 +3,7 @@
 import { useMemo, type ReactNode } from "react";
 
 import { layoutPins, type MapPoint } from "@/components/map/layout";
-import { MapCoast, MapLand, MapPatterns, SaltFlats } from "@/components/map/MapBase";
+import { MapCoast, MapLand, MapPatterns, SaltFlats, StateLines } from "@/components/map/MapBase";
 import { MapHoverCard } from "@/components/map/MapHoverCard";
 import { Pin } from "@/components/map/MapMarks";
 import { PinControls } from "@/components/map/PinControls";
@@ -31,6 +31,7 @@ export function IndiaMapBase({ underlay }: { underlay?: ReactNode }) {
       <MapPatterns />
       <MapLand frame={FRAME} />
       {underlay}
+      <StateLines />
       <SaltFlats />
       <MapCoast />
     </>
