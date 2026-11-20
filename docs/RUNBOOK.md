@@ -52,6 +52,11 @@ also writes the kit to `frontend/public/monographs/kit/`. After a change to the 
 rewrite the golden document with
 `python -m app.scripts.build_monograph --document Kutch-Ajrakh --out ../shared/monograph.document.golden.json`.
 
+Each backend deploy rebuilds the stale craft page snapshots after the import (`app.scripts.rebuild_stale_pages`,
+at most `PAGES_SECONDS`, 480 by default), because a curated craft's document reads its snapshot and a
+stale one is rebuilt on every read (about 9 s), which times the web build out. The nightly upkeep
+rebuilds whatever a deploy leaves.
+
 Each curated craft's document is generated from the sections its dossier's claims publish at import
 (round 6). The backend deploy's `import_curation` writes them; to write them without a deploy, run
 `python -m app.scripts.publish_curated_sections` on the box (it prints written, unchanged, waiting
