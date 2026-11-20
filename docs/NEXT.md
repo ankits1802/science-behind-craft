@@ -119,18 +119,18 @@ Open:
      page retired), the structure write path (`propose_structure`, decision 0108), signed-out pages
      refreshed when content changes, 70 of Kutch Ajrakh's 79 components as native views under
      parity.
-   - **Round 7 (owner, 2026-11-20: content arrives through MCP; every MCP gap is resolved):**
-     knowledge creation at scale (a gate queue off the request, batch proposals with idempotency
-     keys, my tasks and multi-claim, trust tiers, craft stewardship, a cost ledger per stream,
-     consistent argument names, a content-aware `find_crafts`); contributors deliver whole
-     components (the 42 kinds as data and general kinds for anything new) and whole pages, and
-     preview the assembled page before submitting; pictures in every format (an imaging library,
-     SVG cleaned), from the chat by URL or inline after the person confirms, screened before
-     review, picture tasks and targets; knowledge that heals itself (failed quotes held and
-     re-sourced, link rot as tasks, pages rebuilt as their facts change) and expert seats that run
-     capped live research where their field is thin (owner approved, amends decision 0099); the
-     release gate (a post-deploy check, a failed-build alert, the live retrieval evaluation, a
-     real MCP client over OAuth, Lighthouse and axe on previews).
+   - **Round 7 (2026-11-20):** MCP is where knowledge is created. Contributors work in parallel
+     through a queued, batched, idempotent proposal flow with trust tiers, stewardship and a cost
+     ledger; deliver facts, structure, components (42 kinds and five general kinds) and whole
+     pages, previewed before submitting; give pictures in every format straight from the chat,
+     screened before review; and follow one body of method served over MCP (the page checklist,
+     source rubric, quotes, fields, component and dataset guides). Knowledge heals itself and
+     expert seats research their thin fields live. The landing leads everyone into reading, the
+     map is drawn from Natural Earth on the Survey of India outline with relief, rivers and
+     minerals layers, curated documents read as the board, and the release gate checks every
+     deploy (post-deploy pages and MCP, a real OAuth MCP client, accessibility and performance).
+   - **Round 7 quality (running):** citation accessibility, mobile speed (Kutch Ajrakh LCP), a
+     build that cannot time out on one slow page, answer maps matching /map.
    - **Content:** arrives through MCP over time; the paid completeness run stays off.
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
