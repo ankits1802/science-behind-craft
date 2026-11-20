@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { CraftScreen } from "@/components/craft/CraftScreen";
@@ -33,13 +32,10 @@ export default async function CraftPage({ params }: CraftRoute) {
   const document = await serverCraftDocument(slug);
   if (document) return <MonographPage document={document} />;
   const page = await serverCraftPage(slug);
-  if (!page) notFound();
-  if (page.curated) {
-    return (
-      <Suspense fallback={null}>
-        <CraftScreen slug={slug} initial={page} />
-      </Suspense>
-    );
-  }
-  return <CraftWithoutMonograph record={craftRecordView(page)} />;
+  if (page && !page.curated) return <CraftWithoutMonograph record={craftRecordView(page)} />;
+  return (
+    <Suspense fallback={null}>
+      <CraftScreen slug={slug} initial={page} />
+    </Suspense>
+  );
 }
