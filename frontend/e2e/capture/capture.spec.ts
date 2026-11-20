@@ -4,8 +4,10 @@ import { pathToFileURL } from "node:url";
 
 import { test, type Page } from "@playwright/test";
 
+import { passPreviewProtection } from "../production/preview";
+
 const REPORT_DIR = process.env.E2E_REPORT_DIR ?? "capture-run";
-const DEFAULT_PATHS = ["/", "/crafts", "/crafts/Kutch-Ajrakh", "/crafts/Bastar-Dhokra", "/crafts/Kasuti-Embroidery", "/categories/Textile-Craft-Category", "/map", "/login"];
+const DEFAULT_PATHS = ["/", "/crafts", "/crafts/Kutch-Ajrakh", "/crafts/Bastar-Dhokra", "/crafts/Kasuti-Embroidery", "/categories/Textiles-Based-Craft-Category", "/map", "/login", "/ask"];
 const BOARD = pathToFileURL(join(__dirname, "..", "..", "..", "docs", "design", "master-board.html")).href;
 const BOARD_SCREENS = ["landing", "atlas", "craft", "answer", "uncurated", "urdu"];
 const MAX_HEIGHT_PX = 6000;
@@ -50,6 +52,10 @@ for (const path of screenPaths()) {
     save(fileName(path), await capture(page, 0, height));
   });
 }
+
+test.beforeEach(async ({ context }) => {
+  await passPreviewProtection(context, process.env.E2E_BASE_URL ?? "", process.env.E2E_VERCEL_BYPASS ?? "");
+});
 
 test("the master board's screens at this width and theme", async ({ page }, info) => {
   const dark = info.project.name.endsWith("-dark");

@@ -3,6 +3,8 @@ import { join } from "node:path";
 
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
+import { passPreviewProtection } from "../production/preview";
+
 import { driftSteps, heightDifferences, sectionHeights, type DriftReport } from "./parityDrift";
 import { chapterIds, lineDiff, pixelDifference, type PixelDifference } from "./parityMeasure";
 import { alignPhase } from "./parityPhase";
@@ -47,6 +49,10 @@ async function bothPages(context: BrowserContext): Promise<{ approved: Page; ren
   await opened(approved, APPROVED);
   return { approved, rendered };
 }
+
+test.beforeEach(async ({ context }) => {
+  await passPreviewProtection(context, process.env.E2E_BASE_URL ?? "", process.env.E2E_VERCEL_BYPASS ?? "");
+});
 
 test("the React page reads exactly as the approved page", async ({ context }) => {
   const { approved, rendered } = await bothPages(context);
