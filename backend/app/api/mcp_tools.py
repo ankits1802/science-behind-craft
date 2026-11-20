@@ -11,6 +11,7 @@ from app.core.errors import InvalidInput, Refused
 from .mcp_ask_tools import ASK_TOOLS
 from .mcp_fact_tools import FACT_TOOLS
 from .mcp_layout_tools import LAYOUT_TOOLS
+from .mcp_picture_tools import PICTURE_TOOLS
 from .mcp_prompts import prompt_list, prompt_result
 from .mcp_protocol import (
     INVALID_PARAMS,
@@ -25,8 +26,8 @@ from .mcp_protocol import (
 )
 from .mcp_read_tools import READ_TOOLS
 from .mcp_resources import resource_list, resource_read, resource_templates
-from .mcp_steward_tools import STEWARD_TOOLS
 from .mcp_source_tools import SOURCE_TOOLS
+from .mcp_steward_tools import STEWARD_TOOLS
 from .mcp_structure_tools import STRUCTURE_TOOLS
 from .mcp_task_tools import TASK_TOOLS
 from .mcp_tool_base import Tool, ToolContext, scope_refusal
@@ -44,6 +45,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *TASK_TOOLS,
             *STEWARD_TOOLS,
             *ASK_TOOLS,
+            *PICTURE_TOOLS,
             *LAYOUT_TOOLS,
             *STRUCTURE_TOOLS,
             *SOURCE_TOOLS,
