@@ -6,10 +6,10 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { categoriesHeading, monographLine } from "@/components/landing/CategoriesSection";
-import { collectionDek } from "@/components/landing/CollectionSection";
+import { COLLECTION_DEK, CollectionSection } from "@/components/landing/CollectionSection";
 import { batches, COVERAGE_BATCH, coveragePath } from "@/components/landing/fieldCoverageServer";
 import { FIELD_CHAPTER, fieldHoldings, fieldsFinding } from "@/components/landing/fieldHoldings";
-import { FieldsSection, fieldsDek, leadLine } from "@/components/landing/FieldsSection";
+import { FieldsSection, fieldNumber, fieldsDek, leadLine } from "@/components/landing/FieldsSection";
 import { collectionStats, documentPlates, familyBlocks, interleaved, landingCollection } from "@/components/landing/landingCollection";
 import { parseCraftCatalogue } from "@/lib/craftCatalogueContract";
 import { DISCIPLINES, type Discipline } from "@/lib/explainerBlockBase";
@@ -68,6 +68,9 @@ test("the fields section draws sixteen rows from coverage, and the sixteen names
   expect(markup).toContain('href="/crafts/Kutch-Ajrakh#chem"');
   expect(markup).toContain(fieldsDek(holdings));
   expect(markup).toContain(">Sixteen fields</h2>");
+  expect([fieldNumber(0), fieldNumber(15)]).toEqual(["01", "16"]);
+  expect(markup).toContain("<b>3</b><span> of 3 monographs</span>");
+  expect(markup).toContain('style="width:33.3%"');
   const plain = renderToStaticMarkup(createElement(FieldsSection, { holdings: null }));
   expect(plain.match(/<li/g)).toHaveLength(16);
   for (const label of ["Overview", "Physics", "Geology and soil", "Ecology", "Health", "Society", "Policy"]) expect(plain).toContain(`>${label}</li>`);
@@ -79,9 +82,9 @@ test("the collection shows the monographs across families, the families with pla
   expect(documentPlates(CATALOGUE).map((plate) => plate.craft.slug)).toEqual(["Kutch-Ajrakh", "Bastar-Dhokra"]);
   expect(documentPlates(CATALOGUE)[0].craft.aliases).toEqual([]);
   const families = familyBlocks(CATALOGUE);
-  expect(families.map((family) => [family.name, family.href, family.count, family.documents, family.plates.map((plate) => plate.craft.slug)])).toEqual([
-    ["Textiles", "/categories/Textiles-Based-Craft-Category", 4, 1, ["Bagru-Hand-Block-Print", "Phulkari"]],
-    ["Metal", "/categories/Metal-Craft-Category", 3, 1, ["Brass-And-Bell-Metal-Craft", "Metal-Embosing"]]
+  expect(families.map((family) => [family.name, family.href, family.count, family.documents])).toEqual([
+    ["Textiles", "/categories/Textiles-Based-Craft-Category", 4, 1],
+    ["Metal", "/categories/Metal-Craft-Category", 3, 1]
   ]);
   expect(collectionStats(CATALOGUE).map((stat) => [stat.key, stat.value])).toEqual([
     ["crafts", 7],
@@ -91,9 +94,11 @@ test("the collection shows the monographs across families, the families with pla
     ["monographs", 2]
   ]);
   const collection = landingCollection(CATALOGUE);
-  expect(collection && collectionDek(collection)).toBe(
-    "7 crafts in two families, from 6 states and union territories. Every page is open to read: each craft has its plate and record, and the monographs are written out in full."
-  );
+  expect(COLLECTION_DEK).not.toMatch(/\d/);
+  const wall = collection ? renderToStaticMarkup(createElement(CollectionSection, { collection })) : "";
+  expect(wall).toContain(COLLECTION_DEK);
+  expect(wall).toContain("Open the atlas of 7 crafts");
+  expect(wall).not.toContain('data-testid="landing-stat"');
   expect(landingCollection(null)).toBeNull();
   expect([categoriesHeading(9), categoriesHeading(1)]).toEqual(["Nine families of craft", "One family of craft"]);
   expect([monographLine(0), monographLine(1), monographLine(7)]).toEqual([null, "1 monograph read in full", "7 monographs read in full"]);

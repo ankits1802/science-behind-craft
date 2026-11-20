@@ -15,6 +15,7 @@ import { Landing } from "@/components/landing/Landing";
 import { landingCollection, type LandingCollection } from "@/components/landing/landingCollection";
 import { LANDING_CRAFT_SLUG, emptyLanding, giDay, italicParts, landingContent, type LandingContent } from "@/components/landing/landingContent";
 import { ACCESS_LINK, fieldsLine } from "@/components/landing/LandingHero";
+import { PARTNER_MARKS, PartnersFooter } from "@/components/landing/PartnersFooter";
 import { currentVatStep } from "@/components/landing/VatSteps";
 import { currentHref } from "@/components/nav/Appbar";
 import { publicLinks } from "@/components/nav/PublicNav";
@@ -86,7 +87,7 @@ test("the hero names all sixteen fields' breadth and every reader, not three fie
   expect(fieldsLine(1)).toContain("across 1 craft,");
 });
 
-test("the landing is about the whole collection: monographs from every family, the families with their plates, and one labelled example", () => {
+test("the landing is about the whole collection: monographs from every family, the families with their counts, and one labelled example", () => {
   const markup = landing(landingContent(PAGE, idOf), landingCollection(CATALOGUE));
   for (const gone of ["kv-ribbon", "One cloth, four chemistries", "kv-four", "Kachchh, home of", "place this page is about"]) expect(markup).not.toContain(gone);
   expect(markup).toContain("An example from Kutch Ajrakh");
@@ -163,6 +164,34 @@ test("the institution footer is one line naming IIT Kharagpur and the citation p
   const markup = renderToStaticMarkup(createElement(InstitutionFooter));
   expect(markup).toContain("KalaVigyan, from IIT Kharagpur and its Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform. Every reader sentence is cited to a verbatim quote.");
   expect(markup.match(/<p/g)).toHaveLength(1);
+});
+
+test("the landing ends on its partners' marks, each named in its alt text and drawn from a web-weight file", () => {
+  const markup = renderToStaticMarkup(createElement(PartnersFooter));
+  expect(markup).toContain('data-testid="institution-footer"');
+  expect(markup.replace(/<[^>]+>/g, "")).toContain("KalaVigyan, from IIT Kharagpur and its Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform.");
+  expect(markup).toContain('<span class="whitespace-nowrap">AI-Enabled</span>');
+  expect(markup).toContain('alt="Indian Institute of Technology Kharagpur"');
+  expect(markup).toContain('alt="Development Commissioner (Handicrafts), Ministry of Textiles, Government of India"');
+  expect(markup.match(/data-testid="partner-mark"/g)).toHaveLength(2);
+  for (const mark of PARTNER_MARKS) {
+    const file = join(FRONTEND, "public", mark.src);
+    expect(existsSync(file), mark.src).toBe(true);
+    expect(readFileSync(file).length, mark.src).toBeLessThan(80_000);
+  }
+  const svg = readFileSync(join(FRONTEND, "public", "partners", "iit-kharagpur.svg"), "utf8");
+  expect(svg).not.toMatch(/<script|<metadata|on[a-z]+=/i);
+  expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.538 299.737"')).toBe(true);
+  expect(readFileSync(join(FRONTEND, "public", "partners", "dc-handicrafts.webp")).subarray(8, 12).toString("latin1")).toBe("WEBP");
+  const css = readFileSync(join(FRONTEND, "components", "landing", "sections.css"), "utf8");
+  expect(css).toMatch(/\.kv-partner-plate \{[^}]*background-color: var\(--photo-ink-1\);/);
+  expect(css).toMatch(/\.kv-partners-grid \{[^}]*justify-items: center;[^}]*text-align: center;/);
+});
+
+test("the landing's first screen carries the collection's counts once, and the collection section does not repeat them", () => {
+  const markup = landing(landingContent(PAGE, idOf), landingCollection(CATALOGUE));
+  expect(markup).toMatch(/data-testid="landing-hero"[\s\S]*data-testid="landing-stats"[\s\S]*data-testid="landing-collection"/);
+  expect(markup.match(/data-testid="landing-stats"/g)).toHaveLength(1);
 });
 
 test("the shells sit on ground with its grain showing, and the island navigation is gone", () => {
