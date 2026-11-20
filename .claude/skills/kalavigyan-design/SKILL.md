@@ -515,10 +515,13 @@ Every page has one h1. Full detail in SYSTEM.md section 4; the master board is t
 
 Decide by job, not by name: a purple class on something you can press becomes indigo; on a
 surface, border or decoration it becomes a neutral or disappears (a hairline instead of a box).
-Neutral, type, radius, shadow and status keys are aliased in the config so nothing silently
+The neutral, type and radius keys still in use are aliased in the config so nothing silently
 vanishes (`ink-900` to `ink-1`, `ink-700` to `ink-2`, `ink-500` to `ink-3`, `line-200` to `rule`,
-`surface-50` to `sunk`, `text-sm` to `text-ui`, `rounded-md` to 6px, `font-bold` to 600,
-`shadow-sm`, `-md`, `-lg`, `-panel` and `-island` to none, `ease-spring` to out).
+`surface-50` to `sunk`, `text-sm` to `text-ui`, `rounded-sm` to 4px, `rounded-md` to 6px,
+`font-bold` to 600). Round 6 deleted every alias with no use left: the legacy shadows,
+`ease-spring`, `font-mono`, bare `rounded` and `rounded-lg` to `-2xl`, `text-xl` to `-4xl`,
+`ink-300` and the `ink` default, `bg-0`, `progress-*`, `secondary`, `accent` and the `-100` and
+`-600` status steps. A deleted alias compiles to nothing, so use the token class.
 
 The retired ramps are aliased too, unlike what SYSTEM.md section 6 planned (decision 0092,
 point 6): `frontend/tailwind.migration.ts` keeps every unmigrated screen drawn in the new tokens.
@@ -551,8 +554,9 @@ and, in CSS, physical properties (`physical`); media queries, `min-[…]:`/`max-
 `matchMedia` widths off the breakpoint list (`media`); and `[var(--…)]` or `-(--…)` values outside
 `components/charts`, `map`, `cloth` and `crafts` (`arbitraryVar`). It parses arbitrary, important
 and responsive forms and `@apply`. A new file starts at zero. After migrating, record the lower
-counts with `DESIGN_GUARD_SHRINK=1 npx playwright test --project=unit e2e/design-guard-unit.spec.ts`;
-each alias is deleted when its count reaches zero. While touching a file, also: `.panel` and `bg-card` around prose go
+counts on GitHub: dispatch the **Design guard** workflow (`.github/workflows/design-guard.yml`,
+which runs the guard with `DESIGN_GUARD_SHRINK=1`) on the branch and commit the baseline it
+uploads; each alias is deleted when its count reaches zero. While touching a file, also: `.panel` and `bg-card` around prose go
 (interactive cards keep `bg-raised border border-rule rounded-card`), `.eyebrow` becomes `.kicker`,
 `.field-button*` becomes Button, `.field-input` becomes Input, physical left and right become
 logical, arbitrary sizes become named tokens, and `dark:` overrides of a token are deleted (tokens
