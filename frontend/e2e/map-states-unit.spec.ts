@@ -5,8 +5,12 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { BOARD_INDIA_BOX, boardBox } from "@/components/map/boardGeometry";
+import { BOARD_FRAME, BOARD_INDIA_BOX, boardBox } from "@/components/map/boardGeometry";
+import { MapCanvas } from "@/components/map/MapCanvas";
+import { MAP_PLACE, MapStatesFigure, SIDE_PLACE } from "@/components/map/MapStatesFigure";
+import { KachchhPin, placedCircles, StateCircles } from "@/components/map/StateCircles";
 import { MapLegend, NO_READING_EXTRA } from "@/components/map/ChoroplethLegend";
+import { CircleKey, circleKeyBox } from "@/components/map/CirclesLegend";
 import { VIEW_BOX } from "@/components/map/projection";
 import { rampFill } from "@/components/map/rampFills";
 import { RankedList } from "@/components/map/RankedList";
@@ -60,6 +64,45 @@ test("circles are drawn by area, and the key takes round values below the larges
   expect(circleKeys(64)).toEqual([10, 30, 60]);
   expect(circleKeys(3)).toEqual([1, 3]);
   expect(circleKeys(0)).toEqual([]);
+});
+
+test("below 640px the map keeps its circles and the place pin but drops the state labels and the Rann's name, as the board does", () => {
+  const scene = { frame: boardBox(BOARD_FRAME), scale: 1 };
+  const circles = placedCircles([{ name: "Madhya Pradesh", count: 19, longitude: 78.6, latitude: 23.5 }]);
+  const states = renderToStaticMarkup(createElement("svg", null, createElement(StateCircles, { circles, emphKey: null, scene })));
+  expect(states).toContain('<g class="max-sm:hidden" data-testid="state-labels">');
+  expect(states).toMatch(/data-testid="state-labels">.*Madhya Pradesh/);
+  expect(states.match(/<circle/g)).toHaveLength(1);
+  const pin = renderToStaticMarkup(createElement("svg", null, createElement(KachchhPin, { lines: ["Kachchh, home of", "Kutch Ajrakh"], scene })));
+  expect(pin).not.toContain("max-sm:hidden");
+  const canvas = renderToStaticMarkup(createElement(MapCanvas, { title: "Map", description: "India" }));
+  expect(canvas).toMatch(/<g class="max-sm:hidden"><text[^>]*>Great Rann<\/text><\/g>/);
+});
+
+test("from 1024px the map page's caption, ranked list and legend stand beside the map, as the board's landing map does", () => {
+  const counts = { states: [state("Uttar Pradesh", 64), state("Gujarat", 37)], allIndia: 46 };
+  const rows = counts.states.map((entry) => ({ key: entry.name, name: entry.name, value: entry.count }));
+  const ranking = { catalogue: null, points: { data: [], failure: null, retry: () => undefined }, counts, circles: [], rows, catalogueError: null, reloadCatalogue: () => undefined };
+  const html = renderToStaticMarkup(createElement(MapStatesFigure, { ranking, boundary: null }));
+  expect(html).toMatch(/<figure id="map-figure" class="kv-figure lg:grid lg:grid-cols-\[minmax\(0,6.6fr\)_minmax\(0,4.4fr\)\]/);
+  expect(html).toContain("lg:[&amp;&gt;figcaption]:col-start-2");
+  expect(html).toContain("lg:[&amp;&gt;div]:contents");
+  expect(html.indexOf("<figcaption")).toBeLessThan(html.indexOf('data-testid="map-states-plot"'));
+  expect(html.indexOf('data-testid="map-states-plot"')).toBeLessThan(html.indexOf('data-testid="map-states-side"'));
+  expect(html).toMatch(/data-testid="map-states-side"><p[^>]*>Circles are drawn to scale/);
+  expect(SIDE_PLACE).toContain("lg:row-start-2");
+  expect(MAP_PLACE).toContain("lg:row-span-2");
+});
+
+test("the circle key leaves room above its largest circle for that circle's 12px label", () => {
+  const [, minY, width, height] = circleKeyBox().split(" ").map(Number);
+  const largestLabelBaseline = 1.5 + 4;
+  expect(minY).toBeLessThanOrEqual(largestLabelBaseline - 12);
+  expect(width).toBe(85);
+  expect(minY + height).toBeGreaterThanOrEqual(25.6 * 2 + 1.5);
+  const markup = renderToStaticMarkup(createElement(CircleKey, { largest: 64 }));
+  expect(markup).toContain(`viewBox="${circleKeyBox()}"`);
+  expect(markup).toContain(">60</text>");
 });
 
 test("state circles sit on the state points the API serves, matched by name", () => {
