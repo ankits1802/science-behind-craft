@@ -176,19 +176,35 @@ test("the landing ends on its partners' marks, each named in its alt text and dr
   expect(markup).toContain('<span class="whitespace-nowrap">AI-Enabled</span>');
   expect(markup).toContain('alt="Indian Institute of Technology Kharagpur"');
   expect(markup).toContain('alt="Development Commissioner (Handicrafts), Ministry of Textiles, Government of India"');
-  expect(markup.match(/data-testid="partner-mark"/g)).toHaveLength(2);
+  expect(markup).toContain('alt="Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform"');
+  expect(markup.match(/data-testid="partner-mark"/g)).toHaveLength(3);
   for (const mark of PARTNER_MARKS) {
     const file = join(FRONTEND, "public", mark.src);
     expect(existsSync(file), mark.src).toBe(true);
     expect(readFileSync(file).length, mark.src).toBeLessThan(80_000);
   }
+  for (const svgFile of ["iit-kharagpur.svg", "centre-of-excellence.svg"]) {
+    expect(readFileSync(join(FRONTEND, "public", "partners", svgFile), "utf8"), svgFile).not.toMatch(/<script|<metadata|on[a-z]+=/i);
+  }
   const svg = readFileSync(join(FRONTEND, "public", "partners", "iit-kharagpur.svg"), "utf8");
-  expect(svg).not.toMatch(/<script|<metadata|on[a-z]+=/i);
   expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.538 299.737"')).toBe(true);
+  expect(readFileSync(join(FRONTEND, "public", "partners", "centre-of-excellence.svg"), "utf8").startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108"')).toBe(true);
   expect(readFileSync(join(FRONTEND, "public", "partners", "dc-handicrafts.webp")).subarray(8, 12).toString("latin1")).toBe("WEBP");
   const css = readFileSync(join(FRONTEND, "components", "landing", "sections.css"), "utf8");
   expect(css).toMatch(/\.kv-partner-plate \{[^}]*background-color: var\(--photo-ink-1\);/);
   expect(css).toMatch(/\.kv-partners-grid \{[^}]*justify-items: center;[^}]*text-align: center;/);
+});
+
+test("each partner's mark is a link to its own site, named with its address, that lifts under the pointer and stays still under reduced motion", () => {
+  const markup = renderToStaticMarkup(createElement(PartnersFooter));
+  const links = [...markup.matchAll(/<a href="([^"]+)" target="_blank" rel="noopener noreferrer" class="kv-partner-link">([\s\S]*?)<\/a>/g)];
+  expect(links.map((link) => link[1])).toEqual(["https://www.iitkgp.ac.in/", "https://cxa-cms.vercel.app/", "https://handicrafts.nic.in/"]);
+  expect(links.map((link) => link[2].match(/<span class="kv-partner-site">([^<]+)<\/span>/)?.[1])).toEqual(["iitkgp.ac.in", "cxa-cms.vercel.app", "handicrafts.nic.in"]);
+  for (const link of links) expect(link[2]).toContain('<span class="sr-only"> (opens in a new tab)</span>');
+  const css = readFileSync(join(FRONTEND, "components", "landing", "sections.css"), "utf8");
+  expect(css).toMatch(/\.kv-partner-link:hover \.kv-partner-plate,\s*\.kv-partner-link:focus-visible \.kv-partner-plate \{[^}]*box-shadow: var\(--shadow-label\);[^}]*transform: translateY\(-4px\);/);
+  expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\) \{\s*\.kv-partner-link:hover \.kv-partner-plate,\s*\.kv-partner-link:focus-visible \.kv-partner-plate \{\s*transform: none;/);
+  expect(css).toMatch(/:root\[data-reduced-motion="true"\] \.kv-partner-link:hover \.kv-partner-plate,\s*:root\[data-reduced-motion="true"\] \.kv-partner-link:focus-visible \.kv-partner-plate \{\s*transform: none;/);
 });
 
 test("the landing's first screen carries the collection's counts once, and the collection section does not repeat them", () => {

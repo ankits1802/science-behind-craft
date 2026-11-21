@@ -3,9 +3,19 @@ import Link from "next/link";
 
 import { CITATION_PROMISE, CITE_DATASET_LINK, DATASET_PAGE, INSTITUTION_LINE } from "@/components/landing/Footer";
 
-export type PartnerMark = { key: string; name: string; src: string; width: number; height: number; shape: "seal" | "wide" };
+export type PartnerMark = {
+  key: string;
+  name: string;
+  href: string;
+  site: string;
+  src: string;
+  width: number;
+  height: number;
+  shape: "seal" | "tile" | "wide";
+};
 
 export const PARTNERS_LABEL = "Partners";
+export const OPENS_IN_NEW_TAB = " (opens in a new tab)";
 const KEPT_WHOLE = "AI-Enabled";
 
 export function InstitutionLine() {
@@ -21,10 +31,31 @@ export function InstitutionLine() {
 }
 
 export const PARTNER_MARKS: readonly PartnerMark[] = [
-  { key: "iit-kharagpur", name: "Indian Institute of Technology Kharagpur", src: "/partners/iit-kharagpur.svg", width: 268, height: 300, shape: "seal" },
+  {
+    key: "iit-kharagpur",
+    name: "Indian Institute of Technology Kharagpur",
+    href: "https://www.iitkgp.ac.in/",
+    site: "iitkgp.ac.in",
+    src: "/partners/iit-kharagpur.svg",
+    width: 268,
+    height: 300,
+    shape: "seal"
+  },
+  {
+    key: "centre-of-excellence",
+    name: "Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform",
+    href: "https://cxa-cms.vercel.app/",
+    site: "cxa-cms.vercel.app",
+    src: "/partners/centre-of-excellence.svg",
+    width: 108,
+    height: 108,
+    shape: "tile"
+  },
   {
     key: "dc-handicrafts",
     name: "Development Commissioner (Handicrafts), Ministry of Textiles, Government of India",
+    href: "https://handicrafts.nic.in/",
+    site: "handicrafts.nic.in",
     src: "/partners/dc-handicrafts.webp",
     width: 600,
     height: 221,
@@ -35,12 +66,16 @@ export const PARTNER_MARKS: readonly PartnerMark[] = [
 function Mark({ mark }: { mark: PartnerMark }) {
   return (
     <li className="kv-partner" data-shape={mark.shape} data-testid="partner-mark">
-      <span className="kv-partner-plate">
-        <Image src={mark.src} alt={mark.name} width={mark.width} height={mark.height} unoptimized loading="lazy" className="kv-partner-img" />
-      </span>
-      <span className="kv-partner-name" aria-hidden>
-        {mark.name}
-      </span>
+      <a href={mark.href} target="_blank" rel="noopener noreferrer" className="kv-partner-link">
+        <span className="kv-partner-plate">
+          <Image src={mark.src} alt={mark.name} width={mark.width} height={mark.height} unoptimized loading="lazy" className="kv-partner-img" />
+        </span>
+        <span className="kv-partner-name" aria-hidden>
+          {mark.name}
+        </span>
+        <span className="kv-partner-site">{mark.site}</span>
+        <span className="sr-only">{OPENS_IN_NEW_TAB}</span>
+      </a>
     </li>
   );
 }
