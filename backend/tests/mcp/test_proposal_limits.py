@@ -6,7 +6,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from app.api import mcp_page_tools, mcp_picture_tools
+from app.api import mcp_dataset_tools, mcp_page_tools, mcp_picture_tools
 from app.api.mcp_tools import ToolContext, answer
 from app.api.proposal_limits import refuse_tool_when_spent, wait_words
 from app.api.routes import knowledge_writes
@@ -65,6 +65,26 @@ COMPONENT = {
     "subjects": [{"kind": "CRAFT", "key": "Kutch-Ajrakh"}],
     "spec": TABLE,
     "units": {ref: {"text": "Alum"} for ref in ("u0001", "u0002", "u0003", "u0004", "u0005", "u0006")},
+}
+
+
+DATASET = {
+    "code": "KV_TEST_ARTISANS_LIMIT",
+    "title": "Artisans by district",
+    "publisher": "A state handicrafts department",
+    "edition": "2024",
+    "version": "1",
+    "period": "2024",
+    "native_resolution": "district",
+    "crs": "none, a table by district",
+    "licence": "CC BY 4.0",
+    "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "A state handicrafts department",
+    "redistributable": True,
+    "citation": "A state handicrafts department (2024). Artisans by district.",
+    "landing_url": "https://example.org/artisans",
+    "url": "https://example.org/artisans.csv",
+    "sha256": "0" * 64,
 }
 
 
@@ -240,6 +260,16 @@ async def test_a_spent_picture_limit_refuses_the_upload_before_a_slot_is_opened(
     )
     (place,) = result["structuredContent"]["uploads"]
     assert result["isError"] is False and "20 picture uploads" in place["refused"]
+
+
+async def test_a_spent_component_limit_refuses_a_dataset_proposal_before_its_slot_is_opened(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    researcher = person("RESEARCHER", 36)
+    monkeypatch.setattr(mcp_dataset_tools, "endpoints_or_none", never_called)
+    await spend(COMPONENT_PROPOSALS, researcher)
+    result = await tool_text("propose_dataset", {"proposal": DATASET}, researcher)
+    assert result["isError"] is True and "10 component proposals" in result["content"][0]["text"]
 
 
 async def test_page_bundles_and_page_previews_have_their_own_hourly_allowances(

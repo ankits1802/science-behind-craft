@@ -41,7 +41,7 @@ class ProposeDataset(SnakeBodyArguments):
 
 async def _propose(context: ToolContext, arguments: ProposeDataset) -> DatasetReply:
     user = contributor(context, "propose_dataset", "propose datasets")
-    refuse_tool_when_spent(COMPONENT_PROPOSALS, user)
+    await refuse_tool_when_spent(COMPONENT_PROPOSALS, user)
     proposal = arguments.proposal
     endpoints = endpoints_or_none()
     if endpoints is None:
