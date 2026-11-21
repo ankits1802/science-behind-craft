@@ -11,6 +11,7 @@ from app.models.ai import (
 )
 from app.models.alerts import AlertDigestSend, Notification
 from app.models.allowances import AllowanceBucket
+from app.models.answer_gaps import AnswerGap, AnswerVerdict
 from app.models.article_sections import ArticleSection
 from app.models.base import Base
 from app.models.candidate_checks import CandidateCheck
@@ -131,8 +132,10 @@ __all__ = [
     "AllowanceBucket",
     "Answer",
     "AnswerCitation",
+    "AnswerGap",
     "AnswerSentence",
     "AnswerTrace",
+    "AnswerVerdict",
     "AppSetting",
     "ArticleSection",
     "ArtisanContribution",
