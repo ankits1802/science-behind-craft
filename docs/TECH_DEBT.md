@@ -166,18 +166,6 @@ Last reviewed: 2026-11-18.
 - **Why left:** detecting a changed descriptor needs a stored hash per craft, a schema change.
 - **Clears it:** store a hash of `descriptor_text` per craft and embed again when it differs.
 
-### Craft matching has no evaluation set
-
-- **What:** PLAN 5.2's gate (300 match cases, top-1 at least 95%, in CI on seeded fixtures) does
-  not exist. The resolver's weights, `FUZZY_MIN_SIMILARITY` 0.85, `SEMANTIC_MIN_SIMILARITY` 0.6
-  and the hand list `GENERIC_TOKENS` were set from about 30 questions tried by hand against the
-  master list (decision 0004). The model choice among the top 5 (PLAN 5.2 step 6) is now the
-  understanding step's `PLAN` call (decision 0031), unmeasured as well.
-- **Why left:** the cases have to be written from real questions in several scripts; owner
-  direction is 1-2 known-answer checks at a time, not a large suite on every change.
-- **Clears it:** collect the cases as answers are corrected, run them in Backend checks, and tune
-  the constants and the understanding prompt against them.
-
 ### Scholarly adapters: gaps left on 2026-11-16 (decision 0005)
 
 - **What:**

@@ -87,7 +87,7 @@ id (`answer-eval-<run>-q<NNN>`), then scores the stored explainer.
 | cited | per question field, cited sentences over 3 (at most 1), averaged over the question's fields |
 | everyCited | 1 when every sentence's citations name sources the answer lists |
 | figures | 1 when the answer shows a figure (any block that is not text) |
-| noGaps | 1 when no sentence admits a gap (`GAP_ADMISSION`: no source or evidence, not enough evidence, could not find, not known or documented, little is known, sources do not say, we do not know) |
+| noGaps | 1 when no sentence admits a gap (`research/gap_admissions.GAP_ADMISSION`, the one home the composer's routing also reads: no source or evidence, not enough evidence, could not find, not known or documented, little is known, sources do not say, we do not know, is, are or remains unknown or unclear, and has, have or had not or never been identified, established, determined, documented, recorded or studied) |
 
 **The judge** (the existing `EVAL_JUDGE` route, `router_structured_model(AiTask.EVAL_JUDGE)`) scores
 the same five parts 0 to 5 with a note, reading the question and the answer's sentences by field as

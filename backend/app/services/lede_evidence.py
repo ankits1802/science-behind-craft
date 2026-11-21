@@ -63,7 +63,11 @@ class LedeAsk:
 
 def lede_query(craft_slug: str, english: str, mode: str) -> KnowledgeQuery:
     return KnowledgeQuery(
-        craft_slug=craft_slug, text=english[:QUESTION_MAX_CHARS], mode=mode, limit=LEDE_SEARCH_LIMIT
+        craft_slug=craft_slug,
+        text=english[:QUESTION_MAX_CHARS],
+        mode=mode,
+        limit=LEDE_SEARCH_LIMIT,
+        rerank=True,
     )
 
 

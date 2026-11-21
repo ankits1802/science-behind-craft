@@ -166,6 +166,9 @@ flowchart LR
 | [0122](0122-evidence-reach.md) | Evidence the knowledge base holds reaches the answers that need it | · |
 | [0123](0123-question-understanding.md) | A question is understood honestly before any evidence is read | · |
 | [0124](0124-live-research-write-back.md) | Live research writes back only what its sources say | · |
+| [0125](0125-reranking.md) | Stored facts are reranked, and relevance decides when stored knowledge is enough | · |
+| [0126](0126-measurement-that-grows.md) | Measurement grows with the knowledge and alerts when it falls | · |
+| [0127](0127-coherent-answers.md) | An answer says each fact once, never admits a gap, keeps the stages it is asked and paces its sources | · |
 
 ## How this document is kept true
 
