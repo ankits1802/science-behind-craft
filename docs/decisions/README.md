@@ -161,6 +161,11 @@ flowchart LR
 | [0117](0117-pages-in-other-languages.md) | Pages in other languages | · |
 | [0118](0118-python-3-15.md) | The backend runs on Python 3.15, and each release pins its interpreter | · |
 | [0119](0119-nightly-refresh-of-changed-pages.md) | The night refreshes only the pages that changed; it never rebuilds the site | · |
+| [0120](0120-grounded-sentences.md) | Every sentence says no more than the quotes it cites | · |
+| [0121](0121-quote-visibility.md) | A quote is shown only where its page allows | · |
+| [0122](0122-evidence-reach.md) | Evidence the knowledge base holds reaches the answers that need it | · |
+| [0123](0123-question-understanding.md) | A question is understood honestly before any evidence is read | · |
+| [0124](0124-live-research-write-back.md) | Live research writes back only what its sources say | · |
 
 ## How this document is kept true
 

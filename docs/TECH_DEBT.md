@@ -332,16 +332,6 @@ Last reviewed: 2026-11-18.
 - **Why left:** closed is the safe side; the common spellings from the adapters are covered.
 - **Clears it:** add each further spelling with a test when a source shows it.
 
-### A re-chunked source can move a citation's chunk
-
-- **What:** `ClaimSource.chunkId` points at the chunk that held the quote when it was written.
-  When a live source is read again with different text, `replace_source_chunks` updates chunks
-  by ordinal, so an older citation's `chunkId` may then point at a chunk that no longer holds
-  its quote (`backend/app/services/live_source_store.py`). The quote and source stay correct.
-- **Why left:** nothing reads `chunkId` yet; the quote is the citation.
-- **Clears it:** re-point citations of a re-chunked source with `chunk_for_quote` in the same
-  transaction, or clear `chunkId` for chunks whose text changed.
-
 ### Coverage counts only a craft's own concepts
 
 - **What:** `least_covered_crafts` and the open-facet test count claims on concepts whose
