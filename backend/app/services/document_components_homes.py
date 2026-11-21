@@ -3,7 +3,9 @@ from __future__ import annotations
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass
+from functools import lru_cache
 from html.parser import HTMLParser
+from types import MappingProxyType
 from typing import Any
 
 from app.research.monograph_page import COMPONENT_SLOT, SLOT_PATTERN
@@ -20,6 +22,7 @@ from .monograph_document import (
 
 __all__ = [
     "BOX_CLASSES",
+    "FRAME_ATTRIBUTES",
     "ComponentHome",
     "FrameStep",
     "HomeSource",
@@ -27,6 +30,7 @@ __all__ = [
     "authored_homes",
     "component_homes",
     "frame_steps",
+    "home_scopes",
     "homes_body",
     "kind_scopes",
     "spec_keys",
@@ -39,6 +43,7 @@ BOX_CLASSES = frozenset({"screen", "wrap", "kv-wrap"})
 COLUMN_HOST = "spread"
 COLUMN_CLASS = "main"
 FRAGMENT_TAG = "kv-fragment"
+FRAME_ATTRIBUTES = ("lang", "dir", "data-ui-lang")
 SLOT_TAG = "kv-slot"
 VOID_TAGS = frozenset(
     {
@@ -58,16 +63,20 @@ VOID_TAGS = frozenset(
         "wbr",
     }
 )
+MONOGRAPH_SLUG = re.compile(r"^[A-Za-z0-9-]+$")
+SCOPES_CACHED = 32
 FIRST_TAG = re.compile(r"<([a-zA-Z][a-zA-Z0-9-]*)([^>]*)>")
 ATTRIBUTE = re.compile(r'([a-zA-Z_:][-a-zA-Z0-9_:.]*)="([^"]*)"')
 
-Ancestor = tuple[str, tuple[str, ...]]
+Marks = tuple[tuple[str, str], ...]
+Ancestor = tuple[str, tuple[str, ...], Marks]
 
 
 @dataclass(frozen=True)
 class FrameStep:
     classes: tuple[str, ...]
     box: bool
+    attrs: Marks = ()
 
 
 @dataclass(frozen=True)
@@ -100,7 +109,8 @@ class _Ancestry(HTMLParser):
         if tag == SLOT_TAG and label:
             self.found.setdefault(label, tuple(a for a in self.stack if a[0] != FRAGMENT_TAG))
         if tag not in VOID_TAGS:
-            self.stack.append((tag, tuple((named.get("class") or "").split())))
+            marks = tuple((name, value) for name in FRAME_ATTRIBUTES if (value := named.get(name)))
+            self.stack.append((tag, tuple((named.get("class") or "").split()), marks))
 
     def handle_endtag(self, tag: str) -> None:
         for at in range(len(self.stack) - 1, -1, -1):
@@ -141,7 +151,7 @@ def _expanded(text: str, source: HomeSource, held: tuple[str, ...] = ()) -> str:
 
 
 def _home(source: HomeSource, label: str, ancestors: tuple[Ancestor, ...]) -> ComponentHome:
-    classes = [found for _, found in ancestors]
+    classes = [found for _, found, _ in ancestors]
     start = _last(classes, SCOPE_CLASS)
     scope = None
     if start is not None:
@@ -150,28 +160,30 @@ def _home(source: HomeSource, label: str, ancestors: tuple[Ancestor, ...]) -> Co
         )
     else:
         start = _last(classes, CHAPTER_CLASS)
-    chain = classes[start + 1 :] if start is not None else classes
+    first = start + 1 if start is not None else 0
     return ComponentHome(
         kind=source.kinds[label],
         scope=scope,
-        frame=frame_steps(chain),
+        frame=frame_steps(classes[first:], [marks for _, _, marks in ancestors[first:]]),
         root=_root(source.fragments.get(label)),
     )
 
 
-def frame_steps(chain: list[tuple[str, ...]]) -> tuple[FrameStep, ...]:
+def frame_steps(chain: list[tuple[str, ...]], marks: list[Marks] | None = None) -> tuple[FrameStep, ...]:
     steps: list[FrameStep] = []
     for at, classes in enumerate(chain):
+        held = marks[at] if marks else ()
         following = chain[at + 1] if at + 1 < len(chain) else ()
         if COLUMN_CLASS in classes or (COLUMN_HOST in classes and COLUMN_CLASS in following):
-            steps.append(FrameStep(classes, box=True))
+            steps.append(FrameStep(classes, box=True, attrs=held))
             continue
         boxed = tuple(name for name in classes if name in BOX_CLASSES)
         rest = tuple(name for name in classes if name not in BOX_CLASSES)
         if rest or not boxed:
-            steps.append(FrameStep(rest, box=False))
+            steps.append(FrameStep(rest, box=False, attrs=held))
+            held = ()
         if boxed:
-            steps.append(FrameStep(boxed, box=True))
+            steps.append(FrameStep(boxed, box=True, attrs=held))
     return tuple(steps)
 
 
@@ -242,11 +254,18 @@ def _home_body(home: ComponentHome) -> dict[str, Any]:
     body: dict[str, Any] = {
         "kind": home.kind,
         "scope": home.scope,
-        "frame": [{"classes": list(step.classes), "box": step.box} for step in home.frame],
+        "frame": [_step_body(step) for step in home.frame],
         "root": home.root,
     }
     if home.within is not None:
         body["within"] = home.within
+    return body
+
+
+def _step_body(step: FrameStep) -> dict[str, Any]:
+    body: dict[str, Any] = {"classes": list(step.classes), "box": step.box}
+    if step.attrs:
+        body["attrs"] = dict(step.attrs)
     return body
 
 
@@ -259,6 +278,14 @@ def authored_home_source(slug: str) -> HomeSource:
         kinds={component.label: component.kind for component in content.components},
         native=native_views(slug),
     )
+
+
+@lru_cache(maxsize=SCOPES_CACHED)
+def home_scopes(monograph: str) -> Mapping[str, str | None]:
+    if not MONOGRAPH_SLUG.fullmatch(monograph) or not has_authored_content(monograph):
+        return MappingProxyType({})
+    homes = component_homes(authored_home_source(monograph))
+    return MappingProxyType({label: home.scope for label, home in homes.items()})
 
 
 def authored_homes() -> dict[str, Any]:
