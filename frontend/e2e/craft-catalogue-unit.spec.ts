@@ -16,7 +16,7 @@ import {
 import { CRAFT_STATUSES, FAMILY_PALETTES, parseCraftCatalogue, type CraftCatalogue } from "@/lib/craftCatalogueContract";
 import { SESSION_COOKIE, INSECURE_SESSION_COOKIE } from "@/lib/sessionCookie";
 import { UNKNOWN_VIEWER, upstreamHeaders } from "@/lib/server/apiProxy";
-import { publicFetch, signedInFetch, type IncomingRequest } from "@/lib/server/serverFetch";
+import { PUBLIC_REVALIDATE_SECONDS, publicFetch, signedInFetch, type IncomingRequest } from "@/lib/server/serverFetch";
 import { ShapeError } from "@/lib/shape";
 
 const FRONTEND = join(__dirname, "..");
@@ -188,7 +188,8 @@ test("public data is fetched anonymously, tagged for the cache, and never carrie
   const headers = new Headers(calls[0].init.headers);
   expect(headers.has("authorization")).toBe(false);
   expect(headers.has("cookie")).toBe(false);
-  expect(calls[0].init.next).toEqual({ tags: ["craft-catalogue"], revalidate: 300 });
+  expect(calls[0].init.next).toEqual({ tags: ["craft-catalogue"], revalidate: PUBLIC_REVALIDATE_SECONDS });
+  expect(PUBLIC_REVALIDATE_SECONDS).toBe(3_600);
   const proxied = recorder(() => json(golden()));
   await publicFetch("/crafts/catalogue", { parse: parseCraftCatalogue, tags: [], deps: { fetcher: proxied.fetcher, env: { ...ENV, WEB_PROXY_SECRET: "proxy" } } });
   const sent = new Headers(proxied.calls[0].init.headers);

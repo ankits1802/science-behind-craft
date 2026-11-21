@@ -9,7 +9,7 @@ import {
 } from "@/lib/server/apiProxy";
 
 export const SERVER_FETCH_TIMEOUT_MS = 4_000;
-export const PUBLIC_REVALIDATE_SECONDS = 300;
+export const PUBLIC_REVALIDATE_SECONDS = 3_600;
 
 export type ServerFetchFailure = "unconfigured" | "timeout" | "unreachable" | "refused" | "failed" | "invalid";
 

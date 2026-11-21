@@ -1,7 +1,7 @@
 import { CATALOGUE_METHODS, MCP_PROTOCOL_VERSION, MCP_ROUTE, RESOURCE_METADATA_PATH, catalogueOf, catalogueRequest, resourceOf, type ConnectFacts, type McpCatalogue } from "@/lib/connectCatalogue";
 import { apiOrigin } from "@/lib/server/apiProxy";
 
-export const MCP_GUIDE_REVALIDATE_SECONDS = 300;
+export const MCP_GUIDE_REVALIDATE_SECONDS = 86_400;
 export const MCP_GUIDE_TIMEOUT_MS = 4_000;
 
 type Env = Record<string, string | undefined>;

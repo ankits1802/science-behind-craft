@@ -2,7 +2,7 @@ import { boolean, dictionary, integer, list, matching, nullable, object, oneOf, 
 
 export const OPEN_DATA_PATH = "/open-data";
 export const OPEN_DATA_SCHEMA_VERSION = 1;
-export const OPEN_DATA_REVALIDATE_SECONDS = 300;
+export const OPEN_DATA_REVALIDATE_SECONDS = 3_600;
 
 const TABLE_NAME = /^[a-z_]+$/;
 const DAY = matching(/^\d{4}-\d{2}-\d{2}$/, "a day as YYYY-MM-DD");
