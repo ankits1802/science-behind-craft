@@ -10,7 +10,7 @@ from app.services.answer_lede import LedeTools
 from app.services.answering import AnswerAsk, AnswerPipeline
 
 from ..composer.fixtures import QUESTION
-from ..planner.fakes import FakeModel
+from ..planner.fakes import FakeModel, FakeRetriever
 from .fakes import (
     UNDERSTOOD_REPLY,
     FakeResearch,
@@ -43,6 +43,7 @@ class Asked:
     research: FakeResearch = field(default_factory=FakeResearch)
     store: FakeStore = field(default_factory=FakeStore)
     catalogue: Catalogue = field(default_factory=Catalogue)
+    retriever: FakeRetriever = field(default_factory=FakeRetriever)
     translator: FakeModel = field(default_factory=lambda: FakeModel([reply()] * QUIET))
     found: list[tuple[str, dict]] = field(default_factory=list)
 
@@ -54,8 +55,11 @@ class Asked:
             translated=translation(self.translator),
             understand_model=understanding_model(understood),
         )
-        lede = LedeTools(compose=ModelComposer(model=FakeModel([])).lede)
+        lede = LedeTools(compose=ModelComposer(model=FakeModel([])).lede, retriever=self.retriever)
         return dataclasses.replace(built, lede=lede, catalogue=self.catalogue)
+
+    def lede_searches(self) -> list[str]:
+        return [query.text for query in self.retriever.queries]
 
     def renderings(self) -> int:
         return sum(1 for call in self.translator.calls if schema_keys(call) == ["question"])
@@ -76,7 +80,7 @@ async def test_every_search_of_a_hindi_question_reads_the_understanding_s_one_en
     (request,) = run.research.requests
     assert request.english_question == RENDERED
     assert run.catalogue.asked == [RENDERED]
-    assert run.store.questions == [RENDERED]
+    assert run.lede_searches() == [RENDERED]
     assert run.renderings() == 0
     assert run.store.understood[0].english_question == RENDERED
 
@@ -88,7 +92,7 @@ async def test_a_reply_without_a_rendering_has_the_question_rendered_once_for_th
     assert run.renderings() == 1
     (request,) = run.research.requests
     assert request.english_question == RENDERED
-    assert run.store.questions == [RENDERED]
+    assert run.lede_searches() == [RENDERED]
 
 
 async def test_a_romanised_hindi_question_searches_the_model_s_english_not_its_own_words() -> None:
