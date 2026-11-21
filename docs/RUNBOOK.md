@@ -263,6 +263,16 @@ origins; the issuer is the API origin and the consent page is `<PUBLIC_WEB_URL>/
    '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists the read, proposal and open-work tools.
 3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
 
+### Open data with a DOI (decision 0116)
+
+`.github/workflows/open-data.yml` (dispatch only, from `main`) builds a release of KalaVigyan's open knowledge on the box (`app.scripts.build_open_data`), deposits it on Zenodo from the runner and records it (`OpenDataRelease`); `/data` and `GET /api/open-data` show it. Before the first release the owner, once:
+
+1. Creates an account on https://sandbox.zenodo.org and one on https://zenodo.org.
+2. On each: Account, Applications, Personal access tokens, New token named `kalavigyan-open-data` with the scopes `deposit:write` and `deposit:actions`.
+3. Adds them as repository secrets `ZENODO_SANDBOX_TOKEN` and `ZENODO_TOKEN`.
+
+A dispatch without `publish=true` goes to the sandbox; `publish=true` publishes on Zenodo and needs `ZENODO_TOKEN` (the run stops before sending anything without it). The Zenodo token never reaches the box. A published version is never rebuilt.
+
 ### Contributions at scale (round 7)
 
 - **Allowances** are counted per account and kind in each clock hour (UTC) in Postgres (`AllowanceBucket`, `core/allowances.py`), so a restart does not reset them and both deploy slots share them; the nightly upkeep deletes buckets over a day old. A refusal saying the call "could not be counted" means the allowance database was unreachable or slow; it lifts in a minute.

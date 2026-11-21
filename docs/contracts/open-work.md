@@ -37,7 +37,7 @@ the server", and item 16's component proposals. The endpoint, framing and read t
 | The contract resources and the index | `data/contributor/contracts/<name>.md`, copies of `docs/contracts/<name>.md`; `data/contributor/index.md`; read by `data/skill_library.py` |
 | HTTP routes | `api/routes/open_work.py`; `api/routes/page_proposals.py` (bundles and previews, `api/page_proposal_deps.py`) |
 | The contributor skill | `data/contributor/SKILL.md`, served at `frontend/public/skills/kalavigyan-contributor/SKILL.md` |
-| The references and the datasets skill | `data/contributor/references/<name>.md` and `data/contributor/kalavigyan-datasets/SKILL.md` (from `.claude/skills/kalavigyan-datasets`), read by `data/skill_library.py`, served at `frontend/public/skills/references/` and `frontend/public/skills/kalavigyan-datasets/` |
+| The references, the datasets skill and the interactives skill | `data/contributor/references/<name>.md`, `data/contributor/kalavigyan-datasets/SKILL.md` (from `.claude/skills/kalavigyan-datasets`) and `data/contributor/kalavigyan-interactives/` (from `.claude/skills/kalavigyan-interactives`, listed in `skill_library.SKILL_FILES`), read by `data/skill_library.py`, served at `frontend/public/skills/references/`, `frontend/public/skills/kalavigyan-datasets/` and `frontend/public/skills/kalavigyan-interactives/` |
 | The design tokens resource | `data/design/tokens.json`, written by `tools/design_tokens.py` beside the design skill's `references/tokens.json` |
 
 ## Subjects
