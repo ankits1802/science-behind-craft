@@ -33,7 +33,7 @@ flowchart LR
 
 | Assumption | Detail |
 |---|---|
-| Packaging | `backend/pyproject.toml` with uv. Commit `backend/uv.lock`; without it the box resolves dependencies itself and the deploy warns. Installed with `uv sync --no-dev --no-editable --frozen` on CPython 3.14.10 (standalone build at `/opt/cpython/3.14.10+20261110`). |
+| Packaging | `backend/pyproject.toml` with uv. Commit `backend/uv.lock`; without it the box resolves dependencies itself and the deploy warns. Installed with `uv sync --no-dev --no-editable --frozen` on the CPython that `infra/deploy/python.pin` names (3.15.2, a python-build-standalone build): the release installs it into `/opt/cpython/<version>+<build>` when it is missing, after its SHA-256 is checked, beside every older one, and builds the venv on it, so a rollback keeps each release on its own interpreter (decision 0118). |
 | ASGI app | `app.main:app`, started from `backend/` as `python -m uvicorn app.main:app --host 127.0.0.1 --port 8000|8001 --workers ${API_WORKERS} --no-proxy-headers`. `API_WORKERS` defaults to 1. |
 | Liveness | `GET /health` answers 200 without touching the database. The blue/green switch, nginx check, watchdog and CloudFront smoke test all call it. |
 | Migrations | `backend/alembic.ini` present → `python -m alembic upgrade head` runs from `backend/` with the env loaded, before the new colour starts. No `alembic.ini` → no migrations. |

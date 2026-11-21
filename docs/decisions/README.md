@@ -159,6 +159,7 @@ flowchart LR
 | [0115](0115-client-id-metadata-documents.md) | MCP clients sign in with their published identity | · |
 | [0116](0116-open-data-with-a-doi.md) | KalaVigyan's knowledge is an open dataset with a DOI | · |
 | [0117](0117-pages-in-other-languages.md) | Pages in other languages | · |
+| [0118](0118-python-3-15.md) | The backend runs on Python 3.15, and each release pins its interpreter | · |
 | [0119](0119-nightly-refresh-of-changed-pages.md) | The night refreshes only the pages that changed; it never rebuilds the site | · |
 
 ## How this document is kept true

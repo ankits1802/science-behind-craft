@@ -3300,6 +3300,15 @@ Last reviewed: 2026-11-18.
 - **What:** questions that become open work (decision 0113) are anonymised by rules with no model, so a lone first name with no honorific or self-introduction is not detected; the rules lean the other way elsewhere (a place outside the gazetteer written in capitals becomes [name], and a title-cased question may be dropped).
 - **Clears it:** a named-entity pass with the cheapest model route on the few questions that survive the rules, run in the nightly step, never at request time.
 
+### The geo ETL stays on Python 3.14
+
+- **What:** the backend, the tools and the craft ETL run on Python 3.15 (decision 0118), but
+  `etl/geo` and `geo-etl.yml` stay on 3.14, because `exactextract` 0.3.0, its newest release, has
+  wheels for cp39 to cp314 only.
+- **Why left:** building `exactextract` from source needs GEOS and GDAL headers on every runner.
+- **Clears it:** when `exactextract` publishes a cp315 wheel, move `etl/geo/pyproject.toml` and
+  `geo-etl.yml` together; `backend/tests/test_python_version.py` keeps the two agreeing.
+
 ## How this document is kept true
 
 | Change | What to do here |
