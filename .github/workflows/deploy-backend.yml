@@ -81,6 +81,7 @@ jobs:
           MEDIA_BUNDLE_HMAC_KEY: ${{ secrets.MEDIA_BUNDLE_HMAC_KEY }}
           TRANSCRIPT_ENCRYPTION_KEY: ${{ secrets.TRANSCRIPT_ENCRYPTION_KEY }}
           BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
+          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
           WEB_PROXY_SECRET: ${{ secrets.WEB_PROXY_SECRET }}
           TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
@@ -113,7 +114,7 @@ jobs:
             echo "$name: updated"
           }
           for name in DATABASE_URL JWT_SECRET SECRETS_ENCRYPTION_KEY TWO_FACTOR_ENCRYPTION_KEY ORIGIN_VERIFY_SECRET \
-                      GEMINI_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY DEEPSEEK_API_KEY ELEVENLABS_API_KEY BRAVE_SEARCH_API_KEY \
+                      GEMINI_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY DEEPSEEK_API_KEY ELEVENLABS_API_KEY BRAVE_SEARCH_API_KEY VOYAGE_API_KEY \
                       WEB_PROXY_SECRET TURNSTILE_SECRET_KEY CROSS_PORTAL_TOKEN \
                       ELEVENLABS_AGENT_ID VOICE_LLM_BEARER VOICE_SESSION_HMAC_KEY TRANSCRIPT_ENCRYPTION_KEY \
                       MEDIA_BUNDLE_HMAC_KEY \
@@ -123,6 +124,39 @@ jobs:
           done
           sync AWS_ACCESS_KEY_ID AWS_ACCESS_KEY_ID_APP
           sync AWS_SECRET_ACCESS_KEY AWS_SECRET_ACCESS_KEY_APP
+
+      - name: Mirror the CI secrets and the repository variables into Parameter Store
+        env:
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+          E2E_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL }}
+          E2E_PROFESSOR_EMAIL: ${{ secrets.E2E_PROFESSOR_EMAIL }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          REPOSITORY_VARIABLES: ${{ toJSON(vars) }}
+        run: |
+          set -euo pipefail
+          mirror() {
+            local path="$1" name="$2" kind="$3" value="$4" current
+            if [ -z "$value" ]; then
+              echo "$path/$name: not set in GitHub; Parameter Store keeps what it has"
+              return 0
+            fi
+            current="$(aws ssm get-parameter --name "$path/$name" --with-decryption --query Parameter.Value --output text 2>/dev/null || true)"
+            if [ "$current" = "$value" ]; then
+              echo "$path/$name: unchanged"
+              return 0
+            fi
+            VALUE="$value" jq -n --arg n "$path/$name" --arg t "$kind" '{Name: $n, Value: env.VALUE, Type: $t, Overwrite: true}' \
+              | aws ssm put-parameter --cli-input-json file:///dev/stdin > /dev/null
+            echo "$path/$name: updated"
+          }
+          for name in E2E_EMAIL E2E_PASSWORD E2E_ADMIN_EMAIL E2E_PROFESSOR_EMAIL; do
+            mirror /kalavigyan/e2e "$name" SecureString "${!name:-}"
+          done
+          mirror /kalavigyan/ci VERCEL_AUTOMATION_BYPASS_SECRET SecureString "${VERCEL_AUTOMATION_BYPASS_SECRET:-}"
+          while IFS=$'\t' read -r name value; do
+            mirror /kalavigyan/config "$name" String "$value"
+          done < <(jq -r 'to_entries[] | [.key, .value] | @tsv' <<< "$REPOSITORY_VARIABLES")
 
       - name: Upload the release tarball
         run: |

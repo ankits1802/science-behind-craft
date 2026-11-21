@@ -6,6 +6,8 @@ locals {
   env_param_arn   = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter${local.env_param_path}"
   e2e_param_path  = "/${var.project}/e2e"
   e2e_param_arn   = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter${local.e2e_param_path}"
+  ci_param_arn    = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter/${var.project}/ci"
+  config_arn      = "arn:aws:ssm:${var.aws_region}:${local.account_id}:parameter/${var.project}/config"
   run_shell_doc   = "arn:aws:ssm:${var.aws_region}::document/AWS-RunShellScript"
   oidc_provider   = "token.actions.githubusercontent.com"
   oidc_provider_a = "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"
@@ -191,6 +193,16 @@ resource "aws_iam_role_policy" "deploy" {
           "ssm:AddTagsToResource",
         ]
         Resource = [local.env_param_arn, "${local.env_param_arn}/*"]
+      },
+      {
+        Sid    = "MirrorRepositorySettings"
+        Effect = "Allow"
+        Action = [
+          "ssm:PutParameter",
+          "ssm:GetParameter",
+          "ssm:AddTagsToResource",
+        ]
+        Resource = ["${local.e2e_param_arn}/*", "${local.ci_param_arn}/*", "${local.config_arn}/*"]
       },
     ]
   })
