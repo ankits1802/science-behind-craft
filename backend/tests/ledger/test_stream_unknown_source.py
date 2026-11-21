@@ -1,5 +1,7 @@
 from typing import Any
 
+import pytest
+
 from app.research.explainer import ExplainerSection
 from app.services.claim_ledger import admission_batches
 from app.services.explainer_events import ExplainerStream
@@ -36,7 +38,33 @@ def _first_cited_source(sections: dict[str, ExplainerSection]) -> str:
     raise AssertionError("the recorded answer cites no source")
 
 
-async def test_a_block_citing_a_source_not_sent_with_it_is_left_out_and_the_answer_goes_on() -> None:
+async def _streamed(
+    stream: ExplainerStream, sections: dict[str, ExplainerSection], refs: dict[str, Any]
+) -> list[Any]:
+    returned: list[Any] = []
+    for section_id in ORDER:
+        for batch in admission_batches(sections[section_id].blocks):
+            returned += await stream.blocks(section_id, batch, refs)
+    return returned
+
+
+async def test_an_answer_whose_source_is_withheld_goes_on_and_shows_no_citation_without_its_source() -> None:
+    sections = _sections()
+    withheld = _first_cited_source(sections)
+    refs = {ref["id"]: ref for ref in SOURCES if ref["id"] != withheld}
+    recorded = Recorded()
+    returned = await _streamed(ExplainerStream(recorded, language="en"), sections, refs)
+    shown = recorded.blocks()
+    assert shown
+    assert [block.id for block in returned] == [block.id for block in shown]
+    assert not any(withheld in block.cited_source_ids() for block in shown)
+    assert {source for block in shown for source in block.cited_source_ids()} <= recorded.source_ids()
+    assert withheld not in recorded.source_ids()
+
+
+async def test_a_block_admitted_with_a_citation_to_a_source_not_sent_is_left_out_whole(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     sections = _sections()
     withheld = _first_cited_source(sections)
     citing = {
@@ -45,17 +73,13 @@ async def test_a_block_citing_a_source_not_sent_with_it_is_left_out_and_the_answ
         for block in section.blocks
         if withheld in block.cited_source_ids()
     }
+    every = {block.id for section in sections.values() for block in section.blocks}
     refs = {ref["id"]: ref for ref in SOURCES if ref["id"] != withheld}
     recorded = Recorded()
     stream = ExplainerStream(recorded, language="en")
-    returned = []
-    for section_id in ORDER:
-        for batch in admission_batches(sections[section_id].blocks):
-            returned += await stream.blocks(section_id, batch, refs)
-    shown = recorded.blocks()
+    monkeypatch.setattr(stream.ledger, "admit", lambda section_id, blocks, sources: list(blocks))
+    returned = await _streamed(stream, sections, refs)
     assert citing
-    assert shown
-    assert not {block.id for block in shown} & citing
-    assert [block.id for block in returned] == [block.id for block in shown]
-    assert {source for block in shown for source in block.cited_source_ids()} <= recorded.source_ids()
+    assert {block.id for block in returned} == every - citing
+    assert {block.id for block in recorded.blocks()} == every - citing
     assert withheld not in recorded.source_ids()
