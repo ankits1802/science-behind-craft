@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import time
 
 from app.core.retry_after import retry_after_of
@@ -8,6 +9,9 @@ from .base import Adapter, ChatRequest, ChatResult, ProviderError, format_refuse
 from .usage import anthropic_usage
 
 _FORMAT_NEEDLES = ("output_config.format", "json_schema", "schema")
+REASON_CHARS = 300
+
+logger = logging.getLogger(__name__)
 
 _NO_SAMPLING = (
     "claude-fable-5",
@@ -136,6 +140,9 @@ class AnthropicAdapter(Adapter):
                     msg = await stream.get_final_message()
             except a.BadRequestError as e:
                 if req.json_schema and names_the_format(str(e.message), _FORMAT_NEEDLES):
+                    logger.warning(
+                        "Anthropic's reason for refusing the format: %s", str(e.message)[:REASON_CHARS]
+                    )
                     raise format_refused("Anthropic", req.model) from e
                 if self._adapt(req.model, str(e.message)):
                     continue

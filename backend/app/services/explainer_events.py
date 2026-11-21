@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
 from typing import Any
 
@@ -15,6 +16,8 @@ from .answer_trail import TrailLog
 from .claim_ledger import ClaimLedger
 
 __all__ = ["ONCE_STEPS", "ExplainerStream", "InLanguage", "shown_title", "status_message"]
+
+logger = logging.getLogger(__name__)
 
 ONCE_STEPS = frozenset(
     {"SEARCHING_STORED", "RESEARCHING", "READING", "COMPOSING", "WRITING_BACK", "TRANSLATING"}
@@ -113,10 +116,11 @@ class ExplainerStream:
         shown = list(await asyncio.gather(*map(in_language, admitted))) if in_language else admitted
         async with self._lock:
             known = {**sources, **self.ledger.sources.refs()}
-            for block in shown:
+            sent = [block for block in shown if _sourced(section_id, block, known)]
+            for block in sent:
                 await self._sources(block.cited_source_ids(), known)
                 await self.emit("block", {"sectionId": section_id, "block": block})
-        return shown
+        return sent
 
     def shown_sources(self) -> dict[str, dict[str, Any]]:
         return self.ledger.sources.refs()
@@ -141,6 +145,18 @@ class ExplainerStream:
             if source_id not in self._sent_sources:
                 self._sent_sources.add(source_id)
                 await self.emit("source", sources[source_id])
+
+
+def _sourced(section_id: str, block: Block, known: Mapping[str, Mapping[str, Any]]) -> bool:
+    missing = [source_id for source_id in block.cited_source_ids() if source_id not in known]
+    if missing:
+        logger.warning(
+            "block %s of section %s is left out: it cites sources not sent with it (%s)",
+            block.id,
+            section_id,
+            ", ".join(missing),
+        )
+    return not missing
 
 
 def _counted(count: int, singular: str, plural: str) -> str:

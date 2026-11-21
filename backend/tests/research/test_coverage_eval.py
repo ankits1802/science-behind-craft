@@ -17,7 +17,7 @@ from app.research.coverage_eval import (
     rubric_score,
 )
 from app.research.explainer import Explainer
-from app.research.structured import StructuredReply
+from app.research.structured import StructuredReply, schema_problems
 
 from ..contracts.explainer_golden import DOCUMENT, golden_json
 
@@ -71,6 +71,12 @@ def test_the_rubric_scores_fields_reached_density_citations_figures_and_no_gaps(
 )
 def test_a_gap_admission_is_found_and_an_ordinary_negative_is_not(text: str, admits: bool) -> None:
     assert bool(gap_admissions([text])) is admits
+
+
+def test_the_judge_schema_uses_only_keywords_every_judge_route_accepts() -> None:
+    schema = judge_schema()
+    assert schema_problems(schema) == []
+    assert schema["properties"]["fields"] == {"type": "integer", "enum": [0, 1, 2, 3, 4, 5]}
 
 
 def test_the_judge_reads_the_question_and_answer_as_data_and_replies_in_its_schema() -> None:

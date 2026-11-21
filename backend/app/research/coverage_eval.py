@@ -224,7 +224,7 @@ def judge_message(question: str, explainer: Explainer, expected: Sequence[str]) 
 
 
 def judge_schema() -> dict[str, Any]:
-    score = {"type": "integer", "minimum": 0, "maximum": JUDGE_SCORE_MAX}
+    score = {"type": "integer", "enum": list(range(JUDGE_SCORE_MAX + 1))}
     return schema_object(
         fields=score, cited=score, everyCited=score, figures=score, noGaps=score, notes={"type": "string"}
     )
