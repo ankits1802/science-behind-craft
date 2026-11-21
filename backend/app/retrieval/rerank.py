@@ -16,6 +16,7 @@ from app.models import Claim, Concept, Craft
 from app.research.reranking import Relevance, Reranker, checked_relevance
 from app.research.retrieval import ClaimHit
 
+from .stamps import embedding_model_of
 from .text import document_text
 
 __all__ = [
@@ -131,7 +132,7 @@ async def _restated(session: AsyncSession, ids: Sequence[uuid.UUID]) -> frozense
             first.id < second.id,
             first.embedding.is_not(None),
             second.embedding.is_not(None),
-            first.embeddingModel == second.embeddingModel,
+            embedding_model_of(first.embeddingModel) == embedding_model_of(second.embeddingModel),
             first.embedding.cosine_distance(second.embedding) <= 1 - RESTATEMENT_COSINE,
         )
     )

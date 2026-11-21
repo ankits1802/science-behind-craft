@@ -2,6 +2,7 @@ import uuid
 from collections.abc import AsyncIterator, Sequence
 
 import pytest
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine
@@ -137,3 +138,28 @@ async def test_a_search_that_asks_for_no_reranking_never_calls_the_reranker(sess
     assert reranker.asked == []
     assert len(found.claims) == len(TEXTS)
     assert all(hit.relevance_score is None and hit.corroborating_ids == () for hit in found.claims)
+
+
+async def test_restatements_join_across_recipes_of_one_model_while_vectors_are_renewed(
+    session: AsyncSession,
+) -> None:
+    await session.execute(
+        update(Claim)
+        .where(Claim.id == ALUM_REWORDED)
+        .values(embeddingModel=func.split_part(Claim.embeddingModel, "#", 1))
+    )
+    stamps = dict(
+        (
+            await session.execute(
+                select(Claim.id, Claim.embeddingModel).where(Claim.id.in_([ALUM, ALUM_REWORDED]))
+            )
+        )
+        .tuples()
+        .all()
+    )
+    assert stamps[ALUM] != stamps[ALUM_REWORDED]
+    assert stamps[ALUM].split("#")[0] == stamps[ALUM_REWORDED]
+    search = StoredKnowledgeSearch(session, embed=FixedEmbedder(), rerank=ByText())
+    found = await search.search(asked(3))
+    assert found.claims[0].claim_id == ALUM_AGAIN
+    assert found.claims[0].corroborating_ids == (ALUM, ALUM_REWORDED)

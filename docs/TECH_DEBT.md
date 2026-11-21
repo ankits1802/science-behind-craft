@@ -239,12 +239,10 @@ Last reviewed: 2026-11-18.
   passages (`docs/contracts/retrieval.md`). Left: knowledge pieces carry no stamp, and the
   candidate gates' neighbour search and the piece store's reuse distance compare vectors without
   it; the Wood Handbook import has no passages, because the repository holds no text of the cited
-  edition (FPL-GTR-190); the HNSW indexes on `Claim.embedding` and `Chunk.embedding` are unused by
-  the exact craft-scoped scan.
+  edition (FPL-GTR-190).
 - **Clears it:** stamp pieces and filter the gates' and the piece store's neighbours on the current
   model; vendor the pages of FPL-GTR-190, or give FPL-GTR-282 its own source and re-cite the wood
-  claims after a quote check; use or drop the HNSW indexes once a scope is large enough to need
-  them.
+  claims after a quote check.
 
 ## Checks not automated yet
 
@@ -1047,16 +1045,6 @@ Last reviewed: 2026-11-18.
   deletes"); no removal has been needed yet.
 - **Clears it:** a seed step that deletes links the plan no longer has, and terms with no links
   and no cached summary.
-
-### Term summaries and pictures written back are not embedded at once
-
-- **What:** claims and sources kept by a term summary are stored without vectors; they get them
-  from `app/scripts/embed_knowledge` (run by the daily Coverage enrichment workflow), so up to a
-  day passes before semantic retrieval finds them.
-- **Why left:** the term route has no embedder in its request path and the summary is already
-  cached for the reader.
-- **Clears it:** pass `router_embedder(principal)` into `SqlTermStore` and call `embed_written`
-  after the write-back, as `store_live_research` does.
 
 ### Term summaries never expire while their claims stand
 
@@ -3286,6 +3274,20 @@ Last reviewed: 2026-11-18.
 - **Why left:** building `exactextract` from source needs GEOS and GDAL headers on every runner.
 - **Clears it:** when `exactextract` publishes a cp315 wheel, move `etl/geo/pyproject.toml` and
   `geo-etl.yml` together; `backend/tests/test_python_version.py` keeps the two agreeing.
+
+### The duplicate gate embeds candidates without the stored facts' titles
+
+- **What:** since decision 0129 a stored fact is embedded titled by its craft, concept and field
+  (`title: Kutch Ajrakh · Washing · Process | text: ...`), but `services/candidate_gates._vectors`
+  embeds a candidate statement untitled (`document_text(statement)`). A paraphrase of a stored fact
+  therefore sits a little further from it than before, and the 0.97 vector-twin shortcut fires less
+  often. Text twins and the novelty judge, which reads the nearest facts whatever their distance,
+  still catch duplicates, and the reranker folds restatements into one slot at read time.
+- **Why left:** a candidate does not carry its concept, so titling it like for like needs the
+  gates' callers (proposals, structure, live-research write-back) to pass craft, concept and field;
+  found the night the first-stage lane merged, before a release that could not wait on it.
+- **Clears it:** give `Candidate` an optional title (craft, concept, field) from its callers, embed it
+  with `text.context_title`, and test that a stored fact's paraphrase reaches the twin floor again.
 
 ## How this document is kept true
 

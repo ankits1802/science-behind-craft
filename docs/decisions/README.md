@@ -169,6 +169,7 @@ flowchart LR
 | [0125](0125-reranking.md) | Stored facts are reranked, and relevance decides when stored knowledge is enough | · |
 | [0126](0126-measurement-that-grows.md) | Measurement grows with the knowledge and alerts when it falls | · |
 | [0127](0127-coherent-answers.md) | An answer says each fact once, never admits a gap, keeps the stages it is asked and paces its sources | · |
+| [0129](0129-first-stage-retrieval.md) | The stored search finds the right facts as the knowledge grows | · |
 
 ## How this document is kept true
 
