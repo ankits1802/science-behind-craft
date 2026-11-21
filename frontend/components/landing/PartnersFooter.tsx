@@ -44,8 +44,8 @@ export const PARTNER_MARKS: readonly PartnerMark[] = [
   {
     key: "centre-of-excellence",
     name: "Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform",
-    href: "https://cxa-cms.vercel.app/",
-    site: "cxa-cms.vercel.app",
+    href: "https://aicraft.iitkgp.ac.in/",
+    site: "aicraft.iitkgp.ac.in",
     src: "/partners/centre-of-excellence.svg",
     width: 108,
     height: 108,

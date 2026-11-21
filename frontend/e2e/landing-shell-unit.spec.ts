@@ -198,8 +198,8 @@ test("the landing ends on its partners' marks, each named in its alt text and dr
 test("each partner's mark is a link to its own site, named with its address, that lifts under the pointer and stays still under reduced motion", () => {
   const markup = renderToStaticMarkup(createElement(PartnersFooter));
   const links = [...markup.matchAll(/<a href="([^"]+)" target="_blank" rel="noopener noreferrer" class="kv-partner-link">([\s\S]*?)<\/a>/g)];
-  expect(links.map((link) => link[1])).toEqual(["https://www.iitkgp.ac.in/", "https://cxa-cms.vercel.app/", "https://handicrafts.nic.in/"]);
-  expect(links.map((link) => link[2].match(/<span class="kv-partner-site">([^<]+)<\/span>/)?.[1])).toEqual(["iitkgp.ac.in", "cxa-cms.vercel.app", "handicrafts.nic.in"]);
+  expect(links.map((link) => link[1])).toEqual(["https://www.iitkgp.ac.in/", "https://aicraft.iitkgp.ac.in/", "https://handicrafts.nic.in/"]);
+  expect(links.map((link) => link[2].match(/<span class="kv-partner-site">([^<]+)<\/span>/)?.[1])).toEqual(["iitkgp.ac.in", "aicraft.iitkgp.ac.in", "handicrafts.nic.in"]);
   for (const link of links) expect(link[2]).toContain('<span class="sr-only"> (opens in a new tab)</span>');
   const css = readFileSync(join(FRONTEND, "components", "landing", "sections.css"), "utf8");
   expect(css).toMatch(/\.kv-partner-link:hover \.kv-partner-plate,\s*\.kv-partner-link:focus-visible \.kv-partner-plate \{[^}]*box-shadow: var\(--shadow-label\);[^}]*transform: translateY\(-4px\);/);
