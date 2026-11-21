@@ -1,13 +1,16 @@
 import argparse
 import json
+from pathlib import Path
 from typing import Any
 
 from app.data.craft_master_loader import DATA_DIR
 from app.services.document_components_homes import authored_homes
+from app.services.document_kit_defs import kit_defs
 
-__all__ = ["HOMES_FILE", "homes_text", "main"]
+__all__ = ["DEFS_FILE", "HOMES_FILE", "defs_text", "homes_text", "main"]
 
 HOMES_FILE = DATA_DIR.parents[2] / "frontend" / "lib" / "componentHomes.ts"
+DEFS_FILE = DATA_DIR.parents[2] / "frontend" / "generated" / "kitDefs.ts"
 TYPES = (
     "export type FrameStep = { classes: string[]; box: boolean; attrs?: Readonly<Record<string, string>> };\n"
     "export type HomeRecord = { kind: string; scope: string | null; frame: FrameStep[]; root: string | null; "
@@ -35,20 +38,34 @@ def homes_text() -> str:
     )
 
 
+def defs_text() -> str:
+    return (
+        "export type KitDef = { scope: string | null; markup: string };\n\n"
+        f"export const KIT_DEFS: Readonly<Record<string, KitDef>> = {{\n{_entries(kit_defs())}\n}};\n"
+    )
+
+
+def _written(file: Path, text: str, *, check: bool) -> bool:
+    current = file.read_bytes().decode("utf-8") if file.is_file() else None
+    if check:
+        return current == text
+    file.write_bytes(text.encode("utf-8"))
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="write_component_homes")
     parser.add_argument(
-        "--check", action="store_true", help="fail when the committed homes differ from the build"
+        "--check", action="store_true", help="fail when the committed homes or kit defs differ from the build"
     )
     args = parser.parse_args(argv)
-    text = homes_text()
-    current = HOMES_FILE.read_bytes().decode("utf-8") if HOMES_FILE.is_file() else None
-    if args.check:
-        print(json.dumps({"ok": current == text, "file": str(HOMES_FILE)}))
-        return 0 if current == text else 1
-    HOMES_FILE.write_bytes(text.encode("utf-8"))
-    print(json.dumps({"ok": True, "written": str(HOMES_FILE)}))
-    return 0
+    outcomes = {
+        str(file): _written(file, text, check=args.check)
+        for file, text in ((HOMES_FILE, homes_text()), (DEFS_FILE, defs_text()))
+    }
+    ok = all(outcomes.values())
+    print(json.dumps({"ok": ok, "checked" if args.check else "written": outcomes}))
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

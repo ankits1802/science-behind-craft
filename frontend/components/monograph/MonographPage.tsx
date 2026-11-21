@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { AuthoredShell } from "@/components/monograph/AuthoredShell";
 import { DeferredShellSlot } from "@/components/monograph/DeferredShellSlot";
+import { KitDefs } from "@/components/monograph/KitDefs";
 import { KitScript } from "@/components/monograph/KitScript";
 import { KitShellTail } from "@/components/monograph/KitShellTail";
 import { ChapterRun, PageCitation, shownPage } from "@/components/monograph/MonographChapters";
@@ -47,6 +48,7 @@ export function MonographPage({ document: given, masthead = true, deferred = fal
       <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
       {later ? null : rail}
       {document.shell !== null ? <AuthoredShell document={document} shell={document.shell} rest={rest} /> : <DocumentChapters document={document} plan={plan} masthead={masthead} rail={later ? rail : null} rest={rest} />}
+      {document.shell === null ? <KitDefs document={given} /> : null}
       <KitShellTail document={document} dataDeferred={rest !== null} />
       <KitPreferences />
       <KitScript />
