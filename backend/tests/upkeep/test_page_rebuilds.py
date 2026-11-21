@@ -4,6 +4,7 @@ from typing import Any
 import pytest
 
 from app.core.errors import InvalidInput, NotConfigured
+from app.research.page_revalidation import PageOwners
 from app.services import upkeep_pages
 from app.services.upkeep_pages import (
     PagesReport,
@@ -140,3 +141,12 @@ def test_curated_crafts_are_rebuilt_first_then_the_oldest() -> None:
         "Agra-Durrie",
         "Aari-Work",
     ]
+
+
+def test_the_night_s_changed_pages_are_the_crafts_and_documents_that_moved_once_each() -> None:
+    report = PagesReport(changed_crafts=["Kutch-Ajrakh", "Bagru-Prints"])
+    report.documents.moved.extend(["craft:Kutch-Ajrakh", "category:Textiles-Based-Craft-Category"])
+    assert report.changed_owners() == PageOwners(
+        crafts=("Kutch-Ajrakh", "Bagru-Prints"), categories=("Textiles-Based-Craft-Category",)
+    )
+    assert PagesReport().changed_owners().empty
