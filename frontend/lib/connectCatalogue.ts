@@ -5,36 +5,27 @@ export const CATALOGUE_METHODS = ["tools/list", "prompts/list"] as const;
 
 export type CatalogueMethod = (typeof CATALOGUE_METHODS)[number];
 
-export type McpTool = { name: string; title: string; summary: string; writes: boolean };
+export type McpTool = { name: string; title: string; summary: string; writes: boolean; group: ToolGroupKey | null };
 export type McpPromptArgument = { name: string; description: string; required: boolean };
 export type McpPrompt = { name: string; title: string; description: string; arguments: McpPromptArgument[] };
 export type McpCatalogue = { tools: McpTool[]; prompts: McpPrompt[] };
 export type ConnectFacts = { address: string | null; catalogue: McpCatalogue | null };
 
-export type ToolGroupKey = "reading" | "asking" | "sources" | "work" | "proposing" | "components" | "pictures" | "drafts";
+export const TOOL_GROUP_KEYS = ["reading", "sources", "work", "proposing", "pages", "pictures"] as const;
+export const GROUP_META = "kalavigyan/group";
+
+export type ToolGroupKey = (typeof TOOL_GROUP_KEYS)[number];
 export type ToolGroup = { key: ToolGroupKey; title: string; about: string; tools: McpTool[] };
 
 type Json = Record<string, unknown>;
 
 export const TOOL_GROUPS: readonly Omit<ToolGroup, "tools">[] = [
-  { key: "reading", title: "Reading", about: "Crafts, their sixteen fields, facts with their quotes, sections and coverage, as anyone reads them." },
-  { key: "asking", title: "Asking", about: "Cited answers in your name, as the site gives them." },
-  { key: "sources", title: "Finding and reading sources", about: "The registries, reader and quote matcher the checks themselves use." },
-  { key: "work", title: "Open work", about: "Tasks to claim and give back, your own tasks and the crafts you steward." },
-  { key: "proposing", title: "Proposing facts and structure", about: "Facts, new sources and a page's structure, each checked as on the site, and how each proposal is doing." },
-  { key: "components", title: "Components and pages", about: "The component library, page layouts and whole page bundles." },
-  { key: "pictures", title: "Pictures", about: "Open pictures to place and pictures you give." },
-  { key: "drafts", title: "Drafts and previews", about: "A page assembled privately, seen before you submit it." }
-];
-
-const GROUP_RULES: readonly { key: ToolGroupKey; pattern: RegExp }[] = [
-  { key: "pictures", pattern: /image|picture/ },
-  { key: "drafts", pattern: /draft|preview/ },
-  { key: "components", pattern: /component|layout|page/ },
-  { key: "proposing", pattern: /^propose_|proposal|withdraw/ },
-  { key: "sources", pattern: /source|quote|lookup|archive/ },
-  { key: "work", pattern: /task|work|adopt|drop_|steward|my_crafts/ },
-  { key: "asking", pattern: /^ask/ }
+  { key: "reading", title: "Reading and asking", about: "Crafts, their sixteen fields, facts with their quotes, a page's sections and coverage, the component library, and cited answers in your name." },
+  { key: "sources", title: "Finding and reading sources", about: "The registries, reader and quote matcher the checks themselves use, and sources only you can read." },
+  { key: "work", title: "Open work", about: "Tasks to claim and give back, your own work, the crafts you steward and how each proposal is doing." },
+  { key: "proposing", title: "Proposing facts and structure", about: "Facts, new sources and a page's structure, each checked as on the site." },
+  { key: "pages", title: "Pages, drafts and previews", about: "A page built in a private draft, seen with its checklist report before you submit it, components included." },
+  { key: "pictures", title: "Pictures", about: "Pictures you give, each with the declaration you confirmed." }
 ];
 
 const SENTENCE = /^(.+?[.!?])(?=\s+[A-Z(“"'`]|$)/;
@@ -52,10 +43,15 @@ export function toolSummary(description: string): string {
   return ENDS_A_SENTENCE.test(clause) ? clause : `${clause}.`;
 }
 
-export function toolGroupOf(tool: Pick<McpTool, "name" | "writes">): ToolGroupKey {
-  const rule = GROUP_RULES.find((candidate) => candidate.pattern.test(tool.name));
-  if (rule) return rule.key;
+export function toolGroupOf(tool: Pick<McpTool, "group" | "writes">): ToolGroupKey {
+  if (tool.group !== null) return tool.group;
   return tool.writes ? "proposing" : "reading";
+}
+
+function groupOf(meta: unknown): ToolGroupKey | null {
+  if (typeof meta !== "object" || meta === null) return null;
+  const named = (meta as Json)[GROUP_META];
+  return TOOL_GROUP_KEYS.find((key) => key === named) ?? null;
 }
 
 export function groupTools(tools: readonly McpTool[]): ToolGroup[] {
@@ -88,7 +84,7 @@ function toolOf(entry: Json): McpTool {
   const name = words(entry.name, "a tool's name");
   const title = typeof entry.title === "string" && entry.title.trim() ? entry.title.trim() : name;
   const annotations = typeof entry.annotations === "object" && entry.annotations !== null ? (entry.annotations as Json) : {};
-  return { name, title, summary: toolSummary(words(entry.description, `${name}'s description`)), writes: annotations.readOnlyHint !== true };
+  return { name, title, summary: toolSummary(words(entry.description, `${name}'s description`)), writes: annotations.readOnlyHint !== true, group: groupOf(entry._meta) };
 }
 
 function argumentOf(entry: unknown, prompt: string): McpPromptArgument {

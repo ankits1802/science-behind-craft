@@ -44,11 +44,11 @@ export type Suggestion = { key: string; ask: string; needs: { kind: "tool" | "pr
 export const SUGGESTIONS: readonly Suggestion[] = [
   { key: "curate", ask: "Run the curate_page prompt for Kutch Ajrakh and show me the draft before anything is submitted.", needs: { kind: "prompt", name: "curate_page" }, scope: "contribute" },
   { key: "work", ask: "List the open work in the chemistry field, highest priority first, and claim the first task.", needs: { kind: "tool", name: "list_open_work" }, scope: "contribute" },
-  { key: "quote", ask: "Check this quote against its source with check_quote before you propose the fact.", needs: { kind: "tool", name: "check_quote" }, scope: "contribute" },
+  { key: "quote", ask: "Check this quote against its source with read_source before you propose the fact.", needs: { kind: "tool", name: "read_source" }, scope: "contribute" },
   { key: "preview", ask: "Preview the page bundle with preview_page and give me its private link.", needs: { kind: "tool", name: "preview_page" }, scope: "contribute" },
   { key: "find", ask: "Find the crafts that use indigo and read Kutch Ajrakh's chemistry facts with their quotes.", needs: { kind: "tool", name: "find_crafts" }, scope: "read" },
   { key: "ask", ask: "Ask KalaVigyan why alum fixes madder dye on cotton, and keep the citations.", needs: { kind: "tool", name: "ask" }, scope: "ask" },
-  { key: "coverage", ask: "Show which of the sixteen fields Kutch Ajrakh covers, and which are thin or missing.", needs: { kind: "tool", name: "get_coverage" }, scope: "read" }
+  { key: "coverage", ask: "Show which of the sixteen fields Kutch Ajrakh covers, and which are thin or missing.", needs: { kind: "tool", name: "get_page" }, scope: "read" }
 ];
 
 export const FIRST_SESSION_SIZE = 4;
