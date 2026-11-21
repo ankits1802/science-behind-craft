@@ -26,11 +26,14 @@ from .ledger_payloads import (
     sentence_keys,
     zoomed_levels,
 )
+from .restatements import Said, restates_any, said
 from .source_merge import SourceMerge
 
 __all__ = [
     "ANCHORED_KINDS",
     "COVERED_NOTE",
+    "EXPERT_KIND",
+    "LADDER_KIND",
     "ONCE_PER_ANSWER_KINDS",
     "RESTATING_KINDS",
     "SINGLE_BLOCK_KINDS",
@@ -43,6 +46,7 @@ logger = logging.getLogger(__name__)
 
 COVERED_NOTE = "Already covered in this answer."
 EXPERT_KIND = "expert_view"
+LADDER_KIND = "process_ladder"
 SIMULATION_KIND = "simulation"
 SINGLE_BLOCK_KINDS = frozenset({"prose", "process_ladder", "images"})
 ONCE_PER_ANSWER_KINDS = frozenset({"region_story", "seasons", "supply_map", "zoom_story"})
@@ -78,6 +82,7 @@ class ClaimLedger:
         self.sources = SourceMerge()
         self._texts: set[str] = set()
         self._claims: set[str] = set()
+        self._said: list[Said] = []
         self._materials: set[str] = set()
         self._molecules: set[int] = set()
         self._concepts: set[str] = set()
@@ -132,8 +137,7 @@ class ClaimLedger:
         if not self._first_of_its_kind(kind, payload):
             logger.info("block %s shows what this answer already shows", payload["id"])
             return None
-        kept = self._without_repeats(kind, payload)
-        block = _validated(kind, kept) if kept is not None else None
+        block = next((block for block in self._kept_forms(kind, payload) if block is not None), None)
         if block is not None:
             self._record(section_id, block)
         return block
@@ -147,12 +151,24 @@ class ClaimLedger:
             return fold(payload["concept"]) not in self._explained
         return kind not in self._once
 
-    def _without_repeats(self, kind: str, payload: Payload) -> Payload | None:
+    def _kept_forms(self, kind: str, payload: Payload) -> Iterator[Block | None]:
         if kind in RESTATING_KINDS:
-            return kept_sentences(payload, RESTATING_KINDS[kind], self._restating_repeat())
+            kept = kept_sentences(payload, RESTATING_KINDS[kind], self._restating_repeat())
+            yield _validated(kind, kept) if kept is not None else None
+            return
+        repeats = (
+            (self._anchored_repeat(),)
+            if kind == LADDER_KIND
+            else (self._story_repeat(), self._story_repeat(spared=1), self._anchored_repeat())
+        )
+        for repeat in repeats:
+            kept = self._without_repeats(kind, payload, repeat)
+            yield _validated(kind, kept) if kept is not None else None
+
+    def _without_repeats(self, kind: str, payload: Payload, repeat: Repeat) -> Payload | None:
         if kind == "compare":
-            return compared_rows(payload, self._anchored_repeat())
-        kept = kept_sentences(payload, BLOCK_MODELS[kind].SENTENCES, self._anchored_repeat())
+            return compared_rows(payload, repeat)
+        kept = kept_sentences(payload, BLOCK_MODELS[kind].SENTENCES, repeat)
         return None if kept is None else self._repaired(kind, kept)
 
     def _repaired(self, kind: str, payload: Payload) -> Payload:
@@ -160,19 +176,30 @@ class ClaimLedger:
             return fresh_nodes(payload, self._concepts)
         if kind == "zoom_story":
             return zoomed_levels(payload, self._pictures)
-        if kind == "process_ladder":
-            return leveled_stages(payload)
+        if kind == LADDER_KIND:
+            return leveled_stages(self._thinned_stages(payload))
         return payload
+
+    def _thinned_stages(self, payload: Payload) -> Payload:
+        shown = tuple(self._said)
+        stages = []
+        for stage in payload["stages"]:
+            fresh = [sentence for sentence in stage["sentences"] if not restates_any(said(sentence), shown)]
+            stages.append({**stage, "sentences": fresh or stage["sentences"][:1]})
+        return {**payload, "stages": stages}
 
     def _restating_repeat(self) -> Repeat:
         seen = set(self._texts)
+        shown = list(self._said)
 
         def repeat(sentence: Mapping[str, Any]) -> bool:
             keys = sentence_keys(sentence["text"], sentence.get("original"))
             claims = claims_of(sentence)
-            if keys & seen or (claims and claims <= self._claims):
+            stated = said(sentence)
+            if keys & seen or (claims and claims <= self._claims) or restates_any(stated, shown):
                 return True
             seen.update(keys)
+            shown.append(stated)
             return False
 
         return repeat
@@ -180,6 +207,21 @@ class ClaimLedger:
     def _anchored_repeat(self) -> Repeat:
         seen = frozenset(self._texts)
         return lambda sentence: bool(sentence_keys(sentence["text"], sentence.get("original")) & seen)
+
+    def _story_repeat(self, *, spared: int = 0) -> Repeat:
+        exact = self._anchored_repeat()
+        shown = tuple(self._said)
+        left = [spared]
+
+        def repeat(sentence: Mapping[str, Any]) -> bool:
+            if exact(sentence):
+                return True
+            if not restates_any(said(sentence), shown):
+                return False
+            left[0] -= 1
+            return left[0] < 0
+
+        return repeat
 
     def _experts(self, section_id: str, payloads: Mapping[int, Payload]) -> dict[int, Block]:
         kept, differing = self._new_takes(payloads)
@@ -262,6 +304,7 @@ class ClaimLedger:
         for sentence in sentences:
             self._texts.update(sentence_keys(sentence["text"], sentence.get("original")))
             self._claims.update(claims_of(sentence))
+            self._said.append(said(sentence))
 
 
 def _validated(kind: str, payload: Payload) -> Block | None:
