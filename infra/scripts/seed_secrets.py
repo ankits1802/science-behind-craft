@@ -90,11 +90,7 @@ def log(msg):
 
 def tf_outputs(tf_bin):
     out = subprocess.run(
-        [tf_bin, "output", "-json"],
-        cwd=INFRA / "terraform",
-        capture_output=True,
-        text=True,
-        check=True,
+        [tf_bin, "output", "-json"], cwd=INFRA / "terraform", capture_output=True, text=True, check=True
     ).stdout
     return {k: v["value"] for k, v in json.loads(out).items()}
 
@@ -105,9 +101,7 @@ class Params:
 
     def get(self, name):
         try:
-            return self.ssm.get_parameter(Name=name, WithDecryption=True)["Parameter"][
-                "Value"
-            ]
+            return self.ssm.get_parameter(Name=name, WithDecryption=True)["Parameter"]["Value"]
         except self.ssm.exceptions.ParameterNotFound:
             return None
 
@@ -124,11 +118,7 @@ class Params:
         if current.get(key) == value:
             return False
         self.ssm.put_parameter(
-            Name=f"{ENV_PATH}/{key}",
-            Value=value,
-            Type="SecureString",
-            Overwrite=True,
-            Tier="Standard",
+            Name=f"{ENV_PATH}/{key}", Value=value, Type="SecureString", Overwrite=True, Tier="Standard"
         )
         current[key] = value
         return True
@@ -177,13 +167,9 @@ def ssm_run(instance_id, script, timeout=600):
 
 def copy_from_instance(instance_id, env_file, keys):
     key = rsa.generate_private_key(public_exponent=65537, key_size=4096)
-    pem = (
-        key.public_key()
-        .public_bytes(
-            serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo
-        )
-        .decode()
-    )
+    pem = key.public_key().public_bytes(
+        serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo
+    ).decode()
     names = " ".join(keys)
     script = f"""set -eu
 umask 077
@@ -199,14 +185,8 @@ rm -f "$pub"
 """
     inv = ssm_run(instance_id, script)
     if inv["Status"] != "Success":
-        raise SystemExit(
-            f"copy from {instance_id} failed: {inv['Status']} {inv['StandardErrorContent'][:300]}"
-        )
-    oaep = padding.OAEP(
-        mgf=padding.MGF1(algorithm=hashes.SHA256()),
-        algorithm=hashes.SHA256(),
-        label=None,
-    )
+        raise SystemExit(f"copy from {instance_id} failed: {inv['Status']} {inv['StandardErrorContent'][:300]}")
+    oaep = padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None)
     found = {}
     for line in inv["StandardOutputContent"].splitlines():
         parts = line.strip().split(" ", 1)
@@ -222,18 +202,13 @@ rm -f "$pub"
 
 def gh_token():
     return subprocess.run(
-        ["gh", "auth", "token", "--user", "ankits1802"],
-        capture_output=True,
-        text=True,
-        check=True,
+        ["gh", "auth", "token", "--user", "ankits1802"], capture_output=True, text=True, check=True
     ).stdout.strip()
 
 
 def gh(args, stdin=None):
     env = {**os.environ, "GH_TOKEN": gh_token()}
-    r = subprocess.run(
-        ["gh", *args], check=False, input=stdin, capture_output=True, text=True, env=env
-    )
+    r = subprocess.run(["gh", *args], check=False, input=stdin, capture_output=True, text=True, env=env)
     if r.returncode != 0:
         raise SystemExit(f"gh {' '.join(args[:3])} failed: {r.stderr.strip()[:300]}")
 
@@ -264,9 +239,7 @@ def vercel(method, path, body=None):
 
 
 def main():
-    ap = argparse.ArgumentParser(
-        description="Seed the KalaVigyan environment into SSM, GitHub and Vercel."
-    )
+    ap = argparse.ArgumentParser(description="Seed the KalaVigyan environment into SSM, GitHub and Vercel.")
     ap.add_argument("--terraform", default="terraform")
     ap.add_argument("--copy-from-instance")
     ap.add_argument("--copy-env-file", default="/home/ubuntu/app/current/backend/.env")
@@ -313,16 +286,12 @@ def main():
     missing = [k for k in COPYABLE if not current.get(k)]
     if a.copy_from_instance and missing:
         copied = copy_from_instance(a.copy_from_instance, a.copy_env_file, missing)
-        log(
-            f"copied from {a.copy_from_instance}: {', '.join(sorted(copied)) or 'nothing'}"
-        )
+        log(f"copied from {a.copy_from_instance}: {', '.join(sorted(copied)) or 'nothing'}")
         wanted.update(copied)
 
     changed = [k for k, v in wanted.items() if params.put(k, v, current)]
     dropped = [k for k in STALE if params.drop(k, current)]
-    log(
-        f"Parameter Store: {len(changed)} written ({', '.join(sorted(changed)) or 'none'}), {len(current)} total"
-    )
+    log(f"Parameter Store: {len(changed)} written ({', '.join(sorted(changed)) or 'none'}), {len(current)} total")
     if dropped:
         log(f"Parameter Store: removed unused {', '.join(dropped)}")
     still_missing = [k for k in COPYABLE if not current.get(k)]
@@ -347,15 +316,10 @@ def main():
             variables["VERCEL_PROJECT_ID"] = proj["id"]
         for key, value in variables.items():
             gh(["variable", "set", key, "--repo", REPO, "--body", value])
-        log(
-            f"GitHub: {sum(1 for k in GITHUB_SECRETS if current.get(k))} secrets, {len(variables)} variables"
-        )
+        log(f"GitHub: {sum(1 for k in GITHUB_SECRETS if current.get(k))} secrets, {len(variables)} variables")
 
     if not a.skip_vercel:
-        envs = {
-            "NEXT_PUBLIC_API_URL": tf["api_base_url"],
-            "NEXT_PUBLIC_APP_URL": WEB_ORIGIN,
-        }
+        envs = {"NEXT_PUBLIC_API_URL": tf["api_base_url"], "NEXT_PUBLIC_APP_URL": WEB_ORIGIN}
         for public, live_with in (
             ("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_ID"),
             ("YAHOO_CLIENT_ID", "YAHOO_CLIENT_SECRET"),
@@ -364,20 +328,13 @@ def main():
         ):
             if current.get(public) and current.get(live_with):
                 envs[f"NEXT_PUBLIC_{public}"] = current[public]
-        server_only = {
-            key: current[key] for key in ("WEB_PROXY_SECRET", "WEB_REVALIDATE_SECRET")
-        }
+        server_only = {key: current[key] for key in ("WEB_PROXY_SECRET", "WEB_REVALIDATE_SECRET")}
         for key, value in {**envs, **server_only}.items():
             kind = "sensitive" if key in server_only else "encrypted"
             st, out = vercel(
                 "POST",
                 f"/v10/projects/{VERCEL_PROJECT}/env?upsert=true",
-                {
-                    "key": key,
-                    "value": value,
-                    "type": kind,
-                    "target": ["production", "preview"],
-                },
+                {"key": key, "value": value, "type": kind, "target": ["production", "preview"]},
             )
             if st not in (200, 201):
                 raise SystemExit(f"Vercel env {key} failed: {st} {out}")
@@ -395,9 +352,7 @@ def main():
             "grep -c . /opt/kalavigyan/.env\n"
         )
         inv = ssm_run(tf["instance_id"], script)
-        log(
-            f"box: {inv['Status']}\n{inv['StandardOutputContent'].strip()}\n{inv['StandardErrorContent'].strip()}"
-        )
+        log(f"box: {inv['Status']}\n{inv['StandardOutputContent'].strip()}\n{inv['StandardErrorContent'].strip()}")
         if inv["Status"] != "Success":
             raise SystemExit(1)
 
