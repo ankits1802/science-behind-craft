@@ -24,7 +24,7 @@ finish the release and start on decision 0101's database and MCP work on its own
   - **The MCP studio (decisions 0110, 0111):** 21 tools in six groups (reading, sources, work,
     proposing, pages, pictures); KalaVigyan's own source registries, fetcher and quote matcher as
     tools; sources only a contributor can read, supplied and checked against their text; a draft per
-    page with a preview report on the 26 checklist rules, drawn in the chat; the `curate_page` prompt;
+    page with a preview report on the 27 checklist rules, drawn in the chat; the `curate_page` prompt;
     every skill, reference and contract teaching it.
   - **Pages:** every borrowed component drawn in its home's styles (the Textiles chemistry), figures
     beside the sentences they illustrate, a view missing a unit left out instead of breaking the page,

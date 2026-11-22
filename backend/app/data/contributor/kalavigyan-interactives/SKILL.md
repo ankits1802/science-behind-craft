@@ -104,7 +104,9 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   `--rule-strong`, `--ink-1` to `--ink-3`, `--madder`, `--indigo`, `--dye-*`, `--dip-*`, `--mol-*`,
   `--atom-*`, `--map-*` and `--chart-*`. Of those, map and chart colours are data and never a
   material, indigo means a control and madder emphasis; the plate grounds (`--plate-*`) belong to
-  the typographic plates and are refused in a drawing.
+  the typographic plates and are refused in a drawing. Delivery holds a drawing to the design's
+  roles (`kalavigyan://design/drawing.md`) and refuses indigo in it, so a delivered drawing never
+  uses it.
 - The specimen set holds the textile family's dyes and dips only. A family whose materials have no
   specimen token (wax, molten and cast metal, raw and fired clay, stone, wood, lac, hide, fibre,
   pulp, mineral pigments) asks the team for them first: a real material colour each, added through

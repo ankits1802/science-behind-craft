@@ -3233,13 +3233,6 @@ Last reviewed: 2026-11-18.
   dynamic imports for the uncurated page and the answer renderers; split curated documents the way
   Ajrakh's shell is split; a server-rendered shell for `/ask`.
 
-### The reaction player's step buttons read as one word
-
-- **What:** axe finds four label mismatches on the hub, because a step button's visible text reads
-  "1In the leaf" with no space between the numeral and the name. The approved template and the native
-  view both hold it.
-- **Clears it:** change the template and the native view together, with a parity check.
-
 ### Source tools: what they do not cover yet
 
 - **What:** the lookup allowances are counted in each process's memory, as the proposal limits are,
@@ -3288,6 +3281,21 @@ Last reviewed: 2026-11-18.
   found the night the first-stage lane merged, before a release that could not wait on it.
 - **Clears it:** give `Candidate` an optional title (craft, concept, field) from its callers, embed it
   with `text.context_title`, and test that a stored fact's paraphrase reaches the twin floor again.
+
+### Leftovers of the design-conformance lane
+
+- **What:** an answer sentence flagged Sources differ opens both readings under the sentence, not in
+  a details element after its paragraph as SYSTEM.md draws it, and its summary cannot name what the
+  sources differ on, because the payload carries only `sourcesDiffer` and the citations. The board
+  `docs/design/master-board.html` still names its ribbon buttons "Stage N, name". A drawing stored
+  without server variants (the kind fixtures on `/design/kinds`) shows a sunk placeholder until it
+  hydrates. An SVG picture's ETag is the stored file's hash for every `?theme=` variant, so a token
+  change reaches a cached picture only after its five-minute max-age. Captures cover light and dark
+  only. Left at the end of round 7 (decision 0131).
+- **Clears it:** carry the readings and what they differ on in the answer payload and let the
+  paragraph's host components (`LadderStageCard` and the other callers) draw the details after the
+  paragraph; rename the board's buttons; serve the fixtures with their variants; put the token
+  set's hash in the themed ETag; add high contrast to the capture run.
 
 ## How this document is kept true
 

@@ -155,7 +155,7 @@ flowchart LR
 | [0111](0111-fewer-mcp-tools.md) | Twenty-one MCP tools in six groups, with small schemas | [0114](0114-kinds-and-datasets.md) and [0117](0117-pages-in-other-languages.md) |
 | [0112](0112-reviewed-field-photographs.md) | Each field photograph filed on an artisan is reviewed by a person before it is shown | · |
 | [0113](0113-questions-become-work.md) | Questions KalaVigyan cannot answer well become open work | · |
-| [0114](0114-kinds-and-datasets.md) | Component kinds any craft can use, and one dataset record | · |
+| [0114](0114-kinds-and-datasets.md) | Component kinds any craft can use, and one dataset record | [0131](0131-drawings-in-the-design.md) |
 | [0115](0115-client-id-metadata-documents.md) | MCP clients sign in with their published identity | · |
 | [0116](0116-open-data-with-a-doi.md) | KalaVigyan's knowledge is an open dataset with a DOI | [0130](0130-a-craft-release.md) |
 | [0117](0117-pages-in-other-languages.md) | A page in another language is the same page, translated passage by passage | · |
@@ -171,6 +171,7 @@ flowchart LR
 | [0127](0127-coherent-answers.md) | An answer says each fact once, never admits a gap, keeps the stages it is asked and paces its sources | · |
 | [0129](0129-first-stage-retrieval.md) | The stored search finds the right facts as the knowledge grows | · |
 | [0130](0130-a-craft-release.md) | One craft can be released as its own dataset with its own DOI | · |
+| [0131](0131-drawings-in-the-design.md) | Whatever an AI draws for KalaVigyan speaks the design and follows the reader's theme | · |
 
 ## How this document is kept true
 
