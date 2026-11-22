@@ -72,6 +72,15 @@ route_to_files() {
   swap_in "$FILES/rsyslog.conf" "$RSYSLOG_CONF" check_rsyslog restart_rsyslog
   swap_in "$FILES/logrotate.conf" "$LOGROTATE_CONF" check_logrotate check_nothing
   swap_in "$FILES/nginx.conf" "$NGINX_CONF" check_nginx reload_nginx
+  readable_by_adm "$LOG_DIR"/*.log /var/log/nginx/error.log
+}
+
+readable_by_adm() {
+  local file
+  for file in "$@"; do
+    [ -f "$file" ] || continue
+    chgrp adm "$file" && chmod g+r "$file"
+  done
 }
 
 ship() {
