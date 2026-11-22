@@ -176,6 +176,7 @@ flowchart LR
 | [0133](0133-the-evaluation-scores-what-answers-read.md) | The evaluation scores what answers read | · |
 | [0134](0134-each-sentence-once-in-a-block.md) | A block says each sentence once, and the judge reads it as a reader does | · |
 | [0135](0135-write-backs-filed-under-the-craft-they-name.md) | A write-back is filed under the craft it names, every stored text is storable, and an answer records its cost | · |
+| [0137](0137-limits-kept-by-choice.md) | Nine limits are kept by choice and leave the debt register | · |
 
 ## How this document is kept true
 
