@@ -10,7 +10,7 @@ import { requiredCraftCatalogue } from "@/lib/server/readingPages";
 
 type CategoryLanguageRoute = { params: Promise<{ slug: string; language: string }> };
 
-export const revalidate = 86400;
+export const revalidate = 604800;
 export const dynamicParams = true;
 
 async function asked(params: CategoryLanguageRoute["params"]) {

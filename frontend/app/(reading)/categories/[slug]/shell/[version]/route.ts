@@ -6,7 +6,7 @@ import { documentRest, restAddress, type RestAddress } from "@/lib/monographRend
 type RestRoute = { params: Promise<ShellParams> };
 
 export const dynamic = "force-static";
-export const revalidate = 86400;
+export const revalidate = 604800;
 export const dynamicParams = true;
 
 export async function generateStaticParams(): Promise<ShellParams[]> {

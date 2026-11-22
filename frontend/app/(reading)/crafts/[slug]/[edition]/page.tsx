@@ -12,7 +12,7 @@ import { serverCraftDocument } from "@/lib/monographRenderServer";
 type CraftEditionRoute = { params: Promise<{ slug: string; edition: string }> };
 type Edition = { slug: string; version: number | null; language: DocumentLanguageCode | null };
 
-export const revalidate = 86400;
+export const revalidate = 604800;
 export const dynamicParams = true;
 
 async function editionOf(params: CraftEditionRoute["params"]): Promise<Edition> {

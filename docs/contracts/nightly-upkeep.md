@@ -186,7 +186,7 @@ to refresh exactly those (`/api/revalidate`, in batches). A night that changed n
 nothing. Without `WEB_REVALIDATE_SECRET` the report names the pages and is not a failure; those
 pages then refresh on their own schedule. A production build still pre-renders `/crafts/{slug}`
 for every slug of `GET /api/site/pages` (except the static monograph) and `/categories/{slug}`
-for every category it lists, and keeps each page for a day (`revalidate = 86400`), but only when a
+for every category it lists, and keeps each page for a week (`revalidate = 604800`), but only when a
 release ships or an Admin starts one; any other craft renders on its first visit and is kept the
 same way. Signed-in readers still load their own variant in the browser, and answers are never
 cached. A change that must reach readers who are not signed in at once (a hidden piece, a

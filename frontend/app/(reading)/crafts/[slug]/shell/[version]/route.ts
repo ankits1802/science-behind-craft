@@ -7,7 +7,7 @@ import { documentDigest, restAddress, restBody, type RestAddress } from "@/lib/m
 type ShellRoute = { params: Promise<ShellParams> };
 
 export const dynamic = "force-static";
-export const revalidate = 86400;
+export const revalidate = 604800;
 export const dynamicParams = true;
 
 export async function generateStaticParams(): Promise<ShellParams[]> {

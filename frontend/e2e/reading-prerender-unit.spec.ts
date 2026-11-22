@@ -30,13 +30,13 @@ test("the pages read at build are few and named once, so one slow page elsewhere
   expect(PRERENDERED_PAGES.crafts).toContain("Kutch-Ajrakh");
 });
 
-test("every reading route with static params takes them from the policy and renders the rest on first request, kept for a day", () => {
+test("every reading route with static params takes them from the policy and renders the rest on first request, kept for a week", () => {
   const routes = [route("crafts", "[slug]"), route("crafts", "[slug]", "monograph"), route("categories", "[slug]"), route("categories", "[slug]", "monograph")];
   expect(route("crafts", "[slug]")).toContain('return prerenderedPages("crafts");');
   for (const source of routes.slice(1)) expect(source).toMatch(/return previewStaticParams\("(craft|category)"\);/);
   for (const source of routes) {
     expect(source).toContain("export const dynamicParams = true;");
-    expect(source).toContain("export const revalidate = 86400;");
+    expect(source).toContain("export const revalidate = 604800;");
   }
 });
 
