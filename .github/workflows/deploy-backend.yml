@@ -109,8 +109,10 @@ jobs:
               echo "$name: unchanged"
               return 0
             fi
-            jq -n --arg n "$PARAM_PATH/$name" --arg k "$from" '{Name: $n, Value: env[$k], Type: "SecureString", Overwrite: true}' \
-              | aws ssm put-parameter --cli-input-json file:///dev/stdin > /dev/null
+            request="$(mktemp)"
+            jq -n --arg n "$PARAM_PATH/$name" --arg k "$from" '{Name: $n, Value: env[$k], Type: "SecureString", Overwrite: true}' > "$request"
+            aws ssm put-parameter --cli-input-json "file://$request" > /dev/null
+            rm -f "$request"
             echo "$name: updated"
           }
           for name in DATABASE_URL JWT_SECRET SECRETS_ENCRYPTION_KEY TWO_FACTOR_ENCRYPTION_KEY ORIGIN_VERIFY_SECRET \
@@ -146,8 +148,10 @@ jobs:
               echo "$path/$name: unchanged"
               return 0
             fi
-            VALUE="$value" jq -n --arg n "$path/$name" --arg t "$kind" '{Name: $n, Value: env.VALUE, Type: $t, Overwrite: true}' \
-              | aws ssm put-parameter --cli-input-json file:///dev/stdin > /dev/null
+            request="$(mktemp)"
+            VALUE="$value" jq -n --arg n "$path/$name" --arg t "$kind" '{Name: $n, Value: env.VALUE, Type: $t, Overwrite: true}' > "$request"
+            aws ssm put-parameter --cli-input-json "file://$request" > /dev/null
+            rm -f "$request"
             echo "$path/$name: updated"
           }
           for name in E2E_EMAIL E2E_PASSWORD E2E_ADMIN_EMAIL E2E_PROFESSOR_EMAIL; do
