@@ -31,9 +31,12 @@ Last reviewed: 2026-11-22.
   group and the `X-Origin-Verify` header, but the hop between CloudFront and the box is not
   encrypted. The designer and documentation portals use the same pattern.
 - **Why left:** TLS ends at CloudFront; there is no custom domain or origin certificate yet, and
-  the pattern matches the portals so they can be changed together.
+  the pattern matches the portals so they can be changed together. Deferred by the owner on
+  2026-11-22 ("we will take care of it later on") as D43 of the cross-portal list of decisions
+  deferred to launch (`C:/dev/IIT/docs/DEFERRED_FOR_LAUNCH.md`).
 - **Clears it:** an origin certificate (custom domain with certbot, already installed and
-  unused on the box) and `https-only` origin protocol, done for all three portals in one change.
+  unused on the box) and `https-only` origin protocol, done for all three portals in one change,
+  with a certificate-expiry check in each post-deploy run.
 
 ## Backend structure
 
