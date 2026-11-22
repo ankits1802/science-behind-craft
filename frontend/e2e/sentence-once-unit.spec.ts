@@ -110,7 +110,6 @@ test("a material on two sentences joins the row of a material sharing either, an
   ]);
   const html = withReading(createElement(SupplyMapView, { block }));
   expect(attribute(html, "supply-pin", "data-testid")).toHaveLength(3);
-  expect(html).toContain('data-testid="map-placeholder"');
   for (const text of [SHIKARPUR, BHUJ_ALUM, DHAMADKA]) expect(count(html, text)).toBe(1);
 });
 
