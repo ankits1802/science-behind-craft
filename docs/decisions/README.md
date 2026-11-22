@@ -157,7 +157,7 @@ flowchart LR
 | [0113](0113-questions-become-work.md) | Questions KalaVigyan cannot answer well become open work | · |
 | [0114](0114-kinds-and-datasets.md) | Component kinds any craft can use, and one dataset record | · |
 | [0115](0115-client-id-metadata-documents.md) | MCP clients sign in with their published identity | · |
-| [0116](0116-open-data-with-a-doi.md) | KalaVigyan's knowledge is an open dataset with a DOI | · |
+| [0116](0116-open-data-with-a-doi.md) | KalaVigyan's knowledge is an open dataset with a DOI | [0130](0130-a-craft-release.md) |
 | [0117](0117-pages-in-other-languages.md) | A page in another language is the same page, translated passage by passage | · |
 | [0118](0118-python-3-15.md) | The backend runs on Python 3.15, and each release pins its interpreter | · |
 | [0119](0119-nightly-refresh-of-changed-pages.md) | The night refreshes only the pages that changed; it never rebuilds the site | · |
@@ -170,6 +170,7 @@ flowchart LR
 | [0126](0126-measurement-that-grows.md) | Measurement grows with the knowledge and alerts when it falls | · |
 | [0127](0127-coherent-answers.md) | An answer says each fact once, never admits a gap, keeps the stages it is asked and paces its sources | · |
 | [0129](0129-first-stage-retrieval.md) | The stored search finds the right facts as the knowledge grows | · |
+| [0130](0130-a-craft-release.md) | One craft can be released as its own dataset with its own DOI | · |
 
 ## How this document is kept true
 
