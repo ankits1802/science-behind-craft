@@ -459,77 +459,43 @@ Last reviewed: 2026-11-22.
   `secondary_language_codes` hint; the spike decides whether the agent gets an `agent.language`
   override or one agent per language.
 
-### The voice pack is claims only, ranked by words
+### T2 passages are not offered to a voice turn
 
-- **What:** PLAN 10.3 asks for the T0/T1 pack with embeddings plus T2 passages; the pack is the
-  craft's visible claims ranked by shared word stems (`voice/pack.ranked_claims`), without vectors
-  or corpus chunks.
-- **Why left:** a query embedding per turn is a second model call before the first sentence.
-- **Clears it:** prefetch the claim vectors with the pack and embed the question in parallel with
-  the filler; add T2 chunks as `EVIDENCE` candidates with their verified quotes.
+- **What:** a voice turn ranks the craft's visible claims by the stored hybrid search (lexical,
+  vector and entity rankings fused, the question embedded while the filler plays) ahead of shared
+  word stems (decision 0140), but no corpus passage (T2 chunk) is a candidate, so a passage that
+  states the answer and is not yet a claim is not spoken.
+- **Why left:** a spoken sentence is cited only through a stored claim, so a passage must be
+  written back as a claim before it can be cited; that write-back belongs to the write-back lane
+  (`services/write_back_*`), which was changing at the same time.
+- **Clears it:** hybrid turns ask the search for passages and offer each as an `EVIDENCE`
+  candidate with its verified quote, and a cited passage is written back (as
+  `services/field_voices_citations` does for field passages) before its sentence is spoken.
 
-### Voice upkeep rides the daily Coverage enrichment run
+### An agent call cannot be hung up from our side
 
-- **What:** purging transcripts after 30 days, closing calls left open and reconciling agent calls
-  run as the first module of the daily box job in `coverage-enrichment.yml`; `kv-worker`
-  (`app/worker.py`, decision 0018) runs only the media queue.
-- **Why left:** the worker arrived with the media lane, which did not take on voice scheduling.
-- **Clears it:** move `app.scripts.voice_upkeep` into the worker's schedule.
-
-### Voice billing approximations
-
-- **What:** a relay upload's floor is its bytes at 5 000 a second; compressed audio is not decoded,
-  so a client encoding below the dock's 32 kbit/s (Opus goes down to 6 kbit/s) gets up to about
-  6.7 times the floor's seconds of speech to text inside the 300 000-byte ceiling, still within
-  the day's seconds. Parallel uploads are allowed; each holds its own minute under the row lock,
-  so they cannot pass the day's seconds. An agent call cannot be hung up from our side: after its
-  row ends the ElevenLabs call can run to the agent's 600 s, which reconciliation charges (the user
-  may go below zero for that day). Refund and settle rows count on the day they are written, not
-  the call's day.
-- **Why left:** decoding needs ffmpeg on the box; ending a call needs an ElevenLabs endpoint the
-  spike has not confirmed. Each is bounded by the day's seconds, the turn and replay limits and
-  the 40-turn cap (decision 0022).
-- **Clears it:** decode the upload's duration (ffprobe) before speech to text and bill that; end
-  the ElevenLabs conversation when the row ends, once the spike shows how; date settlement rows to
-  the call's day.
-
-### Voice state held per process
-
-- **What:** claim packs (10 minutes), relay reply audio (15 minutes, 32 replies) and the ElevenLabs
-  reachability (1 minute) are held per API process. A reply missing from that process's cache
-  (another worker, a handover, eviction) is synthesised again, only while the call is live or two
-  minutes after it ended, billed under its own key and limited to 60 replays in 10 minutes
-  (decision 0022).
-- **Clears it:** keep reply audio in the media bucket under a short lifecycle rule, so a cache miss
-  never calls text to speech.
-
-### Voice settings have no screen
-
-- **What:** `voice.transport`, `voice.max_live_sessions` and `voice.voice_id` are `AppSetting` rows set
-  in SQL (`docs/RUNBOOK.md`); `voice.max_live_sessions` defaults to 5, an assumption about the bought
-  plan's concurrent-call limit.
-- **Clears it:** a master-admin voice block in Settings, and the limit from the plan once bought.
-
-### A hand-written multipart reader
-
-- **What:** relay uploads are read by `api/multipart_form.py` rather than `python-multipart`.
-- **Why left:** the lockfile cannot be regenerated on this machine (no `uv`), and one field is
-  enough.
-- **Clears it:** add `python-multipart` with `uv add` where `uv` runs and read the form with
-  Starlette's limits.
+- **What:** after an `AGENT` call's row ends, the ElevenLabs call can run on to the agent's 600 s,
+  which reconciliation charges, so the user may go below zero for the call's day (the settlement
+  row counts on that day, decision 0140).
+- **Why left:** ending a conversation needs an ElevenLabs endpoint the spike has not confirmed; it
+  is bounded by the day's seconds, the turn and replay limits and the 40-turn cap (decision 0022).
+- **Clears it:** end the ElevenLabs conversation when the row ends, once the spike shows how.
 
 ## Voice UI (decision 0020)
 
-### The voice dock has not run in a browser
+### The live agent call has not run in a browser
 
-- **What:** the dock, orb, microphone recording, speech playback and the ElevenLabs WebRTC call
-  are checked by typecheck, lint and unit specs that drive `VoiceCall` with fakes; no browser has
-  recorded, played or joined a LiveKit room, and the dock's layout above the bottom island, its
-  contrast in both themes and the transcript at phone width are unverified. The `AGENT` path also
-  assumes the server writes each turn to the transcript as it is spoken.
-- **Clears it:** after lane 0017 deploys, a signed-in smoke spec with a fake microphone
-  (`--use-fake-device-for-media-stream`) on `RELAY`, route fixtures from `shared/` at desktop and
-  phone widths, then one real `AGENT` call once the spike passes.
+- **What:** the release check `e2e/production/voice.spec.ts` drives the dock on `/design/voice`
+  at desktop and phone widths in both themes: the notice, a relay turn recorded from Chromium's
+  fake microphone, sent, answered from the relay goldens and played, and the end, with the dock
+  inside the screen and its contrast checked (decision 0140). The `AGENT` path (the ElevenLabs
+  WebRTC call joining a LiveKit room, the server writing each turn to the transcript as it is
+  spoken) has not run, nor has the dock above the bottom island, since no page with the island
+  mounts it while the call is switched off (decision 0035).
+- **Why left:** an `AGENT` call needs a real ElevenLabs agent and conversation (the spike); the
+  dock's page comes back with the call.
+- **Clears it:** one real `AGENT` call once the spike passes, and the same check run on the page
+  that mounts the dock when `VOICE_CALL_ENABLED` brings the call back.
 
 ### The dock asks for a bit rate it cannot enforce
 
@@ -956,17 +922,6 @@ Last reviewed: 2026-11-22.
 - **Clears it:** after the deploy, load `/ask`, ask the Kutch Ajrakh known-answer questions and
   see each section's pictures with their credits and underlined terms that open their summary.
 
-## Explainer view (decision 0037)
-
-### Listen re-renders every sentence on each time update
-
-- **What:** the word being read travels through the reading context, so each `timeupdate`
-  (about four a second) re-renders every sentence of the explainer.
-- **Why left:** not measured as slow on an Expert answer; memoising every sentence first would be
-  a guess.
-- **Clears it:** measure on a long answer on a phone; if it drops frames, give each sentence a
-  selector on the mark (only the sentence being read re-renders).
-
 ## Listen and the switched-off call (decision 0035)
 
 ### Narration not yet heard from ElevenLabs
@@ -980,23 +935,6 @@ Last reviewed: 2026-11-22.
   if `eleven_v4` is refused, set `NARRATION_MODEL` to `eleven_v4_turbo`; replace the fixture
   with the recorded answer.
 
-### Two readers missing the same block both pay for it
-
-- **What:** the narration cache is checked, then filled; two requests that miss the same block at
-  the same moment both synthesise it and both are billed (the second write wins, both are valid).
-- **Why left:** rare until many readers open the same new answer at once; a lock across processes
-  needs a table or a lease.
-- **Clears it:** an in-flight lease per cache id (a row with a short expiry, or an S3 conditional
-  put with `If-None-Match`) so the second request waits for the first.
-
-### Narration objects never age out
-
-- **What:** `media/narration/<cacheId>/` objects stay forever; a block that changes (a claim
-  retracted, a translation corrected) gets a new cache id and the old audio is orphaned.
-- **Why left:** the bucket lifecycle is Terraform, which agents do not change; the cost is small.
-- **Clears it:** a lifecycle rule expiring `media/narration/` objects not read for a year, or a
-  sweep of cache ids no stored explainer or piece names.
-
 ### Listen has no fallback voice
 
 - **What:** PLAN 10.6 reads aloud with the Gemini voice when ElevenLabs is down; Listen is hidden
@@ -1004,14 +942,6 @@ Last reviewed: 2026-11-22.
 - **Why left:** highlighting needs timings; a fallback without them is a second Listen.
 - **Clears it:** a Gemini read-aloud that highlights by sentence only, if the owner wants Listen
   while ElevenLabs is down.
-
-### The Listen route repeats the throttle shape
-
-- **What:** `api/routes/listen.throttle` repeats the `Retry-After` arithmetic of the other route
-  throttles (`terms`, `knowledge`, `voice`, `auth`, `password_change`).
-- **Why left:** those routes belong to other lanes working in the tree at the same time.
-- **Clears it:** one `core/rate_limit.refused(attempt, detail)` that raises the 429 with its
-  `Retry-After`, used by every route.
 
 ## Sectioned composition (decision 0032)
 
@@ -1684,15 +1614,6 @@ Last reviewed: 2026-11-22.
 - **Clears it:** curation storing condition ranges with the outcomes a source ties to each, or
   water sources as materials with their relations; then an input kind over them in a version 2.
 
-### Listen reads a hypothesis outcome without its label
-
-- **What:** Listen speaks every outcome sentence of a what-if (all options, in reading order),
-  and a hypothesis is spoken like a finding; on screen it carries the Hypothesis badge.
-- **Why left:** the narration and its cache are decision 0035's and shared with film mode
-  (0060); changing what is spoken changes every cached narration's hash.
-- **Clears it:** Listen leaving hypotheses out, or a spoken "possibly" prefix, with the narration
-  cache version raised.
-
 ### One answer can show the same what-if in two sections
 
 - **What:** builders see only their own section, so a process and a chemistry section that both
@@ -2208,18 +2129,16 @@ Last reviewed: 2026-11-22.
 
 ## The lede on the page (decision 0077)
 
-### Listen, film, the quiz and lesson packs leave the lede out
+### Lesson packs leave the lede out
 
-- **What:** the explainer page opens with the lede (`components/answer/LedeBlock.tsx`), and so do
-  the report PDF and the citations export, but Listen narrates sections only
-  (`voice/narration.spoken_blocks`): it starts at the first section and never marks a lede word.
-  Film mode's scenes (`voice/film_scenes.film_scenes`, `lib/filmScenes.ts`), the quiz
-  (`research/quiz.py`) and lesson packs (`research/lesson_builder.py`) also read sections only.
-- **Why left:** decision 0077 kept these readers on sections; task 3-03 draws the lede and adds no
-  Listen or film behaviour.
-- **Clears it:** `spoken_blocks` yields the lede first for a whole-answer narration (the Listen
-  golden and the narration cache keys change with it) and film opens on a lede scene; the quiz and
-  lesson packs take the lede only if the owner wants the direct answer in them.
+- **What:** a lesson pack is built from the sections a teacher chooses, and its title slide carries
+  only the title, so the answer's lede (the direct answer) is on no slide. Listen and film open on
+  the lede and a whole-answer quiz asks from it (decision 0140).
+- **Why left:** a lede on the title slide changes the slide contract that the deck, the PPTX file
+  and the lesson screen draw, and decision 0077 left the lesson packs to the owner's wish.
+- **Clears it:** the owner's yes; then the `TITLE` slide carries the lede's sentences as bullets
+  (block id `lede`) in `research/lesson_builder`, `services/lesson_deck`, `services/lesson_pptx`
+  and the lesson screen, with `docs/contracts/learning.md`.
 
 ## Frontend audit exceptions
 
