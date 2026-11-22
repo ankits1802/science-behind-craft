@@ -277,7 +277,7 @@ Vercel deploy hook (`/kalavigyan/env/VERCEL_DEPLOY_HOOK_URL`) by the action
 - A push that changes the API (any of the **Backend checks** push paths): the last step of
   **Deploy backend**, once the API answers through CloudFront, starts the build. A failed backend
   deploy leaves the web app as it is.
-- A push that changes only the web app (`frontend/**`): **Deploy web app** starts the build at once.
+- A push that changes only the web app (`frontend/**`): **Deploy web app** starts the build at once. A push that changes only the specs under `frontend/e2e/**` builds nothing; Frontend checks still run them.
   It reads the Backend checks push paths from that workflow and leaves the build to Deploy backend
   when the push touches any of them.
 - By hand: run **Deploy web app** from Actions, or **Build pages now** in admin settings.
