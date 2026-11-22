@@ -141,7 +141,11 @@ included. A citation that already points at the right passage and locator is not
 ### Ranking
 
 - Claims: three rankings of at most `RANKING_DEPTH` (60) each, fused by reciprocal rank fusion
-  (`score = sum(1 / (60 + rank))`, ties by best single rank, then id):
+  (`score = sum(1 / (60 + rank))`). Each ranking votes with its first `VOTING_DEPTH` (30) items
+  (`fusion.reciprocal_rank_fusion`, decision 0132): the fused order sorts by the score of those
+  ranks, then by the whole score, then by best single rank, then id, so an item found only below
+  rank 30 in every ranking follows every voted item and only fills the rerank pool. `score` stays
+  the whole sum:
   - full text: the search words' distinct Latin terms of 3 or more characters (at most
     `TSQUERY_MAX_TERMS`, 40), then their words of 2 characters (at most `TSQUERY_SHORT_TERMS`, 8;
     `text.or_tsquery`), each a slot ORed with the others. A short word counts only when it is a

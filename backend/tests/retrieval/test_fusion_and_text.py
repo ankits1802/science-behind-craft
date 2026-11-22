@@ -1,7 +1,7 @@
 import pytest
 
 from app.core.errors import InvalidInput
-from app.retrieval.fusion import RRF_K, reciprocal_rank_fusion
+from app.retrieval.fusion import RRF_K, VOTING_DEPTH, reciprocal_rank_fusion
 from app.retrieval.text import TSQUERY_MAX_TERMS, document_text, or_tsquery, query_text
 
 
@@ -43,6 +43,40 @@ def test_a_ranking_that_repeats_an_item_is_refused() -> None:
 def test_a_fusion_constant_below_one_is_refused() -> None:
     with pytest.raises(InvalidInput):
         reciprocal_rank_fusion([["a"]], k=0)
+
+
+def ranking(prefix: str, length: int, placed: dict[int, str]) -> list[str]:
+    return [placed.get(rank, f"{prefix}{rank}") for rank in range(1, length + 1)]
+
+
+def test_each_ranking_votes_with_its_first_thirty_as_before_the_pool_widened() -> None:
+    assert VOTING_DEPTH == 30
+    words = ranking("w", 60, {1: "gold", 37: "near"})
+    vectors = ranking("v", 60, {1: "gold", 10: "near"})
+    entities = ranking("e", 60, {6: "near"})
+    fused = {item.key: item for item in reciprocal_rank_fusion([words, vectors, entities])}
+    assert fused["gold"].voted == pytest.approx(2 / 61, abs=1e-12)
+    assert fused["near"].voted == pytest.approx(1 / 70 + 1 / 66, abs=1e-12)
+    assert fused["near"].score == pytest.approx(1 / 97 + 1 / 70 + 1 / 66, abs=1e-12)
+    assert fused["near"].score > fused["gold"].score
+    order = [item.key for item in reciprocal_rank_fusion([words, vectors, entities])]
+    assert order.index("gold") < order.index("near")
+
+
+def test_an_item_found_only_below_the_voting_depth_follows_every_voted_item() -> None:
+    first = ranking("a", 35, {30: "shallow", 31: "deep"})
+    second = ranking("b", 35, {31: "deep"})
+    fused = reciprocal_rank_fusion([first, second])
+    keys = [item.key for item in fused]
+    deep = next(item for item in fused if item.key == "deep")
+    assert (deep.voted, deep.score) == (0.0, pytest.approx(2 / 91, abs=1e-12))
+    assert keys.index("shallow") < keys.index("deep")
+    assert all(item.voted > 0 for item in fused[: keys.index("deep")])
+
+
+def test_a_voting_depth_below_one_is_refused() -> None:
+    with pytest.raises(InvalidInput, match="at least its first item"):
+        reciprocal_rank_fusion([["a"]], voting_depth=0)
 
 
 def test_the_text_query_ors_distinct_words_of_three_or_more_characters_then_the_short_ones() -> None:

@@ -3297,6 +3297,29 @@ Last reviewed: 2026-11-18.
   paragraph; rename the board's buttons; serve the fixtures with their variants; put the token
   set's hash in the themed ETag; add high contrast to the capture run.
 
+### A stopped release leaves the live code on the migrated database
+
+- **What:** a release migrates the shared database before its retrieval check, so when the check
+  stops it (2026-11-22, decision 0132) the live release runs on the new schema. That release's
+  models read the `AiProvider` and `AiTask` columns as closed lists and raise `LookupError` on a
+  value added after it ('VOYAGE', 'RERANK'), which broke the admin route-order save until the next
+  release; and the recipe stamp of migration 0061 hid every vector not yet renewed from its vector
+  search until the renewal finished. Found when the round 7 release was stopped; left because the
+  fix is a release discipline, not a change to one file.
+- **Clears it:** keep every migration readable by the release before it (an added enum value is
+  read as unknown rather than refused, a renamed stamp keeps the old one current until the switch),
+  with a database test that loads every table through the previous release's models after
+  `alembic upgrade head`; or run the retrieval check on the new tree before migrating where the
+  schema allows.
+
+### The stuck-page unit spec can time out under load
+
+- **What:** `frontend/e2e/stuck-page-unit.spec.ts` ("a page whose script never yields is caught")
+  timed out once after 1.2 minutes on main at `098739f` and passed on the rerun; it had passed on
+  the same commit minutes before.
+- **Clears it:** give the spinning page's catch a bound of its own well inside the test timeout, or
+  run that spec alone in its project with a longer timeout.
+
 ## How this document is kept true
 
 | Change | What to do here |
