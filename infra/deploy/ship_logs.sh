@@ -97,6 +97,7 @@ ship() {
   systemctl is-active --quiet amazon-cloudwatch-agent || restart=yes
   if [ "$restart" = yes ]; then
     "$AGENT_HOME/bin/amazon-cloudwatch-agent-ctl" -a fetch-config -m ec2 -s -c "file:$AGENT_CONFIG" >&2
+    systemctl restart amazon-cloudwatch-agent
   fi
 }
 
