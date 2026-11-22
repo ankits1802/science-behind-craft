@@ -35,16 +35,6 @@ Last reviewed: 2026-11-22.
 - **Clears it:** an origin certificate (custom domain with certbot, already installed and
   unused on the box) and `https-only` origin protocol, done for all three portals in one change.
 
-### Turnstile keys pending
-
-- **What:** `TURNSTILE_SECRET_KEY` (GitHub secret) and `TURNSTILE_SITE_KEY` (GitHub variable) are
-  not yet issued for `kalavigyan.vercel.app`. With `APP_ENV=production` and either missing,
-  email sign-up answers 503 and the sign-up page offers Google only
-  (`docs/contracts/infra.md`, `backend/app/services/turnstile.py`).
-- **Why left:** the Cloudflare widget has to be created by the owner.
-- **Clears it:** create the widget, set both values; Deploy backend copies them to Parameter
-  Store.
-
 ## Backend structure
 
 ### Python code over budget
@@ -655,15 +645,6 @@ Last reviewed: 2026-11-22.
   cited sources.
 - **Clears it:** the governance lane keeps the named practitioners per craft as data; the claim
   set and the named-cluster flag check against it.
-
-### The KalaVigyan token is not in the cross-portal naming document
-
-- **What:** PLAN 14.3 adds `KalaVigyan` and its entities to
-  `C:/dev/IIT/docs/conventions/NAMING_2026-10-18.md`; only this repository's helper and golden
-  rows know them.
-- **Why left:** that document is outside this repository and shared with both portals.
-- **Clears it:** add the token, the `Generated-Image` and `Generated-Video` entities and the
-  `Step-NN` sequence there at the portals' next release.
 
 ### India time is written again outside the backend package
 
