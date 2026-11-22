@@ -37,9 +37,9 @@ test("a static page list off its contract is refused", () => {
   expect(() => parseStaticPages({ ...golden(), extra: true })).toThrow(ShapeError);
 });
 
-test("the craft route keeps its pages for the day the nightly build refreshes", () => {
+test("the craft route keeps its pages for a week, since the night refreshes the pages that changed", () => {
   const route = readFileSync(CRAFT_ROUTE, "utf8");
-  expect(STATIC_PAGE_REVALIDATE_SECONDS).toBe(24 * 60 * 60);
+  expect(STATIC_PAGE_REVALIDATE_SECONDS).toBe(7 * 24 * 60 * 60);
   expect(route).toContain(`export const revalidate = ${STATIC_PAGE_REVALIDATE_SECONDS};`);
   expect(route).toContain("export async function generateStaticParams");
 });

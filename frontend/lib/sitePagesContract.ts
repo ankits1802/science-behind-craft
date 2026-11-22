@@ -4,7 +4,7 @@ import { boolean, list, matching, nullable, object, oneOf, parseShape, type Shap
 export const SITE_PAGES_PATH = "/site/pages";
 export const SITE_BUILD_PATH = "/site/build";
 export const STATIC_PAGES_SCHEMA_VERSION = 1;
-export const STATIC_PAGE_REVALIDATE_SECONDS = 86_400;
+export const STATIC_PAGE_REVALIDATE_SECONDS = 604_800;
 
 const SLUG = matching(/^\S+$/, "a page slug");
 
