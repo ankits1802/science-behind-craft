@@ -10,6 +10,7 @@ from app.models import Claim, ClaimSource, Concept, Craft, CraftCategory, CraftS
 from app.research.reranking import Relevance
 from app.research.retrieval import KnowledgeQuery
 from app.retrieval.hybrid import StoredKnowledgeSearch
+from app.retrieval.stamps import EMBEDDING_RECIPE, RECIPE_MARK
 
 from ..craft_fixtures import FixedEmbedder, unit
 
@@ -145,8 +146,8 @@ async def test_restatements_join_across_recipes_of_one_model_while_vectors_are_r
 ) -> None:
     await session.execute(
         update(Claim)
-        .where(Claim.id == ALUM_REWORDED)
-        .values(embeddingModel=func.split_part(Claim.embeddingModel, "#", 1))
+        .where(Claim.id == ALUM)
+        .values(embeddingModel=func.concat(Claim.embeddingModel, RECIPE_MARK, EMBEDDING_RECIPE))
     )
     stamps = dict(
         (
