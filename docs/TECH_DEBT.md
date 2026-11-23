@@ -1459,18 +1459,6 @@ Last reviewed: 2026-11-22.
   photo in `craft.page.inputs.json`, a contributed and an AI plate, a journal source), add the
   missing block kinds to the explainer fixtures, regenerate the goldens and empty the list.
 
-### The question writer keeps few of the facts it samples
-
-- **What:** generation run 44993519051 sampled 727 facts and dropped 580 questions because they
-  reused their fact's distinctive words, so the generated set holds 169 questions, 58 in English.
-  Decision 0151 asks the writer once more for each such fact, naming the words it reused, and
-  reports `asked`, `keptEnglish`, `keptShare`, `askedAgain` and `rewritten`; the committed set was
-  written before it.
-- **Why left:** a generation run spends money on production and is the lead's to dispatch.
-- **Clears it:** dispatch `eval-questions.yml` after the release that carries decision 0151, commit
-  the set, compare its `keptShare` with run 44993519051's, and score the new questions in the fused
-  order with `eval_retrieval --fusion`.
-
 ### The quantities table has not been measured by the judge
 
 - **What:** in run 44994632550 the judge's figures part averaged 2.8 of 5 (36 of 65); the Ajrakh
