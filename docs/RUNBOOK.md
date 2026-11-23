@@ -23,7 +23,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | IAM | user `kalavigyan-media` (API's S3 key), role + instance profile `kalavigyan-box`, role `kalavigyan-deploy` (GitHub OIDC, `repo:cxacraftecosystem-ui/KalaVigyan:ref:refs/heads/main` only) |
 | Parameter Store | `/kalavigyan/env/*` (SecureString, one parameter per env key, the box's source of truth). `/kalavigyan/db-password` (Supabase DB password backup) |
 | CloudWatch Logs | `/kalavigyan/kv-api`, `kv-worker`, `kv-fetcher`, `kv-contributions`, `nginx-access`, `nginx-error`, each kept 30 days; the box role may write them (inline policy `kalavigyan-box-logs`). See Logs |
-| Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11 on Small compute (`max_connections` 90). Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc`, pool size 30 (`max_client_conn` 400); see Connection budget |
+| Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11 on Small compute (`max_connections` 90). Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc`, pool size 45 (raised by the owner from 30 on 2026-11-23; `max_client_conn` 400); see Connection budget |
 | Web | Vercel project `kalavigyan` (`prj_5hRNy7S9CS4fkhVVBRW5mbmAAUSd`), team `team_pcTf4Alb2DCIwq2IZcdu00dS`, root `frontend`, Node 26.x, no Git link, `https://kalavigyan.vercel.app` |
 | Repository | `github.com/cxacraftecosystem-ui/KalaVigyan` (deploys); mirror `github.com/ankits1802/science-behind-craft` (public, no deploys) |
 
@@ -103,7 +103,7 @@ capture cleared and what still lay over it.
 ## Connection budget
 
 Every process on the box reaches Postgres through the Supabase session pooler, which holds at most
-30 server connections for our user (the dashboard's Database → Settings → Connection pooling;
+45 server connections for our user (30 until the owner raised it on 2026-11-23) (the dashboard's Database → Settings → Connection pooling;
 read with `supabase config pull --remote=inqbqiqspgvhfamupwuc`, and only the dashboard can
 change it). Each process has its own budget (`backend/app/core/connection_budget.py`, decision
 0163): a main pool that keeps a few connections and opens the rest only for a burst, closing them
@@ -114,16 +114,16 @@ run over SSM or by the deploy, is a script. `DATABASE_CONNECTION_LIMIT` and
 
 | Process (`KV_PROCESS`) | Main pool, kept + burst | Counting pool | At most |
 |---|---|---|---|
-| `kv-api@` (`api`), two slots during a deploy | 2 + 3 | 1 + 1 | 7 each |
-| `kv-contributions` (`contributions`), 2 gate runs at once | 1 + 3 | 1 + 0 | 5 |
+| `kv-api@` (`api`), two slots during a deploy | 2 + 8 | 1 + 1 | 12 each |
+| `kv-contributions` (`contributions`), 4 gate runs at once | 1 + 7 | 1 + 0 | 9 |
 | `kv-worker` (`worker`) | 1 + 1 | 1 + 0 | 3 |
 | one script over SSM or from the deploy (`script`) | 1 + 2 | 1 + 0 | 4 |
 | `kv-fetcher` (`fetcher`) | no database | | 0 |
 
-- **The sum is 26** with both API slots, the queue, the worker and one script, leaving 4 of the 30
+- **The sum is 40** with both API slots, the queue, the worker and one script, leaving 5 of the 45
   for a person's `psql` or the dashboard. `backend/tests/test_connection_budget.py` reads
   `infra/deploy/units` and fails when a unit or a limit would pass it. The research gate of an API
-  slot holds 3 of its 5 main connections (decision 0146).
+  slot holds 8 of its 10 main connections (decision 0146).
 - **A refused connect.** When the pooler answers `EMAXCONNSESSION` (max clients reached), the
   allowance and pace counts open their session again after 0.2, 0.5 and 1 s
   (`core/pooler.connected_session`) and refuse only if it is still full, so a reader sees a 429

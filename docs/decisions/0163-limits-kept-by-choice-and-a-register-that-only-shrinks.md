@@ -147,3 +147,7 @@ It is not edited after acceptance except to mark a row superseded: a later choic
 that names this one. It records the choices as taken on 2026-11-23; what the code does today is in
 [ARCHITECTURE.md](../ARCHITECTURE.md), the [contracts](../contracts/README.md) and the hygiene
 check's own tests (`tools/tests/test_register.py`, `test_check.py`, `test_baseline.py`).
+
+## Later
+
+On 2026-11-23 the owner raised the session pooler from 30 to 45 sessions (Small compute's Postgres allows 90; this project holds only KalaVigyan's database and Supabase's own services). `POOLER_SESSIONS` became 45 and the headroom 5; an API slot may open 10 main connections (8 research slots, against 3 under this record and 10 before it), the contribution queue 8 (4 gate runs at once again), and the busiest box sums to 40.

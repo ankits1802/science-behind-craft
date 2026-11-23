@@ -25,8 +25,8 @@ __all__ = [
     "process_role",
 ]
 
-POOLER_SESSIONS = 30
-POOLER_HEADROOM = 4
+POOLER_SESSIONS = 45
+POOLER_HEADROOM = 5
 BLUE_GREEN_SLOTS = 2
 RUN_CONNECTIONS = 2
 PROCESS_VARIABLE = "KV_PROCESS"
@@ -64,8 +64,8 @@ class ProcessBudget:
 
 BUDGETS: Mapping[str, ProcessBudget] = MappingProxyType(
     {
-        API: ProcessBudget(main=PoolBudget(kept=2, burst=3), counting=PoolBudget(kept=1, burst=1)),
-        CONTRIBUTIONS: ProcessBudget(main=PoolBudget(kept=1, burst=3), counting=PoolBudget(kept=1, burst=0)),
+        API: ProcessBudget(main=PoolBudget(kept=2, burst=8), counting=PoolBudget(kept=1, burst=1)),
+        CONTRIBUTIONS: ProcessBudget(main=PoolBudget(kept=1, burst=7), counting=PoolBudget(kept=1, burst=0)),
         WORKER: ProcessBudget(main=PoolBudget(kept=1, burst=1), counting=PoolBudget(kept=1, burst=0)),
         SCRIPT: ProcessBudget(main=PoolBudget(kept=1, burst=2), counting=PoolBudget(kept=1, burst=0)),
     }

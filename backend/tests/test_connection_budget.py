@@ -59,7 +59,7 @@ def test_every_unit_that_reads_the_database_settings_names_a_budgeted_process() 
 def test_the_box_at_its_busiest_stays_inside_the_pooler_with_headroom() -> None:
     instances = box_instances()
     assert instances == {API: 2, CONTRIBUTIONS: 1, WORKER: 1, FETCHER: 1, SCRIPT: 1}
-    assert peak_sessions(instances) == 2 * (5 + 2) + (4 + 1) + (2 + 1) + (3 + 1)
+    assert peak_sessions(instances) == 2 * (10 + 2) + (8 + 1) + (2 + 1) + (3 + 1)
     assert peak_sessions(instances) + POOLER_HEADROOM <= POOLER_SESSIONS
 
 
@@ -73,7 +73,7 @@ def test_the_contribution_unit_runs_no_more_gates_than_its_connections_carry() -
     found = re.search(r"^Environment=CONTRIBUTION_WORKERS=(\d+)$", unit, re.MULTILINE)
     assert found is not None
     assert int(found.group(1)) * RUN_CONNECTIONS <= BUDGETS[CONTRIBUTIONS].main.most
-    assert most_runs(BUDGETS[CONTRIBUTIONS].main) == 2
+    assert most_runs(BUDGETS[CONTRIBUTIONS].main) == 4
 
 
 @pytest.mark.parametrize(("asked", "allowed", "runs"), [(4, 2, 2), (2, 2, 2), (1, 2, 1), (0, 2, 1)])
