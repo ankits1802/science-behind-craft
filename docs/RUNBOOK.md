@@ -61,6 +61,17 @@ also writes the kit to `frontend/public/monographs/kit/`. After a change to the 
 rewrite the golden document with
 `python -m app.scripts.build_monograph --document Kutch-Ajrakh --out ../shared/monograph.document.golden.json`.
 
+The approved page carries the ground figure the API places in Kutch Ajrakh's why chapter
+(decision 0151) as a fragment captured from the React page. To capture it again, run **Capture
+screens** with `figure` on (production, or a preview as `base_url`): it takes the drawn
+`.kv-why-here` at 1440 in light with the app's rules that draw it, scoped to the figure, fails if
+the committed spec is not the served document's, rebuilds the page and the golden document with
+`build_monograph` and the component homes and kit defs with `write_component_homes`, checks the
+rebuilt page against the React page at 360, 834 and 1440 in light and dark (every text line, every
+laid-out id's place, every figure element's computed style) and keeps every file it changed under
+`files/` in its artifact, to commit. After the deploy, `load_monograph` on the box stores the
+document with the figure, which the page then draws from its fragment, sized for 1440.
+
 Each backend deploy rebuilds the stale craft page snapshots after the import (`app.scripts.rebuild_stale_pages`,
 at most `PAGES_SECONDS`, 480 by default), because a curated craft's document reads its snapshot and a
 stale one is rebuilt on every read (about 9 s), which times the web build out. The nightly upkeep
@@ -81,7 +92,13 @@ with the approved static page at 360, 834 and 1440 in light and dark, text, chap
 citation and figure, then every component borrowed from Kutch Ajrakh on the pages that place it
 (decision 0151: the run after a deploy compares all of it, so a change to the approved page fails
 the release), and keeps `text.json`, `pixels.json`, `interactions.json` and the differing chapters'
-screenshots as its artifact.
+screenshots as its artifact. Each capture of a chapter, figure or borrowed component scrolls the
+page to the whole pixel at its top and back until the sticky and fixed bars over its top edge (the
+chapter rail, the menu bar) clear it, on both pages alike, so both pages draw it at the same
+fraction of a pixel, then takes its region from the screen (or from the page beyond it when it is
+taller than the screen), so a rail
+that lies over a figure at one width is not counted as the figure; `overlays.json` names what each
+capture cleared and what still lay over it.
 
 ## Connection budget
 
