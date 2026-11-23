@@ -726,23 +726,6 @@ Last reviewed: 2026-11-22.
 
 ## Stored knowledge pieces (decision 0033)
 
-### Topic keys match only the same glossary terms
-
-- **What:** a facet's topic is the glossary terms the question names (else the place or the
-  craft), so a rephrasing that names one more or one fewer term researches again, and a question
-  in an Indian script matches only the glossary's local names. Reusing a stored set whose terms are
-  a subset of the question's is safe only within a nearness of the question's vector to the
-  stored piece's, and nothing in the code can tell that nearness.
-- **Why left:** the nearness is a production measurement (checked 2026-11-22, decision 0142); a
-  guessed one would serve a narrower set for a broader question.
-- **Clears it:** the lead measures, over the answers of the last 30 days that researched a facet
-  (`Answer.tiersUsed` holding `T3` or `T4`), how many researched facets had a current stored piece
-  of the same craft and facet whose topic terms are a strict subset of the question's marked terms,
-  and the cosine distance between the question's vector and that piece's `embedding`. If such near
-  misses are common, accept a subset set within the distance below which those pieces' claims all
-  reappear in the fresh answer (`piece_store.reusable`, `research/piece_topics`); if they are rare,
-  delete this entry.
-
 ### Answers never grow the Process tab
 
 - **What:** plan 2.2 wants process stages answers find to land in the science tables. No answer
@@ -1122,7 +1105,9 @@ Last reviewed: 2026-11-22.
   only when the time left is at least what the first draft took (decision 0142), so the registry's
   wait no longer cuts a redraft, but a slow route can still leave a section without its explainer:
   the builder then records `OUT_OF_TIME` or `NO_TIME_TO_REDRAFT` under `Answer.plan.builds`.
-- **Why left:** how often that happens is a production measurement.
+- **Why left:** how often that happens is a production measurement. Checked 2026-11-23: no
+  production answer has `plan.builds` yet, because the record shipped late on 2026-11-22 and no
+  answer has finished since (the two later rows are production checks stopped mid-stream).
 - **Clears it:** the lead reads `plan->'builds'` of a week of Expert answers on production. If
   `OUT_OF_TIME` and `NO_TIME_TO_REDRAFT` are a large share of the `simulation` outcomes, build the
   explainer after `section_done` as a late block, which needs a stream event the contract does not
