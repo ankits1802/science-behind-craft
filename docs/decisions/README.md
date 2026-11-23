@@ -120,7 +120,7 @@ flowchart LR
 | [0079](0079-public-reading.md) | Craft, category, map and science pages read without signing in | [0084](0084-field-voices-v2.md), [0091](0091-field-voices-kalavigyan-side.md) and [0095](0095-craft-page-chapters.md) |
 | [0080](0080-claim-ledger.md) | An answer renders each claim once: the claim ledger | · |
 | [0081](0081-craft-page-contract-v2.md) | Craft page contract version 2: a page whose structure is final at first paint | [0095](0095-craft-page-chapters.md) |
-| [0082](0082-catalogue-v2-and-server-fetch.md) | Catalogue v2: reader names, depth, concepts and one count, and server fetch | · |
+| [0082](0082-catalogue-v2-and-server-fetch.md) | Catalogue v2: reader names, depth, concepts and one count, and server fetch | [0172](0172-a-rotated-session-taken-over-and-cached-pages-kept-whole.md) |
 | [0083](0083-students-and-artisans.md) | Students and artisans: profiles at first entry, the Artisan role, conversations and testimony | · |
 | [0084](0084-field-voices-v2.md) | Field voices v2: both portals, full transcripts and craft images, by cursor with tombstones | [0097](0097-public-reading-everywhere-but-asking.md) and [0112](0112-reviewed-field-photographs.md) |
 | [0085](0085-answer-map-switch-and-locator.md) | The story map's layers redraw what it shows, and zoomed answer maps carry an India locator | · |
@@ -214,6 +214,7 @@ flowchart LR
 | [0168](0168-a-table-under-a-said-sentence-and-python-within-budget.md) | A quantities table is drawn under a sentence the answer already said, and the Python files are split along what they do | · |
 | [0169](0169-mcp-follow-ups-kept-true.md) | A write-back asks the cheap judge first, a reviewer decides readings, map layers and a category's structure, and a PDF is described by its first page | · |
 | [0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) | An Admin's AI stages review decisions a person confirms, and an Admin refreshes changed pages now | · |
+| [0172](0172-a-rotated-session-taken-over-and-cached-pages-kept-whole.md) | The web takes over every session the API rotates, a cached reading page fails rather than drops a part, and sign-in and the shells settle once | · |
 
 ## How this document is kept true
 
