@@ -7,7 +7,7 @@ Every count that changes with the code, generated from the working tree by `tool
 | What | Count |
 | --- | ---: |
 | Tables (`__tablename__` in `backend/app/models/`) | 146 |
-| Migrations (`backend/migrations/versions/`) | 70 |
+| Migrations (`backend/migrations/versions/`) | 71 |
 
 Newest migration: `0080_stream_stamps_differs_on`.
 
@@ -15,7 +15,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## HTTP API
 
-**243 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 127 GET, 77 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**244 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 128 GET, 77 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -67,6 +67,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `place_ground.py` | 2 |
 | `supplied_sources.py` | 2 |
 | `contributed_pictures.py` | 1 |
+| `craft_media.py` | 1 |
 | `craft_monograph.py` | 1 |
 | `dataset_uploads.py` | 1 |
 | `film.py` | 1 |
@@ -106,8 +107,8 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 675 | 5123 |
-| Backend, on Postgres | 179 | 843 |
+| Backend, without a database | 678 | 5151 |
+| Backend, on Postgres | 181 | 849 |
 | Tools | 23 | 188 |
 | Craft data ETL | 5 | 46 |
 | Geo ETL | 16 | 151 |
@@ -123,9 +124,9 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 153 |
+| Decision records (`docs/decisions/`) | 154 |
 | Contracts (`docs/contracts/`) | 40 |
-| Workflows (`.github/workflows/`) | 27 |
+| Workflows (`.github/workflows/`) | 28 |
 | Curated craft dossiers | 32 |
 | Curated category dossiers | 9 |
 
@@ -133,13 +134,13 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1329 | 188,518 |
-| `backend/tests` | 1008 | 131,891 |
-| `backend/migrations` | 71 | 10,222 |
+| `backend/app` | 1342 | 189,980 |
+| `backend/tests` | 1013 | 132,641 |
+| `backend/migrations` | 72 | 10,239 |
 | `frontend/app` | 110 | 10,009 |
-| `frontend/components` | 610 | 41,691 |
-| `frontend/lib` | 258 | 26,109 |
-| `frontend/e2e` | 279 | 30,882 |
+| `frontend/components` | 610 | 41,739 |
+| `frontend/lib` | 258 | 26,121 |
+| `frontend/e2e` | 279 | 30,921 |
 | `etl` | 52 | 8,442 |
 | `tools` | 96 | 8,232 |
 | `infra` | 17 | 2,193 |

@@ -46,7 +46,7 @@ flowchart LR
 | [0015](0015-science-engine.md) | Science engine: balancing, units, envelopes, the science seed and the process route | [0152](0152-matter-read-once-and-the-science-seed-kept-true.md) |
 | [0016](0016-region-profile.md) | Region profile and map layers from the stored district statistics | · |
 | [0017](0017-voice-backend.md) | Voice backend: sessions, the custom LLM, the relay path and upkeep | [0025](0025-multilingual-voice.md) and [0140](0140-voice-and-listen-kept-true.md) |
-| [0018](0018-media-backend.md) | Media backend: stage illustrations and clips through the router, the job queue and S3 | · |
+| [0018](0018-media-backend.md) | Media backend: stage illustrations and clips through the router, the job queue and S3 | [0154](0154-ai-media-and-film-scores-kept-true.md) |
 | [0019](0019-craft-page-and-region-panel.md) | Craft page process timeline, region panel and map choropleths | [0092](0092-design-system.md) |
 | [0020](0020-voice-ui.md) | Voice UI: the voice dock on /ask and the craft page | [0140](0140-voice-and-listen-kept-true.md) |
 | [0021](0021-media-ui.md) | Media UI: Image and Video on the craft page's process stages | [0092](0092-design-system.md) |
@@ -92,12 +92,10 @@ flowchart LR
 | [0054](0054-phase-c-contract.md) | Phase C contract: generated explainers, the what-if lab, zoom, timelines and film mode | [0147](0147-time-market-and-figures-kept-true.md) |
 | [0055](0055-generated-explainers.md) | Generated explainers: built from cited figures, checked, stored, reused and hidden | [0142](0142-curated-crafts-read-only-curated-rows.md) |
 | [0056](0056-what-if-lab.md) | The what-if lab's builder | [0140](0140-voice-and-listen-kept-true.md), [0152](0152-matter-read-once-and-the-science-seed-kept-true.md) |
-| [0057](0057-zoom-story-and-timeline-map.md) | Zoom story and timeline map builders | · |
-| [0056](0056-what-if-lab.md) | The what-if lab's builder | [0140](0140-voice-and-listen-kept-true.md) |
 | [0057](0057-zoom-story-and-timeline-map.md) | Zoom story and timeline map builders | [0147](0147-time-market-and-figures-kept-true.md) |
-| [0058](0058-elevenlabs-music-sound-image-video.md) | ElevenLabs music, sound effects, image and video | · |
+| [0058](0058-elevenlabs-music-sound-image-video.md) | ElevenLabs music, sound effects, image and video | [0154](0154-ai-media-and-film-scores-kept-true.md) |
 | [0059](0059-sandbox-and-what-if-renderers.md) | Sandbox and what-if renderers | · |
-| [0060](0060-zoom-timeline-and-film-renderers.md) | Zoom, timeline and film mode renderers | · |
+| [0060](0060-zoom-timeline-and-film-renderers.md) | Zoom, timeline and film mode renderers | [0154](0154-ai-media-and-film-scores-kept-true.md) |
 | [0061](0061-phase-c-review-fixes.md) | Phase C review fixes | · |
 | [0062](0062-phase-d-contract.md) | Phase D contract: learning blocks, versions, alerts, lessons, exports and the map | [0067](0067-lessons-and-exports.md) and [0147](0147-time-market-and-figures-kept-true.md) |
 | [0063](0063-follow-ups-versions-and-alerts.md) | Follow-ups that build, version history, saved explainers and alerts | [0070](0070-phase-d-review-fixes.md) and [0143](0143-lessons-exports-and-follow-ups-kept-true.md) |
@@ -138,7 +136,7 @@ flowchart LR
 | [0093](0093-no-caps-for-now.md) | No caps for now: every AI cap defaults to none, and every call asks for its model's documented maximum output | · |
 | [0094](0094-design-primitives.md) | The design primitives: one citation cluster, one motion owner, the editorial folder | · |
 | [0095](0095-craft-page-chapters.md) | The craft page becomes a monograph in chapters, public to read, built without a question | [0097](0097-public-reading-everywhere-but-asking.md) and [0100](0100-ajrakh-monograph-served-as-built.md) |
-| [0096](0096-reader-question-pieces-join-their-craft-page.md) | Every piece built for a reader's question joins its craft's page, whoever asked | · |
+| [0096](0096-reader-question-pieces-join-their-craft-page.md) | Every piece built for a reader's question joins its craft's page, whoever asked | [0154](0154-ai-media-and-film-scores-kept-true.md) |
 | [0097](0097-public-reading-everywhere-but-asking.md) | Everything reads without signing in except asking | [0145](0145-monograph-pages-and-speed-without-debt.md) and [0155](0155-accounts-and-sharing-kept-true.md) |
 | [0098](0098-craft-page-chapters-build.md) | How the craft page chapters were built: the readings taken where the contract was open | [0100](0100-ajrakh-monograph-served-as-built.md) |
 | [0099](0099-wider-expert-panel.md) | The expert panel searches its own fields, calls each seat on its own, seats up to 12 at Expert, and hears the artisan from field transcripts | [0156](0156-expert-panel-and-field-voices-kept-true.md) |
@@ -199,8 +197,9 @@ flowchart LR
 | [0150](0150-mcp-activity-and-box-logs.md) | Each MCP call keeps its client and its reason for 180 days and its count for good, and the box ships its logs to CloudWatch | · |
 | [0151](0151-a-release-the-live-side-can-read.md) | A release is one the live side can read: the web ignores a field it does not know, every migration reads under the release before, and the first stage's fusion is measured before it is weighted | · |
 | [0152](0152-matter-read-once-and-the-science-seed-kept-true.md) | An answer reads a craft's matter once and shows each card, molecule and what-if once, matter blocks cite every value they show, and the science seed deletes what it no longer plans | · |
-| [0156](0156-expert-panel-and-field-voices-kept-true.md) | The expert panel takes a failing view again, differs across linked concepts and reuses only the seats it seats, and field voices reach the craft page, their pictures and every run | · |
+| [0154](0154-ai-media-and-film-scores-kept-true.md) | A film score is made once and timed by what was heard, AI pictures are shared on their craft page, and the paid checks run under a cap | · |
 | [0155](0155-accounts-and-sharing-kept-true.md) | The roster offers what its guards allow, a recovery code may add a first password, roles sort and cap by rank, and a stopped share's files leave the bucket | · |
+| [0156](0156-expert-panel-and-field-voices-kept-true.md) | The expert panel takes a failing view again, differs across linked concepts and reuses only the seats it seats, and field voices reach the craft page, their pictures and every run | · |
 | [0157](0157-translations-read-back-and-reviewed-interface-words.md) | A translation is read back before it is shown, and every fixed word in another language is sourced, reviewed data | · |
 | [0158](0158-a-curated-page-lists-the-facts-contributors-add.md) | A curated craft's monograph lists the facts contributors add under their own fields, and a fact a figure shows is not listed again | · |
 
