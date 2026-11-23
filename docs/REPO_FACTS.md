@@ -112,7 +112,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 751 | 5569 |
+| Backend, without a database | 751 | 5571 |
 | Backend, on Postgres | 208 | 938 |
 | Tools | 25 | 202 |
 | Craft data ETL | 6 | 47 |
@@ -140,7 +140,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 | Area | Files | Lines |
 | --- | ---: | ---: |
 | `backend/app` | 1421 | 200,270 |
-| `backend/tests` | 1126 | 144,126 |
+| `backend/tests` | 1126 | 144,158 |
 | `backend/migrations` | 80 | 11,022 |
 | `frontend/app` | 111 | 10,103 |
 | `frontend/components` | 625 | 42,800 |
