@@ -87,7 +87,15 @@ approved the paid clip on 2026-11-23 and the voice check window on 2026-11-24). 
 - The register entry "Gemini video not yet seen live" is rewritten to what is still unseen: the
   `image` input that would make a stage image the clip's first frame, and a safety block. The
   entry "The rubric floor waits on a run that shows the quantities table" and the entry "The
-  `SIGNED_IN` chunk ACL is read by everyone" are deleted; the register holds 45 entries.
+  `SIGNED_IN` chunk ACL is read by everyone" are deleted.
+- The two write-back entries are deleted on the filing report run on production on 2026-11-24
+  (`python -m app.scripts.write_back_filing` on release 1e366637): all 75 approved write-backs with
+  no `CandidateCheck` row are among the 171 the lead reviewed on 2026-11-23 under the owner's
+  approval of 2026-11-22, and the 20 of them today's rule would file elsewhere carry that review's
+  KEEP ruling; the 19 facts answer 504968ea-49cc-469c-88f9-205a2ea90e8a wrote are all decided (12
+  rejected, 1 retracted, 6 approved, each filed where today's rule files it). The five facts still
+  filed elsewhere are `IN_REVIEW`, waiting in the review queue as every gated write-back does. The
+  register holds 43 entries.
 - Readers read exactly the rows they read before: every window was readable by everyone through
   `SIGNED_IN`, and is now through `PUBLIC`. Searches that pass no reader's ACLs still read windows
   only when they name `WINDOW`.

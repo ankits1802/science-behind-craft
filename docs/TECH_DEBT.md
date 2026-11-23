@@ -684,17 +684,6 @@ Last reviewed: 2026-11-22.
 
 ## Round 7 (2026-11-20)
 
-### Live research write-backs skipped the candidate gates
-
-- **What:** on production since 2026-11-21 every live-research write-back is `IN_REVIEW` with
-  `CandidateCheck` rows (47 claims, 220 checks), so this is left only for the older approved
-  write-backs, stored `APPROVED` with no checks before the write-back went through the gates.
-- **Why left:** stored facts on production are a person's to review; no lane changes them.
-- **Clears it:** a reviewer re-checks them with the filing report
-  (`python -m app.scripts.write_back_filing`, whose summary lists the facts with no `CandidateCheck`
-  rows, decision 0136) and `python -m app.scripts.write_back_report --gate-less`, then rejects or
-  re-files each in the review queue.
-
 ### Speed left after the quality lane
 
 - **What:** on a phone (Lighthouse at 360, median of three, 2026-11-22) Kutch Ajrakh scored 78 with
@@ -771,17 +760,6 @@ Last reviewed: 2026-11-22.
 - **Clears it:** a person opens the two statement-of-case PDFs of application 178 at
   search.ipindia.gov.in in a browser, reads the glaze and colour section, and proposes its sentence
   (cobalt, copper, or whatever it names) through `propose_facts` with `supply_source` for the PDF.
-
-### Write-backs filed before decision 0135
-
-- **What:** the 19 facts answer 504968ea-49cc-469c-88f9-205a2ea90e8a wrote stay under Khurja
-  Pottery's concept in the review queue, among them the Khorezm, Nigerian, porcelain, kiln-schedule
-  and polymer-clay sentences; earlier live-research facts were filed by the old rule too.
-- **Why left:** stored facts on production are a person's to review; no lane changes a stored row.
-- **Clears it:** a reviewer runs `python -m app.scripts.write_back_filing --answer
-  504968ea-49cc-469c-88f9-205a2ea90e8a` (and `--since` for the older ones), which prints where each
-  fact is against where today's rule files it (decision 0136), and approves each under the craft it
-  names (approve with `craft`), approves it where it is, or rejects it.
 
 ## How this document is kept true
 
