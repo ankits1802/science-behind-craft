@@ -1444,21 +1444,6 @@ Last reviewed: 2026-11-22.
   three hosts; serve the kind preview's specs through the backend, which adds the four variants
   with `services/drawing_themes.themed_spec` as it does for a delivered drawing.
 
-### The fused order is weak on paraphrased English questions
-
-- **What:** on release db09b9e7 the fused first-stage order scored recall at 5 of 0.414 and a mean
-  reciprocal rank of 0.296 on the 58 generated English questions, against 1.000 and 0.855 reranked,
-  because the full-text and named-concept rankings outvote the vector ranking. Decision 0151 weighs
-  each claim ranking by `backend/app/data/eval/fusion.json` and adds `eval_retrieval --fusion`, which
-  scores 60 weightings read-only and picks the best on the generated English questions that does not
-  lower the hand-written ones; the committed file still weighs the three rankings equally, and the
-  fused floors stand where they were (`releaseSample` fused recall at 5 0.38).
-- **Why left:** the weights must be measured on the production knowledge base, which only the lead
-  reaches.
-- **Clears it:** after the release that carries decision 0151, the lead runs
-  `eval_retrieval --fusion --out /tmp/fusion.json` on the box (RUNBOOK, Fusion weights), commits the
-  picked file and raises the fused floors to its numbers less 0.05.
-
 ### The MCP call's client name is filled by a trigger for the release before
 
 - **What:** migration `0075_mcp_call_name_filled` adds a `BEFORE INSERT` trigger on `McpToolCall`
