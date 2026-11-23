@@ -37,7 +37,7 @@ flowchart LR
 | [0006](0006-reference-source-adapters.md) | Reference source adapters: Wikipedia, Wikidata, PubChem, Wikimedia Commons | · |
 | [0007](0007-web-search-and-fetcher.md) | Web search adapters and the fetcher sandbox | [0173](0173-a-release-that-keeps-serving-and-its-way-back.md) |
 | [0008](0008-stored-knowledge-retrieval.md) | Stored-knowledge retrieval | [0166](0166-pictures-terms-and-stored-pieces-kept-true.md) |
-| [0009](0009-planner-and-tiered-research.md) | Planner and tiered research | · |
+| [0009](0009-planner-and-tiered-research.md) | Planner and tiered research | [0181](0181-names-kept-out-of-pictures-reference-lists-and-the-wood-handbook.md) |
 | [0010](0010-composer.md) | Composer | [0138](0138-answers-composed-from-the-asked-fields.md) and [0144](0144-stored-passages-as-evidence.md) |
 | [0011](0011-claim-write-back-and-coverage-enrichment.md) | Claim write-back and the coverage enrichment job | · |
 | [0012](0012-answer-stream-end-to-end.md) | The answer stream end to end | [0146](0146-answers-recorded-and-bounded-on-the-box.md) |
@@ -50,7 +50,7 @@ flowchart LR
 | [0019](0019-craft-page-and-region-panel.md) | Craft page process timeline, region panel and map choropleths | [0092](0092-design-system.md) |
 | [0020](0020-voice-ui.md) | Voice UI: the voice dock on /ask and the craft page | [0140](0140-voice-and-listen-kept-true.md) |
 | [0021](0021-media-ui.md) | Media UI: Image and Video on the craft page's process stages | [0092](0092-design-system.md) |
-| [0022](0022-batch-3-review-fixes.md) | Voice spend fails closed, a filtered style hint, region sources and one home per rule | · |
+| [0022](0022-batch-3-review-fixes.md) | Voice spend fails closed, a filtered style hint, region sources and one home per rule | [0181](0181-names-kept-out-of-pictures-reference-lists-and-the-wood-handbook.md) |
 | [0023](0023-multilingual-answers.md) | Answers in Indian languages | [0117](0117-pages-in-other-languages.md) and [0157](0157-translations-read-back-and-reviewed-interface-words.md) |
 | [0024](0024-admin-role.md) | Admin role | [0155](0155-accounts-and-sharing-kept-true.md) |
 | [0025](0025-multilingual-voice.md) | Voice in every answer language | [0157](0157-translations-read-back-and-reviewed-interface-words.md) |
@@ -225,6 +225,7 @@ flowchart LR
 | [0178](0178-seed-authors-whole-and-goldens-from-recorded-data.md) | The seed names an organisation as one author, Kutch Ajrakh's fixture market shows its curated price, and the goldens show recorded rain, a placed component and a craft's own names | · |
 | [0179](0179-transcript-windows-a-chunk-kind-linked-shared-concepts-and-one-paid-clip.md) | A transcript window is a chunk kind, a craft reads the shared concepts the graph links to it, and the paid checks make one Gemini clip when asked | · |
 | [0180](0180-places-abroad-yearly-series-picture-levels-figures-and-kin-crafts.md) | A place abroad sits in its own inset, a yearly series is one row, picture levels come from glossary tags, the fibre asks paper figures, and a generated page shows its kin crafts | · |
+| [0181](0181-names-kept-out-of-pictures-reference-lists-and-the-wood-handbook.md) | A craft's community and person names stay out of AI pictures, Expert research follows OpenAlex reference lists, and the Wood Handbook's cited chapters are its passages | · |
 
 ## How this document is kept true
 
