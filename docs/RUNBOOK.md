@@ -35,7 +35,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | `/opt/kalavigyan/slot-8000`, `slot-8001`, `current` | Symlinks used by blue/green. nginx proxies to exactly one port. |
 | `/opt/kalavigyan/.env`, `fetcher.env` | Rendered from Parameter Store by `kv-render-env` (0640 root:kalavigyan) |
 | `kv-api@8000`, `kv-api@8001` | The two API colours (user `kalavigyan`, MemoryMax 3000M, Restart=always) |
-| `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher`. `app/worker.py` (the media queue, decision 0018) ships with the media backend; `journalctl -u kv-worker` shows its jobs. |
+| `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher`. `app/worker.py` (the media queue, decision 0018) ships with the media backend and runs as user `kalavigyan`; `journalctl -u kv-worker` shows its jobs. `kv-fetcher` runs as a user of its own that systemd makes at each start (`DynamicUser=yes`, outside the `kalavigyan` group, so it cannot read `.env`; `ProtectProc=invisible`, so it sees no other user's processes), with only `fetcher.env`, which systemd reads as root (decision 0173). |
 | `api-watchdog.timer` | Restarts a running colour after 2 failed `/health` checks a minute apart (`journalctl -t api-watchdog`) |
 | nginx site `kalavigyan` | `:80`. The snippet `kalavigyan-origin-verify.conf` returns 403 without CloudFront's header; loopback is exempt. |
 | `redis-server` | `127.0.0.1:6379`, 256 MB LRU |
@@ -374,7 +374,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Copies changed secrets into `/kalavigyan/env`.
 3. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
 4. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, installs the CPython that `infra/deploy/python.pin` names into `/opt/cpython/<version>+<build>` unless it is there (over https, checksum checked before it is unpacked, staged then moved, root-owned; decision 0118), builds the venv with uv on that interpreter, writes `RELEASE=<sha>` to the release's `release.env` (the API colour reads it, so `/health` names the commit it runs), then `blue_green.sh release <sha> --within <seconds>`:
-   1. migrate (`alembic upgrade head`; after three failed tries the live colour is stopped to free its pooler sessions, five more tries follow, and the live colour starts again as soon as one passes, so it serves through the seeds and the checks), seed (`seed_crafts`, `seed_claims`, `seed_districts`) and import the curated dossiers (`import_curation`, decision 0053; a refused dossier exits 2 and stops the release like a failed seed), then rebuild the shared-science explorer's per-term summary (`refresh_shared_terms`, `docs/contracts/learning.md`) while the old colour serves, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and embed what the seeds and the import wrote (`embed_craft_descriptors`, then `embed_knowledge`, each bounded to 240 seconds; a failure is a warning too);
+   1. migrate (`alembic upgrade head`; after three failed tries the live colour is stopped to free its pooler sessions, five more tries follow, and the live colour starts again as soon as one passes, so it serves through the seeds and the checks), seed (`seed_crafts`, `seed_claims`, `seed_districts`), bring the stored dataset records up to the registry (`sync_dataset_registry`, decision 0114) and import the curated dossiers (`import_curation`, decision 0053; a refused dossier exits 2 and stops the release like a failed seed), then rebuild the shared-science explorer's per-term summary (`refresh_shared_terms`, `docs/contracts/learning.md`) while the old colour serves; a non-zero exit of any of these six stops the release with "seeding failed" and nginx keeps the live colour, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and embed what the seeds and the import wrote (`embed_craft_descriptors`, then `embed_knowledge`, each bounded to 240 seconds; a failure is a warning too);
    2. start the other colour;
    3. wait for `/health/ready`: the new colour must start and reach its database, or it is stopped and nginx stays where it was;
    4. switch nginx;
@@ -490,8 +490,8 @@ A craft release (decision 0130): give `craft` its exact slug, for Kutch Ajrakh `
 - **The contribution worker** `kv-contributions` (a systemd unit beside `kv-worker` and `kv-fetcher`,
   restarted by every deploy) takes queued proposals and runs their gates off the request
   (`docs/contracts/knowledge-writes.md`). Read it with `journalctl -u kv-contributions`. Its
-  concurrency is `CONTRIBUTION_WORKERS` (2 in the unit; a larger number runs only as many as its
-  connection budget carries, decision 0163). To drain the queue by
+  concurrency is `CONTRIBUTION_WORKERS` (4 in the unit since the pooler went to 45; a larger number
+  runs only as many gates as its connection budget carries, 4 today, decision 0163). To drain the queue by
   hand: `python -m app.scripts.contribution_worker --once` (Shell on the box).
 - **Picture screens** need an enabled CAPTION route (a vision model, Settings, Routing). Without
   one, every picture waits for a person as `UNSCREENED`. After the deploy that adds them, run
@@ -577,9 +577,16 @@ values (`monthlyCeilingUsd`, `mediaCapUsd`, `roleDailyUsd`, `degradeAtFraction`,
 cap is `maxOutputTokens` in AI routing (never above the model's maximum). The deploy does not
 reset any of these.
 
-To undo the data step: `alembic downgrade 0028_roles_and_contributions` from this release puts
-back the seeded `QuotaPolicy.perDay` values and the `TRANSLATE` and `SUMMARISE` route caps; it does
-not write the AI budget rows back (an earlier release then uses its own capped defaults).
+To put back what the data step cleared, set each value where it now lives, as above. The seeded
+daily allowances were, per role and day, Student 600 voice seconds, 5 images and no video,
+Researcher 1,800, 30 and 5, Professor 1,800, 50 and 10, and Admin 3,600, 100 and 20
+(`EARLIER_QUOTAS` in `backend/migrations/versions/0029_unlimited_ai_use.py`): enter them as
+`dailyAllowances` on the AI budget screen. The `TRANSLATE` and `SUMMARISE` output caps were 8192 and
+2048: set `maxOutputTokens` on those two routes in AI routing. Never undo the data step with
+`alembic downgrade`: the head is far past `0029_unlimited_ai_use`, so a downgrade to
+`0028_roles_and_contributions` would undo every later migration in turn, each committed on its own,
+and drop the tables they added with their rows. In production `backend/migrations/env.py` refuses it
+(Roll back, decision 0174).
 
 ## Geo ETL
 
@@ -820,7 +827,7 @@ nothing, so a release that stopped before its switch is never promoted by accide
 release to go back to instead. Either way the new colour must answer `/health/ready` before nginx
 switches.
 
-A rollback does not reverse migrations. If a migration has to be undone, run `alembic downgrade` from the release that added it before rolling back.
+A rollback does not reverse migrations. If a migration has to be undone, run `alembic downgrade -1` from the release that added it, while that migration is still the head, before rolling back; it undoes that one revision. In production (`APP_ENV=production`) `backend/migrations/env.py` refuses any downgrade that would undo more than one revision, before any step runs, and names how many it would undo; each step commits on its own and may drop a table with its rows. To undo more on purpose, run the same command again with `CONFIRM_DOWNGRADE_STEPS` set to that exact number (decision 0174).
 
 A rollback keeps each release on the interpreter it was built with: its `.venv` points into its own `/opt/cpython/<version>+<build>`, and no release removes one. To go back to an older Python for new releases, revert `infra/deploy/python.pin`, `requires-python` and `backend/uv.lock` together and deploy; the release finds that interpreter installed and builds on it (decision 0118). `readlink -f /opt/kalavigyan/releases/*/backend/.venv/bin/python` shows which interpreter each kept release runs on.
 
