@@ -638,16 +638,22 @@ Last reviewed: 2026-11-22.
   (`components/map/place-context/GroundFigure`) fills the neighbouring countries and sizes its pins
   only after it is drawn in the browser, so its view's first drawing is not the figure readers see;
   once the stored document carries it, a change to the ground data reaches the page only through a
-  new capture. The six page tools' views draw their own markup, behaviour and legacy scope for the
-  React shell, so inside the authored shell they would nest a second `div.bx` scope and differ from
-  the approved markup the native proof compares element for element. The kit's script still drives
-  the native views' behaviour by ids and classes, and a generated page still reuses a borrowed
-  component's fragment when it has no spec (every Kutch Ajrakh component has one, so the path
-  serves only a future authored monograph).
+  new capture. The six page tools' views (`kinds/tools`) draw their own markup, React behaviour and
+  legacy scope (`LegacyScope`) for generated pages, while the approved page's tools are markup the
+  kit's script drives through ids (`#quiz*`, `#lang-*`, `#gen*`), so inside the authored shell a
+  tool view would nest a second `div.bx` scope, differ from the approved markup the native proof
+  compares element for element, and be driven twice. The kit's script still drives the native
+  views' behaviour by ids and classes, and a generated page still reuses a borrowed component's
+  fragment when it has no spec (every Kutch Ajrakh component has one, so the path serves only a
+  future authored monograph). A Vercel preview reads the production API's stored document, so a
+  branch's `native.json` is proven by `e2e/monograph-native-unit.spec.ts` and the smoke on the
+  golden document and seen only after its release's `load_monograph` (checked 2026-11-23, decision
+  0177).
 - **Clears it:** the ground map drawing its neighbours and pins in its first drawing (the map is the
   place builders' `components/map`), then the figure listed in `native.json`; the six tools drawn
-  natively once the React shell draws the page (the next entry but one); then the kit's behaviour
-  moved into the views and the fragments and the generated pages' fragment reuse retired.
+  natively once the React page draws Kutch Ajrakh without its authored shell (the next entry but
+  one), each drawing the approved markup; then the kit's behaviour moved into the views and the
+  fragments and the generated pages' fragment reuse retired.
 
 ### A plate's crop is a class or a focal box
 
@@ -656,11 +662,12 @@ Last reviewed: 2026-11-22.
   the frame's aspect ratio (3 / 4, 3 / 2, 4 / 3, `.ph.tall`, `.ph.r32`, `.ph.r43`); a generated plate
   carries the layout's focal box, which `SpecPicture.focalPosition` draws as `object-position` only
   and which sets no frame. Two ways to say one thing, and a focal box cannot yet say what a class
-  says. It cannot be cleared while the authored shell holds (checked 2026-11-23, monograph shell
-  lane): the native proof (`e2e/monograph-native-unit.spec.ts`) needs each native plate to draw the
-  approved markup element for element, and the approved page writes `div.ph.tall`, `.ph.r32` and
-  `.ph.r43`, so a frame set by a style fails it; and stored document versions are never changed
-  (`monograph-document.md`, Versions), so the editions stored before the change keep `crop`.
+  says. It cannot be cleared while the authored shell holds (checked 2026-11-23, decisions 0164
+  and 0177): the native proof (`e2e/monograph-native-unit.spec.ts`) needs each native plate to
+  draw the approved markup element for element, and the approved page writes `div.ph.tall`,
+  `.ph.r32` and `.ph.r43`, so a frame set by a style fails it; and stored document versions are
+  never changed (`monograph-document.md`, Versions), so the editions stored before the change keep
+  `crop`.
 - **Clears it:** once the shell retires (the next entry), a focal box that also sets its frame's
   aspect ratio (the box's width and height times the picture's), the three crops written as such
   boxes (each picture's own ratio is its class's: 1280 by 1707, 853 and 960, so each box is the
@@ -675,18 +682,30 @@ Last reviewed: 2026-11-22.
   and the seven components "Fragments are a bridge" names inlined from their fragments, so the
   React page matches the approved one by construction (decision 0106, the first parity run); 73
   components are native views inside it and the rail takes the content's chapter names (decision
-  0164). Besides components the shell holds hand-made markup that `MonographDocumentPage` does not
-  draw: the masthead with its tools and counts (44 sources plus 24 for the kin crafts, where the React
-  masthead counts every cited source, 64), the answer's table of contents, margin notes with fixed
-  entries, the sources chapter's five groups (the React shell draws one numbered list), and each
-  chapter's own wrappers (screens, articles, spreads, the chemistry sub-rail, the colour key).
-- **Clears it:** the React shell drawing the masthead and its counts (the kin crafts' sources are
+  0164). Measured on 2026-11-23 (decision 0177), the shell's own markup outside units and
+  components is 1,633 elements and 365 runs of hand-written text in 13 chapters, which
+  `MonographDocumentPage` does not draw: the masthead with its tools and counts (44 sources plus 24
+  for the kin crafts, where the React masthead counts every cited source, 64), the answer's table
+  of contents (two of its seven entries are not units), margin notes with fixed entries, each
+  chapter's own wrappers (screens, articles, spreads, the chemistry sub-rail, the colour key) and
+  the sources chapter's five groups, 44 hand-made entries holding 320 of those text runs. The
+  `source-list` component is only the list's live status line (`setting: "status"`), because the
+  approved markup gives the groups no element an anchor (`#id` or `[attribute="value"]`) selects
+  once: the list's wrapper repeats in the kin crafts' list. Stored versions are never changed
+  (`monograph-document.md`, Versions), so every edition stored with a shell keeps it, and
+  `/crafts/<slug>/v<N>` serves them.
+- **Clears it:** the React page drawing the masthead and its counts (the kin crafts' sources are
   the ones the `kin-craft-sources` component lists), the table of contents, the margin notes, the
-  sources chapter through the page's own `source-list` and `kin-craft-sources` components (whose
-  specs carry the groups) and each chapter's wrappers, proven by Monograph parity (`check=all`),
-  then the shell retired. The wrappers are hand-made per chapter, so this needs either a port of
-  the template's main markup into structure the document carries, or the owner's leave to let a
-  React drawing become the approved reference, as the ground figure's capture did (decision 0151).
+  sources chapter's groups (from a `source-list` spec that carries them, once an anchor can select
+  them or the owner gives them an element) and each chapter's wrappers, proven by the native unit
+  spec and the smoke on the golden document and by Monograph parity (`check=all`) after the release
+  that loads it; then the shell retired for new editions, and for the stored ones either kept
+  readable or stored again with the owner's leave. The wrappers are hand-made per chapter, so this
+  needs either structure the page plan draws for any authored page (each chapter's frames named, as
+  `componentPlace` names a component's), into which the template's main markup is ported, or the
+  owner's leave to let a React drawing become the approved reference, as the ground figure's capture
+  did (decision 0151). The template's main carried as a tree of elements was weighed and refused
+  (decision 0177): it is the same hand-made markup under another name.
 
 ### The authored shell keeps the app's CSS out by name
 
@@ -757,22 +776,25 @@ Last reviewed: 2026-11-22.
 
 ### Speed left after the quality lane
 
-- **What:** on a phone (Lighthouse at 360, median of three, 2026-11-22) Kutch Ajrakh scores 78 with
-  an LCP of 5.7 s against the 2.5 s target: about 1 MB is requested before its masthead picture
-  paints, namely the six first-screen font files the layout preloads (364 KB, Newsreader italic
-  143 KB and roman 128 KB among them), the kit stylesheet (78 KB, render-blocking) and about
-  400 KB of scripts. Signed out, `/ask` lands on the sign-in page (83, LCP 4.7 s), whose photograph
-  shares the first round with Google's sign-in script (104 KB). The Textiles hub scores 100 (LCP
-  1.5 s).
-- **Why left:** what the entry named is in: Newsreader subset to weights 300 to 600 and its kept
-  features (`tools/webfonts`), the arrow on Plex's symbols face, the uncurated page and (decision
-  0145) the answer renderers loaded on demand, curated documents split like Ajrakh's shell, and
-  `/ask` drawn before its scripts. Before and after this lane Ajrakh measured 78 and 5.7 s on the
-  phone (TBT 112 ms to 83 ms, 1.39 MB to 1.35 MB). What is left is a choice of which first-screen
-  bytes wait: the first-screen faces are preloaded by choice (round 7, so the first screen never
-  swaps its type), and the kit stylesheet is the owner-approved page's.
-- **Clears it:** the owner's or lead's choice of the faces to preload and of a kit stylesheet split
-  by chapter, then the change proven by Monograph parity and Lighthouse at 360.
+- **What:** on a phone (Lighthouse at 360, median of three, 2026-11-22) Kutch Ajrakh scored 78 with
+  an LCP of 5.7 s against the 2.5 s target, with about 1 MB requested before its masthead picture
+  paints (the preloaded first-screen faces, the kit stylesheet and about 400 KB of scripts); signed
+  out, `/ask` lands on the sign-in page (83, LCP 4.7 s). Decision 0177 measured, from the computed
+  styles of the text each first screen at 360 shows (`e2e/first-screen-fonts.smoke.spec.ts`), which
+  faces they draw: Kutch Ajrakh's Newsreader roman and italic (its standfirst) and Plex Sans 400,
+  500 and 600; the landing's Newsreader roman and italic (the hero title's emphasis) and Plex Sans
+  500; the sign-in page's the same with Plex Sans 400. None draws Plex Sans italic, which is no
+  longer preloaded (23,096 bytes off every page's first round, 359,276 to 336,180 bytes of
+  preloaded faces); every face still preloaded is drawn on Kutch Ajrakh's first screen, so none can
+  wait without its type swapping. The kit stylesheet (526,637 bytes, 84,108 gzipped,
+  render-blocking) stays one file: its rules are grouped by kit scope (`bx-mb`, `bx-chem`, `bx-pt`,
+  `bx-rm`, `bx-sa`, `bx-ask`), not by chapter, every chapter mixes scopes, and a later rule decides
+  over an earlier one, so a split by chapter would reorder the cascade the approved page is built
+  from (decision 0100) and parity could not stay exact.
+- **Why left:** Lighthouse is not run in CI, so the effect is measured on production.
+- **Clears it:** the lead's Lighthouse at 360 on Kutch Ajrakh and the sign-in page after the
+  release that carries decision 0177 (expected: about 23 KB fewer bytes before the masthead
+  paints); the entry is deleted with that measurement, or rewritten to what it shows is left.
 
 ### The geo ETL stays on Python 3.14
 
@@ -782,31 +804,6 @@ Last reviewed: 2026-11-22.
 - **Why left:** building `exactextract` from source needs GEOS and GDAL headers on every runner.
 - **Clears it:** when `exactextract` publishes a cp315 wheel, move `etl/geo/pyproject.toml` and
   `geo-etl.yml` together; `backend/tests/test_python_version.py` keeps the two agreeing.
-
-### Leftovers of the design-conformance lane
-
-- **What:** the Sources differ readings open in a `<details>` after their paragraph and the claim
-  stores what they differ on (`Claim.differsOn`, decision 0156), but three seams are open. An
-  answer sentence never receives it, because `knowledge_view.ClaimView` carries no `differs_on`
-  (`section_blocks.explainer_sentence` reads it through `DIFFERS_ON_FIELD`), so answers show a plain
-  "Sources differ" summary; a flag the write-back's duplicate judge sets stores no subject, because
-  the judge names none; and the matter and what-if hosts
-  (`components/answer/matter/ReactionStepList.tsx`, `StepDetail.tsx`,
-  `components/answer/play/WhatIfLab.tsx`) draw a flagged sentence's tag without its readings. A
-  drawing stored without server variants (the kind fixtures on `/design/kinds`) shows a sunk
-  placeholder until it hydrates.
-- **Why left:** filling `ClaimView.differs_on` also gives the craft page's sentences their
-  `differsOn` (the Kutch Ajrakh page gains three, renumbering its paragraphs), so it lands with the
-  refresh of `shared/craft.page.golden.json` and a re-baseline of the approved page's parity, which
-  the final clean-up and monograph lanes held while decision 0166 ran; the judges and their callers
-  (`write_back_gates`, `fact_proposals`) and the matter hosts were other lanes' files; the
-  fixtures are delivered specs, which may not carry `themes` (`component_specs_general_delivery`),
-  and the page bundles them instead of asking the server, which adds the variants.
-- **Clears it:** `ClaimView.differs_on: str | None` filled from `Claim.differsOn` in `cited_view`,
-  with the craft page golden regenerated and the parity re-baselined; the duplicate judge naming
-  what two facts differ on and passing it as `candidate_writes.mark_sources_differ(..., about=)`;
-  `SentencesDiffer` after the paragraph in the three hosts; serve the kind preview's specs through the backend, which adds the four variants
-  with `services/drawing_themes.themed_spec` as it does for a delivered drawing.
 
 ### Goldens that do not yet show every field
 
