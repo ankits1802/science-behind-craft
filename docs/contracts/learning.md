@@ -97,7 +97,10 @@ the next version; earlier versions are never changed.
   its claims are written back either way. Both events are in `research/stream.STREAM_EVENTS`
   (`explainer_versions.VERSION_EVENTS`); the client reads them (`lib/explainerVersions`, decision
   0069): it keeps the base's sections, adds a deepened section's blocks before its pictures and
-  shows a deepened section that ended `EMPTY` as the base does.
+  shows a deepened section that ended `EMPTY` as the base does. A `version` whose `basedOn` is not
+  the version the follow-up built on (`lib/explainerVersions.lostRace`) marks the state `reload`,
+  and once the stream is `done` the client opens the stored version in place of what it streamed,
+  so the merged blocks show under their stored numbers (decision 0160).
 - **The stored version.** The follow-up's `Answer.payload.explainer` holds the whole merged
   explainer (`answerId` the follow-up's, `question` the follow-up's), so Listen and every reader
   keep working on one document; `payload.version` holds its `VersionMark`. `Answer.explainerId`
@@ -525,7 +528,8 @@ boundaryCaption}`, read with no model call:
   by name. A state of practice alone does not place a craft in a district.
 - **Land** (why the land suits them): `LandStory {blocks[Block] (0-4), facets[RegionFacet]}`.
   Blocks are stored pieces placed with their reuse mark, never built on the tap: the current
-  cross-craft region story of the district (`water:lgd-<code>` or a basin crossing it) and the
+  cross-craft region story of the district (one told over districts that include it, or a basin
+  crossing it) and the
   `GEOGRAPHY`, `GEOLOGY` and `CLIMATE` prose pieces of the crafts listed whose topic names the
   district, at most four, each passing the reuse rule. Facets are the district's own values of
   the land facets (`LAND_FACETS`: `SOIL`, `CLIMATE`, `WATER`, `TERRAIN`), exactly as the region route
@@ -552,10 +556,11 @@ else 404 `{detail}`. Crafts: `ACTIVE`, not catch-all crafts with a `DISTRICT` or
 located_places`: a point by the polygon covering it, lowest LGD first, else its stored district)
 whose source is visible; curated places are such rows (decision 0053). Each craft once by name,
 its roles in `PLACE_ROLES` order, its basis the strongest location (level, then id). Land blocks,
-at most four: the newest current region story with no craft keyed `water:lgd-<code>` or a basin
-crossing the district (`region_pieces.district_story_pieces`, its river still stored), then for
-each listed craft and each of `GEOGRAPHY`, `GEOLOGY`, `CLIMATE` the newest English `prose` piece
-whose topic key's subjects include the district's name slug, by craft name then facet; every
+at most four: the newest current region story with no craft whose `districtLgds` include the
+district or keyed by a basin crossing it (`region_pieces.district_story_pieces`, its river still
+stored), then for each listed craft and each of `GEOGRAPHY`, `GEOLOGY`, `CLIMATE` the newest English
+`prose` piece whose topic key's subjects include the district's code (`lgd-<code>`, decision 0160),
+so a district named alike in two states never lends its pieces, by craft name then facet; every
 piece passes the reuse rule at any depth (`reuse_refusal` with `BASIC`) and cites only visible
 sources. Blocks are `land.b<n>` with sentences `land.b<n>.<m>` and their reuse marks. Facets are
 the district's stored values of `SOIL`, `CLIMATE`, `WATER` and `TERRAIN` built by
