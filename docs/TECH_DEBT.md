@@ -461,31 +461,6 @@ Last reviewed: 2026-11-22.
 - **Clears it:** curation storing condition ranges with the outcomes a source ties to each, or
   water sources as materials with their relations; then an input kind over them in a version 2.
 
-## Zoom story and timeline map (decision 0057)
-
-### No open-access paper figure is searched for the fibre level
-
-- **What:** the fibre level comes only from Commons and Openverse micrographs; the contract's
-  "open-access figure whose `sourceId` is the stored paper" has no adapter (no figure search in
-  Europe PMC or a publisher's open figures), so most crafts show no fibre level.
-- **Why left:** no figure source exists to reuse, and a new adapter needs its own recorded tests
-  and licence reading per figure.
-- **Clears it:** one figures adapter over an open-access full-text source (for example the
-  figures of Europe PMC's open-access articles, each with its article's licence), checked on
-  recorded responses, and the fibre search asking it after Commons and Openverse.
-
-### Picture levels are read from English words
-
-- **What:** a picture's level is read from its title and description against short English word
-  lists (`zoom_pictures.LEVEL_WORDS`), and the craft's fibre from a list of fibre names
-  (`FIBRE_NAMES`); a picture titled in another language or with an unlisted word ("hand block
-  print", "karigar") finds no level, and a fibre material named only by a local word ("kora")
-  gives no fibre level.
-- **Why left:** a vision call per candidate would spend from the answer for a picture the reader
-  may never open; the lists hold the words the stored pictures use.
-- **Clears it:** the glossary's terms tagged with a zoom level, or a vision check of the top
-  candidate per level within the answer's headroom.
-
 ## ElevenLabs music, sound effects, image and video (decision 0058)
 
 ### ElevenLabs prices are unverified
@@ -510,16 +485,6 @@ Last reviewed: 2026-11-22.
   not include; if it names another host, add it to `DOWNLOAD_HOSTS` after checking the reference.
 
 ## Zoom, timeline and film renderers (decision 0060)
-
-### A place beyond the India frame is a signpost, not a pin
-
-- **What:** the timeline draws a placed point outside the India frame (Fustat in the fixture) as
-  a signpost at the frame's edge pointing toward it, so the reader sees its direction and its
-  Wikidata item but not its distance or neighbourhood.
-- **Why left:** the frame is fixed by `components/map/projection.ts`; widening it for one point
-  would shrink India on every timeline, and drawing other countries is refused.
-- **Clears it:** an inset frame for points abroad (the same projection, its own bounds, the plain
-  ground only), chosen by the timeline when it places a point outside the India frame.
 
 ### Film volumes on iPhones and iPads not yet heard
 
@@ -549,17 +514,6 @@ Last reviewed: 2026-11-22.
   for more states on the portal (each a new dataset row and a table in
   `etl/geo/geo_etl/layers/groundwater.py`), or the owner's choice to load the National Compilation's
   district annexure another way (for example a transcription recorded as its own dataset).
-
-### Ask the map lists every year of the series
-
-- **What:** ask the map lists each district value, so Climate shows 45 years of CHIRPS annual
-  means (with their 10th and 90th percentiles) and 45 years of GHCN CAMS means beside the normals
-  and trends. The region route no longer does: a place there sends only its facets' headline
-  values (`geo/headline.HEADLINE_SERIES`, decision 0153).
-- **Why left:** ask the map gives a district's values as stored (contract); folding a series is a
-  screen choice.
-- **Clears it:** the map screen folds a yearly series into one row with a sparkline (each year a
-  dataset value), or a contract change that leaves yearly rows out of its facets.
 
 ## Public transcripts and share links (decision 0097)
 
@@ -599,13 +553,16 @@ Last reviewed: 2026-11-22.
 
 ### The craft page's film score and its AI media on the monograph
 
-- **What:** AI images and clips now get a page copy, join their craft's chapters as `ai_media` and
-  are served at `GET /api/crafts/media/{assetId}` (decision 0154). Left: the page's film score (job
-  step 5 and `GET /api/crafts/{slug}/film-score`) is not built, and the monograph document the craft
-  page renders for a curated craft does not draw the chapters' `ai_media` part.
-- **Why left:** the media-and-film lane of 2026-11-22 built the producer side; the page's film and
-  the monograph's picture slots are the craft page's and the monograph's own work.
-- **Clears it:** job step 5 with the route, and an AI media slot in the monograph document.
+- **What:** AI images and clips get a page copy, join their craft's chapters as `ai_media` and are
+  served at `GET /api/crafts/media/{assetId}` (decision 0154). Left: the page's film score (job step
+  5 and `GET /api/crafts/{slug}/film-score`) is not built, and the monograph document the craft page
+  renders does not draw the chapters' `ai_media` part.
+- **Waits on:** for the score, the owner's approval of a nightly ElevenLabs music and sound spend for
+  every curated page (step 5 makes it from the job, unasked, where an answer's score is made only
+  when a reader turns Music on) together with a film player on the craft page to play it: no page
+  plays a film since decision 0162 retired the chapters screen, and the monograph's authored `film`
+  carries no score, so a score made now would be heard by no one (decision 0180). For the AI media
+  slot, the owner's ruling on principle 9 (pictures are plates: no AI imagery).
 
 ## Track 1, round 1 (decision 0101, 2026-11-19)
 
@@ -720,19 +677,14 @@ Last reviewed: 2026-11-22.
   styles in the views), or prefix the kit's classes so no name can collide, which renames classes in
   the approved page's markup and so needs the owner's leave (decision 0100 serves it as built).
 
-### Curated craft documents: what they do not carry yet
+### Curated craft documents: the kin crafts not yet captured, and no AI imagery
 
-- **What:** a generated craft document draws its curated plates, its contributed plates and its
-  record (key facts as the fact grid, the record strip), and its page draws the reviewed field
-  photographs and quotes after the chapters (`FieldVoicesPart`, decision 0156), but not its kin
-  crafts (`relatives`), which `GET /crafts/{slug}/page` still carries in its chapters. AI images and
-  videos made from a craft's claims are not carried either.
-- **Why left:** a `related_crafts` spec per generated document needs each kin craft's swatch, shared
-  materials and cited sentence from stored rows (Kutch Ajrakh's are authored), and a capture of a
-  generated page; AI imagery on a page waits on the owner's ruling on principle 9 (see the production
-  E2E defects below).
-- **Clears it:** a `related_crafts` component in the kin chapter of a generated document, from the
-  page's relatives, with its tests and a capture; the owner's ruling for AI media.
+- **What:** a generated craft document now draws its kin crafts as a `related_crafts` component in
+  the kin chapter (decision 0180), but no capture of a generated page showing it has been taken; and
+  AI images and videos made from a craft's claims are not carried on the page.
+- **Waits on:** the lead's capture of a generated craft page with kin crafts after the release (the
+  capture workflow against production); the owner's ruling on principle 9 (pictures are plates: no
+  AI imagery) before any AI media joins a page (see the production E2E defects below).
 
 ## Round 6 (2026-11-20)
 
