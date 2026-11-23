@@ -12,6 +12,7 @@ const TWO_STEP_PATH = "/api/auth/two-factor/verify";
 const TWO_STEP_CODE = "6-digit code";
 const CODE_KEY_DELAY_MS = 120;
 const SIGN_IN_TIMEOUT_MS = 60_000;
+const HYDRATION_IDLE_MS = 15_000;
 
 type SignInAnswer = { user?: User; two_factor_required?: boolean; detail?: unknown };
 
@@ -21,6 +22,11 @@ async function fillSecretly(page: Page, label: string, value: string): Promise<v
   } catch {
     throw new Error(`could not fill the ${label} field on the sign-in form`);
   }
+}
+
+async function stillFilled(page: Page, label: string, value: string): Promise<void> {
+  const field = page.getByLabel(label, { exact: true });
+  if ((await field.inputValue().catch(() => "")) !== value) await fillSecretly(page, label, value);
 }
 
 async function answerOf(page: Page, path: string, submit: () => Promise<void>): Promise<SignInAnswer> {
@@ -44,8 +50,11 @@ async function passTwoStep(page: Page, totpSecret: string | undefined): Promise<
 }
 
 export async function submitSignIn(page: Page, account: Credentials): Promise<User> {
+  await page.waitForLoadState("networkidle", { timeout: HYDRATION_IDLE_MS }).catch(() => undefined);
   await fillSecretly(page, "Email", account.email);
   await fillSecretly(page, "Password", account.password);
+  await stillFilled(page, "Email", account.email);
+  await stillFilled(page, "Password", account.password);
   const first = await answerOf(page, SIGN_IN_PATH, () => page.getByRole("button", { name: "Sign in", exact: true }).click());
   const body = first.two_factor_required ? await passTwoStep(page, account.totpSecret) : first;
   if (!body.user) throw new Error("sign-in answered without the account");
