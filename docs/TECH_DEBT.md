@@ -165,11 +165,14 @@ Last reviewed: 2026-11-22.
   `end_call` and client tools, Hindi in agents, CSP hosts and the plan's retention minimum
   (`docs/contracts/voice.md`). Relay text to speech cannot run with zero retention
   (`enable_logging=false` is enterprise only).
-- **Waits on:** waits on the paid check run by the lead (`.github/workflows/paid-checks.yml`, decision 0154): its agent turn binds a session to the conversation it opens and asks one
-  question, so a reply in `agent_turn_events.json` settles the header, the bearer and the suffix;
-  commit it as `backend/tests/voice/fixtures/agent_turn_events.json`; `voice.transport` stays
-  `RELAY` until it passes. Tool calls, Hindi in agents, the CSP hosts and retention still need a
-  browser call on the box; retention also needs an enterprise plan or the Gemini voice.
+- **Waits on:** the agent spike, which is the switched-off voice call (decision 0035), not another
+  paid run: the paid check of 2026-11-23 (run 45112123057) refused its agent turn because no
+  ElevenLabs agent, agent key or voice session key is provisioned. Once the spike provisions them,
+  the paid check's agent turn settles the header, the bearer and the suffix (commit its
+  `agent_turn_events.json` as `backend/tests/voice/fixtures/agent_turn_events.json`;
+  `voice.transport` stays `RELAY` until it passes). Tool calls, Hindi in agents, the CSP hosts and
+  retention need a browser call on the box; retention also needs an enterprise plan or the Gemini
+  voice.
 
 ## Voice backend (decision 0017)
 
@@ -217,13 +220,18 @@ Last reviewed: 2026-11-22.
 - **Clears it:** one real `AGENT` call once the spike passes, and the same check run on the page
   that mounts the dock when `VOICE_CALL_ENABLED` brings the call back.
 
-### The dock asks for a bit rate it cannot enforce
+### The dock's recorded bit rate is unmeasured in Safari
 
 - **What:** the relay recorder asks `MediaRecorder` for the session's `audioBitsPerSecond`
-  (32 kbit/s) and sends a turn at nine tenths of `maxAudioBytes`; a browser that ignores the asked
-  rate (Safari's AAC is the likely case, unverified) sends shorter turns than a minute.
-- **Clears it:** measure the recorded rate per browser in the smoke spec; if one ignores it, raise
-  that type's byte ceiling in the contract with its measured rate.
+  (32 kbit/s) and sends a turn at nine tenths of `maxAudioBytes`, so a full minute fits only at
+  36,000 bit/s or less. The browser smoke measures Chromium on every pull request
+  (`frontend/e2e/voice-rate.smoke.spec.ts`: `audio/webm` at 28,269 and 28,245 bit/s on 2026-11-23,
+  decision 0161); Safari records `audio/mp4` (AAC), and whether it keeps to the asked rate is
+  unmeasured.
+- **Waits on:** a Safari run, which no GitHub runner has (Playwright's WebKit is not Safari's media
+  stack): a person with a Mac runs the smoke spec in Safari once. If it records above 36,000 bit/s,
+  raise the `audio/mp4` byte ceiling in `docs/contracts/voice.md` and `schemas/voice.py` by its
+  measured rate.
 
 ## Science engine (decision 0015)
 
@@ -295,19 +303,17 @@ Last reviewed: 2026-11-22.
 
 ## Media backend (decision 0018)
 
-### Gemini media behaviour not yet seen live
+### Gemini video not yet seen live
 
-- **What:** how a safety block reads on the Interactions API, the image output type when none is
-  asked for (PNG assumed), the image's token breakdown and the interaction id alphabet are
-  unverified for images; for video also `DELETE /v1beta/interactions/{id}`, the clip's exact
-  duration, and the shape of an `image` input that would make the requester's stage image the
-  clip's first frame (PLAN 11 allows it; videos are `text_to_video` until the shape is seen, because
-  a wrong input fails every clip). The fixtures in `backend/tests/media/fixtures/` follow the
-  documented shapes, not captured traffic.
-- **Waits on:** images waits on the paid check run by the lead (`.github/workflows/paid-checks.yml`, decision 0154): commit its `image_completed_recorded.json` as
-  `backend/tests/media/fixtures/image_completed.json` and adjust `providers/gemini_media.py` where
-  the shapes differ. Video and the first frame wait on the owner approving one paid Gemini clip,
-  which the approval of 2026-11-22 does not include.
+- **What:** the paid check of 2026-11-23 saw an image made live (an unstored interaction with no id,
+  a thought step, `image/jpeg` output, usage by modality; `backend/tests/media/fixtures/image_completed.json`,
+  decision 0161). Video is still unseen: `DELETE /v1beta/interactions/{id}`, the clip's exact
+  duration, the shape of an `image` input that would make the requester's stage image the clip's
+  first frame (PLAN 11 allows it; videos are `text_to_video` until the shape is seen, because a wrong
+  input fails every clip), and how a safety block reads, which no paid call can be made to show.
+  The video fixtures follow the documented shapes, not captured traffic.
+- **Waits on:** the owner approving one paid Gemini clip, which the approval of 2026-11-22 does not
+  include.
 
 ### Community and caste names caught by group words only
 
@@ -319,13 +325,6 @@ Last reviewed: 2026-11-22.
   cited sources.
 - **Waits on:** the owner's and the governance lane's decision to keep the named practitioners per
   craft as cited data; the claim set and the named-cluster flag then check against it.
-
-### Media image output priced at one rate
-
-- **What:** a media call's text and thinking tokens are priced at the media output rate, which
-  overstates the cost of an image slightly.
-- **Waits on:** waits on the paid check run by the lead (`.github/workflows/paid-checks.yml`, decision 0154): its `image_completed_recorded.json` shows the
-  `output_tokens_by_modality` breakdown; then price each modality at its own rate.
 
 ## Yahoo sign-in (decision 0026)
 
@@ -513,24 +512,31 @@ Last reviewed: 2026-11-22.
 
 ## Listen and the switched-off call (decision 0035)
 
-### Narration not yet heard from ElevenLabs
+### Narration heard in English and Hindi only
 
-- **What:** `ElevenLabs.narration` follows the documented `/with-timestamps` shape; no request has
-  reached ElevenLabs, so `eleven_v4` on that endpoint, the alignment spelling the text in every
-  language, bracketed text read as text rather than as a v4 audio tag, and the real speaking rate
-  behind the 1,000-characters-a-minute hold are unverified (decision 0035, Unverified).
-- **Waits on:** waits on the paid check run by the lead (`.github/workflows/paid-checks.yml`, decision 0154): commit its `narration_en.json` and `narration_hi.json` as
-  `backend/tests/voice/fixtures/narration_with_timestamps.json` and a Hindi sibling; its report
-  gives each reply's characters a minute and whether the alignment spells the text. If `eleven_v4`
-  is refused, set `NARRATION_MODEL` to `eleven_v4_turbo`.
+- **What:** the paid check of 2026-11-23 heard `eleven_v4` on `/with-timestamps` in English and
+  Hindi: accepted, the alignment spelling the text code point for code point, 882 and 765 characters
+  a minute (`backend/tests/voice/fixtures/narration_with_timestamps.json` and its Hindi sibling,
+  decision 0161). It also showed Hindi skipping square-bracketed words as an audio tag, so Listen now
+  sends them as parentheses; that a parenthesis is read in Hindi, and the alignment in the eleven
+  other languages, are unheard. A mismatch fails loudly, and Listen then reads with the Gemini voice.
+- **Waits on:** the next paid check, whose narration step now sends the text as Listen does and
+  reports `parenthesisedSeconds`; the other languages wait on a reviewed sentence in each for
+  `paid_check_steps.NARRATIONS`, as interface words are reviewed (decision 0157).
 
-### Listen has no fallback voice
+### The Gemini read-aloud has not reached Gemini
 
-- **What:** PLAN 10.6 reads aloud with the Gemini voice when ElevenLabs is down; Listen is hidden
-  instead (`listen.languages` empty), because the Gemini voice gives no word timings.
-- **Why left:** highlighting needs timings; a fallback without them is a second Listen.
-- **Clears it:** a Gemini read-aloud that highlights by sentence only, if the owner wants Listen
-  while ElevenLabs is down.
+- **What:** Listen's fallback voice (`GeminiMediaWire.read_aloud`, decision 0161) follows the
+  speech page of the Gemini documentation read on 2026-11-23: `POST /v1beta/interactions` with
+  `gemini-3.8-flash-tts`, the voice in `generation_config.speech_config`, and a RIFF WAV of 24 kHz
+  mono 16-bit PCM in the last `audio` block of the `model_output` step. No request has reached
+  Gemini, so that shape, whether the `Api-Revision` header the media wire sends is accepted, the
+  real speaking rate behind the 1,000-characters-a-minute hold, and whether a cited sentence's
+  angle brackets are read as text rather than as an inline speech tag are unverified.
+- **Waits on:** the paid check run by the lead (`.github/workflows/paid-checks.yml`, decision 0154),
+  whose `gemini_speech` step reads one sentence and parses it as Listen does; commit its
+  `speech_completed.json` as a fixture of `backend/tests/media/test_gemini_speech.py`. A refusal
+  there names what to change in `providers/gemini_media.py`.
 
 ## Sectioned composition (decision 0032)
 
@@ -913,21 +919,6 @@ Last reviewed: 2026-11-22.
 - **Why left:** no route stores quiz attempts, and decision 0062 makes a quiz a rebuilt block.
 - **Clears it:** an attempts route if the owner wants scores kept (for a class, with the lesson
   builder).
-
-## Quiz, compare and the shared-science explorer (decision 0064)
-
-### A shared-science node lists at most 100 of the crafts sharing its term
-
-- **What:** the explorer and the concept graph now read every craft whose claims name a term, with
-  all its naming claims (`SharedTermCraft`, rebuilt by `refresh_shared_terms` at each release and
-  each night, decision 0143), but a node (`ConceptNode.crafts`, `CONCEPT_CRAFTS_MAX` in the
-  contract) still lists at most 100 of them, the focus craft first and then by name, and does not
-  say how many share the term.
-- **Why left:** a term such as cotton or indigo can be shared by hundreds of crafts and a craft's
-  explorer answers up to 24 nodes; a longer list or a count changes the shape the client draws
-  (`frontend/lib`), which belonged to the design lane at the time (2026-11-22).
-- **Clears it:** a node carries how many crafts share its term and the route pages a node's crafts,
-  in the contract, the backend and the client together.
 
 ## Craft page rebuild (decision 0071)
 
@@ -1348,17 +1339,6 @@ Last reviewed: 2026-11-22.
   the queue anyway.
 - **Clears it:** when a filed write-back meets its held twin, move it to the switch's status with a
   `ReviewEvent` by `live_research`.
-
-### The count of hidden facts has no admin screen
-
-- **What:** the nightly count of approved facts a signed-out reader cannot see, by craft and reason
-  (decision 0149), is in the night's report and at `GET /api/coverage/hidden-facts` for admins, but
-  no admin screen shows it.
-- **Why left:** the contributions-visible lane built the count, its route and the failing night;
-  the admin screens belong to the design-system work, and a screen needs the kalavigyan-design
-  review of a new admin card.
-- **Clears it:** a card on the admin settings page that reads the route and lists each craft's
-  hidden facts by reason, with the unexplained ones first, and a unit spec of its shape.
 
 ## How this document is kept true
 

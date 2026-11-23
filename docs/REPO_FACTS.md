@@ -15,7 +15,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## HTTP API
 
-**244 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 128 GET, 77 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**245 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 129 GET, 77 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -38,10 +38,10 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `shared.py` | 6 |
 | `artisan_conversations.py` | 5 |
 | `knowledge.py` | 5 |
+| `learning_views.py` | 5 |
 | `review_queue.py` | 5 |
 | `coverage.py` | 4 |
 | `knowledge_writes.py` | 4 |
-| `learning_views.py` | 4 |
 | `page_documents.py` | 4 |
 | `page_proposals.py` | 4 |
 | `secrets.py` | 4 |
@@ -107,16 +107,16 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 686 | 5215 |
-| Backend, on Postgres | 186 | 865 |
+| Backend, without a database | 690 | 5243 |
+| Backend, on Postgres | 186 | 866 |
 | Tools | 23 | 188 |
 | Craft data ETL | 5 | 46 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 180 | 1301 |
-| Browser and release specs | 17 | 59 |
+| Unit specs (`*-unit.spec.ts`) | 182 | 1313 |
+| Browser and release specs | 18 | 60 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
 
@@ -124,7 +124,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 157 |
+| Decision records (`docs/decisions/`) | 158 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 28 |
 | Curated craft dossiers | 32 |
@@ -134,13 +134,13 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1353 | 191,272 |
-| `backend/tests` | 1026 | 134,872 |
+| `backend/app` | 1355 | 191,784 |
+| `backend/tests` | 1030 | 135,391 |
 | `backend/migrations` | 74 | 10,482 |
-| `frontend/app` | 110 | 10,009 |
-| `frontend/components` | 611 | 41,853 |
-| `frontend/lib` | 254 | 25,619 |
-| `frontend/e2e` | 295 | 32,201 |
+| `frontend/app` | 110 | 10,011 |
+| `frontend/components` | 614 | 42,042 |
+| `frontend/lib` | 255 | 25,801 |
+| `frontend/e2e` | 299 | 32,452 |
 | `etl` | 66 | 10,978 |
 | `tools` | 96 | 8,232 |
 | `infra` | 17 | 2,194 |
