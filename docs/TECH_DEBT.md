@@ -65,17 +65,6 @@ Last reviewed: 2026-11-22.
   `ELSEVIER_INSTTOKEN`, each tested from the settings screen, and the fixtures are recorded then
   (CORE's with `journals`); read Wiley's PDF once the fetcher can carry one host's token.
 
-### Web search and fetcher: recordings and the box (decisions 0007, 0139)
-
-- **What:** the SearXNG and Brave fixtures (`backend/tests/sources/fixtures/*.synthetic.json`) are
-  hand-written to the documented shapes, and `kv-fetcher` with its parser processes has not been
-  smoke-tested on the box.
-- **Why left:** SearXNG runs only on the box, there is no Brave key on the laptop, and the box is
-  reached only through a deploy.
-- **Clears it:** after the next deploy, check `/health`, one HTML and one PDF fetch, the parser
-  processes staying under the 768 MB cap and the `WebFetch` row an answer writes; then record one
-  SearXNG and one Brave answer to replace the synthetic fixtures.
-
 ## Checks not automated yet
 
 - **Nesting depth** (budget 3) is not measured by the hygiene check.

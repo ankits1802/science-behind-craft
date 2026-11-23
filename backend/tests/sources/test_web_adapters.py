@@ -301,3 +301,20 @@ async def test_an_empty_searxng_answer_with_blocked_engines_turns_to_brave() -> 
     search = WebSearch(searxng(recorder), brave(recorder))
     hits = await search.search(QUERY, 5)
     assert [h.adapter for h in hits] == ["brave", "brave", "brave"]
+
+
+@pytest.mark.parametrize(
+    ("make", "route", "name", "dated"),
+    [
+        (searxng, SEARXNG, "searxng_search.recorded.json", []),
+        (brave, BRAVE, "brave_search.recorded.json", ["2019-10-08", "2026-08-12"]),
+    ],
+)
+async def test_a_recorded_search_reply_from_the_box_reads_as_https_web_pages(
+    make, route: str, name: str, dated: list[str]
+) -> None:
+    hits = await make(Recorder({route: Reply(name)})).search(QUERY, 10)
+    assert len(hits) == 5
+    assert all(hit.id.startswith(f"{make.__name__}:https://") and hit.title for hit in hits)
+    assert {(hit.tier, hit.source_type, len(hit.quotes)) for hit in hits} == {("T4", "WEB_PAGE", 0)}
+    assert sorted(str(hit.published) for hit in hits if hit.published) == dated

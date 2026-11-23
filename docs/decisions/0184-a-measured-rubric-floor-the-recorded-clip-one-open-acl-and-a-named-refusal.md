@@ -81,6 +81,17 @@ approved the paid clip on 2026-11-23 and the voice check window on 2026-11-24). 
    bearer; the header's length; no session holds the conversation, its purpose or transport, ended
    or past its hard end, its turn count; the nonce or conversation does not match). It never logs a
    bearer, key, nonce or conversation id. The reply is still the one 401 `unauthorized`.
+5. **The fetcher and web search are seen on the box.** On release dab903fd (2026-11-24),
+   `kv-fetcher` answered `/health` 200, fetched and read one HTML page (191,259 bytes, 6,379
+   characters of text) and one PDF (13,264 bytes), and its unit's memory peaked at 236 MB against
+   `MemoryMax` 768 MB; `WebFetch` held 212 rows, the newest written by an answer that evening. One
+   SearXNG and one Brave web search and one image search of each were recorded on the box as
+   `backend/tests/sources/fixtures/{searxng,brave}_{search,images}.recorded.json` (results cut to
+   five and eight): the adapters read five https web pages from each search, and keep seven of
+   Brave's eight pictures and six of SearXNG's, leaving out those another site serves. The
+   synthetic fixtures stay for the cases no live reply shows (an empty reply, no web block, long
+   ids). SearXNG reported its own Brave engine rate-limited and DuckDuckGo behind a CAPTCHA, so its
+   hits came from its other engines.
 
 ## Consequences
 
@@ -96,8 +107,9 @@ approved the paid clip on 2026-11-23 and the voice check window on 2026-11-24). 
   approval of 2026-11-22, and the 20 of them today's rule would file elsewhere carry that review's
   KEEP ruling; the 19 facts answer 504968ea-49cc-469c-88f9-205a2ea90e8a wrote are all decided (12
   rejected, 1 retracted, 6 approved, each filed where today's rule files it). The five facts still
-  filed elsewhere are `IN_REVIEW`, waiting in the review queue as every gated write-back does. The
-  register holds 43 entries.
+  filed elsewhere are `IN_REVIEW`, waiting in the review queue as every gated write-back does.
+- The entry "Web search and fetcher: recordings and the box" is deleted on item 5. The register
+  holds 42 entries.
 - Readers read exactly the rows they read before: every window was readable by everyone through
   `SIGNED_IN`, and is now through `PUBLIC`. Searches that pass no reader's ACLs still read windows
   only when they name `WINDOW`.
@@ -113,5 +125,6 @@ names this one, and the table above links the two both ways. It records the choi
 [contracts](../contracts/README.md). Its rules are tested by
 `backend/tests/answering/test_answer_floors.py`, `backend/tests/retrieval/test_eval_floors.py`,
 `backend/tests/media/test_gemini_media.py`, `backend/tests/db/test_chunk_kinds_db.py`,
-`backend/tests/field_voices/test_citing_rules.py`, `backend/tests/voice/test_pack_access.py` and
-`backend/tests/voice/test_agent_turn.py`.
+`backend/tests/field_voices/test_citing_rules.py`, `backend/tests/voice/test_pack_access.py`,
+`backend/tests/voice/test_agent_turn.py`, `backend/tests/sources/test_web_adapters.py` and
+`backend/tests/sources/test_brave_images.py`.

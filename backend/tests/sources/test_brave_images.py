@@ -8,6 +8,7 @@ from app.core.errors import ExternalFailure
 from app.research.images import ImageCandidate, ImageQuery
 from app.sources.images.web_images import WebImages, with_web_image_fallback
 from app.sources.web.brave import BraveAdapter
+from app.sources.web.searxng import SearxngAdapter
 
 from .recorded import RETRIEVED, Recorder, Reply, fixed_clock, source_http
 from .test_web_adapters import PageFetcher
@@ -133,3 +134,29 @@ def test_the_fallback_wraps_the_searxng_source_only_and_keeps_its_name() -> None
         commons,
         searxng,
     )
+
+
+def searxng(recorder: Recorder) -> SearxngAdapter:
+    return SearxngAdapter(
+        source_http(recorder, "searxng"),
+        base_url="http://127.0.0.1:8888",
+        fetcher=PageFetcher(),
+        clock=fixed_clock(),
+    )
+
+
+@pytest.mark.parametrize(
+    ("make", "route", "name", "kept"),
+    [
+        (brave, BRAVE_IMAGES, "brave_images.recorded.json", 7),
+        (searxng, "127.0.0.1/search", "searxng_images.recorded.json", 6),
+    ],
+)
+async def test_a_recorded_image_reply_from_the_box_keeps_only_pictures_the_page_site_serves(
+    make, route: str, name: str, kept: int
+) -> None:
+    cards = await make(Recorder({route: Reply(name)})).images(QUERY, 8)
+    assert len(cards) == kept
+    for card in cards:
+        assert card.page_url.startswith("https://") and card.image_url.startswith("https://")
+        assert card.provider == make.__name__ and card.width and card.height
