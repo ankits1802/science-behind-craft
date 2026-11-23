@@ -65,9 +65,11 @@ approved the paid clip on 2026-11-23 and the voice check window on 2026-11-24). 
 3. **Every reader's chunk ACL is `PUBLIC`.** Migration `0100_signed_in_chunks_public` sets every
    `SIGNED_IN` chunk to `PUBLIC` (their kind stays `WINDOW`) and drops the trigger
    `Chunk_kind_window_mark` with its function. `OPEN_CHUNK_ACLS` is `("PUBLIC",)`,
-   `SIGNED_IN_CHUNK_ACL` is gone, and `CHUNK_ACLS` (so `EVERY_CHUNK_ACLS` and the `ChunkAcl`
-   literal) is `PUBLIC` and `RESEARCHER`. The PostgreSQL type `ChunkAcl` keeps its `SIGNED_IN`
-   label, which no row holds and no code names: the release before binds it in
+   `SIGNED_IN_CHUNK_ACL` is gone, and `EVERY_CHUNK_ACLS`, what a `READ_RESEARCHER_QUOTES` holder
+   reads, is `PUBLIC` and `RESEARCHER`. The PostgreSQL type `ChunkAcl` keeps its `SIGNED_IN`
+   label, which no row holds and no reader reads, and so does `CHUNK_ACLS`, the model's copy of the
+   type, since `tests/test_app_and_schema.py` holds the model to every label its migrations
+   declare: the release before binds it in
    `Chunk.acl IN (...)` while the new colour starts, so dropping it now would fail that release's
    every read, and dropping it later means recreating the type, which rewrites the `Chunk` table and
    rebuilds its vector index under an exclusive lock, for no reader's gain. `OpenEnum` reads the

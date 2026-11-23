@@ -8,7 +8,7 @@ from typing import Any, Literal, Protocol, runtime_checkable
 from pydantic import Field, field_validator
 
 from app.core.roles import Capability, can
-from app.models.enums import CHUNK_ACLS, CHUNK_KINDS, CLAIM_STATUSES, EVIDENCE_LEVELS
+from app.models.enums import CHUNK_KINDS, CLAIM_STATUSES, EVIDENCE_LEVELS
 
 from .base import ContractModel
 from .crafts import QUESTION_MAX_CHARS
@@ -54,7 +54,7 @@ SHOWN_CLAIM_STATUSES = tuple(status for status in CLAIM_STATUSES if status not i
 PUBLIC_CHUNK_ACL: ChunkAcl = "PUBLIC"
 RESEARCHER_CHUNK_ACL: ChunkAcl = "RESEARCHER"
 OPEN_CHUNK_ACLS: tuple[ChunkAcl, ...] = (PUBLIC_CHUNK_ACL,)
-EVERY_CHUNK_ACLS: tuple[str, ...] = CHUNK_ACLS
+EVERY_CHUNK_ACLS: tuple[str, ...] = (PUBLIC_CHUNK_ACL, RESEARCHER_CHUNK_ACL)
 PASSAGE_CHUNK_KIND: ChunkKind = "PASSAGE"
 WINDOW_CHUNK_KIND: ChunkKind = "WINDOW"
 PASSAGE_CHUNK_KINDS: tuple[ChunkKind, ...] = (PASSAGE_CHUNK_KIND,)

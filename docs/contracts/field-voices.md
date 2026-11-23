@@ -847,8 +847,9 @@ still never cite `FIELD_TESTIMONY` (`CURATED_SOURCE_KINDS`).
   0179 carried `SIGNED_IN`; migration `0097_chunk_kinds` marked them `WINDOW`, and migration
   `0100_signed_in_chunks_public` (decision 0184) set them `PUBLIC` and dropped `0097`'s insert
   trigger, which had marked a `SIGNED_IN` chunk the release before wrote the same way. The
-  `ChunkAcl` type keeps the label, which no row holds and no code names, since dropping an enum
-  label rewrites the whole table and the release before still binds it.
+  `ChunkAcl` type and its model copy `CHUNK_ACLS` keep the label, which no row holds and no
+  reader reads, since dropping an enum label rewrites the whole table and the release before
+  still binds it.
 - Every chunk: `sensitivity` `ATTRIBUTE_REQUIRED`; `locator` `m:ss–m:ss` (`h:mm:ss` past an hour)
   from the segment or window times, or "paragraphs <a>–<b>" when untimed.
 - **Who reads what:** `research/retrieval.chunk_acls_for(reader)`: every reader, anonymous or
