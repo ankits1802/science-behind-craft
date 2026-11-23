@@ -133,9 +133,9 @@ def test_signed_in_reads_stay_private(path: str) -> None:
 @pytest.mark.parametrize(
     ("reader", "acls"),
     [
-        (None, ("PUBLIC", "SIGNED_IN")),
-        (STUDENT, ("PUBLIC", "SIGNED_IN")),
-        (RESEARCHER, ("PUBLIC", "RESEARCHER", "SIGNED_IN")),
+        (None, ("PUBLIC",)),
+        (STUDENT, ("PUBLIC",)),
+        (RESEARCHER, ("PUBLIC", "RESEARCHER")),
     ],
     ids=["anonymous", "student", "researcher"],
 )

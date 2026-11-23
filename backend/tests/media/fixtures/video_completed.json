@@ -1,27 +1,61 @@
 {
-  "id": "v1_ChdvbW5pLWludGVyYWN0aW9uLTAwMDM",
+  "id": "v1_ChdrcUVFYTlPUUNfQ0M2OTRQcUt6RTJBWRIXa3FFRWE5T1FDX0NDNjk0UHFLekUyQVk",
   "status": "completed",
-  "model": "gemini-omni-1.2-flash",
-  "steps": [
-    {
-      "type": "model_output",
-      "content": [
-        {
-          "type": "video",
-          "mime_type": "video/mp4",
-          "data": "AAAAFGZ0eXBpc29tAAAAAGlzb20AAAIWbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANF0cmFrAAAAXHRraGQAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAALQAAAAAABtbWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAAAyAAABkAAAAAAAAAAAIWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAAAAAAAAJG1pbmYAAAAcc3RibAAAABRzdGNvAAAAAAAAAAEAAAIyAAAA0XRyYWsAAABcdGtoZAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAtAAAAAAAG1tZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAADIAAAGQAAAAAAAAAAAhaGRscgAAAAAAAAAAc291bgAAAAAAAAAAAAAAAAAAAAAkbWluZgAAABxzdGJsAAAAFHN0Y28AAAAAAAAAAQAAAjYAAAAQbWRhdFZWVlZBQUFB"
-        }
-      ]
-    }
-  ],
   "usage": {
-    "total_input_tokens": 410,
+    "total_tokens": 47342,
+    "total_input_tokens": 65,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 65
+      }
+    ],
+    "total_cached_tokens": 0,
     "total_output_tokens": 46336,
     "output_tokens_by_modality": [
       {
         "modality": "video",
         "tokens": 46336
       }
-    ]
-  }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 941,
+    "initial_input_tokens": 65
+  },
+  "created": "2026-11-23T20:27:30Z",
+  "updated": "2026-11-23T20:27:30Z",
+  "service_tier": "standard",
+  "steps": [
+    {
+      "type": "user_input",
+      "content": [
+        {
+          "text": "Show one stage of an Indian craft process as a calm, neutral documentary video clip with no speech, music or sound: a length of plain cotton cloth soaking in a shallow metal vat of water. Rules: no text, letters or numbers; no logos; no faces of real people; no maps, borders or flags.",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "signature": "EqJrCp9rAWkUfRO7UMziagrob4ndicxwq2ZRAWQCLrxlM2DHv/rocLasWHx3aowR",
+      "type": "thought"
+    },
+    {
+      "content": [
+        {
+          "data": "AAAAFGZ0eXBpc29tAAAAAGlzb20AAAIWbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANF0cmFrAAAAXHRraGQAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAALQAAAAAABtbWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAAAyAAABkAAAAAAAAAAAIWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAAAAAAAAJG1pbmYAAAAcc3RibAAAABRzdGNvAAAAAAAAAAEAAAIyAAAA0XRyYWsAAABcdGtoZAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAtAAAAAAAG1tZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAADIAAAGQAAAAAAAAAAAhaGRscgAAAAAAAAAAc291bgAAAAAAAAAAAAAAAAAAAAAkbWluZgAAABxzdGJsAAAAFHN0Y28AAAAAAAAAAQAAAjYAAAAQbWRhdFZWVlZBQUFB",
+          "mime_type": "video/mp4",
+          "type": "video"
+        }
+      ],
+      "type": "model_output"
+    }
+  ],
+  "object": "interaction",
+  "response_format": {
+    "aspect_ratio": "16:9",
+    "duration": "8s",
+    "resolution": "720p",
+    "type": "video"
+  },
+  "model": "gemini-omni-1.2-flash"
 }

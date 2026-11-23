@@ -13,13 +13,13 @@ async def test_a_pack_is_kept_per_reader_access_so_a_student_never_reads_a_resea
         loaded.append(acls)
         return alum_pack()
 
-    student = await packs.get(CRAFT, "HYBRID", ("PUBLIC", "SIGNED_IN"), load)
-    researcher = await packs.get(CRAFT, "HYBRID", ("PUBLIC", "RESEARCHER", "SIGNED_IN"), load)
-    again = await packs.get(CRAFT, "HYBRID", ("SIGNED_IN", "PUBLIC"), load)
-    assert loaded == [("PUBLIC", "SIGNED_IN"), ("PUBLIC", "RESEARCHER", "SIGNED_IN")]
-    assert again is student and researcher is not student
+    student = await packs.get(CRAFT, "HYBRID", ("PUBLIC",), load)
+    researcher = await packs.get(CRAFT, "HYBRID", ("PUBLIC", "RESEARCHER"), load)
+    again = await packs.get(CRAFT, "HYBRID", ("RESEARCHER", "PUBLIC"), load)
+    assert loaded == [("PUBLIC",), ("PUBLIC", "RESEARCHER")]
+    assert again is researcher and researcher is not student
 
 
 def test_a_student_reads_the_open_passages_and_a_researcher_every_passage() -> None:
-    assert chunk_acls_for("STUDENT") == OPEN_CHUNK_ACLS == ("PUBLIC", "SIGNED_IN")
+    assert chunk_acls_for("STUDENT") == OPEN_CHUNK_ACLS == ("PUBLIC",)
     assert chunk_acls_for("RESEARCHER") == EVERY_CHUNK_ACLS

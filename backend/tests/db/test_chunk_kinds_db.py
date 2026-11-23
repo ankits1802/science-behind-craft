@@ -2,7 +2,7 @@ import uuid
 from collections.abc import AsyncIterator
 
 import pytest
-from sqlalchemy import insert, select
+from sqlalchemy import insert, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine
@@ -34,13 +34,18 @@ async def stored_kinds(session: AsyncSession) -> list[tuple[int, str, str]]:
     return [(ordinal, acl, kind) for ordinal, acl, kind in rows.tuples()]
 
 
-async def test_a_window_the_release_before_writes_signed_in_is_marked_a_window(session: AsyncSession) -> None:
-    rows = [
-        {"sourceId": SOURCE, "ordinal": 0, "text": "We grind the alum with tamarind seed.", "acl": "PUBLIC"},
-        {"sourceId": SOURCE, "ordinal": 1, "text": "Researcher: How is it made?", "acl": "SIGNED_IN"},
-    ]
+async def test_no_trigger_marks_windows_and_no_chunk_is_left_signed_in(session: AsyncSession) -> None:
+    triggers = await session.execute(
+        text("SELECT tgname FROM pg_trigger WHERE tgrelid = to_regclass('\"Chunk\"') AND NOT tgisinternal")
+    )
+    assert "Chunk_kind_window_mark" not in triggers.scalars().all()
+    signed_in = await session.execute(
+        text("""SELECT count(*) FROM "Chunk" WHERE "acl"::text = 'SIGNED_IN'""")
+    )
+    assert signed_in.scalar_one() == 0
+    rows = [{"sourceId": SOURCE, "ordinal": 0, "text": "Researcher: How is it made?", "acl": "PUBLIC"}]
     await session.execute(insert(Chunk.__table__).values(rows))
-    assert await stored_kinds(session) == [(0, "PUBLIC", "PASSAGE"), (1, "SIGNED_IN", "WINDOW")]
+    assert await stored_kinds(session) == [(0, "PUBLIC", "PASSAGE")]
 
 
 async def test_this_release_writes_a_public_window_and_its_kind_stands(session: AsyncSession) -> None:

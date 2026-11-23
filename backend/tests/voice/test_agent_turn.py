@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 from dataclasses import dataclass, field, replace
 from datetime import timedelta
 from typing import Any
@@ -9,7 +10,7 @@ import pytest
 from app.research.structured import StructuredReply
 from app.schemas.voice_llm import LlmChatRequest
 from app.voice import llm
-from app.voice.agent_turn import AgentCall, agent_reply, authorised_session, last_question
+from app.voice.agent_turn import REFUSAL_CHECKS, AgentCall, agent_reply, authorised_session, last_question
 from app.voice.llm import reply_stream
 from app.voice.runtime import VoiceSettings
 from app.voice.sessions import VoiceRefused
@@ -72,18 +73,21 @@ async def test_the_bound_conversation_reaches_its_session() -> None:
 
 
 @pytest.mark.parametrize(
-    "case",
+    ("case", "check"),
     [
-        "forged conversation id",
-        "forged nonce",
-        "reused nonce",
-        "ended",
-        "missing bearer",
-        "wrong bearer",
-        "expired",
+        ("forged conversation id", "session record"),
+        ("forged nonce", "binding"),
+        ("reused nonce", "binding"),
+        ("ended", "session record"),
+        ("missing bearer", "bearer"),
+        ("wrong bearer", "bearer"),
+        ("expired", "session record"),
+        ("no conversation header", "conversation header"),
     ],
 )
-async def test_every_unbound_request_is_refused_alike(case: str) -> None:
+async def test_every_unbound_request_is_refused_alike_and_the_log_names_the_check(
+    case: str, check: str, caplog: pytest.LogCaptureFixture
+) -> None:
     store = store_with()
     record = store.sessions[SESSION_ID]
     request, now = call(), NOW
@@ -100,11 +104,19 @@ async def test_every_unbound_request_is_refused_alike(case: str) -> None:
         request = call(bearer=None)
     elif case == "wrong bearer":
         request = call(bearer=BEARER + "x")
+    elif case == "no conversation header":
+        request = call(None)
     else:
         now = record.hard_end
-    with pytest.raises(VoiceRefused) as refused:
+    with (
+        caplog.at_level(logging.WARNING, logger="app.voice.agent_turn"),
+        pytest.raises(VoiceRefused) as refused,
+    ):
         await authorised_session(store, settings(), request, now=now)
-    assert refused.value.reason == "unauthorized"
+    assert (refused.value.reason, refused.value.message) == ("unauthorized", "unauthorized")
+    (logged,) = caplog.records
+    assert logged.getMessage().startswith(f"a voice agent turn was refused at the {check} check: ")
+    assert check in REFUSAL_CHECKS and BEARER not in logged.getMessage()
 
 
 def test_the_question_is_the_last_user_message_scrubbed() -> None:

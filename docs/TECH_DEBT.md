@@ -254,31 +254,31 @@ Last reviewed: 2026-11-22.
 
 ## Media backend (decision 0018)
 
-### Gemini video not yet seen live
+### A Gemini clip's first frame and its safety block are not yet seen live
 
-- **What:** the paid check of 2026-11-23 saw an image made live
-  (`backend/tests/media/fixtures/image_completed.json`, decision 0161); no clip has been made yet,
-  so the video fixtures follow the documented shapes, not captured traffic. The paid checks' `gemini_video` step (`scripts/paid_check_video.py`, decision
-  0179) makes one 8 s `gemini-omni-1.2-flash` clip through `GeminiMediaWire` with the job's
-  requested output and keeps, as fixtures to be, the start, the first open poll and the finished
-  interaction (`video_started_recorded.json`, `video_polling_recorded.json`,
-  `video_completed_recorded.json`), the `DELETE /v1beta/interactions/{id}` reply
-  (`video_deleted_recorded.json` and its status), the clip (`gemini_video.mp4`) with its exact
-  duration, size and whether it came silent (`silentAsAsked`), how long it took
-  (`secondsToFinish`, against the job's 240 s attempt) and whether `media/output.checked_output`
-  would store it. Still unseen after that run: the shape of an `image` input that would make the
-  requester's stage image the clip's first frame, because the documented shape is ambiguous (an
-  `image` block before the text in `input`, with `generation_config.video_config.task`
-  `image_to_video` shown only as an optional fallback; no field names the first frame, which the
-  position and the prompt imply; and the examples wrap `input` both as a plain list of blocks and
-  in a `user_input` step), so videos stay `text_to_video`, since a wrong input fails every clip;
-  and how a safety block reads, which no paid call can be made to show.
-- **Waits on:** the lead dispatching the step once, after this release is on the box, with only the
-  clip (`gh workflow run paid-checks.yml -R cxacraftecosystem-ui/KalaVigyan --ref main -f video=true
-  -f narration=false -f music=false -f image=false -f speech=false -f agent=false`, the owner's
-  approval of 2026-11-23), then committing the recorded replies over the documented fixtures in
-  `backend/tests/media/fixtures` (the clip's base64 cut to a small MP4, as the image's was) and
-  correcting `gemini_media` and `MEDIA_OUTPUT` where they differ.
+- **What:** paid check run 45259180160 (2026-11-23) made one clip live: `gemini-omni-1.2-flash`
+  served 8.0 s at 1280×720 in 40 s, 46,336 video tokens ($0.56 at seven cents a second), and the
+  `DELETE /v1beta/interactions/{id}` reply was 200 `{}`. Its replies are now the fixtures in
+  `backend/tests/media/fixtures` (`video_started.json`, `video_polling.json`,
+  `video_completed.json` with the clip's base64 cut to a small MP4 and the thought signature cut,
+  `video_deleted.json`); the finished interaction holds `user_input`, `thought` and
+  `model_output` steps, which `gemini_media` already read. The clip came with a sound track although
+  the prompt asked for none (`silentAsAsked: false`), and `media/mp4.without_audio` removed it, so
+  stored clips stay silent as `MEDIA_OUTPUT` requires (checked on the recorded clip: its one `soun`
+  track dropped and all 17 video chunk offsets moved with it). Two shapes are still unseen. The
+  `image` input that would make the requester's stage image the clip's first frame is ambiguous in
+  the documentation (an `image` block before the text in `input`, with
+  `generation_config.video_config.task` `image_to_video` shown only as an optional fallback; no
+  field names the first frame, which the position and the prompt imply; and the examples wrap
+  `input` both as a plain list of blocks and in a `user_input` step), so videos stay
+  `text_to_video`, since a wrong input fails every clip. How a safety block reads cannot be shown
+  by any paid call.
+- **Why left:** the first-frame input costs a paid clip with a stage image to see, and no owner
+  approval covers one; a safety block cannot be made on purpose.
+- **Clears it:** with the owner's approval, one paid clip with a stage image as the first `image`
+  block (the paid checks' `gemini_video` step taking an image), its reply recorded as a fixture and
+  `interaction_body` sending that shape; the safety shape is recorded the first time production
+  meets one (`video_failed_safety.json` follows the documented shape until then).
 
 ## Yahoo sign-in (decision 0026)
 
@@ -501,24 +501,6 @@ Last reviewed: 2026-11-22.
   district annexure another way (for example a transcription recorded as its own dataset).
 
 ## Public transcripts and share links (decision 0097)
-
-### The `SIGNED_IN` chunk ACL is read by everyone
-
-- **What:** since decision 0179 a field transcript's speaker-labelled windows are written `PUBLIC`
-  with the chunk kind `WINDOW` (`Chunk.kind`, migration `0097_chunk_kinds`), the quote recheck and
-  the citation contexts read `PASSAGE` chunks only, a search reads windows only when it names
-  `WINDOW` in `KnowledgeQuery.chunk_kinds`, and `SIGNED_IN_CHUNK_ACLS` is gone. The windows
-  written before that release still carry `SIGNED_IN`, so `OPEN_CHUNK_ACLS` (what every reader and
-  every loader that names no reader reads) still holds `PUBLIC` and `SIGNED_IN`, and the
-  migration's insert trigger (`Chunk_kind_window_mark`) marks a `SIGNED_IN` chunk the release
-  before writes as a window.
-- **Why left:** a label is dropped only after a release that no longer writes it is live
-  (`docs/contracts/infra.md`, decision 0151), and the release before decision 0179 still writes
-  `SIGNED_IN`.
-- **Clears it:** once the release carrying decision 0179 is live, a migration that sets every
-  `SIGNED_IN` chunk to `PUBLIC`, drops the trigger and its function, and drops the `SIGNED_IN`
-  label from `ChunkAcl`, with `OPEN_CHUNK_ACLS` back to `PUBLIC` alone, `SIGNED_IN_CHUNK_ACL` and
-  `CHUNK_ACLS`' third value removed in the same change.
 
 ### Kutch Ajrakh's timeline pins and named river are not yet seen, and three why claims describe steps
 
@@ -772,21 +754,6 @@ Last reviewed: 2026-11-22.
   stored compound record, or the owner's choice to keep those two fields to the chapters; a recorded
   live-research answer citing a paper with its journal, from a run the lead pays for after the
   measurement; and the owner's decision on translated category pages. Then empty the list.
-
-### The rubric floor waits on a run that shows the quantities table
-
-- **What:** run 45112746194 (release 1ab422fe, 2026-11-23) found decision 0147's table built once
-  and dropped, since every row's sentence was a ladder stage sentence already shown. Decision 0168
-  shows such a table: the claim ledger keeps those rows with `shownIn`, the view draws them with
-  the sentence's citation and without saying it again, and the judge, the rubric and Listen read
-  the sentence once. No run has yet measured it, so `rubricMean` in
-  `backend/app/data/eval/floors.json` is still the 0.82 decision 0147 set. Decision 0174 made the
-  rubric's everyCited part a share of the shown sentences; run 45161982883 scores 0.920 under it
-  (0.754 as run), so the next run's mean is measured under the share.
-- **Why left:** the floor is re-based on a measured run, and answer-quality is a paid run only the
-  lead dispatches.
-- **Clears it:** the lead runs answer-quality on the same questions and raises `rubricMean` to the
-  run's mean less 0.05, rounded down.
 
 ### The answer did not name the oxides behind Khurja's blue and turquoise glazes
 

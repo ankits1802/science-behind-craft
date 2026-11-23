@@ -272,7 +272,7 @@ async def test_the_artisan_seat_reads_no_transcript_with_field_voices_off() -> N
     assert retriever.queries == []
     assert await stored_voices(armed, enabled=lambda: True)(ask) == Heard()
     (query,) = retriever.queries
-    assert query.chunk_acls == ("PUBLIC", "SIGNED_IN")
+    assert query.chunk_acls == ("PUBLIC",)
     assert query.chunk_kinds == ("PASSAGE", "WINDOW")
 
 

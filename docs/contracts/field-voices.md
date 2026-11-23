@@ -67,7 +67,7 @@ reader, its models and its recorded answers are gone. Where the build differs fr
 | Paging | per-craft index, per-craft pages, a digest per craft, withdrawal by absence | two global streams (transcripts, images) paged by an `updatedAt` cursor, with **tombstones** for deletions, withdrawals, replacements and merges; a stream digest for reconciliation |
 | Under 18 | not sent | sent: the owner states that every artisan in both portals is an adult; no age rule remains and no date of birth is read |
 | Never sent | documentation portal fields | both portals' fields, extended (designer contact details, Aadhaar verification, signatures, identity photographs, bank details, consent evidence images, credentials) |
-| Chunk ACL | quotes `PUBLIC` | quotes and the full transcript `PUBLIC`, the transcript's windows marked by their kind `WINDOW` (decision 0179; written `SIGNED_IN` until then, an ACL every reader has read since decision 0097) |
+| Chunk ACL | quotes `PUBLIC` | quotes and the full transcript `PUBLIC`, the transcript's windows marked by their kind `WINDOW` (decision 0179; written `SIGNED_IN` until then, an ACL every reader read from decision 0097 until migration `0100_signed_in_chunks_public` folded it into `PUBLIC`, decision 0184) |
 
 Kept from version 1 and restated below: the signed peer mechanism and its headers, the gate
 default off, the access log, the 600-calls-in-10-minutes limit, the echoed request, revisions,
@@ -844,14 +844,16 @@ still never cite `FIELD_TESTIMONY` (`CURATED_SOURCE_KINDS`).
   ACL and kind agree (`retrieval/quote_passages`), and a search reads windows only when its
   `KnowledgeQuery.chunk_kinds` names `WINDOW` (the artisan seat and the voice turn do; the answer's
   stored pack, the lede and the evaluation read passages only). Windows written before decision
-  0179 keep `SIGNED_IN` until the migration that folds the label into `PUBLIC`
-  (`docs/TECH_DEBT.md`); migration `0097_chunk_kinds` marked them `WINDOW`, and its insert trigger
-  marks a `SIGNED_IN` chunk the release before writes the same way.
+  0179 carried `SIGNED_IN`; migration `0097_chunk_kinds` marked them `WINDOW`, and migration
+  `0100_signed_in_chunks_public` (decision 0184) set them `PUBLIC` and dropped `0097`'s insert
+  trigger, which had marked a `SIGNED_IN` chunk the release before wrote the same way. The
+  `ChunkAcl` type keeps the label, which no row holds and no code names, since dropping an enum
+  label rewrites the whole table and the release before still binds it.
 - Every chunk: `sensitivity` `ATTRIBUTE_REQUIRED`; `locator` `m:ss–m:ss` (`h:mm:ss` past an hour)
   from the segment or window times, or "paragraphs <a>–<b>" when untimed.
 - **Who reads what:** `research/retrieval.chunk_acls_for(reader)`: every reader, anonymous or
-  signed in, `OPEN_CHUNK_ACLS` (`PUBLIC`, and `SIGNED_IN` until the windows written with it are
-  folded into `PUBLIC`); a `READ_RESEARCHER_QUOTES` holder every ACL. Since decision 0097 the full
+  signed in, `OPEN_CHUNK_ACLS` (`PUBLIC`); a `READ_RESEARCHER_QUOTES` holder every ACL
+  (`PUBLIC` and `RESEARCHER`). Since decision 0097 the full
   transcript is public, so an anonymous reader reads exactly what a signed-in Student reads again
   (decision 0079 point 3 as first written), and since decision 0179 a loader that names no reader
   reads the same set. `citation_access.reader_citations` hides the words of a

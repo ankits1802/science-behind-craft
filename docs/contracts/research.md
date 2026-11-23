@@ -503,7 +503,7 @@ it; the answer flow passes `providers/embedding.router_embedder(principal)`.
 
 - `KnowledgeQuery {craftSlug | null, text (1-1000), mode, facets[FacetType] (distinct),
   fields[Discipline] (distinct, default none), chunkAcls (distinct, default `OPEN_CHUNK_ACLS`:
-  `PUBLIC`, and the field transcripts' `SIGNED_IN` until it is folded into `PUBLIC`), chunkKinds
+  `PUBLIC`; decision 0184 folded the field transcripts' `SIGNED_IN` into it), chunkKinds
   (distinct, default ["PASSAGE"]), limit (1-50, default 12)}`. The caller passes the ACLs the
   reader may see (`RESEARCHER` for researchers and above); nothing widens them. A chunk's kind is
   `PASSAGE` (a source's text, a field quote) or `WINDOW` (a field transcript's speaker-labelled

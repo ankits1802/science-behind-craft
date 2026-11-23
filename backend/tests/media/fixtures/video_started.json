@@ -1,6 +1,9 @@
 {
-  "id": "v1_ChdvbW5pLWludGVyYWN0aW9uLTAwMDM",
+  "id": "v1_ChdrcUVFYTlPUUNfQ0M2OTRQcUt6RTJBWRIXa3FFRWE5T1FDX0NDNjk0UHFLekUyQVk",
   "status": "in_progress",
-  "model": "gemini-omni-1.2-flash",
-  "steps": []
+  "created": "2026-11-23T20:27:00Z",
+  "updated": "2026-11-23T20:27:00Z",
+  "service_tier": "standard",
+  "object": "interaction",
+  "model": "gemini-omni-1.2-flash"
 }

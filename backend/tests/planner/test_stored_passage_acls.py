@@ -15,5 +15,5 @@ async def test_an_answer_reads_open_passages_and_no_transcript_window_whoever_as
     asked = Asked()
     await stored_knowledge(asked, craft_slug="Kutch-Ajrakh", mode="HYBRID", question="Why alum?")
     (query,) = asked.queries
-    assert query.chunk_acls == ("PUBLIC", "SIGNED_IN") and "RESEARCHER" not in query.chunk_acls
+    assert query.chunk_acls == ("PUBLIC",) and "RESEARCHER" not in query.chunk_acls
     assert query.chunk_kinds == ("PASSAGE",)

@@ -1,0 +1,25 @@
+{
+  "id": "v1_ChdrcUVFYTlPUUNfQ0M2OTRQcUt6RTJBWRIXa3FFRWE5T1FDX0NDNjk0UHFLekUyQVk",
+  "status": "in_progress",
+  "created": "2026-11-23T20:27:00Z",
+  "updated": "2026-11-23T20:27:00Z",
+  "steps": [
+    {
+      "type": "user_input",
+      "content": [
+        {
+          "text": "Show one stage of an Indian craft process as a calm, neutral documentary video clip with no speech, music or sound: a length of plain cotton cloth soaking in a shallow metal vat of water. Rules: no text, letters or numbers; no logos; no faces of real people; no maps, borders or flags.",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "object": "interaction",
+  "response_format": {
+    "aspect_ratio": "16:9",
+    "duration": "8s",
+    "resolution": "720p",
+    "type": "video"
+  },
+  "model": "gemini-omni-1.2-flash"
+}

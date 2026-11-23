@@ -89,8 +89,11 @@ def test_a_png_is_stored_as_it_came_and_any_other_picture_type_is_refused() -> N
         checked_output("IMAGE", MediaResult(b"GIF89a", "image/gif", None, None, None, None, None))
 
 
+RECORDED_CLIP = "v1_ChdrcUVFYTlPUUNfQ0M2OTRQcUt6RTJBWRIXa3FFRWE5T1FDX0NDNjk0UHFLekUyQVk"
+
+
 async def test_a_video_starts_in_the_background_and_is_polled_until_done() -> None:
-    answers = iter(["video_started.json", "video_started.json", "video_completed.json"])
+    answers = iter(["video_started.json", "video_polling.json", "video_completed.json"])
     recorder = Recorder(lambda _: httpx.Response(200, content=fixture(next(answers))))
     wire = recorder.wire()
     ref = await wire.start_video(VIDEO)
@@ -105,12 +108,25 @@ async def test_a_video_starts_in_the_background_and_is_polled_until_done() -> No
     first = await wire.poll_video(ref)
     done = await wire.poll_video(ref)
     assert not first.done and done.done and done.result is not None
-    assert str(recorder.requests[1].url) == f"{API}/interactions/v1_ChdvbW5pLWludGVyYWN0aW9uLTAwMDM"
+    assert ref == RECORDED_CLIP
+    assert str(recorder.requests[1].url) == f"{API}/interactions/{RECORDED_CLIP}"
     assert done.result.data == movie().data
-    assert done.result.media_tokens == 46336
+    assert (done.result.input_tokens, done.result.output_tokens, done.result.media_tokens) == (
+        65,
+        46336,
+        46336,
+    )
+    assert (done.result.provider_ref, done.result.served_model) == (RECORDED_CLIP, "gemini-omni-1.2-flash")
     stored = checked_output("VIDEO", done.result)
     assert (stored.width, stored.height, stored.duration_seconds) == (1280, 720, 8.0)
     assert b"soun" not in stored.data
+
+
+async def test_a_finished_clip_is_deleted_and_the_recorded_empty_reply_is_accepted() -> None:
+    recorder = answering("video_deleted.json")
+    await recorder.wire().forget(RECORDED_CLIP)
+    sent = recorder.requests[0]
+    assert (sent.method, str(sent.url)) == ("DELETE", f"{API}/interactions/{RECORDED_CLIP}")
 
 
 async def test_a_video_delivered_by_uri_is_downloaded_from_the_files_api() -> None:

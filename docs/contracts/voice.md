@@ -170,7 +170,9 @@ is when the session may last start. The client shows the voice button only when
    `VOICE_LLM_BEARER`; then finds the live session whose `elConversationId` equals the header;
    then recomputes the nonce from that row and compares its hash with `nonceHash`; then checks
    `exp` and that the session has not ended or passed `MAX_TURNS`. Any failure is 401 with one
-   `LlmError` (`code` `unauthorized`) and the same message, whichever check failed. User, role,
+   `LlmError` (`code` `unauthorized`) and the same message, whichever check failed; the server
+   logs one warning naming the check that refused (`REFUSAL_CHECKS`: bearer, conversation header,
+   session record, binding) and why, never a bearer, key or nonce (decision 0184). User, role,
    mode, craft and language come only from the row. `elevenlabs_extra_body` and dynamic
    variables are never read (`LlmChatRequest` ignores unknown fields).
 6. Ending the session sets `endedAt` and clears `nonceHash`, so any later request is 401.

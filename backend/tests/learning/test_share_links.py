@@ -41,7 +41,7 @@ EXPLAINER_ID = LATEST.mark.explainer_id
 SHARED_AT = datetime(2026, 11, 18, 9, 30, tzinfo=UTC)
 SHARED = ShareLink(schema_version=1, shared=True, path=f"/shared/answers/{TOKEN}", shared_at=SHARED_AT)
 LESSON_SHARED = SHARED.model_copy(update={"path": f"/shared/lessons/{TOKEN}"})
-ANONYMOUS_ACLS = ("PUBLIC", "SIGNED_IN")
+ANONYMOUS_ACLS = ("PUBLIC",)
 NEUTRAL_EXPORTS = "exports/00000000-0000-0000-0000-000000000000/"
 READER_KEYS = ("email", "userId", "askedBy", "createdById", "ipHash", "passwordHash", "accessToken")
 

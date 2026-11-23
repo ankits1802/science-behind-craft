@@ -241,7 +241,7 @@ def test_the_query_contract_refuses_repeats_and_out_of_range_limits() -> None:
     with pytest.raises(ValueError):
         KnowledgeQuery(craft_slug="Kutch-Ajrakh", text="alum", mode="HYBRID", chunk_acls=("EVERYONE",))
     query = KnowledgeQuery.model_validate({"craftSlug": "Kutch-Ajrakh", "text": " alum ", "mode": "VERIFIED"})
-    assert query.text == "alum" and query.chunk_acls == ("PUBLIC", "SIGNED_IN") and query.limit == 12
+    assert query.text == "alum" and query.chunk_acls == ("PUBLIC",) and query.limit == 12
     assert query.chunk_kinds == ("PASSAGE",)
     with pytest.raises(ValueError):
         KnowledgeQuery(

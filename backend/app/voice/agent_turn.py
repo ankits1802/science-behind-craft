@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import time
 import uuid
 from collections.abc import Callable
@@ -19,11 +20,21 @@ from .sessions import VoiceRefused
 from .transcript import turn_merge
 from .turns import TurnAsk, TurnTools, spoken_turn
 
-__all__ = ["CONVERSATION_ID_MAX_CHARS", "AgentCall", "agent_reply", "authorised_session", "last_question"]
+__all__ = [
+    "CONVERSATION_ID_MAX_CHARS",
+    "REFUSAL_CHECKS",
+    "AgentCall",
+    "agent_reply",
+    "authorised_session",
+    "last_question",
+]
 
 CONVERSATION_ID_MAX_CHARS = 120
 ASK_PURPOSE = "ASK"
+AGENT_TRANSPORT = "AGENT"
+REFUSAL_CHECKS = ("bearer", "conversation header", "session record", "binding")
 Clock = Callable[[], datetime]
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -37,21 +48,47 @@ async def authorised_session(
 ) -> SessionRecord:
     conversation_id = (call.conversation_id or "").strip()
     if not bearer_matches(call.authorization, voice.llm_bearer) or voice.hmac_key is None:
-        raise VoiceRefused("unauthorized", message="unauthorized")
+        raise _refused("bearer", _bearer_detail(call.authorization, voice))
     if not conversation_id or len(conversation_id) > CONVERSATION_ID_MAX_CHARS:
-        raise VoiceRefused("unauthorized", message="unauthorized")
+        raise _refused("conversation header", f"{len(conversation_id)} characters")
     record = await store.by_conversation(conversation_id)
-    if (
-        record is None
-        or record.purpose != ASK_PURPOSE
-        or record.transport != "AGENT"
-        or not record.live_at(now)
-        or record.turn_count > MAX_TURNS
-    ):
-        raise VoiceRefused("unauthorized", message="unauthorized")
+    if record is None:
+        raise _refused("session record", "no session holds this conversation")
+    unfit = _unfit(record, now)
+    if unfit:
+        raise _refused("session record", unfit)
     if not session_is_bound(voice.hmac_key, record, conversation_id):
-        raise VoiceRefused("unauthorized", message="unauthorized")
+        raise _refused("binding", "the stored nonce or conversation does not match")
     return record
+
+
+def _refused(check: str, detail: str) -> VoiceRefused:
+    logger.warning("a voice agent turn was refused at the %s check: %s", check, detail)
+    return VoiceRefused("unauthorized", message="unauthorized")
+
+
+def _bearer_detail(authorization: str | None, voice: VoiceSettings) -> str:
+    if voice.hmac_key is None:
+        return "no session key is configured"
+    if not (voice.llm_bearer or "").strip():
+        return "no agent bearer is configured"
+    if not authorization:
+        return "the request carried no authorization header"
+    if not authorization.startswith("Bearer "):
+        return "the authorization header is not a bearer"
+    return "the bearer differs from the configured one"
+
+
+def _unfit(record: SessionRecord, now: datetime) -> str:
+    if record.purpose != ASK_PURPOSE:
+        return f"its purpose is {record.purpose}"
+    if record.transport != AGENT_TRANSPORT:
+        return f"its transport is {record.transport}"
+    if not record.live_at(now):
+        return "it has ended" if record.ended_at is not None else "it is past its hard end"
+    if record.turn_count > MAX_TURNS:
+        return f"it has had {record.turn_count} turns"
+    return ""
 
 
 def last_question(request: LlmChatRequest) -> str:

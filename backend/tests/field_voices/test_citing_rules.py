@@ -32,13 +32,13 @@ class Reader:
 
 
 def test_every_reader_quotes_field_transcripts_and_only_researchers_quote_closed_text() -> None:
-    assert chunk_acls_for(None) == ("PUBLIC", "SIGNED_IN")
-    assert chunk_acls_for("STUDENT") == ("PUBLIC", "SIGNED_IN")
-    assert chunk_acls_for(Reader("STUDENT")) == ("PUBLIC", "SIGNED_IN")
-    assert chunk_acls_for(Reader("ARTISAN")) == ("PUBLIC", "SIGNED_IN")
-    assert set(chunk_acls_for(Reader("RESEARCHER"))) == {"PUBLIC", "RESEARCHER", "SIGNED_IN"}
-    assert set(chunk_acls_for("RESEARCHER")) == {"PUBLIC", "RESEARCHER", "SIGNED_IN"}
-    assert reading_acls(None) == ("PUBLIC", "SIGNED_IN")
+    assert chunk_acls_for(None) == ("PUBLIC",)
+    assert chunk_acls_for("STUDENT") == ("PUBLIC",)
+    assert chunk_acls_for(Reader("STUDENT")) == ("PUBLIC",)
+    assert chunk_acls_for(Reader("ARTISAN")) == ("PUBLIC",)
+    assert set(chunk_acls_for(Reader("RESEARCHER"))) == {"PUBLIC", "RESEARCHER"}
+    assert set(chunk_acls_for("RESEARCHER")) == {"PUBLIC", "RESEARCHER"}
+    assert reading_acls(None) == ("PUBLIC",)
 
 
 def field_hit() -> ChunkHit:

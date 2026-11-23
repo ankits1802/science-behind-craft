@@ -126,12 +126,13 @@ and writes the asked, answered, means and spend into the run summary.
 
 **The floors.** The printed line also carries `{floorsApplied, floors[{measure, floor, value, held}],
 belowFloor}` (`services/coverage_eval.floor_report`): the judge's and rubric means compared with the
-answer floors of `backend/app/data/eval/floors.json` (judge 0.76 and rubric 0.82, re-based on
-2026-11-22 when the judge changed from Gemini 4 Argon to Claude Opus 5.5, a stricter judge: run
-44994632550 scored judge 0.815 and rubric 0.969, each less 0.05 and rounded down; the rubric floor
-was re-based again the same day when the rubric began to count each shown sentence once, to the
-lowest mean that count can give on that run's answers, 0.872, less 0.05 and rounded down;
-decisions 0126, 0133 and 0147 and [retrieval.md](retrieval.md), Floors). They are compared only for a run that asked every
+answer floors of `backend/app/data/eval/floors.json` (judge 0.76 and rubric 0.88). The judge floor
+was re-based on 2026-11-22 when the judge changed from Gemini 4 Argon to Claude Opus 5.5, a stricter
+judge: run 44994632550 scored judge 0.815, less 0.05 and rounded down. The rubric floor was raised on
+2026-11-24 from 0.82 to 0.88: run 45230293916 on release aa85ff4c, the first whole run measured with
+the shown quantities table (decision 0168) and the everyCited share (decision 0174), answered all 24
+questions at rubric 0.930 and judge 0.807, and the rubric's 0.930 less 0.05, rounded down, is 0.88
+(decisions 0126, 0133, 0147 and 0174 and [retrieval.md](retrieval.md), Floors). They are compared only for a run that asked every
 question and was not stopped by the cap; a mean that is missing breaks its floor. The workflow then fails
 when a floor is broken and keeps one issue, `Answers fell below their floor`, through
 `.github/actions/release-issue`: opened or commented on while a floor is broken, closed when a whole

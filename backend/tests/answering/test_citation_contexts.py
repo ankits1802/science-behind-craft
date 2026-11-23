@@ -53,7 +53,7 @@ async def test_a_quoted_citation_carries_the_public_passage_around_its_quote() -
     found = await with_contexts(session, claims())
     (view,) = found.views.values()
     assert [citation["context"] for citation in view.citations] == [PASSAGE, None, None]
-    assert CONTEXT_ACLS == ("PUBLIC", "SIGNED_IN") and "RESEARCHER" not in CONTEXT_ACLS
+    assert CONTEXT_ACLS == ("PUBLIC",)
 
 
 async def test_a_context_is_a_passage_and_never_a_transcript_window() -> None:
