@@ -17,12 +17,14 @@ from app.models import (
     LayoutProposal,
     StructureProposal,
 )
+from app.models.science import READING_REJECTED
 from app.research.page_revalidation import PageOwners
 from app.research.review_queue import (
     COMPONENTS,
     FACTS,
     IMAGES,
     LAYOUTS,
+    READINGS,
     STAGES,
     STRUCTURE,
     TESTIMONY,
@@ -32,6 +34,7 @@ from app.research.review_queue_stages import PLACED_STATUS
 from app.research.structure_proposals import APPROVED_STATUS
 
 from .page_revalidation import claim_owners, craft_owners, merged_owners, refresh_pages
+from .review_queue_readings import reading_craft
 
 __all__ = ["refresh_after_decision"]
 
@@ -52,6 +55,8 @@ async def _owners(session: AsyncSession, decided: QueueDecision) -> PageOwners:
         return await _component_owners(session, decided.id)
     if decided.kind == LAYOUTS and decided.status == APPROVED:
         return await _layout_owners(session, decided.id)
+    if decided.kind == STRUCTURE and decided.status == APPROVED_STATUS:
+        return await _structure_owners(session, decided.id)
     craft = _owning_craft(decided)
     if craft is None:
         return PageOwners()
@@ -62,13 +67,23 @@ async def _owners(session: AsyncSession, decided: QueueDecision) -> PageOwners:
 def _owning_craft(decided: QueueDecision) -> Select[Any] | None:
     if decided.kind == TESTIMONY and decided.status == REJECTED_TESTIMONY:
         return select(ArtisanContribution.craftId).where(ArtisanContribution.id == decided.id)
-    if decided.kind == STRUCTURE and decided.status == APPROVED_STATUS:
-        return select(StructureProposal.craftId).where(StructureProposal.id == decided.id)
     if decided.kind == STAGES and decided.status == PLACED_STATUS:
         return select(Concept.craftId).where(Concept.id == decided.id)
     if decided.kind == IMAGES and decided.status == APPROVED:
         return select(ImageContribution.craftId).where(ImageContribution.id == decided.id)
+    if decided.kind == READINGS and decided.status == READING_REJECTED:
+        return reading_craft(decided.id)
     return None
+
+
+async def _structure_owners(session: AsyncSession, proposal_id: uuid.UUID) -> PageOwners:
+    row = await session.get(StructureProposal, proposal_id)
+    if row is None:
+        return PageOwners()
+    if row.categoryId is not None:
+        slug = await session.scalar(select(CraftCategory.slug).where(CraftCategory.id == row.categoryId))
+        return PageOwners(categories=(slug,)) if slug else PageOwners()
+    return await craft_owners(session, [row.craftId] if row.craftId is not None else [])
 
 
 async def _component_owners(session: AsyncSession, proposal_id: uuid.UUID) -> PageOwners:
