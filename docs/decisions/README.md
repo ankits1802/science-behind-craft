@@ -206,6 +206,7 @@ flowchart LR
 | [0160](0160-place-builders-kept-true.md) | A geography section reuses a current story, places are keyed and pinned by the register, seasons read what a source states, and the place proofs run on production | · |
 | [0161](0161-listen-falls-back-a-node-counts-admins-see-hidden-facts.md) | Listen falls back to the Gemini voice by sentence, a shared-science node counts and pages its crafts, admins see the hidden facts, and the smoke measures the dock's bit rate | · |
 | [0162](0162-unused-craft-page-chapters-retired.md) | The craft page's chapters keep only what a page draws, and an approved structure writes its shared rows at once | · |
+| [0163](0163-limits-kept-by-choice-and-a-register-that-only-shrinks.md) | Nine more limits are kept by choice, the debt register may only shrink, the database tests run in shards, and each process on the box keeps to its own connection budget | · |
 
 ## How this document is kept true
 
