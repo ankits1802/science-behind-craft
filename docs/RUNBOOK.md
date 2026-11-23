@@ -727,7 +727,9 @@ fixture or the category page (`docs/contracts/category-page.md`).
   60 to 3300, 1800 by default). It runs `embed_craft_descriptors` and then `embed_knowledge` on the box
   until every claim and passage vector carries the current stamp or the time is spent; the daily
   Coverage enrichment embeds what is left. About 2.6 million tokens (0.52 US dollars) on 2026-11-22.
-- **Answer quality** (`answer-quality.yml`): by hand, from main (`-f limit=`, `-f only=`, `-f cap=`).
+- **Answer quality** (`answer-quality.yml`): by hand, from main (`-f limit=`, `-f only=`, `-f cap=`;
+  `-f fresh=true` answers each question afresh, reusing no stored section, so two routes compare on
+  equal terms).
   A run that asks every question compares the judge and rubric means with the answer floors and
   keeps the issue `Answers fell below their floor`.
 - **Floors**: raise a floor in `backend/app/data/eval/floors.json` (version 2: per question set,
