@@ -20,6 +20,7 @@ SALT_LAND_GAP = 5
 PLATE_INK_RATIO = 5
 PLATE_TEXTURE_GAP = 3
 MATERIAL_RESERVED_GAP = 3
+ATOM_GAP = 5
 INTERACTIVE_CHROMA = 0.15
 BLUE_HUES = (230, 290)
 
@@ -166,6 +167,37 @@ def _specimen_violations(tokens: dict[str, Any], system: System) -> list[str]:
     return bad
 
 
+def _atom_violations(symbol: str, theme: str, entry: dict[str, Any]) -> list[str]:
+    bad = []
+    if max(entry["vsStage"], entry["vsEdge"]) < GRAPHIC_RATIO:
+        bad.append(f"atom {symbol} {theme} edge {entry['vsStage']}/{entry['vsEdge']} < {GRAPHIC_RATIO}")
+    if "vsLetter" in entry and entry["vsLetter"] < TEXT_RATIO:
+        bad.append(f"atom {symbol} {theme} letter {entry['vsLetter']} < {TEXT_RATIO}")
+    near, other = entry["nearestSemantic"], entry["nearestAtom"]
+    if near["deltaE"] < MATERIAL_RESERVED_GAP:
+        bad.append(f"atom {symbol} {theme} {near['deltaE']} from {near['token']}")
+    if other["deltaE"] < ATOM_GAP:
+        bad.append(f"atom {symbol} {theme} {other['deltaE']} from atom {other['symbol']}")
+    _, chroma, hue = oklch(entry["hex"])
+    if BLUE_HUES[0] <= hue <= BLUE_HUES[1] and chroma >= INTERACTIVE_CHROMA:
+        bad.append(f"atom {symbol} {theme} chroma {chroma:.3f} reads as the interactive indigo")
+    return bad
+
+
+def _molecule_violations(tokens: dict[str, Any], system: System) -> list[str]:
+    molecule = tokens["molecule"]
+    bond = molecule["kit"]["mol-bond"]
+    bad = [
+        f"molecule mol-bond {theme} {bond[theme]['vsStage']} < {GRAPHIC_RATIO}"
+        for theme in system.themes
+        if bond[theme]["vsStage"] < GRAPHIC_RATIO
+    ]
+    for symbol, entry in molecule["atoms"].items():
+        for theme in system.themes:
+            bad += _atom_violations(symbol, theme, entry[theme])
+    return bad
+
+
 def validate(tokens: dict[str, Any], system: System) -> list[str]:
     checks = (
         _colour_violations,
@@ -175,5 +207,6 @@ def validate(tokens: dict[str, Any], system: System) -> list[str]:
         _map_violations,
         _plate_violations,
         _specimen_violations,
+        _molecule_violations,
     )
     return [violation for check in checks for violation in check(tokens, system)]

@@ -67,7 +67,7 @@ def test_two_colours_draw_a_key_opening_the_chemistry_one_as_its_swatch_pair_one
         "Blue in the air.",
         WHY_TEXT,
         "Yellow",
-        "Turmeric",
+        "Marigold",
         "A bright yellow.",
     ]
     chem = [(e.ref, e.within) for e in document.content.layout if e.chapter == "chem"]
@@ -202,7 +202,7 @@ def test_each_mordant_s_shift_and_a_dye_s_stated_colour_join_the_key_in_the_orde
         "Madder on iron",
         SHIFTS[1][1],
         "Yellow",
-        "Pomegranate rind",
+        "Marigold flowers",
         SHIFTS[2][1],
     ]
     assert text_of(document, spec["title"]) == "Three colours and what gives each"

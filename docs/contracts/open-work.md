@@ -531,8 +531,10 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   reaction, the compounds of its materials and the depicted colours recorded for them, and builds
   `reaction_player` (two reactions or more, in the order of their stages, an equation only where
   the server balanced one), `dip_player` (two bath stages or more with their colour after, each in
-  the depicted colour recorded with the fact that states it), `molecule_3d` (up to two compounds of its materials, from
-  PubChem's 3D conformer through `ConformerCache`, of carbon, hydrogen, nitrogen and oxygen only)
+  the depicted colour recorded with the fact that states it or of the dye, mordant or resist that
+  gives it, a colour no token depicts outlined and named in words), `molecule_3d` (up to two
+  compounds of its materials, from PubChem's 3D conformer through `ConformerCache`, of the elements
+  the design colours, decision 0202)
   or `experiment_lab` with a `choice_toggle` for each of two or three materials with a stated
   alternative. Every unit cites only those facts. With too little it composes nothing and
   `missing` names each fact or structure item to propose; what it composed without is `leftOut`.

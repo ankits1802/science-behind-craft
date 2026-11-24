@@ -8,7 +8,7 @@ from app.research.blocks import ExplainerSentence, LadderStage, ProcessLadderBlo
 from app.research.blocks_matter import MaterialCardBlock
 from app.research.blocks_signature import MordantBathBlock
 from app.research.citations import Citation
-from app.research.colour_key import AGENT_ROLES, KEY_COLOURS_MIN, depicted_material
+from app.research.colour_key import KEY_COLOURS_MIN, agent_materials, agent_names, depicted_material
 from app.research.colours import colour_of, states_colour
 from app.research.explainer import Block
 from app.research.quotes import quote_key
@@ -111,13 +111,8 @@ def _stage_colours(stage: LadderStage) -> Iterator[KeyColour]:
     after = stage.after
     if after is None:
         return
-    agents = [material for material in stage.materials if material.role in AGENT_ROLES]
-    names = tuple(
-        name
-        for material in agents
-        for name in (material.name, material.botanical_name, *material.local_names)
-        if name
-    )
+    agents = agent_materials(stage.materials)
+    names = agent_names(agents)
     text = KeyText(_closed(after.text), _claims(after.citations))
     why = _key_text(stage.why) if stage.why is not None else None
     befores = _changes(after.citations)

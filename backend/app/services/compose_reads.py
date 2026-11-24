@@ -205,6 +205,9 @@ def _material(
         compound=compounds.get(entry.key),
         tokens=tokens,
         alternatives=tuple((alternative.key, alternative.claim_id) for alternative in entry.alternatives),
+        role=entry.role,
+        local_names=tuple(entry.local_names),
+        botanical_name=entry.botanical_name,
     )
 
 

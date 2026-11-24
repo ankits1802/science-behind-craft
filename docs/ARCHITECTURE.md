@@ -65,7 +65,7 @@ are in `docs/RUNBOOK.md`; what the box assumes from the code is in `docs/contrac
 | `frontend/` | Next.js web client (npm, Node 26) |
 | `infra/` | Terraform, deploy scripts, systemd units, secret seeding, Supabase lockdown SQL |
 | `shared/` | Files checked by more than one side (`craft-master.sha1`, the `*.golden.*` contract files) |
-| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `repo_facts_build.py` and the `repo_facts` package, which write `docs/REPO_FACTS.md`; `curation/` (fetch, verify, check, schema and migrate for curated dossiers, decisions 0051 and 0095); `design/` and `design_tokens.py`, the design token generator that writes `frontend/app/tokens.css` and the skill's references (decision 0092); their tests |
+| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `repo_facts_build.py` and the `repo_facts` package, which write `docs/REPO_FACTS.md`; `curation/` (fetch, verify, check, schema and migrate for curated dossiers, decisions 0051 and 0095); `design/` and `design_tokens.py`, the design token generator that writes `frontend/app/tokens.css`, the skill's references and the server's lists of depicted materials and drawn atoms (decisions 0092 and 0202); their tests |
 | `docs/` | Plan, architecture, catalogue, contracts, decisions, debt, progress, runbook, data sources, the design boards, the contributors' terms, the generated repository facts and the README kit (`docs/README.md` is the index) |
 | `.claude/skills/` | Practice skills (engineering, backend, frontend), naming, the frontend design system (`kalavigyan-design`), the contributor's method skills (`kalavigyan-craft-pages`, `kalavigyan-datasets`, `kalavigyan-interactives`), the vendored security audit, and the retired `motion` pointer |
 
@@ -218,7 +218,10 @@ OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the metho
 are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
-monograph kit plays it on any page as it plays Kutch Ajrakh's. The research write-back asks the worker's judge ladder, cheapest
+monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's
+colour through the colour key's substance-to-token mapping (`research/colour_key`), and a molecule
+draws any of the twenty elements of the design generator's atom table (`science/molecule_elements`,
+decision 0202). The research write-back asks the worker's judge ladder, cheapest
 model first (`providers/judge_routes.thrifty_judges`, decision 0169), and a write-back the filing
 ladder cannot place waits for a reviewer, who may file it under a craft or a family's science
 (decision 0159). Beside facts the queue holds a process stage an answer found (`STAGES`, decision

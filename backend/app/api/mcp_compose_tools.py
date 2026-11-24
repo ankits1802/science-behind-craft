@@ -32,7 +32,7 @@ ONE_ABOUT = "name at most one of stage, reaction, material and compound"
 DESCRIPTION = (
     "Compose a craft's own interactive from the facts and structure its page holds, as the server builds "
     "it: reaction_player from its stored reactions in the order of their stages, dip_player from its stages in "
-    "a bath with their colour after and the recorded colours of the dyes and mordants they use, molecule_3d "
+    "a bath with their colour after, drawn as the depicted colour of the dye, mordant or resist named, molecule_3d "
     "from a compound its materials name with PubChem's 3D conformer (atoms, bonds, turned and zoomed by "
     "pointer, touch and keyboard), experiment_lab from the alternatives its facts compare, with a toggle for "
     "each. Every state and label cites only that craft's own facts; nothing is borrowed from another page. "

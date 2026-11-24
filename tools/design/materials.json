@@ -354,6 +354,120 @@
       ],
       "hex": "#8E5E4A",
       "shows": "Riverside soil, rui mitti: red, soft and easy to shape."
+    },
+    {
+      "token": "dye-turmeric",
+      "craft": "Bagru-Hand-Block-Print",
+      "material": "M16",
+      "claims": [
+        "C088"
+      ],
+      "oklch": [
+        0.84,
+        0.15,
+        98
+      ],
+      "shows": "Turmeric (haldi) yellow on cotton, which the GI journal's dye table gives as yellow."
+    },
+    {
+      "token": "dye-pomegranate",
+      "craft": "Bagru-Hand-Block-Print",
+      "material": "M17",
+      "claims": [
+        "C088"
+      ],
+      "oklch": [
+        0.88,
+        0.085,
+        100
+      ],
+      "shows": "Pomegranate rind (naspal) on cotton: the light yellow of the GI journal's dye table."
+    },
+    {
+      "token": "dye-kali-mitti",
+      "craft": "Dabu-Hand-Block-Printing",
+      "material": "M01",
+      "claims": [
+        "C007",
+        "C077"
+      ],
+      "oklch": [
+        0.32,
+        0.015,
+        65
+      ],
+      "shows": "Kali mitti, the black clay of the dabu resist paste, laid thick on the cloth."
+    },
+    {
+      "token": "dye-cinnabar",
+      "craft": "Orissa-Pattachitra",
+      "material": "M05",
+      "claims": [
+        "C083"
+      ],
+      "oklch": [
+        0.6,
+        0.19,
+        34
+      ],
+      "shows": "Hingula, cinnabar: the vermilion red of pattachitra."
+    },
+    {
+      "token": "dye-red-ochre",
+      "craft": "Orissa-Pattachitra",
+      "material": "M06",
+      "claims": [
+        "C083"
+      ],
+      "oklch": [
+        0.5,
+        0.12,
+        40
+      ],
+      "shows": "Geru, red ochre: the brick red of pattachitra."
+    },
+    {
+      "token": "dye-orpiment",
+      "craft": "Orissa-Pattachitra",
+      "material": "M07",
+      "claims": [
+        "C085",
+        "C095"
+      ],
+      "oklch": [
+        0.82,
+        0.16,
+        74
+      ],
+      "shows": "Haritala, orpiment: a light, vivid yellow inclined towards orange."
+    },
+    {
+      "token": "dye-lamp-black",
+      "craft": "Orissa-Pattachitra",
+      "material": "M08",
+      "claims": [
+        "C055"
+      ],
+      "oklch": [
+        0.2,
+        0.004,
+        90
+      ],
+      "shows": "Lamp black from an oil wick, gathered inside an earthen pot."
+    },
+    {
+      "token": "dye-conch-white",
+      "craft": "Orissa-Pattachitra",
+      "material": "M04",
+      "claims": [
+        "C081"
+      ],
+      "oklch": [
+        0.955,
+        0.012,
+        95
+      ],
+      "shows": "Conch-shell white, the pata painters' base colour."
     }
   ]
 }
