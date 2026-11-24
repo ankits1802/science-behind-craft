@@ -10,9 +10,10 @@ from app.research.colour_key import agent_materials, agent_names, first_depicted
 from .compose_held import CraftHeld, HeldAfter, HeldStage
 from .compose_parts import UnitBook
 
-__all__ = ["PRINTED", "PRINTED_STAGES", "after_token", "stage_agent_names", "stage_scene"]
+__all__ = ["PASTED_STAGES", "PRINTED", "PRINTED_STAGES", "after_token", "stage_agent_names", "stage_scene"]
 
 PRINTED_STAGES = frozenset({"PRINT"})
+PASTED_STAGES = PRINTED_STAGES | {"RESIST"}
 PRINTED = "printed"
 CLOTH = "cloth"
 WATER = "water"
@@ -87,14 +88,19 @@ def _piece(craft: CraftHeld, stage: HeldStage, stated: Sequence[Stated], book: U
 
 
 def _paste(craft: CraftHeld, stage: HeldStage, stated: Sequence[Stated], book: UnitBook) -> list[Part]:
-    if stage.stage_type not in PRINTED_STAGES or not stated:
+    if stage.stage_type not in PASTED_STAGES or not stated:
+        return []
+    form = choice_named("paste", "form", " ".join(text for _, text in stated))
+    if form is None and stage.stage_type in PRINTED_STAGES:
+        form = PRINTED
+    if form is None:
         return []
     for key in stage.material_keys:
         material = craft.material(key)
         if material is not None and material.tokens:
             naming = [claim for claim, text in stated if material.name.casefold() in text.casefold()]
             label = book.cited(material.name, naming or [stated[0][0]])
-            return [{"part": "paste", "form": PRINTED, "material": material.tokens[0], "label": label}]
+            return [{"part": "paste", "form": form, "material": material.tokens[0], "label": label}]
     return []
 
 

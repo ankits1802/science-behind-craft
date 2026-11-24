@@ -68,7 +68,8 @@ own facts), `docs/contracts/component-specs-plates.md` (label_card) and
 4. **The composer composes from the kit.** `services/compose_kit.stage_scene` builds a stage's
    scene from the facts that state it: the bath in the vessel they name holding the piece in its
    recorded colour after, else the cloth they name or a piece of the shape they name in that colour,
-   a printing stage's first coloured material as a printed paste, and the heat source and water
+   a printing or resist stage's first coloured material as a paste applied as they name (a printing
+   stage prints it when they name no way), and the heat source and water
    form they name; three parts at most, a bath with its piece dips and a cloth takes its colour,
    each part labelled by the fact that names it. Choices the facts do not name are never chosen for
    them, save the cloth's plain swatch. A dip phase the kit cannot draw is left out and named with

@@ -236,7 +236,8 @@ Its scenes are kit scenes (`services/compose_kit.stage_scene`, decision 0200), e
 stage it draws and the facts that state that stage, at most three parts: the bath in the vessel those
 facts name (a vat, pot, trough or pit), holding the piece in the stage's recorded colour after;
 otherwise the cloth they name, or a piece of the shape they name, in that colour; for a printing
-stage, its first material with a recorded colour printed as a paste; and the heat source and the
+or resist stage, its first material with a recorded colour as a paste, applied as those facts name
+(printed, spread or outline; a printing stage prints it when they name no way); and the heat source and the
 water form they name. A bath with its piece dips, a cloth takes its colour. Each part is labelled by
 the fact that names it (the stage's name for the bath, the colour after's fact for the cloth or piece,
 the material's name for the paste). A dip player draws every phase and its scene so, and a phase the

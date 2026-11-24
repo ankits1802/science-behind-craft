@@ -74,6 +74,23 @@ def test_a_printing_stage_prints_its_material_in_its_recorded_colour_and_a_scene
     }
 
 
+def test_a_resist_stage_applies_its_paste_only_in_the_way_its_facts_name() -> None:
+    after = HeldAfter("White", ("white",), FIRE, ("--dye-lime",))
+    stage = HeldStage("S09", "Resist", "RESIST", (FIRE,), ("M02",), after)
+    for said, drawn in (
+        ("The resist keeps the ground white.", None),
+        ("The outline is printed with a paste of lime and gum.", [("paste", "printed", "--dye-lime")]),
+    ):
+        craft = held(facts={**BAGRU.facts, FIRE: HeldFact(FIRE, said)}, stages=(*BAGRU.stages, stage))
+        scene = stage_scene(craft, stage, UnitBook())
+        found = (
+            None
+            if scene is None
+            else [(part["part"], part["form"], part["material"]) for part in scene["parts"]]
+        )
+        assert found == drawn, said
+
+
 def test_a_stage_whose_facts_name_nothing_the_kit_draws_composes_no_scene() -> None:
     stage = BAGRU.stage("S02")
     assert stage is not None
