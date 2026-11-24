@@ -1,14 +1,14 @@
 {
  "schemaVersion": 1,
  "recordedAt": "2026-11-24",
- "run": 45475377032,
+ "run": 45485654429,
  "pages": {
   "/crafts/Kutch-Ajrakh": {
    "scriptBytes": 697810,
    "styleBytes": 142254,
    "firstScreenImageBytes": 73696,
-   "lcpMs": 4760,
-   "blockingMs": 747,
+   "lcpMs": 5028,
+   "blockingMs": 973,
    "cls": 0.0293,
    "readingShift": 0
   },
@@ -16,10 +16,10 @@
    "scriptBytes": 715853,
    "styleBytes": 142254,
    "firstScreenImageBytes": 73696,
-   "lcpMs": 5180,
-   "blockingMs": 227,
+   "lcpMs": 5224,
+   "blockingMs": 319,
    "cls": 0.0293,
-   "readingShift": 0.0325
+   "readingShift": 0
   }
  }
 }

@@ -109,23 +109,25 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
   nav and brand) and not at all as it was read. The page of every kind sent 804,618 bytes of
   JavaScript and the same CSS and first screen, painted its largest element at 4,896 ms and was
   blocked 334 ms.
-- **The measure with the heavy kinds loading near** (run 45475377032 on 290b62a9), which
-  `e2e/phone-budget.json` records. Kutch Ajrakh sends 697,810 bytes of JavaScript (90,450 fewer:
+- **The measure with the heavy kinds loading near** (four runs of the same build: 45475377032,
+  45478401340, 45481973342 and 45485654429, whose numbers `e2e/phone-budget.json` records). The
+  bytes are the same in every run. Kutch Ajrakh sends 697,810 bytes of JavaScript (90,450 fewer:
   the 83.7 KB chunk that carried every kind's view is gone, although its page draws none of the
   heavy kinds, because the registry no longer brings them), 142,254 bytes of CSS (1,452 more, the
-  ground map's stylesheet now on the page before its code), the same first screen and pictures;
-  its largest element paints at 4,760 ms and the main thread is blocked 747 ms, 530 of them in the
-  framework chunk drawing the rest of the page and 201 in the kit. The page of every kind sends
-  715,853 bytes of JavaScript (88,765 fewer) and 73,696 bytes of pictures (81,683 fewer: the maps
-  below its first screen load nothing until they near), is blocked 227 ms (107 fewer) and paints
-  its largest element at 5,180 ms. Read then at 0.8 of a screen every 300 ms, a fling, with the
-  views drawn a screen and a half ahead, it moved by 0.0325 (`section#k26`) in that run and by
-  0.7733 in the next (run 45481973342: `section#k26`, `section#sources`), because the fling
-  outran the views' code on this network and their reserve was replaced in view; the margin was
-  widened to two screens and the read slowed to a skim of a screen a second, and the record was
-  taken again (below). With the build's largest chunk it
-  does not load added to its document, Kutch Ajrakh sends 865,932 bytes, past its 767,591-byte
-  budget, and the spec names `/_next/static/chunks/2np8vbiqedr4p.js` first.
+  ground map's stylesheet now on the page before its code) and the same pictures. The page of every
+  kind sends 715,853 bytes of JavaScript (88,765 fewer) and 73,696 bytes of pictures (81,683
+  fewer: the maps below its first screen load nothing until they near). The times move from run
+  to run on a shared runner more than the change moved them: Kutch Ajrakh's largest element at
+  4,760 to 5,268 ms and its blocking 747 to 1,163 ms (973 recorded, 846 of them in the framework
+  chunk drawing the rest of the page, 198 in the kit); the page of every kind at 4,996 to 5,224 ms
+  and 216 to 324 ms. Read at 0.8 of a screen every 300 ms, a fling, with the views drawn a screen
+  and a half ahead, the page of every kind moved by 0.0325 (`section#k26`) in two runs and by
+  0.7733 in the third (`section#k26`, `section#sources`), because the fling outran the views'
+  code on this network and their reserve was replaced in view; with the views drawn two screens
+  ahead and the read a skim of a screen a second, neither page moves as it is read (0 in run
+  45485654429). With the build's largest chunk it does not load added to its document, Kutch
+  Ajrakh sends 865,932 bytes, past its 767,591-byte budget, and the spec names
+  `/_next/static/chunks/2np8vbiqedr4p.js` (164.2 KB) first.
 - **A page past its budget fails the pull request**, with the sentence that names what grew, and
   the numbers are in every run's log and artifact for the lead's release notes.
 - **What is left.** The kit's players, vats and dips bind as the kit starts, not on approach, and
@@ -134,7 +136,7 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
   lane. The render-blocking kit stylesheet stays one file (decision 0177, item 7). A plate's
   Commons picture is still offered at one standard width, 960 px, because no standard size names a
   figure in the reading column; a new size is a design-system decision. The first screen's largest
-  element paints after about 4.9 s on this phone, against Lighthouse's 2.5 s target: the budget
+  element paints after about five seconds on this phone, against Lighthouse's 2.5 s target: the budget
   holds it where it is, and bringing it down is the speed entry of the debt register, which the
   lead may now clear or rewrite from these numbers instead of production's Lighthouse.
 
