@@ -22,7 +22,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | Terraform state | `s3://kalavigyan-tfstate-626159998512/kalavigyan/infra.tfstate` (versioned, private, S3 lockfile). DR's and FR's state are not touched. |
 | IAM | user `kalavigyan-media` (API's S3 key), role + instance profile `kalavigyan-box`, role `kalavigyan-deploy` (GitHub OIDC, `repo:cxacraftecosystem-ui/KalaVigyan:ref:refs/heads/main` only) |
 | Parameter Store | `/kalavigyan/env/*` (SecureString, one parameter per env key, the box's source of truth). `/kalavigyan/db-password` (Supabase DB password backup) |
-| CloudWatch Logs | `/kalavigyan/kv-api`, `kv-worker`, `kv-fetcher`, `kv-contributions`, `nginx-access`, `nginx-error`, each kept 30 days; the box role may write them (inline policy `kalavigyan-box-logs`). See Logs |
+| CloudWatch Logs | `/kalavigyan/kv-api`, `kv-worker`, `kv-fetcher`, `kv-contributions`, `kv-renderer`, `nginx-access`, `nginx-error`, each kept 30 days; the box role may write them (inline policy `kalavigyan-box-logs`). See Logs |
 | Database | Supabase project `science-behind-craft`, ref `inqbqiqspgvhfamupwuc`, org `pifvglrcqwrizapmooik`, ap-south-1, Postgres 17.11 on Small compute (`max_connections` 90). Session pooler `aws-1-ap-south-1.pooler.supabase.com:5432`, user `postgres.inqbqiqspgvhfamupwuc`, pool size 45 (raised by the owner from 30 on 2026-11-23; `max_client_conn` 400); see Connection budget |
 | Web | Vercel project `kalavigyan` (`prj_5hRNy7S9CS4fkhVVBRW5mbmAAUSd`), team `team_pcTf4Alb2DCIwq2IZcdu00dS`, root `frontend`, Node 26.x, no Git link, `https://kalavigyan.vercel.app` |
 | Repository | `github.com/cxacraftecosystem-ui/KalaVigyan` (deploys); mirror `github.com/ankits1802/science-behind-craft` (public, no deploys) |
@@ -33,9 +33,11 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 |---|---|
 | `/opt/kalavigyan/releases/<sha>` | One directory per release: `backend/` with its own `.venv`, `infra/deploy/`, `REVISION` |
 | `/opt/kalavigyan/slot-8000`, `slot-8001`, `current` | Symlinks used by blue/green. nginx proxies to exactly one port. |
-| `/opt/kalavigyan/.env`, `fetcher.env` | Rendered from Parameter Store by `kv-render-env` (0640 root:kalavigyan) |
+| `/opt/kalavigyan/.env`, `fetcher.env`, `renderer.env` | Rendered from Parameter Store by `kv-render-env` (0640 root:kalavigyan) |
 | `kv-api@8000`, `kv-api@8001` | The two API colours (user `kalavigyan`, MemoryMax 3000M, Restart=always) |
 | `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher`. `app/worker.py` (the media queue, decision 0018) ships with the media backend and runs as user `kalavigyan`; `journalctl -u kv-worker` shows its jobs. `kv-fetcher` runs as a user of its own that systemd makes at each start (`DynamicUser=yes`, outside the `kalavigyan` group, so it cannot read `.env`; `ProtectProc=invisible`, so it sees no other user's processes), with only `fetcher.env`, which systemd reads as root (decision 0173). |
+| `kv-renderer` | The page renderer (decision 0195; Page renderer, below): a user of its own like `kv-fetcher`, with only `renderer.env`, on 127.0.0.1:8091. |
+| `/opt/chrome-headless-shell/<version>`, `current` | The chrome-headless-shell `infra/deploy/chromium.pin` names, installed by `install_renderer.sh` on every release that lacks it (sha256 checked, root-owned); `current` points at the one the renderer runs |
 | `api-watchdog.timer` | Restarts a running colour after 2 failed `/health` checks a minute apart (`journalctl -t api-watchdog`) |
 | nginx site `kalavigyan` | `:80`. The snippet `kalavigyan-origin-verify.conf` returns 403 without CloudFront's header; loopback is exempt. |
 | `redis-server` | `127.0.0.1:6379`, 256 MB LRU |
@@ -124,6 +126,7 @@ run over SSM or by the deploy, is a script. `DATABASE_CONNECTION_LIMIT` and
 | `kv-worker` (`worker`) | 1 + 1 | 1 + 0 | 3 |
 | one script over SSM or from the deploy (`script`) | 1 + 2 | 1 + 0 | 4 |
 | `kv-fetcher` (`fetcher`) | no database | | 0 |
+| `kv-renderer` (`renderer`) | no database | | 0 |
 
 - **The sum is 40** with both API slots, the queue, the worker and one script, leaving 5 of the 45
   for a person's `psql` or the dashboard. `backend/tests/test_connection_budget.py` reads
@@ -141,6 +144,39 @@ run over SSM or by the deploy, is a script. `DATABASE_CONNECTION_LIMIT` and
   carries them; `kv-render-env` writes no limit. Never raise a budget past what the pooler holds: a
   slot that cannot connect fails its health check and the deploy rolls back.
 
+## Page renderer
+
+`kv-renderer` (decision 0195) draws a `preview_page` preview as a reader sees it. The API asks it
+at `RENDERER_URL` (`http://127.0.0.1:8091`, the code's default) with the private link and a pass
+that reads only that preview for two minutes (`x-kv-render-pass`, minted with a key of its own
+from `JWT_SECRET`). It starts the pinned chrome-headless-shell, opens the link at 390 and 1440 px
+in light with motion reduced, runs the shared drawing checks (`backend/app/data/design/drawing-checks.js`,
+the copy Monograph parity runs) and takes the first screen at both widths and each chapter, at most
+1 MB of JPEG in all, then kills the browser.
+
+| What | Value |
+|---|---|
+| Unit | `infra/deploy/units/kv-renderer.service`: `python -m app.renderer`, `DynamicUser=yes`, `ProtectSystem=strict`, private ranges and link-local blocked, MemoryHigh 1200M, MemoryMax 1536M, no swap, 512 tasks, restarted with the workers on every release |
+| Browser | `infra/deploy/chromium.pin` (Chrome for Testing's chrome-headless-shell, version, URL and SHA-256), installed by `infra/deploy/install_renderer.sh` into `/opt/chrome-headless-shell/<version>`, with the Debian libraries its `deb.deps` names (GTK, wget and xdg-utils left out) and checked with `ldd` |
+| What it may reach | the site (`PUBLIC_WEB_URL` from `renderer.env`) and, for pictures only, `upload.wikimedia.org`: every other request is refused in the browser, and no other host name resolves |
+| Limits | one render at a time; a second waits 5 s and is told the renderer is busy; a render stops at 35 s; the API waits 45 s |
+| When it is down | the preview's report is still given; rule 28 says the pictures could not be made and why, and is the agent's to judge on the link; `propose_page` refuses only a page whose latest preview failed the checks |
+
+To look at it:
+
+```bash
+sudo systemctl status kv-renderer
+journalctl -u kv-renderer -n 50
+curl -s http://127.0.0.1:8091/health
+readlink -f /opt/chrome-headless-shell/current
+```
+
+To bring it up on a box that has never had it, after the release that ships it is live:
+`sudo bash /opt/kalavigyan/current/infra/deploy/install_renderer.sh`, then
+`sudo kv-render-env && sudo systemctl enable --now kv-renderer`. A newer browser is a new pin: its
+version, its download from `googlechromelabs.github.io/chrome-for-testing` and the SHA-256 of that
+zip, shipped as a release; the old directory stays beside it.
+
 ## Shell on the box
 
 ```bash
@@ -157,7 +193,7 @@ writes it, by the unit's `SyslogIdentifier`, to `/var/log/kalavigyan/<service>.l
 `/etc/logrotate.d/kalavigyan`). nginx writes one JSON line per request to
 `/var/log/nginx/kalavigyan-access.log` (`/etc/nginx/conf.d/kalavigyan-logs.conf`) beside its own
 `access.log` and `error.log`. The CloudWatch agent (`amazon-cloudwatch-agent`, user `cwagent` in group
-`adm`) ships those six files to CloudWatch Logs, one group per service, each kept 30 days
+`adm`) ships those seven files to CloudWatch Logs, one group per service, each kept 30 days
 (decision 0150). The journal stays as it was: `journalctl -u kv-api@8000` still reads a colour on
 the box.
 
@@ -167,6 +203,7 @@ the box.
 | `/kalavigyan/kv-worker` | the media queue, the daily voice upkeep, the daily score sweep and the heartbeat |
 | `/kalavigyan/kv-fetcher` | the fetcher sandbox |
 | `/kalavigyan/kv-contributions` | the contribution queue's gates |
+| `/kalavigyan/kv-renderer` | the page renderer: one line per render, drawn or not and why (never a link or a pass) |
 | `/kalavigyan/nginx-access` | one line per request at the origin: `time`, `method`, `path`, `status`, `bytes`, `seconds`, `upstreamSeconds`, `requestId`, `agent` |
 | `/kalavigyan/nginx-error` | nginx's error log, less any line naming a capability route |
 
@@ -391,13 +428,13 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Assumes `kalavigyan-deploy` through GitHub OIDC (no static AWS keys in GitHub).
 3. Copies changed secrets into `/kalavigyan/env`.
 4. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
-5. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, installs the CPython that `infra/deploy/python.pin` names into `/opt/cpython/<version>+<build>` unless it is there (over https, checksum checked before it is unpacked, staged then moved, root-owned; decision 0118), builds the venv with uv on that interpreter, writes `RELEASE=<sha>` to the release's `release.env` (the API colour reads it, so `/health` names the commit it runs), then `blue_green.sh release <sha> --within <seconds>`:
+5. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, ships the logs, installs the renderer's browser (`install_renderer.sh`; a failure is a warning, and previews then say their pictures could not be made), installs the CPython that `infra/deploy/python.pin` names into `/opt/cpython/<version>+<build>` unless it is there (over https, checksum checked before it is unpacked, staged then moved, root-owned; decision 0118), builds the venv with uv on that interpreter, writes `RELEASE=<sha>` to the release's `release.env` (the API colour reads it, so `/health` names the commit it runs), then `blue_green.sh release <sha> --within <seconds>`:
    1. migrate (`alembic upgrade head`; after three failed tries the live colour is stopped to free its pooler sessions, five more tries follow, and the live colour starts again as soon as one passes, so it serves through the seeds and the checks), seed (`seed_crafts`, `seed_claims`, `seed_districts`), bring the stored dataset records up to the registry (`sync_dataset_registry`, decision 0114) and import the curated dossiers (`import_curation`, decision 0053; a refused dossier exits 2 and stops the release like a failed seed), then rebuild the shared-science explorer's per-term summary (`refresh_shared_terms`, `docs/contracts/learning.md`) while the old colour serves; a non-zero exit of any of these six stops the release with "seeding failed" and nginx keeps the live colour, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and embed what the seeds and the import wrote (`embed_craft_descriptors`, then `embed_knowledge`, each bounded to 240 seconds; a failure is a warning too);
    2. start the other colour;
    3. wait for `/health/ready`: the new colour must start and reach its database, or it is stopped and nginx stays where it was;
    4. switch nginx;
    5. stop the old colour;
-   6. restart the worker and fetcher;
+   6. restart the worker, the fetcher, the contribution queue and the renderer;
    7. rebuild the stale pages and stored documents (`rebuild_stale_pages`, below) now that only this
       release serves, then refresh the pages the web holds (`refresh_served_pages`).
 

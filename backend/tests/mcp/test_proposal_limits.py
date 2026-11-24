@@ -219,7 +219,11 @@ async def test_spent_component_and_layout_limits_refuse_their_bundle_parts(
     async def subject(session: Any, kind: str, slug: str) -> WorkSubject:
         return AJRAKH
 
+    async def drawn_whole(*args: Any, **kwargs: Any) -> None:
+        return None
+
     monkeypatch.setattr(page_proposals, "subject_by_key", subject)
+    monkeypatch.setattr(page_proposals, "refuse_a_failed_drawing", drawn_whole)
     monkeypatch.setattr(page_proposals, "propose_component", never_called)
     monkeypatch.setattr(page_proposals, "propose_layout", never_called)
     nothing: Any = never_called

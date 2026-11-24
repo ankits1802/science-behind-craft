@@ -21,7 +21,7 @@ COMMANDS = {
     "sleep": "quiet.sh",
 }
 PREVIOUS, LIVE, NEW = "a" * 40, "b" * 40, "c" * 40
-WORKERS = ("kv-worker", "kv-fetcher", "kv-contributions")
+WORKERS = ("kv-worker", "kv-fetcher", "kv-contributions", "kv-renderer")
 SITE = "server {\n    location / {\n        proxy_pass http://127.0.0.1:8000;\n    }\n}\n"
 PROXIED = re.compile(r"proxy_pass http://127\.0\.0\.1:(\d+);")
 RUN_LIMIT = 90

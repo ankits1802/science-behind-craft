@@ -15,13 +15,8 @@ from app.models import User
 
 from ..readers import sign_in_as
 
-PUBLIC = "PUBLIC"
-SIGN_IN_FLOW = "SIGN_IN_FLOW"
-SERVICE = "SERVICE"
-ASKING = "ASKING"
-OWN_RECORDS = "OWN_RECORDS"
-ADMIN = "ADMIN"
-CONSENT = "CONSENT"
+PUBLIC, SIGN_IN_FLOW, SERVICE = "PUBLIC", "SIGN_IN_FLOW", "SERVICE"
+ASKING, OWN_RECORDS, ADMIN, CONSENT = "ASKING", "OWN_RECORDS", "ADMIN", "CONSENT"
 OPEN_CLASSES = frozenset({PUBLIC, SIGN_IN_FLOW, SERVICE})
 GUARDED_CLASSES = frozenset({ASKING, OWN_RECORDS, ADMIN, CONSENT})
 
@@ -111,6 +106,8 @@ SERVICE_ROUTES = {
     ("PUT", "/api/upload-links/slots/{token}"),
     ("PUT", "/api/knowledge/supplied-sources/slots/{token}"),
     ("PUT", "/api/dataset-uploads/{token}"),
+    ("GET", "/api/knowledge/pages/previews/{token}/drawn"),
+    ("GET", "/api/knowledge/pages/drawn-pictures/{contribution_id}"),
 }
 ASKING_ROUTES = {
     ("GET", "/api/answers/config"),

@@ -31,12 +31,6 @@ def test_it_writes_the_delivered_columns_and_the_preview_table_as_the_models_hol
     assert step.DELIVERED_SPEC == DELIVERED_SPEC and DELIVERED_SPEC in checks
     assert PagePreview.__tablename__ == step.PREVIEWS
     assert step.PREVIEW_SUBJECT_KINDS == PREVIEW_SUBJECT_KINDS
-    assert set(PagePreview.__table__.c.keys()) == {
-        "id",
-        "userId",
-        "subjectKind",
-        "subjectSlug",
-        "document",
-        "expiresAt",
-        "createdAt",
-    }
+    created = {"id", "userId", "subjectKind", "subjectSlug", "document", "expiresAt", "createdAt"}
+    assert migration("0108_render_review").PREVIEWS == step.PREVIEWS
+    assert set(PagePreview.__table__.c.keys()) == created | {"drawing", "drawingProblems"}

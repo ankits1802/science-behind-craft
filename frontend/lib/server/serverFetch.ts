@@ -1,5 +1,6 @@
 import {
   PROXY_SECRET_HEADER,
+  RENDER_PASS_HEADER,
   VIEWER_ADDRESS_HEADER,
   apiOrigin,
   cookieNames,
@@ -58,6 +59,19 @@ export async function signedInFetch<T>(path: string, options: SignedInFetchOptio
   const headers = serviceHeaders(deps.env);
   headers.set("authorization", `Bearer ${token}`);
   if (headers.has(PROXY_SECRET_HEADER)) headers.set(VIEWER_ADDRESS_HEADER, viewerOrUnknown(request.headers));
+  return fetchFromApi(path, { headers, cache: "no-store" }, options.parse, deps);
+}
+
+export type RenderPassFetchOptions<T> = {
+  parse: (body: unknown) => T;
+  pass: string;
+  deps?: Partial<ServerFetchDeps>;
+};
+
+export async function renderPassFetch<T>(path: string, options: RenderPassFetchOptions<T>): Promise<ServerFetchResult<T>> {
+  const deps = withDefaults(options.deps);
+  const headers = serviceHeaders(deps.env);
+  headers.set(RENDER_PASS_HEADER, options.pass);
   return fetchFromApi(path, { headers, cache: "no-store" }, options.parse, deps);
 }
 

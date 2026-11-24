@@ -10,7 +10,7 @@ from .component_specs_general import is_declared
 from .coverage_chapters import field_chapter
 from .elements import ELEMENTS
 from .monograph_document import MonographDocument
-from .monograph_page import ComponentEntry
+from .monograph_page import ComponentEntry, MonographContent
 from .page_drafts import PageLists
 from .page_report_design import DESIGN_RULE, design_evidence
 from .page_report_sources import counted_apart
@@ -19,6 +19,7 @@ from .structure_proposals import ReactionItem
 
 __all__ = [
     "DENSE_SENTENCES",
+    "EVIDENCE_MAX",
     "FAIL",
     "JUDGE",
     "OPENING",
@@ -64,6 +65,7 @@ JUDGE_HINTS: Mapping[int, str] = {
     16: "read the close of the page and its length at 1440 px",
     19: "read each transformation for what changes and what does it",
     22: "check that each quoted error is marked [sic] beside its correction",
+    28: "preview_page draws the page at 390 and 1440 px and checks what a reader sees; read its pictures",
 }
 
 Verdict = tuple[str, list[str]]
@@ -85,6 +87,7 @@ class ReportInput:
     statements: Mapping[str, str] = field(default_factory=dict)
     reactions: tuple[ReactionItem, ...] = ()
     supplied: Mapping[str, str] = field(default_factory=dict)
+    bar: MonographContent | None = None
 
 
 def node_text(nodes: Sequence[Any]) -> str:

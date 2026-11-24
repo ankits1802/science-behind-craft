@@ -503,7 +503,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `get_proposal` | work | contribute | read-only | `ProposalTicket` (`knowledge-writes.md`) |
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` |
-| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below) and `notices`; `_meta.ui` names `ui://kalavigyan/page-preview.html` |
+| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below) and `notices`, and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
 | `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices}`, each component in the snake_case `edit_draft`'s add takes (decision 0198) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
@@ -702,7 +702,11 @@ and a draft or a bundle of more than one part also against the page bundles; a b
 counts against that part's kind alone, as its retired tool did. A part is also refused when it names
 another page (a fact's or structure item's subject), when a category's bundle carries structure or
 pictures, when a component is keyed to another craft (`craft_slug` or a `CRAFT` subject), or when it
-cites a bundle fact that was refused. A refused part rolls back only itself: the others stand, and
+cites a bundle fact that was refused. A page whose account's latest live preview of it failed its
+drawing checks (rule 28, below) is refused whole before any part runs, naming the problems; a later
+preview that does not fail them lifts it, and so does one whose pictures could not be made
+(`services/page_renders.refuse_a_failed_drawing`, run by `services/page_proposals.propose_page` and
+`services/page_holds.hold_page`). A refused part rolls back only itself: the others stand, and
 one report lists every part `{part, index, outcome ACCEPTED or REFUSED, status, id, message,
 upload?, matches?, waysOn?}` with the counts; a component refused for a close match carries the
 matches and the two ways on. A component citing a bundle fact that waits for review is stored, and
@@ -740,21 +744,57 @@ with `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow`. H
 `MonographPage` exactly as the site draws its pages, `noindex`; signed out it sends the reader to
 sign in and back, and any other answer is the not-found page.
 
+### Drawn as a reader sees it (decision 0195)
+
+Over MCP, once the report is made, `preview_page` commits the preview and asks the renderer
+(`kv-renderer`, `RENDERER_URL`, `POST /render` with `RenderRequest {previewUrl, renderPass, plan}`,
+`research/page_render.py`) to draw the private link. The pass is a token of the preview's shape,
+`<preview id hex>.<expiry epoch>.<HMAC-SHA256>`, signed for the account with a key of its own
+(`page_preview_links.render_key`) and alive two minutes; the renderer sends it as the
+`x-kv-render-pass` header on every request to the site and on nothing else. The session routes
+stay as they are; the pass opens two routes of its own. The web route reads the document with it in
+place of a session from `GET /api/knowledge/pages/previews/{token}/drawn` (`serverFetch.renderPassFetch`,
+`page_preview_links.pass_document`), and the site's proxy sends a picture request that carries the
+pass, `/api/knowledge/pages/pictures/{id}` as the document names it, to `GET
+/api/knowledge/pages/drawn-pictures/{id}` (`apiProxy.upstreamPath`), which serves only a picture that
+preview shows (`page_preview_pictures.pass_picture_file`). Both answer 404 to a pass of another
+preview, an expired one or the preview's own link, and 422 without a pass.
+
+The renderer opens the link at 390 by 844 px (as a phone) and at 1440 by 900 px, in light with
+motion reduced, lets every picture load and runs `backend/app/data/design/drawing-checks.js` on each
+component the document lists (`RenderPlan`: its label, its role from its kind, picture, chart, map,
+interactive or figure, and whether the layout places it; the masthead picture; the chapters), the
+same copy Monograph parity runs on live pages. It returns `RenderResult {problems[{width, label,
+problem}], images[{name, caption, width, height, data}], blocked[], seconds}`: the first screen at
+both widths (the desktop's at half size) and each chapter at 1440 px from its top, 1600 px at most,
+at two fifths size, JPEG, at most 1 MB in all, kept in that order (`kept_images`). `blocked` names
+what the browser was kept from. A renderer that is down, busy for 5 s, slower than 35 s or that
+cannot open the link answers `RenderUnmade {reason UNREACHABLE | BUSY | TIMEOUT | REFUSED | BROWSER |
+ELSEWHERE, message}` and the report is given all the same. The verdict is kept on the preview
+(`PagePreview.drawing` CHECKED, FAILED or UNMADE, `drawingProblems`).
+
 ## The checklist report (decision 0110)
 
 Over MCP, `preview_page`, of a bundle or a draft, reads back the stored preview document
 (`services/page_report.preview_report`) and reports it against the page checklist
 (`research/page_report.py`, the rules in `research/page_report_rules.py`); a preview whose document
 cannot be read back carries `report: null`. The rule titles are read from the checklist reference
-(`services/page_report.checklist_titles`), its one copy.
+(`services/page_report.checklist_titles`), its one copy. Rule 28 is judged until the page is drawn,
+then decided by the render (`research/page_report_drawing.with_drawing`), and the counts are recounted.
 
 `PageReport {schemaVersion 1, passed, failed, judged, rules[{rule, title, verdict PASS | FAIL | JUDGE,
-evidence[] (at most 12 lines)}] (all 26, in order), sentences, ledeSentences, fields[{field, chapter,
+evidence[] (at most 12 lines)}] (all 28, in order), sentences, ledeSentences, fields[{field, chapter,
 sentences, figures, held, standing DENSE | THIN | ABSENT}] (the sixteen, in vocabulary order),
 figures[{number, label, kind, title, field, chapter, cited}] (every component but pictures, numbered in
 reading order), figureKinds, sources, sourcesByGrade (A to D, or UNGRADED for a source the gates grade
 when it is proposed), suppliedSources, pictures[{label, chapter, caption, credit, licence}],
-picturesByLicence, message}`. A sentence is a placed `p` unit with facts outside a component; the lede
+picturesByLicence, message, drawing?, bar?}`. `drawing` is the render's `DrawingReport {state
+CHECKED | FAILED | UNMADE, widths[], problems[], images[{name, caption, width, height, bytes}],
+blocked[], reason?}`; `bar` is `BarCounts {barSlug Kutch-Ajrakh, page, bar, chapters[{chapter, page,
+bar}], note}`, each count `{pictures, figures, interactives, maps}` (a figure is any component but a
+picture plate; interactives and maps are figures too), the bar read from Kutch Ajrakh's content with
+its authored chapters under the generated page's names (`research/page_counts.py`); guidance only,
+never a verdict. A sentence is a placed `p` unit with facts outside a component; the lede
 is the sentences of the opening; a picture is a `picture_plate`.
 
 | Rule | Checked |
@@ -778,6 +818,7 @@ is the sentences of the opening; a picture is a `picture_plate`.
 | 25 | no sentence is told twice, and no figure's unit of 40 characters or more repeats one |
 | 26 | no text admits a gap ("not yet", "coming soon", "no data") and no field heading stands without a sentence |
 | 5 | judged, with the counts the masthead draws: the sources of the page's own sentences and, apart, those only a `related_crafts` component's sentences cite (`research/page_report_sources.py`) |
+| 28 | the render's problems at either width fail it, each as `<width> px, <label>: <problem>`; a render with none passes it; pictures that could not be made leave it judged with the reason, never passed |
 | 8, 11, 12, 13, 16, 19, 22 | judged, each with what to look at |
 
 ## Drafts (decision 0110)
@@ -891,6 +932,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Stewardship | `backend/tests/db/test_stewardship_db.py` |
 | Component proposals and their delivery | `backend/tests/research/test_component_proposals.py`, `backend/tests/db/test_component_proposals_db.py` and `test_delivered_components_db.py` |
 | Bundles, previews and the checklist report | `backend/tests/research/test_page_proposals.py`, `test_page_report.py`, `backend/tests/db/test_page_bundles_db.py`, `backend/tests/pages/test_page_preview_links.py` and `backend/tests/mcp/test_page_preview_view.py` |
+| The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
 | Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
 | A craft's own interactive, composed and placed as `edit_draft` takes it | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
