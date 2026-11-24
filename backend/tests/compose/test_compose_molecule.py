@@ -5,7 +5,18 @@ from app.services.compose_held import About
 from app.services.compose_molecule import molecule_3d
 from app.services.document_components_data import kit_data
 
-from .held import BAGRU, CONFORMER_SDF, FACTS, IRON_OXIDE, cited_claims, claim, delivery_problems
+from .held import (
+    BAGRU,
+    CONFORMER_SDF,
+    FACTS,
+    FERROUS_SULPHATE,
+    IRON_SULPHATE,
+    SILICA,
+    cited_claims,
+    claim,
+    delivery_problems,
+    with_syahi_as,
+)
 
 AJRAKH_CONTENT = (
     Path(__file__).resolve().parents[2] / "app" / "data" / "monographs" / "Kutch-Ajrakh" / "content.json"
@@ -56,11 +67,36 @@ def test_a_compound_without_a_conformer_or_an_atom_colour_is_left_out_and_named(
     assert result.left_out == ("a 3D conformer for Potassium alum (CID 62667): PubChem holds none",)
     refused = molecule_3d(BAGRU, About(compound=62667), CONFORMERS)
     assert refused.components == () and refused.missing == result.left_out
-    uncoloured = molecule_3d(BAGRU, About(compound=62667), {62667: IRON_OXIDE})
+    uncoloured = molecule_3d(BAGRU, About(compound=62667), {62667: SILICA})
     assert uncoloured.missing == (
-        "an atom colour for Fe in Potassium alum (CID 62667): the design system colours C, H, N and O only; "
-        "ask the team for the others before a 3D model draws them",
+        "an atom colour for Si in Potassium alum (CID 62667): the design system colours C, H, N, O, Ag, Al, "
+        "Au, Ca, Cl, Cr, Cu, Fe, Hg, K, Na, Pb, S, Sn, Ti and Zn only; ask the team for the others before a 3D "
+        "model draws them",
     )
+
+
+def test_a_conformer_with_sulphur_and_a_metal_is_composed_with_each_atom_in_its_colour_and_letter() -> None:
+    craft = with_syahi_as(IRON_SULPHATE)
+    result = molecule_3d(craft, About(compound=24393), {24393: FERROUS_SULPHATE})
+    assert result.composed, result.missing
+    spec = result.components[0].proposal.spec
+    (model,) = spec["molecules"]
+    assert (model["cid"], model["name"]) == (24393, "Ferrous sulphate")
+    assert model["formula"] == ["FeSO", {"text": "4", "style": "sub"}]
+    assert model["atoms"].startswith("4 oxygen, 1 iron and 1 sulphur atoms.")
+    assert spec["key"] == [
+        {"swatch": "--atom-o", "label": "Oxygen, O"},
+        {"swatch": "--atom-fe", "label": "Iron, Fe"},
+        {"swatch": "--atom-s", "label": "Sulphur, S"},
+        {"swatch": None, "label": "3D conformers computed by PubChem."},
+    ]
+    (group,) = model["drawing"]["children"]
+    atoms = [node for node in group["children"] if node["tag"] == "g"]
+    fills = {atom["children"][0]["attrs"]["fill"] for atom in atoms}
+    assert fills == {"url(#ag-S)", "url(#ag-O)", "url(#ag-Fe)"}
+    letters = sorted(child["children"][0] for atom in atoms for child in atom["children"][1:])
+    assert letters == ["Fe", "O", "O", "O", "O", "S"]
+    assert delivery_problems(result.components, craft) == []
 
 
 def test_a_molecule_about_a_compound_no_material_names_is_refused_with_its_reason() -> None:

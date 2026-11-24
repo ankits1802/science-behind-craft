@@ -73,7 +73,7 @@ test("a key refuses a before swatch without its after swatch, and a join without
   expect(() => parsed({ ...named, before: { dye: "leuco", caption: "u8904" }, join: "becomes" })).toThrow(ShapeError);
   expect(() => parsed({ ...named, join: "or", after: { dye: "indigo", caption: "u8905" } })).toThrow(ShapeError);
   expect(() => parsed({ ...named, before: { dye: "leuco", caption: "u8904" }, after: { dye: "indigo", caption: "u8905" } })).toThrow(ShapeError);
-  expect(() => parsed({ ...named, after: { dye: "turmeric", caption: "u8905" } })).toThrow(ShapeError);
+  expect(() => parsed({ ...named, after: { dye: "marigold", caption: "u8905" } })).toThrow(ShapeError);
 });
 
 const plain = (text: string): MonographUnit => ({ chapter: "chem", tag: "span", field: null, nodes: [text], claimIds: [] });
@@ -97,7 +97,7 @@ function keyedDocument(): MonographDocument {
     u8906: plain("Indigo"),
     u8907: cited("u8907", "Blue in the ", "air.", "g2"),
     u8908: plain("Yellow"),
-    u8909: plain("Turmeric"),
+    u8909: plain("Marigold"),
     u8910: cited("u8910", "A bright ", "yellow.", "g1")
   };
   const content = document.content;

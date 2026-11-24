@@ -22,7 +22,7 @@ YELLOW_FACT = uuid.UUID("c0108000-0000-4000-8000-000000000103")
 STAGE_FACT = uuid.UUID("c0108000-0000-4000-8000-000000000104")
 BLUE_QUOTE = "At first green, the cloth turns blue in the air."
 WHY_TEXT = "Indigo oxidises to its blue form in the air."
-YELLOW_QUOTE = "The turmeric bath gives a bright yellow."
+YELLOW_QUOTE = "The marigold bath gives a bright yellow."
 NAMESPACE = uuid.UUID("c0108000-0000-4000-8000-000000000000")
 SHIFTS = (
     (
@@ -37,8 +37,8 @@ SHIFTS = (
     ),
     (
         uuid.UUID("c0108000-0000-4000-8000-000000000203"),
-        "Pomegranate rind gives the cloth a yellow.",
-        "the rind gives a deep yellow",
+        "Marigold flowers give the cloth a yellow.",
+        "the flowers give a deep yellow",
     ),
 )
 
@@ -91,7 +91,7 @@ def stage(
 
 BLUE_STAGE = stage(1, "Indigo dyeing", "Indigo", ("Blue in the air", ["BLUE"], BLUE_FACT, BLUE_QUOTE))
 YELLOW_STAGE = stage(
-    2, "Turmeric dyeing", "Turmeric", ("A bright yellow", ["YELLOW"], YELLOW_FACT, YELLOW_QUOTE)
+    2, "Marigold dyeing", "Marigold", ("A bright yellow", ["YELLOW"], YELLOW_FACT, YELLOW_QUOTE)
 )
 
 
@@ -153,7 +153,7 @@ def keyed(shown: DocumentStructure, *hidden: uuid.UUID) -> MonographDocument:
     facts = {
         BLUE_FACT: fact(BLUE_FACT, "Indigo-dyed cloth turns blue in air.", BLUE_QUOTE),
         WHY_FACT: fact(WHY_FACT, WHY_TEXT, "indigo oxidises to its blue form"),
-        YELLOW_FACT: fact(YELLOW_FACT, "Turmeric dyes the cloth yellow.", YELLOW_QUOTE),
+        YELLOW_FACT: fact(YELLOW_FACT, "Marigold dyes the cloth yellow.", YELLOW_QUOTE),
         **{claim: fact(claim, text, quote) for claim, text, quote in SHIFTS},
     }
     visible = {**base.visible, **{claim: view for claim, view in facts.items() if claim not in hidden}}
@@ -204,29 +204,29 @@ def mordant_bath() -> MordantBathBlock:
     )
 
 
-def rind_card() -> MaterialCardBlock:
-    rind, rind_text, rind_quote = SHIFTS[2]
+def flowers_card() -> MaterialCardBlock:
+    flowers, flowers_text, flowers_quote = SHIFTS[2]
     return MaterialCardBlock.model_validate(
         {
             "id": "chem.card-1",
             "kind": "material_card",
             "version": 1,
             "reuse": None,
-            "materialId": str(uuid.uuid5(NAMESPACE, "rind")),
+            "materialId": str(uuid.uuid5(NAMESPACE, "marigold")),
             "compoundId": None,
             "termKey": None,
-            "name": "Pomegranate rind",
+            "name": "Marigold flowers",
             "materialKind": "DYE",
             "role": "DYE",
             "formula": None,
             "pubchemCid": None,
             "wikidataId": None,
             "localNames": [],
-            "facts": [sentence("chem.card-1.1", rind, rind_text, rind_quote)],
+            "facts": [sentence("chem.card-1.1", flowers, flowers_text, flowers_quote)],
             "handling": [],
         }
     )
 
 
 def mordants_and_a_dye() -> DocumentStructure:
-    return structured({"chem": [mordant_bath(), rind_card()]})
+    return structured({"chem": [mordant_bath(), flowers_card()]})

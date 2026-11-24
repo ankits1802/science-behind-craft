@@ -63,7 +63,7 @@ function kitPage(body: string, attributes = ""): string {
 test("the web's kit is the shared golden the backend reads", () => {
   expect(JSON.parse(JSON.stringify(ART_KIT))).toEqual(GOLDEN);
   expect(KIT_PART_NAMES).toEqual(["cloth", "block", "bath", "paste", "heat", "water", "tool", "section", "piece"]);
-  expect(KIT_MATERIALS).toHaveLength(30);
+  expect(KIT_MATERIALS).toHaveLength(38);
   expect(depictedToken("--dye-bidri-white")).toBe(true);
   expect(depictedToken("--dip-4")).toBe(true);
   expect(depictedToken("--dye-ultramarine")).toBe(false);

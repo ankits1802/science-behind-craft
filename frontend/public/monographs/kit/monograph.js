@@ -1010,7 +1010,7 @@ KV.boot('chem', function (document) {
 
   var molData = {};
   try { molData = JSON.parse(document.getElementById('mol-data').textContent); } catch (e) {}
-  var RAD = { C: 0.38, N: 0.36, O: 0.36, H: 0.2 };
+  var RAD = { C: 0.38, H: 0.2, N: 0.36, O: 0.36, Ag: 0.55, Al: 0.55, Au: 0.55, Ca: 0.55, Cl: 0.51, Cr: 0.55, Cu: 0.55, Fe: 0.55, Hg: 0.55, K: 0.55, Na: 0.55, Pb: 0.55, S: 0.53, Sn: 0.55, Ti: 0.55, Zn: 0.55 };
   function Viewer(fig) {
     var m = molData[fig.getAttribute('data-cid')];
     if (!m || !fig.querySelector('.mol-dial svg g.mol-g')) return null;

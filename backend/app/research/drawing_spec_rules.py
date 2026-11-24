@@ -9,6 +9,7 @@ from .component_specs_general_svg import sanitised_svg, svg_view_box
 from .component_specs_science_parts import SVG_TAGS
 from .drawing_roles import MATERIAL_ROLES, role_problem
 from .drawing_rules import drawing_problems
+from .molecule_atoms import MOLECULE_ATOMS
 
 __all__ = ["MATERIAL_KEYS", "SVG_KEY", "THEMES_KEY", "drawing_nodes", "node_element", "spec_design_problems"]
 
@@ -18,7 +19,7 @@ SVG_KEY = "svg"
 TOKEN = re.compile(r"^--([a-z0-9-]+)$")
 NODE_TAGS = frozenset(SVG_TAGS)
 ATOM_KEY_PATH = re.compile(r"key\[\d+\]\.swatch")
-ATOM_ROLE = re.compile(r"atom-[a-z]+")
+ATOM_ROLES = frozenset(f"atom-{atom[0].lower()}" for atom in MOLECULE_ATOMS)
 
 
 def spec_design_problems(spec: Mapping[str, Any]) -> list[str]:
@@ -94,4 +95,4 @@ def _token_problems(path: str, token: str, material: bool) -> list[str]:
 
 
 def _atom_key(path: str, token: str) -> bool:
-    return ATOM_KEY_PATH.fullmatch(path) is not None and ATOM_ROLE.fullmatch(token) is not None
+    return ATOM_KEY_PATH.fullmatch(path) is not None and token in ATOM_ROLES
