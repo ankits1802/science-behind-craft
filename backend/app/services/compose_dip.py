@@ -5,12 +5,11 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from app.research.colour_key import agent_materials, agent_names, first_depicted, specimen_token
 from app.research.colours import states_colour
 
 from .compose_held import About, Composition, CraftHeld, HeldAfter, HeldStage, composed, refused
+from .compose_kit import after_token, stage_agent_names, stage_scene
 from .compose_parts import FIGURE, UnitBook, composed_component, joined, unique_word
-from .compose_scene import piece_drawing
 
 __all__ = ["BATH_STAGES", "dip_player"]
 
@@ -35,6 +34,10 @@ IN_WORDS = (
     "{agents}, so its phase is drawn as an outline and the colour named in words; ask the team for a specimen "
     "record with the source that states it"
 )
+NO_PART = (
+    "what the stage {key} ({name}) colours, so the kit can draw it: propose_facts for {slug} with a fact naming "
+    "the cloth, the shape of the piece or the vessel it is dipped in (a vat, pot, trough or pit)"
+)
 TOO_FEW = (
     "two stages of {name} in a bath, each with its colour after naming the colours its fact states: "
     "{slug} holds {count}"
@@ -52,18 +55,19 @@ class _Phase:
     after: HeldAfter
     token: str | None
     claims: tuple[uuid.UUID, ...]
+    scene: dict[str, Any]
 
 
 def dip_player(craft: CraftHeld, about: About) -> Composition:
     stages, problem = _bath_stages(craft, about)
     if problem is not None:
         return refused(problem)
-    phases, gaps = _phases(craft, stages)
+    book = UnitBook()
+    phases, gaps = _phases(craft, stages, book)
     if len(phases) < PHASES_MIN:
         return refused(TOO_FEW.format(name=craft.name, slug=craft.slug, count=len(phases)), *gaps)
     if all(phase.token is None for phase in phases):
         return refused(NONE_DRAWN.format(name=craft.name), *gaps)
-    book = UnitBook()
     return composed(composed_component(craft, _piece(craft, phases, book), book), left_out=gaps)
 
 
@@ -81,7 +85,7 @@ def _bath_stages(craft: CraftHeld, about: About) -> tuple[list[HeldStage], str |
     return stages, None
 
 
-def _phases(craft: CraftHeld, stages: Sequence[HeldStage]) -> tuple[list[_Phase], list[str]]:
+def _phases(craft: CraftHeld, stages: Sequence[HeldStage], book: UnitBook) -> tuple[list[_Phase], list[str]]:
     phases: list[_Phase] = []
     gaps: list[str] = []
     for stage in stages:
@@ -92,27 +96,20 @@ def _phases(craft: CraftHeld, stages: Sequence[HeldStage]) -> tuple[list[_Phase]
         if not after.colours:
             gaps.append(NO_COLOUR.format(key=stage.key, name=stage.name, slug=craft.slug))
             continue
-        token = _token(craft, stage, after)
+        token = after_token(craft, stage, after)
+        scene = stage_scene(craft, stage, book)
+        if scene is None:
+            gaps.append(NO_PART.format(key=stage.key, name=stage.name, slug=craft.slug))
+            continue
         if token is None:
             gaps.append(_in_words(craft, stage, after))
-        phases.append(_Phase(stage, after, token, craft.stated([after.claim_id, *stage.claim_ids])))
+        claims = craft.stated([after.claim_id, *stage.claim_ids])
+        phases.append(_Phase(stage, after, token, claims, scene))
     return phases, gaps
 
 
-def _token(craft: CraftHeld, stage: HeldStage, after: HeldAfter) -> str | None:
-    if after.tokens:
-        return after.tokens[0]
-    found = first_depicted(after.colours, _agent_names(craft, stage))
-    return specimen_token(found[1]) if found is not None else None
-
-
-def _agent_names(craft: CraftHeld, stage: HeldStage) -> tuple[str, ...]:
-    used = [found for key in stage.material_keys if (found := craft.material(key)) is not None]
-    return agent_names(agent_materials(used))
-
-
 def _in_words(craft: CraftHeld, stage: HeldStage, after: HeldAfter) -> str:
-    agents = list(_agent_names(craft, stage))
+    agents = list(stage_agent_names(craft, stage))
     return IN_WORDS.format(
         colour=joined([colour.lower() for colour in after.colours]),
         key=stage.key,
@@ -130,7 +127,7 @@ def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[s
         "id": f"dip-{craft.label_root()}",
         "head": {"figure": None, "number": book.label(FIGURE), "title": book.label(title, _claims(phases))},
         "phase": book.label(last.stage.name, last.claims),
-        "scene": piece_drawing(last.token),
+        "scene": stage_scene(craft, last.stage, book),
         "stripLabel": STRIP,
         "phases": strip,
         "dipAgain": DIP_AGAIN,
@@ -143,10 +140,10 @@ def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[s
         "kind": "dip_player",
         "title": title,
         "description": (
-            f"Plays the stages of {craft.name} in a bath one after another, each drawn in the depicted colour of "
-            f"the dye, mordant or resist that gives the colour its fact states, or outlined with that colour named "
-            f"where no depicted material shows it, and cited by that fact. Place it in the chemistry chapter of "
-            f"the page of {craft.name}."
+            f"Plays the stages of {craft.name} in a bath one after another, each drawn from the figure kit's parts "
+            f"its facts name in the depicted colour of the dye, mordant or resist that gives the colour its fact "
+            f"states, or in line work with that colour named where no depicted material shows it, and cited by "
+            f"that fact. Place it in the chemistry chapter of the page of {craft.name}."
         ),
         "spec": spec,
     }
@@ -157,7 +154,7 @@ def _phase(phase: _Phase, book: UnitBook, poses: list[str]) -> dict[str, Any]:
     poses.append(pose)
     return {
         "pose": pose,
-        "drawing": piece_drawing(phase.token),
+        "drawing": phase.scene,
         "kicker": book.label(phase.stage.name, phase.claims),
         "text": book.cited(_said(phase), [phase.after.claim_id]),
     }

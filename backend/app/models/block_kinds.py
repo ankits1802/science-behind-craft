@@ -31,5 +31,6 @@ BLOCK_KINDS = (
     "lost_wax",
     "firing",
     "quantities",
+    "kit_figure",
     "component",
 )

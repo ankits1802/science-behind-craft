@@ -55,13 +55,27 @@ wanted_libraries() {
   done < "$TARGET/deb.deps"
 }
 
+candidate() {
+  local policy
+  policy="$(apt-cache policy "$1" 2>/dev/null)" || return 1
+  grep -q "Candidate: [^(]" <<<"$policy"
+}
+
+resolved() {
+  local name
+  while IFS= read -r name; do
+    if ! candidate "$name" && candidate "${name}t64"; then name="${name}t64"; fi
+    printf '%s\n' "$name"
+  done
+}
+
 install_libraries() {
   local wanted=() missing
-  mapfile -t wanted < <(wanted_libraries)
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update -y >&2 || say "::warning::apt-get update failed; the libraries are resolved against the lists already held"
+  mapfile -t wanted < <(wanted_libraries | resolved)
   if [ "${#wanted[@]}" -gt 0 ]; then
-    export DEBIAN_FRONTEND=noninteractive
     apt-get install -y --no-install-recommends "${wanted[@]}" >&2 \
-      || { apt-get update -y >&2 && apt-get install -y --no-install-recommends "${wanted[@]}" >&2; } \
       || die "the libraries chrome-headless-shell needs could not be installed: ${wanted[*]}"
   fi
   missing="$(ldd "$TARGET/$BINARY" | awk '/not found/ {print $1}' | tr '\n' ' ')"

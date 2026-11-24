@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Collection, Iterator
+from collections.abc import Collection, Iterator, Sequence
 from typing import Annotated, Literal, Self
 
 from pydantic import AfterValidator, Field, model_validator
@@ -28,12 +28,14 @@ from .drawing_roles import MATERIAL_ROLES
 
 __all__ = [
     "KIT_DIAGRAM",
+    "UNCITED",
     "BathPart",
     "BlockPart",
     "ClothPart",
     "DeclaredDiagramSpec",
     "HeatPart",
     "KitPanel",
+    "KitPartSpec",
     "KitPrint",
     "PastePart",
     "PiecePart",
@@ -43,6 +45,8 @@ __all__ = [
     "WaterPart",
     "kit_label_problems",
     "kit_labels",
+    "motion_problem",
+    "part_labels",
 ]
 
 KIT_DIAGRAM = "diagram"
@@ -162,11 +166,9 @@ class KitPanel(ContractModel):
 
     @model_validator(mode="after")
     def _motion_explains_a_part(self) -> Self:
-        if self.motion is None:
-            return self
-        name, needs = MOTION_NEEDS[self.motion]
-        if not any(_moves(part, name) for part in self.parts):
-            raise ValueError(f"the {self.motion} motion explains {needs}, which this panel does not hold")
+        problem = motion_problem(self.motion, self.parts, "panel")
+        if problem is not None:
+            raise ValueError(problem)
         return self
 
 
@@ -193,13 +195,26 @@ class DeclaredDiagramSpec(ContractModel):
         return self
 
 
+def motion_problem(motion: str | None, parts: Sequence[object], holder: str) -> str | None:
+    if motion is None:
+        return None
+    name, needs = MOTION_NEEDS[motion]
+    if any(_moves(part, name) for part in parts):
+        return None
+    return f"the {motion} motion explains {needs}, which this {holder} does not hold"
+
+
+def part_labels(parts: Sequence[KitPartSpec], where: str) -> Iterator[tuple[str, str]]:
+    for part in parts:
+        yield part.label, f"{where}'s {part.part} part"
+        if isinstance(part, SectionPart):
+            for depth, layer in enumerate(part.layers, start=1):
+                yield layer.label, f"layer {depth} of {where}'s section"
+
+
 def kit_labels(spec: DeclaredDiagramSpec) -> Iterator[tuple[str, str]]:
     for at, panel in enumerate(spec.panels, start=1):
-        for part in panel.parts:
-            yield part.label, f"panel {at}'s {part.part} part"
-            if isinstance(part, SectionPart):
-                for depth, layer in enumerate(part.layers, start=1):
-                    yield layer.label, f"layer {depth} of panel {at}'s section"
+        yield from part_labels(panel.parts, f"panel {at}")
 
 
 def kit_label_problems(spec: DeclaredDiagramSpec, cited: Collection[str]) -> list[str]:

@@ -22,8 +22,9 @@ from app.services.knowledge_view import ClaimView
 from app.services.section_blocks import KeptSentence, prose_block
 from app.services.simulation_builder import SimulationBuilder
 
-from ..contracts.phase_c_golden import corpus, phase_c, phase_c_blocks
+from ..contracts.phase_c_golden import phase_c, phase_c_blocks
 from ..research.fixtures import AJRAKH
+from .at_the_bar import WATER_AT_THE_BAR, at_the_bar
 
 OPUS = "claude-opus-5-5"
 BUILT_AT = datetime(2026, 11, 18, 10, 30, tzinfo=UTC)
@@ -81,7 +82,7 @@ def draft(html: str, **changes: Any) -> dict[str, Any]:
 
 
 def accepted_html() -> str:
-    return corpus()["accepted"][0]["html"]
+    return WATER_AT_THE_BAR
 
 
 @dataclass
@@ -152,7 +153,7 @@ def golden_block(**changes: Any) -> SimulationBlock:
 def stored_simulation(
     block: SimulationBlock | None = None, *, depth: str = "EXPERT", facet: str = "GEOGRAPHY", **changes: Any
 ) -> KnowledgePiece:
-    shown = block or golden_block()
+    shown = block or golden_block(**at_the_bar(WATER_AT_THE_BAR))
     slot = piece_slot(shown, PieceSlot(None, facet, "water:kachchh", depth))
     piece = knowledge_piece(shown, slot, piece_id=uuid.uuid4(), answer_id=uuid.uuid4(), created_at=STORED_AT)
     return piece.model_copy(update=changes)

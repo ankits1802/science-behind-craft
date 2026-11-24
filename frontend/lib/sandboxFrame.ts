@@ -42,17 +42,54 @@ export function sandboxData(values: readonly Pick<SimulationValue, "key" | "valu
   return JSON.stringify(data);
 }
 
-export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[]): string {
+export type FrameLook = { tokens: Readonly<Record<string, string>>; reducedMotion: boolean };
+
+export const FRAME_BASE_TOKENS = ["--sunk", "--ink-1", "--font-ui"] as const;
+export const FRAME_STILL = "animation:none!important;transition:none!important;scroll-behavior:auto!important";
+export const FRAME_MOTION_GUARD = [
+  `html[data-reduced-motion="true"] *,html[data-reduced-motion="true"] *::before,html[data-reduced-motion="true"] *::after{${FRAME_STILL}}`,
+  `@media (prefers-reduced-motion: reduce){*,*::before,*::after{${FRAME_STILL}}}`
+].join("");
+
+const TOKEN_NAME = /^--[a-z0-9-]+$/;
+const UNSAFE_VALUE = /[<>{};\\]/;
+const USED_TOKEN = /var\(\s*(--[a-z0-9-]+)/g;
+
+export function frameTokenNames(html: string): string[] {
+  return [...new Set([...FRAME_BASE_TOKENS, ...[...html.matchAll(USED_TOKEN)].map((found) => found[1])])];
+}
+
+export function frameLookStyle(look: FrameLook): string {
+  const declared = Object.entries(look.tokens)
+    .filter(([name, value]) => TOKEN_NAME.test(name) && value.trim() !== "" && !UNSAFE_VALUE.test(value))
+    .map(([name, value]) => `${name}:${value.trim()}`);
+  return `:root{${declared.join(";")}}body{margin:0;background:var(--sunk);color:var(--ink-1);font-family:var(--font-ui)}${FRAME_MOTION_GUARD}`;
+}
+
+export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[], look: FrameLook | null = null): string {
   return [
-    '<!doctype html><html lang="en"><head>',
+    look?.reducedMotion ? '<!doctype html><html lang="en" data-reduced-motion="true"><head>' : '<!doctype html><html lang="en"><head>',
     `<meta http-equiv="Content-Security-Policy" content="${SANDBOX_CSP}">`,
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     `<script type="application/json" id="${SANDBOX_DATA_ELEMENT_ID}">${sandboxData(values)}</script>`,
     `<script>${FRAME_GUARD}</script>`,
     `<script>${FRAME_SIZER}</script>`,
+    ...(look ? [`<style>${frameLookStyle(look)}</style>`] : []),
     `</head><body>${html}</body></html>`
   ].join("");
+}
+
+export function readFrameLook(names: readonly string[], read: (name: string) => string, reducedMotion: boolean): FrameLook {
+  const tokens: Record<string, string> = {};
+  const wanted = [...names];
+  for (let at = 0; at < wanted.length; at += 1) {
+    const value = read(wanted[at]).trim();
+    if (!value) continue;
+    tokens[wanted[at]] = value;
+    for (const found of value.matchAll(USED_TOKEN)) if (!wanted.includes(found[1])) wanted.push(found[1]);
+  }
+  return { tokens, reducedMotion };
 }
 
 export function ownFrameHeight(event: { source: unknown; data: unknown }, frame: unknown): number | null {

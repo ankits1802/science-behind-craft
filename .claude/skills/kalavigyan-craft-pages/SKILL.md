@@ -39,6 +39,10 @@ client follows, copied whole from `docs/contracts` (`kalavigyan://contracts/know
 `open-work.md`, `component-specs-general.md`, `image-contributions.md`, `mcp-ask-and-upload.md`),
 and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 
+Over MCP each reference is also paged (`get_page`'s `guide`, `contents/1`), and the page tools hand
+an agent the page for its step; a page's first components wait for the design pages' `read_token`.
+Brief an agent to read every page a result hands it.
+
 ## Connect
 
 - The session's client adds the KalaVigyan MCP server at `<PUBLIC_API_URL>/api/mcp`
@@ -59,7 +63,7 @@ and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 | A quote before it is sent | `read_source` with the quote in its `quotes`: the QUOTES gate's verdict, and the nearest passage when it misses |
 | A compound's record and hazards, a plant's taxon name, a place's or craft's item | `lookup`, with kind compound or entity |
 | Finding open pictures | `search_sources` with kinds pictures (Commons and Openverse, open licences only, with author, credit and the site's widths), then `give_pictures` with its `page_url` |
-| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`) |
+| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`); a player's or card's scene as a kit scene in its slot |
 | A map of the page's places, their years and moves | a declared `timeline_map` in the draft or bundle (the dataset guide, Maps of places); never a drawing |
 | A fact that stands alone | `propose_facts` (up to 25, each with an `idempotency_key` and the claimed `task_key`), then `get_proposal` until it is DONE; a working dossier's new facts in one run with `tools/curation/propose.py` |
 | A new source for a held fact, or for a fact that lost its quotes | `propose_source`, naming the fact as `claim_id` |
@@ -105,6 +109,12 @@ A category page has no stages, native names or GI record; it has pictures placed
 `Kutch-Ajrakh.json`; read it by field, never whole (it is large):
 `python -I -c "import json;d=json.load(open('backend/app/data/curation/Kutch-Ajrakh.json',encoding='utf-8'));print(json.dumps(d['pictures'][:3],ensure_ascii=False,indent=1))"`
 
+Every page exports as a PDF and a Word document. Each component is drawn there as its still at rest,
+with every unit it holds and its credits. Say in a component's units what its motion shows: paper
+keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and declared
+timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes and text,
+without its textures.
+
 ## See the gaps first
 
 - `get_page` with its coverage gives each field's cited facts, sources, sections and figures and its standing;
@@ -137,7 +147,8 @@ family figure only when the page holds every fact its units cite.
    through `propose_facts`, structure through `propose_structure`, a held fact's new source through
    `propose_source`, components by the component guide, figures from data by the datasets skill,
    and open pictures through `give_pictures` by `page_url` (the server reads the licence and the
-   author and returns a thumbnail to check).
+   author and returns a thumbnail to check). Quote a colour change as the source states it, first
+   colour and then the colour it turns. Answers then draw that stage from the kit, citing your fact.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, read its pictures, fix every rule its report fails (rule 28 names each
    drawing problem), preview again until rule 28 passes, then judge the rest on the private link at
@@ -155,6 +166,14 @@ family figure only when the page holds every fact its units cite.
    one and its `curatedAt` updated, verified and checked.
 7. **Report** in under 150 words: gaps before and after, each proposal's outcome, sources added,
    what was searched and not found. No prose summaries of the craft.
+
+## Pages in other languages
+
+A component's labels are passages too: a step's name, a lane's species, a molecule's name, atoms and
+key, a dip's strip label, a lab's and a toggle's choices. Their key is `<component label>#<path>`
+(`…/patina-steps#steps.0.name`) and their tag `label`; translate each as a sentence, one text each.
+Formulas, numbers, keys and a stage named in its own language are never offered: leave them as the
+English page holds them.
 
 ## The dossier route
 

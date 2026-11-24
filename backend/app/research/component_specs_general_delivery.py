@@ -25,6 +25,7 @@ from .component_specs_general import (
     GeneralTimelineSpec,
 )
 from .component_specs_kit import DeclaredDiagramSpec, kit_label_problems
+from .component_specs_kit_scene import kit_scene_label_problems
 from .component_specs_timeline_map import TIMELINE_MAP, DeclaredTimelineMapSpec, server_parts_sent
 from .component_specs_timeline_map_delivery import SERVER_SENT, timeline_map_problems
 from .component_specs_tools import spec_unit_refs
@@ -172,7 +173,7 @@ def _value_problems(kind: str, spec: Any, units: Mapping[str, DeliveredUnit]) ->
         return timeline_map_problems(spec, texts, cited)
     if isinstance(spec, DeclaredDiagramSpec):
         return kit_label_problems(spec, cited)
-    return [
+    return kit_scene_label_problems(spec, cited) + [
         f"the value {value:g} is not stated by its unit {ref}"
         for value, ref in _stated_values(kind, spec)
         if ref in units and not any(_same(value, figure) for figure in numbers_in(units[ref].text))

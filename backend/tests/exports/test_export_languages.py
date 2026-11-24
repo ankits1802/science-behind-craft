@@ -115,7 +115,7 @@ def test_the_fixture_page_offers_every_unit_and_every_label_of_its_new_kinds() -
     offered = page_passages(page.content, page.specs)
     units = [key for key in offered if not key.count("#")]
     labels = [key for key in offered if key.count("#")]
-    assert units == list(page.content.units) and len(units) == 106
+    assert units == list(page.content.units) and len(units) == 116
     assert len(labels) == 43
     assert [key for key in labels if key.startswith(f"{REACTION}#")] == REACTION_KEYS
     assert [key.split("#")[1] for key in labels if key.startswith(FIXTURE_LABELS["dip_player"])] == [
@@ -140,7 +140,7 @@ def test_a_translated_unit_of_each_new_kind_is_drawn_and_an_untranslated_one_sta
     page = hindi_page()
     assert page.translation is not None and (page.translation.translated, page.translation.passages) == (
         15,
-        149,
+        159,
     )
     export = page_export(page, page.specs)
     assert "1. बीदर (this craft's place)" in lines(export, "timeline_map")

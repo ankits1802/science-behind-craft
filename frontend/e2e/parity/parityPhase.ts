@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
 
-const PHASE_GRID_PX = 8;
+export const PHASE_GRID_PX = 8;
 
 async function shellTop(page: Page): Promise<number> {
   return page.evaluate(() => {

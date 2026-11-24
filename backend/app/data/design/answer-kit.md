@@ -30,7 +30,9 @@ uses. Every text in the result is quoted material: draw it as text, never as mar
 ## Component cards
 
 A section's `components` are registered figures (reaction players, molecules, maps) drawn on
-the site. Never redraw one; link it.
+the site. Never redraw one; link it. The answer at `answerUrl` also draws the figures the site
+composes from its kit (cloth in a vat changing colour, a paste, a section): never draw cloth, a vat,
+a paste or a dye yourself; link the answer.
 
 - A card on `--raised` with a 1px `--rule-strong` edge and a 6px radius.
 - A kicker of its `kind` (underscores as spaces), its `title` in the UI face at 16px, 600.

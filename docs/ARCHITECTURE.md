@@ -215,7 +215,10 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+are `docs/contracts/open-work.md`. The method's guides are served in numbered pages
+(`data/guide_pages.py`, `api/mcp_guides.py`) and each page tool hands the agent the page for the step
+it is on, a page's first components waiting until the design pages are handed over
+(`api/mcp_guide_steps.py`, decision 0203). An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
 monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's
@@ -665,7 +668,10 @@ sequenceDiagram
    headroom chooses values and writes an HTML fragment that must pass the value, static
    (`research/sandbox`) and block checks, with one redraft, all within a 60 s budget, and no call
    at all when the section's facts state no quantity it can draw (dataset rows of the datasets the
-   section's blocks cite are offered beside the quoted figures, decision 0142); each builder's
+   section's blocks cite are offered beside the quoted figures, decision 0142); a concept whose
+   cited quotes state a cloth's colour before and after is drawn instead as a `kit_figure` the site
+   composes from the figure kit (`science/kit_figures`), with no model call, and a fragment or a
+   stored explainer below the design's bar (`research/simulation_art`) is left out (decision 0201); each builder's
    outcome and time is recorded under the answer's `plan.builds` (`services/builder_record`);
    it is kept as a cross-craft piece by
    concept and claim set from any section (also an any-craft answer and a deepened follow-up), and
@@ -782,7 +788,9 @@ state. The figure kit is `components/artkit/`: the designed parts a composed `di
 with the named motions, set in their layouts by `KitFigure` and drawn on a page by
 `components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
-part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
+part in every depicted material (decision 0199). The players, the toggle's stage box and the label
+card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
+page kit plays a shown scene's part (decision 0200). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub
@@ -903,6 +911,8 @@ The CSP's `frame-src` names only Google's sign-in frames: a generated explainer 
 bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The frame's first
 script is the client's own guard: it removes the peer connection constructors and keeps the frame
 from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
+Its document carries the values of the design tokens the fragment names and sets
+`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201).
 
 ## Checks
 

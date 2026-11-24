@@ -12,6 +12,7 @@ from .figure_fixtures import drawn, golden_block, kachchh, kachchh_rain, pdf_tex
 PHASE_B = "explainer.phase-b.golden.json"
 PHASE_C = "explainer.phase-c.golden.json"
 PHASE_D = "explainer.phase-d.golden.json"
+KIT_FIGURE = "explainer.kit-figure.golden.json"
 FIRST_YEAR = 1981
 TREND_YEARS = 45
 GAP_AT = 10
@@ -126,6 +127,23 @@ def test_a_generated_explainer_draws_its_values_and_a_timeline_its_years() -> No
     assert "Fustat · 1401–1500" in timeline and "Dhamadka · 1586" in timeline
     assert "Ajrakhpur · 2001" in timeline and "Sindh to Kutch · 1586–1631" in timeline
     assert "Places on the map: 1 Fustat" in timeline
+
+
+def test_an_answer_s_kit_figure_draws_its_still_and_each_panel_s_labels_in_order() -> None:
+    text, data = figure_of(KIT_FIGURE, "s1.kit")
+    shown = (
+        "Figure",
+        "Green to blue",
+        "1. Green",
+        "Drawn: Cloth in the vat",
+        "2. Blue",
+        "As oxygen meets the dye",
+        "The cloth becomes blue",
+        "Drawn: Cloth, blue",
+    )
+    at = [text.index(line) for line in shown]
+    assert at == sorted(at)
+    assert line_ops(data) > line_ops(drawn(lambda writer: None)[1])
 
 
 def test_the_report_draws_each_block_before_its_sentences() -> None:

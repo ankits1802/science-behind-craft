@@ -10,6 +10,7 @@ from typing import Any, Self
 from app.core.errors import InvalidInput
 from app.models.enums import DISCIPLINES, EXPLAINER_DEPTHS
 from app.research.block_identity import repeats_shown
+from app.research.blocks_kit import KIT_FIGURE_KIND
 from app.research.depth import depth_at_least
 from app.research.expert_panel import PANEL_FIELDS
 from app.research.explainer import BLOCK_PHASES, BUILT_BLOCK_KINDS, Block
@@ -93,6 +94,7 @@ class BuilderEntry:
     reused_from: str = FIRST_DEPTH
     places_pieces: bool = False
     adds_pictures: bool = False
+    draws: frozenset[str] = frozenset()
     prefers: str | None = None
 
     def builds_in(self, discipline: str, answer_fields: Collection[str]) -> bool:
@@ -100,8 +102,9 @@ class BuilderEntry:
         return preferred is None or preferred == discipline or preferred not in answer_fields
 
     def __post_init__(self) -> None:
-        if BLOCK_PHASES.get(self.kind, PHASE_A) == PHASE_A:
-            raise InvalidInput(f"a builder adds a later phase's block kind, not {self.kind!r}")
+        for kind in (self.kind, *self.draws):
+            if BLOCK_PHASES.get(kind, PHASE_A) == PHASE_A:
+                raise InvalidInput(f"a builder adds a later phase's block kind, not {kind!r}")
         if not self.disciplines or not self.disciplines <= set(DISCIPLINES):
             raise InvalidInput(f"the {self.kind} builder names the fields it adds blocks to")
         if not 0 < self.wait_seconds <= BUILDER_WAIT_MAX_SECONDS:
@@ -161,6 +164,7 @@ BLOCK_BUILDERS: tuple[BuilderEntry, ...] = (
         reused_from=EXPERT_DEPTH,
         places_pieces=True,
         adds_pictures=True,
+        draws=frozenset({KIT_FIGURE_KIND}),
     ),
     BuilderEntry(
         "zoom_story",
@@ -323,7 +327,7 @@ class SectionBuilds:
 
 
 def built_by_registry(entries: Sequence[BuilderEntry] = BLOCK_BUILDERS) -> frozenset[str]:
-    return frozenset(entry.kind for entry in entries)
+    return frozenset(kind for entry in entries for kind in (entry.kind, *entry.draws))
 
 
 async def _bounded(entry: BuilderEntry, builder: BlockBuilder, ask: BuildAsk) -> tuple[Built, float]:
@@ -363,7 +367,8 @@ def _checked(entry: BuilderEntry, built: Built, known: SourceRefs, ask: BuildAsk
 
 
 def _refusal(entry: BuilderEntry, block: Block, known: SourceRefs) -> str | None:
-    if block.kind != entry.kind and not (entry.adds_pictures and block.kind == PICTURES_KIND):
+    drawn = block.kind in entry.draws or (entry.adds_pictures and block.kind == PICTURES_KIND)
+    if block.kind != entry.kind and not drawn:
         return f"the {entry.kind} builder made a {block.kind} block"
     if block.kind not in BUILT_BLOCK_KINDS:
         return f"{block.kind} is not built yet"

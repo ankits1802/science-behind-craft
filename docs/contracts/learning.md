@@ -306,7 +306,8 @@ with its credit.
   map the page export draws (its placed places pinned and numbered over their states' district
   outlines, its routes drawn, then `Places on the map: 1 <name>; ...`; decision 0206). A composed kit
   diagram is drawn by the page export's still renderer (`services/export_pdf_kit.kit_figure_pdf`,
-  decision 0206), the call an answer's kit figure (decision 0201) takes. Nothing a block does not carry is drawn. Name
+  decision 0206), which `draw_figure` calls for an answer's `kit_figure` block (decision 0201) with
+  each label's text by its ref. Nothing a block does not carry is drawn. Name
   `KalaVigyan_Explainer_<date>_<craft>_<question>_Report_v<version>.pdf` (the version's day).
 - **Citations.** `GET /api/explainers/{explainerId}/versions/{version}/citations` (`SAVE_EXPORT`,
   the asker) answers `CitationExport {schemaVersion 1, explainerId, version, entries[CitationEntry]

@@ -38,7 +38,7 @@ and not trivial, and rebuild the section prose on our side from the facts that p
 
 Every contributor follows the same rules, whether in KalaVigyan's own team or over its MCP server,
 and each rule lives in one reference. Read the references your work touches before you start; the
-prompts carry them as well.
+tools hand you their pages as you work.
 
 | Reference | MCP resource | On the site | Read it before |
 |---|---|---|---|
@@ -51,6 +51,13 @@ prompts carry them as well.
 
 For data behind a figure, load the datasets skill too, and for a family's flagship interactive the
 interactives skill (the map above).
+
+Every reference, skill, contract and design page is also served in numbered pages of at most 6,000
+bytes, `kalavigyan://guides/<topic>/<page>`, which `get_page` reads with `guide` set to the address
+(`page-checklist/2`); `contents/1` lists every page. The tools hand you the page for your step: the
+checklist's opening and the Kutch Ajrakh bar with a page's coverage, each kind's design rules as you
+add it, the page of each rule a preview fails, the picture rules and the storyboard. Read each page
+a result hands you before your next call.
 
 ## Connect
 
@@ -256,6 +263,8 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Deliver it finished by the component guide: its kind, its spec as the kind's schema gives it
   (`kalavigyan://components/<kind>.schema.json`) and its units, each unit resting on shown facts or
   on the facts of the same draft or bundle.
+- A page's first components are answered with the design pages and nothing changes: read them,
+  then send the same call again with the `read_token` that came with them.
 - A craft's interactives are composed, not written: `compose_component` with the craft's slug and
   one kind (`reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab`), and `about` for one
   stage, reaction, material or compound, returns them finished from that craft's own facts and
@@ -288,6 +297,11 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Read a library component's facts before you link it or lay it out on another page: if this page
   lacks any of them the server refuses it by those ids, and the cure is a component of the same
   kind built from this page's facts.
+- Every page exports as a PDF and a Word document. Each component is drawn there as its still at
+  rest, with every unit it holds and its credits. Say in a component's units what its motion shows:
+  paper keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and
+  declared timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes
+  and text, without its textures.
 
 ## Drawing in KalaVigyan's design
 
@@ -304,7 +318,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
   not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
   part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
-  depicted material by hand or names a kit part is refused with the part to use.
+  depicted material by hand or names a kit part is refused with the part to use. A player's or
+  card's scene is given as a kit scene in its slot; a scene painting a depicted material by hand is
+  refused with the part to use.
 
 ## Pages
 
@@ -435,6 +451,8 @@ asked in the last 90 days, the fields that would answer it and what the answer l
 - The question closes by itself once a nightly retrieval run for it finds at least two cited facts
   in each of its fields.
 - Never try to reach the person who asked, and never put a personal detail from a question in a fact.
+- An `ask` answer may draw figures the site composes from its kit, at `answerUrl`. Never draw cloth,
+  a vat, a paste or a dye in your own chat; link the answer (`kalavigyan://design/answer-kit.md`).
 
 ## Pages in other languages
 
@@ -459,6 +477,11 @@ English and its `texts`.
 - When an English sentence changes, its translation is held and the page shows the English until
   the passage is translated again; held passages come back in the task. The task closes when no
   passage is left.
+- A component's labels are passages too: a step's name, a lane's species, a molecule's name, atoms
+  and key, a dip's strip label, a lab's and a toggle's choices. Their key is
+  `<component label>#<path>` (`…/patina-steps#steps.0.name`) and their tag `label`; translate each
+  as a sentence, one text each. Formulas, numbers, keys and a stage named in its own language are
+  never offered: leave them as the English page holds them.
 
 ## Never
 

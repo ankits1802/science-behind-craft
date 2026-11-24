@@ -18,6 +18,7 @@ import {
 import { DIFFER_WEIGHTS } from "@/lib/craftPageContext";
 import { componentBlockShape, type ComponentBlock } from "@/lib/explainerComponent";
 import { expertViewBlockShape, type ExpertViewBlock } from "@/lib/explainerExperts";
+import { kitFigureBlockShape, type KitFigureBlock } from "@/lib/explainerKit";
 import { artisanVoiceBlockShape, type ArtisanVoiceBlock } from "@/lib/explainerVoices";
 import {
   climateRiskBlockShape,
@@ -116,9 +117,10 @@ export const BLOCK_KINDS = [
   "lost_wax",
   "firing",
   "quantities",
+  "kit_figure",
   "component"
 ] as const;
-export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d", "compare", "concept_graph", "climate_risk", "measure", "market_gi", "quantities", "simulation", "what_if", "zoom_story", "timeline_map", "component"] as const;
+export const BUILT_BLOCK_KINDS = ["prose", "process_ladder", "images", "region_story", "map_layer", "expert_view", "seasons", "supply_map", "reaction_player", "material_card", "molecule_3d", "compare", "concept_graph", "climate_risk", "measure", "market_gi", "quantities", "simulation", "what_if", "zoom_story", "timeline_map", "kit_figure", "component"] as const;
 export const BUILT_FIGURE_KINDS = ["indigo_vat", "mordant_bath", "lost_wax", "firing"] as const satisfies readonly (typeof SIGNATURE_KINDS)[number][];
 export const WORKING_SECTION_STATES = ["RESEARCHING", "WRITING", "CHECKING"] as const;
 export const FINAL_SECTION_STATES = ["READY", "EMPTY"] as const;
@@ -195,6 +197,7 @@ export type BlockByKind = {
   mordant_bath: MordantBathBlock;
   lost_wax: LostWaxBlock;
   firing: FiringBlock;
+  kit_figure: KitFigureBlock;
   component: ComponentBlock;
 };
 export type TypedBlockKind = keyof BlockByKind;
@@ -317,6 +320,7 @@ export const BLOCK_SHAPES: { readonly [K in TypedBlockKind]: Shape<BlockByKind[K
   mordant_bath: mordantBathBlockShape,
   lost_wax: lostWaxBlockShape,
   firing: firingBlockShape,
+  kit_figure: kitFigureBlockShape,
   component: componentBlockShape
 };
 

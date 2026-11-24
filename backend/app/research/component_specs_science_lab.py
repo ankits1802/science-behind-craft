@@ -4,6 +4,7 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
+from .component_specs_kit_scene import StillDrawing
 from .component_specs_science_parts import (
     ComponentSlot,
     Differs,
@@ -12,7 +13,6 @@ from .component_specs_science_parts import (
     Label,
     Rich,
     SpecModel,
-    SvgNode,
     TextBlock,
     UnitRef,
 )
@@ -91,7 +91,7 @@ class DaysChart(SpecModel):
 
 class StageBox(SpecModel):
     part: Literal["stage"]
-    drawing: SvgNode
+    drawing: StillDrawing
     note: UnitRef | None = None
     note_hook: Key | None = None
 
