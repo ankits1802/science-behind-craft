@@ -11,6 +11,7 @@ const PRODUCTION = process.env.E2E_PRODUCTION === "1";
 const PARITY = process.env.E2E_PARITY === "1";
 const CAPTURE = process.env.E2E_CAPTURE === "1";
 const FIGURE = process.env.E2E_FIGURE === "1";
+const PHONE_BUDGET = process.env.E2E_PHONE_BUDGET === "1";
 const CAPTURE_SPEC = /[\\/]e2e[\\/]capture[\\/]capture\.spec\.ts$/;
 const FIGURE_SPEC = /[\\/]e2e[\\/]capture[\\/]figure\.spec\.ts$/;
 const PARITY_SPEC = /[\\/]e2e[\\/]parity[\\/]monograph-parity\.spec\.ts$/;
@@ -78,6 +79,8 @@ function captureProject(width: Width, look: CaptureLook): Project {
   return { name: captureProjectName(width.key, look), testMatch: [CAPTURE_SPEC], retries: 0, use: { ...devices[width.device], ...contextOptions(width, look.scheme), ...contrast, ...RUN_USE } };
 }
 
+const PHONE_BUDGET_PROJECT: Project = { name: "phone-budget", testMatch: /phone-budget\.spec\.ts$/, retries: 0, outputDir: "test-results/phone-budget" };
+
 const CAPTURE_PROJECTS: Project[] = CAPTURE_WIDTHS.flatMap((width) => captureLooks(width.key, SMALL_PHONE.key).map((look) => captureProject(width, look)));
 
 function voiceProject(width: Width, scheme: Scheme): Project {
@@ -119,7 +122,8 @@ export default defineConfig({
     ...(PRODUCTION ? PRODUCTION_PROJECTS : []),
     ...(PARITY ? PARITY_PROJECTS : []),
     ...(CAPTURE ? CAPTURE_PROJECTS : []),
-    ...(FIGURE ? FIGURE_PROJECTS : [])
+    ...(FIGURE ? FIGURE_PROJECTS : []),
+    ...(PHONE_BUDGET ? [PHONE_BUDGET_PROJECT] : [])
   ],
   webServer:
     SMOKE && LOCAL

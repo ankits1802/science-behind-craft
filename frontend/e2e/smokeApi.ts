@@ -3,11 +3,13 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { join } from "node:path";
 
 import { CRAFT_PAGE_PATH } from "../lib/craftPageContract";
+import { documentLanguagesPath } from "../lib/documentLanguages";
 import { FIELD_VOICES_PATH } from "../lib/fieldVoicesContract";
 import { MONOGRAPH_DOCUMENT_PATH } from "../lib/monographDocument";
 
 import { fragmentDocumentText, goldenText } from "./monographNative";
 import { nativeDocumentPath } from "./monographNativeBrowser";
+import { PHONE_FIXTURE_CRAFT, phoneFixtureDocument } from "./phoneFixturePage";
 import { templateDocument } from "./templateMonographFixture";
 import { withUnknownFields } from "./unknownFields";
 
@@ -15,6 +17,7 @@ export const FRAGMENT_VERSION = 2;
 export const LATER_BACKEND_CRAFT = "Farrukhabad-Prints";
 export const LATER_BACKEND_NAME = "Farrukhabad Prints";
 export const TEMPLATE_CRAFT = "Bagh-Print";
+export const NATIVE_CRAFT = "Kutch-Ajrakh";
 
 const LOCAL_API = /^http:\/\/(127\.0\.0\.1|localhost):\d+$/;
 const REGISTER_GOLDEN = join(__dirname, "..", "..", "shared", "craft.page.register.golden.json");
@@ -22,6 +25,8 @@ const JSON_HEADERS = { "content-type": "application/json", "content-language": "
 
 type Answer = { status: number; body: string };
 type Route = (query: URLSearchParams) => Answer;
+
+const NOT_FOUND: Route = () => ({ status: 404, body: JSON.stringify({ detail: "Not found" }) });
 
 export function smokeApiAddress(): URL | null {
   const origin = process.env.API_ORIGIN ?? process.env.NEXT_PUBLIC_API_URL ?? "";
@@ -43,12 +48,16 @@ function answers(): Map<string, Route> {
   const fragments = fragmentDocumentText(FRAGMENT_VERSION);
   const laterPage = laterBackendPage();
   const template = JSON.stringify(templateDocument());
+  const phone = JSON.stringify(phoneFixtureDocument());
   return new Map<string, Route>([
     [nativeDocumentPath(), (query) => ({ status: 200, body: query.get("version") === String(FRAGMENT_VERSION) ? fragments : native })],
     [`/api${MONOGRAPH_DOCUMENT_PATH(LATER_BACKEND_CRAFT)}`, () => ({ status: 404, body: JSON.stringify({ detail: "No monograph" }) })],
     [`/api${CRAFT_PAGE_PATH(LATER_BACKEND_CRAFT)}`, () => ({ status: 200, body: laterPage })],
     [`/api${MONOGRAPH_DOCUMENT_PATH(TEMPLATE_CRAFT)}`, () => ({ status: 200, body: template })],
-    [`/api${FIELD_VOICES_PATH(LATER_BACKEND_CRAFT, "quotes", null).split("?")[0]}`, noFieldVoices]
+    [`/api${FIELD_VOICES_PATH(LATER_BACKEND_CRAFT, "quotes", null).split("?")[0]}`, noFieldVoices],
+    [`/api${MONOGRAPH_DOCUMENT_PATH(PHONE_FIXTURE_CRAFT)}`, () => ({ status: 200, body: phone })],
+    [`/api${FIELD_VOICES_PATH(PHONE_FIXTURE_CRAFT, "quotes", null).split("?")[0]}`, NOT_FOUND],
+    ...[NATIVE_CRAFT, PHONE_FIXTURE_CRAFT].map((slug): [string, Route] => [`/api${documentLanguagesPath("craft", slug)}`, NOT_FOUND])
   ]);
 }
 
