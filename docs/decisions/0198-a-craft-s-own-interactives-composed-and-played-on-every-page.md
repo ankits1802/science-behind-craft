@@ -55,8 +55,9 @@ more in the pages group). The contracts are `docs/contracts/component-specs-scie
    Researcher or above). `about` names at most one stage, reaction or material key, or a compound's
    CID. It reads the craft through `services/compose_reads.craft_held`: its curated page, the facts
    it owns that readers see as facts and that fit a unit (600 characters), the stage names and
-   uses, the balanced reactions' coefficients, the materials' compounds and their recorded colours
-   (`data/specimen_records.craft_specimens`). A craft without a curated page composes nothing.
+   uses, the balanced reactions' coefficients, the materials' compounds, their recorded colours and
+   the colours recorded with each fact (`data/specimen_records.craft_specimens`,
+   `stated_specimens`). A craft without a curated page composes nothing.
 2. **Each kind from its own structure** (`services/compose_reaction`, `compose_dip`,
    `compose_molecule`, `compose_lab`, with `compose_parts` and `compose_scene`):
    - `reaction_player`: two to twelve reactions stated by the craft's facts, in the order of their
@@ -66,8 +67,10 @@ more in the pages group). The contracts are `docs/contracts/component-specs-scie
      coefficients only where the server balanced the reaction, otherwise a note that names it as
      the sources do; one scene of swatches, a group a step, resting on the last.
    - `dip_player`: two bath stages or more (scouring, mordanting, dyeing, resist, washing), each
-     with its colour after and a dye or mordant it uses in its recorded colour, the dye first; the
-     strip of those stages, the colour of each in `dips`, resting on the last.
+     with its colour after and the depicted colour the team recorded with the fact that states it
+     (Ajrakh's indigo stage is `--dye-indigo`, recorded with its fact C087, never the vat's green
+     `--dye-leuco` of the same material); the strip of those stages, the colour of each in `dips`,
+     resting on the last.
    - `molecule_3d`: up to two compounds of its materials whose facts it owns, one material a
      compound, from PubChem's 3D conformer read through `ConformerCache`; only carbon, hydrogen,
      nitrogen and oxygen, the atoms the design colours; its facts beside the model.

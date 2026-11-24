@@ -355,7 +355,7 @@ and a page that places them for another craft fails its checks.
 | Kind | Composed from the craft's own | Propose first when it is missing |
 |---|---|---|
 | `reaction_player` | two reactions or more, stepped in the order of their stages, each with its species, its facts, its stage's time and its equation where the server balanced one | `propose_structure` REACTION with the stage it happens in |
-| `dip_player` | two stages in a bath or more (scouring, mordanting, dyeing, resist, washing), each with its colour after and a dye or mordant in its recorded colour | `propose_structure` STAGE_AFTER with its colours; the team's specimen colour for a material that has none |
+| `dip_player` | two stages in a bath or more (scouring, mordanting, dyeing, resist, washing), each with its colour after, drawn in the depicted colour the team recorded with the fact that states it | `propose_structure` STAGE_AFTER with its colours; the team's specimen colour recorded with that fact |
 | `molecule_3d` | up to two compounds its materials are held as, turned from PubChem's 3D conformer, of carbon, hydrogen, nitrogen and oxygen | the fact naming what the material is; the team's atom colour for any other element |
 | `experiment_lab` | a toggle for each of two or three materials with a stated stand-in, each option cited by its material's own facts | `propose_structure` ALTERNATIVE naming the material and its stand-in |
 

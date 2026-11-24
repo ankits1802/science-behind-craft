@@ -79,7 +79,12 @@ POTASSIUM_ALUM = HeldCompound(62667, "Potassium alum", "KAl(SO4)2·12H2O")
 def _stages() -> tuple[HeldStage, ...]:
     return (
         HeldStage(
-            "S01", "Harda", "MORDANT", (HARDA,), ("M01",), HeldAfter("Yellow", ("yellow",), HARDA_AFTER)
+            "S01",
+            "Harda",
+            "MORDANT",
+            (HARDA,),
+            ("M01",),
+            HeldAfter("Yellow", ("yellow",), HARDA_AFTER, ("--dye-harda",)),
         ),
         HeldStage("S02", "Syahi", "PREP", (SYAHI,)),
         HeldStage("S03", "Black printing", "PRINT", (BLACK,), ("M05",)),
@@ -89,7 +94,12 @@ def _stages() -> tuple[HeldStage, ...]:
             "DYE",
             (RED_AFTER,),
             ("M03", "M02"),
-            HeldAfter("Red where alum was printed, black where syahi was", ("red", "black"), RED_AFTER),
+            HeldAfter(
+                "Red where alum was printed, black where syahi was",
+                ("red", "black"),
+                RED_AFTER,
+                ("--dye-madder",),
+            ),
             HeldTiming("an hour and a half", BATH_TIME),
         ),
         HeldStage(

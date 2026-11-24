@@ -186,7 +186,7 @@ around the anchor, outside it, and is not drawn by the view.
 decision 0198) builds a `reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab` with its
 `choice_toggle`s finished from the craft's curated page and the facts it owns (`CuratedClaim`),
 shown and stated as facts: the reactions in the order of their stages, the bath stages with their
-colour after and the depicted colour of the dye or mordant they use, a compound of its materials
+colour after in the depicted colour recorded with the fact that states it, a compound of its materials
 with PubChem's conformer, the alternatives its facts state. Every unit cites only those facts; a
 label cites none, and a name that holds a number or a formula cites the facts that state it. When
 the page holds too little it composes nothing and names what to propose (`open-work.md`, MCP).

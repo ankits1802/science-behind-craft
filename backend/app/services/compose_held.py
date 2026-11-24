@@ -40,6 +40,7 @@ class HeldAfter:
     text: str
     colours: tuple[str, ...]
     claim_id: uuid.UUID
+    tokens: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

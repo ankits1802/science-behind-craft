@@ -6,7 +6,7 @@ from app.services.compose_held import About
 from .held import BAGRU, FACTS, cited_claims, claim, delivery_problems, held
 
 
-def test_a_dip_player_plays_the_craft_s_stages_in_a_bath_in_the_recorded_colours_of_their_dyes() -> None:
+def test_a_dip_player_plays_the_craft_s_bath_stages_in_the_colours_recorded_with_their_facts() -> None:
     result = dip_player(BAGRU, About())
     assert result.composed
     (component,) = result.components
@@ -34,11 +34,11 @@ def test_each_phase_says_its_colour_after_cited_by_the_fact_that_states_it() -> 
     assert cited_claims(component) <= set(FACTS)
 
 
-def test_a_stage_whose_materials_have_no_recorded_colour_is_left_out_and_named() -> None:
+def test_a_stage_whose_colour_after_has_no_recorded_colour_is_left_out_and_named() -> None:
     result = dip_player(BAGRU, About())
     assert result.left_out == (
-        "a depicted colour for Water, which stage S05 (Washing) uses: ask the team for its specimen token, "
-        "since a dip shows a material only in its recorded colour",
+        "a depicted colour recorded with the fact that states the colour after the stage S05 (Washing): ask the "
+        "team for its specimen token, since a dip draws a stage only in the colour its fact states",
     )
 
 

@@ -6,13 +6,12 @@ from dataclasses import dataclass
 from typing import Any
 
 from .compose_held import About, Composition, CraftHeld, HeldAfter, HeldStage, composed, refused
-from .compose_parts import FIGURE, UnitBook, composed_component, joined, unique_word
+from .compose_parts import FIGURE, UnitBook, composed_component, unique_word
 from .compose_scene import piece_drawing
 
 __all__ = ["BATH_STAGES", "dip_player"]
 
 BATH_STAGES = frozenset({"SCOUR", "MORDANT", "DYE", "RESIST", "WASH"})
-TOKEN_KINDS = ("DYE", "MORDANT")
 PHASES_MIN = 2
 STRIP = "The stages, in order"
 DIP_AGAIN = "Dip again"
@@ -24,12 +23,12 @@ NO_AFTER = (
     "and the fact that states them"
 )
 NO_TOKEN = (
-    "a depicted colour for {materials}, which stage {key} ({name}) uses: ask the team for its specimen token, "
-    "since a dip shows a material only in its recorded colour"
+    "a depicted colour recorded with the fact that states the colour after the stage {key} ({name}): ask the "
+    "team for its specimen token, since a dip draws a stage only in the colour its fact states"
 )
 TOO_FEW = (
-    "two stages of {name} in a bath, each with its colour after and a material in its recorded colour: "
-    "{slug} holds {count}"
+    "two stages of {name} in a bath, each with its colour after and that colour recorded as a depicted "
+    "material: {slug} holds {count}"
 )
 
 
@@ -74,22 +73,11 @@ def _phases(craft: CraftHeld, stages: Sequence[HeldStage]) -> tuple[list[_Phase]
         if after is None or not craft.stated([after.claim_id]):
             gaps.append(NO_AFTER.format(key=stage.key, name=stage.name, slug=craft.slug))
             continue
-        token = _token(craft, stage)
-        if token is None:
-            names = [m.name for k in stage.material_keys if (m := craft.material(k)) is not None]
-            materials = joined(names) or "its materials"
-            gaps.append(NO_TOKEN.format(materials=materials, key=stage.key, name=stage.name))
+        if not after.tokens:
+            gaps.append(NO_TOKEN.format(key=stage.key, name=stage.name))
             continue
-        phases.append(_Phase(stage, after, token, craft.stated([after.claim_id, *stage.claim_ids])))
+        phases.append(_Phase(stage, after, after.tokens[0], craft.stated([after.claim_id, *stage.claim_ids])))
     return phases, gaps
-
-
-def _token(craft: CraftHeld, stage: HeldStage) -> str | None:
-    materials = [m for key in stage.material_keys if (m := craft.material(key)) is not None and m.tokens]
-    ranked = sorted(
-        materials, key=lambda m: TOKEN_KINDS.index(m.kind) if m.kind in TOKEN_KINDS else len(TOKEN_KINDS)
-    )
-    return ranked[0].tokens[0] if ranked else None
 
 
 def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[str, Any]:
@@ -114,9 +102,9 @@ def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[s
         "kind": "dip_player",
         "title": title,
         "description": (
-            f"Plays the stages of {craft.name} in a bath one after another, each drawn in the recorded colour of "
-            f"the dye or mordant it uses and cited by the fact stating its colour after. Place it in the chemistry "
-            f"chapter of the page of {craft.name}."
+            f"Plays the stages of {craft.name} in a bath one after another, each drawn in the depicted colour "
+            f"recorded with the fact that states its colour after, and cited by that fact. Place it in the "
+            f"chemistry chapter of the page of {craft.name}."
         ),
         "spec": spec,
     }

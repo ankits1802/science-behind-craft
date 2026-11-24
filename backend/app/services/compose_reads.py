@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
-from app.data.specimen_records import craft_specimens
+from app.data.specimen_records import craft_specimens, stated_specimens
 from app.models import Compound, CuratedClaim, CuratedCraft, Material, ProcessStage, Reaction, StageMaterial
 from app.research.component_specs_general_delivery import UNIT_TEXT_MAX
 from app.research.vocabulary import FACT_LEVELS
@@ -39,16 +39,24 @@ async def craft_held(session: AsyncSession, slug: str) -> CraftHeld | None:
     page = stored_curated_page(craft.id, stored)
     if page is None:
         return None
-    owned = set(await session.scalars(select(CuratedClaim.claimId).where(CuratedClaim.craftId == craft.id)))
+    owned = dict(
+        (
+            await session.execute(
+                select(CuratedClaim.claimId, CuratedClaim.key).where(CuratedClaim.craftId == craft.id)
+            )
+        ).tuples()
+    )
     stages = await _stage_rows(session, page)
     compounds = await _compounds(session, page)
     balance = await _balance(session, page)
     tokens = craft_specimens(craft.slug)
+    stated = stated_specimens(craft.slug)
+    colours = {claim: stated[key] for claim, key in owned.items() if key in stated}
     return CraftHeld(
         slug=craft.slug,
         name=craft.name,
-        facts=await _facts(session, owned & _referenced(page)),
-        stages=tuple(_stage(entry, stages, page) for entry in _ordered(page.stages)),
+        facts=await _facts(session, set(owned) & _referenced(page)),
+        stages=tuple(_stage(entry, stages, page, colours) for entry in _ordered(page.stages)),
         materials=tuple(_material(entry, compounds, tokens.get(entry.key, ())) for entry in page.materials),
         reactions=tuple(_reaction(entry, balance) for entry in page.reactions),
     )
@@ -166,7 +174,10 @@ def _ordered(stages: Iterable[IndexStage]) -> list[IndexStage]:
 
 
 def _stage(
-    entry: IndexStage, rows: Mapping[uuid.UUID, tuple[str, str, tuple[uuid.UUID, ...]]], page: CuratedPage
+    entry: IndexStage,
+    rows: Mapping[uuid.UUID, tuple[str, str, tuple[uuid.UUID, ...]]],
+    page: CuratedPage,
+    colours: Mapping[uuid.UUID, tuple[str, ...]],
 ) -> HeldStage:
     name, stage_type, material_ids = rows.get(entry.stage_id, (entry.local_name or entry.key, "OTHER", ()))
     keys = {material.material_id: material.key for material in page.materials}
@@ -178,7 +189,12 @@ def _stage(
         material_keys=tuple(keys[found] for found in material_ids if found in keys),
         after=None
         if entry.after is None
-        else HeldAfter(entry.after.text, tuple(entry.after.colours), entry.after.claim_id),
+        else HeldAfter(
+            entry.after.text,
+            tuple(entry.after.colours),
+            entry.after.claim_id,
+            colours.get(entry.after.claim_id, ()),
+        ),
         duration=None if entry.duration is None else HeldTiming(entry.duration.text, entry.duration.claim_id),
     )
 
