@@ -93,11 +93,12 @@ test("a molecule turns and zooms by keyboard, its model read from the page's own
     await kitBound(page);
     const dial = page.locator(".mol-dial");
     const oxygen = dial.locator('[data-a="0"] circle');
-    const before = await oxygen.getAttribute("cx");
+    const hydrogen = dial.locator('[data-a="1"] circle');
+    const before = await hydrogen.getAttribute("cx");
     await dial.focus();
     await dial.press("ArrowRight");
     await expect(dial).toHaveAttribute("aria-valuenow", "38");
-    await expect.poll(() => oxygen.getAttribute("cx")).not.toBe(before);
+    await expect.poll(() => hydrogen.getAttribute("cx")).not.toBe(before);
     const radius = Number(await oxygen.getAttribute("r"));
     await dial.press("+");
     await expect(dial).toHaveAttribute("aria-valuetext", "Turned 38 degrees, shown at 125 per cent");
