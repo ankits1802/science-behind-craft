@@ -87,6 +87,7 @@ export type ComponentReview = {
   taskKey: string | null;
   closest: ClosestComponent[];
   delivery?: DeliveredReview | null;
+  replaces?: string | null;
 };
 
 export type LayoutCrop = { x: number; y: number; width: number; height: number };
@@ -243,7 +244,8 @@ const componentShape: Shape<ComponentReview> = object<ComponentReview>({
   extension: nullable(text),
   taskKey: nullable(text),
   closest: list(object<ClosestComponent>({ component: libraryShape, overlap: number, reasons: list(text) })),
-  delivery: optional(nullable(deliveryShape))
+  delivery: optional(nullable(deliveryShape)),
+  replaces: optional(nullable(text))
 });
 
 const cropShape: Shape<LayoutCrop> = object<LayoutCrop>({ x: number, y: number, width: number, height: number });

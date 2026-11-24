@@ -217,7 +217,12 @@ ladder cannot place waits for a reviewer, who may file it under a craft or a fam
 (decision 0159). Beside facts the queue holds a process stage an answer found (`STAGES`, decision
 0167), a reading outside its stage's usual range (`READINGS`) and a proposed map layer (`LAYERS`,
 decision 0169); an approved glossary term or reaction writes its shared `Term` or `Reaction` row at
-once (decision 0162).
+once (decision 0162). A contributor takes its own registered component off its pages or replaces it
+(`services/component_lifecycle`), an Admin's AI stages a removal of published content that a person
+confirms (`services/staged_published`), a borrowed component whose units cite facts the page does
+not hold is refused before it is proposed (`services/borrowed_placements`), and a whole page from
+an account whose proposals reach readers at once waits for that person's one confirmation
+(`services/page_holds`, decision 0193).
 
 ```mermaid
 %%{init: {"theme":"base","fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif","themeVariables":{"fontSize":"15px","primaryColor":"#F2E9FE","primaryTextColor":"#1E1B2E","primaryBorderColor":"#9148D2","lineColor":"#AA69E9","textColor":"#857F9E","transitionColor":"#AA69E9","transitionLabelColor":"#857F9E","stateLabelColor":"#1E1B2E","stateBkg":"#F2E9FE","compositeBackground":"#F9F5FF","compositeTitleBackground":"#F2E9FE"}}}%%

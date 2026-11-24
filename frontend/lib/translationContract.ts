@@ -89,7 +89,7 @@ const viewShape: Shape<TranslationView> = object<TranslationView>({
 
 const reportFields = object<PartReport>({ part: text, index: integer, outcome: oneOf(PART_OUTCOMES), status: nullable(text), id: nullable(text), message: text });
 
-const reportShape: Shape<PartReport> = {
+export const partReportShape: Shape<PartReport> = {
   expected: "a part report",
   parse(value, path) {
     const raw = (value ?? {}) as Record<string, unknown>;
@@ -136,7 +136,7 @@ export function translationBundle(view: TranslationView, passages: TranslatedPas
 
 function bundleReply(raw: unknown): BundleReply {
   const body = (raw ?? {}) as Record<string, unknown>;
-  const parts = parseShape(list(reportShape), body.parts ?? []);
+  const parts = parseShape(list(partReportShape), body.parts ?? []);
   return { parts, message: typeof body.message === "string" ? body.message : "", previewUrl: typeof body.previewUrl === "string" ? body.previewUrl : null };
 }
 

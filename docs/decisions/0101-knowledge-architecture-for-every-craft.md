@@ -24,6 +24,7 @@ Date: 2026-11-19. Status: accepted (owner direction, 2026-11-19).
 | Pictures and testimony are decided only on the review queue | [decision 0145](0145-monograph-pages-and-speed-without-debt.md) |
 | `review` held only by Admins with two-step verification, given fresh, and what it lets an AI stage | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) |
 | A code not yet exchanged ends with its approver's sessions, as a connection does | [decision 0185](0185-a-code-bound-to-its-approver-robots-rules-without-backtracking-and-a-cap-on-inflated-bodies.md) |
+| A registered component of one's own withdrawn or replaced, and a trusted account's whole page held for one confirmation (items 8 and 12) | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

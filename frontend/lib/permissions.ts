@@ -170,6 +170,7 @@ export const ROUTE_GUARDS: RouteGuard[] = [
   { path: "/contributions/facts", can: canContributeImages, gate: "require(PROPOSE_KNOWLEDGE)", title: "For researchers and above", message: "Needs Researcher access or above." },
   { path: "/contributions/components", can: canContributeImages, gate: "require(PROPOSE_KNOWLEDGE)", title: "For researchers and above", message: "Needs Researcher access or above." },
   { path: "/contributions/translations", can: canContributeImages, gate: "require(PROPOSE_KNOWLEDGE)", title: "For researchers and above", message: "Needs Researcher access or above." },
+  { path: "/contributions/pages", can: canContributeImages, gate: "require(PROPOSE_KNOWLEDGE)", title: "For researchers and above", message: "Needs Researcher access or above." },
   { path: "/contribute", can: canContributeTestimony, gate: "require(CONTRIBUTE_TESTIMONY)", title: "For artisans", message: "Artisan accounts only." },
   { path: "/lessons", ...PROFESSOR_GUARD, can: canBuildLessons, gate: "require(BUILD_LESSONS)" }
 ];

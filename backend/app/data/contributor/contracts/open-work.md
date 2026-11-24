@@ -60,6 +60,9 @@ stateDiagram-v2
 | My tasks (held, completed, outcomes) | `services/contribution_queue_tasks.py`, contract `research/my_tasks.py` |
 | Stewardship | `services/stewardship.py`, contract `research/stewardship.py`, table `CraftSteward` (`models/contributions.py`, migration `0048_contribution_queue`) |
 | A component proposal | `services/component_proposals.py`; the delivered spec `component_proposals_spec.py`, registration `component_proposals_register.py` (`component-specs-general.md`) |
+| Withdrawing, replacing and taking a component off a page | `services/component_lifecycle.py` (`take_off_pages`, `withdraw_registered`, `retire_replaced`), `component_retirers.py` (who may), `component_layout_swaps.py`; tables `KnowledgePieceUnlink` and `PageHold` (`models/component_lifecycle.py`, migration `0103_component_lifecycle`) |
+| Borrowed components and the facts a page holds | `services/borrowed_placements.py`, `services/page_held_facts.py`; the preview's links and withdrawals `services/page_preview_lifecycle.py` |
+| A page held for one confirmation | `research/page_holds.py`, `services/page_holds.py`, `services/trust_tiers.publishes_at_once`; routes `api/routes/page_holds.py` |
 | `propose_page` and `preview_page` | `research/page_proposals.py` (the bundle and its reports), `services/page_proposals.py` with `page_proposals_parts.py`, `services/page_preview.py` with `page_preview_parts.py`, `page_preview_additions.py` and `page_preview_links.py` |
 | Tables | `models/open_work.py` (`TaskReservation`, `ComponentProposal`), migration `0038_open_work`; the delivered spec's columns and `models/page_previews.py` (`PagePreview`), migration `0049_delivered_components` |
 | MCP tools | `api/mcp_work_tools.py` (`WORK_TOOLS`: `list_open_work`, `my_work`, `reserve_tasks`, `steward_craft`) and `api/mcp_page_tools.py` (`PAGE_TOOLS`: `edit_draft`, `preview_page`, `propose_page`, with `mcp_page_arguments.py` and `mcp_page_texts.py`), registered in `api/mcp_tools.py`; each names its group in `_meta["kalavigyan/group"]` |
@@ -404,6 +407,7 @@ A proposal that names a task ends the proposer's reservation:
 | `subjects[{kind, key}]` | 1 to 20: a craft by slug, a concept or compound by id, a place by `lgd:<code>` or `basin:<id>` |
 | `considered_labels[]` | registered labels only |
 | `extends?` with `extension` | `SUBJECT_LINK` keeps the extended label; `VARIANT` takes a new one |
+| `replaces?` | a registered component it takes the place of (Withdrawn, replaced, borrowed and held, below); a label of its own, never with `SUBJECT_LINK` |
 | `task_key?` | the task it completes (the checks, below) |
 | `spec` | the delivery: the kind's spec data, any of the 22 contributable kinds, authored or declared |
 | `units` | the delivery's units, `{u0001: {text, claimIds}}` |
@@ -437,6 +441,56 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
   the library that every page it applies to draws from its spec, and a `SUBJECT_LINK` keys the
   registered component to its new subjects; approved at once means registered at once. A proposal
   without a spec (the site's form) is approved for a builder as before.
+- A label kept by a withdrawn, hidden or replaced component (`KnowledgePiece_label_key` holds every
+  label) is refused at once with that reason; the new one takes a label of its own.
+
+## Withdrawn, replaced, borrowed and held (decision 0193)
+
+- **Who may retire a component.** Its own proposer (the `ComponentProposal` its piece's
+  `payload.proposalId` names), a live steward of its owning craft, or an Admin
+  (`component_retirers.may_retire`); anyone else is refused (`Refused`, `not_yours`).
+- **Withdrawing** takes a registered component off every page that places it and keeps it in the
+  record: the piece is hidden (`hiddenAt`, `hiddenById`), a proposer's own approved proposal moves to
+  `WITHDRAWN`, and `component.removed` is audited with the label, the reason and the proposal. On the
+  site it is Withdraw on Your components (`contribution-screens.md`); over MCP it is a bundle's or a
+  draft's `withdrawals[{label, reason?}]` part (Pages delivered whole, below). The pages it applied to
+  are refreshed (`component_lifecycle.piece_owners`).
+- **Replacing** is a new proposal naming the old label in `replaces`; the proposer must be one who may
+  retire the old one, and the old one is never the new one's close match. When the new one is
+  registered (an Admin's approval, or at once for a reviewer's own), the same change supersedes the
+  old piece (`supersededById`) and writes each page layout naming it again with the new label in its
+  place (`component_layout_swaps`, a new version each, `PAGE_LAYOUT_WRITTEN`), audited
+  `component.replaced`. An old one gone meanwhile leaves nothing to retire.
+- **Taken off one page.** An Admin's staged removal (`review-queue.md`, Staged over MCP) takes a
+  component off every page as a withdrawal does, or off the one page it names: a
+  `KnowledgePieceUnlink` row (the piece and a craft or a category) that `applies_to` and a category
+  page's pieces leave out, so every other page keeps drawing it; the same `take_off_pages` runs both
+  and audits `component.removed` with the page.
+- **A borrowed component that cannot pass** is refused before it is proposed. Placing one means a
+  `SUBJECT_LINK` part extending it, or a layout entry naming a library label that is not one of the
+  bundle's own new components. A component is borrowed when another craft owns it or it is shared
+  (on a category's page, every component is). It is refused when its units' facts
+  (`KnowledgePiece.claimIds`) include any the page does not hold (`page_held_facts.held_claims`: a
+  craft's claim scope with its family's science, merged crafts and linked shared concepts, and the
+  facts its published sections cite; a category's curated facts, family science and sections), with
+  one sentence naming every such fact and the way on: build the page's own component of that kind on
+  its own facts. `edit_draft` refuses the addition, and `preview_page` and `propose_page` refuse that
+  part (`borrowed_placements.borrowed_problem`). One whose facts the page holds is placed as before,
+  and the preview now draws a held link (the registered component, where the page will draw it).
+- **A whole page waits for one confirmation** when the account's proposals reach readers at once
+  (`trust_tiers.publishes_at_once`: the very placement a fact of this account would get from the
+  agent switch, so a Professor or above, a `PROVEN` account, or an `ESTABLISHED` one under `AUTO`).
+  `propose_page` over MCP with a draft or a bundle of more than one part then proposes nothing: it
+  stores a `PageHold` (the bundle, the draft and its version, the client, the draft's live preview,
+  `WAITING` for 3 days, one waiting hold per account and page) and answers
+  `PageProposalResult {accepted 0, refused 0, parts [], held {id, confirmUrl, expiresAt}}` with a
+  `nextStep` to give the person the link `<site>/contributions/pages/<id>`. Placements that cannot
+  pass are refused first and nothing is held. Signed in to the same account, the person reads it
+  (`GET /api/knowledge/pages/held/{id}`, `PageHoldView`) and presses Confirm once (`POST
+  .../decision {decision CONFIRM}`): the bundle runs then, exactly as `propose_page` runs it with the
+  agent's origin, the hold keeps the result, and the draft, unchanged since, is marked submitted;
+  `DISCARD` proposes nothing. Audited `page.held`, `page.hold_confirmed` and `page.hold_discarded`.
+  Facts, single parts and an account whose parts wait for review are proposed at once as before.
 
 ## MCP
 
@@ -450,7 +504,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` |
 | `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below) and `notices`; `_meta.ui` names `ui://kalavigyan/page-preview.html` |
-| `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn` |
+| `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
 | `search_sources` | sources | contribute (read for pictures alone) | read-only, open-world | `SourceSearch` (`knowledge-api.md`, Source tools) |
 | `read_source` | sources | contribute | read-only, open-world | `SourceReading` |
@@ -596,7 +650,7 @@ flowchart LR
 ```
 
 One bundle builds one page, `PageBundle {schemaVersion 1, subject, facts[], structure[],
-components[], layout?, pictures[], translation?, note?}`, holding at least one part:
+components[], layout?, pictures[], translation?, withdrawals[], note?}`, holding at least one part:
 
 | Part | Holds | At most |
 |---|---|---|
@@ -607,6 +661,7 @@ components[], layout?, pictures[], translation?, note?}`, holding at least one p
 | `layout?` | `{baseVersion, entries, note?}` | one |
 | `pictures[]` | `{stageId?, claimIds, declaration?}` | 10 |
 | `translation?` | a page's passages in one language (Pages in other languages, above; `monograph-document.md`) | one |
+| `withdrawals[]` | `{label, reason?}`, each a registered component the account may retire, once each | 10 |
 | `note?` | a note | one |
 
 Over MCP it is `propose_page`'s and `preview_page`'s `bundle`, in snake_case, and a draft's parts make
@@ -623,7 +678,11 @@ structure item through its checks, a component through the delivery checks and t
 the layout against the page's current version (stored for review, or written at once by an
 Admin), and a picture by starting its upload (the link and slot of `give_pictures`'s `upload:
 true`, `mcp_picture_tools.start_picture`, reported in the part's `upload`); a translation's passages
-are checked last, each reported on its own. Each part counts against its own kind's hourly limit,
+are checked next, each reported on its own, and withdrawals last, each taking its component off every
+page (`status WITHDRAWN`, its piece's id) and counting as a component proposal. A `SUBJECT_LINK` or
+a layout placing a borrowed component that cannot pass is refused (Withdrawn, replaced, borrowed and
+held, above), and a whole page from an account that publishes at once is held instead of run. Each
+part counts against its own kind's hourly limit,
 and a draft or a bundle of more than one part also against the page bundles; a bundle of one part
 counts against that part's kind alone, as its retired tool did. A part is also refused when it names
 another page (a fact's or structure item's subject), when a category's bundle carries structure or
@@ -644,7 +703,8 @@ plus the bundle (`PageAdditions` into `monograph_generated.generated_parts`):
 | Part | In the preview |
 |---|---|
 | A fact, and a structure item that states a fact | one more sentence at the end of its field's section, citing its proposed sources (unstored sources, numbered after the page's); a conflict is listed only |
-| A component | drawn from its delivered spec where the page will draw it once registered; the delivery checks run, so a component that would be refused is refused here |
+| A component | drawn from its delivered spec where the page will draw it once registered; the delivery checks run, so a component that would be refused is refused here; a `SUBJECT_LINK` whose facts the page holds is drawn as the registered component (listed when another craft owns it, since only that craft's page draws it) |
+| A withdrawal | the component is left off the page, checked as `propose_page` would check who may retire it |
 | The layout | replaces the page's own as its next version, refused when its base version is stale |
 | Pictures | listed: they are drawn once uploaded and approved |
 
@@ -717,14 +777,16 @@ A draft is a page bundle built over many calls (`research/page_drafts.py`, `serv
   as `preview_page` finds it), and every later one works on the open one; an account holds at most
   10 open drafts (`DRAFTS_OPEN_MAX`), and its drafts past their expiry are deleted when it opens one.
   With `draft_id` instead it works on that draft.
-- `add {facts?, structure?, components?, layout?, pictures?, supplied_sources?, note?}` and `lists`
-  append parts (a layout, lists or note replaces the draft's) and refuse a draft past the bundle's
-  limits (20 facts, 20 structure items, 10 components, 10 pictures), 40 supplied sources, 600,000
-  bytes of JSON (`DRAFT_BYTES_MAX`), a `fact:N` beyond its facts, a supplied source of another
-  account, or a component without its spec (but a `SUBJECT_LINK`). `lists {mechanisms (up to 12),
+- `add {facts?, structure?, components?, layout?, pictures?, supplied_sources?, withdrawals?, note?}`
+  and `lists` append parts (a layout, lists or note replaces the draft's, and a withdrawal of a label
+  the draft holds replaces it) and refuse a draft past the bundle's limits (20 facts, 20 structure
+  items, 10 components, 10 pictures, 10 withdrawals), 40 supplied sources, 600,000 bytes of JSON
+  (`DRAFT_BYTES_MAX`), a `fact:N` beyond its facts, a supplied source of another account, a
+  component without its spec (but a `SUBJECT_LINK`), a withdrawal of a component the account may not
+  retire, or a placed borrowed component that cannot pass. `lists {mechanisms (up to 12),
   ambiguous_terms (up to 12), signature (fact:N or a fact id)}`.
 - `remove [{part, index}]` (up to 20): `part` one of `fact`, `structure`, `component`, `layout`,
-  `picture`, `supplied_source`; the removals run before the additions, other parts first and facts
+  `picture`, `supplied_source`, `withdrawal`; the removals run before the additions, other parts first and facts
   last, each kind from the highest index down, so every index is the one the draft listed; removing
   `fact:i` refuses while a component, picture or the signature names it, and renumbers every later
   `fact:N`.
@@ -815,6 +877,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Component proposals and their delivery | `backend/tests/research/test_component_proposals.py`, `backend/tests/db/test_component_proposals_db.py` and `test_delivered_components_db.py` |
 | Bundles, previews and the checklist report | `backend/tests/research/test_page_proposals.py`, `test_page_report.py`, `backend/tests/db/test_page_bundles_db.py`, `backend/tests/pages/test_page_preview_links.py` and `backend/tests/mcp/test_page_preview_view.py` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
+| Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
 | The HTTP routes | `backend/tests/test_open_work_routes.py` and `backend/tests/public/test_route_inventory.py` |
 | The prompts and resources | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |
 | The skills and references served | `backend/tests/mcp/test_contributor_kit.py`, `test_skill_references.py`, `test_reference_limits.py` and `test_interactives_skill.py` |
@@ -823,5 +886,6 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 The MCP section was last reviewed on 2026-11-21 (round 7: delivered components and pages, the
 source tools, supplied sources, drafts and the checklist report, decision 0110; the 21 tools of
 decision 0111), and every path, task kind and served skill here was checked against the code on
-2026-11-22. Re-read it when a task kind, a prompt, a resource or a bundle part is added or changed;
+2026-11-22; withdrawals, replacements, borrowed placements and held pages were added on 2026-11-24
+(decision 0193). Re-read it when a task kind, a prompt, a resource or a bundle part is added or changed;
 copy it to `backend/app/data/contributor/contracts/` in the same change.

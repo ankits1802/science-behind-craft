@@ -22,6 +22,7 @@ export function ComponentReviewCard({ item, onDecide }: { item: ComponentItem; o
         <ReviewTerm term="Field" value={fieldsLine(proposal.field, proposal.fields) ?? codeLabel(proposal.field)} />
         <ReviewTerm term="For" value={proposal.subjects.map((subject) => `${codeLabel(subject.kind)} ${subject.key}`).join(", ")} />
         {proposal.extends ? <ReviewTerm term={`${codeLabel(proposal.extension ?? "Extends")} of`} value={proposal.extends} /> : null}
+        {proposal.replaces ? <ReviewTerm term="Replaces" value={proposal.replaces} /> : null}
         <ReviewTerm term="Library components considered" value={proposal.consideredLabels.join(", ") || "None named"} />
       </dl>
       {proposal.delivery ? <DeliveredComponentView label={proposal.label} delivery={proposal.delivery} /> : null}

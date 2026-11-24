@@ -8,6 +8,7 @@ import {
   consideredAfter,
   emptyComponent,
   extendedDraft,
+  replacingDraft,
   resultHeadline,
   suggestedLabel,
   taskKinds,
@@ -16,7 +17,7 @@ import {
   type ComponentProposalResult,
   type ComponentSummary
 } from "../lib/componentProposalContract";
-import type { OpenTask } from "../lib/ownProposalsContract";
+import { canWithdraw, isRegistered, type OpenTask, type OwnProposal } from "../lib/ownProposalsContract";
 import { parseShape } from "../lib/shape";
 
 const CONCEPT_ID = "5f0e8c1a-7b2d-4e3f-9a10-222222222222";
@@ -166,4 +167,50 @@ test("a refusal returns the close matches with their reasons, and a stored propo
   const stored = { ...refused, outcome: "STORED" as const, proposalId: "p", status: "PENDING" as const, matches: [], waysOn: [] };
   expect(resultHeadline(stored)).toBe("Received: it waits for an Admin's review");
   expect(resultHeadline({ ...stored, status: "APPROVED" })).toBe("Approved at once: it waits to be built");
+});
+
+const REGISTERED: OwnProposal = {
+  id: "5f0e8c1a-7b2d-4e3f-9a10-333333333333",
+  kind: "COMPONENT",
+  state: "APPROVED",
+  status: "APPROVED",
+  text: "Plain timeline of the printers",
+  description: "A plain timeline of the printers' years, registered earlier.",
+  label: "sanganeri-hand-block-printing/history/plain-timeline",
+  componentKind: "timeline",
+  field: "HISTORY",
+  subjectName: "Sanganeri Hand Block Printing",
+  craftSlug: "Sanganeri-Hand-Block-Printing",
+  createdAt: "2026-11-23T09:00:00Z",
+  reasons: [],
+  gates: [],
+  registered: true
+};
+
+test("a registered component of yours is withdrawn or replaced, an approved one still being built is not", () => {
+  expect([canWithdraw(REGISTERED), isRegistered(REGISTERED)]).toEqual([true, true]);
+  const building = { ...REGISTERED, registered: false };
+  expect([canWithdraw(building), isRegistered(building)]).toEqual([false, false]);
+  const older = { ...REGISTERED, registered: undefined };
+  expect(isRegistered(older)).toBe(false);
+  expect(canWithdraw({ ...REGISTERED, state: "WAITING", status: "PENDING", registered: false })).toBe(true);
+});
+
+test("a replacement starts from the component it replaces and takes a label of its own", () => {
+  const fresh = replacingDraft(emptyComponent(), REGISTERED);
+  expect([fresh.replaces, fresh.label, fresh.kind, fresh.field, fresh.craftSlug, fresh.craftName]).toEqual([
+    REGISTERED.label,
+    "",
+    "timeline",
+    "HISTORY",
+    "Sanganeri-Hand-Block-Printing",
+    "Sanganeri Hand Block Printing"
+  ]);
+  expect(fresh.subjects).toEqual([{ kind: "CRAFT", key: "Sanganeri-Hand-Block-Printing" }]);
+  expect([fresh.extends, fresh.extension]).toEqual([null, null]);
+  const named = { ...fresh, label: "sanganeri-hand-block-printing/history/dated-timeline", title: "Printers' dated timeline", description: "The dated years of the printers' work, each year from a cited fact." };
+  expect(componentProblems(named)).toEqual([]);
+  expect(componentProblems({ ...named, label: REGISTERED.label! })).toEqual(["A replacement takes a label of its own."]);
+  expect(componentBody(named).replaces).toBe(REGISTERED.label);
+  expect("replaces" in componentBody(DRAFT)).toBe(false);
 });

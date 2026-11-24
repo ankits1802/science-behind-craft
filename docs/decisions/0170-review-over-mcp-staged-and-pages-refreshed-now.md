@@ -26,6 +26,7 @@ reports).
 | The queue's kinds and decisions | [decision 0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md) and [decision 0169](0169-mcp-follow-ups-kept-true.md) |
 | The evaluation runs the report now reads | [decision 0176](0176-listen-plays-as-it-narrates-builds-wait-for-the-api-runs-are-kept.md) |
 | The Admin's budget raised to 108 KB of input | [decision 0191](0191-room-for-the-page-quality-tools.md) |
+| A staged action on published content, the removal of a component from its pages first | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

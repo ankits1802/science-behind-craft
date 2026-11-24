@@ -17,6 +17,7 @@ export function ComponentForm({ proposal, form }: { proposal: ComponentProposal;
     <form className="grid gap-6" noValidate onSubmit={(event) => { event.preventDefault(); void proposal.send(); }} data-testid="component-form">
       <h2 className="font-reading text-h3 text-ink-1">Describe the component</h2>
       <Extending draft={draft} disabled={busy} onStop={() => proposal.setDraft(withoutExtension(draft))} />
+      <Replacing draft={draft} disabled={busy} onStop={() => set({ replaces: null })} />
       <Field label="Title">
         <TextInput value={draft.title} disabled={busy} maxLength={TITLE_MAX} onChange={(event) => set({ title: event.target.value })} />
       </Field>
@@ -63,6 +64,22 @@ function LabelField({ draft, disabled, onChange }: { draft: ComponentDraft; disa
           </Button>
         </ActionGroup>
       ) : null}
+    </div>
+  );
+}
+
+function Replacing({ draft, disabled, onStop }: { draft: ComponentDraft; disabled: boolean; onStop: () => void }) {
+  if (!draft.replaces) return null;
+  return (
+    <div className="grid gap-2 border-s-2 border-ink-1 ps-4" data-testid="replacing">
+      <p className="font-ui text-ui text-ink-1">
+        Takes the place of <span className="font-code [overflow-wrap:anywhere]">{draft.replaces}</span> on every page once it is registered
+      </p>
+      <ActionGroup align="start">
+        <Button type="button" variant="text" size="sm" disabled={disabled} onClick={onStop}>
+          Propose it as a new component instead
+        </Button>
+      </ActionGroup>
     </div>
   );
 }

@@ -213,6 +213,13 @@ refused (`REJECTED`, `RETRACTED`) and waiting (`DRAFT`, never counted for the ti
   100, below 20 (`drawn_for_review`); the queue passes its proposal id, the site's single form a fresh
   one. Unpredictable to the proposer, the same on every retry.
 - Professors and above keep their own rule (approved at once) and hold the `PROVEN` allowances.
+- A whole page waits (decision 0193): when an account's fact proposed by an agent would be placed
+  live (`trust_tiers.publishes_at_once`, this same rule with the agent switch, so a Professor or
+  above, `PROVEN`, or `ESTABLISHED` under `AUTO`), MCP `propose_page` with a draft or a bundle of
+  more than one part holds the page, proposing nothing, until the person signed in to the account
+  confirms it once on the site (`open-work.md`, Withdrawn, replaced, borrowed and held). A fact, a
+  part alone and a page from an account whose parts wait for review are placed by their tiers as
+  before.
 - An admin holds an account at a tier whatever its record (`TrustTierOverride`, audited
   `knowledge.trust_tier_set`) or gives it back to its record (`tier: null`). The standing an admin
   reads is `TrustStanding {schemaVersion 1, userId, name, role, tier, earned, accepted, refused,

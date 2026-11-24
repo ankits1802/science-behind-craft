@@ -16,6 +16,7 @@ the rest of decision 0101 (the gates, the review switch, trust tiers) stands.
 | What amended it | [0111 Twenty-one MCP tools in six groups, with small schemas](0111-fewer-mcp-tools.md): the tools it names; its services, allowances and contracts stand |
 | What it amends | the sources reference's "never used: anything behind a login" ([sources.md](../../backend/app/data/contributor/references/sources.md)), for text a contributor supplies |
 | What it builds on | [0101 One knowledge architecture for every craft: facts, sections, components, monographs](0101-knowledge-architecture-for-every-craft.md): the gates, the review switch and trust tiers, which stand |
+| A draft's withdrawals, its borrowed placements refused, and a trusted account's draft held for one confirmation | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

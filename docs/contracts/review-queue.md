@@ -343,14 +343,27 @@ most put a decision in front of a person, who sees it with its reason and the ap
   `title`, `authors`, `year`, `containerTitle` or `kind`; a title must be a work's title and an
   author never a file's producer, `research/source_titles`, `research/front_page.producer_token`)
   and `SOURCES_DIFFER` (`clear` a fact's sources-differ mark).
+- **Published content** (decision 0193). Beside the queue's actions, a kind may take actions on what
+  is already published, listed once in `research/staged_reviews.PUBLISHED_ACTIONS` (now
+  `COMPONENTS: (remove,)`) and carried out by that kind's entry in
+  `services/staged_published.PUBLISHED_KINDS` (its label, its lookup by label and one function per
+  action). `remove` on `COMPONENTS` names a registered component (its piece id, or over MCP its
+  `label`) and takes it off every page, or off the one page `craft` or `family` names, kept in the
+  record, through `component_lifecycle.take_off_pages`, the function a contributor's own withdrawal
+  uses, audited `component.removed`. A staged decision on published content stays one: a person may
+  change its reason or page but not turn it into a queue decision, nor the reverse. A later kind
+  joins by adding its actions to `PUBLISHED_ACTIONS` (and the web's `PUBLISHED_ACTIONS` in
+  `lib/stagedReviewView.ts`) and its entry to `PUBLISHED_KINDS`; the staging, dry run, confirmation,
+  audit and the Review page's batch view need no change.
 - **Reading** (`review_queue`): the queue as `GET /api/review-queue` lists it, narrowed to those
   kinds and filtered by `kinds`, `craft_slug` and `origin`, each item summarised by its kind, id, origin,
   craft and label; `open {kind, id}` gives one item whole, as its card has it (quotes, sources, gate
   checks, filing verdict, held reason and suggested craft). A source is re-read with its quotes by
   `read_source`, the contributors' tool.
-- **Staging** (`stage_reviews`): 1 to 20 decisions `{kind, id, action, reason (12 to 500
+- **Staging** (`stage_reviews`): 1 to 20 decisions `{kind, id or label, action, reason (12 to 500
   characters), craft_slug?, family_slug?, source?}` a call (`craft_slug` or `family_slug` re-files
-  an approved fact, as `craft` or `family` does on the route). Each is checked by running the decision itself,
+  an approved fact, as `craft` or `family` does on the route, or names the one page a removal takes
+  a component off; a removal may name the component by its `label`). Each is checked by running the decision itself,
   as the Review page's route would for this account (`approve_item`, `reject_item`, `raise_fact`,
   `retract_fact`; `fact_move_problem`, one's own item, the kind's actions, re-filing), inside a
   savepoint that is rolled back (`staged_review_apply.dry_run`); a source correction and a cleared
@@ -383,7 +396,8 @@ most put a decision in front of a person, who sees it with its reason and the ap
   (`components/review/StagedBatches.tsx`, `StagedBatchCard.tsx`, `StagedItemRow.tsx`,
   `StagedSourceFields.tsx`; `app/(protected)/admin/review/useStagedReviews.ts`;
   `lib/stagedReviewContract.ts`, `lib/stagedReviewView.ts`): each item selected by default, its
-  action, reason, filing and source fields open to change, one Confirm selected and a Discard batch
+  action (a removal among its kind's published actions only, its page shown as Off), reason, filing
+  and source fields open to change, one Confirm selected and a Discard batch
   behind a confirmation; a staged item of a kind the web does not know is left out of the
   production build (decision 0167).
 
@@ -461,6 +475,7 @@ stay, and list decided items.
 | Map layer proposals | `backend/tests/research/test_map_layer_proposals.py` and `backend/tests/db/test_map_layer_proposals_db.py` |
 | Refreshing signed-out pages | `backend/tests/test_page_revalidation.py`, `backend/tests/db/test_page_revalidation_db.py` and `test_review_queue_refresh_db.py` |
 | Staged over MCP: staging, confirming, expiry, the allowance and the corrections | `backend/tests/db/test_staged_reviews_db.py`, `backend/tests/mcp/test_staged_contract.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
+| Published content: a staged removal, its one code path and its page | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | The Review page | `frontend/e2e/review-queue-unit.spec.ts`, `review-layers-unit.spec.ts`, `review-layouts-unit.spec.ts`, `review-readings-unit.spec.ts`, `review-structure-unit.spec.ts`, `review-unknown-kinds-unit.spec.ts` and `revalidate-unit.spec.ts` |
 
 Re-read it when a kind joins the queue, a decision is added, or a capability moves between roles.

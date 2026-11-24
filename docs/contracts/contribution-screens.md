@@ -3,8 +3,10 @@
 The site's screens for proposing a fact and a component, and the contributor's own list of what
 they proposed with what happened to each. Facts go through the gates of `knowledge-writes.md`;
 components through the library search and duplicate refusal of `open-work.md`. Consent cannot be
-revoked: a published contribution stays published, and only what still waits for review can be withdrawn.
-Engineers changing a contribution screen or its routes read it.
+revoked: a published contribution stays published, and only what still waits for review can be
+withdrawn, with one exception: a component of yours registered in the library can be taken off the
+pages that place it, kept in the record, or replaced by a better one (decision 0193). Engineers
+changing a contribution screen or its routes read it.
 
 | For | Read |
 |---|---|
@@ -47,9 +49,16 @@ shown only to the proposer, on their own list.
 | `POST /components` | `ComponentProposalBody`, a component of an MCP `propose_page` bundle in camelCase | `ComponentProposalResult {outcome STORED or REFUSED, proposalId, status, label, message, matches[{component, reasons[]}], waysOn[]}` |
 | `GET /mine` | none | `OwnProposals {schemaVersion 1, items[]}`, facts and component proposals together, newest first, at most 100 |
 | `POST /facts/{id}/withdraw` | none | `OwnProposal`, `WITHDRAWN` |
-| `POST /components/{id}/withdraw` | none | `OwnProposal`, `WITHDRAWN` |
+| `POST /components/{id}/withdraw` | none | `OwnProposal`, `WITHDRAWN`; a registered component of yours comes off every page that places it (`open-work.md`, Withdrawn, replaced, borrowed and held) and those pages are refreshed |
 
-A fact is proposed through `POST /api/knowledge/facts` (`knowledge-writes.md`), unchanged.
+A fact is proposed through `POST /api/knowledge/facts` (`knowledge-writes.md`), unchanged. A held
+page (`open-work.md`) is read with `GET /api/knowledge/pages/held/{id}` and decided with `POST
+/api/knowledge/pages/held/{id}/decision {decision CONFIRM | DISCARD}`, both `PROPOSE_KNOWLEDGE` and
+only for the account that holds it (404 for any other), answering `PageHoldView {schemaVersion 1, id,
+subject, pageUrl, state WAITING | CONFIRMED | DISCARDED | EXPIRED, clientName, createdAt, expiresAt,
+decidedAt, counts {facts, structure, components, layout, pictures, withdrawals, translations},
+parts[{part, index, summary}], previewUrl, result, message}`; deciding one no longer waiting is 409
+`not_waiting`.
 
 Refusals: 401 or 403 without the capability; 404 for a proposal that is not the caller's (or does
 not exist); 409 `terms_needed` for a component proposed before the terms are accepted, and
@@ -70,7 +79,8 @@ are accepted, then the date they were. A component proposal on the site needs th
 
 `OwnProposal {id, kind FACT or COMPONENT, state, status, text, description?, label?,
 componentKind?, field, subjectName, craftSlug, createdAt, reasons[], gates[{gate, passed,
-reasons[]}]}`. `text` is the fact's statement or the component's title; `subjectName` is the
+reasons[]}], registered}`; `registered` is true for an approved component whose piece is live in
+the library. `text` is the fact's statement or the component's title; `subjectName` is the
 fact's concept or the component's owning craft (none for a shared component).
 
 | Kind | Stored status | `state` | `reasons` |
@@ -91,14 +101,17 @@ newest `ReviewEvent` to `REJECTED` by an account other than the proposer.
 
 Withdrawing a fact moves it from `DRAFT` to `WITHDRAWN` and records a `ReviewEvent` by the
 proposer; withdrawing a component moves it from `PENDING` to `WITHDRAWN`, which frees its label
-for another proposal. A published, approved, refused or rejected item is never withdrawn.
+for another proposal. Withdrawing a registered component moves its proposal from `APPROVED` to
+`WITHDRAWN` and hides its piece, which keeps its label (a new one takes its own). Otherwise a
+published, approved, refused or rejected item is never withdrawn.
 
 ## Pages
 
 | Page | Guard | What it does |
 |---|---|---|
 | `/contributions/facts` | `require(PROPOSE_KNOWLEDGE)` | Open work to start from (`MISSING_FIELD` and `THIN_FIELD` on a craft or category); the craft and the field; one fact in one sentence; each source with its address, title, licence and quotes with their locators; the terms; Send the fact; what the gates said (published, waiting for review, or refused with each gate's reasons); Your facts with Withdraw on what waits |
-| `/contributions/components` | `require(PROPOSE_KNOWLEDGE)` | Open work to start from (`MISSING_COMPONENT` on a craft, offering only the kinds its need takes and naming the task); a library search first; then describe a new one, or extend a held one (a subject link keeps its label, a variant takes its own); every component the search showed is sent as considered; on a refusal the close matches with their reasons and the two ways on; Your components with Withdraw on what waits |
+| `/contributions/components` | `require(PROPOSE_KNOWLEDGE)` | Open work to start from (`MISSING_COMPONENT` on a craft, offering only the kinds its need takes and naming the task); a library search first; then describe a new one, or extend a held one (a subject link keeps its label, a variant takes its own); every component the search showed is sent as considered; on a refusal the close matches with their reasons and the two ways on; Your components with Withdraw on what waits and on a registered one, and Replace on a registered one (the form opens to propose a new component naming it as `replaces`) |
+| `/contributions/pages/{id}` | `require(PROPOSE_KNOWLEDGE)` | A page an agent proposed for this account, held until the person confirms it: the page it builds, the app that proposed it, its parts and counts, the private preview while it lasts and the expiry; Confirm proposes it once, Discard proposes nothing; then each part's outcome |
 
 The nav carries one entry, Propose knowledge, to the fact page; each page links to the other.
 
@@ -109,9 +122,10 @@ The nav carries one entry, Propose knowledge, to the fact page; each page links 
 | Shapes, states, reasons and the withdrawal rule | `backend/app/research/own_proposals.py` |
 | The list, withdrawals, terms and the site's component proposal | `backend/app/services/own_proposals.py` |
 | Routes | `backend/app/api/routes/own_proposals.py` |
-| Client contracts | `frontend/lib/ownProposalsContract.ts`, `factProposalContract.ts`, `componentProposalContract.ts` |
-| Screens | `frontend/app/(protected)/contributions/facts`, `.../components`, `frontend/components/contributions/` |
-| Tests | `backend/tests/contributions/`, `backend/tests/db/test_own_proposals_db.py`, `frontend/e2e/contribution-facts-unit.spec.ts`, `contribution-components-unit.spec.ts` |
+| Client contracts | `frontend/lib/ownProposalsContract.ts`, `factProposalContract.ts`, `componentProposalContract.ts`, `pageHoldContract.ts` |
+| Screens | `frontend/app/(protected)/contributions/facts`, `.../components`, `.../pages/[id]`, `frontend/components/contributions/` |
+| Held pages | `backend/app/services/page_holds.py`, routes `backend/app/api/routes/page_holds.py` |
+| Tests | `backend/tests/contributions/`, `backend/tests/db/test_own_proposals_db.py`, `test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py`, `frontend/e2e/contribution-facts-unit.spec.ts`, `contribution-components-unit.spec.ts`, `page-holds-unit.spec.ts` |
 
 ## How this document is kept true
 
@@ -121,6 +135,7 @@ The nav carries one entry, Propose knowledge, to the fact page; each page links 
 | The routes and their refusals | `backend/tests/contributions/test_own_proposals_routes.py` |
 | The list, withdrawals and terms on Postgres | `backend/tests/db/test_own_proposals_db.py` |
 | The two pages | `frontend/e2e/contribution-facts-unit.spec.ts` and `contribution-components-unit.spec.ts` |
+| A registered component withdrawn or replaced, and a held page confirmed | `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `frontend/e2e/page-holds-unit.spec.ts` |
 | The routes' classes | `backend/tests/public/test_route_inventory.py` |
 
 Re-read it when a stored status, the terms' version or a page's steps change.

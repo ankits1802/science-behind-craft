@@ -1,6 +1,6 @@
 import { apiFetch, buildQuery } from "@/lib/api";
 import { DISCIPLINES, type Discipline } from "@/lib/explainerBlockBase";
-import { PROPOSALS_PATH, type OpenTask } from "@/lib/ownProposalsContract";
+import { PROPOSALS_PATH, type OpenTask, type OwnProposal } from "@/lib/ownProposalsContract";
 import { list, nullable, object, oneOf, parseShape, text, type Shape } from "@/lib/shape";
 
 export const COMPONENTS_PATH = `${PROPOSALS_PATH}/components`;
@@ -39,9 +39,10 @@ export type ComponentDraft = {
   extends: string | null;
   extension: Extension | null;
   taskKey: string | null;
+  replaces: string | null;
 };
 
-export type ComponentSubject = { kind: ComponentSubjectKind; key: string; name: string };
+export type ComponentSubject ={ kind: ComponentSubjectKind; key: string; name: string };
 export type ComponentSummary = {
   label: string;
   title: string;
@@ -100,7 +101,24 @@ export const componentResultShape: Shape<ComponentProposalResult> = object<Compo
 });
 
 export function emptyComponent(): ComponentDraft {
-  return { label: "", title: "", description: "", kind: "", field: "", fields: [], craftSlug: null, craftName: "", subjects: [], consideredLabels: [], extends: null, extension: null, taskKey: null };
+  return { label: "", title: "", description: "", kind: "", field: "", fields: [], craftSlug: null, craftName: "", subjects: [], consideredLabels: [], extends: null, extension: null, taskKey: null, replaces: null };
+}
+
+export function replacingDraft(draft: ComponentDraft, item: OwnProposal): ComponentDraft {
+  const slug = item.craftSlug;
+  return {
+    ...draft,
+    label: "",
+    kind: item.componentKind ?? draft.kind,
+    field: item.field ?? draft.field,
+    fields: draft.fields.filter((each) => each !== item.field),
+    craftSlug: slug,
+    craftName: item.subjectName ?? "",
+    subjects: slug ? [{ kind: "CRAFT", key: slug }] : draft.subjects,
+    extends: null,
+    extension: null,
+    replaces: item.label
+  };
 }
 
 export function suggestedLabel(craftSlug: string | null, field: Discipline | "", title: string): string {
@@ -165,6 +183,7 @@ export function componentProblems(draft: ComponentDraft): string[] {
   problems.push(...subjectProblems(draft.subjects));
   if (draft.extension === "SUBJECT_LINK" && draft.label !== draft.extends) problems.push("A new subject link keeps the label of the component it extends.");
   if (draft.extension === "VARIANT" && draft.label === draft.extends) problems.push("A variant takes a label of its own.");
+  if (draft.replaces && draft.label === draft.replaces) problems.push("A replacement takes a label of its own.");
   return problems;
 }
 
@@ -197,7 +216,8 @@ export function componentBody(draft: ComponentDraft): Record<string, unknown> {
     consideredLabels: draft.consideredLabels,
     extends: draft.extends,
     extension: draft.extension,
-    taskKey: draft.taskKey
+    taskKey: draft.taskKey,
+    ...(draft.replaces ? { replaces: draft.replaces } : {})
   };
 }
 

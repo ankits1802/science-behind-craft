@@ -11,13 +11,14 @@ import {
   emptyComponent,
   extendedDraft,
   proposeComponent,
+  replacingDraft,
   taskKinds,
   type ComponentDraft,
   type ComponentProposalResult,
   type ComponentSummary,
   type Extension
 } from "@/lib/componentProposalContract";
-import { termsAccepted, withTerms, type OpenTask, type ProposalForm } from "@/lib/ownProposalsContract";
+import { termsAccepted, withTerms, type OpenTask, type OwnProposal, type ProposalForm } from "@/lib/ownProposalsContract";
 
 const SEND_FAILED = "Couldn't send the component. Nothing was stored; try again.";
 
@@ -36,6 +37,7 @@ export type ComponentProposal = {
   startFrom: (task: OpenTask) => void;
   describe: (shown: Shown) => void;
   extend: (component: ComponentSummary, extension: Extension, shown: Shown) => void;
+  replace: (item: OwnProposal) => void;
   send: () => Promise<void>;
 };
 
@@ -61,6 +63,10 @@ function useComponentDraft(form: ProposalForm | null) {
     },
     extend: (component: ComponentSummary, extension: Extension, shown: Shown) => {
       setDraft((current) => extendedDraft({ ...current, consideredLabels: consideredAfter(current.consideredLabels, shown) }, component, extension));
+      setDescribing(true);
+    },
+    replace: (item: OwnProposal) => {
+      setDraft((current) => replacingDraft(current, item));
       setDescribing(true);
     },
     reset: () => {
@@ -108,5 +114,9 @@ export function useComponentProposal(contributions: Contributions): ComponentPro
     editing.extend(component, extension, shown);
     setResult(null);
   };
-  return { draft, kinds, describing, ticked, busy, problems, result, setDraft, setTicked, startFrom, describe, extend, send };
+  const replace = (item: OwnProposal) => {
+    editing.replace(item);
+    setResult(null);
+  };
+  return { draft, kinds, describing, ticked, busy, problems, result, setDraft, setTicked, startFrom, describe, extend, replace, send };
 }

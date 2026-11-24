@@ -41,7 +41,13 @@ export default function ProposeComponentPage() {
         <ComponentResult proposal={proposal} form={form} />
         {notice ? <p role="status" className="font-ui text-ui text-ink-1">{notice}</p> : null}
         {error ? <p role="alert" className="font-ui text-ui text-error">{error}</p> : null}
-        <ContributionsSection title="Your components" kind="COMPONENT" empty="Components you propose appear here with what an Admin decided. Withdraw one while it waits for review." contributions={contributions} />
+        <ContributionsSection
+          title="Your components"
+          kind="COMPONENT"
+          empty="Components you propose appear here with what an Admin decided. Withdraw one while it waits for review, and withdraw or replace one once it is registered."
+          contributions={contributions}
+          onReplace={(item) => proposal.replace(item)}
+        />
       </div>
     </>
   );

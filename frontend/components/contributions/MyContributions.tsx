@@ -8,11 +8,14 @@ import { useConfirm } from "@/components/dialogs/ConfirmDialog";
 import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/format";
-import { canWithdraw, fieldTitle, itemsOfKind, kindLabel, stateLabel, type OwnProposal, type ProposalForm, type ProposalKind } from "@/lib/ownProposalsContract";
+import { canWithdraw, fieldTitle, isRegistered, itemsOfKind, kindLabel, stateLabel, type OwnProposal, type ProposalForm, type ProposalKind } from "@/lib/ownProposalsContract";
 
-type SectionProps = { title: string; kind: ProposalKind; empty: string; contributions: Contributions };
+const WAITING_BODY = "It leaves the review queue and is not shown. To offer it again, propose it again.";
+const REGISTERED_BODY = "It comes off every page that places it and is kept in the record. To show a better one, replace it instead.";
 
-export function ContributionsSection({ title, kind, empty, contributions }: SectionProps) {
+type SectionProps = { title: string; kind: ProposalKind; empty: string; contributions: Contributions; onReplace?: (item: OwnProposal) => void };
+
+export function ContributionsSection({ title, kind, empty, contributions, onReplace }: SectionProps) {
   const headingId = useId();
   const { items, form, busy, error } = contributions;
   return (
@@ -25,6 +28,7 @@ export function ContributionsSection({ title, kind, empty, contributions }: Sect
         busy={busy}
         empty={empty}
         onWithdraw={(item) => void contributions.withdraw(item)}
+        onReplace={onReplace}
       />
     </section>
   );
@@ -37,9 +41,10 @@ type ListProps = {
   busy: boolean;
   empty: string;
   onWithdraw: (item: OwnProposal) => void;
+  onReplace?: (item: OwnProposal) => void;
 };
 
-export function MyContributions({ items, failed, form, busy, empty, onWithdraw }: ListProps) {
+export function MyContributions({ items, failed, form, busy, empty, onWithdraw, onReplace }: ListProps) {
   const confirm = useConfirm();
   if (!items) {
     if (failed) return null;
@@ -54,7 +59,7 @@ export function MyContributions({ items, failed, form, busy, empty, onWithdraw }
   async function withdraw(item: OwnProposal) {
     const sure = await confirm({
       title: "Withdraw it?",
-      body: "It leaves the review queue and is not shown. To offer it again, propose it again.",
+      body: isRegistered(item) ? REGISTERED_BODY : WAITING_BODY,
       confirmLabel: "Withdraw",
       tone: "danger"
     });
@@ -64,13 +69,15 @@ export function MyContributions({ items, failed, form, busy, empty, onWithdraw }
   return (
     <ul className="grid gap-4" data-testid="my-contributions">
       {items.map((item) => (
-        <ContributionRow key={item.id} item={item} form={form} busy={busy} onWithdraw={(chosen) => void withdraw(chosen)} />
+        <ContributionRow key={item.id} item={item} form={form} busy={busy} onWithdraw={(chosen) => void withdraw(chosen)} onReplace={onReplace} />
       ))}
     </ul>
   );
 }
 
-function ContributionRow({ item, form, busy, onWithdraw }: { item: OwnProposal; form: ProposalForm | null; busy: boolean; onWithdraw: (item: OwnProposal) => void }) {
+type RowProps = { item: OwnProposal; form: ProposalForm | null; busy: boolean; onWithdraw: (item: OwnProposal) => void; onReplace?: (item: OwnProposal) => void };
+
+function ContributionRow({ item, form, busy, onWithdraw, onReplace }: RowProps) {
   const about = [item.subjectName ?? "Shared", fieldTitle(form, item.field), item.componentKind ? kindLabel(item.componentKind) : ""].filter(Boolean);
   return (
     <li className="grid gap-2 border-t border-rule pt-4" data-state={item.state}>
@@ -81,14 +88,27 @@ function ContributionRow({ item, form, busy, onWithdraw }: { item: OwnProposal; 
         {stateLabel(item)} · <span className="tabular-nums lining-nums">{formatDate(item.createdAt)}</span>
       </p>
       {item.state === "REFUSED" ? <GateResults gates={item.gates} /> : <Reasons reasons={item.reasons} />}
-      {canWithdraw(item) ? (
-        <ActionGroup align="start" inline>
-          <Button type="button" variant="danger" size="sm" disabled={busy} onClick={() => onWithdraw(item)}>
-            Withdraw
-          </Button>
-        </ActionGroup>
-      ) : null}
+      <RowActions item={item} busy={busy} onWithdraw={onWithdraw} onReplace={onReplace} />
     </li>
+  );
+}
+
+function RowActions({ item, busy, onWithdraw, onReplace }: Omit<RowProps, "form">) {
+  const replaces = Boolean(onReplace) && isRegistered(item);
+  if (!canWithdraw(item) && !replaces) return null;
+  return (
+    <ActionGroup align="start" inline>
+      {replaces ? (
+        <Button type="button" variant="quiet" size="sm" disabled={busy} onClick={() => onReplace?.(item)}>
+          Replace
+        </Button>
+      ) : null}
+      {canWithdraw(item) ? (
+        <Button type="button" variant="danger" size="sm" data-danger disabled={busy} onClick={() => onWithdraw(item)}>
+          Withdraw
+        </Button>
+      ) : null}
+    </ActionGroup>
   );
 }
 

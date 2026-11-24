@@ -183,6 +183,29 @@ units; no citation in the spec's own text; at least one cited unit; every cited 
 the bundle; every number of a unit in its facts or its dataset rows; and the declared kinds' values
 stated by their units.
 
+## Withdrawing, replacing and borrowing
+
+- **Who may.** A registered component is retired only by the account that proposed it, a steward of
+  its owning craft or an Admin; anyone else is refused.
+- **Withdrawing.** A withdrawal takes your registered component off every page that places it:
+  `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a bundle), or Withdraw on Your
+  components on the site. It stays in the record, hidden, and keeps its label, so whatever comes next
+  takes a label of its own.
+- **Replacing.** Propose the better one with `replaces` naming the old label. It is never refused as
+  a copy of the one it replaces, it is never a `SUBJECT_LINK`, and once it is registered the old one
+  is retired and every page layout that named the old label names the new one in the same place.
+- **Borrowing.** On your page a component another craft owns, or a shared one, is borrowed. Linking it
+  (`SUBJECT_LINK`) or naming its label in the page's layout is refused when its units cite facts the
+  page does not hold, and the refusal names them: build the page's own component of that kind on the
+  page's own facts. One resting on facts the page holds (its own, its family's science, its shared
+  concepts) is placed as before, and the preview draws it.
+- **An Admin's removal.** An Admin may stage a component's removal from every page or from one page;
+  nothing changes until a person confirms it on the Review page.
+- **A page held for you.** When this account's proposals reach readers at once, `propose_page` with a
+  draft or a bundle of several parts proposes nothing and returns a `confirm_url`. The person signed
+  in to this account opens it within 3 days and presses Confirm once, or Discard. A component, a
+  layout or a fact sent alone goes by the account's tier as before.
+
 ## The design rules for a contributed figure
 
 - **Give data, not styling.** A declared kind's view sets every colour, size and position itself:
@@ -241,6 +264,7 @@ stated by their units.
 |---|---|
 | The kinds in each group and their counts, against the server's own lists | `test_reference_limits.py` in `backend/tests/mcp`, reading `models/component_kinds` and `research/component_specs` |
 | Every delivery limit it states | that test again, reading each bound from the spec and delivery modules |
+| Withdrawing, replacing, borrowing and the held page, with their limits | that test again, against `research/page_proposals` and `research/page_holds`; `backend/tests/db/test_component_lifecycle_db.py` and `test_borrowed_and_held_pages_db.py` |
 | The colours a drawing may use | `test_interactives_skill.py` in `backend/tests/mcp`, against the drawings' colour pattern |
 | The design's roles, fonts, the text floor and gradients, at intake and in the preview's report | `test_drawing_vocabulary.py` and `test_page_report_design.py` in `backend/tests/research` |
 | The four themes a drawing is served in, the tokens as CSS and the drawing guide | `test_design_kit.py` in `backend/tests/mcp` |

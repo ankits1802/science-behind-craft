@@ -72,6 +72,13 @@ layout, and a new unit or component lands at the end of its chapter until a layo
   `PAGE_LAYOUT_WRITTEN` (target `PageLayout`, detail `subjectKind`, `subjectSlug`, `version`,
   `entries`). The subject is found by `services/open_work_subjects.subject_by_key`, so a family
   asked for as a craft, or the reverse, is refused like an unknown slug.
+- A component registered in the place of another (`replaces`, decision 0193) writes the next version
+  of every layout whose newest version names the old label, with the new label in the old one's
+  entry (chapter, order, role, crop, size and caption kept), or without the old entry when the
+  layout already names the new one (`services/component_layout_swaps.swap_in_layouts`), each one
+  `PAGE_LAYOUT_WRITTEN` by the approver. A withdrawn, hidden or unlinked component keeps its entry:
+  a layout orders only what the page draws, so the entry places nothing until the component is
+  shown again.
 - `services/page_layouts_backfill.backfill_page_layouts(session)` gives every curated craft, family
   and category with pictures and no layout its first version, written as `SYSTEM`, from the
   dossier's pictures (schema 2, `docs/contracts/curation.md`), and reports `{written, kept}`:
