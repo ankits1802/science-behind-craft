@@ -20,7 +20,10 @@ INDEX_INTRO = (
     "proposing, pages, pictures, admin) in its `_meta` as `kalavigyan/group`; the admin tools are listed\n"
     "only to an Admin's connection holding the review scope. Each component schema is the JSON\n"
     "schema of one kind's spec, the object a delivered component carries as `spec`;\n"
-    "`resources/templates/list` gives them as `kalavigyan://components/{kind}.schema.json`."
+    "`resources/templates/list` gives them as `kalavigyan://components/{kind}.schema.json`. Every guide\n"
+    "is also served in numbered pages, `kalavigyan://guides/{topic}/{page}`, which `get_page` reads by\n"
+    "`guide`, and the tools hand each page over at the step it serves; `kalavigyan://guides/contents/1`\n"
+    "lists every page."
 )
 GENERATED = "Written by `tools/mcp_index_build.py` from the registry; never edit it by hand."
 

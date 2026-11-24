@@ -40,7 +40,9 @@ EDIT_DESCRIPTION = (
     "they are named; a fact still named is kept); lists sets the page's mechanisms, ambiguous terms and "
     "signature fact, which the preview checks. Each part is checked for its shape and the draft for its limits "
     "(20 facts, 20 structure items, 10 components, 10 pictures, 40 supplied sources); nothing is proposed "
-    "until propose_page."
+    "until propose_page. An add of components hands back guide, each kind's design rules; the page's first "
+    "components are answered instead with the design pages, nothing changed, and go in once the call is sent "
+    "again with the read_token those pages carry."
 )
 PREVIEW_DESCRIPTION = (
     "Assemble the page a draft (draft_id) or a bundle would make, the stored page with its facts, structure, "
@@ -57,7 +59,9 @@ PREVIEW_DESCRIPTION = (
     "evidence, the rest listed for you to judge on the link, coverage by field, figures, sources by grade, "
     "pictures by licence and the page's pictures, figures, interactives and maps beside Kutch Ajrakh's, chapter "
     "by chapter, as guidance only; drawn by ui://kalavigyan/page-preview.html in clients that show MCP Apps. A "
-    "translation draws the page in its language, authored pages too."
+    "translation draws the page in its language, authored pages too. guide hands over the checklist page of "
+    "each failed rule. A bundle with components waits, like a draft's first, for the read_token that comes "
+    "with the design pages."
 )
 PROPOSE_DESCRIPTION = (
     "Propose a draft once (draft_id), or a bundle, which may hold one part alone: a finished component or a "

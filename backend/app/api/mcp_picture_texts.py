@@ -31,7 +31,7 @@ GIVE_DESCRIPTION = (
     "domain, CC0, CC BY and CC BY-SA, credits it 'Photo: Author, licence, via site' linked to its page, "
     "screens it the same way and refuses a picture already on the page; each one accepted comes back with "
     "a small thumbnail to look at and its plate's label for a draft's layout. Each picture is answered on its "
-    "own: shown, waiting, refused and why, or its slot."
+    "own: shown, waiting, refused and why, or its slot; guide hands over the page checklist's picture rules."
 )
 PAGE_FIELD = (
     "An open-licence picture's page: commons.wikimedia.org/wiki/File:..., openverse.org/image/<id> or "

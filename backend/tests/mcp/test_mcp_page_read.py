@@ -139,7 +139,7 @@ async def test_get_page_is_a_read_tool_with_three_parts_and_a_compact_output_sch
     assert reply is not None
     (listed,) = [tool for tool in reply["result"]["tools"] if tool["name"] == "get_page"]
     assert listed["annotations"]["readOnlyHint"] is True
-    assert set(listed["inputSchema"]["properties"]) == {"subject", "parts", "field"}
+    assert set(listed["inputSchema"]["properties"]) == {"subject", "parts", "field", "guide"}
     output = listed["outputSchema"]["properties"]
     assert {"coverage", "sections", "layout", "openWork", "pageUrl", "attribution"} <= set(output)
     assert output["coverage"] == {"type": ["null", "object"]} and output["openWork"] == {"type": "array"}
