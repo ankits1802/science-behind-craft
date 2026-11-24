@@ -2,7 +2,7 @@ import dataclasses
 from typing import Any
 
 from app.services.compose_dip import dip_player
-from app.services.compose_held import About, HeldAfter, HeldStage
+from app.services.compose_held import About, HeldAfter, HeldFact, HeldStage
 
 from .held import BAGRU, FACTS, cited_claims, claim, delivery_problems, held, unrecorded
 
@@ -16,11 +16,19 @@ RINSING_NO_COLOUR = (
     "STAGE_AFTER for Bagru-Print again with the colours its fact states, and the stage's dyes, mordants and "
     "resists named by their substance"
 )
+HARDA_NO_PART = (
+    "what the stage S01 (Harda) colours, so the kit can draw it: propose_facts for Bagru-Print with a fact "
+    "naming the cloth, the shape of the piece or the vessel it is dipped in (a vat, pot, trough or pit)"
+)
 RINSING = HeldStage("S07", "Rinsing", "WASH", (claim(7),), ("M07",), HeldAfter("Rinsed", (), claim(7)))
 
 
-def _fills(spec: dict[str, Any]) -> list[str]:
-    return [phase["drawing"]["children"][1]["attrs"]["fill"] for phase in spec["phases"]]
+def _paints(scene: dict[str, Any]) -> list[tuple[str, str | None]]:
+    return [(part["part"], part.get("material", part.get("piece"))) for part in scene["parts"]]
+
+
+def _phase_paints(spec: dict[str, Any]) -> list[list[tuple[str, str | None]]]:
+    return [_paints(phase["drawing"]) for phase in spec["phases"]]
 
 
 def test_a_dip_player_plays_the_craft_s_bath_stages_in_the_colours_recorded_with_their_facts() -> None:
@@ -34,7 +42,8 @@ def test_a_dip_player_plays_the_craft_s_bath_stages_in_the_colours_recorded_with
     assert [phase["pose"] for phase in spec["phases"]] == ["harda", "madder-bath", "washing"]
     assert spec["dips"] == ["--dye-harda", "--dye-madder"]
     assert spec["dipAgain"] == "Dip again"
-    assert _fills(spec) == ["var(--dye-harda)", "var(--dye-madder)", "none"]
+    assert _phase_paints(spec) == [[("cloth", "--dye-harda")], [("cloth", "--dye-madder")], [("water", None)]]
+    assert _paints(spec["scene"]) == [("water", None)]
     assert delivery_problems(result.components) == []
 
 
@@ -50,17 +59,74 @@ def test_each_phase_says_its_colour_after_cited_by_the_fact_that_states_it() -> 
     assert cited_claims(component) <= set(FACTS)
 
 
-def test_a_colour_no_token_depicts_is_drawn_as_an_outline_its_colour_named_in_words() -> None:
+def test_each_phase_is_a_kit_scene_of_the_cloth_its_facts_name_taking_its_colour() -> None:
+    (component,) = dip_player(BAGRU, About()).components
+    units = component.proposal.units
+    spec = component.proposal.spec
+    harda, madder, _ = spec["phases"]
+    assert harda["drawing"] == {
+        "parts": [
+            {
+                "part": "cloth",
+                "form": "swatch",
+                "material": "--dye-harda",
+                "label": harda["drawing"]["parts"][0]["label"],
+            }
+        ],
+        "motion": "take",
+    }
+    label = units[madder["drawing"]["parts"][0]["label"]]
+    assert (label.text, label.claim_ids) == (FACTS[claim(5)], [claim(5)])
+    rest = units[spec["scene"]["parts"][0]["label"]]
+    assert (rest.text, rest.claim_ids) == (FACTS[claim(7)], [claim(7)])
+
+
+def test_a_vessel_the_facts_name_draws_the_bath_with_the_piece_dipped_in_its_colour() -> None:
+    facts = {
+        **BAGRU.facts,
+        claim(1): HeldFact(claim(1), "After the harda bath in the vat the cloth turns yellow."),
+    }
+    (component,) = dip_player(held(facts=facts), About()).components
+    units = component.proposal.units
+    harda = component.proposal.spec["phases"][0]["drawing"]
+    (bath,) = harda["parts"]
+    assert (harda["motion"], bath["part"], bath["vessel"], bath["piece"]) == (
+        "dip",
+        "bath",
+        "vat",
+        "--dye-harda",
+    )
+    assert (units[bath["label"]].text, units[bath["label"]].claim_ids) == ("Harda", [claim(1)])
+
+
+def test_a_stage_the_kit_cannot_draw_is_left_out_and_named() -> None:
+    facts = {**BAGRU.facts, claim(1): HeldFact(claim(1), "After the harda bath it turns yellow.")}
+    bare = {
+        **facts,
+        claim(8): HeldFact(claim(8), "Harda, the fruit of the myrobalan tree, gives its tannin."),
+    }
+    result = dip_player(held(facts=bare), About())
+    assert [phase["pose"] for phase in result.components[0].proposal.spec["phases"]] == [
+        "madder-bath",
+        "washing",
+    ]
+    assert result.left_out == (HARDA_NO_PART, WASHING_IN_WORDS)
+    refused = dip_player(held(facts=bare, stages=BAGRU.stages[:4]), About())
+    assert refused.components == ()
+    assert refused.missing[0].startswith("two stages of Bagru Print in a bath")
+    assert HARDA_NO_PART in refused.missing
+
+
+def test_a_colour_no_token_depicts_is_drawn_in_outline_by_the_kit_its_colour_named_in_words() -> None:
     result = dip_player(BAGRU, About())
     spec = result.components[0].proposal.spec
-    washing = spec["phases"][2]["drawing"]["children"][1]["attrs"]
-    assert (washing["fill"], washing["stroke"], washing["stroke-dasharray"]) == (
-        "none",
-        "var(--ink-2)",
-        "6 4",
-    )
-    assert spec["scene"]["children"][1]["attrs"]["fill"] == "none"
+    washing = spec["phases"][2]["drawing"]
+    assert washing == {"parts": [{"part": "water", "form": "running", "label": washing["parts"][0]["label"]}]}
+    assert spec["scene"] == {
+        "parts": [{"part": "water", "form": "running", "label": spec["scene"]["parts"][0]["label"]}]
+    }
     assert result.left_out == (WASHING_IN_WORDS,)
+    assert delivery_problems(result.components) == []
 
 
 def test_a_craft_with_no_recorded_colour_composes_its_dip_from_the_substances_its_stages_name() -> None:
@@ -71,8 +137,13 @@ def test_a_craft_with_no_recorded_colour_composes_its_dip_from_the_substances_it
     spec = result.components[0].proposal.spec
     assert [phase["pose"] for phase in spec["phases"]] == ["harda", "madder-bath", "washing", "yellow-dyeing"]
     assert spec["dips"] == ["--dye-harda", "--dye-madder", "--dye-turmeric"]
-    assert _fills(spec) == ["var(--dye-harda)", "var(--dye-madder)", "none", "var(--dye-turmeric)"]
-    assert spec["scene"]["children"][1]["attrs"]["fill"] == "var(--dye-turmeric)"
+    assert _phase_paints(spec) == [
+        [("cloth", "--dye-harda")],
+        [("cloth", "--dye-madder")],
+        [("water", None)],
+        [("cloth", "--dye-turmeric")],
+    ]
+    assert _paints(spec["scene"]) == [("cloth", "--dye-turmeric")]
     assert result.left_out == (WASHING_IN_WORDS,)
     assert delivery_problems(result.components, craft) == []
 

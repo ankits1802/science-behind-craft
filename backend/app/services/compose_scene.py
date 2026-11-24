@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from types import MappingProxyType
 from typing import Any
 
 from .compose_held import CraftHeld, HeldReaction, HeldSpecies, HeldStage
 from .compose_parts import material_named
 
-__all__ = ["piece_drawing", "reaction_scene"]
+__all__ = ["reaction_scene"]
 
 SCENE_WIDTH = 640
 SCENE_HEIGHT = 180
@@ -15,14 +14,12 @@ SCENE_MARGIN = 40
 SWATCH_MAX = 64
 SWATCH_GAP = 12
 ARROW_WIDTH = 72
-PIECE_BOX = "0 0 240 160"
 OFF = "off"
 INK = "var(--ink-2)"
 ARROW_INK = "var(--ink-3)"
 GROUND = "var(--sunk)"
-UNDEPICTED = MappingProxyType(
-    {"fill": "none", "stroke": INK, "stroke-width": "1.5", "stroke-dasharray": "6 4"}
-)
+OUTLINE_FILL = "var(--raised)"
+UNRECORDED_DASH = "6 4"
 
 Node = dict[str, Any]
 Played = tuple[HeldReaction, HeldStage | None]
@@ -40,19 +37,6 @@ def reaction_scene(craft: CraftHeld, played: Sequence[Played], current: int) -> 
     }
     ground = _rect(0, 0, (SCENE_WIDTH, SCENE_HEIGHT), {"fill": GROUND})
     return {"tag": "svg", "attrs": attrs, "children": [ground, *groups]}
-
-
-def piece_drawing(token: str | None) -> Node:
-    attrs = {"viewBox": PIECE_BOX, "aria-hidden": "true", "focusable": "false"}
-    ground = _rect(0, 0, (240, 160), {"fill": GROUND})
-    piece = _rect(40, 30, (160, 100), _paint(token))
-    return {"tag": "svg", "attrs": attrs, "children": [ground, piece]}
-
-
-def _paint(token: str | None) -> dict[str, str]:
-    if token is None:
-        return dict(UNDEPICTED)
-    return {"fill": f"var({token})", "stroke": INK, "stroke-width": "1.5"}
 
 
 def _step_group(craft: CraftHeld, reaction: HeldReaction, step: int, current: int) -> Node:
@@ -76,7 +60,9 @@ def _step_group(craft: CraftHeld, reaction: HeldReaction, step: int, current: in
 
 def _swatch(craft: CraftHeld, species: HeldSpecies, at: tuple[float, float], size: float) -> Node:
     material = material_named(craft, species.name)
-    paint = _paint(material.tokens[0] if material is not None and material.tokens else None)
+    paint = {"fill": OUTLINE_FILL, "stroke": INK, "stroke-width": "1.5"}
+    if material is None or not material.tokens:
+        paint["stroke-dasharray"] = UNRECORDED_DASH
     return _rect(at[0], at[1], (size, size), {"rx": "4", **paint})
 
 

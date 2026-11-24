@@ -768,7 +768,9 @@ state. The figure kit is `components/artkit/`: the designed parts a composed `di
 with the named motions, set in their layouts by `KitFigure` and drawn on a page by
 `components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
-part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
+part in every depicted material (decision 0199). The players, the toggle's stage box and the label
+card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
+page kit plays a shown scene's part (decision 0200). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub

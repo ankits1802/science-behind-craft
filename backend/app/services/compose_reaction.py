@@ -14,6 +14,7 @@ from .compose_held import (
     composed,
     refused,
 )
+from .compose_kit import stage_scene
 from .compose_parts import (
     FIGURE,
     UnitBook,
@@ -67,6 +68,7 @@ def reaction_player(craft: CraftHeld, about: About) -> Composition:
     book = UnitBook()
     names: list[str] = []
     steps = [_step(craft, entry, book, names) for entry in played]
+    _drawn_steps(craft, played, steps, book)
     return composed(
         composed_component(craft, _piece(craft, played, steps, about, book), book), left_out=unstated
     )
@@ -88,7 +90,7 @@ def _piece(
         },
         "current": current,
         "steps": steps,
-        "scenes": [reaction_scene(craft, played, current)],
+        "scenes": [] if all(step["scene"] for step in steps) else [reaction_scene(craft, played, current)],
         "key": None,
         "status": book.label(_heading(rest), craft.stated(rest.claim_ids)),
     }
@@ -152,6 +154,15 @@ def _step(craft: CraftHeld, entry: Played, book: UnitBook, names: list[str]) -> 
     }
     chemistry = {"parts": [_lane(craft, reaction), _equation(reaction, book)]}
     return {"name": name, "text": text, "chemistry": chemistry, "scene": None}
+
+
+def _drawn_steps(craft: CraftHeld, played: Sequence[Played], steps: list[dict[str, Any]], book: UnitBook) -> None:
+    stages = [stage for _, stage in played if stage is not None]
+    if len(stages) < len(played) or not all(stage_scene(craft, stage, UnitBook()) for stage in stages):
+        return
+    for step, stage in zip(steps, stages, strict=True):
+        where = book.label(stage.name, craft.stated(stage.claim_ids))
+        step["scene"] = {"where": where, "art": stage_scene(craft, stage, book)}
 
 
 def _rail_name(reaction: HeldReaction, stage: HeldStage | None, taken: Sequence[str]) -> str:

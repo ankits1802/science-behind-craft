@@ -26,6 +26,7 @@ __all__ = [
     "VESSELS",
     "WATER_FORMS",
     "KitPart",
+    "choice_named",
     "kit_vocabulary",
     "parts_named_by",
 ]
@@ -176,3 +177,9 @@ def parts_named_by(text: str) -> list[tuple[str, str]]:
             if word in part.subjects and part.name not in found:
                 found[part.name] = word
     return list(found.items())
+
+
+def choice_named(part: str, choice: str, text: str) -> str | None:
+    words = set(WORD.findall(text.casefold()))
+    values = KIT_PARTS[part].choices.get(choice, ())
+    return next((value for value in values if value in words or f"{value}s" in words), None)

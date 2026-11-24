@@ -1,3 +1,6 @@
+import { KitSceneArt, KitSceneKey, KitSceneTextures } from "@/components/artkit/KitScene";
+import { kitIds } from "@/components/artkit/kitIds";
+import { isKitScene } from "@/lib/componentSpecsKitScene";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { stagePlayerShape, type StagePlayerSpec } from "@/lib/componentSpecsSciencePlayers";
 import { parseShape } from "@/lib/shape";
@@ -39,18 +42,21 @@ function LabelCard({ player, renderUnit }: { player: StagePlayerSpec; renderUnit
   );
 }
 
-export function StagePlayer({ spec, renderUnit }: ComponentViewProps) {
+export function StagePlayer({ component, spec, renderUnit }: ComponentViewProps) {
   const player = parseShape(stagePlayerShape, spec);
+  const ids = kitIds(component.label);
+  const drawing = player.drawing;
   return (
     <figure className="fig lc-fig" aria-labelledby={player.head.titleId ?? undefined}>
       <FigureHeadLines head={player.head} renderUnit={renderUnit} />
       <div className="lc" data-comp="cloth" id={`${player.key}-lc`} data-rest={player.stages.length} data-stages={stagesForScript(player)}>
         <div className="lc-stagebox">
           <div className="lc-big" data-big="">
-            <Drawing node={player.drawing} />
+            {isKitScene(drawing) ? <KitSceneArt scene={drawing} ids={ids} name="stage" /> : <Drawing node={drawing} />}
           </div>
           <LabelCard player={player} renderUnit={renderUnit} />
         </div>
+        {isKitScene(drawing) ? <KitSceneKey scene={drawing} ids={ids} renderUnit={renderUnit} className="lc-key" /> : null}
         <StageRibbon player={player} />
         <p className="src-line lc-src">{renderUnit(player.source)}</p>
         <StageList player={player} renderUnit={renderUnit} />
@@ -59,6 +65,7 @@ export function StagePlayer({ spec, renderUnit }: ComponentViewProps) {
           {player.finish.paragraphs.map((unit) => <p key={unit}>{renderUnit(unit)}</p>)}
         </div>
       </div>
+      <KitSceneTextures ids={ids} scenes={[drawing]} />
     </figure>
   );
 }
