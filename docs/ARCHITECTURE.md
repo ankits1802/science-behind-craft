@@ -215,7 +215,10 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+are `docs/contracts/open-work.md`. The method's guides are served in numbered pages
+(`data/guide_pages.py`, `api/mcp_guides.py`) and each page tool hands the agent the page for the step
+it is on, a page's first components waiting until the design pages are handed over
+(`api/mcp_guide_steps.py`, decision 0203). An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
 monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's
@@ -772,7 +775,9 @@ state. The figure kit is `components/artkit/`: the designed parts a composed `di
 with the named motions, set in their layouts by `KitFigure` and drawn on a page by
 `components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
-part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
+part in every depicted material (decision 0199). The players, the toggle's stage box and the label
+card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
+page kit plays a shown scene's part (decision 0200). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub

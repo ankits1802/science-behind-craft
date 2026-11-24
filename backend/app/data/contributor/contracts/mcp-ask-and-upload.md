@@ -201,7 +201,9 @@ opened refuses that picture only, with its reason.
 
 `PicturesReply`: `{schemaVersion: 1, craft, declarationId, given, refused, pictures[{position,
 contributionId, status, label, received, mime, width, height, screen{verdict, flags, reasons},
-refused, openSource?, plate?}], uploads[{position, upload, refused}], nextStep}`. Positions count
+refused, openSource?, plate?}], uploads[{position, upload, refused}], nextStep, guide}`, `guide` the
+page checklist's picture rules (2, 3, 7 and 14) with their pages (`open-work.md`, Guide pages,
+decision 0203). Positions count
 the call's pictures from 1; a refused picture or upload carries only its position and the reason.
 `refused` counts both, and `given` the pictures given in the call and by their page together. A
 picture given by its page also carries `openSource` (its licence evidence and credit, as

@@ -8,6 +8,7 @@ from typing import Literal, Self
 from pydantic import Field, model_validator
 
 from .base import ContractModel, absent
+from .component_specs_kit_scene import SealDrawing
 from .component_specs_plates_media import (
     AiIllustrationSpec,
     AiVideoSpec,
@@ -143,7 +144,7 @@ class LabelFact(ContractModel):
 class LabelCardSpec(ContractModel):
     variant: ClassName
     kicker: UnitRef
-    seal: DrawingElement
+    seal: SealDrawing
     sentence: UnitRef
     inset: ComponentLabel | None = None
     facts: list[LabelFact] = Field(min_length=1)

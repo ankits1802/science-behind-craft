@@ -21,6 +21,7 @@ __all__ = [
     "Reference",
     "SkillFile",
     "contract_text",
+    "demoted",
     "prompt_reference",
     "reference_text",
     "server_index",
@@ -247,7 +248,11 @@ def server_index() -> str:
 
 
 def prompt_reference(name: str) -> str:
-    return HEADING.sub(r"#\1 ", reference_text(name)).strip()
+    return demoted(reference_text(name))
+
+
+def demoted(text: str) -> str:
+    return HEADING.sub(r"#\1 ", text).strip()
 
 
 @cache

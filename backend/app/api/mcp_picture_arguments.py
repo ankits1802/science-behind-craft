@@ -21,6 +21,7 @@ from app.research.image_contributions_give import CONFIRMATION_MAX_CHARS, GIVEN_
 from app.research.image_intake_fetch import IMAGE_BASE64_BYTES_MAX, base64_chars_max
 from app.research.upload_links import SlotCraft, SlotDeclaration, UploadSlot, UploadStart
 
+from .mcp_guide_steps import HandedGuide
 from .mcp_picture_texts import CONFIRMATION_FIELD, DECLARATION_FIELD, PAGE_FIELD
 from .mcp_protocol import ToolImage
 from .mcp_studio_arguments import StudioArguments
@@ -139,6 +140,7 @@ class PicturesReply(ContractModel):
     pictures: list[GivenPicture] = Field(default_factory=list)
     uploads: list[UploadPlace] = Field(default_factory=list)
     next_step: str
+    guide: HandedGuide
     _images: list[ToolImage] = PrivateAttr(default_factory=list)
 
     def showing(self, images: list[ToolImage]) -> PicturesReply:

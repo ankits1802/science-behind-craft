@@ -11,12 +11,13 @@ import { ThemeProvider } from "../components/ThemeProvider";
 import { parseShape } from "../lib/shape";
 import { SPEC_SHAPES_SCIENCE, type ScienceKind } from "../lib/componentSpecsScience";
 
-import { composedDocument, DYE, LAB, MOLECULE, MORDANT, PLAYER, DIP, REST_YAW_DEGREES } from "./composedInteractivesFixture";
+import { composedDocument, DYE, HARDA_SAID, LAB, MADDER_SAID, MOLECULE, MORDANT, PLAYER, DIP, REST_YAW_DEGREES } from "./composedInteractivesFixture";
 import { FRONTEND } from "./moduleGraph";
 import { PRIMITIVE_CSS } from "./primitivesPage";
 
 const KIT_CSS = readFileSync(join(FRONTEND, "public", "monographs", "kit", "monograph.css"), "utf8");
 const PAGE_CSS = readFileSync(join(FRONTEND, "components", "monograph", "documentPage.css"), "utf8");
+const ARTKIT_CSS = readFileSync(join(FRONTEND, "components", "artkit", "artkit.css"), "utf8");
 const KIT_JS = readFileSync(join(FRONTEND, "public", "monographs", "kit", "monograph.js"), "utf8");
 const WIDTHS = [360, 1440] as const;
 const SWITCHES = ["system", "page"] as const;
@@ -29,7 +30,7 @@ async function drawn(page: Page, width: number, motion: Switch): Promise<void> {
   await page.setViewportSize({ width, height: 900 });
   await page.emulateMedia({ reducedMotion: motion === "system" ? "reduce" : "no-preference" });
   const switched = motion === "page" ? ' data-reduced-motion="true"' : "";
-  const head = `<meta charset="utf-8"><style>${PRIMITIVE_CSS}</style><style>${KIT_CSS}</style><style>${PAGE_CSS}</style>`;
+  const head = `<meta charset="utf-8"><style>${PRIMITIVE_CSS}</style><style>${KIT_CSS}</style><style>${PAGE_CSS}</style><style>${ARTKIT_CSS}</style>`;
   await page.setContent(`<!doctype html><html lang="en" data-theme="light"${switched}><head>${head}</head><body>${pageHtml()}</body></html>`, { waitUntil: "domcontentloaded" });
 }
 
@@ -121,11 +122,13 @@ test("under either reduced-motion switch each press of Dip again shows the next 
     await expect(strip.first()).toHaveAttribute("aria-current", "step");
     await expect(dip.locator(".vat-status")).toHaveText("Dip 1 of 2. Harda: Yellow");
     await expect(dip.locator(".dips li").first()).toHaveClass(/on/);
-    await expect(dip.locator(".vat-scene svg rect").nth(1)).toHaveAttribute("fill", "var(--dye-harda)");
+    await expect(dip.locator('.vat-scene [data-kit-part="cloth"] path[fill="var(--dye-harda)"]')).toHaveCount(1);
+    await expect(dip.locator(".vat-key")).toContainText(HARDA_SAID);
     await dip.locator(".vat-dip").click();
     await expect(strip.last()).toHaveAttribute("aria-current", "step");
     await expect(dip.locator(".vat-status")).toHaveText("Dip 1 of 2. Madder bath: Red where alum was printed");
-    await expect(dip.locator(".vat-scene svg rect").nth(1)).toHaveAttribute("fill", "var(--dye-madder)");
+    await expect(dip.locator('.vat-scene [data-kit-part="cloth"] path[fill="var(--dye-madder)"]')).toHaveCount(1);
+    await expect(dip.locator(".vat-key")).toContainText(MADDER_SAID);
   }
 });
 

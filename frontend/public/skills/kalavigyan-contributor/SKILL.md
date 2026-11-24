@@ -38,7 +38,7 @@ and not trivial, and rebuild the section prose on our side from the facts that p
 
 Every contributor follows the same rules, whether in KalaVigyan's own team or over its MCP server,
 and each rule lives in one reference. Read the references your work touches before you start; the
-prompts carry them as well.
+tools hand you their pages as you work.
 
 | Reference | MCP resource | On the site | Read it before |
 |---|---|---|---|
@@ -51,6 +51,13 @@ prompts carry them as well.
 
 For data behind a figure, load the datasets skill too, and for a family's flagship interactive the
 interactives skill (the map above).
+
+Every reference, skill, contract and design page is also served in numbered pages of at most 6,000
+bytes, `kalavigyan://guides/<topic>/<page>`, which `get_page` reads with `guide` set to the address
+(`page-checklist/2`); `contents/1` lists every page. The tools hand you the page for your step: the
+checklist's opening and the Kutch Ajrakh bar with a page's coverage, each kind's design rules as you
+add it, the page of each rule a preview fails, the picture rules and the storyboard. Read each page
+a result hands you before your next call.
 
 ## Connect
 
@@ -256,6 +263,8 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Deliver it finished by the component guide: its kind, its spec as the kind's schema gives it
   (`kalavigyan://components/<kind>.schema.json`) and its units, each unit resting on shown facts or
   on the facts of the same draft or bundle.
+- A page's first components are answered with the design pages and nothing changes: read them,
+  then send the same call again with the `read_token` that came with them.
 - A craft's interactives are composed, not written: `compose_component` with the craft's slug and
   one kind (`reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab`), and `about` for one
   stage, reaction, material or compound, returns them finished from that craft's own facts and
@@ -304,7 +313,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
   not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
   part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
-  depicted material by hand or names a kit part is refused with the part to use.
+  depicted material by hand or names a kit part is refused with the part to use. A player's or
+  card's scene is given as a kit scene in its slot; a scene painting a depicted material by hand is
+  refused with the part to use.
 
 ## Pages
 

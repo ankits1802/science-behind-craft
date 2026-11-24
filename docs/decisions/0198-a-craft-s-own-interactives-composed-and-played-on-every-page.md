@@ -21,6 +21,7 @@ more in the pages group). The contracts are `docs/contracts/component-specs-scie
 | The tool list's room for the page-quality tools | [decision 0191](0191-room-for-the-page-quality-tools.md) |
 | How structure becomes a curated fact of its page | [decision 0108](0108-structure-proposals-become-curated-facts.md) |
 | A conformer kept once per CID, a miss asked again after 90 days | [decision 0152](0152-matter-read-once-and-the-science-seed-kept-true.md) |
+| The composed players' scenes built from the figure kit | [decision 0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | A dip's colours from the substances its stages name, and molecules of twenty elements (amends items 2 and 3) | [decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | Every decision, by group | [README.md](README.md) |
 

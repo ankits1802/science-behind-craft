@@ -65,7 +65,8 @@ moment is the kit's script: the view keeps `.vat-again`, the status id and `data
 
 ### label_card
 
-A specimen label card of a `variant` (`gi`): kicker, seal drawing beside its sentence, an optional
+A specimen label card of a `variant` (`gi`): kicker, seal drawing beside its sentence (a free drawing,
+or a kit scene at rest whose key follows the seal, decision 0200), an optional
 `inset` (the label of a component the card holds between the seal and the facts: the GI ladder, a
 `timeline`) and the facts as term and value units. The view draws the inset through
 `renderComponent` (see Nesting in `component-specs-data.md`).

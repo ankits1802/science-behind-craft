@@ -29,6 +29,50 @@ def test_a_reaction_player_steps_through_the_craft_s_own_reactions_in_the_order_
     assert delivery_problems(result.components) == []
 
 
+def test_a_player_whose_every_step_the_kit_draws_shows_each_step_s_stage_as_a_kit_scene() -> None:
+    (component,) = reaction_player(held(reactions=BAGRU.reactions[:3]), About()).components
+    body = component.proposal
+    spec = body.spec
+    assert spec["scenes"] == [] and [step["name"] for step in spec["steps"]] == [
+        "Black printing",
+        "Madder bath",
+    ]
+    printing, madder = (step["scene"] for step in spec["steps"])
+    assert [body.units[scene["where"]].text for scene in (printing, madder)] == [
+        "Black printing",
+        "Madder bath",
+    ]
+    (paste,) = printing["art"]["parts"]
+    assert (paste["part"], paste["form"], paste["material"], "motion" in printing["art"]) == (
+        "paste",
+        "printed",
+        "--dye-kut",
+        False,
+    )
+    assert (body.units[paste["label"]].text, body.units[paste["label"]].claim_ids) == ("Syahi", [claim(3)])
+    (cloth,) = madder["art"]["parts"]
+    assert (cloth["part"], cloth["material"], madder["art"]["motion"]) == ("cloth", "--dye-madder", "take")
+    assert body.units[cloth["label"]].claim_ids == [claim(5)]
+    assert delivery_problems([component]) == []
+
+
+def test_a_player_with_a_step_the_kit_cannot_draw_keeps_one_scene_in_line_work_painting_nothing() -> None:
+    (component,) = reaction_player(BAGRU, About()).components
+    spec = component.proposal.spec
+    assert all(step["scene"] is None for step in spec["steps"])
+    swatches = [
+        child["attrs"]
+        for group in spec["scenes"][0]["children"]
+        if group["tag"] == "g"
+        for child in group["children"]
+        if child["tag"] == "rect"
+    ]
+    assert {swatch["fill"] for swatch in swatches} == {"var(--raised)"}
+    assert {swatch["stroke"] for swatch in swatches} == {"var(--ink-2)"}
+    dashed = [swatch.get("stroke-dasharray") for swatch in swatches]
+    assert dashed == ["6 4", "6 4", "6 4", "6 4", None, "6 4", "6 4", None, "6 4", "6 4"]
+
+
 def test_every_unit_cites_only_the_craft_s_own_facts_and_a_fact_of_another_page_is_never_cited() -> None:
     (component,) = reaction_player(BAGRU, About()).components
     cited = cited_claims(component)
