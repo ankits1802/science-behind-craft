@@ -131,7 +131,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 190 |
+| Decision records (`docs/decisions/`) | 191 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 29 |
 | Curated craft dossiers | 32 |
@@ -142,7 +142,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 | Area | Files | Lines |
 | --- | ---: | ---: |
 | `backend/app` | 1477 | 208,043 |
-| `backend/tests` | 1172 | 151,110 |
+| `backend/tests` | 1172 | 151,128 |
 | `backend/migrations` | 90 | 11,607 |
 | `frontend/app` | 112 | 10,127 |
 | `frontend/components` | 639 | 43,616 |

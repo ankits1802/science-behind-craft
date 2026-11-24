@@ -482,13 +482,18 @@ An Admin or Master Admin with two-step verification on can review from their AI 
    sign-in), then add or reconnect the server in the AI client and tick Review on the consent page.
    A review token lives 15 minutes and the client renews it; `review` itself ends 8 hours after the
    consent, and the connection goes on without it.
-2. The client lists four more tools: `review_queue` (the queue and one item whole), `stage_reviews`
-   (up to 20 decisions or source corrections a call, at most 100 a day), `refresh_pages` and
-   `admin_reports`. A contributor's connection never sees them.
+2. The client lists four more tools: `review_queue` (the queue and one item whole, or with
+   `published` a page's published items and one with its editable fields), `stage_reviews` (up to
+   20 decisions, source corrections, removals or edits a call, at most 100 a day), `refresh_pages`
+   and `admin_reports`. A contributor's connection never sees them. Point the AI to the resource
+   `kalavigyan://admin/published-content.md` before it removes or edits published content.
 3. Nothing the AI stages is published. Open Review in admin settings: each open batch says "Proposed
    through <client> by <admin>"; untick what to skip, change an action or reason, and Confirm
-   selected. Each item is checked again and applied as the Review page applies a decision, audited
-   with the client and the person who confirmed it, and the pages it touched are refreshed. A batch
+   selected. An edit shows each field's before and after, and is confirmed with the values it was
+   staged with. Each item is checked again and applied as the Review page applies a decision, audited
+   with the client and the person who confirmed it, and the pages it touched are refreshed. A removed
+   map layer an engineer already shipped in `tools/maplayers` stays on the maps until the engineer
+   takes it out. A batch
    expires after three days; Discard batch closes one unapplied.
 4. Who staged what: `StagedReview` and `StagedReviewItem` (who, which client, when, each decision),
    and the audit actions `review.staged_applied`, `review.staged_discarded` and each decision's own.

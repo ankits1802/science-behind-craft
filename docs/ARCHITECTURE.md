@@ -218,8 +218,9 @@ ladder cannot place waits for a reviewer, who may file it under a craft or a fam
 0167), a reading outside its stage's usual range (`READINGS`) and a proposed map layer (`LAYERS`,
 decision 0169); an approved glossary term or reaction writes its shared `Term` or `Reaction` row at
 once (decision 0162). A contributor takes its own registered component off its pages or replaces it
-(`services/component_lifecycle`), an Admin's AI stages a removal of published content that a person
-confirms (`services/staged_published`), a borrowed component whose units cite facts the page does
+(`services/component_lifecycle`), an Admin's AI stages the removal or edit of any published content
+that a person confirms (`services/staged_published` and one `services/published_<kind>` module a kind,
+decision 0194), a borrowed component whose units cite facts the page does
 not hold is refused before it is proposed (`services/borrowed_placements`), and a whole page from
 an account whose proposals reach readers at once waits for that person's one confirmation
 (`services/page_holds`, decision 0193).

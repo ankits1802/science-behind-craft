@@ -25,6 +25,7 @@ The contracts are `docs/contracts/open-work.md` (Withdrawn, replaced, borrowed a
 | Drafts and bundles | [decision 0110](0110-contributor-supplied-sources.md) and [decision 0111](0111-fewer-mcp-tools.md) |
 | Staged review and the one-click confirmation | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) |
 | Why no tool was added | [decision 0191](0191-room-for-the-page-quality-tools.md) |
+| Every other kind's removal and the edit of published content | [decision 0194](0194-an-admin-removes-and-edits-published-content-over-mcp.md) |
 | Where a borrowed component's sources are counted | [decision 0106](0106-one-monograph-template-for-every-page.md) |
 | Every decision, by group | [README.md](README.md) |
 

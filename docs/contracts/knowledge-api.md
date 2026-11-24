@@ -43,7 +43,7 @@ The server offers 22 tools in six groups to every connection (decision 0111; dec
 | proposing | `propose_facts`, `propose_structure`, `propose_source`, `propose_dataset` | contribute | `knowledge-writes.md`, decision 0108; decision 0114 for `propose_dataset`, the datasets reference for its `layer` and `review-queue.md` for `LAYERS` |
 | pages | `edit_draft`, `preview_page`, `propose_page` | contribute | `open-work.md` |
 | pictures | `give_pictures` | contribute | `mcp-ask-and-upload.md` |
-| admin | `review_queue`, `stage_reviews`, `refresh_pages`, `admin_reports` | review (Admin and Master Admin, `mcp-oauth.md`) | `review-queue.md`, Staged over MCP; `nightly-upkeep.md`, Refresh pages now; Admin reports below |
+| admin | `review_queue`, `stage_reviews`, `refresh_pages`, `admin_reports` | review (Admin and Master Admin, `mcp-oauth.md`) | `review-queue.md`, Staged over MCP and Published content (removing and editing what is published, guided by the resource `kalavigyan://admin/published-content.md`); `nightly-upkeep.md`, Refresh pages now; Admin reports below |
 
 ## The endpoint
 
