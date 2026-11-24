@@ -6,7 +6,9 @@ from collections.abc import Collection, Mapping, Sequence
 from dataclasses import dataclass
 
 from .blocks_people import ExpertViewBlock
+from .blocks_play import SimulationBlock
 from .knowledge_pieces import KnowledgePiece, ReuseAsk, piece_content_hash, reuse_refusal
+from .simulation_art import simulation_art_problems
 
 __all__ = [
     "PIECE_BLOCK_ORDER",
@@ -163,6 +165,7 @@ def reusable_simulation(
         for piece in pieces
         if piece.kind == SIMULATION_KIND
         and set(piece.claim_ids) <= set(offered)
+        and _at_the_bar(piece)
         and reuse_refusal(
             piece,
             ReuseAsk(craft_id=None, facet=facet, topic_key=piece.topic_key, depth=depth),
@@ -171,6 +174,10 @@ def reusable_simulation(
         is None
     ]
     return max(usable, key=lambda piece: (len(piece.claim_ids), piece.created_at), default=None)
+
+
+def _at_the_bar(piece: KnowledgePiece) -> bool:
+    return not isinstance(piece.payload, SimulationBlock) or not simulation_art_problems(piece.payload.html)
 
 
 def with_simulation(

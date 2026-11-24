@@ -4,8 +4,8 @@ import { movingPart, type KitDiagramSpec } from "@/lib/componentSpecsKit";
 
 import { kitIds } from "./kitIds";
 import { KitPanelView } from "./KitPanelView";
-import { KitPlay } from "./KitPlay";
 import { KitTextures } from "./KitTextures";
+import { NearKitPlay } from "./NearKitPlay";
 
 import "./artkit.css";
 
@@ -27,7 +27,7 @@ export function KitFigure({ spec, label, renderUnit, unitText }: FigureProps) {
           <KitPanelView key={`${panel.label}-${index}`} panel={panel} index={index} layout={spec.layout} ids={ids} renderUnit={renderUnit} />
         ))}
       </ol>
-      {motions.some((motion) => motion !== null) ? <KitPlay figureId={figureId} labels={spec.panels.map((panel) => unitText?.(panel.label) ?? "")} motions={motions} /> : null}
+      {motions.some((motion) => motion !== null) ? <NearKitPlay figureId={figureId} labels={spec.panels.map((panel) => unitText?.(panel.label) ?? "")} motions={motions} /> : null}
     </div>
   );
 }

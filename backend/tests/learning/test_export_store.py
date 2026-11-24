@@ -27,7 +27,7 @@ from app.services.export_store import (
     export_digest,
     stored_export_link,
 )
-from app.services.naming import explainer_file_name, export_key, lesson_file_name
+from app.services.naming import export_file_name, export_key, lesson_file_name
 from app.services.object_store import ObjectStore
 from app.sources.images.picture_files import picture_files
 
@@ -180,12 +180,29 @@ def test_every_golden_lesson_file_name_is_reproduced(row: dict) -> None:
     "row", golden_json("naming-golden.json")["explainerFiles"], ids=lambda row: row["fileName"]
 )
 def test_every_golden_explainer_file_name_is_reproduced(row: dict) -> None:
-    name = explainer_file_name(
+    name = export_file_name(
+        entity="Explainer",
         made_at=datetime.fromisoformat(row["madeAt"]),
         craft=row["craft"],
-        question=row["question"],
+        subject=row["question"],
         version=row["version"],
         what=row["what"],
+        ext=row["ext"],
+    )
+    assert name == row["fileName"]
+
+
+@pytest.mark.parametrize(
+    "row", golden_json("naming-golden.json")["pageFiles"], ids=lambda row: row["fileName"]
+)
+def test_every_golden_page_export_file_name_is_reproduced(row: dict) -> None:
+    name = export_file_name(
+        entity=row["entity"],
+        made_at=datetime.fromisoformat(row["madeAt"]),
+        craft=row["craft"],
+        subject=row["language"],
+        version=row["version"],
+        what="Export",
         ext=row["ext"],
     )
     assert name == row["fileName"]

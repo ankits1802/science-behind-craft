@@ -12,6 +12,7 @@ from app.research.component_specs_general_delivery import DeliveredUnit, spec_pr
 from app.research.drawn_art import (
     KIT_POINTER,
     MATERIAL_PARTS,
+    SCENE_POINTER,
     drawn_art_problems,
     free_drawings,
     scene_problems,
@@ -27,10 +28,7 @@ UNITS = {
     ),
     "u0003": DeliveredUnit(text="Wax strings wound in close turns"),
 }
-UNTEXTURED = (
-    "on its <ellipse> with no texture: lay an in-drawing <pattern> over the same shape, as the kit's cloth, "
-    "bath, paste, section or piece parts do"
-)
+AT_THE_KIT = SCENE_POINTER.format(kind="stage_player")
 
 
 def rects(count: int, *, stroke: str = ' stroke="var(--ink-1)"') -> str:
@@ -145,10 +143,13 @@ def test_a_figure_whose_own_words_name_a_kit_part_is_sent_to_that_part() -> None
     ]
 
 
-def test_a_player_s_material_is_textured_by_a_pattern_laid_over_the_same_shape() -> None:
+def test_a_player_s_hand_painted_material_is_sent_to_a_kit_scene_textured_or_not() -> None:
     soil = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--dye-field-soil)", "stroke": "var(--ink-1)"}}
-    bare = scene_found("stage_player", stage_player([*inked_rects(6), soil]))
-    assert bare == [f"the stage_player's drawing at drawing paints --dye-field-soil {UNTEXTURED}"]
+    painted = (
+        "the stage_player's drawing at drawing paints --dye-field-soil by hand, which the kit's cloth, bath, "
+        f"paste, section or piece part draws textured, framed and named in a key; {AT_THE_KIT}"
+    )
+    assert scene_found("stage_player", stage_player([*inked_rects(6), soil])) == [painted]
     pattern = {
         "tag": "defs",
         "children": [
@@ -160,29 +161,22 @@ def test_a_player_s_material_is_textured_by_a_pattern_laid_over_the_same_shape()
         ],
     }
     twin = {"tag": "ellipse", "attrs": {**SOIL, "fill": "url(#t)"}}
-    assert scene_found("stage_player", stage_player([pattern, *inked_rects(6), soil, twin])) == []
-    fade = {
-        "tag": "defs",
-        "children": [
-            {
-                "tag": "linearGradient",
-                "attrs": {"id": "t"},
-                "children": [{"tag": "stop", "attrs": {"stop-color": "var(--ink-1)"}}],
-            }
-        ],
-    }
-    assert len(scene_found("stage_player", stage_player([fade, *inked_rects(6), soil, twin]))) == 1
+    assert scene_found("stage_player", stage_player([pattern, *inked_rects(6), soil, twin])) == [painted]
+    lined = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--sunk)", "stroke": "var(--ink-1)"}}
+    assert scene_found("stage_player", stage_player([*inked_rects(6), lined])) == []
 
 
-def test_a_player_s_scene_is_held_to_the_bar_only_once_players_take_kit_parts() -> None:
+def test_a_player_s_scene_is_held_to_the_bar_at_delivery_now_players_take_kit_scenes() -> None:
     lone = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--sunk)"}}
-    assert found("stage_player", stage_player([lone])) == []
-    assert scene_found("stage_player", stage_player([lone])) == [
+    held = [
         "the stage_player's drawing at drawing draws 1 shapes, fewer than the 6 a figure at the bar is drawn "
-        "with; draw it with more of its parts, edged in ink and textured, as the kit's parts are drawn",
+        f"with; {AT_THE_KIT}",
         "the stage_player's drawing at drawing has no line work in ink: edge what it shows in --ink-1, --ink-2 "
-        "or --ink-3; draw it with more of its parts, edged in ink and textured, as the kit's parts are drawn",
+        f"or --ink-3; {AT_THE_KIT}",
     ]
+    assert found("stage_player", stage_player([lone])) == held
+    assert scene_found("stage_player", stage_player([lone])) == held
+    assert scene_problems("process_replay", {"steps": [{"drawing": lone}]}, {}) == []
 
 
 def test_molecule_drawings_are_the_molecule_kit_s_and_icons_are_not_figures() -> None:
@@ -224,4 +218,4 @@ def test_kutch_ajrakh_s_authored_figures_would_be_refused_from_a_contributor_and
         for path in APP.rglob("*.py")
         if "drawn_art import" in path.read_text(encoding="utf-8")
     )
-    assert importers == ["research/component_specs_general_delivery.py"]
+    assert importers == ["research/component_specs_general_delivery.py", "research/simulation_art.py"]

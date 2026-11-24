@@ -20,6 +20,7 @@ import {
   type Styled,
   type SvgNode
 } from "@/lib/componentSpecsScienceParts";
+import { sceneOr, stillOr, type KitScene } from "@/lib/componentSpecsKitScene";
 import { boolean, list, matching, nullable, object, oneOf, optional, ShapeError, tagged, text, type Shape } from "@/lib/shape";
 
 export const SWATCH_MARKS = ["clear", "gas", "ion"] as const;
@@ -48,7 +49,7 @@ export type ChemistryPart =
   | { part: "lane"; label: string; items: LaneItem[] }
   | { part: "equation"; equation: Equation }
   | { part: "none"; unit: string };
-export type StepScene = { whereIcon: SvgNode; where: string; art: SvgNode[] };
+export type StepScene = { whereIcon?: SvgNode | null; where: string; art: SvgNode[] | KitScene };
 export type ReactionStep = { name: string; text: StepText; chemistry: { parts: ChemistryPart[] }; scene: StepScene | null };
 export type ReactionPlayerSpec = {
   id: string;
@@ -60,12 +61,12 @@ export type ReactionPlayerSpec = {
   key: string | null;
   status: string;
 };
-export type DipPhase = { pose: string; drawing: SvgNode; kicker: string; text: string };
+export type DipPhase = { pose: string; drawing: SvgNode | KitScene; kicker: string; text: string };
 export type DipPlayerSpec = {
   id: string;
   head: FigureHead;
   phase: string;
-  scene: SvgNode;
+  scene: SvgNode | KitScene;
   stripLabel: string;
   phases: DipPhase[];
   dipAgain: string;
@@ -91,7 +92,7 @@ export type StageEntry = {
 export type StagePlayerSpec = {
   key: string;
   head: FigureHead;
-  drawing: SvgNode;
+  drawing: SvgNode | KitScene;
   restName: string;
   play: string;
   source: string;
@@ -133,7 +134,7 @@ const stepShape: Shape<ReactionStep> = object<ReactionStep>({
   name: label,
   text: stepTextShape,
   chemistry: object<{ parts: ChemistryPart[] }>({ parts: list(chemistryPartShape, 2) }),
-  scene: nullable(object<StepScene>({ whereIcon: svgNodeShape, where: unitRef, art: list(svgNodeShape, 1) }))
+  scene: nullable(object<StepScene>({ whereIcon: optional(nullable(svgNodeShape)), where: unitRef, art: sceneOr(list(svgNodeShape, 1)) }))
 });
 
 export const reactionPlayerShape: Shape<ReactionPlayerSpec> = {
@@ -158,9 +159,9 @@ export const dipPlayerShape: Shape<DipPlayerSpec> = object<DipPlayerSpec>({
   id: domId,
   head: figureHeadShape,
   phase: unitRef,
-  scene: svgNodeShape,
+  scene: sceneOr(svgNodeShape),
   stripLabel: label,
-  phases: list(object<DipPhase>({ pose: matching(PHASE_KEY, "a phase key"), drawing: svgNodeShape, kicker: unitRef, text: unitRef }), 2),
+  phases: list(object<DipPhase>({ pose: matching(PHASE_KEY, "a phase key"), drawing: sceneOr(svgNodeShape), kicker: unitRef, text: unitRef }), 2),
   dipAgain: label,
   status: unitRef,
   dipsLabel: unitRef,
@@ -171,7 +172,7 @@ export const dipPlayerShape: Shape<DipPlayerSpec> = object<DipPlayerSpec>({
 export const stagePlayerShape: Shape<StagePlayerSpec> = object<StagePlayerSpec>({
   key: domId,
   head: figureHeadShape,
-  drawing: svgNodeShape,
+  drawing: stillOr(svgNodeShape),
   restName: unitRef,
   play: label,
   source: unitRef,

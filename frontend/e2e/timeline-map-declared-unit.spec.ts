@@ -5,6 +5,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { viewBoxOf } from "../components/map/basemap";
 import { placesFrame } from "../components/map/placesFrame";
 import { project, VIEW_BOX } from "../components/map/projection";
@@ -19,6 +20,8 @@ import { timelineEntries, timelineStops } from "../lib/timelineView";
 
 import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownText } from "./explainerRender";
 import { primitivesPage } from "./primitivesPage";
+
+test.beforeAll(() => nearBlocksLoaded());
 
 const BACKEND_DATA = join(__dirname, "..", "..", "backend", "app", "data");
 const FILED = JSON.parse(readFileSync(join(BACKEND_DATA, "kind_fixtures", "timeline_map.json"), "utf8")) as unknown;

@@ -5,6 +5,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { COMPONENT_VIEWS } from "../components/monograph/componentViews";
 import { depictedMaterial } from "../lib/componentSpecsPlates";
 import { knownColourToken } from "../lib/componentSpecsScienceParts";
@@ -16,6 +17,8 @@ import { KIND_PREVIEW_PATH, kindPreviewDocument, renamedRef, renamedSpec } from 
 import type { MonographComponent } from "../lib/monographDocument";
 import { parseMonographDocument } from "../lib/monographDocumentShape";
 import { parseShape, ShapeError } from "../lib/shape";
+
+test.beforeAll(() => nearBlocksLoaded());
 
 const KUTCH = "Kutch-Ajrakh";
 const FIXTURES_DIR = join(__dirname, "..", "..", "backend", "app", "data", "kind_fixtures");

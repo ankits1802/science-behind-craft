@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { createElement, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { AuthProvider } from "../components/AuthProvider";
 import { ComponentSlot, slotDrawing } from "../components/monograph/ComponentSlot";
 import { KitShellTail } from "../components/monograph/KitShellTail";
@@ -14,6 +15,8 @@ import { ThemeProvider } from "../components/ThemeProvider";
 import { pagePlan } from "../lib/monographRenderLayout";
 
 import { ASK, fixtureDocument, LIST, PICTURE, QUIZ } from "./monographFixture";
+
+test.beforeAll(() => nearBlocksLoaded());
 
 const markup = (element: ReactElement) => renderToStaticMarkup(element);
 const provided = (element: ReactElement) => markup(createElement(AuthProvider, null, createElement(ThemeProvider, null, element)));

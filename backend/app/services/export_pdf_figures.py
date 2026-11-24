@@ -4,12 +4,14 @@ from app.research.blocks import BlockBase
 from app.research.blocks_climate import ClimateRiskBlock
 from app.research.blocks_insight import MeasureBlock, MeasureRow
 from app.research.blocks_journey import TimelineMapBlock, ZoomStoryBlock
+from app.research.blocks_kit import KitFigureBlock
 from app.research.blocks_matter import MaterialCardBlock, Molecule3dBlock, ReactionPlayerBlock
 from app.research.blocks_place import MapLayerBlock, RegionStoryBlock, SeasonsBlock, SupplyMapBlock
 from app.research.blocks_play import SimulationBlock, SimulationValue
 from app.research.sentence_names import upper_first
 
 from .export_pdf_charts import climate_figure, seasons_figure
+from .export_pdf_kit import kit_figure_pdf, timeline_places_pdf
 from .export_pdf_maps import map_layer_figure, region_story_figure, zoom_story_figure
 from .export_pdf_styles import CELL, CELL_BOLD, FIGURE_GAP_MM, KICKER, NOTE
 from .export_pdf_text import compound_text, measure_text, number_text, range_text, years_text
@@ -57,6 +59,8 @@ def draw_figure(writer: PdfWriter, block: BlockBase) -> None:
             _simulation(writer, block)
         case TimelineMapBlock():
             _timeline(writer, block)
+        case KitFigureBlock():
+            _kit_figure(writer, block)
 
 
 def measure_line(row: MeasureRow) -> str:
@@ -124,8 +128,14 @@ def _simulation(writer: PdfWriter, block: SimulationBlock) -> None:
     writer.go_to(writer.y + FIGURE_GAP_MM)
 
 
+def _kit_figure(writer: PdfWriter, block: KitFigureBlock) -> None:
+    texts: dict[str | None, str] = {label.ref: label.text for label in block.labels}
+    kit_figure_pdf(writer, block.diagram, texts.get)
+
+
 def _timeline(writer: PdfWriter, block: TimelineMapBlock) -> None:
     writer.text(TIMELINE_KICKER, KICKER)
+    timeline_places_pdf(writer, block)
     for point in block.points:
         writer.text(f"{block.places[point.place].name} · {years_text(point.year_from, point.year_to)}", CELL)
     for route in block.routes:

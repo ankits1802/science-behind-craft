@@ -17,6 +17,7 @@ from app.research.crafts import CraftRef
 from app.research.explainer import Block
 from app.research.knowledge_pieces import SIMULATION_NAMESPACE, KnowledgePiece, placed_block
 from app.research.piece_reuse import SIMULATION_KIND, reusable_simulation
+from app.research.simulation_art import simulation_art_problems
 from app.research.simulation_draft import (
     DraftCheck,
     Grounding,
@@ -28,6 +29,7 @@ from app.research.simulation_draft import (
 )
 from app.research.structured import MODEL_SERVICE, StructuredModel
 from app.research.subject_keys import topic_key
+from app.science.kit_figures import KIT_FIGURE_SUFFIX, concept_kit_figure
 from app.science.mechanisms import Concept, section_concepts
 from app.science.records import ProcessRecords
 
@@ -97,7 +99,7 @@ class SimulationBudget:
 
 @dataclass(frozen=True)
 class _Explained:
-    block: SimulationBlock | None = None
+    block: Block | None = None
     note: str | None = None
 
 
@@ -143,6 +145,12 @@ class SimulationBuilder:
     async def _explained(
         self, ask: BuildAsk, concept: Concept | None, matter: CraftMatter | None
     ) -> _Explained:
+        if concept is not None and matter is not None:
+            figure = concept_kit_figure(
+                concept, matter.records, block_id=f"{ask.section.id}.{KIT_FIGURE_SUFFIX}"
+            )
+            if figure is not None:
+                return _Explained(block=figure)
         grounding = grounding_for(section_facts(ask.blocks, ask.cited), concept)
         quoted = offered_values(c for statement in grounding.statements for c in statement.citations)
         rows = offered_rows(await self._datasets(ask), limit=SIMULATION_VALUES_MAX - len(quoted))
@@ -165,7 +173,7 @@ class SimulationBuilder:
             return _Explained(note=NO_QUANTITY)
         hidden = [piece for piece in stored if piece.hidden_at is not None]
         made = await self._built(ask, _brief(ask, grounding, offers, hidden, concept), offers)
-        if made.block is not None and hidden_again(made.block, hidden):
+        if isinstance(made.block, SimulationBlock) and hidden_again(made.block, hidden):
             logger.warning("the generated explainer of section %s adds nothing: HIDDEN", ask.section.id)
             return _Explained(note=HIDDEN_AGAIN)
         return made
@@ -222,7 +230,7 @@ class SimulationBuilder:
     ) -> DraftCheck:
         if reply.model is None:
             raise ExternalFailure("the route that wrote the explainer named no model", service=MODEL_SERVICE)
-        return checked_draft(
+        check = checked_draft(
             reply.draft,
             offers,
             block_id=_block_id(ask),
@@ -230,6 +238,8 @@ class SimulationBuilder:
             created_at=self._clock(),
             grounding=grounding,
         )
+        art = simulation_art_problems(check.block.html) if check.block is not None else []
+        return DraftCheck(None, tuple(art)) if art else check
 
     async def _stored_in_database(self, claim_ids: Collection[uuid.UUID], facet: str) -> list[KnowledgePiece]:
         async with self._tools.sessions() as session:

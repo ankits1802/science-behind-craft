@@ -45,7 +45,7 @@ async def session() -> AsyncIterator[AsyncSession]:
     async for opened in opened_session():
         english = await english_page(opened, PAGE)
         assert english is not None
-        await refresh_page_texts(opened, PAGE, english.tag, english.document.content)
+        await refresh_page_texts(opened, PAGE, english.tag, english.document.content, english.document.specs)
         yield opened
 
 

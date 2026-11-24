@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { PREVIEW_TOKEN, previewApiPath, previewPagePath } from "../app/(reading)/preview/[token]/previewDocument";
 import { COMPONENT_VIEWS } from "../components/monograph/componentViews";
 import { DECLARED_VIEWS, VIEWS } from "../components/monograph/kinds/general";
@@ -27,6 +28,8 @@ import {
 import { TIMELINE_MAP_KIND } from "../lib/componentSpecsTimelineMap";
 import type { ComponentView } from "../lib/componentViewContract";
 import type { MonographComponent } from "../lib/monographDocument";
+
+test.beforeAll(() => nearBlocksLoaded());
 
 const HEAD = { title: "u0001", caption: "u0002" };
 const SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60"><rect x="1" y="1" width="20" height="10" /></svg>';

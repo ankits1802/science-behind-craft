@@ -1,3 +1,6 @@
+import { KitSceneArt, KitSceneKey } from "@/components/artkit/KitScene";
+import type { KitIds } from "@/components/artkit/kitIds";
+import { isKitScene } from "@/lib/componentSpecsKitScene";
 import type { FormulaChip, PanelPart } from "@/lib/componentSpecsScienceLab";
 
 import { Drawing, RichText } from "./parts/Drawing";
@@ -51,7 +54,16 @@ function Controls({ part }: { part: Extract<PanelPart, { part: "stepper" | "swit
   );
 }
 
-export function PanelPartView({ part, chosen, renderUnit }: { part: PanelPart; chosen: string; renderUnit: RenderUnit }) {
+type PartProps = { part: PanelPart; chosen: string; name: string; ids: KitIds; renderUnit: RenderUnit };
+
+export function stageDrawings(parts: readonly PanelPart[]): unknown[] {
+  return parts.flatMap((part) => {
+    if (part.part === "stage") return [part.drawing];
+    return part.part === "more" ? stageDrawings(part.parts) : [];
+  });
+}
+
+export function PanelPartView({ part, chosen, name, ids, renderUnit }: PartProps) {
   switch (part.part) {
     case "text":
       return <Block block={part.text} renderUnit={renderUnit} />;
@@ -64,18 +76,22 @@ export function PanelPartView({ part, chosen, renderUnit }: { part: PanelPart; c
     case "more":
       return (
         <div className="kv-lab-more">
-          {part.parts.map((inner, index) => <PanelPartView key={index} part={inner} chosen={chosen} renderUnit={renderUnit} />)}
+          {part.parts.map((inner, index) => (
+            <PanelPartView key={index} part={inner} chosen={chosen} name={`${name}-${index}`} ids={ids} renderUnit={renderUnit} />
+          ))}
         </div>
       );
     case "stepper":
     case "switch":
       return <Controls part={part} />;
     default:
-      return <Figure part={part} renderUnit={renderUnit} />;
+      return <Figure part={part} name={name} ids={ids} renderUnit={renderUnit} />;
   }
 }
 
-function Figure({ part, renderUnit }: { part: Extract<PanelPart, { part: "same" | "chart" | "stage" }>; renderUnit: RenderUnit }) {
+type FigureProps = { part: Extract<PanelPart, { part: "same" | "chart" | "stage" }>; name: string; ids: KitIds; renderUnit: RenderUnit };
+
+function Figure({ part, name, ids, renderUnit }: FigureProps) {
   if (part.part === "same") {
     return (
       <div className="lab-same">
@@ -95,14 +111,18 @@ function Figure({ part, renderUnit }: { part: Extract<PanelPart, { part: "same" 
       </div>
     );
   }
+  const drawing = part.drawing;
   return (
-    <div className="stagebox">
-      <Drawing node={part.drawing} />
-      {part.note !== null && part.noteHook !== null ? (
-        <p className="sb-note" {...hook(part.noteHook)} hidden>
-          {renderUnit(part.note)}
-        </p>
-      ) : null}
-    </div>
+    <>
+      <div className="stagebox">
+        {isKitScene(drawing) ? <KitSceneArt scene={drawing} ids={ids} name={name} /> : <Drawing node={drawing} />}
+        {part.note !== null && part.noteHook !== null ? (
+          <p className="sb-note" {...hook(part.noteHook)} hidden>
+            {renderUnit(part.note)}
+          </p>
+        ) : null}
+      </div>
+      {isKitScene(drawing) ? <KitSceneKey scene={drawing} ids={ids} renderUnit={renderUnit} className="stagebox-key" /> : null}
+    </>
   );
 }

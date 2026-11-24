@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.research.monograph_page import TextUnit
 from app.research.open_work_translation_keys import TRANSLATION_LANGUAGES
+from app.research.page_passages import PagePassage, page_passages
 from app.research.page_proposals import PageSubject
 from app.research.page_translation_views import (
     HELD,
@@ -21,7 +21,7 @@ from app.research.page_translation_views import (
 )
 from app.research.page_translations import SERVED_TRANSLATION_STATUSES
 from app.research.review_switch import WAITING_STATUS
-from app.research.translation_passages import TaskPassage, is_translatable, task_passage
+from app.research.translation_passages import TaskPassage
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS, text_direction
 
 from .open_work_subjects import WorkSubject
@@ -65,13 +65,11 @@ async def translation_view(
     english = await english_page(session, page)
     if english is None:
         return None
-    await refresh_page_texts(session, page, english.tag, english.document.content)
+    document = english.document
+    await refresh_page_texts(session, page, english.tag, document.content, document.specs)
     held = await _held(session, page, language)
-    passages = [
-        _view(unit, task_passage(key, unit.nodes, unit.claim_ids), held)
-        for key, unit in english.document.content.units.items()
-        if is_translatable(key, unit.nodes)
-    ]
+    found = page_passages(document.content, document.specs).values()
+    passages = [_view(passage, passage.task(), held) for passage in found]
     chosen = [passage for passage in passages if window.state in (None, passage.state)]
     shown = chosen[window.offset : window.offset + window.limit]
     more = window.offset + window.limit
@@ -103,8 +101,8 @@ async def _held(session: AsyncSession, page: tuple[str, str], language: str) -> 
     )
 
 
-def _view(unit: TextUnit, passage: TaskPassage, held: _Held) -> PassageView:
-    base = {**passage.model_dump(), "chapter": unit.chapter, "tag": unit.tag}
+def _view(page_passage: PagePassage, passage: TaskPassage, held: _Held) -> PassageView:
+    base = {**passage.model_dump(), "chapter": page_passage.chapter, "tag": page_passage.tag}
     current = held.served.get(passage.source_hash)
     if current is not None:
         return PassageView(**base, state=TRANSLATED, translation=list(current.texts))

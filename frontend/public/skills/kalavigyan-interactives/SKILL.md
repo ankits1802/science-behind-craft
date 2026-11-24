@@ -72,9 +72,20 @@ hands back the storyboard's pages with what it composes; read them before you pl
 
 ## Choose the kind that carries it
 
-Until a player takes kit parts, draw a state's scene to the bar: materials textured by a pattern
-laid over the same shape, ink edges, six shapes or more. Show the same states at rest as a composed
-`diagram`.
+Draw every state's scene from the figure kit: a kit scene `{parts, motion?}` in the player's slot
+(a reaction step's `art`, a dip phase's `drawing` and the dip's `scene`, the stage player's
+`drawing`, a toggle's stage box), one to three parts of the composed diagram's vocabulary, each
+labelled by a unit citing its facts; a step's kit scene draws where it happens, so it needs no
+where icon. Only a state the reader shows again names a `motion`; the kit plays it when shown and
+never under either reduced-motion switch. A free scene stays in line work: one painting a depicted
+material by hand is refused naming the kit part. `compose_component` builds a craft's reaction and
+dip scenes from the kit.
+
+An answer draws its own kit figure, with no model call, when a cited quote names cloth and states
+its colour before and after ("At first bright green, the cloth rapidly becomes blue"), and both
+colours are depicted materials (decision 0201). Record a stage's colour change in the source's own
+before-and-after words, so answers draw it. A generated explainer the model writes is held to the
+design's bar or left out.
 
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
@@ -128,6 +139,9 @@ laid over the same shape, ink edges, six shapes or more. Show the same states at
 - At first paint the figure is finished on its rest state, every state's text is already in the
   page (hidden, not missing), and each state is one press away on the rail. The rail marks the
   state shown as pressed and the status line names it; nothing on it reads as work in progress.
+- Paper rests where the page rests: the export draws a player's `current` step, a dip's scene and
+  its dips, a stage player's drawing, and a molecule at its `yaw` and `pitch`, with every step and
+  choice listed. Choose `current` and the rest angle as the state that explains most when still.
 - Motion explains a change between two cited states and nothing else: the design system's named
   motions and durations, on the element that changes. Play is the reader's choice, never autoplay,
   never a loop, never decoration.
@@ -180,6 +194,8 @@ laid over the same shape, ink edges, six shapes or more. Show the same states at
   page, at rest; and the release controls spec (`frontend/e2e/release/controls.spec.ts` with
   `playerControls.ts`) choosing a step, returning to the first, playing, seeing it move and pausing
   on a live page. A new kind adds its own case to each.
+- A kind whose React view is heavy joins `kinds/nearViews.tsx`, and the phone budget holds the pages
+  that draw it.
 
 ## Cost rules
 

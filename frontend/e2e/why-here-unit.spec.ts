@@ -9,6 +9,7 @@ import { PLACE_KIND, placeMapMarks } from "@/components/map/PlaceMarkers";
 import { mapPins } from "@/components/map/place-context/GroundFigure";
 import { PlaceGroundView } from "@/components/map/place-context/PlaceGroundPanel";
 import { COMPONENT_VIEWS } from "@/components/monograph/componentViews";
+import { NearWhyHereView } from "@/components/monograph/kinds/nearViews";
 import { heldNotes, WhyHereView } from "@/components/monograph/kinds/place/WhyHereView";
 import { frameView, kmUnits, placed, ringsIn } from "@/lib/groundFrame";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
@@ -40,7 +41,7 @@ test("the golden ground parses as the API writes it and the view is registered a
   expect([VILLAGE.name, VILLAGE.ground.river?.distanceKm, VILLAGE.ground.lake?.distanceKm, GROUND.deposits.length]).toEqual(["Fixture village", 10.4, 45.8, 2]);
   expect(parseWhyHereSpec({ ground: GOLDEN, notes: [{ reading: "river", unit: "u0001" }] })?.notes).toEqual([{ reading: "river", unit: "u0001" }]);
   expect(parseWhyHereSpec({ ground: GOLDEN, notes: [{ reading: "sky", unit: "u0001" }] })).toBeNull();
-  expect(COMPONENT_VIEWS[WHY_HERE_KIND]).toBe(WhyHereView);
+  expect(COMPONENT_VIEWS[WHY_HERE_KIND]).toBe(NearWhyHereView);
   expect(APP_KINDS.has(WHY_HERE_KIND)).toBe(true);
 });
 

@@ -611,6 +611,14 @@ started it.
 JSON file per craft (`docs/contracts/knowledge-api.md`, Bulk export); the same document is served
 at `GET /api/knowledge/crafts/{slug}/export`.
 
+A page as a reader's PDF or Word document (decision 0206) is `GET
+/api/crafts/<slug>/monograph/pdf` or `/docx` (`lang` as the monograph route takes it), answered as
+a five-minute signed link. The file is built once per served tag and kept under
+`exports/00000000-0000-0000-0000-000000000001/` in the media bucket, which the `expire-exports`
+lifecycle rule clears with every other export; nothing else keeps or deletes it, and no IAM change
+is needed (the media user already puts and reads `exports/*`). A route answering 503 `This file
+can't be made right now.` means `S3_BUCKET` is not set on that process.
+
 ## AI spend and token limits
 
 No caps for now, on anyone, in money or tokens (owner, 2026-11-18; decision 0093). Every cap is
@@ -891,6 +899,14 @@ fixture or the category page (`docs/contracts/category-page.md`).
   `-f audit=false` skips it. To ratchet the budgets, copy `audit-baseline.candidate.json` from a
   production run's artifact over `frontend/e2e/release/audit-baseline.json`. A new axe rule on a
   recorded page is fixed, never accepted by the candidate.
+- **Phone budget**: the Frontend checks' smoke job measures `/crafts/Kutch-Ajrakh` and
+  `/crafts/Phone-Fixtures` (every kind, served by the smoke API) at 360 with the CPU slowed four
+  times and Lighthouse's slow 4G, three loads each and a read to the end, and fails when a page
+  passes the limits drawn from its recorded numbers in `frontend/e2e/phone-budget.json`, naming the
+  scripts, pictures, element or nodes that grew (decision 0205). Each page's `phone-measure.json`
+  is in the run's `frontend-smoke` artifact under `phone-budget/`. To record a deliberate change,
+  copy each page's `numbers` from that artifact into the record with the run id and date, in the
+  change that says why.
 
 ## Roll back
 

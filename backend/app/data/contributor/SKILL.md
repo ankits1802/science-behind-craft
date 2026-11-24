@@ -135,6 +135,19 @@ An account's tier is read from its record of contributed facts at the moment it 
 `my_work` says which tier the account holds. Professors and above hold the proven allowances, and
 their own proposals are approved at once.
 
+### Removing and editing published content (Admins)
+
+Only an Admin's AI client with the review scope changes what is already published, and only by
+staging it. Read `kalavigyan://admin/published-content.md` first: it names the two admin tools that
+list published items and stage their change. Find the item: the review queue with `published` lists
+a page's pictures, layout, structure entries, readings and placed stages, or the approved map
+layers; `get_facts` gives facts and sources; `list_components` gives components. Open the item by
+`id` (or a component by `label`) to see the fields an edit changes. Stage `remove`, or `edit` with
+only the changed fields, plus a reason of at least 12 characters; add `entry` for a structure entry
+whose fact holds up more than one entry. A refusal quotes the gate that refused; fix the change and
+stage it anew. Nothing changes until a person confirms the batch on the Review page. Contributors
+withdraw their own components through a page's `withdrawals`, never these tools.
+
 ## Allowances
 
 Each kind of proposal has its own allowance an hour; each part of a page also counts against its
@@ -297,6 +310,11 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Read a library component's facts before you link it or lay it out on another page: if this page
   lacks any of them the server refuses it by those ids, and the cure is a component of the same
   kind built from this page's facts.
+- Every page exports as a PDF and a Word document. Each component is drawn there as its still at
+  rest, with every unit it holds and its credits. Say in a component's units what its motion shows:
+  paper keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and
+  declared timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes
+  and text, without its textures.
 
 ## Drawing in KalaVigyan's design
 
@@ -313,7 +331,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
   not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
   part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
-  depicted material by hand or names a kit part is refused with the part to use.
+  depicted material by hand or names a kit part is refused with the part to use. A player's or
+  card's scene is given as a kit scene in its slot; a scene painting a depicted material by hand is
+  refused with the part to use.
 
 ## Pages
 
@@ -444,6 +464,8 @@ asked in the last 90 days, the fields that would answer it and what the answer l
 - The question closes by itself once a nightly retrieval run for it finds at least two cited facts
   in each of its fields.
 - Never try to reach the person who asked, and never put a personal detail from a question in a fact.
+- An `ask` answer may draw figures the site composes from its kit, at `answerUrl`. Never draw cloth,
+  a vat, a paste or a dye in your own chat; link the answer (`kalavigyan://design/answer-kit.md`).
 
 ## Pages in other languages
 
@@ -468,6 +490,11 @@ English and its `texts`.
 - When an English sentence changes, its translation is held and the page shows the English until
   the passage is translated again; held passages come back in the task. The task closes when no
   passage is left.
+- A component's labels are passages too: a step's name, a lane's species, a molecule's name, atoms
+  and key, a dip's strip label, a lab's and a toggle's choices. Their key is
+  `<component label>#<path>` (`…/patina-steps#steps.0.name`) and their tag `label`; translate each
+  as a sentence, one text each. Formulas, numbers, keys and a stage named in its own language are
+  never offered: leave them as the English page holds them.
 
 ## Never
 

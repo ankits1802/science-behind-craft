@@ -236,7 +236,12 @@ element as a `kv-slot` was filled.
 - **natively** when the document has its spec and `componentViews.COMPONENT_VIEWS` has a view for
   its kind: a client `SlotRoot` holds the component's bundle (component, spec, its units, and the
   bundles of the components it places, with only the sources they cite) and `BundleView` calls the
-  view with `ComponentViewProps`. `PlacedComponent` draws a placed component inside a view;
+  view with `ComponentViewProps`. `PlacedComponent` draws a placed component inside a view. A kind
+  whose code is heavy (the declared map layer and timeline map, the why-here ground map and the six
+  page tools) is registered as its near view (`kinds/nearViews.tsx`, through `nearBlock`): the
+  server draws it whole inside a `div[data-kv-near]` holder, and the browser loads its code and
+  hydrates it as the holder comes within two screens of the viewport, or, where the browser draws the
+  part itself, shows a figure-shaped skeleton until then (decision 0205);
 - **from its fragment** otherwise: the fragment's HTML as written, inside
   `div.kv-slot.contents#kv-slot-<label with / as __>` that React never re-renders. A placed
   component's `kv-slot` is filled after mount by a portal;
@@ -305,7 +310,16 @@ each one stands (one placed by another native view has no slot: its owner draws 
   At 360, 834 and 1440 in light and dark it checks that the page reads as the approved page (every
   line of `#kv-main`), that the first citation's popover and Fig. 1 answer as there, and that each
   native view looks as its fragment does on the same React page, every sticky or fixed bar hidden in
-  both captures so a bar's place cannot differ between them (decision 0177). A Vercel preview cannot show a
+  both captures so a bar's place cannot differ between them (decision 0177). Each view is taken from
+  the screen in tiles one 8-pixel step shorter than the screen, each tile scrolled to from the view's
+  own top with a screen's room left below the page, once its pictures are decoded, its fonts ready
+  and its box unmoved across two frames: a capture never inherits the scroll an earlier one left,
+  which had shifted whole views by one device pixel, and never goes beyond the screen, where a
+  capture had stalled the page for good. A page that stops drawing frames fails within seconds,
+  naming every view it could not capture. Each width and scheme is its own test of at most 8
+  minutes (each took 1.9 to 3.6 on GitHub), so three of them in turn on each of the job's two
+  workers end inside 24, and the job's 45 hold them and the phone budget's runs after them
+  (decision 0205). A Vercel preview cannot show a
   branch's `native.json`, because it reads the production API's stored document.
 - **Native (73 of 80, 2026-11-23).** All except the ground figure
   `kutch-ajrakh/geography/why-here`, whose fragment is the React page's drawing captured in a

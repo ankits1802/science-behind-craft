@@ -8,6 +8,7 @@ from xml.etree import ElementTree
 
 from .art_kit import KIT_PARTS, parts_named_by
 from .component_specs_general_svg import sanitised_svg, svg_view_box
+from .component_specs_kit_scene import KIT_SCENE_KINDS
 from .component_specs_science_parts import SVG_TAGS
 from .drawing_roles import MATERIAL_ROLES, css_declarations, paint_roles
 from .drawing_rules import DRAWN_WIDTH_MIN, TEXT_FLOOR_PX, drawn_texts, local_name
@@ -17,7 +18,7 @@ __all__ = [
     "KIT_FIGURE_KINDS",
     "KIT_POINTER",
     "MATERIAL_PARTS",
-    "MOLECULE_KINDS",
+    "SCENE_POINTER",
     "SHAPES_MIN",
     "SIZE_TOLERANCE_PX",
     "UI_SIZES_PX",
@@ -27,7 +28,6 @@ __all__ = [
     "scene_problems",
 ]
 
-MOLECULE_KINDS = frozenset({"structure_diagram", "molecule_3d"})
 KIT_FIGURE_KINDS = frozenset({"drawing", "diagram"})
 UI_SIZES_PX = (12, 13, 14, 16)
 SIZE_TOLERANCE_PX = 0.25
@@ -40,25 +40,6 @@ WORDED = frozenset({"title", "desc"})
 INK_ROLES = frozenset({"ink-1", "ink-2", "ink-3"})
 CURRENT_COLOUR = "currentcolor"
 PAINTS = ("fill", "stroke")
-GEOMETRY = (
-    "d",
-    "points",
-    "x",
-    "y",
-    "width",
-    "height",
-    "cx",
-    "cy",
-    "r",
-    "rx",
-    "ry",
-    "x1",
-    "y1",
-    "x2",
-    "y2",
-    "transform",
-)
-LOCAL_URL = re.compile(r"^url\(#([\w.-]+)\)$")
 ICON_KEY = re.compile(r"icon$", re.IGNORECASE)
 DRAWING_KEY = "drawing"
 SVG_TAG = "svg"
@@ -68,7 +49,10 @@ KIT_POINTER = (
     "compose the figure from the kit instead: a diagram with a head, a layout and panels whose named parts "
     "the site draws (kalavigyan://components/diagram.schema.json)"
 )
-AT_THE_BAR = "draw it with more of its parts, edged in ink and textured, as the kit's parts are drawn"
+SCENE_POINTER = (
+    "give the scene as a kit scene instead: one to three named parts the site draws, each labelled by a unit "
+    "citing its facts (kalavigyan://components/{kind}.schema.json)"
+)
 Paints = Mapping[str, str]
 
 
@@ -86,23 +70,32 @@ class Shape:
 
 def drawn_art_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
     if kind not in KIT_FIGURE_KINDS:
-        return []
-    return scene_problems(kind, spec, texts)
-
-
-def scene_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
-    if kind in MOLECULE_KINDS:
-        return []
+        return scene_problems(kind, spec, texts)
     found: list[str] = []
     for drawn in free_drawings(kind, spec):
         shapes = list(_shapes(drawn.root, {}))
-        found += _type_problems(drawn)
-        found += _structure_problems(drawn, shapes, kind)
-        if kind in KIT_FIGURE_KINDS:
-            found += _kit_problems(drawn, shapes, _words(drawn.root, spec, texts))
-        else:
-            found += _texture_problems(drawn, shapes)
+        words = _words(drawn.root, spec, texts)
+        found += _held_problems(drawn, shapes, words, KIT_POINTER)
+        found += _named_problems(drawn, words)
     return list(dict.fromkeys(found))
+
+
+def scene_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
+    if kind not in KIT_SCENE_KINDS:
+        return []
+    pointer = SCENE_POINTER.format(kind=kind)
+    found: list[str] = []
+    for drawn in free_drawings(kind, spec):
+        found += _held_problems(drawn, list(_shapes(drawn.root, {})), _words(drawn.root, {}, texts), pointer)
+    return list(dict.fromkeys(found))
+
+
+def _held_problems(drawn: Drawn, shapes: Sequence[Shape], words: str, pointer: str) -> list[str]:
+    return [
+        *_type_problems(drawn),
+        *_structure_problems(drawn, shapes, pointer),
+        *_painted_problems(drawn, shapes, words, pointer),
+    ]
 
 
 def free_drawings(kind: str, spec: Mapping[str, Any]) -> Iterator[Drawn]:
@@ -178,8 +171,7 @@ def _on_scale(drawn_px: float) -> bool:
     return any(abs(drawn_px - size) <= SIZE_TOLERANCE_PX for size in UI_SIZES_PX)
 
 
-def _structure_problems(drawn: Drawn, shapes: Sequence[Shape], kind: str) -> list[str]:
-    pointer = KIT_POINTER if kind in KIT_FIGURE_KINDS else AT_THE_BAR
+def _structure_problems(drawn: Drawn, shapes: Sequence[Shape], pointer: str) -> list[str]:
     found: list[str] = []
     if len(shapes) < SHAPES_MIN:
         found.append(
@@ -200,54 +192,26 @@ def _inked(paints: Paints) -> bool:
     return bool(set(paint_roles(stroke)) & INK_ROLES)
 
 
-def _kit_problems(drawn: Drawn, shapes: Sequence[Shape], words: str) -> list[str]:
-    found: list[str] = []
+def _painted_problems(drawn: Drawn, shapes: Sequence[Shape], words: str, pointer: str) -> list[str]:
     painted = sorted({role for shape in shapes for role in _materials(shape)})
-    if painted:
-        materials = ", ".join(f"--{role}" for role in painted)
-        found.append(
-            f"{drawn.where} paints {materials} by hand, which {_material_parts(words)} draws textured, framed "
-            f"and named in a key; {KIT_POINTER}"
-        )
-    for part, word in parts_named_by(words):
-        found.append(
-            f"{drawn.where} is said to show {word}, which the kit's {part} part draws; {KIT_POINTER}"
-        )
-    return found
-
-
-def _texture_problems(drawn: Drawn, shapes: Sequence[Shape]) -> list[str]:
-    patterns = {element.get("id") for element in drawn.root.iter() if local_name(element.tag) == "pattern"}
+    if not painted:
+        return []
+    materials = ", ".join(f"--{role}" for role in painted)
     return [
-        f"{drawn.where} paints --{role} on its <{local_name(shape.element.tag)}> with no texture: lay an in-drawing "
-        f"<pattern> over the same shape, as the kit's {_listed(MATERIAL_PARTS)} parts do"
-        for shape in shapes
-        for role in _materials(shape)
-        if not _textured(shape, shapes, patterns)
+        f"{drawn.where} paints {materials} by hand, which {_material_parts(words)} draws textured, framed and "
+        f"named in a key; {pointer}"
+    ]
+
+
+def _named_problems(drawn: Drawn, words: str) -> list[str]:
+    return [
+        f"{drawn.where} is said to show {word}, which the kit's {part} part draws; {KIT_POINTER}"
+        for part, word in parts_named_by(words)
     ]
 
 
 def _materials(shape: Shape) -> list[str]:
     return [role for role in paint_roles(shape.paints.get("fill", "")) if role in MATERIAL_ROLES]
-
-
-def _textured(shape: Shape, shapes: Sequence[Shape], patterns: set[str | None]) -> bool:
-    outline = _geometry(shape.element)
-    return any(
-        other.element is not shape.element
-        and _geometry(other.element) == outline
-        and _patterned(other, patterns)
-        for other in shapes
-    )
-
-
-def _patterned(shape: Shape, patterns: set[str | None]) -> bool:
-    found = LOCAL_URL.match(" ".join(shape.paints.get("fill", "").split()))
-    return found is not None and found.group(1) in patterns
-
-
-def _geometry(element: ElementTree.Element) -> tuple[str, ...]:
-    return (local_name(element.tag), *(" ".join((element.get(name) or "").split()) for name in GEOMETRY))
 
 
 def _words(root: ElementTree.Element, spec: Mapping[str, Any], texts: Mapping[str, str]) -> str:

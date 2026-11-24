@@ -179,6 +179,31 @@
     line-height: 1.4;
   }
 
+  .kv-kit-scene {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .kv-kit-scene-key {
+    min-width: 0;
+    margin-block-start: var(--space-2);
+  }
+
+  .rx > .kv-kit-scene-key {
+    padding-inline: var(--space-3);
+    padding-block-end: var(--space-3);
+  }
+
+  .vs > .kv-kit-scene-key {
+    grid-column: -2 / -1;
+  }
+
+  .vat-key,
+  .lc-key {
+    margin-block-start: var(--space-3);
+  }
+
   .kv-kit-sheet-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

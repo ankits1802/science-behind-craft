@@ -157,7 +157,7 @@ jobs:
     name: Smoke in a browser
     needs: build
     runs-on: ubuntu-26.04
-    timeout-minutes: 20
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: frontend
@@ -194,6 +194,16 @@ jobs:
           API_ORIGIN: http://127.0.0.1:8000
           NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
         run: npm run test:smoke
+
+      - name: Measure the craft pages on a slowed phone against their budget
+        if: ${{ !cancelled() }}
+        env:
+          E2E_SMOKE: "1"
+          E2E_PHONE_BUDGET: "1"
+          E2E_BASE_URL: http://localhost:3000
+          API_ORIGIN: http://127.0.0.1:8000
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+        run: npx playwright test --project=phone-budget --workers=1
 
       - name: Keep the screenshots
         if: always()

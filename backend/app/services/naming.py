@@ -20,7 +20,7 @@ __all__ = [
     "artisan_audio_file_name",
     "artisan_audio_key",
     "content_disposition",
-    "explainer_file_name",
+    "export_file_name",
     "export_key",
     "field",
     "field_voice_file_name",
@@ -65,14 +65,12 @@ NARRATION_EXTENSIONS = frozenset({AUDIO_EXTENSION, "wav"})
 LESSON_FILE_WHAT = {"html": "Slides", "pptx": "Slides", "pdf": "Lesson"}
 ARTISAN_AUDIO_EXTENSIONS = {"audio/webm": "webm", "audio/ogg": "ogg", "audio/mp4": "m4a", "audio/wav": "wav"}
 ARTISAN_TURNS_MAX = 99
-MEDIA_NAMES = {
-    "IMAGE": ("Generated-Image", "Image", "png"),
-    "VIDEO": ("Generated-Video", "Video", "mp4"),
-}
+MEDIA_NAMES = {"IMAGE": ("Generated-Image", "Image", "png"), "VIDEO": ("Generated-Video", "Video", "mp4")}
 RESERVED_STEMS = frozenset(
     {"CON", "PRN", "AUX", "NUL", *(f"COM{i}" for i in range(1, 10)), *(f"LPT{i}" for i in range(1, 10))}
 )
 _ZERO_WIDTH = frozenset({"‌", "‍"})
+NameField = str | None
 
 
 @dataclass(frozen=True)
@@ -124,13 +122,13 @@ def lesson_file_name(*, made_at: datetime, craft: str | None, title: str, fmt: s
     return _named(fixed, (what, None), fmt, (None, craft, _capped_subject(title)))
 
 
-def explainer_file_name(
-    *, made_at: datetime, craft: str | None, question: str, version: int, what: str, ext: str
+def export_file_name(
+    *, entity: str, made_at: datetime, craft: NameField, subject: NameField, version: int, what: str, ext: str
 ) -> str:
     if version < 1:
-        raise InvalidInput(f"Explainer version {version} does not fit v<n>")
-    fixed = (PORTAL, "Explainer", _ist(made_at).date().isoformat())
-    return _named(fixed, (field(what), f"v{version}"), ext, (None, craft, _capped_subject(question)))
+        raise InvalidInput(f"{entity} version {version} does not fit v<n>")
+    fixed = (PORTAL, field(entity), _ist(made_at).date().isoformat())
+    return _named(fixed, (field(what), f"v{version}"), ext, (None, craft, _capped_subject(subject or "")))
 
 
 def export_key(owner_id: uuid.UUID, digest: str, leaf: str) -> str:

@@ -15,6 +15,7 @@ import {
   type SvgNode,
   type TextBlock
 } from "@/lib/componentSpecsScienceParts";
+import { stillOr, type KitScene } from "@/lib/componentSpecsKitScene";
 import { list, matching, nullable, object, oneOf, ShapeError, tagged, type Shape } from "@/lib/shape";
 
 const key = matching(/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/, "a key");
@@ -27,7 +28,7 @@ export type PanelLeaf =
   | { part: "formulas"; option: string | null; chips: FormulaChip[] }
   | { part: "same"; label: string; paragraphs: string[] }
   | { part: "chart"; title: string; chart: ComponentSlot; source: string }
-  | { part: "stage"; drawing: SvgNode; note: string | null; noteHook: string | null }
+  | { part: "stage"; drawing: SvgNode | KitScene; note: string | null; noteHook: string | null }
   | { part: "stepper"; hook: string; action: Rich; statusHook: string; status: string }
   | { part: "switch"; hook: string; label: Rich; description: string };
 export type PanelPart = PanelLeaf | { part: "more"; parts: PanelLeaf[] };
@@ -58,7 +59,7 @@ const leaves: Record<PanelLeaf["part"], Shape<PanelLeaf>> = {
   formulas: object<Of<"formulas">>({ part: oneOf(["formulas"] as const), option: nullable(key), chips: list(chipShape, 1) }),
   same: object<Of<"same">>({ part: oneOf(["same"] as const), label: unitRef, paragraphs: list(unitRef, 1) }),
   chart: object<Of<"chart">>({ part: oneOf(["chart"] as const), title: unitRef, chart: componentSlotShape, source: unitRef }),
-  stage: object<Of<"stage">>({ part: oneOf(["stage"] as const), drawing: svgNodeShape, note: nullable(unitRef), noteHook: nullable(key) }),
+  stage: object<Of<"stage">>({ part: oneOf(["stage"] as const), drawing: stillOr(svgNodeShape), note: nullable(unitRef), noteHook: nullable(key) }),
   stepper: object<Of<"stepper">>({ part: oneOf(["stepper"] as const), hook: key, action: richShape, statusHook: key, status: label }),
   switch: object<Of<"switch">>({ part: oneOf(["switch"] as const), hook: key, label: richShape, description: label })
 };

@@ -5,6 +5,7 @@ from typing import Annotated, Literal, Self
 from pydantic import Field, model_validator
 
 from .base import absent
+from .component_specs_kit_scene import SceneDrawing, StepArt, StillDrawing
 from .component_specs_science_parts import (
     Colour,
     ColourToken,
@@ -12,8 +13,10 @@ from .component_specs_science_parts import (
     DomId,
     Equation,
     FigureHead,
+    HookLabel,
     Label,
     Rich,
+    ShownRich,
     SpecModel,
     Styled,
     SvgNode,
@@ -65,7 +68,7 @@ class StepText(SpecModel):
 class LaneSpecies(SpecModel):
     item: Literal["species"]
     swatch: Colour | Literal[*SWATCH_MARKS]
-    name: Rich
+    name: ShownRich
     formula: Rich | None = None
     state: list[str | Styled] = Field(default_factory=list)
     cid: Cid | None = None
@@ -114,9 +117,17 @@ class StepChemistry(SpecModel):
 
 
 class StepScene(SpecModel):
-    where_icon: SvgNode
+    where_icon: SvgNode | None = Field(default=None, exclude_if=absent)
     where: UnitRef
-    art: list[SvgNode] = Field(min_length=1)
+    art: StepArt
+
+    @model_validator(mode="after")
+    def _drawn_art_shows_where(self) -> Self:
+        if isinstance(self.art, list) and self.where_icon is None:
+            raise ValueError(
+                "a step drawn by hand shows its where icon; a kit scene draws where it happens itself"
+            )
+        return self
 
 
 class ReactionStep(SpecModel):
@@ -128,7 +139,7 @@ class ReactionStep(SpecModel):
 
 class ReactionPlayerSpec(SpecModel):
     id: DomId
-    track: Label
+    track: HookLabel
     head: FigureHead
     current: int = Field(ge=1)
     steps: list[ReactionStep] = Field(min_length=2)
@@ -150,7 +161,7 @@ class ReactionPlayerSpec(SpecModel):
 
 class DipPhase(SpecModel):
     pose: PhaseKey
-    drawing: SvgNode
+    drawing: SceneDrawing
     kicker: UnitRef
     text: UnitRef
 
@@ -159,7 +170,7 @@ class DipPlayerSpec(SpecModel):
     id: DomId
     head: FigureHead
     phase: UnitRef
-    scene: SvgNode
+    scene: SceneDrawing
     strip_label: Label
     phases: list[DipPhase] = Field(min_length=2)
     dip_again: Label
@@ -199,7 +210,7 @@ class StageFinish(SpecModel):
 class StagePlayerSpec(SpecModel):
     key: DomId
     head: FigureHead
-    drawing: SvgNode
+    drawing: StillDrawing
     rest_name: UnitRef
     play: Label
     source: UnitRef

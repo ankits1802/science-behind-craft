@@ -89,7 +89,7 @@ item 6: published pictures over MCP) and
 
 ## Consequences
 
-- Migration `0104_admin_curation` (parent `0103_component_lifecycle`) widens the staged action check
+- Migration `0104_admin_curation` (parent `0111_answer_figures`) widens the staged action check
   with `edit` and the kind check with `IMAGES`, and adds the nullable `ImageContribution.focal` with
   its object check; the release before reads and writes every table, and its downgrade drops the
   staged items it cannot read.

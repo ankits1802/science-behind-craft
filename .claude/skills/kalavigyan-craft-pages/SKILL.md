@@ -63,7 +63,7 @@ Brief an agent to read every page a result hands it.
 | A quote before it is sent | `read_source` with the quote in its `quotes`: the QUOTES gate's verdict, and the nearest passage when it misses |
 | A compound's record and hazards, a plant's taxon name, a place's or craft's item | `lookup`, with kind compound or entity |
 | Finding open pictures | `search_sources` with kinds pictures (Commons and Openverse, open licences only, with author, credit and the site's widths), then `give_pictures` with its `page_url` |
-| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`) |
+| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`); a player's or card's scene as a kit scene in its slot |
 | A map of the page's places, their years and moves | a declared `timeline_map` in the draft or bundle (the dataset guide, Maps of places); never a drawing |
 | A fact that stands alone | `propose_facts` (up to 25, each with an `idempotency_key` and the claimed `task_key`), then `get_proposal` until it is DONE; a working dossier's new facts in one run with `tools/curation/propose.py` |
 | A new source for a held fact, or for a fact that lost its quotes | `propose_source`, naming the fact as `claim_id` |
@@ -82,6 +82,19 @@ The dossiers in `backend/app/data/curation` (a category's under `categories/`), 
 edited by hand only to prepare a bulk import, and then only in a working copy (the dossier route)
 of the export the lead makes first, since the import does not take a file that lacks structure a
 reviewer approved in the database (decision 0171).
+
+### Removing and editing published content (Admins)
+
+Only an Admin's AI client with the review scope changes what is already published, and only by
+staging it. Read `kalavigyan://admin/published-content.md` first. Find the item: `review_queue` with
+`published` lists a page's pictures, layout, structure entries, readings and placed stages, or the
+approved map layers; `get_facts` gives facts and sources; `list_components` gives components. Open
+the item by `id` (or a component by `label`) to see the fields an edit changes. Stage `remove`, or
+`edit` with only the changed fields, plus a reason of at least 12 characters, using `stage_reviews`;
+add `entry` for a structure entry whose fact holds up more than one entry. A refusal quotes the gate
+that refused; fix the change and stage it anew. Nothing changes until a person confirms the batch on
+the Review page. Contributors withdraw their own components through a page's `withdrawals`, never
+these tools.
 
 ## The bar (Kutch Ajrakh, version 3)
 
@@ -108,6 +121,12 @@ A category page has no stages, native names or GI record; it has pictures placed
 `subCategories` on sentences and questions, and the family's reactions. The exemplar's dossier is
 `Kutch-Ajrakh.json`; read it by field, never whole (it is large):
 `python -I -c "import json;d=json.load(open('backend/app/data/curation/Kutch-Ajrakh.json',encoding='utf-8'));print(json.dumps(d['pictures'][:3],ensure_ascii=False,indent=1))"`
+
+Every page exports as a PDF and a Word document. Each component is drawn there as its still at rest,
+with every unit it holds and its credits. Say in a component's units what its motion shows: paper
+keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and declared
+timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes and text,
+without its textures.
 
 ## See the gaps first
 
@@ -141,7 +160,8 @@ family figure only when the page holds every fact its units cite.
    through `propose_facts`, structure through `propose_structure`, a held fact's new source through
    `propose_source`, components by the component guide, figures from data by the datasets skill,
    and open pictures through `give_pictures` by `page_url` (the server reads the licence and the
-   author and returns a thumbnail to check).
+   author and returns a thumbnail to check). Quote a colour change as the source states it, first
+   colour and then the colour it turns. Answers then draw that stage from the kit, citing your fact.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, read its pictures, fix every rule its report fails (rule 28 names each
    drawing problem), preview again until rule 28 passes, then judge the rest on the private link at
@@ -159,6 +179,14 @@ family figure only when the page holds every fact its units cite.
    one and its `curatedAt` updated, verified and checked.
 7. **Report** in under 150 words: gaps before and after, each proposal's outcome, sources added,
    what was searched and not found. No prose summaries of the craft.
+
+## Pages in other languages
+
+A component's labels are passages too: a step's name, a lane's species, a molecule's name, atoms and
+key, a dip's strip label, a lab's and a toggle's choices. Their key is `<component label>#<path>`
+(`…/patina-steps#steps.0.name`) and their tag `label`; translate each as a sentence, one text each.
+Formulas, numbers, keys and a stage named in its own language are never offered: leave them as the
+English page holds them.
 
 ## The dossier route
 

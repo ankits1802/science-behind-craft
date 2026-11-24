@@ -5,6 +5,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { AuthProvider } from "../components/AuthProvider";
 import { ComponentSlot } from "../components/monograph/ComponentSlot";
 import { askNextHref } from "../components/monograph/kinds/tools/AskNextView";
@@ -17,6 +18,8 @@ import { generatorSpecShape, languageSwitchSpecShape, quizSpecShape, TOOL_KINDS,
 import type { MonographDocument } from "../lib/monographDocument";
 import { parseMonographDocument } from "../lib/monographDocumentShape";
 import { parseShape } from "../lib/shape";
+
+test.beforeAll(() => nearBlocksLoaded());
 
 const AJRAKH = join(__dirname, "..", "..", "backend", "app", "data", "monographs", "Kutch-Ajrakh");
 const LABEL = {

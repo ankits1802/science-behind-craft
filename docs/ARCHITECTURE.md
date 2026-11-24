@@ -402,6 +402,16 @@ flowchart LR
    signed link; citation files are answered directly. The files a share link's readers are given
    are recorded against its token (`SharedExportFile`) and deleted from the bucket when the share
    stops (`services/shared_files`, decision 0155).
+3. A page (decision 0206) is exported by `GET /api/crafts/{slug}/monograph/{pdf|docx}` in the
+   language it is served in: the route reads the served document as the monograph route does,
+   releases its connection and files the file under `exports/<page owner>/<sha256>/<name>`, the
+   hash taken over the served tag, so a new version or a new translation is a new file. In one
+   worker thread `services/page_export_document` lays the page out as chapters of passages and
+   figures, each component one figure built by its kind's builder (`page_export_kit`,
+   `page_export_science`, `page_export_labs`, every other kind its words and drawings through
+   `generic_figure`), its still drawn by the one still renderer (`services/export_still_*`, which
+   the answer report's kit figures and timeline maps share), then `page_export_pdf` writes the PDF
+   and `page_export_docx` the Word document (`docx_writer`, the standard library's zip and XML).
 
 ## How stored pieces stay current (decision 0033)
 
@@ -659,7 +669,10 @@ sequenceDiagram
    headroom chooses values and writes an HTML fragment that must pass the value, static
    (`research/sandbox`) and block checks, with one redraft, all within a 60 s budget, and no call
    at all when the section's facts state no quantity it can draw (dataset rows of the datasets the
-   section's blocks cite are offered beside the quoted figures, decision 0142); each builder's
+   section's blocks cite are offered beside the quoted figures, decision 0142); a concept whose
+   cited quotes state a cloth's colour before and after is drawn instead as a `kit_figure` the site
+   composes from the figure kit (`science/kit_figures`), with no model call, and a fragment or a
+   stored explainer below the design's bar (`research/simulation_art`) is left out (decision 0201); each builder's
    outcome and time is recorded under the answer's `plan.builds` (`services/builder_record`);
    it is kept as a cross-craft piece by
    concept and claim set from any section (also an any-craft answer and a deepened follow-up), and
@@ -776,7 +789,14 @@ state. The figure kit is `components/artkit/`: the designed parts a composed `di
 with the named motions, set in their layouts by `KitFigure` and drawn on a page by
 `components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
-part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
+part in every depicted material (decision 0199). The players, the toggle's stage box and the label
+card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
+page kit plays a shown scene's part (decision 0200). A kind whose code is heavy (the declared map layer and
+timeline map, the why-here ground map and the six page tools) is drawn whole on the server and its
+code reaches the browser only as its holder nears the viewport (`components/answer/nearBlock.tsx`,
+the loaders in `components/monograph/kinds/nearViews.tsx`); the smoke job measures Kutch Ajrakh and
+a page of every kind on a slowed phone at 360 against their recorded numbers
+(`frontend/e2e/phone-budget.json`, decision 0205). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub
@@ -897,13 +917,15 @@ The CSP's `frame-src` names only Google's sign-in frames: a generated explainer 
 bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The frame's first
 script is the client's own guard: it removes the peer connection constructors and keeps the frame
 from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
+Its document carries the values of the design tokens the fragment names and sets
+`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201).
 
 ## Checks
 
 | Workflow | Runs |
 |---|---|
 | Backend checks | ruff, DB-free pytest, tools tests (hygiene, curation), hygiene check, the curation check of every dossier and the index (`tools/curation/check.py --check-index`, no network), offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector in three shards, each with its own database (`DB_TEST_SHARD`, decision 0163), then the curated dossier import (decision 0053) and every table loaded through the models of each release before, the one production serves and the base (decision 0186) |
-| Frontend checks | typecheck, lint and unit specs (after the lockfile audit and the no-comments check); the production build; the smoke specs against that build in a browser, among them the voice dock's recorded bit rate (decision 0161) |
+| Frontend checks | typecheck, lint and unit specs (after the lockfile audit and the no-comments check); the production build; the smoke specs against that build in a browser, among them the voice dock's recorded bit rate (decision 0161); then Kutch Ajrakh and a page of every kind measured on a slowed phone at 360 against their budget (decision 0205) |
 | Hygiene | the hygiene check over the whole repository on every push to `main` and every pull request, whatever the paths, since Backend checks runs only for backend paths; it also fails a change that leaves `docs/TECH_DEBT.md` with more entries than its baseline (decision 0163) |
 | README check | on a pull request, or a push to `main` or a round branch, that changes `README.md`, a Markdown file under `docs/` or `.claude/skills/`, the README kit or its workflow: the kit rebuilt and diffed, every SVG checked, every mermaid block drawn by mermaid-cli and on github.com, every page rendered by GitHub (`docs/readme-kit/README_STYLE.md`, CI) |
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |

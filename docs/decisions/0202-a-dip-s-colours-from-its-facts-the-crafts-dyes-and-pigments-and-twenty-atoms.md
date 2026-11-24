@@ -22,6 +22,7 @@ design is `.claude/skills/kalavigyan-design/references/SYSTEM.md` 2.5 and 2.5a.
 | The colour key and its substance-to-token mapping | [decision 0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) |
 | The specimen tokens, their records and their frame | [decision 0092](0092-design-system.md), and SYSTEM.md 2.5 |
 | The figure kit, whose parts take the same depicted materials | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
+| A dip phase drawn from the kit's parts, a colour no token shows in line work (amends item 1) | [decision 0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

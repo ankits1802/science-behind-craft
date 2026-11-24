@@ -22,6 +22,7 @@ from .blocks_climate import ClimateRiskBlock
 from .blocks_component import ComponentBlock
 from .blocks_insight import MarketGiBlock, MeasureBlock, QuantitiesBlock
 from .blocks_journey import TimelineMapBlock, ZoomStoryBlock
+from .blocks_kit import KitFigureBlock
 from .blocks_learning import CompareBlock, ConceptGraphBlock, QuizBlock
 from .blocks_lede import LEDE_KIND, LedeBlock
 from .blocks_matter import MaterialCardBlock, Molecule3dBlock, ReactionPlayerBlock
@@ -120,14 +121,13 @@ BLOCK_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType(
         "mordant_bath": MordantBathBlock,
         "lost_wax": LostWaxBlock,
         "firing": FiringBlock,
+        "kit_figure": KitFigureBlock,
         "component": ComponentBlock,
     }
 )
 BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
     {
-        "prose": "A",
-        "process_ladder": "A",
-        "images": "A",
+        **dict.fromkeys(("prose", "process_ladder", "images", "component"), "A"),
         "region_story": "B",
         "map_layer": "B",
         "reaction_player": "B",
@@ -136,10 +136,7 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "expert_view": "B",
         "seasons": "B",
         "supply_map": "B",
-        "simulation": "C",
-        "what_if": "C",
-        "zoom_story": "C",
-        "timeline_map": "C",
+        **dict.fromkeys(("simulation", "what_if", "zoom_story", "timeline_map", "kit_figure"), "C"),
         "quiz": "D",
         "compare": "D",
         "in_practice": "D",
@@ -152,7 +149,6 @@ BLOCK_PHASES: Mapping[str, str] = MappingProxyType(
         "artisan_voice": "E",
         "designs": "DEFERRED",
         **dict.fromkeys(BUILT_FIGURE_KINDS, SIGNATURE_PHASE),
-        "component": "A",
     }
 )
 SENTENCE_MODELS: Mapping[str, type[BlockBase]] = MappingProxyType({**BLOCK_MODELS, LEDE_KIND: LedeBlock})
@@ -178,6 +174,7 @@ BUILT_BLOCK_KINDS = (
     "what_if",
     "zoom_story",
     "timeline_map",
+    "kit_figure",
     "component",
 )
 Block = Annotated[
@@ -211,6 +208,7 @@ Block = Annotated[
     | MordantBathBlock
     | LostWaxBlock
     | FiringBlock
+    | KitFigureBlock
     | ComponentBlock,
     Field(discriminator="kind"),
 ]

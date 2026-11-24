@@ -1,6 +1,7 @@
 from typing import Any
 
 from app.research.monograph_page import MonographContent, render_page
+from app.research.page_passages import NO_SPECS
 from app.research.page_translation_variant import (
     NO_TRANSLATIONS,
     ServedTranslations,
@@ -67,7 +68,7 @@ def served(*, earlier: frozenset[str] = frozenset()) -> ServedTranslations:
 def test_a_translated_passage_is_drawn_in_its_language_and_every_other_passage_falls_back_marked_english() -> (
     None
 ):
-    variant = variant_content(content(), served(), language="hi", source_version=4)
+    variant = variant_content(content(), served(), language="hi", source_version=4, specs=NO_SPECS)
     units = variant.content.units
     assert units["u1"].lang == "hi" and units["u2"].lang == "en"
     assert units["u2"].nodes == PLANT
@@ -86,7 +87,9 @@ def test_a_translated_passage_is_drawn_in_its_language_and_every_other_passage_f
 
 
 def test_citations_are_the_english_passage_s_even_when_its_sources_were_numbered_again() -> None:
-    variant = variant_content(content(source_key="g7"), served(), language="hi", source_version=1)
+    variant = variant_content(
+        content(source_key="g7"), served(), language="hi", source_version=1, specs=NO_SPECS
+    )
     cite = variant.content.units["u1"].nodes[0]["c"][1]
     assert cite == {"m": "cite", "key": "c1", "g": ["g7"], "c": ["रंगा जाता है।"]}
 
@@ -94,14 +97,14 @@ def test_citations_are_the_english_passage_s_even_when_its_sources_were_numbered
 def test_a_passage_whose_english_changed_falls_back_and_is_counted_held() -> None:
     changed = [{**LEDE[0], "c": ["The cloth is dyed 4 times in an indigo ", LEDE[0]["c"][1]]}]
     variant = variant_content(
-        content(changed), served(earlier=frozenset({"u1"})), language="hi", source_version=2
+        content(changed), served(earlier=frozenset({"u1"})), language="hi", source_version=2, specs=NO_SPECS
     )
     assert variant.content.units["u1"].lang == "en"
     assert (variant.translation.translated, variant.translation.held) == (0, 1)
 
 
 def test_nothing_served_leaves_every_passage_marked_english() -> None:
-    variant = variant_content(content(), NO_TRANSLATIONS, language="ur", source_version=1)
+    variant = variant_content(content(), NO_TRANSLATIONS, language="ur", source_version=1, specs=NO_SPECS)
     assert variant.translation.direction == "rtl" and variant.translation.script == "Arab"
     assert {key: unit.lang for key, unit in variant.content.units.items()} == {
         "masthead-title": None,
@@ -112,7 +115,7 @@ def test_nothing_served_leaves_every_passage_marked_english() -> None:
 
 
 def test_a_drawn_passage_carries_its_language_and_a_fallback_says_it_is_english() -> None:
-    variant = variant_content(content(), served(), language="hi", source_version=1)
+    variant = variant_content(content(), served(), language="hi", source_version=1, specs=NO_SPECS)
     template = (
         '<main id="kv-main"><p><kv-slot unit="u1"></kv-slot></p><p><kv-slot unit="u2"></kv-slot></p></main>'
     )

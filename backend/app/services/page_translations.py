@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import InvalidInput, Refused
 from app.core.roles import PROFESSOR, has_rank
 from app.models import PageTranslation, User
-from app.research.monograph_page import MonographContent
+from app.research.page_passages import PagePassage, page_passages
 from app.research.page_proposals import ACCEPTED, REFUSED, TRANSLATION, PartReport
 from app.research.page_translation_gates import (
     GateInput,
@@ -21,7 +21,7 @@ from app.research.page_translation_gates import (
 from app.research.page_translation_texts import NO_PAGE, NO_PASSAGE, placed_message
 from app.research.page_translations import PageTranslationPart, PassageTranslation, task_problem
 from app.research.review_switch import PUBLISHED, ReviewSwitch, refused_placement
-from app.research.translation_passages import is_translatable, passage_leaves, passage_text, unit_hash
+from app.research.translation_passages import passage_text
 from app.research.trust_tiers import SWITCH, TierPlacement, drawn_for_review, tier_placement
 
 from . import app_settings, trust_tiers
@@ -49,7 +49,7 @@ class _Proposer:
 class _Batch:
     page: PageKey
     part: PageTranslationPart
-    content: MonographContent
+    passages: dict[str, PagePassage]
     proposer: _Proposer
     batch_id: uuid.UUID
     now: datetime
@@ -86,16 +86,16 @@ async def translation_reports(
     english = None if problem is not None else await english_page(session, page)
     if english is None:
         return [_refused(index, problem or NO_PAGE) for index in range(len(part.passages))]
-    await refresh_page_texts(session, page, english.tag, english.document.content, now=now)
-    batch = _Batch(
-        page, part, english.document.content, await _proposer(session, user, part, origin), uuid.uuid4(), now
-    )
+    document = english.document
+    await refresh_page_texts(session, page, english.tag, document.content, document.specs, now=now)
+    passages = page_passages(document.content, document.specs)
+    batch = _Batch(page, part, passages, await _proposer(session, user, part, origin), uuid.uuid4(), now)
     reports = [
         await _passage_report(session, batch, index, passage) for index, passage in enumerate(part.passages)
     ]
     taken = any(report.outcome == ACCEPTED for report in reports)
     if part.task_key is not None and taken:
-        left = await remaining_passages(session, page, part.language, english.document.content)
+        left = await remaining_passages(session, page, part.language, passages)
         if left == 0:
             await complete_task(session, user.id, part.task_key, now=now)
     return reports
@@ -112,13 +112,13 @@ async def _proposer(session: AsyncSession, user: User, part: PageTranslationPart
 async def _passage_report(
     session: AsyncSession, batch: _Batch, index: int, passage: PassageTranslation
 ) -> PartReport:
-    unit = batch.content.units.get(passage.key)
-    if unit is None or not is_translatable(passage.key, unit.nodes):
+    held = batch.passages.get(passage.key)
+    if held is None:
         return _refused(index, NO_PASSAGE.format(key=passage.key))
-    leaves = passage_leaves(unit.nodes)
+    leaves = held.leaves()
     given = GateInput(
         leaves=leaves,
-        current_hash=unit_hash(unit.nodes, unit.claim_ids),
+        current_hash=held.source_hash,
         given_hash=passage.source_hash,
         texts=passage.texts,
         language=batch.part.language,

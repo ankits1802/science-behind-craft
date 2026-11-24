@@ -1,3 +1,4 @@
+import { stillOr, type KitScene } from "@/lib/componentSpecsKitScene";
 import { DEPICTED_MATERIALS } from "@/lib/depictedMaterials";
 import type { MonographMark, MonographNode } from "@/lib/monographDocument";
 import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
@@ -209,11 +210,11 @@ export const specimenPlateShape = object<SpecimenPlateSpec>({
 });
 
 export type LabelFact = { term: string; value: string };
-export type LabelCardSpec = { variant: string; kicker: string; seal: DrawingElement; sentence: string; inset: string | null; facts: LabelFact[] };
+export type LabelCardSpec = { variant: string; kicker: string; seal: DrawingElement | KitScene; sentence: string; inset: string | null; facts: LabelFact[] };
 export const labelCardShape = object<LabelCardSpec>({
   variant: className,
   kicker: unitRef,
-  seal: drawingShape,
+  seal: stillOr(drawingShape),
   sentence: unitRef,
   inset: nullable(componentLabel),
   facts: list(object<LabelFact>({ term: unitRef, value: unitRef }), 1)

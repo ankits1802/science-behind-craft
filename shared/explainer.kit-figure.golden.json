@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 1,
+  "sections": [
+    {
+      "id": "s1",
+      "discipline": "CHEMISTRY",
+      "blocks": [
+        {
+          "id": "s1.kit",
+          "kind": "kit_figure",
+          "version": 1,
+          "reuse": null,
+          "diagram": {
+            "head": {
+              "title": "u0001",
+              "caption": null
+            },
+            "layout": "before_after",
+            "alt": "u0002",
+            "panels": [
+              {
+                "label": "u0003",
+                "motion": "dip",
+                "parts": [
+                  {
+                    "part": "bath",
+                    "vessel": "vat",
+                    "liquor": "--dye-vat-liquor",
+                    "piece": "--dye-leuco",
+                    "label": "u0004"
+                  }
+                ]
+              },
+              {
+                "label": "u0005",
+                "text": "u0006",
+                "via": "u0007",
+                "motion": "take",
+                "parts": [
+                  {
+                    "part": "cloth",
+                    "form": "length",
+                    "material": "--dye-indigo",
+                    "printed": {
+                      "motif": "star",
+                      "material": "--dye-kut"
+                    },
+                    "label": "u0008"
+                  }
+                ]
+              }
+            ]
+          },
+          "labels": [
+            {
+              "ref": "u0001",
+              "text": "Green to blue"
+            },
+            {
+              "ref": "u0002",
+              "text": "Cloth drawn green in the vat, then blue"
+            },
+            {
+              "ref": "u0003",
+              "text": "Green"
+            },
+            {
+              "ref": "u0004",
+              "text": "Cloth in the vat",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0005",
+              "text": "Blue"
+            },
+            {
+              "ref": "u0006",
+              "text": "The cloth becomes blue",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0007",
+              "text": "As oxygen meets the dye",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0008",
+              "text": "Cloth, blue",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s1.kit2",
+          "kind": "kit_figure",
+          "version": 1,
+          "reuse": null,
+          "diagram": {
+            "head": {
+              "title": "u0001",
+              "caption": null
+            },
+            "layout": "steps",
+            "alt": "u0002",
+            "panels": [
+              {
+                "label": "u0003",
+                "text": "u0004",
+                "motion": "dry",
+                "parts": [
+                  {
+                    "part": "paste",
+                    "form": "printed",
+                    "material": "--dye-lime",
+                    "on": "--dye-cloth",
+                    "dried": "--dye-lime-edge",
+                    "label": "u0005"
+                  },
+                  {
+                    "part": "block",
+                    "motif": "lattice",
+                    "paste": "--dye-lime",
+                    "label": "u0006"
+                  },
+                  {
+                    "part": "tool",
+                    "tool": "block",
+                    "held": false,
+                    "load": "--dye-lime",
+                    "label": "u0007"
+                  }
+                ]
+              },
+              {
+                "label": "u0008",
+                "parts": [
+                  {
+                    "part": "heat",
+                    "source": "sun",
+                    "label": "u0009"
+                  },
+                  {
+                    "part": "water",
+                    "form": "running",
+                    "label": "u0010"
+                  }
+                ]
+              },
+              {
+                "label": "u0011",
+                "parts": [
+                  {
+                    "part": "piece",
+                    "shape": "slab",
+                    "material": "--dye-mud",
+                    "inlay": {
+                      "motif": "dots",
+                      "material": "--dye-kut"
+                    },
+                    "label": "u0012"
+                  }
+                ]
+              }
+            ]
+          },
+          "labels": [
+            {
+              "ref": "u0001",
+              "text": "Printed, dried and washed"
+            },
+            {
+              "ref": "u0002",
+              "text": "A resist printed, dried in the sun and washed"
+            },
+            {
+              "ref": "u0003",
+              "text": "Printed"
+            },
+            {
+              "ref": "u0004",
+              "text": "The paste dries on the cloth",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0005",
+              "text": "Resist paste",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0006",
+              "text": "Carved block",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0007",
+              "text": "The printer's block",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0008",
+              "text": "Dried and washed"
+            },
+            {
+              "ref": "u0009",
+              "text": "Sun",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0010",
+              "text": "Running water",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0011",
+              "text": "Inlaid"
+            },
+            {
+              "ref": "u0012",
+              "text": "Inlaid slab",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s1.kit3",
+          "kind": "kit_figure",
+          "version": 1,
+          "reuse": null,
+          "diagram": {
+            "head": {
+              "title": "u0001",
+              "caption": "u0002"
+            },
+            "layout": "section",
+            "alt": "u0003",
+            "panels": [
+              {
+                "label": "u0004",
+                "parts": [
+                  {
+                    "part": "section",
+                    "layers": [
+                      {
+                        "material": "earth",
+                        "label": "u0005"
+                      },
+                      {
+                        "material": "--dye-mud-wet",
+                        "label": "u0006"
+                      }
+                    ],
+                    "label": "u0007"
+                  }
+                ]
+              }
+            ]
+          },
+          "labels": [
+            {
+              "ref": "u0001",
+              "text": "The vat in the earth"
+            },
+            {
+              "ref": "u0002",
+              "text": "Drawn in section"
+            },
+            {
+              "ref": "u0003",
+              "text": "Earth with a wet mud layer above it, in section"
+            },
+            {
+              "ref": "u0004",
+              "text": "In section"
+            },
+            {
+              "ref": "u0005",
+              "text": "Earth",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0006",
+              "text": "Wet mud",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0007",
+              "text": "The ground in section",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+      "kind": "GI_JOURNAL",
+      "title": "Geographical Indications Journal No. 188: Kutch Ajrakh, G.I. Application No. 1050",
+      "authors": [],
+      "year": 2023,
+      "doi": null,
+      "url": "https://search.ipindia.gov.in/IPOJournal/Journal/ViewJournal?FileName=ipo-docs%5CIPIndia_Docs%5CGIR%5C2023%5CJournal_188%5CJournal+188.pdf",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "licence": null,
+      "attribution": null,
+      "reliability": "A"
+    }
+  ]
+}
