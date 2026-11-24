@@ -308,9 +308,9 @@ Each section gives:
   `MISSING_COMPONENT:craft:Firozabad-Glass:reaction-player` (MEDIUM).
 - **Carried by**: `reaction_player`; the pigment step names cinnabar and orpiment as the family's
   facts identify them, with their PubChem records and hazards from `lookup`.
-- **Missing**: specimen tokens for the mineral pigments, the chalk ground and the lacquer; what a
-  gum binder does as the paint dries (no fact states it); glass's melting reactions as a source
-  writes them (the facts give the fluxes, the carbon dioxide and the silicates, not an equation).
+- **Missing**: specimen tokens for the chalk ground and the lacquer; what a gum binder does as the
+  paint dries (no fact states it); glass's melting reactions as a source writes them (the facts
+  give the fluxes, the carbon dioxide and the silicates, not an equation).
 
 ### The states and their facts
 
