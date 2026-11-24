@@ -25,7 +25,7 @@ component contracts; where it is silent, they decide.
   matches and the two ways on.
 - A `MISSING_COMPONENT` task names its need: `what-if`, `molecules`, `map`, `reaction-player` or
   `pictures`, and only a component of a kind that need lists completes it. An `experiment_lab`
-  completes `what-if`, and a delivered `map_layer` completes `map`. Pictures are given, not
+  completes `what-if`, and a delivered `timeline_map` or `map_layer` completes `map`. Pictures are given, not
   delivered as components (the contributor skill, Pictures).
 
 ## Choosing a kind
@@ -37,7 +37,8 @@ Choose by what the reader must see:
 | quantities compared across places, materials or years | `chart`, as `bars` for categories or a `line` for a series over time |
 | several things side by side, by their attributes, or a few headline numbers | `fact_table`, or `stat_tiles` for a few figures |
 | dated events in order | `timeline` |
-| places, with or without a value each | `map_layer` |
+| where a craft is practised, began, spread or moved, and when | `timeline_map` (A map of places, below) |
+| a value at each place, from a dataset | `map_layer` |
 | a mechanism, a section, a tool or an object | `drawing`, or `diagram` for a chain of linked steps |
 | one stated equation | `equation_card` |
 | molecules | `structure_diagram` (flat, with their PubChem records from `lookup`) or `molecule_3d` |
@@ -47,10 +48,10 @@ Choose by what the reader must see:
 | sources that disagree | `source_disagreements` |
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
 
-The 22 kinds a contributor delivers, by group:
+The 23 kinds a contributor delivers, by group:
 
 - **Figures from data** (5): `drawing`, `chart`, `fact_table`, `timeline`, `map_layer`.
-- **Data and place** (3): `stat_tiles`, `map_sequence`, `source_disagreements`.
+- **Data and place** (4): `stat_tiles`, `map_sequence`, `source_disagreements`, `timeline_map`.
 - **Plates and voices** (4): `label_card`, `swatch_cards`, `swatch_pair`, `voice`.
 - **Science** (10): `reaction_player`, `dip_player`, `stage_player`, `diagram`, `molecule_3d`,
   `structure_diagram`, `equation_card`, `material_cards`, `experiment_lab`, `choice_toggle`.
@@ -64,10 +65,10 @@ dip player shows an equation only where a source states one. The site builds the
   `concept_atlas`, `credits`, `explainer`, `film`, `generator`, `language_switch`,
   `process_replay`, `quiz`, `reading_level`, `related_crafts`, `source_list`. They are the page's
   apparatus, computed from its data; a proposal of one is refused.
-- **The authored page's own** (7): `picture_plate`, `specimen_plate`, `ai_illustration`, `ai_video`,
-  `comic`, `model_explainer`, `timeline_map`. Pictures are given with `give_pictures` and placed
-  by the site; a model or a route map runs the authored page's own script, so deliver a `drawing`,
-  a `timeline` or a `map_layer` instead.
+- **The authored page's own** (6): `picture_plate`, `specimen_plate`, `ai_illustration`, `ai_video`,
+  `comic`, `model_explainer`. Pictures are given with `give_pictures` and placed by the site; a
+  model runs the authored page's own script, so deliver a `drawing` or a `diagram` instead. A
+  `timeline_map` without `places` is Kutch Ajrakh's own route map and is never delivered.
 
 Each kind's spec is checked against its model (the repository's
 `docs/contracts/component-specs-plates.md`, `-data.md`, `-science.md` and `-general.md`). The MCP
@@ -105,6 +106,25 @@ each value's place in its table as `cell {row, column}` (a table's rows by `row`
 `column`): the dataset guide's Contributed datasets says how a table is stored. The gates read
 every such value from its row, so its unit needs no fact of its own; the site writes the dataset's
 credit under the figure.
+
+## A map of places
+
+Never draw a map. A map of the page's places is a `timeline_map` you declare and the site draws,
+with the answers' own timeline map, on its base map and the Survey of India outline, framed to
+your places. A `drawing` or a `map_layer` of your own SVG that is a map (the base map's colours,
+an outline with dots, places marked as dots in the place colours) is refused with this pointer.
+
+- `timeline_map`: `head`; `places`, 1 to 30, each `{name, home?}` and one of `wikidata` (an item
+  `lookup` found), `district` (its LGD code) or `longitude`, `latitude` and `at` (the unit citing
+  the fact that states that coordinate); `points` `{place, yearFrom, yearTo, text}`, `routes`
+  `{start, end, yearFrom, yearTo, text}` and `undated` `{place?, text}`, up to 40 each, one at
+  least; `layers`, up to 3 of `relief`, `rivers`, `minerals` and the site's district layers, one
+  area layer at most. `name` is a label; `home: true` hatches the page's own district.
+- Every listed place is named by an entry. A point's or route's `text` states its years, a point's
+  or undated fact's `text` names its place, and a route's `text` states the move from its start to
+  its end, each as its facts say it.
+- The server resolves each place and refuses, by name, one it cannot; it writes the points, the
+  boundary record and each layer's dataset record into the stored spec. Send none of them.
 
 ## Depicted materials
 
