@@ -89,6 +89,7 @@ A finished craft page has:
 | Stage pictures | `STAGE` placements on key stages | the stages a reader would want to see |
 | Material pictures | `MATERIAL` placements, `standIn` when not this craft | key dyes, ores, clays, fibres |
 | Stage `after` | 8 of 14 | every stage whose result a source describes (text plus up to 3 colours) |
+| Colour key | 5 colours, each by its dye | drawn by the site from stage afters with colours, mordant and dye facts; two or more colours |
 | Stage `whyClaimId` | 11 of 14 | two thirds of stages or more |
 | Native names | Sindhi script and Latin | 1 or more, in the craft's own script where a source gives it |
 | Reactions | 2, with reactants and products | every reaction a source states, formulas only as quoted |

@@ -212,6 +212,14 @@ callers share one allowance between them.
   the GI record (`GI_RECORD`), or held facts of the page that disagree (`CONFLICT`, by their ids as
   `claim_ids`, with no new fact). A category page (`subject {kind category, slug}`) takes a reaction
   without a stage, a term, an open question or a conflict.
+- The site draws a craft page's colour key at the head of its chemistry chapter from what you
+  propose: each stage's `STAGE_AFTER` with its `colours`, its text naming each one ("red where alum
+  was printed"), and its `STAGE_WHY`; each mordant's colour as a fact ("with an alum mordant, madder
+  dyes cotton red"); each dye's colour as its fact's quote gives it ("the rind gives a deep
+  yellow"). Keep dyes and mordants named by their substance (indigo, madder, harda or myrobalan,
+  lime, ferrous sulphate, scrap iron): a substance with a depicted material is drawn as its swatch,
+  any other colour is named in words. Two colours make the key; never deliver `swatch_cards` by
+  hand for colours your stages name.
 - A community or person a source names in connection with a craft goes in as `GROUP_NAME` (`name`,
   `group_kind` `COMMUNITY` or `PERSON`, the sources whose quotes state it, no field, statement or
   task), on any craft: approved, it only keeps that name out of AI pictures and is never shown.
