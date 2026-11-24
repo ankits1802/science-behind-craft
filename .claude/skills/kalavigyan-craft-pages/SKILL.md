@@ -140,7 +140,10 @@ family figure only when the page holds every fact its units cite.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, fix every rule its report fails, judge the rest on the private link at
    360 and 1440 px in both themes, preview again, then `propose_page` with it. A page given in one call
-   goes through `preview_page` and `propose_page` the same way.
+   goes through `preview_page` and `propose_page` the same way. Compose the page's interactives with
+   `compose_component`, never borrowed from Kutch Ajrakh; propose what `missing` names first. Preview
+   the page with them and read its pictures: step every player, dip every dip, turn and zoom every
+   molecule and choose every option at 360 and 1440 px before `propose_page`.
 5. **Follow every proposal** with `get_proposal` or `my_work`. A refused fact is fixed from its
    sources or dropped, never reworded past its quotes to slip a gate.
 6. **Hand the lead what only the dossier route carries**: a curated picture's focal box and stand-in,
