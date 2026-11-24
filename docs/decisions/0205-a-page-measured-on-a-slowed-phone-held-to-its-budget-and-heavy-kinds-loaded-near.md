@@ -144,4 +144,6 @@ names this one, and the table above links the two both ways. It records the choi
 `frontend/e2e/phone-budget-unit.spec.ts` (the measure, the limits and the named breaches),
 `frontend/e2e/phone-budget.spec.ts` (the pages within their budget, and a heavy import refused and
 named, in the smoke job) and `frontend/e2e/near-views-unit.spec.ts` (each heavy kind's still state
-at first paint, its code reached only near the viewport, its stylesheet on the page first).
+at first paint, its code reached only near the viewport, its stylesheet on the page first), with
+`frontend/e2e/monograph-tools-unit.spec.ts` and `frontend/e2e/art-kit-unit.spec.ts` drawing the
+page tools and a kit figure at rest through their near views.

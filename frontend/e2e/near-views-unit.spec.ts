@@ -13,7 +13,6 @@ import { MapLayerView } from "@/components/monograph/kinds/general/MapLayerView"
 import { TimelineMapDeclaredView } from "@/components/monograph/kinds/general/TimelineMapDeclaredView";
 import { NEAR_RESERVE_LABEL } from "@/components/monograph/kinds/nearViews";
 import { WhyHereView } from "@/components/monograph/kinds/place/WhyHereView";
-import { GeneratorView } from "@/components/monograph/kinds/tools/GeneratorView";
 import type { ComponentView, ComponentViewProps } from "@/lib/componentViewContract";
 import type { KindFixture } from "@/lib/kindFixtures";
 import { WHY_HERE_KIND } from "@/lib/placeGround";
@@ -48,13 +47,11 @@ function propsOf(kind: string, label: string, spec: Record<string, unknown>, uni
 
 const readJson = (...parts: string[]) => JSON.parse(readFileSync(join(REPO, ...parts), "utf8")) as Record<string, unknown>;
 const ground = readJson("shared", "place.ground.golden.json");
-const generator = readJson("backend", "app", "data", "monographs", "Kutch-Ajrakh", "specs", "kutch-ajrakh__overview__watch-it-being-made.json");
 
 const HEAVY_CASES: { kind: string; eager: ComponentView; props: ComponentViewProps }[] = [
   { kind: WHY_HERE_KIND, eager: WhyHereView, props: propsOf(WHY_HERE_KIND, "ground-fixture/geography/why-here", { ground, notes: [] }, []) },
   { kind: "map_layer", eager: MapLayerView, props: fixtureProps(fixture("bidriware/history/centres")) },
-  { kind: "timeline_map", eager: TimelineMapDeclaredView, props: fixtureProps(fixture("bidriware/history/where-bidri-was-made")) },
-  { kind: "generator", eager: GeneratorView, props: propsOf("generator", "kutch-ajrakh/overview/watch-it-being-made", generator, []) }
+  { kind: "timeline_map", eager: TimelineMapDeclaredView, props: fixtureProps(fixture("bidriware/history/where-bidri-was-made")) }
 ];
 
 function drawn(view: ComponentView, props: ComponentViewProps): string {
