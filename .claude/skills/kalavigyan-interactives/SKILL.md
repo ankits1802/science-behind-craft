@@ -168,7 +168,9 @@ laid over the same shape, ink edges, six shapes or more. Show the same states at
   every rule its report fails, then open the private link in both themes at 360, 834 and 1440 px,
   and again with reduced motion on; work it by keyboard alone; step every state and read each against its
   facts. Preview again after each fix, then `propose_page`. Preview the page with a composed
-  component and read its pictures before proposing.
+  component and read its pictures before proposing: look at the preview's pictures of the
+  interactive's chapter and fix every rule 28 failure naming it (drawn empty, loading or moving at
+  rest, too large, past its column) before opening the link.
 - **In the repository**: a valid and a refused spec of the kind in
   `backend/tests/research/test_component_specs_science.py`; the view resting on its state and
   pressing on the rail in `frontend/e2e/monograph-science-views-unit.spec.ts`; Monograph parity
