@@ -304,7 +304,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
   not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
   part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
-  depicted material by hand or names a kit part is refused with the part to use.
+  depicted material by hand or names a kit part is refused with the part to use. A player's or
+  card's scene is given as a kit scene in its slot; a scene painting a depicted material by hand is
+  refused with the part to use.
 
 ## Pages
 

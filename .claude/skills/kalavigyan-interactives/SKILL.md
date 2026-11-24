@@ -71,9 +71,14 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## Choose the kind that carries it
 
-Until a player takes kit parts, draw a state's scene to the bar: materials textured by a pattern
-laid over the same shape, ink edges, six shapes or more. Show the same states at rest as a composed
-`diagram`.
+Draw every state's scene from the figure kit: a kit scene `{parts, motion?}` in the player's slot
+(a reaction step's `art`, a dip phase's `drawing` and the dip's `scene`, the stage player's
+`drawing`, a toggle's stage box), one to three parts of the composed diagram's vocabulary, each
+labelled by a unit citing its facts; a step's kit scene draws where it happens, so it needs no
+where icon. Only a state the reader shows again names a `motion`; the kit plays it when shown and
+never under either reduced-motion switch. A free scene stays in line work: one painting a depicted
+material by hand is refused naming the kit part. `compose_component` builds a craft's reaction and
+dip scenes from the kit.
 
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
