@@ -10,8 +10,8 @@ holder nears the viewport.
 Date: 2026-11-25. Status: accepted (the lead's lane `phone-budget` of the page-quality round; the
 owner reads on a phone first). It amends
 [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md), item 7, which left
-what a release gains on a phone to the lead's Lighthouse because CI ran none. The contracts are
-unchanged; the measure and the budget are `frontend/e2e/phoneBudget.ts`,
+what a release gains on a phone to the lead's Lighthouse because CI ran none. The contract is
+`docs/contracts/monograph-renderer.md` (Component slots); the measure and the budget are `frontend/e2e/phoneBudget.ts`,
 `frontend/e2e/phoneMeasure.ts` and `frontend/e2e/phone-budget.json`, and the loading is
 `frontend/components/answer/nearBlock.tsx` with `frontend/components/monograph/kinds/nearViews.tsx`.
 
@@ -98,7 +98,7 @@ unchanged; the measure and the budget are `frontend/e2e/phoneBudget.ts`,
 
 ## Consequences
 
-- **The first measure, before the heavy kinds loaded near** (run 45471317370 on a7982fe4, the
+- **The first measure, before the heavy kinds loaded near** (run 45471317370 on 6ab05b42, the
   median of three loads). Kutch Ajrakh sent 788,260 bytes of JavaScript (the largest chunks 83.7,
   72.9 and 44.5 KB, then the kit's `monograph.js`, 44.5 KB), 140,802 bytes of CSS (the kit's
   `monograph.css`, 83.6 KB, render-blocking), 708,770 bytes of pictures of which 73,696 in the
@@ -108,10 +108,21 @@ unchanged; the measure and the budget are `frontend/e2e/phoneBudget.ts`,
   page and 215 in the kit; its layout moved 0.0293 as it loaded (the app shell's `main`, its page
   nav and brand) and not at all as it was read. The page of every kind sent 804,618 bytes of
   JavaScript and the same CSS and first screen, painted its largest element at 4,896 ms and was
-  blocked 334 ms. The build's largest unloaded chunk, added to Kutch Ajrakh's document, raised its
-  JavaScript to 956,382 bytes, past the 867,086 its budget allows.
-- **What the record holds.** `e2e/phone-budget.json` records that run's numbers; the next record,
-  taken with the heavy kinds loading near, replaces them in this change (see below).
+  blocked 334 ms.
+- **The measure with the heavy kinds loading near** (run 45475377032 on 290b62a9), which
+  `e2e/phone-budget.json` records. Kutch Ajrakh sends 697,810 bytes of JavaScript (90,450 fewer:
+  the 83.7 KB chunk that carried every kind's view is gone, although its page draws none of the
+  heavy kinds, because the registry no longer brings them), 142,254 bytes of CSS (1,452 more, the
+  ground map's stylesheet now on the page before its code), the same first screen and pictures;
+  its largest element paints at 4,760 ms and the main thread is blocked 747 ms, 530 of them in the
+  framework chunk drawing the rest of the page and 201 in the kit. The page of every kind sends
+  715,853 bytes of JavaScript (88,765 fewer) and 73,696 bytes of pictures (81,683 fewer: the maps
+  below its first screen load nothing until they near), is blocked 227 ms (107 fewer) and paints
+  its largest element at 5,180 ms; as it is read, its near views replace their reserve ahead of the
+  reader and move it by 0.0325 (`section#k26`), within the 0.1 of a page that is still, at a read
+  of 0.8 of a screen every 300 ms, faster than a reader scrolls. With the build's largest chunk it
+  does not load added to its document, Kutch Ajrakh sends 865,932 bytes, past its 767,591-byte
+  budget, and the spec names `/_next/static/chunks/2np8vbiqedr4p.js` first.
 - **A page past its budget fails the pull request**, with the sentence that names what grew, and
   the numbers are in every run's log and artifact for the lead's release notes.
 - **What is left.** The kit's players, vats and dips bind as the kit starts, not on approach, and

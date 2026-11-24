@@ -2,11 +2,12 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
-import { createElement } from "react";
+import { createElement, type ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { NEAR_MARGIN, nearBlocksLoaded, nearSignal, whenNear, type NearEntry, type NearObserverMaker } from "@/components/answer/nearBlock";
 import { AuthProvider } from "@/components/AuthProvider";
+import { SlotRoot } from "@/components/monograph/BundleView";
 import { COMPONENT_VIEWS } from "@/components/monograph/componentViews";
 import { MapLayerView } from "@/components/monograph/kinds/general/MapLayerView";
 import { TimelineMapDeclaredView } from "@/components/monograph/kinds/general/TimelineMapDeclaredView";
@@ -57,7 +58,8 @@ const HEAVY_CASES: { kind: string; eager: ComponentView; props: ComponentViewPro
 ];
 
 function drawn(view: ComponentView, props: ComponentViewProps): string {
-  return renderToStaticMarkup(createElement(AuthProvider, null, createElement(() => view(props)))).replace(GENERATED_ID, '$1=""');
+  const slot = createElement(SlotRoot, { sources: {}, bundles: {}, bare: true } as ComponentProps<typeof SlotRoot>, createElement(() => view(props)));
+  return renderToStaticMarkup(createElement(AuthProvider, null, slot)).replace(GENERATED_ID, '$1=""');
 }
 
 for (const { kind, eager, props } of HEAVY_CASES) {

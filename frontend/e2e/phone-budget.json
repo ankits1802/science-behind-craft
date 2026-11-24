@@ -1,25 +1,25 @@
 {
  "schemaVersion": 1,
  "recordedAt": "2026-11-24",
- "run": 45471317370,
+ "run": 45475377032,
  "pages": {
   "/crafts/Kutch-Ajrakh": {
-   "scriptBytes": 788260,
-   "styleBytes": 140802,
+   "scriptBytes": 697810,
+   "styleBytes": 142254,
    "firstScreenImageBytes": 73696,
-   "lcpMs": 4912,
-   "blockingMs": 916,
+   "lcpMs": 4760,
+   "blockingMs": 747,
    "cls": 0.0293,
    "readingShift": 0
   },
   "/crafts/Phone-Fixtures": {
-   "scriptBytes": 804618,
-   "styleBytes": 140802,
+   "scriptBytes": 715853,
+   "styleBytes": 142254,
    "firstScreenImageBytes": 73696,
-   "lcpMs": 4896,
-   "blockingMs": 334,
+   "lcpMs": 5180,
+   "blockingMs": 227,
    "cls": 0.0293,
-   "readingShift": 0
+   "readingShift": 0.0325
   }
  }
 }

@@ -236,7 +236,12 @@ element as a `kv-slot` was filled.
 - **natively** when the document has its spec and `componentViews.COMPONENT_VIEWS` has a view for
   its kind: a client `SlotRoot` holds the component's bundle (component, spec, its units, and the
   bundles of the components it places, with only the sources they cite) and `BundleView` calls the
-  view with `ComponentViewProps`. `PlacedComponent` draws a placed component inside a view;
+  view with `ComponentViewProps`. `PlacedComponent` draws a placed component inside a view. A kind
+  whose code is heavy (the declared map layer and timeline map, the why-here ground map and the six
+  page tools) is registered as its near view (`kinds/nearViews.tsx`, through `nearBlock`): the
+  server draws it whole inside a `div[data-kv-near]` holder, and the browser loads its code and
+  hydrates it as the holder comes within 1,200 px of the viewport, or, where the browser draws the
+  part itself, shows a figure-shaped skeleton until then (decision 0205);
 - **from its fragment** otherwise: the fragment's HTML as written, inside
   `div.kv-slot.contents#kv-slot-<label with / as __>` that React never re-renders. A placed
   component's `kv-slot` is filled after mount by a portal;
