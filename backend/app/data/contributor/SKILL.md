@@ -221,6 +221,18 @@ callers share one allowance between them.
   lime, ferrous sulphate, scrap iron): a substance with a depicted material is drawn as its swatch,
   any other colour is named in words. Two colours make the key; never deliver `swatch_cards` by
   hand for colours your stages name.
+- The same afters compose the craft's dip player: `compose_component` `dip_player` draws each bath
+  stage in the depicted material of the dye, mordant or resist it uses, found by its substance
+  name; a colour no material shows is outlined and named in words, and a stage whose after names no
+  colour is left out. So propose each bath stage's `STAGE_AFTER` with every colour its fact states
+  and text naming them ("yellow from turmeric and pomegranate rind"), its materials named by
+  substance with their local and botanical names. Depicted today: indigo; madder or alizarin; harda
+  or myrobalan; turmeric (haldi); pomegranate rind (naspal); orpiment (haritala); kut, syahi, kasim,
+  ferrous sulphate or scrap iron; kali mitti; lamp black; lime; conch; gach or dabu mud; kesari;
+  cobalt; quartz; sem; cinnabar (hingula); red ochre (geru). Any other colour comes back in
+  `leftOut` asking for a specimen record, which the team adds only with the fact that quotes it.
+- `molecule_3d` composes any compound of the kit's twenty elements that PubChem holds a 3D
+  conformer for; another element is named in `missing`.
 - A community or person a source names in connection with a craft goes in as `GROUP_NAME` (`name`,
   `group_kind` `COMMUNITY` or `PERSON`, the sources whose quotes state it, no field, statement or
   task), on any craft: approved, it only keeps that name out of AI pictures and is never shown.
