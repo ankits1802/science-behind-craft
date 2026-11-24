@@ -241,7 +241,7 @@ FLAGSHIPS: Mapping[str, Flagship] = MappingProxyType(
                     "3a6c9021-d269-59f3-a5a8-60a993dbe001",
                 ),
                 (
-                    "specimen tokens for the mineral pigments, the chalk ground and the lacquer; what a "
+                    "specimen tokens for the chalk ground and the lacquer; what a "
                     "gum binder does as the paint dries (no fact states it); glass's melting reactions as "
                     "a source writes them (the facts give the fluxes, the carbon dioxide and the "
                     "silicates, not an equation)"

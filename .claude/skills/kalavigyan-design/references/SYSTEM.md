@@ -158,14 +158,54 @@ Depicted materials. They do not change with the theme. Each is a material record
 | `--dye-field-soil` | `#3B342E` | 15.4 from indigo-hover | Bastar Dhokra: the black field soil of the core. |
 | `--dye-sem-green` | `#5F7B3B` | 15.2 from terracotta | Bastar Dhokra: the core rubbed green with sem leaves. |
 | `--dye-river-soil` | `#8E5E4A` | 6.3 from terracotta | Bastar Dhokra: the red riverside soil. |
+| `--dye-turmeric` | `#E5CB45` | 7.0 from turmeric | Bagru: turmeric (haldi) yellow, as the GI journal's dye table gives it. |
+| `--dye-pomegranate` | `#E4D998` | 12.1 from turmeric | Bagru: pomegranate rind (naspal), the dye table's light yellow. |
+| `--dye-kali-mitti` | `#38312B` | 15.4 from indigo-hover | Dabu: kali mitti, the black clay of the dabu resist paste. |
+| `--dye-cinnabar` | `#DA4624` | 8.0 from terracotta | Orissa Pattachitra: hingula, cinnabar, the vermilion red. |
+| `--dye-red-ochre` | `#9A4729` | 4.9 from madder | Orissa Pattachitra: geru, red ochre, the brick red. |
+| `--dye-orpiment` | `#FFB232` | 4.3 from turmeric | Orissa Pattachitra: haritala, orpiment, a light vivid yellow inclined towards orange. |
+| `--dye-lamp-black` | `#171614` | 18.8 from indigo-hover | Orissa Pattachitra: lamp black from an oil wick. |
+| `--dye-conch-white` | `#F2F0E7` | 22.1 from turmeric | Orissa Pattachitra: conch-shell white, the painters' base colour. |
 | `--photo-ink-1` | `#FBFAF6` | – | Headline ink over a scrimmed photograph. |
 | `--photo-ink-2` | `#E6E3DA` | – | Standfirst ink over a scrimmed photograph. |
 
+- **From a craft's facts.** A specimen is added only for a material whose own fact quotes its colour, recorded with that fact (decision 0202): Bagru's turmeric and pomegranate from the GI journal's dye table, Dabu's kali mitti, Pattachitra's five pigments from its GI application. The colour key and the composed dip player find each one from the substance a stage or card names (`research/colour_key.DEPICTED_COLOURS`); a colour no record shows is named in words.
 - **Frame.** Every swatch sits in a 1px ink-2 frame with a 2px raised mat inside it. Its edge then reads at 3:1 or better against the mat (dark swatches) or the frame (light and mid swatches) in all four themes; tokens.json records both ratios per swatch. The swatch carries the weave texture.
-- **Exception, with safeguards.** A dye is a real material, so a few specimens sit closer than 10 delta E to a reserved colour in some theme: harda 7.3 from turmeric, gach clay 7.9 and dhokra's riverside soil 6.3 from terracotta, dye-madder 4.4 from the high-contrast madder. Safeguards: a specimen is always framed, textured and named in a key; it never fills a control, a link, a chart series or a map class; the reserved colours never fill an area larger than a control.
+- **Exception, with safeguards.** A dye is a real material, so a few specimens sit closer than 10 delta E to a reserved colour in some theme: harda 7.3 from turmeric, gach clay 7.9 and dhokra's riverside soil 6.3 from terracotta, dye-madder 4.4 from the high-contrast madder, turmeric 3.4 and orpiment 3.9 from the dark turmeric, red ochre 4.9 from madder. Safeguards: a specimen is always framed, textured and named in a key; it never fills a control, a link, a chart series or a map class; the reserved colours never fill an area larger than a control.
 - **On a photograph.** Text uses `--photo-ink-1` and `--photo-ink-2` over a scrim keyed to the text block: `--photo-scrim-start` (a horizontal gradient under text at the inline start, desktop and tablet, mirrored in right-to-left) and `--photo-scrim-bottom` (phone, text stacked at the bottom). The primary button on a photograph is a paper button with indigo text; the quiet one is outlined in photo ink over a 40 per cent dark fill. These do not theme.
 - **Scrim check (acceptance).** For every art-directed crop, the build hides the text, screenshots the photograph through its scrim and samples the pixels under each text line's own boxes. The 95th-percentile luminance must leave photo-ink-1 at 4.5:1 or better for every line, in every vat phase (rest, in the vat, lifted green, in the air). On the landing photograph today the worst line is 5.96:1 (kicker, 390px); headlines are 8.0:1 or better. A failing crop strengthens its scrim; text is never weakened.
 - **Appbar on a photograph.** Photo ink and a translucent rule while the photograph is under it; once 64px of page ground has scrolled under the bar it switches to page ink in one 200ms state change.
+
+### 2.5a The molecule kit
+
+The atoms of a 3D model (`molecule_3d`) are drawn from one table in `tools/design/system.json` (`molecule`, decision 0202): each element's `--atom-<symbol>` in all four themes, its radius in angstroms and whether it carries its letter. A sphere is filled through the kit's radial gradient `ag-<Symbol>` (the colour mixed 42 per cent into white at the highlight and 78 per cent into black at the rim), edged in `--mol-edge`, bonded in `--mol-bond`, and every atom but carbon and hydrogen is lettered in `--mol-letter`, on the sunk ground of the model's stage. Carbon, hydrogen, nitrogen and oxygen keep the approved kit's colours and radii, and high contrast keeps each theme's colours as the kit does. The other elements are those the crafts' held compounds contain, each at half its covalent radius (Cordero and others 2008), at most 0.55, so a metal never hides the atoms bonded to it.
+
+| Atom | Light | Dark | Radius |
+|---|---|---|---|
+| C carbon | `#3F3A35` | `#B9B4AA` | 0.38 |
+| H hydrogen | `#FBFBF9` | `#ECEAE3` | 0.2 |
+| N nitrogen | `#147882` | `#3AA095` | 0.36 |
+| O oxygen | `#C34728` | `#E87627` | 0.36 |
+| Ag silver | `#595E63` | `#9A9FA5` | 0.55 |
+| Al aluminium | `#866064` | `#CD9CA2` | 0.55 |
+| Au gold | `#906A21` | `#E1B75C` | 0.55 |
+| Ca calcium | `#445E36` | `#8CA97D` | 0.55 |
+| Cl chlorine | `#317A45` | `#6FC082` | 0.51 |
+| Cr chromium | `#3B5C87` | `#7DA1D0` | 0.55 |
+| Cu copper | `#995522` | `#BC813F` | 0.55 |
+| Fe iron | `#8E3F34` | `#C36953` | 0.55 |
+| Hg mercury | `#725573` | `#C8B0D3` | 0.55 |
+| K potassium | `#5F2F73` | `#AA72C2` | 0.55 |
+| Na sodium | `#775AA6` | `#AF95DF` | 0.55 |
+| Pb lead | `#4E4E60` | `#848498` | 0.55 |
+| S sulphur | `#72761A` | `#DED66A` | 0.53 |
+| Sn tin | `#335A5A` | `#62908F` | 0.55 |
+| Ti titanium | `#617775` | `#CADBE1` | 0.55 |
+| Zn zinc | `#627195` | `#99AFD5` | 0.55 |
+
+- **Checks, in all four themes.** Each atom's edge reads at 3:1 on the stage, by its own colour or by its edge; a lettered atom reads at 4.5:1 under its letter; two atoms sit 5 or more delta E apart; an atom sits 3 or more from every reserved colour; no atom is a blue as saturated as the interactive indigo. The generator refuses a table that breaks one and writes the table for the server (`backend/app/research/molecule_atoms.py`).
+- **Identity is never colour alone.** Every heteroatom carries its letter and the figure's key names each element with its letter ("Iron, Fe"), so two atoms close in colour are still told apart.
+- **One table.** The server draws each atom at its radius (`science/molecule_drawing`), the kit turns it at the same radius (`RAD` in `monograph.js`, kept equal by test), and the kit defs carry a gradient for every atom the table holds.
 
 ### 2.6 Plate grounds
 

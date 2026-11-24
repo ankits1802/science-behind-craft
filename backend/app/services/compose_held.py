@@ -70,6 +70,9 @@ class HeldMaterial:
     compound: HeldCompound | None = None
     tokens: tuple[str, ...] = ()
     alternatives: tuple[tuple[str, uuid.UUID], ...] = ()
+    role: str | None = None
+    local_names: tuple[str, ...] = ()
+    botanical_name: str | None = None
 
 
 @dataclass(frozen=True)

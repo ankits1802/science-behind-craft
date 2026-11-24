@@ -10,7 +10,7 @@ from app.research.drawing_rules import text_floor
 from app.science.molecule_conformer import conformer_geometry, hill_formula, undrawn_elements
 from app.science.molecule_drawing import molecule_drawing
 
-from ..compose.held import IRON_OXIDE
+from ..compose.held import SILICA
 
 BACKEND = Path(__file__).resolve().parents[2]
 SDF = (BACKEND / "tests" / "sources" / "fixtures" / "pubchem_conformer.sdf").read_text(encoding="ascii")
@@ -96,7 +96,7 @@ def test_a_model_turned_by_nothing_lies_flat_and_hand_measured() -> None:
 
 
 def test_an_element_the_design_has_no_atom_colour_for_is_named_and_a_v3000_file_is_refused() -> None:
-    assert undrawn_elements(conformer_geometry(IRON_OXIDE)) == ["Fe"]
+    assert undrawn_elements(conformer_geometry(SILICA)) == ["Si"]
     with pytest.raises(InvalidInput, match="V2000"):
         conformer_geometry(SDF.replace("V2000", "V3000"))
     with pytest.raises(InvalidInput, match="ends before"):

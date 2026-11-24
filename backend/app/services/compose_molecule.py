@@ -7,14 +7,9 @@ from typing import Any
 
 from app.core.errors import InvalidInput
 from app.research.component_specs_science_geometry import MoleculeGeometry
-from app.science.molecule_conformer import (
-    DRAWN_ELEMENTS,
-    conformer_geometry,
-    element_counts,
-    hill_formula,
-    undrawn_elements,
-)
+from app.science.molecule_conformer import conformer_geometry, element_counts, hill_formula, undrawn_elements
 from app.science.molecule_drawing import REST_PITCH, REST_YAW, molecule_drawing
+from app.science.molecule_elements import DRAWN_ELEMENTS, ELEMENTS, atom_token, key_label
 
 from .compose_held import About, Composition, CraftHeld, HeldCompound, HeldMaterial, composed, refused
 from .compose_parts import FIGURE, UnitBook, composed_component, joined, key_word, rich_formula
@@ -27,8 +22,6 @@ SIDE_FACTS_MAX = 3
 SIDE_STYLE = "t-body-sm"
 NOTE = "Its 3D conformer is PubChem's record."
 CONFORMERS_KEY = "3D conformers computed by PubChem."
-ELEMENT_WORDS = {"C": "carbon", "H": "hydrogen", "N": "nitrogen", "O": "oxygen"}
-KEY_LABELS = {"C": "Carbon", "H": "Hydrogen", "N": "Nitrogen, N", "O": "Oxygen, O"}
 TURN_HINT = "Drag, or use the arrow keys, to turn it; plus and minus zoom."
 NONE_HELD = (
     "a material of {name} held with its PubChem compound and stated by its own facts: lookup gives a "
@@ -160,14 +153,14 @@ def _molecule(model: _Model) -> dict[str, Any]:
 
 def _atom_words(geometry: MoleculeGeometry) -> str:
     counts = element_counts(geometry)
-    words = [f"{counts[symbol]} {ELEMENT_WORDS[symbol]}" for symbol in DRAWN_ELEMENTS if symbol in counts]
+    words = [f"{counts[symbol]} {ELEMENTS[symbol].name}" for symbol in DRAWN_ELEMENTS if symbol in counts]
     return f"{joined(words)} atoms"
 
 
 def _key(models: Sequence[_Model]) -> list[dict[str, Any]]:
     present = {symbol for model in models for symbol in element_counts(model.geometry)}
     items: list[dict[str, Any]] = [
-        {"swatch": f"--atom-{symbol.lower()}", "label": KEY_LABELS[symbol]}
+        {"swatch": atom_token(symbol), "label": key_label(symbol)}
         for symbol in DRAWN_ELEMENTS
         if symbol in present
     ]

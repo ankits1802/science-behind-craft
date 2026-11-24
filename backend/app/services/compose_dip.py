@@ -5,8 +5,11 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
+from app.research.colour_key import agent_materials, agent_names, first_depicted, specimen_token
+from app.research.colours import states_colour
+
 from .compose_held import About, Composition, CraftHeld, HeldAfter, HeldStage, composed, refused
-from .compose_parts import FIGURE, UnitBook, composed_component, unique_word
+from .compose_parts import FIGURE, UnitBook, composed_component, joined, unique_word
 from .compose_scene import piece_drawing
 
 __all__ = ["BATH_STAGES", "dip_player"]
@@ -22,21 +25,32 @@ NO_AFTER = (
     "the colour after the stage {key} ({name}): propose_structure STAGE_AFTER for {slug} with its colours "
     "and the fact that states them"
 )
-NO_TOKEN = (
-    "a depicted colour recorded with the fact that states the colour after the stage {key} ({name}): ask the "
-    "team for its specimen token, since a dip draws a stage only in the colour its fact states"
+NO_COLOUR = (
+    "the colours after the stage {key} ({name}): its after names none, so the dip leaves it out; propose "
+    "STAGE_AFTER for {slug} again with the colours its fact states, and the stage's dyes, mordants and resists "
+    "named by their substance"
+)
+IN_WORDS = (
+    "a specimen colour for {colour} after the stage {key} ({name}): no depicted material shows it from "
+    "{agents}, so its phase is drawn as an outline and the colour named in words; ask the team for a specimen "
+    "record with the source that states it"
 )
 TOO_FEW = (
-    "two stages of {name} in a bath, each with its colour after and that colour recorded as a depicted "
-    "material: {slug} holds {count}"
+    "two stages of {name} in a bath, each with its colour after naming the colours its fact states: "
+    "{slug} holds {count}"
 )
+NONE_DRAWN = (
+    "a depicted colour for one stage of {name} at least: no specimen token shows a colour its stages name "
+    "from the substances that give it, so the dip has no colour to draw"
+)
+WHAT_NAMES = "the materials it names"
 
 
 @dataclass(frozen=True)
 class _Phase:
     stage: HeldStage
     after: HeldAfter
-    token: str
+    token: str | None
     claims: tuple[uuid.UUID, ...]
 
 
@@ -47,6 +61,8 @@ def dip_player(craft: CraftHeld, about: About) -> Composition:
     phases, gaps = _phases(craft, stages)
     if len(phases) < PHASES_MIN:
         return refused(TOO_FEW.format(name=craft.name, slug=craft.slug, count=len(phases)), *gaps)
+    if all(phase.token is None for phase in phases):
+        return refused(NONE_DRAWN.format(name=craft.name), *gaps)
     book = UnitBook()
     return composed(composed_component(craft, _piece(craft, phases, book), book), left_out=gaps)
 
@@ -73,11 +89,36 @@ def _phases(craft: CraftHeld, stages: Sequence[HeldStage]) -> tuple[list[_Phase]
         if after is None or not craft.stated([after.claim_id]):
             gaps.append(NO_AFTER.format(key=stage.key, name=stage.name, slug=craft.slug))
             continue
-        if not after.tokens:
-            gaps.append(NO_TOKEN.format(key=stage.key, name=stage.name))
+        if not after.colours:
+            gaps.append(NO_COLOUR.format(key=stage.key, name=stage.name, slug=craft.slug))
             continue
-        phases.append(_Phase(stage, after, after.tokens[0], craft.stated([after.claim_id, *stage.claim_ids])))
+        token = _token(craft, stage, after)
+        if token is None:
+            gaps.append(_in_words(craft, stage, after))
+        phases.append(_Phase(stage, after, token, craft.stated([after.claim_id, *stage.claim_ids])))
     return phases, gaps
+
+
+def _token(craft: CraftHeld, stage: HeldStage, after: HeldAfter) -> str | None:
+    if after.tokens:
+        return after.tokens[0]
+    found = first_depicted(after.colours, _agent_names(craft, stage))
+    return specimen_token(found[1]) if found is not None else None
+
+
+def _agent_names(craft: CraftHeld, stage: HeldStage) -> tuple[str, ...]:
+    used = [found for key in stage.material_keys if (found := craft.material(key)) is not None]
+    return agent_names(agent_materials(used))
+
+
+def _in_words(craft: CraftHeld, stage: HeldStage, after: HeldAfter) -> str:
+    agents = list(_agent_names(craft, stage))
+    return IN_WORDS.format(
+        colour=joined([colour.lower() for colour in after.colours]),
+        key=stage.key,
+        name=stage.name,
+        agents=joined(agents) if agents else WHAT_NAMES,
+    )
 
 
 def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[str, Any]:
@@ -95,16 +136,17 @@ def _piece(craft: CraftHeld, phases: Sequence[_Phase], book: UnitBook) -> dict[s
         "dipAgain": DIP_AGAIN,
         "status": book.label(last.stage.name, last.claims),
         "dipsLabel": book.label(DIPS_LABEL),
-        "dips": list(dict.fromkeys(phase.token for phase in phases)),
+        "dips": list(dict.fromkeys(phase.token for phase in phases if phase.token is not None)),
     }
     return {
         "name": "colour-after-each-stage",
         "kind": "dip_player",
         "title": title,
         "description": (
-            f"Plays the stages of {craft.name} in a bath one after another, each drawn in the depicted colour "
-            f"recorded with the fact that states its colour after, and cited by that fact. Place it in the "
-            f"chemistry chapter of the page of {craft.name}."
+            f"Plays the stages of {craft.name} in a bath one after another, each drawn in the depicted colour of "
+            f"the dye, mordant or resist that gives the colour its fact states, or outlined with that colour named "
+            f"where no depicted material shows it, and cited by that fact. Place it in the chemistry chapter of "
+            f"the page of {craft.name}."
         ),
         "spec": spec,
     }
@@ -117,8 +159,16 @@ def _phase(phase: _Phase, book: UnitBook, poses: list[str]) -> dict[str, Any]:
         "pose": pose,
         "drawing": piece_drawing(phase.token),
         "kicker": book.label(phase.stage.name, phase.claims),
-        "text": book.cited(phase.after.text, [phase.after.claim_id]),
+        "text": book.cited(_said(phase), [phase.after.claim_id]),
     }
+
+
+def _said(phase: _Phase) -> str:
+    after = phase.after
+    if phase.token is not None or any(states_colour(after.text, colour) for colour in after.colours):
+        return after.text
+    named = joined([colour.lower() for colour in after.colours])
+    return f"{named[:1].upper()}{named[1:]}: {after.text}"
 
 
 def _claims(phases: Sequence[_Phase]) -> tuple[uuid.UUID, ...]:

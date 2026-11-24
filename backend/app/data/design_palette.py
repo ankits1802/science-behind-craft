@@ -67,6 +67,10 @@ def _palette(tokens: Mapping[str, Any], theme: str) -> Iterator[tuple[str, str]]
     for name, token in tokens["specimen"].items():
         if isinstance(token, dict) and "hex" in token:
             yield name, token["hex"]
+    molecule = tokens["molecule"]
+    for token in (*molecule["kit"].values(), *molecule["atoms"].values()):
+        if "hex" in token[theme]:
+            yield token["cssVar"].removeprefix("--"), token[theme]["hex"]
 
 
 def ui_face() -> str:

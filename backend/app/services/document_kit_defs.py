@@ -4,6 +4,9 @@ import re
 from collections.abc import Iterable
 from typing import Any
 
+from app.science.molecule_drawing import GRADIENT_PREFIX, atom_gradient
+from app.science.molecule_elements import DRAWN_ELEMENTS
+
 from .document_components_homes import home_scopes
 from .monograph_document import (
     KIT_DIR,
@@ -15,8 +18,10 @@ from .monograph_document import (
 )
 
 __all__ = [
+    "ATOM_SCOPE",
     "DEFS_CLASS",
     "KIT_STYLE_FILE",
+    "atom_defs",
     "defined_ids",
     "kit_defs",
     "kit_defs_of",
@@ -27,6 +32,7 @@ __all__ = [
 ]
 
 DEFS_CLASS = "kv-defs"
+ATOM_SCOPE = "chem"
 DEFS_BLOCK = re.compile(
     r'<svg\b[^>]*\bclass="' + DEFS_CLASS + r'"[^>]*>\s*<defs>(?P<body>.*?)</defs>\s*</svg>', re.S
 )
@@ -76,7 +82,17 @@ def kit_defs() -> dict[str, dict[str, str | None]]:
         for slug in slugs
         for label, markup in page_parts(monograph_content(slug)).fragments.items()
     ]
-    return kit_defs_of((monograph_shell(slug) for slug in slugs), fragments)
+    kept = kit_defs_of((monograph_shell(slug) for slug in slugs), fragments)
+    for key, found in atom_defs().items():
+        kept.setdefault(key, found)
+    return kept
+
+
+def atom_defs() -> dict[str, dict[str, str | None]]:
+    return {
+        f"{GRADIENT_PREFIX}{symbol}": {"scope": ATOM_SCOPE, "markup": atom_gradient(symbol)}
+        for symbol in DRAWN_ELEMENTS
+    }
 
 
 def kit_style_references() -> dict[str, list[str]]:

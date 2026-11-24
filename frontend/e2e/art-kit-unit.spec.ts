@@ -63,7 +63,7 @@ function kitPage(body: string, attributes = ""): string {
 test("the web's kit is the shared golden the backend reads", () => {
   expect(JSON.parse(JSON.stringify(ART_KIT))).toEqual(GOLDEN);
   expect(KIT_PART_NAMES).toEqual(["cloth", "block", "bath", "paste", "heat", "water", "tool", "section", "piece"]);
-  expect(KIT_MATERIALS).toHaveLength(30);
+  expect(KIT_MATERIALS).toHaveLength(38);
   expect(depictedToken("--dye-bidri-white")).toBe(true);
   expect(depictedToken("--dip-4")).toBe(true);
   expect(depictedToken("--dye-ultramarine")).toBe(false);
@@ -122,7 +122,7 @@ test("every part's every form is drawn and named on the kit sheet", () => {
   expect(MATERIAL_PARTS.map((part) => part.name)).toEqual(["cloth", "block", "bath", "paste", "tool", "section", "piece"]);
   expect(sheet[0].families).toBe("Serves Textiles and More crafts");
   const html = renderToStaticMarkup(createElement(KitSheet));
-  expect(html.match(/data-kit-tile="/g)).toHaveLength(48 + 7 * 30);
+  expect(html.match(/data-kit-tile="/g)).toHaveLength(48 + 7 * 38);
   for (const material of KIT_MATERIALS) expect(html.match(new RegExp(`data-kit-specimen="${material}"`, "g")), material).toHaveLength(7);
   expect(html.match(/data-kit-sheet-layout="/g)).toHaveLength(4);
 });

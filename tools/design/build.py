@@ -5,6 +5,7 @@ from typing import Any
 
 from design.build_colour import colour_tokens, plate_tokens, specimen_tokens
 from design.build_data import chart_tokens, family_tokens, map_tokens, ramp_tokens
+from design.build_molecule import atom_list, molecule_tokens
 from design.build_type import space_tokens, type_tokens
 from design.checks import validate
 from design.css import css
@@ -43,6 +44,7 @@ def build(system: System) -> dict[str, Any]:
         "color": colour_tokens(system),
         "grain": data["grain"],
         "specimen": specimen_tokens(system),
+        "molecule": molecule_tokens(system),
         "plate": plate_tokens(system),
         "dataviz": dataviz,
         "type": type_tokens(system),
@@ -60,5 +62,6 @@ def render(system: System) -> tuple[dict[str, str], list[str]]:
         "tailwind.config.ts": tailwind_ts(tokens),
         "depicted_materials.py": python_list(material_names(system.materials)),
         "depictedMaterials.ts": typescript_list(material_names(system.materials)),
+        "molecule_atoms.py": atom_list(tokens),
     }
     return outputs, validate(tokens, system)

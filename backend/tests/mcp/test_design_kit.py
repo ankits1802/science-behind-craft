@@ -37,6 +37,8 @@ def test_every_drawing_role_has_a_value_in_each_of_the_four_themes() -> None:
     assert palettes["dark"]["ink-1"] == colour("ink-1", "dark")
     assert palettes["hcLight"]["rain-6"] == TOKENS["dataviz"]["ramps"]["rain"]["hcLight"]["steps"][5]
     assert palettes["hcDark"]["dye-madder"] == TOKENS["specimen"]["dye-madder"]["hex"]
+    assert palettes["dark"]["atom-fe"] == TOKENS["molecule"]["atoms"]["Fe"]["dark"]["hex"] == "#C36953"
+    assert palettes["light"]["mol-bond"] == "#59534E" and "mol-edge" not in palettes["light"]
 
 
 def test_a_mix_is_the_share_of_the_first_colour_in_srgb() -> None:
