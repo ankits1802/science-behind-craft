@@ -67,9 +67,7 @@ def holding(topic: str, section: str) -> GuideSheet:
 
 def holding_rule(number: int) -> GuideSheet:
     return next(
-        each
-        for each in guide_sheets("page-checklist")
-        if RULE_LINE.format(number=number) in f"\n{each.text}"
+        each for each in guide_sheets("page-checklist") if RULE_LINE.format(number=number) in f"\n{each.text}"
     )
 
 
