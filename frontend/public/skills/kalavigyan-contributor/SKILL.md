@@ -248,6 +248,12 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
   facts. A close match in the library refuses it with the matches and two ways on. An Admin's
   approval registers it so every page it applies to draws it; a Professor's or Admin's own is
   registered at once.
+- **Maps.** Never draw a map. Deliver a declared `timeline_map`: name each place by the Wikidata
+  `qid` `lookup` found, its LGD district, or a coordinate a fact states (`at`); caption every place
+  with a point, route or undated fact whose unit states its years, names its place or states the
+  move; ask for `relief`, `rivers`, `minerals` or a district layer by name, and send no coordinates
+  or credits. The server refuses a place it cannot resolve, by name; a `drawing` or `map_layer` that
+  is a map is refused (the dataset guide, Maps of places).
 - A figure drawn from a table of values rests on a dataset, not on one fact per value:
   `propose_dataset` gives the dataset's record (`datasets.md`, Recording a dataset) and returns a
   single-use upload slot for its CSV file, checked against the SHA-256 you declare. A `chart`,

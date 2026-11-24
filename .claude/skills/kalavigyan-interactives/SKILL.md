@@ -95,6 +95,7 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## What a state may show
 
+- A state never draws a map; a family's places go in a declared `timeline_map` beside the flagship.
 - Only what its facts state: the materials they name, the change they describe, the cause they
   give, with their numbers. No scale, arrow, flame, bubble or label that implies a quantity or a
   cause no fact states.
