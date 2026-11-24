@@ -1,5 +1,7 @@
 import { COMPONENT_HOMES, type FrameStep, type HomeRecord } from "@/lib/componentHomes";
-import { GENERAL_KINDS, isDeclared } from "@/lib/componentSpecsGeneral";
+import { GENERAL_KINDS } from "@/lib/componentSpecsGeneral";
+import { KIT_KIND } from "@/lib/componentSpecsKit";
+import { declaredForm, TIMELINE_MAP_KIND } from "@/lib/componentSpecsTimelineMap";
 
 export type { FrameStep };
 
@@ -56,10 +58,10 @@ const PLACES: Readonly<Record<string, ComponentPlace>> = {
 const UNKNOWN_PLACE: ComponentPlace = { scope: "mb", frame: "wrap" };
 
 export const APP_KINDS: ReadonlySet<string> = new Set(["answer_block", "drawing", "why_here"]);
-const DECLARED_KINDS: ReadonlySet<string> = new Set(GENERAL_KINDS);
+const DECLARED_KINDS: ReadonlySet<string> = new Set([...GENERAL_KINDS, TIMELINE_MAP_KIND, KIT_KIND]);
 
 export function appDrawn(kind: string, spec: Readonly<Record<string, unknown>> | null): boolean {
-  return APP_KINDS.has(kind) || (DECLARED_KINDS.has(kind) && isDeclared(spec));
+  return APP_KINDS.has(kind) || (DECLARED_KINDS.has(kind) && declaredForm(kind, spec));
 }
 
 const SCREEN: FrameStep = { classes: ["screen"], box: true };

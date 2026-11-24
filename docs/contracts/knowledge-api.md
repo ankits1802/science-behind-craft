@@ -29,9 +29,9 @@ flowchart LR
   class E accent
 ```
 
-The server offers 22 tools in six groups to every connection (decision 0111; decision 0114 added
-`propose_dataset`), and four more in a seventh group, `admin`, listed only to a token holding the
-`review` scope (decision 0170); each tool names its group in `tools/list` as
+The server offers 23 tools in six groups to every connection (decision 0111; decision 0114 added
+`propose_dataset`, decision 0198 `compose_component`), and four more in a seventh group, `admin`,
+listed only to a token holding the `review` scope (decision 0170); each tool names its group in `tools/list` as
 `_meta["kalavigyan/group"]`, so a screen can group them without a list of names:
 
 | Group | Tools | Scope | Contract |
@@ -41,7 +41,7 @@ The server offers 22 tools in six groups to every connection (decision 0111; dec
 | sources | `search_sources` (contribute; a pictures-only search is read), `read_source` (contribute), `lookup` (read), `supply_source` (contribute) | as listed | this file, Source tools; `knowledge-writes.md` for `supply_source` |
 | work | `list_open_work` (read; its review queues need review), `my_work`, `reserve_tasks`, `steward_craft`, `get_proposal` | contribute | `open-work.md`, `knowledge-writes.md` |
 | proposing | `propose_facts`, `propose_structure`, `propose_source`, `propose_dataset` | contribute | `knowledge-writes.md`, decision 0108; decision 0114 for `propose_dataset`, the datasets reference for its `layer` and `review-queue.md` for `LAYERS` |
-| pages | `edit_draft`, `preview_page`, `propose_page` | contribute | `open-work.md` |
+| pages | `edit_draft`, `preview_page`, `propose_page`, `compose_component` | contribute | `open-work.md`; `component-specs-science.md` for what `compose_component` builds |
 | pictures | `give_pictures` | contribute | `mcp-ask-and-upload.md` |
 | admin | `review_queue`, `stage_reviews`, `refresh_pages`, `admin_reports` | review (Admin and Master Admin, `mcp-oauth.md`) | `review-queue.md`, Staged over MCP; `nightly-upkeep.md`, Refresh pages now; Admin reports below |
 

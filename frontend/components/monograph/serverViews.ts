@@ -1,5 +1,5 @@
+import { DIAGRAM_VIEW } from "@/components/monograph/kinds/kit";
 import { PicturePlateView } from "@/components/monograph/kinds/plates/PicturePlateView";
-import { Diagram } from "@/components/monograph/kinds/science/Diagram";
 import { DipPlayer } from "@/components/monograph/kinds/science/DipPlayer";
 import { EquationCard } from "@/components/monograph/kinds/science/EquationCard";
 import { ModelExplainer } from "@/components/monograph/kinds/science/ModelExplainer";
@@ -12,7 +12,7 @@ import type { ComponentViews } from "@/lib/componentViewContract";
 
 export const SERVER_VIEWS: ComponentViews = {
   picture_plate: PicturePlateView,
-  diagram: Diagram,
+  diagram: DIAGRAM_VIEW,
   dip_player: DipPlayer,
   equation_card: EquationCard,
   model_explainer: ModelExplainer,

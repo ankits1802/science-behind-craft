@@ -4,7 +4,9 @@ from typing import Annotated, Any, Literal, Self
 
 from pydantic import AfterValidator, Field, model_validator
 
+from .base import absent
 from .component_specs_plates_parts import held_text
+from .component_specs_science_geometry import MoleculeGeometry, geometry_drawing_problem
 from .component_specs_science_parts import (
     ColourToken,
     DomId,
@@ -155,6 +157,14 @@ class MoleculeModel(SpecModel):
     atoms: Label
     note: Label
     drawing: SvgNode
+    geometry: MoleculeGeometry | None = Field(default=None, exclude_if=absent)
+
+    @model_validator(mode="after")
+    def _drawn_from_its_geometry(self) -> Self:
+        problem = None if self.geometry is None else geometry_drawing_problem(self.drawing, self.geometry)
+        if problem is not None:
+            raise ValueError(f"model {self.key}: {problem}")
+        return self
 
 
 class AtomKeyItem(SpecModel):

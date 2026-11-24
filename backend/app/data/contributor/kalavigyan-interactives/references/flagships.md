@@ -333,6 +333,35 @@ Each section gives:
 | Glass, the second candidate | `5d3ee0aa-2406-5250-a7ca-adcd17ddcdb0` | `Firozabad-Glass` | The GI journal gives Firozabad soda lime silica glass as 33% soda ash, 66% silica sand and 1% chemicals, produced at around 1450 degrees Celsius. |
 | Glass, the second candidate | `305d78bd-5562-500b-b25e-4ecf0560baea` | `Firozabad-Glass` | Annealing heats and cools glass products in a controlled way to remove strains, so that they are not brittle. |
 
+## Each craft composes its own
+
+The flagship is the family's, drawn once on its category page. A craft of the family that holds its
+own facts gets its own player, molecule and what-if too, and they are composed by the server from
+that craft's page, never borrowed: Kutch Ajrakh's alizarin model and indigo vat cite Ajrakh's facts,
+and a page that places them for another craft fails its checks.
+
+1. Read the craft's keys first: `get_facts` gives its stage, material and reaction keys, `get_page`
+   its coverage.
+2. Call `compose_component` with the craft and one kind, and `about` for one stage, reaction,
+   material or compound when the page holds several. It answers with finished components, or with
+   `missing`: each fact or structure item to propose before it can compose.
+3. Propose what `missing` names (below), then compose again. What a composed component went
+   without is in `leftOut`; propose it too if the page should show it.
+4. Place the components with `edit_draft`'s add exactly as they came, set the claimed task as
+   `task_key`, call `preview_page`, open the private link and work each one by keyboard and pointer
+   before `propose_page`. When propose_page names a close match in the library, propose the craft's
+   own as a `VARIANT` that extends it.
+
+| Kind | Composed from the craft's own | Propose first when it is missing |
+|---|---|---|
+| `reaction_player` | two reactions or more, stepped in the order of their stages, each with its species, its facts, its stage's time and its equation where the server balanced one | `propose_structure` REACTION with the stage it happens in |
+| `dip_player` | two stages in a bath or more (scouring, mordanting, dyeing, resist, washing), each with its colour after, drawn in the depicted colour the team recorded with the fact that states it | `propose_structure` STAGE_AFTER with its colours; the team's specimen colour recorded with that fact |
+| `molecule_3d` | up to two compounds its materials are held as, turned from PubChem's 3D conformer, of carbon, hydrogen, nitrogen and oxygen | the fact naming what the material is; the team's atom colour for any other element |
+| `experiment_lab` | a toggle for each of two or three materials with a stated stand-in, each option cited by its material's own facts | `propose_structure` ALTERNATIVE naming the material and its stand-in |
+
+The family's own flagship on its category page is still storyboarded and drawn as this skill
+says: the composer reads one craft's curated page, not a category's.
+
 ## Open work and the flagships
 
 Each of the nine family pages holds one `FLAGSHIP` task until it draws its flagship, keyed
@@ -363,6 +392,7 @@ is `HIGH`, since every craft of the family borrows the flagship, and its prompt 
 | Nine families, each anchored on one of its own crafts | the same test, against the category register |
 | Every task it names is a craft's reaction-player task, and the family task's key is the server's | the same test, against `research/open_work.parse_task_key` |
 | Each fact is named once | the same test |
+| What each kind is composed from, and what a craft proposes when it holds too little | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
 | The served copies | the same test, byte for byte against the server's and the site's |
 
 Re-read it when a family's flagship is built, its facts are read again from the server, or a

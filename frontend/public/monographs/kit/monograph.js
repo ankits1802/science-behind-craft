@@ -909,7 +909,8 @@ KV.boot('chem', function (document) {
     var vpD = fig.querySelector('.vp-d'), vpN = fig.querySelector('.vp-n');
     var strip = arr(fig.querySelectorAll('.vs'));
     var dipLis = arr(fig.querySelectorAll('.dips li'));
-    if (!mv || !btn) return;
+    if (!mv) { initDips(fig); return; }
+    if (!btn) return;
     var DIP = 316, SY = 0.6, TOT = 2600;
     var S = { dips: Math.min(4, Math.max(1, +fig.getAttribute('data-dips') || 1)), dy: 0, sy: 1, g: 1, f: 1.08, pose: 'air' };
     var names = { vat: 'In the vat', lifted: 'Lifted', air: 'In the air' };
@@ -972,6 +973,39 @@ KV.boot('chem', function (document) {
     });
     apply(); label();
   }
+  function initDips(fig) {
+    var strip = arr(fig.querySelectorAll('.vs')), dips = arr(fig.querySelectorAll('.dips li'));
+    var btn = fig.querySelector('.vat-dip'), status = fig.querySelector('.vat-status'), box = fig.querySelector('.vat-scene');
+    if (!btn || !status || strip.length < 2) return;
+    var rest = box ? box.querySelector('svg') : null, last = strip.length - 1, total = Math.max(1, dips.length);
+    var S = { dip: Math.min(total, Math.max(1, +fig.getAttribute('data-dips') || total)), at: last }, timers = [];
+    function said(i) {
+      return arr(strip[i].querySelectorAll('.vs-k, .vs-t')).map(function (p) { return p.textContent.trim(); }).filter(Boolean).join(': ');
+    }
+    function scene(i) {
+      var shown = box ? box.querySelector('svg') : null, drawn = i === last ? rest : strip[i].querySelector('svg');
+      if (!shown || !drawn || drawn === shown) return;
+      shown.replaceWith(drawn === rest ? rest : drawn.cloneNode(true));
+    }
+    function show(i) {
+      S.at = i;
+      strip.forEach(function (li, k) { if (k === i) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
+      dips.forEach(function (li, k) { li.classList.toggle('on', k + 1 === S.dip); });
+      fig.setAttribute('data-pose', strip[i].getAttribute('data-pose') || '');
+      fig.setAttribute('data-dips', String(S.dip));
+      scene(i);
+      status.textContent = (total > 1 ? 'Dip ' + S.dip + ' of ' + total + '. ' : '') + said(i);
+    }
+    function clear() { timers.forEach(clearTimeout); timers = []; }
+    btn.addEventListener('click', function () {
+      clear();
+      if (reduced() && S.at < last) { show(S.at + 1); return; }
+      S.dip = S.dip >= total ? 1 : S.dip + 1;
+      if (reduced()) { show(0); return; }
+      var hold = Math.round(2600 / strip.length);
+      strip.forEach(function (li, k) { timers.push(setTimeout(function () { show(k); }, k * hold)); });
+    });
+  }
   arr(document.querySelectorAll('figure.vat')).forEach(function (f) { if (!f.closest('[inert]')) initVat(f); });
 
   var molData = {};
@@ -979,7 +1013,7 @@ KV.boot('chem', function (document) {
   var RAD = { C: 0.38, N: 0.36, O: 0.36, H: 0.2 };
   function Viewer(fig) {
     var m = molData[fig.getAttribute('data-cid')];
-    if (!m) return null;
+    if (!m || !fig.querySelector('.mol-dial svg g.mol-g')) return null;
     var dial = fig.querySelector('.mol-dial');
     var svg = dial.querySelector('svg');
     var g = svg.querySelector('g.mol-g');
@@ -992,9 +1026,10 @@ KV.boot('chem', function (document) {
       } else if (el.hasAttribute('data-b')) bondEls[+el.getAttribute('data-b')] = el;
     });
     var order = arr(g.children);
-    var s = 0.95 / m.R, bw = 0.11 * s;
+    var base = 0.95 / m.R, zoom = 1, s = base;
     function f3(v) { return Math.round(v * 1000) / 1000; }
     function draw() {
+      s = base * zoom;
       var cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
       var P = m.atoms.map(function (a) {
         var x1 = cy * a[1] + sy * a[3], z1 = -sy * a[1] + cy * a[3];
@@ -1031,7 +1066,7 @@ KV.boot('chem', function (document) {
       for (var i = 0; i < items.length; i++) if (order[i] !== items[i][1]) { changed = true; break; }
       if (changed) { items.forEach(function (it) { g.appendChild(it[1]); }); order = items.map(function (it) { return it[1]; }); }
       var deg = ((Math.round(yaw * 180 / Math.PI) % 360) + 360) % 360;
-      dial.setAttribute('aria-valuenow', String(deg)); dial.setAttribute('aria-valuetext', 'Turned ' + deg + ' degrees');
+      dial.setAttribute('aria-valuenow', String(deg)); dial.setAttribute('aria-valuetext', 'Turned ' + deg + ' degrees' + (zoom === 1 ? '' : ', shown at ' + Math.round(zoom * 100) + ' per cent'));
     }
     var anim = 0, pending = false;
     function req() { if (pending) return; pending = true; requestAnimationFrame(function () { pending = false; draw(); }); }
@@ -1047,19 +1082,26 @@ KV.boot('chem', function (document) {
       }
       anim = requestAnimationFrame(fr);
     }
-    var drag = null;
-    dial.addEventListener('pointerdown', function (e) { cancelAnimationFrame(anim); drag = [e.clientX, e.clientY]; try { dial.setPointerCapture(e.pointerId); } catch (x) {} });
+    var drag = null, touch = {}, spread = 0;
+    function zoomTo(z) { zoom = Math.max(0.6, Math.min(2.5, z)); draw(); }
+    function gap() { var p = Object.keys(touch).map(function (k) { return touch[k]; }); return p.length === 2 ? Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) : 0; }
+    dial.addEventListener('pointerdown', function (e) { cancelAnimationFrame(anim); touch[e.pointerId] = [e.clientX, e.clientY]; spread = gap(); drag = spread ? null : [e.clientX, e.clientY]; try { dial.setPointerCapture(e.pointerId); } catch (x) {} });
     dial.addEventListener('pointermove', function (e) {
+      if (touch[e.pointerId]) touch[e.pointerId] = [e.clientX, e.clientY];
+      if (spread) { var wide = gap(); if (wide) { zoom = Math.max(0.6, Math.min(2.5, zoom * wide / spread)); spread = wide; req(); } return; }
       if (!drag) return;
       yaw += (e.clientX - drag[0]) * 0.012; pitch = Math.max(-1.5, Math.min(1.5, pitch + (e.clientY - drag[1]) * 0.012));
       drag = [e.clientX, e.clientY]; req();
     });
-    function end() { drag = null; }
+    function end(e) { delete touch[e.pointerId]; spread = 0; drag = null; }
     dial.addEventListener('pointerup', end); dial.addEventListener('pointercancel', end);
+    dial.addEventListener('wheel', function (e) { if (!e.ctrlKey) return; e.preventDefault(); zoomTo(zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1)); }, { passive: false });
     dial.addEventListener('keydown', function (e) {
       var d = { ArrowLeft: [-Math.PI / 12, 0], ArrowRight: [Math.PI / 12, 0], ArrowUp: [0, -0.2], ArrowDown: [0, 0.2], PageUp: [Math.PI / 2, 0], PageDown: [-Math.PI / 2, 0] }[e.key];
       if (e.key === 'Home') { e.preventDefault(); yaw = 0; draw(); return; }
       if (e.key === 'End') { e.preventDefault(); yaw = Math.PI * 359 / 180; draw(); return; }
+      if (e.key === '+' || e.key === '=') { e.preventDefault(); zoomTo(zoom * 1.25); return; }
+      if (e.key === '-' || e.key === '_') { e.preventDefault(); zoomTo(zoom / 1.25); return; }
       if (!d) return;
       e.preventDefault(); cancelAnimationFrame(anim);
       yaw += d[0]; pitch = Math.max(-1.5, Math.min(1.5, pitch + d[1])); draw();
@@ -1521,7 +1563,7 @@ KV.boot('pt', function (document) {
     setLayer('rain');
     setZoom('region', false);
     if ('ResizeObserver' in window) new ResizeObserver(function () { if (!svg.classList.contains('is-moving')) cam.go(RS.views[state.zoom], false); }).observe(mapEl);
-  });
+  }); });
 
   all('[data-comp="rain"]').forEach(function (box) {
     var ser = JSON.parse(box.getAttribute('data-series'));
@@ -1632,7 +1674,7 @@ KV.boot('pt', function (document) {
     });
     select(+tl.getAttribute('data-rest'), false);
     if ('ResizeObserver' in window) new ResizeObserver(function () { if (!svg.classList.contains('is-moving')) cam.go(views[st.view], false); }).observe(mapEl);
-  });
+  }); });
 
   function bez(x1, y1, x2, y2) {
     function a(p1, p2) { return 1 - 3 * p2 + 3 * p1; }
@@ -1716,6 +1758,21 @@ KV.boot('pt', function (document) {
     } };
   }
 
+  function choices(lab) {
+    all('[data-choice]', lab).forEach(function (seg) {
+      var panel = seg.closest('[data-exp]'), btns = all('button[data-v]', seg);
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var v = b.getAttribute('data-v');
+          btns.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+          if (!panel) return;
+          all('[data-res]', panel).forEach(function (r) { r.hidden = r.getAttribute('data-res') !== v; });
+          all('[data-forms]', panel).forEach(function (r) { r.hidden = r.getAttribute('data-forms') !== v; });
+        });
+      });
+    });
+  }
+
   all('[data-comp="lab"]').forEach(function (lab) {
     var expBtns = all('[data-x]', lab), panels = all('[data-exp]', lab);
     expBtns.forEach(function (b) {
@@ -1726,6 +1783,7 @@ KV.boot('pt', function (document) {
         all('svg[data-fit]', lab).forEach(fitSvg);
       });
     });
+    if (!lab.querySelector('[data-redsw]')) { choices(lab); return; }
     var state = { blue: 'natural', red: 'madder', water: 'alum', tap: 0, pa: false };
     function paintChoice(group, v) {
       all('[data-choice="' + group + '"] button', lab).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === v ? 'true' : 'false'); });
@@ -1769,7 +1827,7 @@ KV.boot('pt', function (document) {
     all('[data-choice="water"] button', lab).forEach(function (b) { b.addEventListener('click', function () { state.water = b.getAttribute('data-v'); paintWater(); }); });
     paintWater();
   });
-}, 700); }, 700); })();
+})();
 
 
 });

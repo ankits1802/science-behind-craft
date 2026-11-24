@@ -18,6 +18,8 @@ components of round 7 (`component-specs-general.md`) and decision 0111 (the MCP 
 | Drawings held to the design's roles and served in four themes (amends this record) | [decision 0131](0131-drawings-in-the-design.md) |
 | A dataset for a new map layer is proposed over MCP and held for an Admin | [decision 0169](0169-mcp-follow-ups-kept-true.md) |
 | The kind fixtures served from the backend with each drawing's themes | [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md) |
+| `timeline_map` delivered in its declared form, a map the site draws from places it resolves (amends this record) | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
+| `diagram` takes a declared form composed from the figure kit, and the kind fixtures gain a composed diagram (amends this record) | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

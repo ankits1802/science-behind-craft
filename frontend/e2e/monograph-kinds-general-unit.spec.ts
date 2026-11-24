@@ -24,6 +24,7 @@ import {
   timelineSpecShape,
   type ChartSpec
 } from "../lib/componentSpecsGeneral";
+import { TIMELINE_MAP_KIND } from "../lib/componentSpecsTimelineMap";
 import type { ComponentView } from "../lib/componentViewContract";
 import type { MonographComponent } from "../lib/monographDocument";
 
@@ -86,7 +87,7 @@ function drawn(kind: (typeof GENERAL_KINDS)[number], spec: object): string {
 }
 
 test("the general group draws every general kind and the page's registry carries them", () => {
-  expect(Object.keys(GENERAL_VIEWS).sort()).toEqual([...GENERAL_KINDS].sort());
+  expect(Object.keys(GENERAL_VIEWS).sort()).toEqual([...GENERAL_KINDS, TIMELINE_MAP_KIND].sort());
   expect(COMPONENT_VIEWS.drawing).toBe(VIEWS.drawing);
   for (const kind of GENERAL_KINDS) expect(COMPONENT_VIEWS[kind]).toBeDefined();
   expect(Object.keys(COMPONENT_VIEWS).filter((kind) => kind.startsWith("general_"))).toEqual([]);

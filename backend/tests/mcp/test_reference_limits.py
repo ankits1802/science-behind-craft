@@ -42,7 +42,7 @@ INDIA_BOUNDS = REPOSITORY / "frontend" / "components" / "map" / "indiaBounds.ts"
 NUMBER_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
 KIND_GROUPS = {
     "Figures from data": ("drawing", "chart", "fact_table", "timeline", "map_layer"),
-    "Data and place": ("stat_tiles", "map_sequence", "source_disagreements"),
+    "Data and place": ("stat_tiles", "map_sequence", "source_disagreements", "timeline_map"),
     "Plates and voices": ("label_card", "swatch_cards", "swatch_pair", "voice"),
     "Science": (
         "reaction_player",

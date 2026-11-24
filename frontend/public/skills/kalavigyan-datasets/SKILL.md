@@ -41,7 +41,8 @@ Each reference is also on the site under `/skills/references/`.
    rivers) belong to the site's own layers (the dataset guide, From a dataset to a component):
    follow "In the repository". Over MCP they are never facts; a new layer of them goes to
    `propose_dataset` with its `layer` (the dataset guide, Map layers over MCP), for a reviewer
-   and then an engineer.
+   and then an engineer. A map of places, dated or not, is a declared `timeline_map` the site
+   resolves and draws (the dataset guide, Maps of places); never draw one.
 
 ## Over the MCP server
 

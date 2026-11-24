@@ -71,6 +71,10 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## Choose the kind that carries it
 
+Until a player takes kit parts, draw a state's scene to the bar: materials textured by a pattern
+laid over the same shape, ink edges, six shapes or more. Show the same states at rest as a composed
+`diagram`.
+
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
 | a sequence of changes, chemical or physical, each stated by sources | `reaction_player` | rail, Play and status from the page's kit; two steps or more, each naming its materials in a lane and giving its balanced equation or a note saying why it has none |
@@ -95,6 +99,7 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## What a state may show
 
+- A state never draws a map; a family's places go in a declared `timeline_map` beside the flagship.
 - Only what its facts state: the materials they name, the change they describe, the cause they
   give, with their numbers. No scale, arrow, flame, bubble or label that implies a quantity or a
   cause no fact states.
@@ -152,6 +157,9 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   family's facts stay the family's, and the mechanism is explained once on a page.
 - A craft that lacks the family facts a flagship's units cite cannot link or lay it out; give it a
   `VARIANT` resting on its own facts.
+- A craft whose own facts state reactions, colours after, a compound or a choice composes its own
+  player, dip, molecule or what-if with `compose_component` (`references/flagships.md`, Each craft
+  composes its own), citing only its facts.
 
 ## Proving it
 
@@ -159,7 +167,8 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   rests on and the family's `FLAGSHIP` task as `task_key`, call `preview_page`, fix
   every rule its report fails, then open the private link in both themes at 360, 834 and 1440 px,
   and again with reduced motion on; work it by keyboard alone; step every state and read each against its
-  facts. Preview again after each fix, then `propose_page`.
+  facts. Preview again after each fix, then `propose_page`. Preview the page with a composed
+  component and read its pictures before proposing.
 - **In the repository**: a valid and a refused spec of the kind in
   `backend/tests/research/test_component_specs_science.py`; the view resting on its state and
   pressing on the rail in `frontend/e2e/monograph-science-views-unit.spec.ts`; Monograph parity

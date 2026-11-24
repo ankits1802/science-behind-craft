@@ -65,7 +65,7 @@ stateDiagram-v2
 | A page held for one confirmation | `research/page_holds.py`, `services/page_holds.py`, `services/trust_tiers.publishes_at_once`; routes `api/routes/page_holds.py` |
 | `propose_page` and `preview_page` | `research/page_proposals.py` (the bundle and its reports), `services/page_proposals.py` with `page_proposals_parts.py`, `services/page_preview.py` with `page_preview_parts.py`, `page_preview_additions.py` and `page_preview_links.py` |
 | Tables | `models/open_work.py` (`TaskReservation`, `ComponentProposal`), migration `0038_open_work`; the delivered spec's columns and `models/page_previews.py` (`PagePreview`), migration `0049_delivered_components` |
-| MCP tools | `api/mcp_work_tools.py` (`WORK_TOOLS`: `list_open_work`, `my_work`, `reserve_tasks`, `steward_craft`) and `api/mcp_page_tools.py` (`PAGE_TOOLS`: `edit_draft`, `preview_page`, `propose_page`, with `mcp_page_arguments.py` and `mcp_page_texts.py`), registered in `api/mcp_tools.py`; each names its group in `_meta["kalavigyan/group"]` |
+| MCP tools | `api/mcp_work_tools.py` (`WORK_TOOLS`: `list_open_work`, `my_work`, `reserve_tasks`, `steward_craft`) and `api/mcp_page_tools.py` (`PAGE_TOOLS`: `edit_draft`, `preview_page`, `propose_page`, with `mcp_page_arguments.py` and `mcp_page_texts.py`) and `api/mcp_compose_tools.py` (`COMPOSE_TOOLS`: `compose_component`, its service `services/compose_components.py` with `compose_reads.py` and a module a kind), registered in `api/mcp_tools.py`; each names its group in `_meta["kalavigyan/group"]` |
 | MCP prompts and resources | `api/mcp_prompts.py`, `api/mcp_resources.py`, dispatched in `api/mcp_tools.py` |
 | Source tools (`search_sources`, `read_source`, `lookup`) | `api/mcp_lookup_tools.py` (`LOOKUP_TOOLS`), `services/source_lookup*.py`, limits `core/rate_limit.LOOKUP_LIMITS` (`knowledge-api.md`, Source tools) |
 | The contract resources and the index | `data/contributor/contracts/<name>.md`, copies of `docs/contracts/<name>.md`; `data/contributor/index.md`, written from the registry by `tools/mcp_index_build.py` (`api/mcp_index.index_text`: every tool, prompt and resource by its title); read by `data/skill_library.py` |
@@ -409,7 +409,7 @@ A proposal that names a task ends the proposer's reservation:
 | `extends?` with `extension` | `SUBJECT_LINK` keeps the extended label; `VARIANT` takes a new one |
 | `replaces?` | a registered component it takes the place of (Withdrawn, replaced, borrowed and held, below); a label of its own, never with `SUBJECT_LINK` |
 | `task_key?` | the task it completes (the checks, below) |
-| `spec` | the delivery: the kind's spec data, any of the 22 contributable kinds, authored or declared |
+| `spec` | the delivery: the kind's spec data, any of the 23 contributable kinds, authored or declared (a `timeline_map` declared only) |
 | `units` | the delivery's units, `{u0001: {text, claimIds}}` |
 
 The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`, which carries none
@@ -505,6 +505,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` |
 | `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below) and `notices`, and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
+| `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices}`, each component in the snake_case `edit_draft`'s add takes (decision 0198) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
 | `search_sources` | sources | contribute (read for pictures alone) | read-only, open-world | `SourceSearch` (`knowledge-api.md`, Source tools) |
 | `read_source` | sources | contribute | read-only, open-world | `SourceReading` |
@@ -524,6 +525,18 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   `propose_page` take a `bundle` or a `draft_id` and are `preview_draft` and `submit_draft` too, and
   `propose_page` with one part alone is `propose_component` and `propose_layout`. Every allowance,
   check and message of the old tools is kept.
+- **A craft's own interactive** (decision 0198). `compose_component {craft, kind, about? {stage |
+  reaction | material | compound}}` reads the craft's curated page, the facts it owns that readers
+  see as facts, its stage names and the materials each uses, the balance the server checked for each
+  reaction, the compounds of its materials and the depicted colours recorded for them, and builds
+  `reaction_player` (two reactions or more, in the order of their stages, an equation only where
+  the server balanced one), `dip_player` (two bath stages or more with their colour after, each in
+  the depicted colour recorded with the fact that states it), `molecule_3d` (up to two compounds of its materials, from
+  PubChem's 3D conformer through `ConformerCache`, of carbon, hydrogen, nitrogen and oxygen only)
+  or `experiment_lab` with a `choice_toggle` for each of two or three materials with a stated
+  alternative. Every unit cites only those facts. With too little it composes nothing and
+  `missing` names each fact or structure item to propose; what it composed without is `leftOut`.
+  The result is placed with `edit_draft`'s add as it is; nothing is stored.
 - Review queues reach `list_open_work` only on a connection holding the review scope, and then by
   the account's role.
 - `initialize` declares `tools`, `prompts` (`listChanged` false) and `resources` (`subscribe` and
@@ -920,6 +933,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
 | Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
+| A craft's own interactive, composed and placed as `edit_draft` takes it | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
 | The HTTP routes | `backend/tests/test_open_work_routes.py` and `backend/tests/public/test_route_inventory.py` |
 | The prompts and resources | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |
 | The skills and references served | `backend/tests/mcp/test_contributor_kit.py`, `test_skill_references.py`, `test_reference_limits.py` and `test_interactives_skill.py` |

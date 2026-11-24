@@ -6,6 +6,7 @@ import { SLOT_CLASS } from "@/components/monograph/slotClass";
 import type { MonographSources } from "@/lib/monographRender";
 import { nodeElements } from "@/lib/monographRenderElements";
 import type { ComponentBundle } from "@/lib/monographRenderLayout";
+import { unitTexts } from "@/lib/unitTexts";
 
 export type BundleSet = { bundles: Readonly<Record<string, ComponentBundle>>; sources: MonographSources; bare: boolean };
 
@@ -39,6 +40,7 @@ export function ServerBundle({ label, set }: { label: string; set: BundleSet }) 
       spec={bundle.spec}
       unitRefs={Object.keys(bundle.units)}
       renderUnit={(ref) => unitOf(bundle, ref, set.sources)}
+      unitText={unitTexts(bundle)}
       renderComponent={(nested) => <DrawnBundle key={nested} label={nested} set={set} />}
     />
   );

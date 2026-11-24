@@ -2,7 +2,7 @@ import dataclasses
 import json
 from pathlib import Path
 
-from app.services.document_components_data import borrowed_data, merged_data, reader_data
+from app.services.document_components_data import kit_data, merged_data, reader_data
 from app.services.monograph_generated_assembly import assembled_document
 from app.services.monograph_generated_drawings import Drawings
 from app.services.monograph_generated_units import SourceBook
@@ -57,9 +57,9 @@ def test_a_page_borrowing_nothing_that_reads_kit_data_carries_none(tmp_path: Pat
 
 def test_molecules_borrowed_from_two_figures_are_carried_together() -> None:
     held: dict[str, object] = {}
-    merged_data(held, borrowed_data(DATA, "molecule_3d", {"molecules": [{"cid": 6293}]}))
-    merged_data(held, borrowed_data(DATA, "molecule_3d", {"molecules": [{"cid": 441564}]}))
-    merged_data(held, borrowed_data(DATA, "reaction_player", {"steps": []}))
+    merged_data(held, kit_data(DATA, "molecule_3d", {"molecules": [{"cid": 6293}]}))
+    merged_data(held, kit_data(DATA, "molecule_3d", {"molecules": [{"cid": 441564}]}))
+    merged_data(held, kit_data(DATA, "reaction_player", {"steps": []}))
     assert held == {"mol-data": {"6293": ALIZARIN, "441564": INDICAN}}
 
 

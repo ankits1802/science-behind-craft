@@ -1,6 +1,6 @@
 ---
 name: kalavigyan-contributor
-description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and the science behind them, through its MCP server and its 22 tools - find and reserve open work, read a page whole, search, read and check sources with the same registries, reader and quote matcher KalaVigyan uses itself (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators in batches and follow them through the queue, give structure and new sources, build whole pages in a draft (edit_draft) and see them with their checklist report (preview_page) before proposing them once (propose_page), deliver finished components and figures, and give pictures with the person's own declaration (give_pictures). The rules live in six references served beside it (the page checklist, sources, quotes and locators, the fields, components, datasets). Load it before proposing anything to KalaVigyan, and before researching or writing about a craft for it.
+description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and the science behind them, through its MCP server and its 23 tools - find and reserve open work, read a page whole, search, read and check sources with the same registries, reader and quote matcher KalaVigyan uses itself (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators in batches and follow them through the queue, give structure and new sources, build whole pages in a draft (edit_draft) and see them with their checklist report (preview_page) before proposing them once (propose_page), deliver finished components and figures, and give pictures with the person's own declaration (give_pictures). The rules live in six references served beside it (the page checklist, sources, quotes and locators, the fields, components, datasets). Load it before proposing anything to KalaVigyan, and before researching or writing about a craft for it.
 ---
 
 # Contributing to KalaVigyan
@@ -90,7 +90,8 @@ interactives skill (the map above).
 6. Propose: `propose_facts` for new facts, `propose_source` for a new source of a held fact,
    `propose_structure` for a curated page's structure, `give_pictures` for pictures; and a page's
    parts in `edit_draft`, seen with `preview_page` and proposed once with `propose_page`, which also
-   takes a single component or layout.
+   takes a single component or layout. A craft's reaction player, dip player, 3D molecule or what-if
+   lab comes from `compose_component`, built from that craft's own facts.
 7. `get_proposal` with each proposal id, or `my_work`, for the outcome.
 
 ## Proposals and their progress
@@ -243,11 +244,24 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Deliver it finished by the component guide: its kind, its spec as the kind's schema gives it
   (`kalavigyan://components/<kind>.schema.json`) and its units, each unit resting on shown facts or
   on the facts of the same draft or bundle.
+- A craft's interactives are composed, not written: `compose_component` with the craft's slug and
+  one kind (`reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab`), and `about` for one
+  stage, reaction, material or compound, returns them finished from that craft's own facts and
+  structure, each unit citing only its facts, the molecule turned from PubChem's 3D record. Never
+  place another craft's player or molecule on a page: its units cite that craft's facts and the
+  page's checks refuse it. When it composes nothing, propose each item its `missing` names and call
+  it again; add what it returns to the draft as it is, with your task as its `task_key`.
 - See it drawn before you propose it: put it in a draft or a bundle with the facts it rests on and
   call `preview_page`. Send it with `propose_page`, alone in a bundle when it rests only on held
   facts. A close match in the library refuses it with the matches and two ways on. An Admin's
   approval registers it so every page it applies to draws it; a Professor's or Admin's own is
   registered at once.
+- **Maps.** Never draw a map. Deliver a declared `timeline_map`: name each place by the Wikidata
+  `qid` `lookup` found, its LGD district, or a coordinate a fact states (`at`); caption every place
+  with a point, route or undated fact whose unit states its years, names its place or states the
+  move; ask for `relief`, `rivers`, `minerals` or a district layer by name, and send no coordinates
+  or credits. The server refuses a place it cannot resolve, by name; a `drawing` or `map_layer` that
+  is a map is refused (the dataset guide, Maps of places).
 - A figure drawn from a table of values rests on a dataset, not on one fact per value:
   `propose_dataset` gives the dataset's record (`datasets.md`, Recording a dataset) and returns a
   single-use upload slot for its CSV file, checked against the SHA-256 you declare. A `chart`,
@@ -275,6 +289,10 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - Delivering a `drawing`, a science drawing or an SVG picture: use those same roles. The server
   refuses a typed colour, a font, small text or words in outlines and names the element, serves
   each drawing in all four themes, and the preview's report checks every figure on rule 27.
+- A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
+  not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
+  part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
+  depicted material by hand or names a kit part is refused with the part to use.
 
 ## Pages
 

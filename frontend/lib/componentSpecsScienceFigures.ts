@@ -21,7 +21,7 @@ import {
   type TextBlock
 } from "@/lib/componentSpecsScienceParts";
 import { heldTextShape, type HeldMark } from "@/lib/componentSpecsPlates";
-import { list, nullable, number, object, oneOf, optional, ShapeError, tagged, type Shape } from "@/lib/shape";
+import { list, nullable, number, object, oneOf, optional, ruled, ShapeError, tagged, type Shape } from "@/lib/shape";
 
 const CITE_MARK = "cite";
 
@@ -74,6 +74,9 @@ export type StructureDiagramSpec = {
   swatches: KeySwatch[];
   swatchNote: TextBlock | null;
 };
+export type AtomPoint = [string, number, number, number];
+export type BondLine = [number, number, number];
+export type MoleculeGeometry = { atoms: AtomPoint[]; bonds: BondLine[]; radius: number };
 export type MoleculeModel = {
   key: string;
   cid: number;
@@ -85,6 +88,7 @@ export type MoleculeModel = {
   atoms: string;
   note: string;
   drawing: SvgNode;
+  geometry?: MoleculeGeometry;
 };
 export type AtomKeyItem = { swatch: string | null; label: string };
 export type Molecule3dSpec = { head: FigureHead; molecules: MoleculeModel[]; side: TextBlock[]; key: AtomKeyItem[] };
@@ -152,6 +156,39 @@ export const structureDiagramShape: Shape<StructureDiagramSpec> = object<Structu
   swatchNote: nullable(textBlockShape)
 });
 
+const ATOM_SYMBOL = /^[A-Z][a-z]?$/;
+const BOND_ORDERS: readonly unknown[] = [1, 2, 3];
+const ATOM_POINT = "an atom: its element, then x, y and z";
+const BOND_LINE = "a bond: two atom indices and an order of 1, 2 or 3";
+const finite = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value);
+const atomIndex = (value: unknown): value is number => Number.isInteger(value) && (value as number) >= 0;
+
+const atomPointShape: Shape<AtomPoint> = {
+  expected: ATOM_POINT,
+  parse(value, path) {
+    if (!Array.isArray(value) || value.length !== 4) throw new ShapeError(path, ATOM_POINT);
+    const [symbol, x, y, z] = value as unknown[];
+    if (typeof symbol !== "string" || !ATOM_SYMBOL.test(symbol) || !finite(x) || !finite(y) || !finite(z)) throw new ShapeError(path, ATOM_POINT);
+    return [symbol, x, y, z];
+  }
+};
+
+const bondLineShape: Shape<BondLine> = {
+  expected: BOND_LINE,
+  parse(value, path) {
+    if (!Array.isArray(value) || value.length !== 3) throw new ShapeError(path, BOND_LINE);
+    const [first, second, order] = value as unknown[];
+    if (!atomIndex(first) || !atomIndex(second) || !BOND_ORDERS.includes(order)) throw new ShapeError(path, BOND_LINE);
+    return [first, second, order as number];
+  }
+};
+
+export const moleculeGeometryShape: Shape<MoleculeGeometry> = object<MoleculeGeometry>({
+  atoms: list(atomPointShape, 1),
+  bonds: list(bondLineShape),
+  radius: ruled(number, "a positive radius", (value) => value > 0)
+});
+
 export const molecule3dShape: Shape<Molecule3dSpec> = object<Molecule3dSpec>({
   head: figureHeadShape,
   molecules: list(
@@ -165,7 +202,8 @@ export const molecule3dShape: Shape<Molecule3dSpec> = object<Molecule3dSpec>({
       formula: richShape,
       atoms: label,
       note: label,
-      drawing: svgNodeShape
+      drawing: svgNodeShape,
+      geometry: optional(moleculeGeometryShape)
     }),
     1
   ),

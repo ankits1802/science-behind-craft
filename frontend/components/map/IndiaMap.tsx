@@ -2,17 +2,15 @@
 
 import { useMemo, type ReactNode } from "react";
 
-import { layoutPins, type MapPoint } from "@/components/map/layout";
+import { viewBoxOf, type MapBox } from "@/components/map/basemap";
+import { layoutPins, WHOLE_MAP, type MapPoint } from "@/components/map/layout";
 import { MapCoast, MapLand, MapPatterns, SaltFlats, StateLines } from "@/components/map/MapBase";
 import { MapHoverCard } from "@/components/map/MapHoverCard";
 import { Pin } from "@/components/map/MapMarks";
 import { PinControls } from "@/components/map/PinControls";
-import { VIEW_BOX } from "@/components/map/projection";
 import { cn } from "@/lib/utils";
 
 export type { MapPoint } from "@/components/map/layout";
-
-const FRAME = { x: 0, y: 0, width: VIEW_BOX.width, height: VIEW_BOX.height };
 
 export interface IndiaMapProps {
   points: MapPoint[];
@@ -22,14 +20,15 @@ export interface IndiaMapProps {
   onHover?: (key: string | null) => void;
   underlay?: ReactNode;
   overlay?: ReactNode;
+  frame?: MapBox;
   className?: string;
 }
 
-export function IndiaMapBase({ underlay }: { underlay?: ReactNode }) {
+export function IndiaMapBase({ underlay, frame = WHOLE_MAP }: { underlay?: ReactNode; frame?: MapBox }) {
   return (
     <>
       <MapPatterns />
-      <MapLand frame={FRAME} />
+      <MapLand frame={frame} />
       {underlay}
       <StateLines />
       <SaltFlats />
@@ -38,22 +37,23 @@ export function IndiaMapBase({ underlay }: { underlay?: ReactNode }) {
   );
 }
 
-export function IndiaMap({ points, selectedKey = null, hoveredKey = null, onSelect, onHover, underlay = null, overlay = null, className }: IndiaMapProps) {
-  const pins = useMemo(() => layoutPins(points), [points]);
+export function IndiaMap({ points, selectedKey = null, hoveredKey = null, onSelect, onHover, underlay = null, overlay = null, frame = WHOLE_MAP, className }: IndiaMapProps) {
+  const pins = useMemo(() => layoutPins(points, frame), [points, frame]);
   const ordinals = useMemo(() => new Map(points.map((point, index) => [point.key, index + 1])), [points]);
   const active = pins.find((pin) => pin.point.key === (hoveredKey ?? selectedKey)) ?? null;
+  const ring = frame.width / WHOLE_MAP.width;
 
   return (
     <div className={cn("relative", className)}>
-      <svg viewBox={`0 0 ${VIEW_BOX.width} ${VIEW_BOX.height}`} className="h-auto w-full max-w-full rounded-plate" role="presentation" aria-hidden="true" focusable="false">
-        <IndiaMapBase underlay={underlay} />
+      <svg viewBox={frame === WHOLE_MAP ? `0 0 ${frame.width} ${frame.height}` : viewBoxOf(frame)} className="h-auto w-full max-w-full rounded-plate" role="presentation" aria-hidden="true" focusable="false">
+        <IndiaMapBase underlay={underlay} frame={frame} />
         <g>
           {pins
             .filter((pin) => pin.displaced)
             .map((pin) => (
               <g key={`leader-${pin.point.key}`}>
                 <line x1={pin.anchorX} y1={pin.anchorY} x2={pin.x} y2={pin.y} stroke="var(--map-marker-ring)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-                <circle cx={pin.anchorX} cy={pin.anchorY} r={2.5} fill="var(--map-marker-ring)" />
+                <circle cx={pin.anchorX} cy={pin.anchorY} r={2.5 * ring} fill="var(--map-marker-ring)" />
               </g>
             ))}
         </g>
@@ -62,8 +62,8 @@ export function IndiaMap({ points, selectedKey = null, hoveredKey = null, onSele
         ))}
         {overlay}
       </svg>
-      {onSelect && pins.length ? <PinControls pins={pins} frame={FRAME} selectedKey={selectedKey} onSelect={onSelect} onHover={onHover} /> : null}
-      {active ? <MapHoverCard key={active.point.key} pin={active} ordinal={ordinals.get(active.point.key)} /> : null}
+      {onSelect && pins.length ? <PinControls pins={pins} frame={frame} selectedKey={selectedKey} onSelect={onSelect} onHover={onHover} /> : null}
+      {active ? <MapHoverCard key={active.point.key} pin={active} ordinal={ordinals.get(active.point.key)} frame={frame} /> : null}
     </div>
   );
 }

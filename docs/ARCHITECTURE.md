@@ -215,7 +215,10 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. The research write-back asks the worker's judge ladder, cheapest
+are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+lab is composed by the server from the craft's own curated page and facts (`compose_component`,
+`services/compose_components`, decision 0198), never borrowed from another craft's page, and the
+monograph kit plays it on any page as it plays Kutch Ajrakh's. The research write-back asks the worker's judge ladder, cheapest
 model first (`providers/judge_routes.thrifty_judges`, decision 0169), and a write-back the filing
 ladder cannot place waits for a reviewer, who may file it under a craft or a family's science
 (decision 0159). Beside facts the queue holds a process stage an answer found (`STAGES`, decision
@@ -761,7 +764,12 @@ evidence marks, specimen label, masthead, plates, fact grid, chapter rail, margi
 `components/editorial/`, and their CSS through `app/primitives.css` and `app/editorial.css`.
 Named motions are owned by `app/motion.css` with the hooks in `components/motion/`, declarative
 motion by framer-motion; GSAP is gone (decision 0094). `/design` draws every primitive in every
-state. Practice rules are `frontend-practices`.
+state. The figure kit is `components/artkit/`: the designed parts a composed `diagram` names
+(cloth, block, bath, paste, heat, water, tool, section, piece), drawn as inline SVG in the tokens
+with the named motions, set in their layouts by `KitFigure` and drawn on a page by
+`components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
+copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
+part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub

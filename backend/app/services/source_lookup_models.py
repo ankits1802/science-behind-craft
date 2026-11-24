@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import Field
 
-from app.research.base import ContractModel
+from app.research.base import ContractModel, absent
 from app.research.vocabulary import TrustTier
 
 __all__ = [
@@ -165,6 +165,8 @@ class EntityRecord(ContractModel):
     taxon_name: str | None = None
     pubchem_cid: str | None = None
     lines: list[str]
+    latitude: float | None = Field(default=None, exclude_if=absent)
+    longitude: float | None = Field(default=None, exclude_if=absent)
 
 
 class EntityLookup(ContractModel):

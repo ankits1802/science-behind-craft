@@ -35,9 +35,9 @@ function drawn(fixture: KindFixture): string {
   return renderToStaticMarkup(createElement(() => view(props)));
 }
 
-test("twenty-two contributable kinds are each drawn for a craft other than Kutch Ajrakh", () => {
-  expect(KIND_FIXTURES).toHaveLength(24);
-  expect(new Set(KIND_FIXTURES.map((fixture) => fixture.kind)).size).toBe(22);
+test("twenty-three contributable kinds are each drawn for a craft other than Kutch Ajrakh", () => {
+  expect(KIND_FIXTURES).toHaveLength(26);
+  expect(new Set(KIND_FIXTURES.map((fixture) => fixture.kind)).size).toBe(23);
   expect(KIND_FIXTURES.filter((fixture) => fixture.craft === KUTCH)).toEqual([]);
   for (const fixture of KIND_FIXTURES) expect(COMPONENT_VIEWS[fixture.kind], fixture.kind).toBeDefined();
 });

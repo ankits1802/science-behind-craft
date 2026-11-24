@@ -59,6 +59,8 @@ and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 | A quote before it is sent | `read_source` with the quote in its `quotes`: the QUOTES gate's verdict, and the nearest passage when it misses |
 | A compound's record and hazards, a plant's taxon name, a place's or craft's item | `lookup`, with kind compound or entity |
 | Finding open pictures | `search_sources` with kinds pictures (Commons and Openverse, open licences only, with author, credit and the site's widths), then `give_pictures` with its `page_url` |
+| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`) |
+| A map of the page's places, their years and moves | a declared `timeline_map` in the draft or bundle (the dataset guide, Maps of places); never a drawing |
 | A fact that stands alone | `propose_facts` (up to 25, each with an `idempotency_key` and the claimed `task_key`), then `get_proposal` until it is DONE; a working dossier's new facts in one run with `tools/curation/propose.py` |
 | A new source for a held fact, or for a fact that lost its quotes | `propose_source`, naming the fact as `claim_id` |
 | A stage's after or why, a native name, a reaction, a botanical name, a glossary term, an open question, the GI record, a conflict | `propose_structure`, one item with the fact and the quotes that state it |
@@ -139,7 +141,10 @@ family figure only when the page holds every fact its units cite.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, fix every rule its report fails, judge the rest on the private link at
    360 and 1440 px in both themes, preview again, then `propose_page` with it. A page given in one call
-   goes through `preview_page` and `propose_page` the same way.
+   goes through `preview_page` and `propose_page` the same way. Compose the page's interactives with
+   `compose_component`, never borrowed from Kutch Ajrakh; propose what `missing` names first. Preview
+   the page with them and read its pictures: step every player, dip every dip, turn and zoom every
+   molecule and choose every option at 360 and 1440 px before `propose_page`.
 5. **Follow every proposal** with `get_proposal` or `my_work`. A refused fact is fixed from its
    sources or dropped, never reworded past its quotes to slip a gate.
 6. **Hand the lead what only the dossier route carries**: a curated picture's focal box and stand-in,

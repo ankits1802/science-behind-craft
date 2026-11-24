@@ -9,6 +9,7 @@ from pydantic import ValidationError
 from app.core.errors import InvalidInput, Refused
 
 from .mcp_ask_tools import ASK_TOOLS
+from .mcp_compose_tools import COMPOSE_TOOLS
 from .mcp_dataset_tools import DATASET_TOOLS
 from .mcp_fact_tools import FACT_TOOLS
 from .mcp_lookup_tools import LOOKUP_TOOLS
@@ -52,6 +53,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *SOURCE_TOOLS,
             *DATASET_TOOLS,
             *PAGE_TOOLS,
+            *COMPOSE_TOOLS,
             *PICTURE_TOOLS,
             *REVIEW_TOOLS,
             *REPORT_TOOLS,

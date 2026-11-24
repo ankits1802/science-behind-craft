@@ -7,6 +7,7 @@ export type ComponentViewProps = {
   spec: Record<string, unknown>;
   unitRefs: string[];
   renderUnit: (ref: string) => ReactNode;
+  unitText?: (ref: string) => string;
   renderComponent: (label: string) => ReactNode;
 };
 

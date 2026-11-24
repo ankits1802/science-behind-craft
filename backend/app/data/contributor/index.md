@@ -36,6 +36,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `edit_draft`: Build a page in a draft.
 - `preview_page`: Preview a page.
 - `propose_page`: Propose a page or one of its parts.
+- `compose_component`: Compose a craft's own interactive.
 - `give_pictures`: Give pictures of a craft.
 - `review_queue`: Read the review queue (Admins).
 - `stage_reviews`: Stage review decisions for a person to confirm (Admins).
@@ -101,4 +102,5 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `kalavigyan://components/swatch_cards.schema.json`: The swatch_cards spec schema.
 - `kalavigyan://components/swatch_pair.schema.json`: The swatch_pair spec schema.
 - `kalavigyan://components/timeline.schema.json`: The timeline spec schema.
+- `kalavigyan://components/timeline_map.schema.json`: The timeline_map spec schema.
 - `kalavigyan://components/voice.schema.json`: The voice spec schema.

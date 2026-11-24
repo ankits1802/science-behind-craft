@@ -9,7 +9,7 @@ from pydantic import BaseModel, Discriminator, RootModel, Tag
 from .base import ContractModel
 from .component_specs_data import ChartSpec, FactTableSpec, TimelineSpec
 from .component_specs_data_lists import RelatedCraftsSpec
-from .component_specs_data_maps import MapLayerSpec
+from .component_specs_data_maps import MapLayerSpec, TimelineMapSpec
 from .component_specs_general import (
     GENERAL_CHART,
     GENERAL_MAP_LAYER,
@@ -21,28 +21,51 @@ from .component_specs_general import (
     GeneralTimelineSpec,
     is_declared,
 )
+from .component_specs_kit import KIT_DIAGRAM, DeclaredDiagramSpec
+from .component_specs_science_figures import DiagramSpec
+from .component_specs_timeline_map import DECLARED_MARK, TIMELINE_MAP, DeclaredTimelineMapSpec
 from .kin_crafts import KIN_KIND, KinCraftsSpec
 
 __all__ = [
     "AUTHORED",
     "DECLARED",
+    "DECLARED_MARKS",
+    "DELIVERED_FORMS",
     "EITHER_FORMS",
     "SPEC_MODELS_EITHER",
     "ChartKindSpec",
+    "DiagramKindSpec",
     "FactTableKindSpec",
     "MapLayerKindSpec",
     "RelatedCraftsKindSpec",
     "TimelineKindSpec",
+    "TimelineMapKindSpec",
+    "declared_form",
     "form_model",
     "spec_form",
 ]
 
 AUTHORED = "authored"
 DECLARED = "declared"
+DECLARED_MARKS: Mapping[str, str] = MappingProxyType({TIMELINE_MAP: DECLARED_MARK})
+DELIVERED_FORMS: Mapping[str, type[ContractModel]] = MappingProxyType({TIMELINE_MAP: DeclaredTimelineMapSpec})
 
 
 def spec_form(value: Any) -> str:
     return DECLARED if is_declared(value) else AUTHORED
+
+
+def declared_form(kind: str, spec: Any) -> bool:
+    mark = DECLARED_MARKS.get(kind)
+    if mark is None:
+        return is_declared(spec)
+    if isinstance(spec, Mapping):
+        return mark in spec
+    return isinstance(spec, DELIVERED_FORMS[kind])
+
+
+def timeline_map_form(value: Any) -> str:
+    return DECLARED if declared_form(TIMELINE_MAP, value) else AUTHORED
 
 
 class ChartKindSpec(
@@ -100,6 +123,28 @@ class RelatedCraftsKindSpec(
     pass
 
 
+class DiagramKindSpec(
+    RootModel[
+        Annotated[
+            Annotated[DeclaredDiagramSpec, Tag(DECLARED)] | Annotated[DiagramSpec, Tag(AUTHORED)],
+            Discriminator(spec_form),
+        ]
+    ]
+):
+    pass
+
+
+class TimelineMapKindSpec(
+    RootModel[
+        Annotated[
+            Annotated[DeclaredTimelineMapSpec, Tag(DECLARED)] | Annotated[TimelineMapSpec, Tag(AUTHORED)],
+            Discriminator(timeline_map_form),
+        ]
+    ]
+):
+    pass
+
+
 EITHER_FORMS: Mapping[str, Mapping[str, type[ContractModel]]] = MappingProxyType(
     {
         GENERAL_CHART: MappingProxyType({DECLARED: GeneralChartSpec, AUTHORED: ChartSpec}),
@@ -107,6 +152,8 @@ EITHER_FORMS: Mapping[str, Mapping[str, type[ContractModel]]] = MappingProxyType
         GENERAL_TIMELINE: MappingProxyType({DECLARED: GeneralTimelineSpec, AUTHORED: TimelineSpec}),
         GENERAL_MAP_LAYER: MappingProxyType({DECLARED: GeneralMapLayerSpec, AUTHORED: MapLayerSpec}),
         KIN_KIND: MappingProxyType({DECLARED: KinCraftsSpec, AUTHORED: RelatedCraftsSpec}),
+        TIMELINE_MAP: MappingProxyType({DECLARED: DeclaredTimelineMapSpec, AUTHORED: TimelineMapSpec}),
+        KIT_DIAGRAM: MappingProxyType({DECLARED: DeclaredDiagramSpec, AUTHORED: DiagramSpec}),
     }
 )
 SPEC_MODELS_EITHER: Mapping[str, type[BaseModel]] = MappingProxyType(
@@ -116,10 +163,12 @@ SPEC_MODELS_EITHER: Mapping[str, type[BaseModel]] = MappingProxyType(
         GENERAL_TIMELINE: TimelineKindSpec,
         GENERAL_MAP_LAYER: MapLayerKindSpec,
         KIN_KIND: RelatedCraftsKindSpec,
+        TIMELINE_MAP: TimelineMapKindSpec,
+        KIT_DIAGRAM: DiagramKindSpec,
     }
 )
 
 
 def form_model(kind: str, spec: Any) -> type[ContractModel] | None:
     forms = EITHER_FORMS.get(kind)
-    return None if forms is None else forms[spec_form(spec)]
+    return None if forms is None else forms[DECLARED if declared_form(kind, spec) else AUTHORED]
