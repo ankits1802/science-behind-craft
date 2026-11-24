@@ -11,10 +11,13 @@ Date: 2026-11-24. Status: accepted (the lead's lane `kit-players` of the page-qu
 the owner judged the Sanganeri page built over MCP: "the animations that it is creating are
 completely lacklustre ... the svg look like shit"). It amends
 [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) (the bar now
-holds the players' and cards' scenes at delivery, and the texture rule gives way to the kit) and
+holds the players' and cards' scenes at delivery, and the texture rule gives way to the kit),
 [decision 0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) (the composed
-players' scenes). The contracts are `docs/contracts/component-specs-science.md` (Rules every science
-spec follows, reaction_player, dip_player, stage_player, choice_toggle and Composed from a craft's
+players' scenes) and
+[decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md),
+item 1 (a dip phase whose colour no token shows is a kit scene drawn in line work, not the outlined
+piece). The contracts are `docs/contracts/component-specs-science.md` (Rules every science spec
+follows, reaction_player, dip_player, stage_player, choice_toggle and Composed from a craft's
 own facts), `docs/contracts/component-specs-plates.md` (label_card) and
 `docs/contracts/component-specs-general.md` (checks 7 and 8, Kit scenes, The hand-drawn figure).
 
@@ -22,6 +25,7 @@ own facts), `docs/contracts/component-specs-plates.md` (label_card) and
 |---|---|
 | The kit's parts, its vocabulary and the bar for hand-drawn art | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | The composer and the kit driving every page's players | [decision 0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) |
+| A dip's colours from the substances its stages name | [decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | The named motions and the two reduced-motion switches | [decision 0092](0092-design-system.md) and the kalavigyan-design skill, sections 2.13 and 6 |
 | Every decision, by group | [README.md](README.md) |
 
@@ -67,13 +71,17 @@ own facts), `docs/contracts/component-specs-plates.md` (label_card) and
    source part, the served script and Ajrakh's static page) carry the same lines.
 4. **The composer composes from the kit.** `services/compose_kit.stage_scene` builds a stage's
    scene from the facts that state it: the bath in the vessel they name holding the piece in its
-   recorded colour after, else the cloth they name or a piece of the shape they name in that colour,
+   colour after (`compose_kit.after_token`: the token recorded with its fact, else the one decision
+   0202's substance mapping gives the stage's dyes, mordants and resists), else the cloth they name
+   or a piece of the shape they name in that colour,
    a printing or resist stage's first coloured material as a paste applied as they name (a printing
    stage prints it when they name no way), and the heat source and water
    form they name; three parts at most, a bath with its piece dips and a cloth takes its colour,
    each part labelled by the fact that names it. Choices the facts do not name are never chosen for
    them, save the cloth's plain swatch. A dip phase the kit cannot draw is left out and named with
-   the fact to propose; a reaction player draws each step's stage when the kit draws them all, and
+   the fact to propose; one whose colour no token shows is drawn by the parts that take no colour
+   (the bath without its piece, the paste, the heat and the water), its colour named in words as
+   decision 0202 has it; a reaction player draws each step's stage when the kit draws them all, and
    otherwise keeps its one scene in line work, painting no material.
 5. **The bar follows.** Check 8 holds every free scene of the five kinds to the bar
    (`drawn_art.scene_problems`, called by `drawn_art_problems`): text on the type scale, six shapes
@@ -92,8 +100,10 @@ own facts), `docs/contracts/component-specs-plates.md` (label_card) and
   in a depicted material is refused with the part to use; a `VARIANT` of an authored player redraws
   its scenes from the kit.
 - Most real pages compose kit scenes only where their facts name a vessel, the cloth or a shape and
-  their materials have recorded colours: Sanganeri's reaction player keeps its line-work scene
-  until its printing stage's material has a depicted colour. The colours a family lacks are asked
+  their materials or colours after have depicted colours: Sanganeri's reaction player keeps its
+  line-work scene until its printing stage's material has a depicted colour, which decision 0202's
+  records (Bagru's, Dabu's and Pattachitra's) and its mapping of a stage's colour after do not give
+  it. The colours a family lacks are asked
   of the design generator, as before.
 - The interactives skill's interim rule ("Until a player takes kit parts ...") and the component
   guide's "textured in a player" are replaced by the lead from the lane's report.

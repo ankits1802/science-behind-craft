@@ -226,22 +226,25 @@ colour after, a compound of its materials with PubChem's conformer, the alternat
 state. A bath stage's colour is the depicted colour recorded with the fact that states it, else the
 first colour its after names that a specimen token depicts from the dyes, mordants and resists the
 stage uses, by the colour key's substance mapping (`research/colour_key.first_depicted`, decision
-0202); a colour no token depicts is drawn as the outlined piece and named in words in its phase's
-text, a stage whose after names no colour is left out with its reason, and a dip with no depicted
+0202); a colour no token depicts is drawn in line work, its kit scene painting no colour, and named
+in words in its phase's text, a stage whose after names no colour is left out with its reason, and a dip with no depicted
 colour at all composes nothing. Every unit cites only those facts; a
 label cites none, and a name that holds a number or a formula cites the facts that state it. When
 the page holds too little it composes nothing and names what to propose (`open-work.md`, MCP).
 
 Its scenes are kit scenes (`services/compose_kit.stage_scene`, decision 0200), each built from the
 stage it draws and the facts that state that stage, at most three parts: the bath in the vessel those
-facts name (a vat, pot, trough or pit), holding the piece in the stage's recorded colour after;
+facts name (a vat, pot, trough or pit), holding the piece in the stage's colour after (the token
+recorded with its fact, else the one the substance mapping gives, `compose_kit.after_token`);
 otherwise the cloth they name, or a piece of the shape they name, in that colour; for a printing
 or resist stage, its first material with a recorded colour as a paste, applied as those facts name
 (printed, spread or outline; a printing stage prints it when they name no way); and the heat source and the
 water form they name. A bath with its piece dips, a cloth takes its colour. Each part is labelled by
 the fact that names it (the stage's name for the bath, the colour after's fact for the cloth or piece,
 the material's name for the paste). A dip player draws every phase and its scene so, and a phase the
-kit cannot draw is left out and named, with the fact to propose. A reaction player draws each step's
+kit cannot draw is left out and named, with the fact to propose; a phase whose colour no token shows
+is drawn by the parts that take no colour (the bath without its piece, the paste, the heat and the
+water). A reaction player draws each step's
 stage as its scene when the kit draws every step's stage; otherwise it keeps one scene for all its
 steps, drawn in line work (each species an ink outline, dashed when no colour is recorded for it), so
 nothing is painted by hand.
