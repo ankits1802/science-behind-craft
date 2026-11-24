@@ -163,10 +163,14 @@ The plan (`pagePlan`) is pure and tested:
   masthead above), and the photograph as `figure.plate.kv-open-photo` (`div.kv-open-stage >
   div.ph > img` at the standard Commons widths, its focal box as `object-position`) with the label
   card on it (`div.label-card.mast-label.on-photo.kv-open-label`, `data-size` `title` for a name of
-  18 characters or fewer, else `h1`: the kicker's parts, the name as `p.lc-title`, the GI line with
-  its seal and the place) and the caption units and credit under it (`p.cap`, `p.cap.kv-look`,
-  `p.credit`). Without a photograph the label card lies on the family's typographic plate in the
-  same stage. No date is drawn, since the document carries none.
+  18 characters or fewer, else `h1`: the kicker's parts, the name as `p.lc-title` hidden from
+  screen readers, since the `h1` already names the page, the GI line with its seal and the place)
+  and the caption units and credit under it (`p.cap`, `p.cap.kv-look`, `p.credit`). Without a
+  photograph the stage holds the family's typographic plate (its texture, the knocked-out kicker
+  and name, hidden from screen readers) and, over it, a label of the GI line and the place alone
+  (`div.lc-meta`), or no label when the craft has neither, so the name is drawn by the title and
+  the plate and read once, by the `h1` (decision 0197). No date is drawn, since the document
+  carries none.
 - **Table of contents** (a labelled page with its masthead): `MonographContents` follows the
   masthead in the opening chapter, `div.bx.bx-chem > div.screen > div.wrap > div.spread > div.main >
   nav.toc.kv-toc` ("Chapters of this monograph"): "The monograph in N chapters", one
@@ -378,6 +382,7 @@ when any of them changes (`kv-prefs`). The menu's display tools change the app's
 | The rail and chapter menu, and Kutch Ajrakh's chapter names as the approved page gives them | `frontend/e2e/monograph-rail-unit.spec.ts` |
 | A craft's route draws its document or its record | `frontend/e2e/craft-monograph-unit.spec.ts` and `craft-without-monograph-unit.spec.ts` |
 | Generated documents and the answer block kind | `frontend/e2e/monograph-generated-unit.spec.ts` and `monograph-blocks-unit.spec.ts` |
+| A generated page's colour key in its chemistry chapter, and its masthead naming the craft once to a screen reader with or without a photograph | `frontend/e2e/colour-key-unit.spec.ts` |
 | The approved page's masthead, contents, margin notes, sub-rail and source groups on a generated page, at 360, 768 and 1440 in light and dark, and a passage's last popover docked whole at 1440 | `frontend/e2e/monograph-template-unit.spec.ts`, and `monograph-template.smoke.spec.ts` against the built site |
 | A chapter's listed facts drawn as one cited list after its prose | `frontend/e2e/cited-list-unit.spec.ts` |
 | Native views and the whole shell | `frontend/e2e/monograph-native-unit.spec.ts`, and `monograph-native.smoke.spec.ts` against the built site |

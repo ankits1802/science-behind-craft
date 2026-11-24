@@ -42,7 +42,7 @@ test("the masthead is the approved page's: the name over the cited lede, its too
   expect(html).toContain('<p class="kv-open-prov"><span class="kv-prov-n">Drawn from 2 sources</span>');
   expect(html).toContain('aria-label="Reliability of the 2 sources: 1 graded A, 1 graded B"');
   expect(html).not.toContain("more for the kin crafts");
-  expect(html).toContain('<div class="label-card mast-label on-photo kv-open-label" data-size="title"><p class="lc-k"><span>Monograph</span><span>Textiles · Hand block printing</span></p><p class="lc-title">Bagh Print</p>');
+  expect(html).toContain('<div class="label-card mast-label on-photo kv-open-label" data-size="title"><p class="lc-k"><span>Monograph</span><span>Textiles · Hand block printing</span></p><p class="lc-title" aria-hidden="true">Bagh Print</p>');
   expect(html).toContain("<span>Registered geographical indication</span></span><span>Madhya Pradesh</span></div>");
   expect(html).toContain("/thumb/a/ab/I02.jpg/960px-I02.jpg");
   expect(html).toMatch(/<img [^>]*width="1600" height="1200" alt="Picture I02" loading="eager" fetchPriority="high"/);
@@ -51,7 +51,7 @@ test("the masthead is the approved page's: the name over the cited lede, its too
   expect(html).not.toContain('data-testid="typographic-plate"');
 });
 
-test("a generated document without a licensed photograph shows its typographic plate at the masthead", () => {
+test("a generated document without a licensed photograph shows its typographic plate at the masthead, the label holding only its GI and place", () => {
   const document = generatedDocument();
   document.content.layout = document.content.layout.filter((entry) => entry.ref !== HERO && entry.within !== HERO);
   document.content.components = [];
@@ -62,7 +62,10 @@ test("a generated document without a licensed photograph shows its typographic p
   expect(html).toContain('<div class="plate kv-open-photo"><div class="kv-open-stage"><div class="ph" data-app="">');
   expect(html).toContain('data-testid="typographic-plate"');
   expect(html).toContain("g-textile");
-  expect(html).toContain('<div class="label-card mast-label on-photo kv-open-label" data-size="title">');
+  expect(html).toContain('<div class="label-card mast-label on-photo kv-open-label"><div class="lc-meta"><span class="seal">');
+  expect(html).toContain("<span>Registered geographical indication</span></span><span>Madhya Pradesh</span></div></div>");
+  expect(html).not.toContain("lc-title");
+  expect(html).not.toContain("lc-k");
   expect(html).not.toContain("<figure");
 });
 

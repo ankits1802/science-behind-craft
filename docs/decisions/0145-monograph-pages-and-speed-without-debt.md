@@ -21,6 +21,7 @@ contracts are `docs/contracts/science.md`, `coverage.md`, `review-queue.md`,
 | The shared screens and their reading metadata | [decision 0097](0097-public-reading-everywhere-but-asking.md) |
 | One monograph template, its units and specs | [decision 0106](0106-one-monograph-template-for-every-page.md) |
 | The design system and its boards | [decision 0092](0092-design-system.md), and [0141](0141-design-system-and-answer-screens-without-debt.md) for its last migration |
+| The site-drawn colour key's units `u8901` to `u8999`, delivered components' now `u5001` to `u8900` (amends item 7) | [decision 0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

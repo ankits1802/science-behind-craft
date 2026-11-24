@@ -23,20 +23,41 @@ function SwatchFigure({ swatch, weave, renderUnit }: { swatch: Swatch; weave: st
   );
 }
 
-function Colour({ colour, weave, renderUnit }: { colour: ColourCard; weave: string; renderUnit: (ref: string) => ReactNode }) {
-  const join = JOINS[colour.join];
+type ColourProps = { colour: ColourCard; weave: string; renderUnit: (ref: string) => ReactNode };
+
+function Swatches({ colour, weave, renderUnit }: ColourProps) {
+  if (!colour.after) return null;
+  const join = colour.before && colour.join ? JOINS[colour.join] : null;
+  return (
+    <div className="pair">
+      {colour.before && join ? (
+        <>
+          <SwatchFigure swatch={colour.before} weave={weave} renderUnit={renderUnit} />
+          <span className={join.className} aria-hidden="true">
+            {join.mark}
+          </span>
+        </>
+      ) : null}
+      <SwatchFigure swatch={colour.after} weave={weave} renderUnit={renderUnit} />
+    </div>
+  );
+}
+
+function Colour({ colour, weave, renderUnit }: ColourProps) {
   return (
     <li className="colour">
-      <div className="pair">
-        <SwatchFigure swatch={colour.before} weave={weave} renderUnit={renderUnit} />
-        <span className={join.className} aria-hidden="true">
-          {join.mark}
-        </span>
-        <SwatchFigure swatch={colour.after} weave={weave} renderUnit={renderUnit} />
-      </div>
+      <Swatches colour={colour} weave={weave} renderUnit={renderUnit} />
       <h3>{renderUnit(colour.name)}</h3>
       <p className="agent">{renderUnit(colour.agent)}</p>
-      <p className="ctext">{renderUnit(colour.text)}</p>
+      <p className="ctext">
+        {renderUnit(colour.text)}
+        {colour.why ? (
+          <>
+            {" "}
+            {renderUnit(colour.why)}
+          </>
+        ) : null}
+      </p>
     </li>
   );
 }

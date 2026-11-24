@@ -154,7 +154,9 @@ from its published sections, registered components, curated pictures and `PageLa
 
 A registered component a contributor delivered (`component-specs-general.md`) is drawn from the
 spec it was approved with: its units become the page's units `u5001` and on, held within it and
-cited from the facts they rest on, so its numerals are the page's like every sentence's.
+cited from the facts they rest on, so its numerals are the page's like every sentence's. The
+colour key the site draws in `chem` from the page's stage, dye and mordant colours (decision 0197,
+`page-layout.md`) holds its units the same way, from `u8901` on.
 
 A picture's spec is the full `PicturePlateSpec` (`checked_spec`, every field written); a picture
 whose file is off the picture contract is left out.
