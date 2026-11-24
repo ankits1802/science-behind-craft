@@ -79,6 +79,7 @@ def kit_label_card() -> dict[str, Any]:
         "kicker": "u0844",
         "seal": SEAL,
         "sentence": "u0846",
+        "inset": None,
         "facts": [{"term": "u0852", "value": "u0853"}],
     }
 
