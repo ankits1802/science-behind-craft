@@ -287,9 +287,10 @@ validated on the server by its kind's spec model, whose JSON schema is served as
 string the server checks against the library, `list_components` describes it by example and
 `edit_draft`'s component points to the kind schemas `resources/templates/list` names, so a new kind
 never grows the list; output schemas are compact and listed only where a client reads the result.
-`tests/mcp/test_tool_budget.py` fails when the list grows past 22 tools, 60 KB of input schemas and
-descriptions (decision 0147 raised it to 62 KB for a release; decision 0159 restored it), or 120 KB
-in all; on 2026-11-23 it held 61,316 bytes of input and 68,737 in all. The admin tools are left out
+`tests/mcp/test_tool_budget.py` fails when the list grows past 32 tools, 100 KB of input schemas and
+descriptions, or 200 KB in all (decision 0191 raised it from 22 tools, 60 KB and 120 KB for the
+page-quality tools; on 2026-11-23 it held 61,316 bytes of input and 68,737 in all). A tool whose
+guidance outgrows its description points to a served reference, paged like the skill's references. The admin tools are left out
 of every list a token without `review` sees (`mcp_tool_base.listed_to`), so the contributors' list
 does not grow; an Admin's list has its own budget, 26 tools and 68 KB of input (66,576 bytes and
 74,893 in all on 2026-11-23), and no admin tool lists an output schema.
@@ -354,7 +355,7 @@ not break (decision 0101, item 15). `serverInfo.version` is `1.0.0`.
 
 | Claim | Kept true by |
 |---|---|
-| The tools, their groups and the list's budget | `backend/tests/mcp/test_tool_budget.py`: 22 tools in the six groups, 60 KB of input with no component kind enumerated, 120 KB in all; an Admin's list 26 tools and 68 KB of input |
+| The tools, their groups and the list's budget | `backend/tests/mcp/test_tool_budget.py`: at most 32 tools in the six groups, 100 KB of input with no component kind enumerated, 200 KB in all; an Admin's list four more tools and 108 KB of input (decision 0191) |
 | The admin reports | `backend/tests/mcp/test_admin_reports.py` and `backend/tests/db/test_admin_reports_db.py` |
 | The protocol, framing and the event stream | `backend/tests/mcp/test_mcp_protocol.py`, `test_mcp_route.py` and `test_mcp_stream.py` |
 | Browser clients | `backend/tests/mcp/test_mcp_cors.py` |

@@ -17,6 +17,7 @@ allowances and contracts stand.
 | What it amends | [0110 Sources a contributor's AI can read and we cannot, and a studio to build a page in](0110-contributor-supplied-sources.md): the tools it names; its services, allowances and contracts stand |
 | The component kinds are described once, and the index is written from the registry | [decision 0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md) |
 | A seventh group, `admin`, listed only to a token holding `review`, with its own budget | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) |
+| The list's budget raised to 32 tools and 100 KB of input | [decision 0191](0191-room-for-the-page-quality-tools.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context
