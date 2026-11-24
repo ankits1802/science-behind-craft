@@ -26,6 +26,7 @@ binding, point 5; the relay turn; Listen's seconds) and `docs/DATA_SOURCES.md` (
 | Relay billing and Listen's hold | [decision 0140](0140-voice-and-listen-kept-true.md) |
 | Seconds unlimited for every role for now | [decision 0093](0093-no-caps-for-now.md) |
 | The refused agent turn's log | [decision 0184](0184-a-measured-rubric-floor-the-recorded-clip-one-open-acl-and-a-named-refusal.md) |
+| The header the log showed unsubstituted, now a variable reference that ElevenLabs fills | [decision 0190](0190-a-voice-turn-bound-and-answered-and-a-page-built-while-its-inputs-move.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

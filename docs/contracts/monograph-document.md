@@ -45,7 +45,7 @@ flowchart LR
 | Storing the document when it changed | `services/monograph_load.py` |
 | The table | `models/monograph_documents.py` and migration `0041_monograph_documents`; migration `0045_document_language` keys stored documents by language (all rows English) |
 | The route | `api/routes/craft_monograph.py`; the family and category routes `api/routes/page_documents.py` |
-| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py` |
+| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py`. A read claims a rebuild only when the stored stamp differs from the current one (or a claim is ten minutes old), and a rebuild that finds its document changed under the stamp it held reads the stamp again: when the inputs moved while it built, the copy keeps the stamp it started from and the next read builds it again; only a document that changed while its inputs stood still is reported as an input the stamp misses (decision 0190) |
 | The static page, the served kit and the golden | `scripts/build_monograph.py` |
 | The split | `scripts/split_monograph.py` |
 | The web shapes | `frontend/lib/monographDocument.ts` and `frontend/lib/componentViewContract.ts` |

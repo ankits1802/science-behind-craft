@@ -54,7 +54,13 @@ def test_the_agent_carries_plan_ten_four_settings() -> None:
     assert prompt["built_in_tools"]["end_call"]["params"] == {"system_tool_type": "end_call"}
     assert prompt["tool_ids"] == TOOL_IDS
     assert prompt["custom_llm"]["api_key"] == {"secret_id": "secret_llm"}
-    assert prompt["custom_llm"]["request_headers"] == {"X-KV-Conversation-Id": "{{system__conversation_id}}"}
+    assert prompt["custom_llm"]["request_headers"] == {
+        "X-KV-Conversation-Id": {"variable_name": "system__conversation_id"}
+    }
+    assert (prompt["cascade_timeout_seconds"], prompt["backup_llm_config"]) == (
+        15.0,
+        {"preference": "disabled"},
+    )
     assert prompt["custom_llm"]["model_id"] == "kalavigyan-voice"
 
 

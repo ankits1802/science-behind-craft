@@ -20,6 +20,7 @@ and Roll back say how to use it.
 | Every migration readable by the release before, and its probe, which this amends | [decision 0151](0151-a-release-the-live-side-can-read.md) |
 | The field whose arrival showed the fault, `CitedSource.kind` | [decision 0183](0183-the-shared-template-draws-the-approved-page.md) |
 | How a release migrates, seeds, switches and rebuilds pages | [infra.md](../contracts/infra.md), Migrations, Seeds and Stored pages |
+| A rebuild whose inputs move while it builds, and a read that claims only a stale copy | [decision 0190](0190-a-voice-turn-bound-and-answered-and-a-page-built-while-its-inputs-move.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

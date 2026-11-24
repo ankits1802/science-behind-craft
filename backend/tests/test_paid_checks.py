@@ -128,3 +128,26 @@ async def test_one_agent_turn_binds_the_conversation_before_it_asks_and_keeps_no
     ]
     assert turn.replies == ["Ajrakh is a resist-printed cloth."]
     assert turn.events[-1] == {"type": "audio", "audio_event": {"event_id": 8, "base64Length": 4}}
+
+
+async def test_the_recorded_agent_turn_binds_its_conversation_and_hears_one_cited_reply() -> None:
+    fixture = Path(__file__).parent / "voice" / "fixtures" / "agent_turn_events.json"
+    events = json.loads(fixture.read_text(encoding="utf-8"))
+    started = next(e for e in events if e["type"] == "conversation_initiation_metadata")
+    recorded = started["conversation_initiation_metadata_event"]["conversation_id"]
+    socket = FakeSocket(events)
+    bound: list[str] = []
+
+    async def bind(conversation_id: str) -> None:
+        bound.append(conversation_id)
+
+    @asynccontextmanager
+    async def opener(url: str) -> Any:
+        yield socket
+
+    turn = await one_turn(
+        "wss://api.elevenlabs.io/v1/convai/conversation", "What is Ajrakh?", bind=bind, opener=opener
+    )
+    assert bound == [recorded] and recorded.startswith("conv_")
+    assert len(turn.replies) == 1 and "Sources: " in turn.replies[0]
+    assert turn.replies[0].startswith("Let me check the sources... Ajrakh is a double-sided")

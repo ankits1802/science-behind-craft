@@ -1,3 +1,4 @@
+import logging
 from collections.abc import AsyncIterator
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -74,6 +75,10 @@ async def laid_out(session: AsyncSession) -> None:
     )
 
 
+def stored_document_records(caplog: pytest.LogCaptureFixture) -> list[logging.LogRecord]:
+    return [record for record in caplog.records if record.name == stored_documents.logger.name]
+
+
 def never_assembled(monkeypatch: pytest.MonkeyPatch) -> None:
     async def refused(session: Any, subject: Any) -> None:
         raise AssertionError(f"{subject.slug} was assembled inside a read that holds a copy")
@@ -140,6 +145,56 @@ async def test_the_rebuild_stores_the_changed_document_under_the_next_version_an
         SECTIONS_VERSION + 1,
         NOW + timedelta(hours=1),
     )
+
+
+async def test_a_read_that_races_a_finished_rebuild_claims_no_second_one(session: AsyncSession) -> None:
+    subject = await craft(session)
+    assert await stored_copy(session, subject) is not None
+    await laid_out(session)
+    assert await claim_rebuild(session, subject, now=NOW) is True
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    assert await claim_rebuild(session, subject, now=NOW + timedelta(seconds=1)) is False
+
+
+async def test_inputs_that_move_while_a_document_is_built_raise_no_alarm_and_leave_it_to_be_built_again(
+    session: AsyncSession, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    subject = await craft(session)
+    assert await stored_copy(session, subject) is not None
+    built = stored_documents.generated_document_of
+
+    async def moved_while_built(opened: AsyncSession, asked: WorkSubject) -> Any:
+        await laid_out(opened)
+        return await built(opened, asked)
+
+    monkeypatch.setattr(stored_documents, "generated_document_of", moved_while_built)
+    with caplog.at_level(logging.INFO, logger="app.services.stored_documents"):
+        assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    monkeypatch.setattr(stored_documents, "generated_document_of", built)
+    reported = stored_document_records(caplog)
+    assert [record.levelno for record in reported] == [logging.INFO]
+    assert "moved while it was built" in reported[0].getMessage()
+    later = await read_generated(session, subject, now=NOW + timedelta(seconds=1))
+    assert later.copy is not None and (later.copy.current, later.rebuild) == (False, True)
+
+
+async def test_a_document_that_changes_while_its_inputs_stand_still_is_reported(
+    session: AsyncSession, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    subject = await craft(session)
+    assert await stored_copy(session, subject) is not None
+    built = stored_documents.generated_document_of
+
+    async def retitled(opened: AsyncSession, asked: WorkSubject) -> Any:
+        document = await built(opened, asked)
+        return None if document is None else document.model_copy(update={"title": "A title no input gave"})
+
+    monkeypatch.setattr(stored_documents, "generated_document_of", retitled)
+    with caplog.at_level(logging.INFO, logger="app.services.stored_documents"):
+        assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    reported = stored_document_records(caplog)
+    assert [record.levelno for record in reported] == [logging.ERROR]
+    assert "an input the stamp misses moved" in reported[0].getMessage()
 
 
 async def test_a_page_whose_sections_are_withdrawn_loses_its_stored_document(session: AsyncSession) -> None:

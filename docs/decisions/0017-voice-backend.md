@@ -14,6 +14,7 @@ Date: 2026-11-16. Status: accepted; item 12 superseded by decision 0025.
 | The contract it was built to | [0014 Contracts for process science, region profile, voice and media](0014-science-region-voice-media-contracts.md) |
 | The review that fixed it | [0022 Voice spend fails closed, a filtered style hint, region sources and one home per rule](0022-batch-3-review-fixes.md) |
 | The contracts it names | [voice.md](../contracts/voice.md) |
+| The agent's conversation header as a variable reference, its 15 s cascade timeout and no backup model | [decision 0190](0190-a-voice-turn-bound-and-answered-and-a-page-built-while-its-inputs-move.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

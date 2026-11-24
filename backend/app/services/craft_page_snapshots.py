@@ -70,12 +70,19 @@ async def rebuild_snapshots(session: AsyncSession, craft: Craft) -> bool:
         if before is not None and before[0] != served.etag:
             changed = True
             if before[1] == stamp:
-                logger.error(
-                    "the %s page of %s changed under an unchanged stamp; an input the stamp misses moved",
-                    variant,
-                    craft.slug,
-                )
+                await _report_unchanged_stamp(session, craft, variant, stamp)
     return changed
+
+
+async def _report_unchanged_stamp(session: AsyncSession, craft: Craft, variant: str, stamp: str) -> None:
+    if await page_stamp(session, craft, variant) != stamp:
+        logger.info("the inputs of the %s page of %s moved while it was built", variant, craft.slug)
+        return
+    logger.error(
+        "the %s page of %s changed under an unchanged stamp; an input the stamp misses moved",
+        variant,
+        craft.slug,
+    )
 
 
 async def _snapshot(session: AsyncSession, craft: Craft, variant: str, stamp: str) -> ServedPage:

@@ -42,6 +42,9 @@ LLM_SECRET_NAME = "KALAVIGYAN_VOICE_LLM_BEARER"
 CHAT_COMPLETIONS_SUFFIX = "/chat/completions"
 AGENT_PROMPT = "You are KalaVigyan. Every reply comes from the custom language model."
 TURN_TIMEOUT_SECONDS = 10
+CONVERSATION_ID_VARIABLE = {"variable_name": "system__conversation_id"}
+CASCADE_TIMEOUT_SECONDS = 15.0
+NO_BACKUP_LLM = {"preference": "disabled"}
 SOFT_TIMEOUT_SECONDS = 3.0
 TURN_EAGERNESS = "normal"
 TRANSCRIPT_RETENTION_DAYS_AT_ELEVENLABS = 2
@@ -172,9 +175,11 @@ def _prompt(plan: AgentPlan, secret_id: str, tool_ids: Sequence[str]) -> dict[st
             "url": llm_base_url(plan.api_base_url),
             "model_id": VOICE_LLM_MODEL,
             "api_key": {"secret_id": secret_id},
-            "request_headers": {CONVERSATION_HEADER: "{{system__conversation_id}}"},
+            "request_headers": {CONVERSATION_HEADER: dict(CONVERSATION_ID_VARIABLE)},
             "api_type": "chat_completions",
         },
+        "cascade_timeout_seconds": CASCADE_TIMEOUT_SECONDS,
+        "backup_llm_config": dict(NO_BACKUP_LLM),
         "tool_ids": list(tool_ids),
         "built_in_tools": {
             name: {"name": name, "description": "", "params": {"system_tool_type": name}}

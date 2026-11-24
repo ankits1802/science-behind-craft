@@ -7,7 +7,7 @@ from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from typing import Any
 
-from sqlalchemy import delete, func, or_, select, update
+from sqlalchemy import and_, delete, func, or_, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -87,7 +87,8 @@ async def read_generated(session: AsyncSession, subject: WorkSubject, *, now: da
     copy = await stored_copy(session, subject)
     if copy is None or copy.current:
         return GeneratedRead(subject, copy)
-    return GeneratedRead(subject, copy, rebuild=await claim_rebuild(session, subject, now=now))
+    stamp = await document_stamp(session, subject)
+    return GeneratedRead(subject, copy, rebuild=await claim_rebuild(session, subject, now=now, stamp=stamp))
 
 
 async def stored_copy(
@@ -118,15 +119,22 @@ async def held_copy(
 
 
 async def claim_rebuild(
-    session: AsyncSession, subject: WorkSubject, *, now: datetime, language: str = ENGLISH
+    session: AsyncSession,
+    subject: WorkSubject,
+    *,
+    now: datetime,
+    language: str = ENGLISH,
+    stamp: str | None = None,
 ) -> bool:
+    current = stamp if stamp is not None else await document_stamp(session, subject)
+    unclaimed_and_stale = and_(StoredDocument.wantedAt.is_(None), StoredDocument.stamp != current)
     claimed = await session.execute(
         update(StoredDocument)
         .where(
             StoredDocument.subjectKind == subject.kind,
             StoredDocument.subjectSlug == subject.slug,
             StoredDocument.language == language,
-            or_(StoredDocument.wantedAt.is_(None), StoredDocument.wantedAt < now - REBUILD_RETRY),
+            or_(unclaimed_and_stale, StoredDocument.wantedAt < now - REBUILD_RETRY),
         )
         .values(wantedAt=now)
         .returning(StoredDocument.subjectSlug)
@@ -150,12 +158,18 @@ async def rebuild_document(session: AsyncSession, subject: WorkSubject, *, now: 
     held = None if before is None else before.stamp
     _, rebuilt = await _store(session, document, stamp, now=now)
     if rebuilt == Rebuilt.CHANGED and held == stamp:
-        logger.error(
-            "the document of %s:%s changed under an unchanged stamp; an input the stamp misses moved",
-            subject.kind,
-            subject.slug,
-        )
+        await _report_unchanged_stamp(session, subject, stamp)
     return rebuilt
+
+
+async def _report_unchanged_stamp(session: AsyncSession, subject: WorkSubject, stamp: str) -> None:
+    named = f"{subject.kind}:{subject.slug}"
+    if await document_stamp(session, subject) != stamp:
+        logger.info("the inputs of %s moved while it was built; the next read builds it again", named)
+        return
+    logger.error(
+        "the document of %s changed under an unchanged stamp; an input the stamp misses moved", named
+    )
 
 
 async def has_sections(session: AsyncSession, subject: WorkSubject) -> bool:

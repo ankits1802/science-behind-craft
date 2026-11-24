@@ -1,0 +1,682 @@
+[
+  {
+    "conversation_initiation_metadata_event": {
+      "conversation_id": "conv_4801m865ckmaegkt6kcq7w2jnybt",
+      "agent_output_audio_format": "pcm_16000",
+      "user_input_audio_format": "pcm_16000",
+      "persistent_session_token": null
+    },
+    "type": "conversation_initiation_metadata"
+  },
+  {
+    "ping_event": {
+      "event_id": 2,
+      "ping_ms": null
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 3,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 4,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 5,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 6,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 7,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 2024
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 2024
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 8088
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 2024
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 10108
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 4044
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 4044
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 20216
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 14152
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 30320
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 38408
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "ping_event": {
+      "event_id": 8,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 38408
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 36384
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 38408
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 36384
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 34364
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 40428
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 38408
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 30320
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 44472
+    }
+  },
+  {
+    "ping_event": {
+      "event_id": 9,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 38408
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 26280
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 42448
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 44472
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 22236
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 42448
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 36384
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 30320
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 42448
+    }
+  },
+  {
+    "type": "audio",
+    "audio_event": {
+      "event_id": 1,
+      "base64Length": 1356
+    }
+  },
+  {
+    "agent_response_event": {
+      "agent_response": "Let me check the sources... Ajrakh is a double-sided block-printed textile made by Khatri artisans. It is created through an elaborate resist block-printing technique with direct and resist printing and dyeing steps. Traditional ajrakh uses four colours, blue, black, red and white. Sources: Edwards 2016; GI Journal 188; Ajrakh; Frater 2024.",
+      "event_id": 1,
+      "response_id": "5ad226b5-7151-4987-a310-481927f9a82f",
+      "in_response_to_ids": [
+        "4e544f3c-0d80-4549-b0c0-3bf325c60e46"
+      ],
+      "response_type": "text",
+      "attachments": []
+    },
+    "type": "agent_response"
+  },
+  {
+    "ping_event": {
+      "event_id": 10,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 11,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 12,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 13,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 14,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 15,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 16,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 17,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 18,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 19,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 20,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 21,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 22,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 23,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 24,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 25,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 26,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 27,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 28,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 29,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 30,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 31,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 32,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 33,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 34,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 35,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 36,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 37,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 38,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 39,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 40,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 41,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 42,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 43,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 44,
+      "ping_ms": 271
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 45,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 46,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 47,
+      "ping_ms": 273
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 48,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 49,
+      "ping_ms": 273
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 50,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 51,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 52,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  },
+  {
+    "ping_event": {
+      "event_id": 53,
+      "ping_ms": 272
+    },
+    "type": "ping"
+  }
+]

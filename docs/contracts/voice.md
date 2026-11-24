@@ -83,12 +83,12 @@ Verified on the official documentation (2026-11-16):
 **Unverified** (the P1a spike of PLAN 10.1, run by lane 0017 on GitHub Actions, settles each one
 and records the captured requests in decision 0017):
 
-1. That `custom_llm.request_headers` values substitute `{{system__conversation_id}}` on every
-   request (documented for tool headers; a third-party gateway guide says it works for custom
-   LLM headers).
-2. Whether ElevenLabs appends `/chat/completions` to `custom_llm.url` or calls it as given.
-3. That ElevenLabs sends `custom_llm.api_key` as `Authorization: Bearer <key>` (third-party
-   guides say so; the official page only says the key is a secret).
+1. Settled on 2026-11-24 (decision 0190): a plain-string `custom_llm.request_headers` value is
+   sent as written, so `"{{system__conversation_id}}"` arrived as those 27 characters; a
+   dynamic-variable reference, `{"variable_name": "system__conversation_id"}` (`ConvAIDynamicVariable`
+   in the agent API), arrives as the conversation's `conv_` id (paid check run 45343985030).
+2. Settled the same day: ElevenLabs appends `/chat/completions` to `custom_llm.url`.
+3. Settled the same day: ElevenLabs sends `custom_llm.api_key` as `Authorization: Bearer <key>`.
 4. That a custom LLM's `tool_calls` reach `end_call` and the client tools.
 5. That a reply may stream text and then a tool call in the same response.
 6. Speech in and out of an agent in each offered language (how a session's language reaches the
@@ -164,8 +164,11 @@ is when the session may last start. The client shows the voice button only when
 4. The agent is configured once (lane 0017, recorded with ids in `docs/RUNBOOK.md`): private (a
    token is required), `custom_llm.url` our route, `custom_llm.api_key` a workspace secret
    holding `VOICE_LLM_BEARER`, `custom_llm.request_headers`
-   `{"X-KV-Conversation-Id": "{{system__conversation_id}}"}` (`CONVERSATION_HEADER`), every client
-   override off including `custom_llm_extra_body`.
+   `{"X-KV-Conversation-Id": {"variable_name": "system__conversation_id"}}` (`CONVERSATION_HEADER`),
+   `cascade_timeout_seconds` 15 (the API's most; ElevenLabs gives up on a turn and asks the same
+   custom LLM again after it, and at the default 4 s every answer was cut after its filler) and
+   `backup_llm_config` `{"preference": "disabled"}`, so no model of ElevenLabs' answers in place of
+   ours; every client override off including `custom_llm_extra_body` (decision 0190).
 5. On every custom-LLM request the server requires, in constant time, the bearer
    `VOICE_LLM_BEARER`; then finds the live session whose `elConversationId` equals the header;
    then recomputes the nonce from that row and compares its hash with `nonceHash`; then checks
