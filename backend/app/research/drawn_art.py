@@ -24,6 +24,7 @@ __all__ = [
     "Drawn",
     "drawn_art_problems",
     "free_drawings",
+    "scene_problems",
 ]
 
 MOLECULE_KINDS = frozenset({"structure_diagram", "molecule_3d"})
@@ -84,6 +85,12 @@ class Shape:
 
 
 def drawn_art_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
+    if kind not in KIT_FIGURE_KINDS:
+        return []
+    return scene_problems(kind, spec, texts)
+
+
+def scene_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
     if kind in MOLECULE_KINDS:
         return []
     found: list[str] = []

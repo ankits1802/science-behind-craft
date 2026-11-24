@@ -112,8 +112,10 @@ The hand-drawn figure, checks 7 and 8) and `docs/contracts/component-specs-scien
 - A contributor's figure of cloth, a vat, a paste, a section or a piece is composed rather than
   drawn, and the delivery says which part to use when one is drawn by hand.
 - The players and cards cannot place a kit part yet: their renderers are the interactives lane's
-  and take `SvgNode` trees. Their art is held to the bar, and the kit's `KitPartArt` and
-  `KitFigure` are ready for those renderers to draw a kit scene when they take one.
+  and take `SvgNode` trees. Their art is held to the bar only once they take kit parts
+  (`scene_problems`, which the delivery does not call yet), so the scenes `compose_component`
+  builds are not refused for want of a part; the kit's `KitPartArt` and `KitFigure` are ready for
+  those renderers to draw a kit scene when they take one.
 - A family whose materials have no depicted token (wax, cast metal, raw and fired clay, stone,
   wood, lac, hide, pulp, mineral pigments) draws its parts in line work until the design generator
   records the material, as the interactives skill already asks.

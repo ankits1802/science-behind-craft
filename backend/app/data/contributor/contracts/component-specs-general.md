@@ -317,11 +317,14 @@ the line from 640 px, mirrored right to left; a section sets its drawing beside 
 640 px. **The kit sheet** (`/design/kit`) draws every part in every form and every depicted
 material and the four layouts, at the sheet's widths, in the theme its switches choose.
 
-**The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8 for every kind but
-the molecule drawings of `structure_diagram` and `molecule_3d`): every free drawing a delivery
-carries (a `drawing`'s SVG, a `diagram`'s drawing and chain drawings, a player's scene, phase and
-stage drawings, a card's seal, a panel's art; icons excepted) is refused, naming the kit part to
-use, when it
+**The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8 for a `drawing` and
+a `diagram`): every free drawing such a delivery carries (a `drawing`'s SVG, a `diagram`'s drawing
+and chain drawings; icons excepted) is refused, naming the kit part to use, when it breaks one of
+the rules below. A player's scene, phase and stage drawings, a card's seal and a panel's art are held
+to the same bar (`drawn_art.scene_problems`, the molecule drawings of `structure_diagram` and
+`molecule_3d` excepted) once those kinds can place kit parts; until then the delivery does not
+apply it to them, so the scenes the composer builds are not refused for want of a part. A drawing
+held to the bar is refused when it
 
 - sets text off the type scale: drawn at 320 px wide, a text is 12, 13, 14 or 16 px, within a
   quarter of a pixel (`UI_SIZES_PX`; under 12 px the vocabulary's floor refuses it);

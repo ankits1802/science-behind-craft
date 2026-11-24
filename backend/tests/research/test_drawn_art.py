@@ -9,7 +9,13 @@ import pytest
 from app.data.kind_fixture_files import kind_fixtures
 from app.research.component_specs import checked_spec
 from app.research.component_specs_general_delivery import DeliveredUnit, spec_problems
-from app.research.drawn_art import KIT_POINTER, MATERIAL_PARTS, drawn_art_problems, free_drawings
+from app.research.drawn_art import (
+    KIT_POINTER,
+    MATERIAL_PARTS,
+    drawn_art_problems,
+    free_drawings,
+    scene_problems,
+)
 
 APP = Path(__file__).resolve().parents[2] / "app"
 MONOGRAPH_SPECS = APP / "data" / "monographs" / "Kutch-Ajrakh" / "specs"
@@ -40,6 +46,10 @@ def declared(body: str) -> dict[str, Any]:
 
 def found(kind: str, spec: dict[str, Any], texts: dict[str, str] = TEXTS) -> list[str]:
     return drawn_art_problems(kind, checked_spec(kind, spec).model_dump(mode="json"), texts)
+
+
+def scene_found(kind: str, spec: dict[str, Any], texts: dict[str, str] = TEXTS) -> list[str]:
+    return scene_problems(kind, checked_spec(kind, spec).model_dump(mode="json"), texts)
 
 
 def stage_player(children: list[dict[str, Any]]) -> dict[str, Any]:
@@ -137,7 +147,7 @@ def test_a_figure_whose_own_words_name_a_kit_part_is_sent_to_that_part() -> None
 
 def test_a_player_s_material_is_textured_by_a_pattern_laid_over_the_same_shape() -> None:
     soil = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--dye-field-soil)", "stroke": "var(--ink-1)"}}
-    bare = found("stage_player", stage_player([*inked_rects(6), soil]))
+    bare = scene_found("stage_player", stage_player([*inked_rects(6), soil]))
     assert bare == [f"the stage_player's drawing at drawing paints --dye-field-soil {UNTEXTURED}"]
     pattern = {
         "tag": "defs",
@@ -150,7 +160,7 @@ def test_a_player_s_material_is_textured_by_a_pattern_laid_over_the_same_shape()
         ],
     }
     twin = {"tag": "ellipse", "attrs": {**SOIL, "fill": "url(#t)"}}
-    assert found("stage_player", stage_player([pattern, *inked_rects(6), soil, twin])) == []
+    assert scene_found("stage_player", stage_player([pattern, *inked_rects(6), soil, twin])) == []
     fade = {
         "tag": "defs",
         "children": [
@@ -161,12 +171,13 @@ def test_a_player_s_material_is_textured_by_a_pattern_laid_over_the_same_shape()
             }
         ],
     }
-    assert len(found("stage_player", stage_player([fade, *inked_rects(6), soil, twin]))) == 1
+    assert len(scene_found("stage_player", stage_player([fade, *inked_rects(6), soil, twin]))) == 1
 
 
-def test_a_player_s_drawing_is_held_to_the_shapes_and_the_ink_but_not_sent_to_the_kit() -> None:
+def test_a_player_s_scene_is_held_to_the_bar_only_once_players_take_kit_parts() -> None:
     lone = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--sunk)"}}
-    assert found("stage_player", stage_player([lone])) == [
+    assert found("stage_player", stage_player([lone])) == []
+    assert scene_found("stage_player", stage_player([lone])) == [
         "the stage_player's drawing at drawing draws 1 shapes, fewer than the 6 a figure at the bar is drawn "
         "with; draw it with more of its parts, edged in ink and textured, as the kit's parts are drawn",
         "the stage_player's drawing at drawing has no line work in ink: edge what it shows in --ink-1, --ink-2 "
