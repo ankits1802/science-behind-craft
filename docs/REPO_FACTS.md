@@ -15,7 +15,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## HTTP API
 
-**255 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 135 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**256 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 136 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -83,6 +83,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `mcp_activity.py` | 1 |
 | `molecules.py` | 1 |
 | `open_data.py` | 1 |
+| `page_exports.py` | 1 |
 | `public.py` | 1 |
 | `rivers.py` | 1 |
 | `simulations.py` | 1 |
@@ -115,7 +116,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 804 | 5928 |
+| Backend, without a database | 808 | 5963 |
 | Backend, on Postgres | 221 | 991 |
 | Tools | 27 | 211 |
 | Craft data ETL | 7 | 51 |
@@ -132,7 +133,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 196 |
+| Decision records (`docs/decisions/`) | 197 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 29 |
 | Curated craft dossiers | 32 |
@@ -142,8 +143,8 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1506 | 211,419 |
-| `backend/tests` | 1198 | 153,686 |
+| `backend/app` | 1535 | 215,204 |
+| `backend/tests` | 1204 | 154,630 |
 | `backend/migrations` | 90 | 11,576 |
 | `frontend/app` | 114 | 10,282 |
 | `frontend/components` | 662 | 45,149 |

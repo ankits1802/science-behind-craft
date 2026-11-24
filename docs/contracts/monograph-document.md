@@ -52,6 +52,7 @@ flowchart LR
 | A curated craft's structure | `services/document_components.py` (the structure read from the craft page), `document_components_parts.py` (its records as text units), `document_components_store.py` (the page it reads), `monograph_generated_structure.py` (placing it), `research/component_specs_blocks.py` (the `answer_block` kind) |
 | The sections | `services/monograph_generated_sections.py` (the one writer), `services/curation_sections.py` and `scripts/publish_curated_sections.py` |
 | Pages in other languages | the code table of that section, below |
+| The page as a PDF and a Word document | `api/routes/page_exports.py`, `services/page_export_*.py`, `services/docx_writer.py`, the still renderer `services/export_still*.py` (Exports, below) |
 
 ## GET /api/crafts/{slug}/monograph
 
@@ -96,6 +97,58 @@ tag of at most 16 characters) and `version` (optional, from 1).
   generated. A craft needs `CRAFT_SECTIONS_MIN` (3) published sections for a generated document
   (`enough_sections`; a family or category needs one). The web app then draws the craft without a
   monograph.
+
+## Exports (decision 0206)
+
+`GET /api/crafts/{slug}/monograph/{fmt}`, `fmt` `pdf` or `docx`, with `lang` and `version` as
+above. Public; the document is the one the monograph route serves (English, or the variant in
+`lang`), so a translated page exports in its language with every passage not yet translated in
+English. The answer is an `ExportLink` (`format` `pdf` or `docx`, a five-minute signed link,
+`Cache-Control: private, no-cache`), the file built once under
+`exports/00000000-0000-0000-0000-000000000001/<sha256 of the page, the served tag and the
+language>/<name>` and named `KalaVigyan_Craft-Page_<date>_<page>[_<language>]_Export_v<n>.<fmt>`
+(`naming.export_file_name`); 503 when no media bucket is set, 404 as the monograph route.
+
+- **The page as paper** (`page_export_document.page_export`): the title, the page's address, its
+  version and its language, the reading note of a variant (`<translated> of <passages> passages read
+  in <language>; the others are shown in English.`), then each chapter under its title in layout
+  order: every passage unit not placed in a component, with its citation numbers (the page's
+  `sources` numbers, `[1, 4]`) after its cited words, sub- and superscripts kept, and every
+  component as one figure where the layout places it (a component placed in no chapter is given in
+  its own chapter last). The sources end the file, numbered as the page numbers them.
+- **A figure** is its kind label, its title (the spec's head title, else the component's title),
+  its stills, its lines, what the page does that paper cannot (`PAPER_NOTES`: a player's steps, a
+  molecule turned, a map moving through its years, a lab's choices) and its credits. Every unit
+  placed in the component, or named by its spec when nothing is placed, is given in its lines; the
+  figure number and a stage's ordinal, which the export numbers itself, are the only units left out.
+  The builders, by kind:
+
+  | Kind | Its still and lines |
+  |---|---|
+  | `timeline_map` (declared) | the site's district outlines of its places' states, the home district in terracotta, a numbered pin at each found place and each route drawn: the map at its last year with every place pinned; then each place by number with its dated points and undated facts, each route, the boundary caption, and its datasets as credits |
+  | `diagram` (composed) | the panels drawn from the kit's parts, numbered, arrows between in a sequence or a before and after; each panel's label, change, text and the labels of the parts it draws; the note only when a panel moves |
+  | `swatch_cards` | each colour's before and after swatches in their depicted-material tokens (a colour no token shows drawn in line work); its name, what gives it, its text and the swatches' captions |
+  | `reaction_player` | the scene of the step the page opens on; every step with its species, its equation or why it has none, its conditions and where it happens |
+  | `dip_player`, `stage_player` | the scene and a strip of the dips' or stages' colours; every phase or stage in order, a stage's name with its English when it is named in its own language |
+  | `molecule_3d` | each model from its conformer turned to its rest (atoms in the kit's atom tokens, bonds in ink), else its 2D drawing; its name, formula and PubChem record, its atoms, note and key |
+  | `label_card`, `experiment_lab`, `choice_toggle` | the seal or the stage drawings; the facts, the experiments and the figures that draw them, each choice with its result |
+  | every other kind | its SVG drawings (at most four), the pictures it names by their alt text, and its units |
+
+  A scene slot that holds a kit scene (`{"parts": [...]}`, the kit-players lane, decision 0200) is
+  drawn from its parts; an answer's kit figure (decision 0201) takes `export_pdf_kit.kit_figure_pdf`,
+  the same renderer. A spec that does not parse is drawn from its words alone and logged.
+- **The still renderer** draws at rest, light theme, from the design tokens: a component's own
+  drawing (paths with every command, shapes, text, transforms, gradients by their first stop;
+  textures, masks and filters left out), the kit's parts with the web kit's own path data
+  (`frontend/components/artkit/parts/`), a conformer, swatches and the district outlines. A PDF
+  draws it as vectors (`export_pdf_still.draw_still`); a Word document holds it as a PNG 1000 px
+  on its long side (`export_still_png.still_png`) with its lines as text beneath, so a translated
+  label is never drawn in a picture.
+- **The files**: the PDF through `PdfWriter` (fpdf2, HarfBuzz, the Noto font of the page's script);
+  the Word document written as WordprocessingML with the standard library (`docx_writer`):
+  `[Content_Types].xml`, `_rels/.rels`, `docProps/core.xml`, `word/styles.xml` (named styles in the
+  design's ink and indigo), `word/document.xml` (runs in bold, italic, sub- or superscript, each
+  with its passage's `w:lang`, right to left for Urdu) and one `word/media/figure<n>.png` per still.
 
 ## The document
 
@@ -250,6 +303,7 @@ contribution brought (`origin`) are left out.
 | Part | Code |
 |---|---|
 | Passages, their hash, their texts | `research/translation_passages.py` |
+| A page's passages, its components' labels among them | `research/page_passages.py`, `research/spec_texts.py`, `research/shown_text.py` |
 | The gates | `research/page_translation_gates.py` |
 | The variant | `research/page_translation_variant.py` |
 | The document's `translation` | `research/document_translation.py` |
@@ -278,7 +332,12 @@ stateDiagram-v2
 
 - **A passage** is a text unit with a letter outside a fixed mark (`i`, `sub`, `sup`: names in
   italic, botanical names, verbatim quotes, formula parts), the masthead title aside: a name is
-  never translated. Its **texts** are its string leaves in document order, `fixed` the indices
+  never translated. A component's reader labels are passages too (decision 0206,
+  `research/page_passages.page_passages`): every string of its spec typed `Label` and every
+  species name (`ShownRich`), both marked `SHOWN_TEXT` in `component_specs_science_parts`, keyed
+  `<component label>#<path>` (`steps.0.name`), with tag `label`, the component's chapter and no
+  claims; its `formula`s, keys, ids, colours, numbers and drawings are never passages, nor a
+  stage's `name` when the stage is named in its own language (`local`). Its **texts** are its string leaves in document order, `fixed` the indices
   inside a fixed mark, `cited` those inside a `cite` mark. Its **hash** (`unit_hash`) is the
   SHA-256 of `{"claims": sorted claim ids, "nodes": the nodes with each cite mark's g and key
   removed}` (JSON, keys sorted, compact): the words and the claims a sentence rests on, not how
@@ -321,14 +380,16 @@ stateDiagram-v2
   passage (the English changed, so the translation is held until the passage is translated again).
   Units that are not passages keep no `lang`. The document's `language` is the language and its
   `translation` is `{sourceLanguage "en", sourceVersion, script, direction, passages, translated,
-  held}`; specs, fragments, data and the source book are the English document's. An authored
+  held}`, labels counted with units; a spec's labels are drawn from their served translations and
+  everything else in it, and the fragments, data and source book, are the English document's. An authored
   page's shell is drawn again from its template with the variant's units (`authored_document`);
   `render_nodes` wraps a unit with a `lang` in `<span lang dir data-script>` (`data-script` `Aran`
   for Urdu, else the language's script) or `<span lang="en" dir="ltr" data-fallback="en">`, and
   the web's `UnitView` sets the same attributes, so a reader and a screen reader always know which
   language a passage is in and the page marks each English passage with the word English.
 - **The index** (`PageTextUnit`): every passage of a page's English document, its position, hash,
-  chapter, tag and leaves, under the document's tag (`v<version>-<content hash>`). The monograph
+  chapter, tag and leaves, under the document's tag (`v<version>-<content hash>-i2`, the index's
+  edition `i2` since its labels joined, so every page is indexed again once). The monograph
   routes, the translation view and every translation part write it again when the tag changed, so
   open work counts passages without building documents.
 - **Reads.** `GET /api/pages/{kind}/{slug}/languages` (public): each answer language the page is
@@ -446,6 +507,10 @@ to `specs`).
 | Placement, the variant, the hold on change, the preview | `tests/db/test_page_translations_db.py` |
 | The tasks, a claim completed, review | `tests/db/test_translation_work_db.py` |
 | The languages on the web | `frontend/e2e/document-languages-unit.spec.ts` |
+| A component's labels offered, a native name and formulas never, a label put back where it was read, the fixture page's offers, a translated unit of each new kind drawn and an untranslated one in English, the served variant's specs | `tests/exports/test_export_languages.py` |
+| Each new kind as its figure, every unit of a component in it, Kutch Ajrakh whole | `tests/exports/test_page_export.py` |
+| The still renderer: paths, paints, drawings, kit parts, a composed diagram, a kit scene, a molecule, swatches, a map, the PDF and the PNG, an answer's kit figure | `tests/exports/test_export_stills.py` |
+| The PDF's text and drawings, the Word document's parts, Kutch Ajrakh's files, the filed link and its name | `tests/exports/test_page_files.py` |
 
 Test paths are relative to `backend/`, but the web's, which is relative to the repository. Last
 reviewed: 2026-11-20, and every path here checked against the code on 2026-11-22. Re-read it when a document field, the route's answers, a slot, the

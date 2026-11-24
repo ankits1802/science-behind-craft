@@ -302,8 +302,11 @@ with its credit.
   client draws) with the district names and the boundary caption; a reaction player's or generated
   explainer's labels and equations, and the explainer's values; a molecule's or material's name,
   formula and PubChem id; a supply map's materials with their origins; a measure's stated and
-  metric amounts with their basis; a timeline map's places and routes with their years (no map is
-  drawn for it). Nothing a block does not carry is drawn. Name
+  metric amounts with their basis; a timeline map's places and routes with their years, over the
+  map the page export draws (its placed places pinned and numbered over their states' district
+  outlines, its routes drawn, then `Places on the map: 1 <name>; ...`; decision 0206). A composed kit
+  diagram is drawn by the page export's still renderer (`services/export_pdf_kit.kit_figure_pdf`,
+  decision 0206), the call an answer's kit figure (decision 0201) takes. Nothing a block does not carry is drawn. Name
   `KalaVigyan_Explainer_<date>_<craft>_<question>_Report_v<version>.pdf` (the version's day).
 - **Citations.** `GET /api/explainers/{explainerId}/versions/{version}/citations` (`SAVE_EXPORT`,
   the asker) answers `CitationExport {schemaVersion 1, explainerId, version, entries[CitationEntry]

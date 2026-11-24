@@ -125,6 +125,7 @@ def test_a_generated_explainer_draws_its_values_and_a_timeline_its_years() -> No
     timeline, _ = figure_of(PHASE_C, "s4.b1")
     assert "Fustat · 1401–1500" in timeline and "Dhamadka · 1586" in timeline
     assert "Ajrakhpur · 2001" in timeline and "Sindh to Kutch · 1586–1631" in timeline
+    assert "Places on the map: 1 Fustat" in timeline
 
 
 def test_the_report_draws_each_block_before_its_sentences() -> None:

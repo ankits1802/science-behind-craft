@@ -1,20 +1,19 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import PageTranslation
-from app.research.monograph_page import MonographContent
+from app.research.page_passages import PagePassage
 from app.research.page_translation_variant import ServedTranslations, translations_digest
 from app.research.page_translations import (
     LIVE_TRANSLATION_STATUSES,
     SERVED_TRANSLATION_STATUSES,
     SUPERSEDED_STATUS,
 )
-from app.research.translation_passages import is_translatable, unit_hash
 
 from .page_text_index import PageKey
 
@@ -78,14 +77,10 @@ async def live_hashes(session: AsyncSession, page: PageKey, language: str) -> fr
 
 
 async def remaining_passages(
-    session: AsyncSession, page: PageKey, language: str, content: MonographContent
+    session: AsyncSession, page: PageKey, language: str, passages: Mapping[str, PagePassage]
 ) -> int:
     live = await live_hashes(session, page, language)
-    return sum(
-        1
-        for key, unit in content.units.items()
-        if is_translatable(key, unit.nodes) and unit_hash(unit.nodes, unit.claim_ids) not in live
-    )
+    return sum(1 for passage in passages.values() if passage.source_hash not in live)
 
 
 async def supersede_others(session: AsyncSession, row: PageTranslation) -> None:

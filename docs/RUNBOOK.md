@@ -606,6 +606,14 @@ started it.
 JSON file per craft (`docs/contracts/knowledge-api.md`, Bulk export); the same document is served
 at `GET /api/knowledge/crafts/{slug}/export`.
 
+A page as a reader's PDF or Word document (decision 0206) is `GET
+/api/crafts/<slug>/monograph/pdf` or `/docx` (`lang` as the monograph route takes it), answered as
+a five-minute signed link. The file is built once per served tag and kept under
+`exports/00000000-0000-0000-0000-000000000001/` in the media bucket, which the `expire-exports`
+lifecycle rule clears with every other export; nothing else keeps or deletes it, and no IAM change
+is needed (the media user already puts and reads `exports/*`). A route answering 503 `This file
+can't be made right now.` means `S3_BUCKET` is not set on that process.
+
 ## AI spend and token limits
 
 No caps for now, on anyone, in money or tokens (owner, 2026-11-18; decision 0093). Every cap is

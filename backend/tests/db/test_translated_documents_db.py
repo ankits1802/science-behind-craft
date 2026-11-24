@@ -133,5 +133,5 @@ async def test_a_contributor_works_on_the_english_readers_are_served_so_both_ind
     await generated_in_language(session, read, language="en")
     english = await english_page(session, ("craft", CRAFT_SLUG))
     assert english is not None
-    assert english.tag == f"v{moved}-{first.copy.content_hash}"
+    assert english.tag == f"v{moved}-{first.copy.content_hash}-i2"
     assert await indexed_tag(session, ("craft", CRAFT_SLUG)) == english.tag

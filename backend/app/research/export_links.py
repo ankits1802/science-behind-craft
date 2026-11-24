@@ -10,9 +10,11 @@ from .base import ContractModel, HttpsUrl
 from .lessons import LESSON_FORMATS
 
 __all__ = [
+    "EXPORT_FORMATS",
     "EXPORT_LINK_SCHEMA_VERSION",
     "EXPORT_LINK_SECONDS",
     "EXPORT_MEDIA_TYPES",
+    "PAGE_EXPORT_FORMATS",
     "ExportLink",
 ]
 
@@ -23,10 +25,13 @@ EXPORT_MEDIA_TYPES: Mapping[str, str] = MappingProxyType(
         "html": "text/html; charset=utf-8",
         "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
         "pdf": "application/pdf",
+        "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     }
 )
+PAGE_EXPORT_FORMATS = ("pdf", "docx")
+EXPORT_FORMATS = (*LESSON_FORMATS, "docx")
 
-ExportFormat = Literal[*LESSON_FORMATS]
+ExportFormat = Literal[*EXPORT_FORMATS]
 
 
 class ExportLink(ContractModel):

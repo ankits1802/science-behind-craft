@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import asdict
 from datetime import UTC, datetime
 from itertools import batched
@@ -12,18 +12,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import PageTextUnit, PageTranslation
 from app.research.monograph_page import MonographContent
+from app.research.page_passages import PagePassage, page_passages
 from app.research.page_translations import LIVE_TRANSLATION_STATUSES
-from app.research.translation_passages import (
-    PassageLeaf,
-    TaskPassage,
-    is_translatable,
-    passage_leaves,
-    passage_text,
-    unit_hash,
-)
+from app.research.translation_passages import PassageLeaf, TaskPassage, passage_text
 
 __all__ = [
+    "INDEX_EDITION",
     "PageKey",
+    "Specs",
     "covered_counts",
     "indexed_passages",
     "indexed_tag",
@@ -34,16 +30,18 @@ __all__ = [
 ]
 
 CHAPTER_MAX = 80
+INDEX_EDITION = "i2"
 TAG_MAX = 16
 ROWS_PER_INSERT = 500
 PRIMARY_KEY = ("subjectKind", "subjectSlug", "unitKey")
 REFRESHED = ("position", "sourceHash", "chapter", "tag", "leaves", "documentTag", "refreshedAt")
 
 PageKey = tuple[str, str]
+Specs = Mapping[str, Mapping[str, Any]]
 
 
 def stored_tag(version: int, content_hash: str) -> str:
-    return f"v{version}-{content_hash}"
+    return f"v{version}-{content_hash}-{INDEX_EDITION}"
 
 
 async def indexed_tag(session: AsyncSession, page: PageKey) -> str | None:
@@ -56,19 +54,31 @@ async def indexed_tag(session: AsyncSession, page: PageKey) -> str | None:
 
 
 async def refresh_page_texts(
-    session: AsyncSession, page: PageKey, tag: str, content: MonographContent, *, now: datetime | None = None
+    session: AsyncSession,
+    page: PageKey,
+    tag: str,
+    content: MonographContent,
+    specs: Specs,
+    *,
+    now: datetime | None = None,
 ) -> bool:
     if await indexed_tag(session, page) == tag:
         return False
-    await write_page_texts(session, page, tag, content, now=now)
+    await write_page_texts(session, page, tag, content, specs, now=now)
     return True
 
 
 async def write_page_texts(
-    session: AsyncSession, page: PageKey, tag: str, content: MonographContent, *, now: datetime | None = None
+    session: AsyncSession,
+    page: PageKey,
+    tag: str,
+    content: MonographContent,
+    specs: Specs,
+    *,
+    now: datetime | None = None,
 ) -> None:
     kind, slug = page
-    rows = _index_rows(page, tag, content, now or datetime.now(UTC))
+    rows = _index_rows(page, tag, page_passages(content, specs).values(), now or datetime.now(UTC))
     await session.execute(
         delete(PageTextUnit).where(PageTextUnit.subjectKind == kind, PageTextUnit.subjectSlug == slug)
     )
@@ -79,27 +89,25 @@ async def write_page_texts(
     await session.flush()
 
 
-def _index_rows(page: PageKey, tag: str, content: MonographContent, now: datetime) -> list[dict[str, Any]]:
+def _index_rows(
+    page: PageKey, tag: str, passages: Iterable[PagePassage], now: datetime
+) -> list[dict[str, Any]]:
     kind, slug = page
-    rows: list[dict[str, Any]] = []
-    for key, unit in content.units.items():
-        if not is_translatable(key, unit.nodes):
-            continue
-        rows.append(
-            {
-                "subjectKind": kind,
-                "subjectSlug": slug,
-                "unitKey": key,
-                "position": len(rows),
-                "sourceHash": unit_hash(unit.nodes, unit.claim_ids),
-                "chapter": unit.chapter[:CHAPTER_MAX],
-                "tag": unit.tag[:TAG_MAX],
-                "leaves": [asdict(leaf) for leaf in passage_leaves(unit.nodes)],
-                "documentTag": tag,
-                "refreshedAt": now,
-            }
-        )
-    return rows
+    return [
+        {
+            "subjectKind": kind,
+            "subjectSlug": slug,
+            "unitKey": passage.key,
+            "position": position,
+            "sourceHash": passage.source_hash,
+            "chapter": passage.chapter[:CHAPTER_MAX],
+            "tag": passage.tag[:TAG_MAX],
+            "leaves": [asdict(leaf) for leaf in passage.leaves()],
+            "documentTag": tag,
+            "refreshedAt": now,
+        }
+        for position, passage in enumerate(passages)
+    ]
 
 
 async def indexed_passages(session: AsyncSession, page: PageKey) -> list[TaskPassage]:

@@ -87,6 +87,10 @@
     {"madeAt": "2026-11-17T20:15:00Z", "craft": "Kutch Ajrakh", "question": "Why did water push Ajrakh printers from Dhamadka to Ajrakhpur?", "version": 2, "what": "Report", "ext": "pdf", "fileName": "KalaVigyan_Explainer_2026-11-18_Kutch-Ajrakh_Why-Did-Water-Push-Ajrakh-Printers-From_Report_v2.pdf"},
     {"madeAt": "2026-11-18T05:00:00Z", "craft": null, "question": "Which crafts use alum", "version": 1, "what": "Citations", "ext": "bib", "fileName": "KalaVigyan_Explainer_2026-11-18_Which-Crafts-Use-Alum_Citations_v1.bib"}
   ],
+  "pageFiles": [
+    {"madeAt": "2026-11-25T06:30:00Z", "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": null, "version": 3, "ext": "pdf", "fileName": "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Export_v3.pdf"},
+    {"madeAt": "2026-11-24T19:00:00Z", "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": "Hindi", "version": 3, "ext": "docx", "fileName": "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Hindi_Export_v3.docx"}
+  ],
   "exportKeys": [
     {"ownerId": "00000000-0000-0000-0000-000000000007", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf", "key": "exports/00000000-0000-0000-0000-000000000007/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"}
   ],

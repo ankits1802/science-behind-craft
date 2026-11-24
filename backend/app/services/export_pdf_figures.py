@@ -10,6 +10,7 @@ from app.research.blocks_play import SimulationBlock, SimulationValue
 from app.research.sentence_names import upper_first
 
 from .export_pdf_charts import climate_figure, seasons_figure
+from .export_pdf_kit import timeline_places_pdf
 from .export_pdf_maps import map_layer_figure, region_story_figure, zoom_story_figure
 from .export_pdf_styles import CELL, CELL_BOLD, FIGURE_GAP_MM, KICKER, NOTE
 from .export_pdf_text import compound_text, measure_text, number_text, range_text, years_text
@@ -126,6 +127,7 @@ def _simulation(writer: PdfWriter, block: SimulationBlock) -> None:
 
 def _timeline(writer: PdfWriter, block: TimelineMapBlock) -> None:
     writer.text(TIMELINE_KICKER, KICKER)
+    timeline_places_pdf(writer, block)
     for point in block.points:
         writer.text(f"{block.places[point.place].name} · {years_text(point.year_from, point.year_to)}", CELL)
     for route in block.routes:

@@ -398,6 +398,16 @@ flowchart LR
    signed link; citation files are answered directly. The files a share link's readers are given
    are recorded against its token (`SharedExportFile`) and deleted from the bucket when the share
    stops (`services/shared_files`, decision 0155).
+3. A page (decision 0206) is exported by `GET /api/crafts/{slug}/monograph/{pdf|docx}` in the
+   language it is served in: the route reads the served document as the monograph route does,
+   releases its connection and files the file under `exports/<page owner>/<sha256>/<name>`, the
+   hash taken over the served tag, so a new version or a new translation is a new file. In one
+   worker thread `services/page_export_document` lays the page out as chapters of passages and
+   figures, each component one figure built by its kind's builder (`page_export_kit`,
+   `page_export_science`, `page_export_labs`, every other kind its words and drawings through
+   `generic_figure`), its still drawn by the one still renderer (`services/export_still_*`, which
+   the answer report's kit figures and timeline maps share), then `page_export_pdf` writes the PDF
+   and `page_export_docx` the Word document (`docx_writer`, the standard library's zip and XML).
 
 ## How stored pieces stay current (decision 0033)
 

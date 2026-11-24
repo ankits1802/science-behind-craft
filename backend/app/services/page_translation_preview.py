@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import InvalidInput
 from app.models import User
 from app.research.monograph_document import MonographDocument
+from app.research.page_passages import PagePassage, page_passages
 from app.research.page_proposals import (
     REFUSED,
     SHOWN,
@@ -20,7 +21,6 @@ from app.research.page_translation_gates import GateInput, refusal, translation_
 from app.research.page_translation_texts import NO_PAGE, NO_PASSAGE
 from app.research.page_translation_variant import ServedTranslations
 from app.research.page_translations import PageTranslationPart, PassageTranslation, task_problem
-from app.research.translation_passages import is_translatable, passage_leaves, unit_hash
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .open_work_subjects import WorkSubject, subject_by_key
@@ -85,8 +85,10 @@ async def previewed_translation(
     problem = task_problem(part.task_key, (subject.kind, subject.slug), part.language)
     if problem is not None:
         return document, [_report(index, REFUSED, problem) for index in range(len(part.passages))]
+    held = page_passages(document.content, document.specs)
     reports = [
-        _checked(document, index, passage, part.language) for index, passage in enumerate(part.passages)
+        _checked(held.get(passage.key), index, passage, part.language)
+        for index, passage in enumerate(part.passages)
     ]
     passing = {
         passage.source_hash: tuple(passage.texts)
@@ -104,15 +106,12 @@ async def previewed_translation(
     return (document if variant is None else MonographDocument.model_validate(variant)), reports
 
 
-def _checked(
-    document: MonographDocument, index: int, passage: PassageTranslation, language: str
-) -> PartReport:
-    unit = document.content.units.get(passage.key)
-    if unit is None or not is_translatable(passage.key, unit.nodes):
+def _checked(held: PagePassage | None, index: int, passage: PassageTranslation, language: str) -> PartReport:
+    if held is None:
         return _report(index, REFUSED, NO_PASSAGE.format(key=passage.key))
     given = GateInput(
-        leaves=passage_leaves(unit.nodes),
-        current_hash=unit_hash(unit.nodes, unit.claim_ids),
+        leaves=held.leaves(),
+        current_hash=held.source_hash,
         given_hash=passage.source_hash,
         texts=passage.texts,
         language=language,

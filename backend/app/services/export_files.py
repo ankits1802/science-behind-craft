@@ -32,9 +32,10 @@ from .apa_references import apa_references
 from .export_pictures import Picture, PictureSource, export_pictures
 from .export_store import BuiltExport, ExportFile, ExportObjects, stored_export_link
 from .lesson_deck import lesson_deck
-from .naming import explainer_file_name, lesson_file_name
+from .naming import export_file_name, lesson_file_name
 
 __all__ = [
+    "EXPLAINER_ENTITY",
     "REPORT_WHAT",
     "ExportTools",
     "explainer_citations",
@@ -44,6 +45,7 @@ __all__ = [
     "opened_export_tools",
 ]
 
+EXPLAINER_ENTITY = "Explainer"
 REPORT_WHAT = "Report"
 PDF = "pdf"
 
@@ -138,10 +140,11 @@ async def explainer_pdf_link(
 ) -> ExportLink:
     explainer = document.explainer
     crafts = explainer.understood.crafts
-    name = explainer_file_name(
+    name = export_file_name(
+        entity=EXPLAINER_ENTITY,
         made_at=document.mark.created_at,
         craft=crafts[0].name if crafts else None,
-        question=document.mark.question,
+        subject=document.mark.question,
         version=document.mark.version,
         what=REPORT_WHAT,
         ext=PDF,

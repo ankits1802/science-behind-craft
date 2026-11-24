@@ -4,9 +4,11 @@ import hashlib
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from types import MappingProxyType
+from typing import Any
 
 from .document_translation import DocumentTranslation
 from .monograph_page import MonographContent, TextUnit
+from .spec_texts import SpecText, spec_texts, with_spec_texts
 from .translation_passages import is_translatable, passage_leaves, unit_hash, with_texts
 from .vocabulary import ANSWER_LANGUAGE_SPECS, CANONICAL_LANGUAGE, text_direction
 
@@ -33,6 +35,7 @@ NO_TRANSLATIONS = ServedTranslations()
 class Variant:
     content: MonographContent
     translation: DocumentTranslation
+    specs: Mapping[str, Mapping[str, Any]] = field(default_factory=lambda: MappingProxyType({}))
 
 
 @dataclass
@@ -48,10 +51,16 @@ def translations_digest(ids: Iterable[str]) -> str:
 
 
 def variant_content(
-    content: MonographContent, served: ServedTranslations, *, language: str, source_version: int
+    content: MonographContent,
+    served: ServedTranslations,
+    *,
+    language: str,
+    source_version: int,
+    specs: Mapping[str, Mapping[str, Any]],
 ) -> Variant:
     tally = _Tally()
     units = {key: _shown(key, unit, served, language, tally) for key, unit in content.units.items()}
+    shown_specs = {**specs, **_shown_specs(content, specs, served, tally)}
     translation = DocumentTranslation(
         source_version=source_version,
         script=ANSWER_LANGUAGE_SPECS[language].script,
@@ -60,7 +69,36 @@ def variant_content(
         translated=tally.translated,
         held=tally.held,
     )
-    return Variant(content=content.model_copy(update={"units": units}), translation=translation)
+    return Variant(
+        content=content.model_copy(update={"units": units}), translation=translation, specs=shown_specs
+    )
+
+
+def _shown_specs(
+    content: MonographContent,
+    specs: Mapping[str, Mapping[str, Any]],
+    served: ServedTranslations,
+    tally: _Tally,
+) -> dict[str, dict[str, Any]]:
+    shown: dict[str, dict[str, Any]] = {}
+    for component in content.components:
+        spec = specs.get(component.label)
+        if spec is None:
+            continue
+        given: list[tuple[SpecText, list[Any]]] = []
+        for text in spec_texts(component.label, component.kind, spec):
+            if not is_translatable(text.key, text.nodes):
+                continue
+            tally.passages += 1
+            texts = served.by_hash.get(unit_hash(text.nodes, []))
+            if texts is not None and len(texts) == len(passage_leaves(text.nodes)):
+                tally.translated += 1
+                given.append((text, with_texts(text.nodes, texts)))
+            else:
+                tally.held += text.key in served.earlier
+        if given:
+            shown[component.label] = with_spec_texts(spec, given)
+    return shown
 
 
 def _shown(key: str, unit: TextUnit, served: ServedTranslations, language: str, tally: _Tally) -> TextUnit:
