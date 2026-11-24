@@ -182,6 +182,7 @@ async def _audited(session: AsyncSession, action: str, user: User, row: PageHold
         target_id=row.id,
         detail={"page": f"{row.subjectKind}:{row.subjectSlug}", "client": row.clientName, **counts},
     )
+    await session.flush()
 
 
 def _live_preview(draft: PageDraft | None, now: datetime) -> str | None:

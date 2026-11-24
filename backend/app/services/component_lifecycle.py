@@ -111,6 +111,7 @@ async def take_off_pages(
             "proposal": None if proposal_of(piece) is None else str(proposal_of(piece)),
         },
     )
+    await session.flush()
     return Retired(piece.id, str(piece.label), owners)
 
 
@@ -141,6 +142,7 @@ async def retire_replaced(session: AsyncSession, row: ComponentProposal, piece_i
         target_id=old.id,
         detail={"label": old.label, "by": row.label, "proposal": str(row.id), "layouts": swapped},
     )
+    await session.flush()
     return swapped
 
 
