@@ -10,7 +10,14 @@ from pydantic import Field
 
 from app.core.errors import Refused
 from app.research.base import ContractModel, absent, empty
-from app.research.drawn_art import KIT_FIGURE_KINDS
+from app.research.component_specs_general import (
+    GENERAL_CHART,
+    GENERAL_DRAWING,
+    GENERAL_MAP_LAYER,
+    GENERAL_TABLE,
+    GENERAL_TIMELINE,
+)
+from app.research.component_specs_kit import KIT_DIAGRAM
 from app.research.page_render import INTERACTIVE_KINDS
 from app.research.page_report import PageReport
 from app.research.page_report_rules import FAIL
@@ -67,11 +74,12 @@ PLACES: Anchor = (COMPONENTS, "A map of places")
 MATERIALS: Anchor = (COMPONENTS, "Depicted materials")
 UNITS: Anchor = (COMPONENTS, "Units and citations")
 PLAYERS: Anchor = (INTERACTIVES, "What a state may show")
+FIGURE_KINDS = frozenset({GENERAL_DRAWING, KIT_DIAGRAM})
 KIND_RULES: Mapping[str, Anchor] = MappingProxyType(
     {
-        "drawing": DESIGN_RULES,
-        "diagram": FIGURE_KIT,
-        **dict.fromkeys(("chart", "fact_table", "timeline", "map_layer"), DECLARED),
+        GENERAL_DRAWING: DESIGN_RULES,
+        KIT_DIAGRAM: FIGURE_KIT,
+        **dict.fromkeys((GENERAL_CHART, GENERAL_TABLE, GENERAL_TIMELINE, GENERAL_MAP_LAYER), DECLARED),
         "timeline_map": PLACES,
         **dict.fromkeys(("swatch_cards", "swatch_pair"), MATERIALS),
         **dict.fromkeys(sorted(INTERACTIVE_KINDS), PLAYERS),
@@ -149,7 +157,7 @@ def kinds_guide(kinds: Iterable[str]) -> HandedGuide | None:
     if not listed:
         return None
     sheets = [sheet_holding(*KIND_RULES.get(kind, UNITS)) for kind in listed]
-    if any(kind in KIT_FIGURE_KINDS for kind in listed):
+    if any(kind in FIGURE_KINDS for kind in listed):
         sheets.append(sheet_holding(*KIT_PARTS))
     return handed(sheets)
 
