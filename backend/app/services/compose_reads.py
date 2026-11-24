@@ -39,13 +39,8 @@ async def craft_held(session: AsyncSession, slug: str) -> CraftHeld | None:
     page = stored_curated_page(craft.id, stored)
     if page is None:
         return None
-    owned = dict(
-        (
-            await session.execute(
-                select(CuratedClaim.claimId, CuratedClaim.key).where(CuratedClaim.craftId == craft.id)
-            )
-        ).tuples()
-    )
+    marked = select(CuratedClaim.claimId, CuratedClaim.key).where(CuratedClaim.craftId == craft.id)
+    owned = {row.claimId: row.key for row in (await session.execute(marked)).all()}
     stages = await _stage_rows(session, page)
     compounds = await _compounds(session, page)
     balance = await _balance(session, page)
