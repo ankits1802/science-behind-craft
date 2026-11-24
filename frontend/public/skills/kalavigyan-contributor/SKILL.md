@@ -316,8 +316,8 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - The preview's `report` checks the page against the page checklist: each rule a machine can check
   passes or fails with its evidence, and the rest are yours to judge on the link. Clients that draw
   MCP Apps show it from `ui://kalavigyan/page-preview.html`. Fix every failure before you propose.
-- The preview also comes back as pictures: the first screen at 390 and 1440 px and each chapter.
-  Look at each as a reader would: the masthead picture and the name in the first screen, nothing
+- The preview also comes back as pictures of the page's opening view, on a phone and on a wide
+  screen, and of each chapter. Look at each as a reader would: the masthead picture and the name in the first screen, nothing
   cut off or past the column, every figure, map and interactive whole. Rule 28 runs the release's
   drawing checks on every component and names each failure; fix it, preview again, and look again.
   `propose_page` refuses a page while its latest preview fails rule 28. When the pictures could not
