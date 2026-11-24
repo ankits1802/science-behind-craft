@@ -1,6 +1,6 @@
 # The page checklist
 
-Every craft, family, category and answer page of KalaVigyan meets these 27 rules, whoever works on
+Every craft, family, category and answer page of KalaVigyan meets these 28 rules, whoever works on
 it: a contributor delivering facts, structure, components, pictures or a whole page bundle over the
 MCP server, a curator deepening a page, an engineer building a screen, or a critic scoring the
 result. Each rule is written for any craft; an example shows how one craft met a rule and is never
@@ -50,7 +50,8 @@ The rules below refer to them.
    goes to `give_pictures` by its `page_url` with slot `MASTHEAD`, and its returned thumbnail is
    looked at before it is placed.
 3. **One masthead.** One picture holds the masthead, and no card, label or component repeats the
-   masthead's GI date, place or name.
+   masthead's GI date, place or name. Without a photograph the title and the family's plate name
+   the craft, and a screen reader hears it once.
 
 ## Counting and labels
 
@@ -113,7 +114,8 @@ The rules below refer to them.
     sentence follows the chemistry and the quote stays as it is.
 20. **Every mechanism on the list gets equal depth**: a drawing or structure plus its key step and
     a cited sentence for each. The thinnest mechanism sets the page's level, so none is left at one
-    line.
+    line. A dyed or printed craft's colours are keyed from their facts: every stage's after with its
+    colours and why, every mordant's colour, every dye named by its substance.
 21. **Equations are balanced for atoms and charge, and quantities are plausible** (units,
     magnitudes, temperatures) before anything is proposed or drawn.
 22. **A source error stays verbatim and is marked**: the quote keeps the source's words, and the
@@ -146,13 +148,34 @@ The rules below refer to them.
     font, sets no text under 12 px at its narrowest width, draws its words as text and blends no two
     roles in a gradient. The server draws every drawing in the light, dark and high-contrast themes,
     and every figure and picture says in its alt text what it shows. The preview's report fails a
-    delivered figure that breaks this and names the element.
+    delivered figure that breaks this and names the element. Figures of materials, sections and
+    steps are composed from the figure kit; the delivery refuses hand-drawn art below the bar and
+    names the kit part to use.
+
+## Seen as a reader sees it (owner, 2026-11-24)
+
+28. **The page draws whole at both widths.** `preview_page` draws the private link in a sandboxed
+    browser at 390 and 1440 px wide, in light with motion reduced, and runs the release's own
+    drawing checks on every component at both widths: no component drawn at no size or empty, no
+    icon of 8 to 32 units drawn wider than 64 px, no figure text above 96 px and no SVG label taller
+    than 48 px; nothing runs past its column or the phone's width, and the page never scrolls
+    sideways; every map, chart and interactive is whole at rest (drawn, not loading, not moving), and
+    one the layout places is drawn at all; the first screen holds the masthead picture and the
+    page's name once, as its one headline. A failure fails this rule with the component's label and
+    the problem in words, and `propose_page` refuses the page until a later preview no longer fails
+    it. The pictures come back with the report, the first screen at both widths and each chapter:
+    look at them as a reader would before proposing. When the pictures cannot be made the rule is
+    yours to judge on the link, never passed.
 
 ## How a page is checked
 
 - A contribution is seen before it is submitted: `preview_page` draws a bundle exactly as the site
-  will draw the page, behind a private link for 24 hours. Read it at 360 and 1440 px wide, in light
-  and dark, against these rules; fix what breaks one and preview again before `propose_page`.
+  will draw the page, behind a private link for 24 hours, and returns pictures of its first screen at
+  390 and 1440 px and of each chapter with rule 28's drawing checks. Look at the pictures, fix what
+  breaks a rule and preview again before `propose_page`, which refuses a page whose latest preview
+  fails rule 28. Read the link at 360 and 1440 px, in light and dark, for what the pictures leave out.
+- The report sets the page's pictures, figures, interactives and maps beside Kutch Ajrakh's, chapter
+  by chapter: how far the page is from the bar, as guidance. A count never passes or fails a page.
 - After a page is built, one critic reads it in a browser, design and science together, at 360 and
   1440 px in light and dark, and scores it against this checklist. Everything that keeps it below 9
   is fixed, then it is scored once more. No judge panels.
@@ -162,9 +185,11 @@ The rules below refer to them.
 
 | Rule | Kept true by |
 |---|---|
-| The rules are numbered 1 to 26 in order, and the count is stated | `test_skill_references.py` in `backend/tests/mcp` |
+| The rules are numbered 1 to 28 in order, and the count is stated | `test_skill_references.py` in `backend/tests/mcp` |
 | The preview's report names each rule by its bold title | `services/page_report.checklist_titles`, which reads them from this file, tested in `test_page_report.py` in `backend/tests/research` |
 | The density bar of rule 24 | `test_reference_limits.py` in `backend/tests/mcp`, against `curation/limits` |
 | The curation skill carries this very file | `test_skill_references.py` again, comparing the two files' bytes |
+| The drawing checks of rule 28 | `backend/app/data/design/drawing-checks.js`, the one copy the renderer (`backend/app/renderer`) and Monograph parity (`frontend/e2e/parity/drawingChecks.ts`) both run, tested on fixture pages in `parity-drawing-unit.spec.ts` |
+| `propose_page` refusing after a failed drawing | `test_render_review_db.py` in `backend/tests/db` |
 
 Read it again whenever a critic's finding becomes a rule, or a rule's title changes (the report quotes it).

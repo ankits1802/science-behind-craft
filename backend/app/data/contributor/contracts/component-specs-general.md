@@ -1,14 +1,18 @@
 # Component specs: delivered components and the declared kinds
 
 A component arrives finished: its kind's spec data and the texts it places, each resting on shown
-facts. The 22 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
+facts. The 23 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
 way; five of them (`drawing`, `chart`, `fact_table`, `timeline`, `map_layer`) also take a declared
-spec that draws anything new from data. Nothing a contributor sends is ever run as code. A
+spec that draws anything new from data, `diagram` also takes a declared spec that composes a
+figure from the site's kit of designed parts (decision 0199), and `timeline_map` is delivered only
+in its declared form, a map the site draws from places it resolves (decision 0196). Nothing a
+contributor sends is ever run as code. A
 contributor's agent reads this over MCP before it delivers one, and engineers before they change a kind.
 
 | For | Read |
 |---|---|
 | Why components arrive finished | the owner, 2026-11-20: contributors deliver whole components and pages through MCP (round 7) |
+| The figure kit and the bar for hand-drawn art | [decision 0199](../decisions/0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | One kind per job | [decision 0114](../decisions/0114-kinds-and-datasets.md) |
 | The proposal, the close-match search, drafts and bundles | [open-work.md](open-work.md) |
 | Where a registered delivery is drawn | [page-layout.md](page-layout.md), Generated documents |
@@ -36,10 +40,16 @@ by the general view, a spec without one is the authored figure of a page (Kutch 
 by the kind's own view (`component_specs_either.EITHER_FORMS`, `form_model`;
 `frontend/components/monograph/eitherView.tsx`). `drawing` has only the declared form, and the page
 tool `related_crafts` takes both too: its declared form is the kin crafts the site builds for a
-generated craft document (`research/kin_crafts.KinCraftsSpec`, decision 0180). The page
-tools (`PAGE_TOOL_KINDS`), the authored art (`AUTHORED_ART_KINDS`) and the authored scripts
-(`AUTHORED_SCRIPT_KINDS`: `model_explainer`, `timeline_map`) are refused with a reason
-(`component_specs.not_contributable`). Each contributable kind has a fixture for a craft other
+generated craft document (`research/kin_crafts.KinCraftsSpec`, decision 0180). `diagram` takes
+both as well: a spec with a `head` is composed from the kit (The figure kit, below) and drawn by the
+kit's view, one without is a drawing or a chain of steps (`DiagramSpec`, Kutch Ajrakh's three). The page
+tools (`PAGE_TOOL_KINDS`), the authored art (`AUTHORED_ART_KINDS`) and the authored script
+(`AUTHORED_SCRIPT_KINDS`: `model_explainer`) are refused with a reason
+(`component_specs.not_contributable`). `timeline_map` (`DECLARED_ONLY_KINDS`) takes two forms told
+apart by `places` rather than `head` (`component_specs_either.declared_form`, `DECLARED_MARKS`): a
+spec with `places` is declared and contributable; one without is Kutch Ajrakh's authored route map,
+kept for that page and refused from a contributor with a pointer to the declared form
+(`component_specs.withheld_form`, `MAP_POINTER`). Each contributable kind has a fixture for a craft other
 than Kutch Ajrakh in `backend/app/data/kind_fixtures/` (`data/kind_fixture_files.kind_fixtures`, in
 the preview's order), checked by the gates in `backend/tests/research/test_kind_fixtures.py`, drawn
 by its view in `frontend/e2e/kind-fixtures-unit.spec.ts` and placed together on `/design/kinds`,
@@ -47,7 +57,7 @@ which reads them from `GET /api/design/kind-fixtures` with each drawing's four t
 `services/drawing_themes.themed_spec`, as a delivered drawing is served (decision 0177), so the
 preview draws its drawing in every theme at first paint.
 
-Last reviewed: 2026-11-23.
+Last reviewed: 2026-11-24.
 
 | Side | File |
 |---|---|
@@ -59,7 +69,9 @@ Last reviewed: 2026-11-23.
 | Drawing a registered delivery | `backend/app/services/component_proposals_drawn.py`, called by `monograph_generated_assembly._drawn` and `monograph_generated.generated_parts` |
 | Shapes | `frontend/lib/componentSpecsGeneral.ts` |
 | Views | `frontend/components/monograph/kinds/general/` (`index.ts` exports `VIEWS`, registered in `componentViews.ts`) |
-| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `backend/tests/db/test_delivered_components_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts` |
+| The declared timeline map | spec `backend/app/research/component_specs_timeline_map.py`, its delivery rules `component_specs_timeline_map_delivery.py`, its places `backend/app/services/timeline_map_places.py` and placement `services/timeline_maps.py` (`placed_spec`); the hand-drawn map test `backend/app/research/drawn_maps.py`; shape `frontend/lib/componentSpecsTimelineMap.ts`, view `frontend/components/monograph/kinds/general/TimelineMapDeclaredView.tsx` on the answers' `components/answer/journey/TimelineMap.tsx` (`TimelineMapFrame`) with `components/map/TimelineMapLayers.tsx` and `placesFrame.ts` |
+| The figure kit | the vocabulary `backend/app/research/art_kit.py` (`KIT_PARTS`, `kit_vocabulary`, both sides' golden `shared/art-kit.golden.json`), the composed diagram `component_specs_kit.py` (`DeclaredDiagramSpec`, `kit_label_problems`), the bar for hand-drawn art `drawn_art.py` (`drawn_art_problems`); the web's `frontend/lib/artKit.ts`, `componentSpecsKit.ts`, `artKitMotion.ts`, `artKitSheet.ts`, the parts `frontend/components/artkit/` and the view `components/monograph/kinds/kit/KitDiagramView.tsx`; the kit sheet `/design/kit` (`app/design/kit`) |
+| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `test_art_kit.py`, `test_component_specs_kit.py`, `test_drawn_art.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `timeline-map-declared-unit.spec.ts`, `art-kit-unit.spec.ts` |
 
 ## A delivered component
 
@@ -89,12 +101,15 @@ and a count of the rest):
    unit citing nothing is a label of at most 80 characters and states no number;
 7. the general kinds' values: a chart point's value is a number its `reading` unit states, a
    timeline event's year (without its sign) is stated by its `when` unit, a map place's value by its
-   `reading` unit, and a numeric table column's cells state a number;
+   `reading` unit, and a numeric table column's cells state a number; a timeline map's years,
+   places, moves and coordinates are stated by their units (The declared timeline map, below); a
+   composed diagram's every part label and section layer label cites a fact (The figure kit, below);
 8. the spec speaks the design's vocabulary (`drawing_spec_rules.spec_design_problems`): every
    drawing node of a science kind (`SvgNode`), every swatch, dip and colour token and a drawing's
    SVG name colours only by design role, name no font, keep text at 12 px or more and blend no two
    roles in a gradient (The design's vocabulary, below); a swatch or dip names a depicted material;
-   and a spec sends no `themes`, which the server draws.
+   a spec sends no `themes`, which the server draws; and every free drawing meets the bar for
+   hand-drawn art (The hand-drawn figure, below).
 
 The close-match search of `open-work.md` runs first: a copy of a registered component is refused
 before its spec is read.
@@ -118,7 +133,7 @@ Every generated document (`page-layout.md`, Generated documents) draws a registe
 draws a component with a spec file: `subject_components` reads `payload.delivered` into the
 `RegisteredComponent` (`stored_delivery`; a payload off its contract is logged and left out), the
 facts it rests on join the page's shown facts (`with_delivered_claims`), and `_drawn` renames its
-units to page-unique ids `u5001` to `u8999` in unit order (`unit_ids.DELIVERED_UNITS`), rewrites the spec's
+units to page-unique ids `u5001` to `u8900` in unit order (`unit_ids.DELIVERED_UNITS`), rewrites the spec's
 refs (`renamed_spec`), and places the units within the component (`within` its label) as cited
 units, so each carries its citation cluster, quotes and claims like any sentence of the page. A
 delivery whose facts are no longer shown is left out of the page. The web app draws the spec with
@@ -196,6 +211,136 @@ variants and a figure or picture without its alt text (checklist rule 27). Agent
 KalaVigyan's knowledge themselves read `kalavigyan://design/tokens.css` and
 `kalavigyan://design/drawing.md`.
 
+## The declared timeline map (decision 0196)
+
+A map of a page's places is drawn by the site, never by the contributor: a spec names its places
+and the dated points, routes and undated facts that caption them, the server resolves every place
+through the place finder the answers use, and the web draws it with the answers' timeline map on
+the site's own base map. A contributed `drawing` or authored `map_layer` that is a map by hand is
+refused with the same pointer (The hand-drawn map, below).
+
+| Part | What it holds |
+|---|---|
+| `head` | `{title, caption?}`, as every declared kind |
+| `places` | 1 to 30, each `{name, home?}` and one of `wikidata` (a Wikidata item, Q and digits), `district` (an LGD district code) or a cited coordinate (`longitude`, `latitude` and `at`, the unit that states both numbers and cites the fact that holds them); `name` is a label unit; `home: true` marks the page's own place, hatched in terracotta |
+| `points` | up to 40 `{place, yearFrom, yearTo, text}`: a place at a span of years |
+| `routes` | up to 40 `{start, end, yearFrom, yearTo, text}`: a move between two places |
+| `undated` | up to 40 `{place?, text}`: a fact of a place with no year, pinned at every year |
+| `layers` | up to 3 names the site holds, drawn beneath the places: `relief`, `rivers`, `minerals` (`tools/maplayers`, mirrored in `backend/app/data/layers`) or a district layer of `geo/layers.MAP_LAYERS` with stored values; at most one area layer (relief or a district layer) |
+
+The model (`DeclaredTimelineMapSpec`) refuses a place named two ways or none, a coordinate without
+its `at`, a map with no point, route or undated fact, an index past the places, a place no entry
+names, a place listed twice, a route from a place to itself, a span whose `yearFrom` is after its
+`yearTo`, a layer named twice and two area layers. Check 7 adds the answers' own rules, unit by
+unit (`component_specs_timeline_map_delivery.timeline_map_problems`): a point's and a route's years
+are stated by its `text` unit (`timeline.years_named`), a point's and an undated fact's unit names
+its place (`blocks.named_in_texts`), a route's unit states the move from its start to its end
+(`timeline.states_movement`), and a cited coordinate's `at` unit states both numbers and cites a
+fact. A spec that sends the server's parts (`found`, `datasets`, `boundaryCaption`) is refused.
+
+**Placement** (`services/timeline_maps.placed_spec`, run by `checked_delivery` after the cells): a
+`district` is the register's point (`AdminDistrict.centroid`); a `wikidata` item is the site's held
+point (`WikidataPoint`), then the place finder's kept answer (`PlaceLookup`, `item:<Q>`, which
+`lookup` with kind entity now keeps for every item it finds, `services/entity_points.py`), then a
+place finder the caller passes; a cited coordinate stands as given. Each point takes the district
+whose shape holds it (`ST_Contains`), and a `home` place outside every district is refused. Each
+unresolved place is refused by name: "look it up with lookup (kind entity, qid Q…) and deliver it
+again". The layers are checked against what the site holds (`map_credits`: the layer files and
+`map_layer_store.listed_layers`), and the spec is stored with `places[].found {latitude, longitude,
+wikidataId?, districtLgd?}`, `datasets` (the boundary record `DR_DISTRICT_SHAPES` first, then each
+layer's records from the registry) and `boundaryCaption` (`datasets.BOUNDARY_CAPTION`).
+
+**Drawing** (`TimelineMapDeclaredView`): `withDeclared` tells the forms apart by kind
+(`lib/componentSpecsTimelineMap.declaredForm`), so Kutch Ajrakh's authored route map keeps its own
+view. The declared view turns the spec into the answers' timeline source
+(`timelineMapSource`, each entry's sentence a unit) and draws it with `TimelineMapFrame`, the
+answers' timeline map: the year slider, the entries through time with `aria-current="step"`, the
+undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracotta and places beyond
+India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
+and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
+physical layers' own drawings and keys, a district layer's fills and legend) with the home
+districts in the place hatch, and the source line gives the boundary note and every layer's
+dataset credit at first paint. It rests on its last year with every place pinned; motion is only
+the entries' colour change, which both reduced-motion switches turn off.
+
+**The hand-drawn map** (`research/drawn_maps.drawn_map_problems`, in check 8 for `drawing` and
+`map_layer`): a drawing is a map, and refused with `component_specs.MAP_POINTER`, when it paints the
+base map's land, coast, borders or salt flats (`BASE_MAP_ROLES`), draws with the page kit's map
+frame and pins (`KIT_MAP_CLASSES`, `data-pin`), marks two or more places as dots in the place
+colours (`PLACE_ROLES`: terracotta, the map marker and place roles), or draws an outline of 60 or
+more points (`OUTLINE_VERTICES_MIN`) with two or more dots on it. A section, a mechanism, a vat or
+a drawing with one place dot is not a map.
+
+## The figure kit (decision 0199)
+
+A figure is composed, not drawn. A declared `diagram` names parts of the site's kit in one of four
+layouts; the web draws every part in the design system (depicted materials textured, edged in ink
+and named in a key, line work in the ink tokens, labels at the type scale), at every width, phone
+first. The kit's vocabulary has one home, `research/art_kit.py`, which `shared/art-kit.golden.json`
+copies for the web (`frontend/lib/artKit.ts`), and both sides' tests hold the three equal.
+
+| Part | What it takes | What it draws | Serves |
+|---|---|---|---|
+| `cloth` | `form` (`swatch`, `length`, `folded`), `material`, `printed?` `{motif, material}` | a swatch with its fringe, a length with its turned end, a folded cloth seen edge on; the print tiled in its material | textiles, more crafts |
+| `block` | `motif`, `paste?` | a carved block with its handle in wood grain, and its print beneath in the paste (line work when no paste is stated) | textiles, wood |
+| `bath` | `vessel` (`vat`, `pot`, `trough`, `pit`), `liquor?`, `piece?` | the vessel in cutaway (a vat or pit sunk in earth strata), its liquor rippled, a piece hanging into it | textiles, metal, leather, fibre, paper |
+| `paste` | `form` (`spread`, `printed`, `outline`), `material`, `on?`, `dried?` | a paste spread over a slab, printed in dabs or drawn in outlines on its ground; the dried colour at rest | textiles, metal, paper, more crafts |
+| `heat` | `source` (`sun`, `fire`, `furnace`, `lamp`) | line work: the sun's disc and rays, flames over logs, a domed furnace with its pipe, a lamp | textiles, metal, clay, wood, fibre, paper, more crafts |
+| `water` | `form` (`running`, `still`, `sprinkled`) | running water with its direction, a still basin's rings, falling drops | textiles, metal, leather, fibre, paper |
+| `tool` | `tool` (`block`, `brush`, `chisel`, `mallet`, `knife`, `stick`), `held` (default true), `load?` | the tool in a hand, a brush or a stick loaded with its material | textiles, metal, stone, wood, fibre, paper, more crafts |
+| `section` | `layers` 2 to 6, each `{material, label}` top to bottom, a material or `earth` | a layered section, earth in the hatch grammar's strata, each layer named in the key | textiles, metal, clay, leather, more crafts |
+| `piece` | `shape` (`lump`, `vessel`, `slab`, `billet`, `sheet`, `figure`, `culm`), `material?`, `inlay?` `{motif, material}` | a shaped piece in its material (line work and its family's texture when none is stated), an inlay tiled in its material | metal, clay, stone, wood, fibre, paper, more crafts |
+
+Motifs are `star`, `lattice`, `dots` and `lines`. A material is a depicted `--dye-*` or `--dip-*`
+token the design system records (`drawing_roles.MATERIAL_ROLES`); a material no record holds is
+refused and asked for first. Every part has a `label`, a unit that cites the facts that state it,
+as does every layer of a section (check 7, `kit_label_problems`); a part takes no coordinate,
+size or colour of its own.
+
+| Spec part | What it holds |
+|---|---|
+| `head` | `{title, caption?}`, as every declared kind |
+| `layout` | `steps` (2 to 6 numbered panels), `before_after` (2), `section` (1 panel holding one `section` part), `sequence` (2 to 6 joined by arrows) |
+| `alt` | a unit saying what the figure shows, drawn under it |
+| `panels` | each `{label, text?, via?, motion?, parts}`: `label` the step's name, `text` a cited sentence under it, `via` the change on the arrow into a later panel of a sequence or a before and after, `motion` the change the panel explains, `parts` 1 to 3 |
+
+**Motion** is part of the kit and runs only when the reader presses Play: `dip` (a bath's piece
+going in, the dip motion), `take` (a cloth's colour taking from the bottom, the dip motion) and
+`dry` (a paste's wet colour withdrawing to its dried one, the oxidise motion), each on the one
+part it explains (`MOTION_NEEDS`). The figure rests complete: every end state is the default
+style, the server and first client render move nothing, Play marks each panel in turn
+(`aria-current="step"`, the ink rule) and announces it, and under either reduced-motion switch
+each press shows the next panel at once and announces it (`artKitMotion.kitSchedule`,
+`kitStillStep`). **Layout** (`components/artkit/artkit.css`): one column on a phone (steps two),
+two or three from 640 px, four from 1024 px; a sequence's arrows point down on a phone and along
+the line from 640 px, mirrored right to left; a section sets its drawing beside its key from
+640 px. **The kit sheet** (`/design/kit`) draws every part in every form and every depicted
+material and the four layouts, at the sheet's widths, in the theme its switches choose.
+
+**The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8 for a `drawing` and
+a `diagram`): every free drawing such a delivery carries (a `drawing`'s SVG, a `diagram`'s drawing
+and chain drawings; icons excepted) is refused, naming the kit part to use, when it breaks one of
+the rules below. A player's scene, phase and stage drawings, a card's seal and a panel's art are held
+to the same bar (`drawn_art.scene_problems`, the molecule drawings of `structure_diagram` and
+`molecule_3d` excepted) once those kinds can place kit parts; until then the delivery does not
+apply it to them, so the scenes the composer builds are not refused for want of a part. A drawing
+held to the bar is refused when it
+
+- sets text off the type scale: drawn at 320 px wide, a text is 12, 13, 14 or 16 px, within a
+  quarter of a pixel (`UI_SIZES_PX`; under 12 px the vocabulary's floor refuses it);
+- draws fewer than six shapes (`SHAPES_MIN`, outside its definitions) or has no line work in ink
+  (no stroke in `--ink-1` to `--ink-3`, a mix of one, or `currentColor`);
+- in a `drawing` or `diagram`, paints a depicted material by hand (the kit's `cloth`, `bath`,
+  `paste`, `section` or `piece` part draws it, or the one its words name), or says it shows what
+  a kit part draws (its title, description and labels and, for a `drawing`, its title and alt
+  units, naming a part's subject: `art_kit.parts_named_by`); these two point to a composed
+  diagram (`KIT_POINTER`);
+- elsewhere, paints a depicted material with no texture: a shape filled with a material needs a
+  shape of the same geometry over it filled with an in-drawing `<pattern>`.
+
+Kutch Ajrakh's authored figures are its page's own and never pass through the delivery check, so
+the bar does not re-check them.
+
 ## How this document is kept true
 
 | Claim | Kept true by |
@@ -208,6 +353,14 @@ KalaVigyan's knowledge themselves read `kalavigyan://design/tokens.css` and
 | Registration and drawing on generated pages | `backend/tests/db/test_delivered_components_db.py` |
 | Each kind's fixture for a craft other than Kutch Ajrakh | `backend/tests/research/test_kind_fixtures.py` and `frontend/e2e/kind-fixtures-unit.spec.ts` |
 | The views | `frontend/e2e/monograph-kinds-general-unit.spec.ts` |
+| The declared timeline map's spec, its delivery rules and its authored form refused | `backend/tests/research/test_timeline_map_specs.py` |
+| Its places resolved and refused, its layers held and credited, a looked-up item's point kept | `backend/tests/db/test_timeline_map_places_db.py` |
+| The hand-drawn map refused, both ways | `backend/tests/research/test_drawn_maps.py` |
+| The kit's vocabulary, its families and the golden both sides read | `backend/tests/research/test_art_kit.py` and `frontend/e2e/art-kit-unit.spec.ts` |
+| The composed diagram's spec, its layouts, motions, materials and cited labels | `backend/tests/research/test_component_specs_kit.py` |
+| The hand-drawn figure refused and allowed, rule by rule, with Kutch Ajrakh's authored figures left alone | `backend/tests/research/test_drawn_art.py` |
+| Every part in every material, each layout at phone and desktop, light and dark, motion off under both switches, and the kit sheet | `frontend/e2e/art-kit-unit.spec.ts` |
+| The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |
 

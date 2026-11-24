@@ -25,7 +25,7 @@ component contracts; where it is silent, they decide.
   matches and the two ways on.
 - A `MISSING_COMPONENT` task names its need: `what-if`, `molecules`, `map`, `reaction-player` or
   `pictures`, and only a component of a kind that need lists completes it. An `experiment_lab`
-  completes `what-if`, and a delivered `map_layer` completes `map`. Pictures are given, not
+  completes `what-if`, and a delivered `timeline_map` or `map_layer` completes `map`. Pictures are given, not
   delivered as components (the contributor skill, Pictures).
 
 ## Choosing a kind
@@ -37,20 +37,21 @@ Choose by what the reader must see:
 | quantities compared across places, materials or years | `chart`, as `bars` for categories or a `line` for a series over time |
 | several things side by side, by their attributes, or a few headline numbers | `fact_table`, or `stat_tiles` for a few figures |
 | dated events in order | `timeline` |
-| places, with or without a value each | `map_layer` |
-| a mechanism, a section, a tool or an object | `drawing`, or `diagram` for a chain of linked steps |
+| where a craft is practised, began, spread or moved, and when | `timeline_map` (A map of places, below) |
+| a value at each place, from a dataset | `map_layer` |
+| a mechanism, a section, a tool or an object | a composed `diagram` (The figure kit), or `drawing` for what no kit part draws |
 | one stated equation | `equation_card` |
 | molecules | `structure_diagram` (flat, with their PubChem records from `lookup`) or `molecule_3d` |
 | a reaction a source states step by step | `reaction_player` |
 | a process stage by stage | `stage_player`, or `dip_player` for successive immersions |
-| what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours |
+| what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours; `swatch_cards` may show one swatch, none, and a `why`, and a page whose stages name their colours gets its key from the site |
 | sources that disagree | `source_disagreements` |
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
 
-The 22 kinds a contributor delivers, by group:
+The 23 kinds a contributor delivers, by group:
 
 - **Figures from data** (5): `drawing`, `chart`, `fact_table`, `timeline`, `map_layer`.
-- **Data and place** (3): `stat_tiles`, `map_sequence`, `source_disagreements`.
+- **Data and place** (4): `stat_tiles`, `map_sequence`, `source_disagreements`, `timeline_map`.
 - **Plates and voices** (4): `label_card`, `swatch_cards`, `swatch_pair`, `voice`.
 - **Science** (10): `reaction_player`, `dip_player`, `stage_player`, `diagram`, `molecule_3d`,
   `structure_diagram`, `equation_card`, `material_cards`, `experiment_lab`, `choice_toggle`.
@@ -64,10 +65,10 @@ dip player shows an equation only where a source states one. The site builds the
   `concept_atlas`, `credits`, `explainer`, `film`, `generator`, `language_switch`,
   `process_replay`, `quiz`, `reading_level`, `related_crafts`, `source_list`. They are the page's
   apparatus, computed from its data; a proposal of one is refused.
-- **The authored page's own** (7): `picture_plate`, `specimen_plate`, `ai_illustration`, `ai_video`,
-  `comic`, `model_explainer`, `timeline_map`. Pictures are given with `give_pictures` and placed
-  by the site; a model or a route map runs the authored page's own script, so deliver a `drawing`,
-  a `timeline` or a `map_layer` instead.
+- **The authored page's own** (6): `picture_plate`, `specimen_plate`, `ai_illustration`, `ai_video`,
+  `comic`, `model_explainer`. Pictures are given with `give_pictures` and placed by the site; a
+  model runs the authored page's own script, so deliver a `drawing` or a `diagram` instead. A
+  `timeline_map` without `places` is Kutch Ajrakh's own route map and is never delivered.
 
 Each kind's spec is checked against its model (the repository's
 `docs/contracts/component-specs-plates.md`, `-data.md`, `-science.md` and `-general.md`). The MCP
@@ -105,6 +106,25 @@ each value's place in its table as `cell {row, column}` (a table's rows by `row`
 `column`): the dataset guide's Contributed datasets says how a table is stored. The gates read
 every such value from its row, so its unit needs no fact of its own; the site writes the dataset's
 credit under the figure.
+
+## A map of places
+
+Never draw a map. A map of the page's places is a `timeline_map` you declare and the site draws,
+with the answers' own timeline map, on its base map and the Survey of India outline, framed to
+your places. A `drawing` or a `map_layer` of your own SVG that is a map (the base map's colours,
+an outline with dots, places marked as dots in the place colours) is refused with this pointer.
+
+- `timeline_map`: `head`; `places`, 1 to 30, each `{name, home?}` and one of `wikidata` (an item
+  `lookup` found), `district` (its LGD code) or `longitude`, `latitude` and `at` (the unit citing
+  the fact that states that coordinate); `points` `{place, yearFrom, yearTo, text}`, `routes`
+  `{start, end, yearFrom, yearTo, text}` and `undated` `{place?, text}`, up to 40 each, one at
+  least; `layers`, up to 3 of `relief`, `rivers`, `minerals` and the site's district layers, one
+  area layer at most. `name` is a label; `home: true` hatches the page's own district.
+- Every listed place is named by an entry. A point's or route's `text` states its years, a point's
+  or undated fact's `text` names its place, and a route's `text` states the move from its start to
+  its end, each as its facts say it.
+- The server resolves each place and refuses, by name, one it cannot; it writes the points, the
+  boundary record and each layer's dataset record into the stored spec. Send none of them.
 
 ## Depicted materials
 
@@ -206,8 +226,21 @@ stated by their units.
   in to this account opens it within 3 days and presses Confirm once, or Discard. A component, a
   layout or a fact sent alone goes by the account's tier as before.
 
+## The figure kit
+
+Cloth, vats, pastes, heat, water, tools, layered sections and shaped pieces are composed from the
+site's kit, never drawn: a `diagram` with a `head`, a `layout` (`steps`, `before_after`, `section` or `sequence`), an `alt`
+unit and `panels`, each panel naming one to three parts with a cited `label`. The parts are
+`cloth`, `block`, `bath`, `paste`, `heat`, `water`, `tool`, `section` and `piece`; each takes a
+depicted material, a named form or a layer list, never a coordinate, size or colour. A panel's
+`motion` (`dip`, `take`, `dry`) plays only on Play and rests complete. What each part takes, draws
+and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure kit), and
+`/design/kit` shows every part in every material.
+
 ## The design rules for a contributed figure
 
+- **At the bar.** Text at 12, 13, 14 or 16 px at 320 px wide; six shapes or more; line work in
+  ink; a depicted material only through the kit, or textured in a player.
 - **Give data, not styling.** A declared kind's view sets every colour, size and position itself:
   bars and lines in the chart series colour with the one mark the title names emphasised, places as
   numbered paper discs on India's outline in the map colours, tables in tabular figures. A spec

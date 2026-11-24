@@ -13,6 +13,7 @@ __all__ = [
     "PROBLEMS_SHOWN",
     "TEXT_FLOOR_PX",
     "drawing_problems",
+    "drawn_texts",
     "listed",
     "local_name",
     "text_floor",
@@ -69,6 +70,14 @@ def drawing_problems(root: ElementTree.Element, view_width: float, *, molecules:
         found += _text_problems(element, context, floor, gradients)
     found += _gradient_problems(gradients)
     return list(dict.fromkeys(found))
+
+
+def drawn_texts(root: ElementTree.Element) -> Iterator[tuple[str, float]]:
+    start = Context(masked=False, size=DEFAULT_FONT_SIZE, scale=1.0, molecules=False)
+    for element, context in _walk(root, start):
+        words = " ".join((element.text or "").split())
+        if local_name(element.tag) in TEXTS and words:
+            yield words[:40], context.size * context.scale
 
 
 def _walk(element: ElementTree.Element, context: Context) -> Iterator[tuple[ElementTree.Element, Context]]:

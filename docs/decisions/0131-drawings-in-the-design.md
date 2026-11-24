@@ -15,6 +15,7 @@ even the AI tools create and render should follow our design theme"). It amends
 | The design it holds drawings to | [decision 0092](0092-design-system.md) and the kalavigyan-design skill, sections 2.7 and 3 |
 | The contract it changes | [component-specs-general.md](../contracts/component-specs-general.md) |
 | What amended it | [0141](0141-design-system-and-answer-screens-without-debt.md), item 12: a themed SVG picture's ETag carries its theme and the token set's hash |
+| A delivered drawing held to the bar for hand-drawn art beyond the roles (amends this record) | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

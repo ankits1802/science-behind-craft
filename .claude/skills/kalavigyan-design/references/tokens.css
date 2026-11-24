@@ -104,6 +104,14 @@
   --dye-field-soil: #3B342E;
   --dye-sem-green: #5F7B3B;
   --dye-river-soil: #8E5E4A;
+  --dye-turmeric: #E5CB45;
+  --dye-pomegranate: #E4D998;
+  --dye-kali-mitti: #38312B;
+  --dye-cinnabar: #DA4624;
+  --dye-red-ochre: #9A4729;
+  --dye-orpiment: #FFB232;
+  --dye-lamp-black: #171614;
+  --dye-conch-white: #F2F0E7;
   --photo-ink-1: #FBFAF6;
   --photo-ink-2: #E6E3DA;
   --photo-scrim-start: linear-gradient(90deg, rgba(8,10,16,.84) 0%, rgba(8,10,16,.74) 36%, rgba(8,10,16,.46) 56%, rgba(8,10,16,.12) 74%, rgba(8,10,16,0) 88%);
@@ -202,6 +210,8 @@
   --map-place: #B05A36;
   --map-nodata: #767C74;
   --map-relief-shade: #1C1815;
+  --atom-c: #3F3A35; --atom-h: #FBFBF9; --atom-n: #147882; --atom-o: #C34728; --atom-ag: #595E63; --atom-al: #866064; --atom-au: #906A21; --atom-ca: #445E36; --atom-cl: #317A45; --atom-cr: #3B5C87; --atom-cu: #995522; --atom-fe: #8E3F34; --atom-hg: #725573; --atom-k: #5F2F73; --atom-na: #775AA6; --atom-pb: #4E4E60; --atom-s: #72761A; --atom-sn: #335A5A; --atom-ti: #617775; --atom-zn: #627195;
+  --mol-bond: #59534E; --mol-letter: #FBFAF6; --mol-edge: rgb(28 24 21 / 0.55);
   --shadow-pop: 0 1px 0 rgba(28,24,21,.05), 0 18px 40px -18px rgba(28,24,21,.30); --shadow-label: 0 24px 48px -24px rgba(8,10,16,.45); --shadow-sheet: 0 -12px 32px -12px rgba(28,24,21,.28);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --map-hillshade-opacity: .45;
@@ -292,6 +302,8 @@
   --map-place: #E0916C;
   --map-nodata: #7A849A;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 1px 0 rgba(0,0,0,.5), 0 24px 48px -18px rgba(0,0,0,.75); --shadow-label: 0 24px 48px -20px rgba(0,0,0,.8); --shadow-sheet: 0 -12px 32px -8px rgba(0,0,0,.7);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.92 0 0 0 0 0.89 0 0 0 0.030 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --map-hillshade-opacity: .6;
@@ -382,6 +394,8 @@
   --map-place: #E0916C;
   --map-nodata: #7A849A;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 1px 0 rgba(0,0,0,.5), 0 24px 48px -18px rgba(0,0,0,.75); --shadow-label: 0 24px 48px -20px rgba(0,0,0,.8); --shadow-sheet: 0 -12px 32px -8px rgba(0,0,0,.7);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.92 0 0 0 0 0.89 0 0 0 0.030 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --map-hillshade-opacity: .6;
@@ -471,6 +485,8 @@
   --map-place: #7D3519;
   --map-nodata: #3D433C;
   --map-relief-shade: #000000;
+  --atom-c: #3F3A35; --atom-h: #FBFBF9; --atom-n: #147882; --atom-o: #C34728; --atom-ag: #595E63; --atom-al: #866064; --atom-au: #906A21; --atom-ca: #445E36; --atom-cl: #317A45; --atom-cr: #3B5C87; --atom-cu: #995522; --atom-fe: #8E3F34; --atom-hg: #725573; --atom-k: #5F2F73; --atom-na: #775AA6; --atom-pb: #4E4E60; --atom-s: #72761A; --atom-sn: #335A5A; --atom-ti: #617775; --atom-zn: #627195;
+  --mol-bond: #59534E; --mol-letter: #FBFAF6; --mol-edge: rgb(28 24 21 / 0.55);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -561,6 +577,8 @@
   --map-place: #F5AE8C;
   --map-nodata: #C4CBD8;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -651,6 +669,8 @@
   --map-place: #F5AE8C;
   --map-nodata: #C4CBD8;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -740,6 +760,8 @@
   --map-place: #7D3519;
   --map-nodata: #3D433C;
   --map-relief-shade: #000000;
+  --atom-c: #3F3A35; --atom-h: #FBFBF9; --atom-n: #147882; --atom-o: #C34728; --atom-ag: #595E63; --atom-al: #866064; --atom-au: #906A21; --atom-ca: #445E36; --atom-cl: #317A45; --atom-cr: #3B5C87; --atom-cu: #995522; --atom-fe: #8E3F34; --atom-hg: #725573; --atom-k: #5F2F73; --atom-na: #775AA6; --atom-pb: #4E4E60; --atom-s: #72761A; --atom-sn: #335A5A; --atom-ti: #617775; --atom-zn: #627195;
+  --mol-bond: #59534E; --mol-letter: #FBFAF6; --mol-edge: rgb(28 24 21 / 0.55);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -829,6 +851,8 @@
   --map-place: #F5AE8C;
   --map-nodata: #C4CBD8;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -918,6 +942,8 @@
   --map-place: #F5AE8C;
   --map-nodata: #C4CBD8;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -1034,6 +1060,8 @@
   --map-place: #B05A36;
   --map-nodata: #767C74;
   --map-relief-shade: #1C1815;
+  --atom-c: #3F3A35; --atom-h: #FBFBF9; --atom-n: #147882; --atom-o: #C34728; --atom-ag: #595E63; --atom-al: #866064; --atom-au: #906A21; --atom-ca: #445E36; --atom-cl: #317A45; --atom-cr: #3B5C87; --atom-cu: #995522; --atom-fe: #8E3F34; --atom-hg: #725573; --atom-k: #5F2F73; --atom-na: #775AA6; --atom-pb: #4E4E60; --atom-s: #72761A; --atom-sn: #335A5A; --atom-ti: #617775; --atom-zn: #627195;
+  --mol-bond: #59534E; --mol-letter: #FBFAF6; --mol-edge: rgb(28 24 21 / 0.55);
   --shadow-pop: 0 1px 0 rgba(28,24,21,.05), 0 18px 40px -18px rgba(28,24,21,.30); --shadow-label: 0 24px 48px -24px rgba(8,10,16,.45); --shadow-sheet: 0 -12px 32px -12px rgba(28,24,21,.28);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --map-hillshade-opacity: .45;
@@ -1125,6 +1153,8 @@
   --map-place: #E0916C;
   --map-nodata: #7A849A;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 1px 0 rgba(0,0,0,.5), 0 24px 48px -18px rgba(0,0,0,.75); --shadow-label: 0 24px 48px -20px rgba(0,0,0,.8); --shadow-sheet: 0 -12px 32px -8px rgba(0,0,0,.7);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.92 0 0 0 0 0.89 0 0 0 0.030 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --map-hillshade-opacity: .6;
@@ -1216,6 +1246,8 @@
   --map-place: #7D3519;
   --map-nodata: #3D433C;
   --map-relief-shade: #000000;
+  --atom-c: #3F3A35; --atom-h: #FBFBF9; --atom-n: #147882; --atom-o: #C34728; --atom-ag: #595E63; --atom-al: #866064; --atom-au: #906A21; --atom-ca: #445E36; --atom-cl: #317A45; --atom-cr: #3B5C87; --atom-cu: #995522; --atom-fe: #8E3F34; --atom-hg: #725573; --atom-k: #5F2F73; --atom-na: #775AA6; --atom-pb: #4E4E60; --atom-s: #72761A; --atom-sn: #335A5A; --atom-ti: #617775; --atom-zn: #627195;
+  --mol-bond: #59534E; --mol-letter: #FBFAF6; --mol-edge: rgb(28 24 21 / 0.55);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;
@@ -1307,6 +1339,8 @@
   --map-place: #F5AE8C;
   --map-nodata: #C4CBD8;
   --map-relief-shade: #000000;
+  --atom-c: #B9B4AA; --atom-h: #ECEAE3; --atom-n: #3AA095; --atom-o: #E87627; --atom-ag: #9A9FA5; --atom-al: #CD9CA2; --atom-au: #E1B75C; --atom-ca: #8CA97D; --atom-cl: #6FC082; --atom-cr: #7DA1D0; --atom-cu: #BC813F; --atom-fe: #C36953; --atom-hg: #C8B0D3; --atom-k: #AA72C2; --atom-na: #AF95DF; --atom-pb: #848498; --atom-s: #DED66A; --atom-sn: #62908F; --atom-ti: #CADBE1; --atom-zn: #99AFD5;
+  --mol-bond: #A5A198; --mol-letter: #0E121C; --mol-edge: rgb(0 0 0 / 0.6);
   --shadow-pop: 0 0 0 2px var(--ink-1); --shadow-label: 0 0 0 2px var(--ink-1); --shadow-sheet: 0 0 0 2px var(--ink-1);
   --grain: none;
   --map-hillshade-opacity: 0;

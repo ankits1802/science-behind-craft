@@ -27,10 +27,14 @@ export function peakRows(file: ReliefFile): RankedRow[] {
   return file.peaks.map((peak) => ({ key: peak.name, name: peak.name, value: peak.elevation, display: `${peak.elevation.toLocaleString("en-IN")} m` }));
 }
 
+export function ReliefKey({ file }: { file: ReliefFile }) {
+  return <MapLegend title="Elevation" steps={reliefSteps(file)} extras={[FOREIGN_EXTRA, WATER_EXTRA]} note="Band edges are the contours; the shading is lit from the north-west." />;
+}
+
 export function ReliefSide({ file }: { file: ReliefFile }) {
   return (
     <>
-      <MapLegend title="Elevation" steps={reliefSteps(file)} extras={[FOREIGN_EXTRA, WATER_EXTRA]} note="Band edges are the contours; the shading is lit from the north-west." />
+      <ReliefKey file={file} />
       <div className="grid gap-2">
         <p className="font-ui text-label text-ink-1">Spot heights</p>
         <p className="font-ui text-caption text-ink-3">{`The ${file.peaks.length} named summits inside the outline, by height; the highest are marked on the map.`}</p>
@@ -64,11 +68,9 @@ function RiverKey() {
 
 const LAKE_EXTRA: LegendExtra = { key: "lake", label: "Lakes and reservoirs", fill: "var(--map-water)", edge: "var(--map-river)" };
 
-export function RiversSide({ file }: { file: RiversFile }) {
-  const named = [...file.labels].sort((a, b) => a.tier - b.tier || a.text.localeCompare(b.text, "en"));
+export function RiversKey() {
   return (
-    <>
-      <div className="grid gap-2 border-t border-rule pt-3" data-testid="rivers-key">
+    <div className="grid gap-2 border-t border-rule pt-3" data-testid="rivers-key">
         <p className="font-ui text-label text-ink-1">Rivers and lakes</p>
         <RiverKey />
         <ul className="grid gap-1.5 font-ui text-caption text-ink-2">
@@ -81,7 +83,15 @@ export function RiversSide({ file }: { file: RiversFile }) {
             </li>
           ))}
         </ul>
-      </div>
+    </div>
+  );
+}
+
+export function RiversSide({ file }: { file: RiversFile }) {
+  const named = [...file.labels].sort((a, b) => a.tier - b.tier || a.text.localeCompare(b.text, "en"));
+  return (
+    <>
+      <RiversKey />
       <div className="grid gap-2">
         <p className="font-ui text-label text-ink-1">{`${named.length} rivers named on the map`}</p>
         <ul className="grid grid-cols-2 gap-x-4 gap-y-1 border-t border-rule pt-2 font-reading text-body-sm italic text-ink-1" data-testid="rivers-named">
@@ -95,7 +105,7 @@ export function RiversSide({ file }: { file: RiversFile }) {
   );
 }
 
-function MineralKey({ file, sites }: { file: MineralsFile; sites: readonly MineralSite[] }) {
+export function MineralKey({ file, sites }: { file: MineralsFile; sites: readonly MineralSite[] }) {
   const counts = tally(sites.map((site) => String(site.classIndex)));
   const largest = counts[0]?.count ?? 0;
   return (

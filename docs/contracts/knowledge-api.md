@@ -29,9 +29,9 @@ flowchart LR
   class E accent
 ```
 
-The server offers 22 tools in six groups to every connection (decision 0111; decision 0114 added
-`propose_dataset`), and four more in a seventh group, `admin`, listed only to a token holding the
-`review` scope (decision 0170); each tool names its group in `tools/list` as
+The server offers 23 tools in six groups to every connection (decision 0111; decision 0114 added
+`propose_dataset`, decision 0198 `compose_component`), and four more in a seventh group, `admin`,
+listed only to a token holding the `review` scope (decision 0170); each tool names its group in `tools/list` as
 `_meta["kalavigyan/group"]`, so a screen can group them without a list of names:
 
 | Group | Tools | Scope | Contract |
@@ -41,7 +41,7 @@ The server offers 22 tools in six groups to every connection (decision 0111; dec
 | sources | `search_sources` (contribute; a pictures-only search is read), `read_source` (contribute), `lookup` (read), `supply_source` (contribute) | as listed | this file, Source tools; `knowledge-writes.md` for `supply_source` |
 | work | `list_open_work` (read; its review queues need review), `my_work`, `reserve_tasks`, `steward_craft`, `get_proposal` | contribute | `open-work.md`, `knowledge-writes.md` |
 | proposing | `propose_facts`, `propose_structure`, `propose_source`, `propose_dataset` | contribute | `knowledge-writes.md`, decision 0108; decision 0114 for `propose_dataset`, the datasets reference for its `layer` and `review-queue.md` for `LAYERS` |
-| pages | `edit_draft`, `preview_page`, `propose_page` | contribute | `open-work.md` |
+| pages | `edit_draft`, `preview_page`, `propose_page`, `compose_component` | contribute | `open-work.md`; `component-specs-science.md` for what `compose_component` builds |
 | pictures | `give_pictures` | contribute | `mcp-ask-and-upload.md` |
 | admin | `review_queue`, `stage_reviews`, `refresh_pages`, `admin_reports` | review (Admin and Master Admin, `mcp-oauth.md`) | `review-queue.md`, Staged over MCP and Published content (removing and editing what is published, guided by the resource `kalavigyan://admin/published-content.md`); `nightly-upkeep.md`, Refresh pages now; Admin reports below |
 
@@ -107,7 +107,7 @@ can act on.
 | Tool | Arguments | Returns |
 |---|---|---|
 | `find_crafts` | `query` (1 to 1,000 characters) | `FoundCrafts {schemaVersion 1, query, crafts[{craft {slug, name, path}, score, pageUrl, fields?}]}`, at most five, ranked by the content-aware finder below (no embedding call); `fields` is each active craft's `{claims, covered[], thin[], missing[], fieldClaims {FIELD: n}}` |
-| `get_page` | `subject? {kind craft, family or category, slug}`, `parts?` (any of `coverage`, `sections`, `layout`; every part when absent), `field?` (one field's section) | `PageRead {schemaVersion 1, subject?, parts[], fields[]?, coverage?: FieldCoverage, field?, sections[ArticleSection], byField[{field, sentences, claims}]?, layout: PageLayout or null, keys[{kind, key, name}]?, openWork[OpenTask], pageUrl?, attribution}`; `sections` are the page's own `PUBLISHED` `ArticleSection` rows, a category's (`subjectKind` `category`) as its page draws them; `keys` gives a craft's or family's page the subject keys a component proposal names: the craft by slug and its districts (at most 40) as `lgd:<code>` places; with no subject, `fields[{field, title, covers, chapter}]`, the 16 fields in vocabulary order (`chapter` is where a page places the field, `coverage_chapters.FIELD_CHAPTERS`, rule 23); `coverage` is the page's `FieldCoverage` (`coverage.md`), `sections` the published versions only, `layout` the stored record (`page-layout.md`); `openWork` joins each part's field tasks once |
+| `get_page` | `subject? {kind craft, family or category, slug}`, `parts?` (any of `coverage`, `sections`, `layout`; every part when absent), `field?` (one field's section), `guide?` (a guide page's address, `<topic>/<n>`, decision 0203) | `PageRead {schemaVersion 1, subject?, parts[], fields[]?, coverage?: FieldCoverage, field?, sections[ArticleSection], byField[{field, sentences, claims}]?, layout: PageLayout or null, keys[{kind, key, name}]?, openWork[OpenTask], pageUrl?, guide?: HandedGuide, attribution}`; `guide` is the page `guide` names (alone, with no subject), else the page checklist's opening and the Kutch Ajrakh bar with the fields or a page's coverage (`open-work.md`, Guide pages); `sections` are the page's own `PUBLISHED` `ArticleSection` rows, a category's (`subjectKind` `category`) as its page draws them; `keys` gives a craft's or family's page the subject keys a component proposal names: the craft by slug and its districts (at most 40) as `lgd:<code>` places; with no subject, `fields[{field, title, covers, chapter}]`, the 16 fields in vocabulary order (`chapter` is where a page places the field, `coverage_chapters.FIELD_CHAPTERS`, rule 23); `coverage` is the page's `FieldCoverage` (`coverage.md`), `sections` the published versions only, `layout` the stored record (`page-layout.md`); `openWork` joins each part's field tasks once |
 | `get_facts` | `craft_slug` or `subject {kind craft, family or category, slug}`, one of them, `field?`, `query?`, `limit?` (1 to 50, default 20) | `CraftFacts {schemaVersion 1, craft? or subject? (a category's `{kind, slug, name, pageUrl}`), field, query, facts[{id, text, level, field, fields[], citations[{sourceId, quote, locator}], quantity?, readings[]?, figures[]?}], byField[{field, count, shown[]}], openWork[OpenTask], sources[{id, kind, title, authors, year, doi, url, publisher, licence, attribution}], pageUrl, attribution}`; a category's facts are the shown, cited facts its page links (`CuratedCategoryClaim`) and those proposed for it (on a shared concept of its name), the same set the duplicate gate holds, in field order or ranked by `query` |
 | `list_components` | `query?`, `craft_slug?`, `field?`, `kind?` | `CraftComponents {schemaVersion 1, craftSlug, field, kind, query, components[{label, title, description, kind, field, fields[], craftSlug, subjects[{kind, key, name}]}]}`, registered, visible and current pieces, at most 100 |
 

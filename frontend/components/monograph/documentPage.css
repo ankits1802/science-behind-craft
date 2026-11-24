@@ -6,6 +6,12 @@
   block-size: 100%;
 }
 
+.kv-monograph .kv-open-label > .lc-meta:first-child {
+  margin-block-start: 0;
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
 .kv-monograph .bx-pt > .screen:has(.pop.docked) {
   overflow-y: visible;
 }

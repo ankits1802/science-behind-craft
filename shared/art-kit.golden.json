@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "families": ["textiles", "metal", "clay", "stone", "wood", "leather", "fibre", "paper", "more"],
+  "layouts": {
+    "steps": [2, 6],
+    "before_after": [2, 2],
+    "section": [1, 1],
+    "sequence": [2, 6]
+  },
+  "partsPerPanelMax": 3,
+  "layers": [2, 6],
+  "earth": "earth",
+  "motions": ["dip", "take", "dry"],
+  "motifs": ["star", "lattice", "dots", "lines"],
+  "parts": {
+    "cloth": {
+      "families": ["textiles", "more"],
+      "subjects": ["cloth", "cotton", "fabric", "textile", "swatch"],
+      "choices": { "form": ["swatch", "length", "folded"], "printed.motif": ["star", "lattice", "dots", "lines"] },
+      "materials": ["material", "printed.material"],
+      "motion": "take"
+    },
+    "block": {
+      "families": ["textiles", "wood"],
+      "subjects": ["block", "blocks", "stamp"],
+      "choices": { "motif": ["star", "lattice", "dots", "lines"] },
+      "materials": ["paste"],
+      "motion": null
+    },
+    "bath": {
+      "families": ["textiles", "metal", "leather", "fibre", "paper"],
+      "subjects": ["vat", "vats", "bath", "baths", "liquor"],
+      "choices": { "vessel": ["vat", "pot", "trough", "pit"] },
+      "materials": ["liquor", "piece"],
+      "motion": "dip"
+    },
+    "paste": {
+      "families": ["textiles", "metal", "paper", "more"],
+      "subjects": ["paste", "mordant", "resist"],
+      "choices": { "form": ["spread", "printed", "outline"] },
+      "materials": ["material", "on", "dried"],
+      "motion": "dry"
+    },
+    "heat": {
+      "families": ["textiles", "metal", "clay", "wood", "fibre", "paper", "more"],
+      "subjects": ["sun", "fire", "furnace", "kiln", "flame"],
+      "choices": { "source": ["sun", "fire", "furnace", "lamp"] },
+      "materials": [],
+      "motion": null
+    },
+    "water": {
+      "families": ["textiles", "metal", "leather", "fibre", "paper"],
+      "subjects": ["water", "washing", "rinse", "rinsing"],
+      "choices": { "form": ["running", "still", "sprinkled"] },
+      "materials": [],
+      "motion": null
+    },
+    "tool": {
+      "families": ["textiles", "metal", "stone", "wood", "fibre", "paper", "more"],
+      "subjects": ["hand", "hands", "chisel", "mallet", "brush"],
+      "choices": { "tool": ["block", "brush", "chisel", "mallet", "knife", "stick"] },
+      "materials": ["load"],
+      "motion": null
+    },
+    "section": {
+      "families": ["textiles", "metal", "clay", "leather", "more"],
+      "subjects": ["section", "cutaway", "strata", "layers"],
+      "choices": {},
+      "materials": ["layers.material"],
+      "motion": null
+    },
+    "piece": {
+      "families": ["metal", "clay", "stone", "wood", "fibre", "paper", "more"],
+      "subjects": ["slab", "billet", "lump"],
+      "choices": { "shape": ["lump", "vessel", "slab", "billet", "sheet", "figure", "culm"], "inlay.motif": ["star", "lattice", "dots", "lines"] },
+      "materials": ["material", "inlay.material"],
+      "motion": null
+    }
+  }
+}

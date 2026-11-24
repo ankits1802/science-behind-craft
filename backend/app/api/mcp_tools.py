@@ -9,8 +9,10 @@ from pydantic import ValidationError
 from app.core.errors import InvalidInput, Refused
 
 from .mcp_ask_tools import ASK_TOOLS
+from .mcp_compose_tools import COMPOSE_TOOLS
 from .mcp_dataset_tools import DATASET_TOOLS
 from .mcp_fact_tools import FACT_TOOLS
+from .mcp_guides import guide_read, guide_template, is_guide_uri
 from .mcp_lookup_tools import LOOKUP_TOOLS
 from .mcp_page_tools import PAGE_TOOLS
 from .mcp_picture_tools import PICTURE_TOOLS
@@ -52,6 +54,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *SOURCE_TOOLS,
             *DATASET_TOOLS,
             *PAGE_TOOLS,
+            *COMPOSE_TOOLS,
             *PICTURE_TOOLS,
             *REVIEW_TOOLS,
             *REPORT_TOOLS,
@@ -97,9 +100,10 @@ def _catalogue(method: str, params: dict[str, Any], context: ToolContext) -> dic
     if method == "resources/list":
         return resource_list(context.site)
     if method == "resources/templates/list":
-        return resource_templates()
+        return {"resourceTemplates": [*resource_templates()["resourceTemplates"], guide_template()]}
     if method == "resources/read":
-        return resource_read(params)
+        uri = params.get("uri")
+        return guide_read(uri) if is_guide_uri(uri) else resource_read(params)
     raise RequestError(METHOD_NOT_FOUND, f"the server offers no method {method}")
 
 

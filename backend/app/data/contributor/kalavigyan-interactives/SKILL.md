@@ -56,7 +56,8 @@ What this skill leaves open is decided elsewhere:
 ## Storyboard it as cited states
 
 A state is one moment of the mechanism drawn whole: what is there, what changed and what changed
-it. Write the storyboard (`references/storyboard.md`) before any drawing.
+it. Write the storyboard (`references/storyboard.md`) before any drawing. `compose_component`
+hands back the storyboard's pages with what it composes; read them before you place the result.
 
 - Every state names the facts that state it, by id, and the page sentences it illustrates (or the
   units you will write, each citing those facts). A state with no fact is not drawn: research it
@@ -70,6 +71,10 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   research and the team's requests before anything is drawn.
 
 ## Choose the kind that carries it
+
+Until a player takes kit parts, draw a state's scene to the bar: materials textured by a pattern
+laid over the same shape, ink edges, six shapes or more. Show the same states at rest as a composed
+`diagram`.
 
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
@@ -95,6 +100,7 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## What a state may show
 
+- A state never draws a map; a family's places go in a declared `timeline_map` beside the flagship.
 - Only what its facts state: the materials they name, the change they describe, the cause they
   give, with their numbers. No scale, arrow, flame, bubble or label that implies a quantity or a
   cause no fact states.
@@ -107,10 +113,11 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   the typographic plates and are refused in a drawing. Delivery holds a drawing to the design's
   roles (`kalavigyan://design/drawing.md`) and refuses indigo in it, so a delivered drawing never
   uses it.
-- The specimen set holds the textile family's dyes and dips only. A family whose materials have no
-  specimen token (wax, molten and cast metal, raw and fired clay, stone, wood, lac, hide, fibre,
-  pulp, mineral pigments) asks the team for them first: a real material colour each, added through
-  the design generator with its nearest semantic colour recorded, and accepted by the spec models.
+- The specimen set holds the textile dyes and dips; bidri, blue pottery and dhokra materials;
+  turmeric, pomegranate rind and kali mitti; and Pattachitra's five pigments (SYSTEM.md 2.5). A
+  family with none of its materials there asks the team first: a record is added only with the fact
+  whose quote states the colour, never a typed colour or another material's token. A molecule's
+  atoms are the kit's twenty elements (SYSTEM.md 2.5a).
   Never a typed colour, and never the nearest token of another material.
 - A source's error stays verbatim and marked; disagreeing sources are both shown in the differs
   note, never settled by the drawing.
@@ -152,6 +159,9 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   family's facts stay the family's, and the mechanism is explained once on a page.
 - A craft that lacks the family facts a flagship's units cite cannot link or lay it out; give it a
   `VARIANT` resting on its own facts.
+- A craft whose own facts state reactions, colours after, a compound or a choice composes its own
+  player, dip, molecule or what-if with `compose_component` (`references/flagships.md`, Each craft
+  composes its own), citing only its facts.
 
 ## Proving it
 
@@ -159,7 +169,10 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   rests on and the family's `FLAGSHIP` task as `task_key`, call `preview_page`, fix
   every rule its report fails, then open the private link in both themes at 360, 834 and 1440 px,
   and again with reduced motion on; work it by keyboard alone; step every state and read each against its
-  facts. Preview again after each fix, then `propose_page`.
+  facts. Preview again after each fix, then `propose_page`. Preview the page with a composed
+  component and read its pictures before proposing: look at the preview's pictures of the
+  interactive's chapter and fix every rule 28 failure naming it (drawn empty, loading or moving at
+  rest, too large, past its column) before opening the link.
 - **In the repository**: a valid and a refused spec of the kind in
   `backend/tests/research/test_component_specs_science.py`; the view resting on its state and
   pressing on the rail in `frontend/e2e/monograph-science-views-unit.spec.ts`; Monograph parity

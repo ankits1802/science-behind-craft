@@ -1,7 +1,7 @@
 "use client";
 
-import type { PlacedPin } from "@/components/map/layout";
-import { VIEW_BOX } from "@/components/map/projection";
+import type { MapBox } from "@/components/map/basemap";
+import { frameScale, WHOLE_MAP, type PlacedPin } from "@/components/map/layout";
 
 const CARD_WIDTH = 256;
 const CLEARANCE = 14;
@@ -15,13 +15,13 @@ function countLine(total: number): string {
   return total === 1 ? "1 craft" : `${total} crafts`;
 }
 
-export function MapHoverCard({ pin, ordinal }: { pin: PlacedPin; ordinal?: number }) {
+export function MapHoverCard({ pin, ordinal, frame = WHOLE_MAP }: { pin: PlacedPin; ordinal?: number; frame?: MapBox }) {
   const { point } = pin;
-  const above = pin.y > VIEW_BOX.height * FLIP_AT;
-  const vertical = above
-    ? { bottom: percent(VIEW_BOX.height - (pin.y - pin.radius - CLEARANCE), VIEW_BOX.height) }
-    : { top: percent(pin.y + pin.radius + CLEARANCE, VIEW_BOX.height) };
-  const across = `clamp(0px, calc(${percent(pin.x, VIEW_BOX.width)} - ${CARD_WIDTH / 2}px), calc(100% - ${CARD_WIDTH}px))`;
+  const y = pin.y - frame.y;
+  const clearance = CLEARANCE * frameScale(frame);
+  const above = y > frame.height * FLIP_AT;
+  const vertical = above ? { bottom: percent(frame.height - (y - pin.radius - clearance), frame.height) } : { top: percent(y + pin.radius + clearance, frame.height) };
+  const across = `clamp(0px, calc(${percent(pin.x - frame.x, frame.width)} - ${CARD_WIDTH / 2}px), calc(100% - ${CARD_WIDTH}px))`;
   const count = point.countText === undefined ? countLine(point.total) : point.countText;
 
   return (

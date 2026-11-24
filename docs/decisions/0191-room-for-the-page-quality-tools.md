@@ -14,6 +14,8 @@ contract is `docs/contracts/knowledge-api.md` (the tools and the list's budget).
 |---|---|
 | Why the list was cut to 22 tools and 60 KB | [decision 0111](0111-fewer-mcp-tools.md) |
 | The Admin tools and their own budget | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) |
+| `compose_component`, a page-quality tool in the pages group | [decision 0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) |
+| The guides paged, as point 2 asks, and handed over at the step they serve | [decision 0203](0203-the-guide-handed-over-page-by-page-at-the-step-it-serves.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

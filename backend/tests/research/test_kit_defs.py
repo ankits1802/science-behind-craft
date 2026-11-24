@@ -1,7 +1,10 @@
 import json
 
+from app.science.molecule_drawing import atom_gradient
+from app.science.molecule_elements import DRAWN_ELEMENTS
 from app.scripts.write_component_homes import DEFS_FILE, defs_text
 from app.services.document_kit_defs import (
+    atom_defs,
     defined_ids,
     kit_defs,
     kit_defs_of,
@@ -10,7 +13,7 @@ from app.services.document_kit_defs import (
     referenced_ids,
     spec_ids,
 )
-from app.services.monograph_document import MONOGRAPHS_DIR
+from app.services.monograph_document import MONOGRAPHS_DIR, monograph_shell
 
 AJRAKH = MONOGRAPHS_DIR / "Kutch-Ajrakh"
 GRADIENT = '<radialGradient id="ag-C" cx=".3"><stop offset="0"/><stop offset="1"/></radialGradient>'
@@ -104,3 +107,20 @@ def test_the_kit_style_fills_the_madder_hatch_and_the_place_hatch() -> None:
 
 def test_the_committed_kit_defs_are_the_build() -> None:
     assert DEFS_FILE.read_bytes().decode("utf-8") == defs_text()
+
+
+def test_every_atom_the_design_colours_has_its_gradient_in_the_chemistry_scope() -> None:
+    kit = kit_defs()
+    for symbol in DRAWN_ELEMENTS:
+        found = kit[f"ag-{symbol}"]
+        assert found["scope"] == "chem", symbol
+        assert f"var(--atom-{symbol.lower()})" in (found["markup"] or ""), symbol
+    assert set(atom_defs()) == {f"ag-{symbol}" for symbol in DRAWN_ELEMENTS}
+
+
+def test_a_new_atom_s_gradient_is_drawn_as_kutch_ajrakh_s_page_draws_its_own() -> None:
+    authored = kit_defs_of([monograph_shell("Kutch-Ajrakh")])
+    for symbol in ("C", "H", "N", "O"):
+        assert authored[f"ag-{symbol}"]["markup"] == atom_gradient(symbol)
+    carbon = authored["ag-C"]["markup"] or ""
+    assert atom_gradient("Fe") == carbon.replace('"ag-C"', '"ag-Fe"').replace("--atom-c)", "--atom-fe)")

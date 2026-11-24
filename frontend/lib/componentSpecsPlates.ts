@@ -220,16 +220,27 @@ export const labelCardShape = object<LabelCardSpec>({
 });
 
 export type Swatch = { dye: DepictedMaterial; caption: string };
-export type ColourCard = { before: Swatch; join: "becomes" | "or"; after: Swatch; name: string; agent: string; text: string };
+type ColourJoin = "becomes" | "or";
+export type ColourCard = { before?: Swatch; join?: ColourJoin; after?: Swatch; name: string; agent: string; text: string; why?: string };
 export type SwatchCardsSpec = { chapterNo: string; title: string; titleId: string; intro: string; weave: string; colours: ColourCard[] };
 const swatchShape = object<Swatch>({ dye: depictedMaterial, caption: unitRef });
+const colourFields = object<ColourCard>({ before: optional(swatchShape), join: optional(oneOf(["becomes", "or"] as const)), after: optional(swatchShape), name: unitRef, agent: unitRef, text: unitRef, why: optional(unitRef) });
+const colourShape: Shape<ColourCard> = {
+  expected: colourFields.expected,
+  parse(value, path) {
+    const colour = colourFields.parse(value, path);
+    if ((colour.before === undefined) !== (colour.join === undefined)) throw new ShapeError(path, "a join between a before swatch and its after swatch, and nowhere else");
+    if (colour.before !== undefined && colour.after === undefined) throw new ShapeError(path, "a before swatch only beside its after swatch");
+    return colour;
+  }
+};
 export const swatchCardsShape = object<SwatchCardsSpec>({
   chapterNo: unitRef,
   title: unitRef,
   titleId: domId,
   intro: unitRef,
   weave: domId,
-  colours: list(object<ColourCard>({ before: swatchShape, join: oneOf(["becomes", "or"] as const), after: swatchShape, name: unitRef, agent: unitRef, text: unitRef }), 1)
+  colours: list(colourShape, 1)
 });
 
 export type PairSwatch = { ground: DepictedMaterial; motif: DrawingElement[]; label: string };

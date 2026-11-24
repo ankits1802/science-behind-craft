@@ -278,3 +278,25 @@ def test_a_cited_passage_may_be_a_text_unit_but_not_any_other_text() -> None:
         SPEC_MODELS_PLATES["comic"].model_validate(
             {**VALID["comic"], "panels": [{**VALID["comic"]["panels"][0], "caption": "Panel one"}]}
         )
+
+
+def test_a_colour_shows_its_swatch_pair_one_swatch_or_none_and_may_add_its_why() -> None:
+    cards = SPEC_MODELS_PLATES["swatch_cards"]
+    named = {"name": "u0090", "agent": "u0091", "text": "u0092"}
+    after = {"dye": "indigo", "caption": "u0093"}
+
+    def colours(colour: dict[str, Any]) -> list[dict[str, Any]]:
+        spec = cards.model_validate({**VALID["swatch_cards"], "colours": [colour]})
+        return spec.model_dump(mode="json", by_alias=True)["colours"]
+
+    assert colours(COLOUR) == [COLOUR]
+    assert colours({**named, "after": after, "why": "u0094"}) == [{"after": after, **named, "why": "u0094"}]
+    assert colours(named) == [named]
+    refused = (
+        ({**named, "before": SWATCH, "after": after}, "joins a before swatch"),
+        ({**named, "join": "or", "after": after}, "joins a before swatch"),
+        ({**named, "before": SWATCH, "join": "becomes"}, "only beside its after swatch"),
+    )
+    for colour, reason in refused:
+        with pytest.raises(ValidationError, match=reason):
+            colours(colour)

@@ -20,8 +20,8 @@ from .craft_page_unwritten import listed_units
 from .document_components import DocumentStructure, StructureBlock
 from .document_components_data import (
     READER_SCOPE,
-    borrowed_data,
     fragment_sentences,
+    kit_data,
     merged_data,
     monograph_data,
     reader_data,
@@ -30,6 +30,7 @@ from .document_components_data import (
 from .document_components_homes import home_scopes
 from .drawing_themes import themed_spec
 from .knowledge_view import ClaimView
+from .monograph_generated_colours import place_colour_key
 from .monograph_generated_drawings import Drawings, spec_unit_keys
 from .monograph_generated_grids import StatedValue, fact_grid
 from .monograph_generated_kin import KinRead, place_kin
@@ -185,6 +186,7 @@ def _structure(parts: GeneratedParts, page: _Page) -> PlacedStructure:
     page.units.update(placed.units)
     page.components.update(placed.components)
     page.blocks.update(placed.blocks)
+    place_colour_key(parts, page, placed.leading)
     return placed
 
 
@@ -247,6 +249,7 @@ def _drawn(parts: GeneratedParts, page: _Page, drawings: Drawings, component: Re
         page.specs[component.label] = themed_spec(component.kind, drawn.spec)
         page.drafts.update(drawn.drafts)
         page.held[component.label] = list(drawn.drafts)
+        merged_data(page.data, kit_data({}, component.kind, page.specs[component.label]))
         return True
     if component.monograph is None:
         return False
@@ -289,7 +292,7 @@ def _borrow_data(page: _Page, drawings: Drawings, book: SourceBook) -> None:
     for label, monograph in {**page.reused, **page.borrowed_specs}.items():
         if monograph not in read:
             read[monograph] = monograph_data(drawings.root, monograph)
-        found = borrowed_data(read[monograph], page.components[label].kind, page.specs.get(label))
+        found = kit_data(read[monograph], page.components[label].kind, page.specs.get(label))
         merged_data(page.data, found)
         if home_scopes(monograph).get(label) == READER_SCOPE:
             numbers = drawings.source_numbers(monograph, book)
@@ -348,11 +351,9 @@ def _chapter_head(chapter: str, record: SubjectRecord, page: _Page) -> list[Layo
 
 def _entry(chapter: str, ref: str, within: str | None, page: _Page) -> list[LayoutEntry]:
     kind = "component" if ref in page.components else "unit"
-    placed = LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within)
-    return [
-        placed,
-        *(LayoutEntry(chapter=chapter, kind="unit", ref=unit, within=ref) for unit in page.held.get(ref, [])),
-    ]
+    units = page.held.get(ref, [])
+    inside = [LayoutEntry(chapter=chapter, kind="unit", ref=unit, within=ref) for unit in units]
+    return [LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within), *inside]
 
 
 def _cite(

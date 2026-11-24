@@ -105,7 +105,9 @@ The dated record on a map: figure head; the events (view, routes, pins, when, ti
 and drawing; the legend; the caption; one card and one list item per event; the supply note; and
 the axis (breaks, ticks, spans, one mark per event). At rest the `rest` event is pressed and its card
 shown; the view writes the marks' names ("1868, Alizarin made in a laboratory") and the list's pick
-buttons ("Show … on the map") from the events.
+buttons ("Show … on the map") from the events. This authored form is Kutch Ajrakh's own; a
+contributor delivers only the declared form (a spec with `places`), which the site draws with the
+answers' timeline map (`component-specs-general.md`, The declared timeline map, decision 0196).
 
 ### concept_atlas
 

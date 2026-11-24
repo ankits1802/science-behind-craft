@@ -155,9 +155,14 @@ changes, quota), never ordinary facts.
 
 - `--dye-cloth`, `-harda`, `-harda-dry`, `-lime`, `-lime-edge`, `-kut`, `-kesari`, `-mud`,
   `-mud-wet`, `-leuco`, `-vat-liquor`, `-indigo`, `-indigo-deep`, `-madder`, `-madder-bright`,
-  `-pink`, `-pink-edge` and `--dip-1` to `--dip-4`: depicted materials. Always textured, framed
-  (1px ink-2 outside a 2px raised mat) and named in a key; never a control, link, series or map
-  class.
+  `-pink`, `-pink-edge` and `--dip-1` to `--dip-4`, then the other crafts' records (bidri, blue
+  pottery, dhokra, `-turmeric`, `-pomegranate`, `-kali-mitti` and Pattachitra's `-cinnabar`,
+  `-red-ochre`, `-orpiment`, `-lamp-black`, `-conch-white`; SYSTEM.md 2.5): depicted materials.
+  Always textured, framed (1px ink-2 outside a 2px raised mat) and named in a key; never a
+  control, link, series or map class. A record is added only with the fact that quotes its colour.
+- `--atom-<symbol>` with `--mol-bond`, `--mol-edge` and `--mol-letter`: the molecule kit, one
+  table of twenty elements in four themes (SYSTEM.md 2.5a). Only inside a `molecule_3d` drawing
+  and its key; every atom but carbon and hydrogen carries its letter.
 - `--plate-<material>` with `--plate-<material>-ink` for textile, metal, wood, fibre, clay,
   stone, paper, leather, paint, instr, toys and misc: a craft plate's ground, its seeded texture
   and the family swatch on shelf headers and the index. The kicker and name are knocked out of

@@ -6,7 +6,7 @@ from app.core.errors import InvalidInput
 from app.research.component_specs_plates_parts import UNIT_REF_PATTERN as PLATE_REFS
 from app.research.component_specs_science_parts import UnitRef as ScienceRef
 from app.research.component_specs_tools import UNIT_REF_PATTERN as TOOL_REFS
-from app.research.unit_ids import AUTHORED_UNITS, DELIVERED_UNITS, PLATE_UNITS, UNIT_REF_PATTERN
+from app.research.unit_ids import AUTHORED_UNITS, DELIVERED_UNITS, KEY_UNITS, PLATE_UNITS, UNIT_REF_PATTERN
 
 
 def test_every_spec_names_its_units_by_the_one_pattern() -> None:
@@ -38,3 +38,12 @@ def test_authored_delivered_and_picture_units_take_their_own_numbers() -> None:
     assert PLATE_UNITS.fresh(2, {"u9001"}) == ["u9002", "u9003"]
     with pytest.raises(InvalidInput, match="no more room for picture units"):
         PLATE_UNITS.unit(999)
+
+
+def test_the_site_drawn_colour_key_takes_the_last_hundred_before_the_pictures() -> None:
+    assert (KEY_UNITS.unit(0), KEY_UNITS.unit(98)) == ("u8901", "u8999")
+    assert DELIVERED_UNITS.holds("u8900") and not DELIVERED_UNITS.holds("u8901")
+    assert not KEY_UNITS.holds("u9001") and not PLATE_UNITS.holds("u8999")
+    assert KEY_UNITS.fresh(2, {"u8901", "u5001"}) == ["u8902", "u8903"]
+    with pytest.raises(InvalidInput, match="no more room for colour key units"):
+        KEY_UNITS.unit(99)

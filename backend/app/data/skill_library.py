@@ -21,6 +21,7 @@ __all__ = [
     "Reference",
     "SkillFile",
     "contract_text",
+    "demoted",
     "prompt_reference",
     "reference_text",
     "server_index",
@@ -74,7 +75,7 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
             Reference(
                 "page-checklist",
                 "The page checklist",
-                "The 27 rules every craft, family, category and answer page meets, and the three lists each "
+                "The 28 rules every craft, family, category and answer page meets, and the three lists each "
                 "page derives first",
             ),
             Reference(
@@ -92,7 +93,7 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
             Reference(
                 "components",
                 "Authoring a component",
-                "Choosing among the 22 kinds a contributor delivers and their declared specs, units and citations "
+                "Choosing among the 23 kinds a contributor delivers and their declared specs, units and citations "
                 "in a spec, depicted materials, and the design rules for a contributed figure",
             ),
             Reference(
@@ -247,7 +248,11 @@ def server_index() -> str:
 
 
 def prompt_reference(name: str) -> str:
-    return HEADING.sub(r"#\1 ", reference_text(name)).strip()
+    return demoted(reference_text(name))
+
+
+def demoted(text: str) -> str:
+    return HEADING.sub(r"#\1 ", text).strip()
 
 
 @cache

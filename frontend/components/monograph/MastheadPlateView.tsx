@@ -17,6 +17,21 @@ function Seal() {
   );
 }
 
+function LabelMeta({ view }: { view: DocumentLabel }) {
+  if (!view.gi && !view.place) return null;
+  return (
+    <div className="lc-meta">
+      {view.gi ? (
+        <span className="seal">
+          <Seal />
+          <span>{view.gi}</span>
+        </span>
+      ) : null}
+      {view.place ? <span>{view.place}</span> : null}
+    </div>
+  );
+}
+
 function LabelCard({ view }: { view: DocumentLabel }) {
   return (
     <div className="label-card mast-label on-photo kv-open-label" data-size={titleSize(view.name)}>
@@ -24,18 +39,19 @@ function LabelCard({ view }: { view: DocumentLabel }) {
         <span>{view.kicker}</span>
         {view.family ? <span>{view.family}</span> : null}
       </p>
-      <p className="lc-title">{view.name}</p>
-      {view.gi || view.place ? (
-        <div className="lc-meta">
-          {view.gi ? (
-            <span className="seal">
-              <Seal />
-              <span>{view.gi}</span>
-            </span>
-          ) : null}
-          {view.place ? <span>{view.place}</span> : null}
-        </div>
-      ) : null}
+      <p className="lc-title" aria-hidden="true">
+        {view.name}
+      </p>
+      <LabelMeta view={view} />
+    </div>
+  );
+}
+
+function PlateLabel({ view }: { view: DocumentLabel }) {
+  if (!view.gi && !view.place) return null;
+  return (
+    <div className="label-card mast-label on-photo kv-open-label">
+      <LabelMeta view={view} />
     </div>
   );
 }
@@ -88,7 +104,7 @@ export function MastheadPlateView({ document, view }: { document: MonographDocum
           <div className="ph" data-app="">
             <TypographicPlate material={view.material} englishName={view.name} kicker={view.plateKicker} size="masthead" decorative />
           </div>
-          <LabelCard view={view} />
+          <PlateLabel view={view} />
         </div>
       </div>
     );

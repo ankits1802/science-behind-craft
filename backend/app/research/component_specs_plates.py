@@ -7,7 +7,7 @@ from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from .base import ContractModel
+from .base import ContractModel, absent
 from .component_specs_plates_media import (
     AiIllustrationSpec,
     AiVideoSpec,
@@ -155,12 +155,21 @@ class Swatch(ContractModel):
 
 
 class ColourCard(ContractModel):
-    before: Swatch
-    join: Literal["becomes", "or"]
-    after: Swatch
+    before: Swatch | None = Field(default=None, exclude_if=absent)
+    join: Literal["becomes", "or"] | None = Field(default=None, exclude_if=absent)
+    after: Swatch | None = Field(default=None, exclude_if=absent)
     name: UnitRef
     agent: UnitRef
     text: UnitRef
+    why: UnitRef | None = Field(default=None, exclude_if=absent)
+
+    @model_validator(mode="after")
+    def _swatches_in_order(self) -> Self:
+        if (self.before is None) != (self.join is None):
+            raise ValueError("A colour joins a before swatch to its after swatch, and joins nothing else")
+        if self.before is not None and self.after is None:
+            raise ValueError("A colour shows a before swatch only beside its after swatch")
+        return self
 
 
 class SwatchCardsSpec(ContractModel):

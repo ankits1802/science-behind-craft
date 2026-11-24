@@ -62,11 +62,34 @@ What this storyboard tells its agent before any drawing: two facts to research (
 colour and the alum print's colour, or draw both as outlines), one token to ask for (beeswax), and
 nothing to redraw that the library already holds (the vat, the alizarin molecule).
 
+## A craft's own player, storyboarded from what the server composes
+
+A craft's own reaction player, dip player, molecule or what-if is composed by `compose_component`
+from its page, so its storyboard is read from the result rather than drafted beside it, and still
+written down before anything is proposed:
+
+| Column | Read from the composed component |
+|---|---|
+| State | each step's `name`, each phase's `pose`, each toggle's options, in the order given |
+| Facts | the claim ids of the units that state it; each must be one of the craft's own |
+| Sentences | the units it holds, their texts the facts' statements as the page shows them |
+| Materials | each species' or phase's swatch, a depicted token of the craft's material or an outline where none is recorded |
+| Conditions | the stage's time where one is stated, with its fact |
+| Equation | the step's equation where the server balanced the reaction, otherwise its note |
+| Missing | the reply's `missing` and `leftOut`, each a fact, structure item or colour to ask for |
+
+Read every row against its facts before placing the result. A state whose facts do not say what
+its drawing shows is dropped by proposing the craft's facts again, never by editing the spec, and a
+row under Missing is researched and proposed, then the component composed again. The header keeps
+its lines: the label the composer gives (`<craft>/chemistry/<name>`), the kind, the state it rests
+on (the last) and the family flagship it stands beside.
+
 ## How this form is kept true
 
 | What | Kept true by |
 |---|---|
 | The filled storyboard cites only facts the backlog names | `backend/tests/mcp/test_interactives_skill.py` |
+| A composed component's states, units and the craft's own facts they cite | `backend/tests/compose/` |
 | The served copies | the same test, byte for byte against the server's and the site's |
 
 Re-read it when the backlog's Textiles facts are read again, or a column is added to the form.

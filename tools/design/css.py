@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from design.build_molecule import molecule_css
 from design.system import System
 
 __all__ = ["css", "theme_css"]
@@ -61,7 +62,8 @@ def theme_css(tokens: dict[str, Any], system: System, theme: str) -> str:
         _grain_line(tokens["grain"][theme]),
         f"--map-hillshade-opacity: {system.data['hillshadeOpacity'][theme]};",
     ]
-    return INDENT.join([*_colour_lines(tokens, theme), *_data_lines(tokens, theme), *effects])
+    lines = [*_colour_lines(tokens, theme), *_data_lines(tokens, theme), *molecule_css(tokens, theme)]
+    return INDENT.join([*lines, *effects])
 
 
 def _script_lines(tokens: dict[str, Any], system: System) -> list[str]:
