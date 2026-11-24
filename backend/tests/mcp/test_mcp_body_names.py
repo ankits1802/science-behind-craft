@@ -139,9 +139,11 @@ def test_a_bundle_names_its_parts_and_points_to_edit_draft_for_their_fields(name
         "layout",
         "pictures",
         "translation",
+        "withdrawals",
         "note",
     }
     assert bundle["properties"]["facts"]["maxItems"] == 20 and "edit_draft's add" in bundle["description"]
+    assert bundle["properties"]["withdrawals"]["maxItems"] == 10 and "withdrawals" in bundle["description"]
     assert (
         bundle["properties"]["translation"] == {"type": "object"} and "translation" in bundle["description"]
     )
