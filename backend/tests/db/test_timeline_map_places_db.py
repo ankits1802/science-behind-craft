@@ -9,11 +9,15 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_engine, session_scope, sessionmaker
+from app.core.errors import InvalidInput
 from app.data.dataset_registry import registry_rows
 from app.data.kind_fixture_files import KIND_FIXTURES_DIR
 from app.models import EnvDataset, PlaceLookup, WikidataPoint
+from app.research.component_proposals import ComponentProposalDraft, ProposedSubject
 from app.research.component_specs import checked_spec
+from app.research.component_specs_general_delivery import DeliveredUnit
 from app.research.component_specs_timeline_map import DeclaredTimelineMapSpec
+from app.services.component_proposals_spec import checked_delivery
 from app.services.entity_points import entity_points
 from app.services.place_lookups import item_key
 from app.services.source_lookup_models import EntityLookup, EntityRecord
@@ -187,3 +191,47 @@ async def test_an_item_looked_up_over_mcp_keeps_its_point_so_a_map_can_name_it()
     finally:
         async with session_scope() as stored:
             await stored.execute(delete(PlaceLookup).where(PlaceLookup.lookupKey == item_key(item)))
+
+
+def _draft(spec: dict[str, Any]) -> tuple[ComponentProposalDraft, dict[uuid.UUID, list[str]]]:
+    fixture = bidriware()
+    ids = {key: uuid.uuid5(uuid.NAMESPACE_URL, f"{fixture['craft']}/{key}") for key in fixture["facts"]}
+    units = {
+        ref: DeliveredUnit(text=unit["text"], claim_ids=[ids[claim] for claim in unit["claims"]])
+        for ref, unit in fixture["units"].items()
+    }
+    known = {
+        ids[key]: [fact["text"], *(quote["quote"] for quote in fact["quotes"])]
+        for key, fact in fixture["facts"].items()
+    }
+    draft = ComponentProposalDraft(
+        label=fixture["label"],
+        title=fixture["title"],
+        description=fixture["description"],
+        kind="timeline_map",
+        field="HISTORY",
+        craft_slug=fixture["craft"],
+        subjects=[ProposedSubject(kind="CRAFT", key=fixture["craft"])],
+        spec=spec,
+        units=units,
+    )
+    return draft, known
+
+
+async def test_a_delivered_timeline_map_is_checked_and_stored_with_its_placement(
+    session: AsyncSession,
+) -> None:
+    fixture = bidriware()
+    draft, known = _draft(fixture["spec"])
+    checked = await checked_delivery(session, draft, known=known)
+    assert [place["found"] for place in checked.spec["places"]] == fixture["placed"]["places"]
+    assert [dataset["code"] for dataset in checked.spec["datasets"]] == list(CREDITED)
+    assert checked.spec["boundaryCaption"] == fixture["placed"]["boundaryCaption"]
+    unknown = {
+        **fixture["spec"],
+        "places": [{**fixture["spec"]["places"][0]}, *fixture["spec"]["places"][1:]],
+    }
+    unknown["places"][1] = {"name": "u0004", "wikidata": "Q999999999"}
+    draft, known = _draft(unknown)
+    with pytest.raises(InvalidInput, match="place 1 names Q999999999, which the site holds no point for"):
+        await checked_delivery(session, draft, known=known)

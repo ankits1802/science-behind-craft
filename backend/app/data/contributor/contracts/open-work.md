@@ -409,7 +409,7 @@ A proposal that names a task ends the proposer's reservation:
 | `extends?` with `extension` | `SUBJECT_LINK` keeps the extended label; `VARIANT` takes a new one |
 | `replaces?` | a registered component it takes the place of (Withdrawn, replaced, borrowed and held, below); a label of its own, never with `SUBJECT_LINK` |
 | `task_key?` | the task it completes (the checks, below) |
-| `spec` | the delivery: the kind's spec data, any of the 22 contributable kinds, authored or declared |
+| `spec` | the delivery: the kind's spec data, any of the 23 contributable kinds, authored or declared (a `timeline_map` declared only) |
 | `units` | the delivery's units, `{u0001: {text, claimIds}}` |
 
 The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`, which carries none
