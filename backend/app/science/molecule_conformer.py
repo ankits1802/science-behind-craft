@@ -7,9 +7,10 @@ from collections.abc import Sequence
 from app.core.errors import InvalidInput
 from app.research.component_specs_science_geometry import ATOMS_MAX, BONDS_MAX, MoleculeGeometry
 
+from .molecule_elements import DRAWN_ELEMENTS, model_margin
+
 __all__ = [
     "DRAWN_ELEMENTS",
-    "RADIUS_MARGIN",
     "conformer_geometry",
     "element_counts",
     "hill_formula",
@@ -25,8 +26,6 @@ COUNT_FIELDS = (slice(0, 3), slice(3, 6))
 BOND_ORDERS = frozenset({1, 2, 3})
 COORDINATE_DECIMALS = 4
 RADIUS_DECIMALS = 3
-RADIUS_MARGIN = 0.42
-DRAWN_ELEMENTS = ("C", "H", "N", "O")
 HILL_FIRST = ("C", "H")
 
 Atom = tuple[str, float, float, float]
@@ -79,7 +78,7 @@ def _centred(atoms: Sequence[Atom], bonds: Sequence[Bond]) -> MoleculeGeometry:
     return MoleculeGeometry(
         atoms=[(symbol, _rounded(x), _rounded(y), _rounded(z)) for symbol, x, y, z in moved],
         bonds=list(bonds),
-        radius=round(reach + RADIUS_MARGIN, RADIUS_DECIMALS),
+        radius=round(reach + model_margin(symbol for symbol, *_ in moved), RADIUS_DECIMALS),
     )
 
 

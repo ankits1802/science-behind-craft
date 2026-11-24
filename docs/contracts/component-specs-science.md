@@ -121,15 +121,28 @@ from 0.6 to 2.5 times on plus and minus, a pinch of two fingers and a trackpad's
 
 A delivered model carries its own data as `geometry {atoms [[element, x, y, z]], bonds [[first,
 second, order]], radius}`: PubChem's 3D conformer centred on its atoms' mean, to 4 decimals, the
-radius the farthest atom's distance plus 0.42 (`science/molecule_conformer`). A model with its
+radius the farthest atom's distance plus 0.42, or plus its largest atom's radius and 0.04 when
+that is more (`science/molecule_conformer`, `science/molecule_elements.model_margin`), so a model
+of carbon, hydrogen, nitrogen and oxygen keeps 0.42. A model with its
 geometry draws one `<g class="mol-g">` holding each atom once as `data-a` and each bond once as
 `data-b`, the groups the kit turns, and a page that places it carries `mol-data[cid] = {atoms,
 bonds, R: radius, marks: []}` (`services/document_components_data.kit_data`). Its at-rest drawing
 is the kit's own projection (`science/molecule_drawing`): Ajrakh's alizarin drawn from its data at
 its yaw and pitch is the approved drawing, with each letter at the 12 px floor or larger. A model
 without geometry, Ajrakh's and every authored one, reads `mol-data` from its home page as before.
-A molecule key's `--atom-*` swatches are accepted at delivery; any other swatch is a depicted
-material.
+A molecule key's `--atom-*` swatches are accepted at delivery for the atoms the design colours;
+any other swatch is a depicted material.
+
+The atoms the design colours are the molecule kit's table in `tools/design/system.json`
+(`molecule.atoms`, decision 0202): carbon, hydrogen, nitrogen and oxygen as the approved kit draws
+them, and silver, aluminium, gold, calcium, chlorine, chromium, copper, iron, mercury, potassium,
+sodium, lead, sulphur, tin, titanium and zinc, the elements the crafts' held compounds contain.
+Each is `--atom-<symbol>` in all four themes, filled through the kit's gradient `ag-<Symbol>`
+(written into the kit defs for every atom the table holds, `services/document_kit_defs.atom_defs`)
+and drawn at its table radius by the server (`science/molecule_drawing`) and the kit (`RAD` in
+`monograph.js`); every atom but carbon and hydrogen carries its letter. The generator writes the
+table for the server as `research/molecule_atoms.py`. A compound with an element outside it is not
+drawn, and the composer names the element in `missing`.
 
 ## structure_diagram
 
@@ -189,8 +202,13 @@ around the anchor, outside it, and is not drawn by the view.
 decision 0198) builds a `reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab` with its
 `choice_toggle`s finished from the craft's curated page and the facts it owns (`CuratedClaim`),
 shown and stated as facts: the reactions in the order of their stages, the bath stages with their
-colour after in the depicted colour recorded with the fact that states it, a compound of its materials
-with PubChem's conformer, the alternatives its facts state. Every unit cites only those facts; a
+colour after, a compound of its materials with PubChem's conformer, the alternatives its facts
+state. A bath stage's colour is the depicted colour recorded with the fact that states it, else the
+first colour its after names that a specimen token depicts from the dyes, mordants and resists the
+stage uses, by the colour key's substance mapping (`research/colour_key.first_depicted`, decision
+0202); a colour no token depicts is drawn as the outlined piece and named in words in its phase's
+text, a stage whose after names no colour is left out with its reason, and a dip with no depicted
+colour at all composes nothing. Every unit cites only those facts; a
 label cites none, and a name that holds a number or a formula cites the facts that state it. When
 the page holds too little it composes nothing and names what to propose (`open-work.md`, MCP).
 
@@ -207,7 +225,9 @@ the page holds too little it composes nothing and names what to propose (`open-w
 | A model's geometry and its drawn group, and a molecule key's atom swatches | `backend/tests/research/test_molecule_geometry_spec.py` |
 | PubChem's recorded conformer gives Ajrakh's alizarin data, and its projection Ajrakh's drawing | `backend/tests/science/test_molecule_model.py` |
 | A delivered molecule carries its own `mol-data` to a generated page | `backend/tests/layouts/test_generated_molecules.py` |
-| Each kind composed from fixture facts, refused with what to propose, citing only the craft's own facts | `backend/tests/compose/`, `backend/tests/mcp/test_compose_tool.py` |
+| Each kind composed from fixture facts, refused with what to propose, citing only the craft's own facts; a dip from colour names alone, a colour in words, a molecule with sulphur and a metal | `backend/tests/compose/`, `backend/tests/mcp/test_compose_tool.py` |
+| The atoms the design colours, their radii in the server and the kit, their key labels and the model's margin | `backend/tests/science/test_molecule_elements.py`, `tools/tests/test_design_atoms.py` |
+| Every atom's gradient in the kit defs, drawn as Ajrakh's | `backend/tests/research/test_kit_defs.py`, `frontend/e2e/molecule-atoms-unit.spec.ts` |
 | On a generated page at 360 and 1440 px, each composed kind whole at rest and worked by the kit, under both reduced-motion switches | `frontend/e2e/composed-interactives-unit.spec.ts` |
 
 Re-read it when a science kind gains a field, a held passage becomes a unit, or the colour rule changes.

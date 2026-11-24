@@ -22,6 +22,7 @@ unit ranges by origin). The contracts are `docs/contracts/page-layout.md` (Colou
 | One unit pattern, in ranges by origin | [decision 0145](0145-monograph-pages-and-speed-without-debt.md) |
 | The specimen tokens and their frame | [decision 0092](0092-design-system.md), and `.claude/skills/kalavigyan-design/references/SYSTEM.md` 2.5 |
 | A generated page's kin crafts, drawn the same way | [decision 0180](0180-places-abroad-yearly-series-picture-levels-figures-and-kin-crafts.md) |
+| The mapping read by the composed dip player too, with syahi, kasim and eight specimens recorded from the crafts' facts (amends item 3) | [decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | Open-licence pictures for the masthead slot | [decision 0192](0192-open-licence-pictures-placed-by-their-page.md) |
 | Every decision, by group | [README.md](README.md) |
 

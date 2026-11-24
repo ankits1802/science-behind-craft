@@ -15,6 +15,7 @@ DESTINATIONS = {
     "tailwind.config.ts": (REFERENCES / "tailwind.config.ts", Path("frontend/tailwind.config.ts")),
     "depicted_materials.py": (Path("backend/app/research/depicted_materials.py"),),
     "depictedMaterials.ts": (Path("frontend/lib/depictedMaterials.ts"),),
+    "molecule_atoms.py": (Path("backend/app/research/molecule_atoms.py"),),
 }
 
 

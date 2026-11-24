@@ -112,10 +112,11 @@ laid over the same shape, ink edges, six shapes or more. Show the same states at
   the typographic plates and are refused in a drawing. Delivery holds a drawing to the design's
   roles (`kalavigyan://design/drawing.md`) and refuses indigo in it, so a delivered drawing never
   uses it.
-- The specimen set holds the textile family's dyes and dips only. A family whose materials have no
-  specimen token (wax, molten and cast metal, raw and fired clay, stone, wood, lac, hide, fibre,
-  pulp, mineral pigments) asks the team for them first: a real material colour each, added through
-  the design generator with its nearest semantic colour recorded, and accepted by the spec models.
+- The specimen set holds the textile dyes and dips; bidri, blue pottery and dhokra materials;
+  turmeric, pomegranate rind and kali mitti; and Pattachitra's five pigments (SYSTEM.md 2.5). A
+  family with none of its materials there asks the team first: a record is added only with the fact
+  whose quote states the colour, never a typed colour or another material's token. A molecule's
+  atoms are the kit's twenty elements (SYSTEM.md 2.5a).
   Never a typed colour, and never the nearest token of another material.
 - A source's error stays verbatim and marked; disagreeing sources are both shown in the differs
   note, never settled by the drawing.

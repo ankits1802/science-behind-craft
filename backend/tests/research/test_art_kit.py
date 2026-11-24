@@ -44,7 +44,7 @@ def test_the_parts_that_take_a_material_name_where_and_the_motions_explain_one_p
     assert takers == ["cloth", "block", "bath", "paste", "tool", "section", "piece"]
     moving = {name: part.motion for name, part in KIT_PARTS.items() if part.motion}
     assert moving == {"cloth": "take", "bath": "dip", "paste": "dry"}
-    assert len(DEPICTED_MATERIALS) == 26
+    assert len(DEPICTED_MATERIALS) == 34
 
 
 def test_words_name_the_kit_parts_they_show_once_each_in_the_order_said() -> None:

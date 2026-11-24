@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from types import MappingProxyType
 from typing import Any
 
 from app.research.component_specs_science_geometry import (
@@ -12,10 +13,21 @@ from app.research.component_specs_science_geometry import (
 )
 from app.research.drawing_rules import text_floor
 
-__all__ = ["ATOM_RADII", "LETTERED", "REST_PITCH", "REST_YAW", "VIEW_WIDTH", "molecule_drawing"]
+from .molecule_elements import ELEMENTS, atom_token
 
-ATOM_RADII = {"C": 0.38, "N": 0.36, "O": 0.36, "H": 0.2}
-LETTERED = frozenset({"N", "O"})
+__all__ = [
+    "ATOM_RADII",
+    "GRADIENT_PREFIX",
+    "LETTERED",
+    "REST_PITCH",
+    "REST_YAW",
+    "VIEW_WIDTH",
+    "atom_gradient",
+    "molecule_drawing",
+]
+
+ATOM_RADII = MappingProxyType({symbol: element.radius for symbol, element in ELEMENTS.items()})
+LETTERED = frozenset(symbol for symbol, element in ELEMENTS.items() if element.lettered)
 REST_YAW = 0.4
 REST_PITCH = 0.3
 VIEW_WIDTH = 2.0
@@ -32,6 +44,14 @@ LETTER_FLOOR = text_floor(VIEW_WIDTH)
 EDGE_WIDTH = "0.005"
 PLACES = 1000
 DOUBLE = 2
+GRADIENT_PREFIX = "ag-"
+GRADIENT = (
+    '<radialGradient id="{id}" cx=".36" cy=".32" r=".72">'
+    '<stop offset="0" style="stop-color:color-mix(in srgb, var({token}) 42%, #ffffff)"/>'
+    '<stop offset=".6" style="stop-color:var({token})"/>'
+    '<stop offset="1" style="stop-color:color-mix(in srgb, var({token}) 78%, #000000)"/>'
+    "</radialGradient>"
+)
 
 Node = dict[str, Any]
 
@@ -58,6 +78,10 @@ def molecule_drawing(geometry: MoleculeGeometry, *, yaw: float, pitch: float) ->
     return {"tag": "svg", "attrs": attrs, "children": [group]}
 
 
+def atom_gradient(symbol: str) -> str:
+    return GRADIENT.format(id=f"{GRADIENT_PREFIX}{symbol}", token=atom_token(symbol))
+
+
 def _turned(atom: tuple[str, float, float, float], yaw: float, pitch: float) -> _Point:
     symbol, x, y, z = atom
     turned_x = math.cos(yaw) * x + math.sin(yaw) * z
@@ -79,7 +103,7 @@ def _atom(index: int, point: _Point, scale: float) -> Node:
             "cx": x,
             "cy": y,
             "r": _shown(radius),
-            "fill": f"url(#ag-{point.symbol})",
+            "fill": f"url(#{GRADIENT_PREFIX}{point.symbol})",
             "stroke": "var(--mol-edge)",
             "stroke-width": EDGE_WIDTH,
         },
