@@ -232,11 +232,9 @@ async def test_a_layout_removal_brings_back_the_layout_before_it_and_keeps_every
 ) -> None:
     session, people = seeded
     versions = dict(
-        (
-            await session.execute(
-                select(PageLayout.version, PageLayout.id).where(PageLayout.craftId == CRAFT)
-            )
-        ).tuples()
+        (await session.execute(select(PageLayout.version, PageLayout.id).where(PageLayout.craftId == CRAFT)))
+        .tuples()
+        .all()
     )
     staged = await stage(
         session, people, decided("LAYOUTS", versions[1], "remove"), decided("LAYOUTS", versions[2], "remove")

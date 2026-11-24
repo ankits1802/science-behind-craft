@@ -9,7 +9,7 @@ from app.core.errors import InvalidInput
 from app.research.base import ContractModel, absent, empty
 from app.services.open_work_subjects import subject_by_key
 from app.services.published_kinds import LIST_MAX, PublishedQuery, PublishedRef
-from app.services.staged_published import published_fields, published_lines
+from app.services.staged_published import published_fields, published_id, published_lines
 
 from .mcp_review_arguments import PublishedArguments
 from .mcp_tool_base import ToolContext
@@ -17,6 +17,7 @@ from .mcp_tool_base import ToolContext
 __all__ = ["PublishedItem", "PublishedRead", "PublishedSummary", "read_published"]
 
 NOT_FOUND = "No published {kind} item has the id {id}."
+NO_LABEL = "No published {kind} item has the label {label}; list_components gives the labels."
 
 
 class PublishedSummary(ContractModel):
@@ -37,6 +38,11 @@ class PublishedRead(ContractModel):
 
 
 async def read_published(context: ToolContext, asked: PublishedArguments) -> PublishedRead:
+    if asked.label is not None:
+        named = await published_id(context.session, asked.kind, asked.label)
+        if named is None:
+            raise InvalidInput(NO_LABEL.format(kind=asked.kind.lower(), label=asked.label))
+        return PublishedRead(item=await _opened(context, asked, named))
     if asked.id is not None:
         return PublishedRead(item=await _opened(context, asked, asked.id))
     page = None

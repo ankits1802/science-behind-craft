@@ -15,7 +15,7 @@ who confirmed it and why in the audit log, and refreshes the pages it touched.
   lists the page's items of that kind, 25 at a time; pass the reply's `next_cursor` as `cursor` for
   the next 25.
 - `{"published": {"kind": "IMAGES", "id": "<id>"}}` opens one item with the fields an edit changes and
-  what each holds now.
+  what each holds now; a component opens by its `label` as well.
 
 | Kind | Where its id comes from | Remove | Edit |
 |---|---|---|---|

@@ -50,6 +50,7 @@ class PublishedArguments(Arguments):
     id: uuid.UUID | None = Field(
         default=None, description="Or one item to open whole, with the fields an edit changes"
     )
+    label: str | None = Field(default=None, max_length=LABEL_COLUMN_CHARS, pattern=LABEL_PATTERN)
     entry: Literal[*STRUCTURE_KINDS] | None = None
     cursor: str | None = Field(default=None, pattern=OFFSET_PATTERN)
 

@@ -4,6 +4,9 @@ import pytest
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.mcp_published_read import read_published
+from app.api.mcp_review_arguments import PublishedArguments
+from app.api.mcp_tool_base import ToolContext
 from app.models import (
     AuditLog,
     ConditionReading,
@@ -12,7 +15,9 @@ from app.models import (
     ProcessStage,
     StageReview,
 )
+from app.research.page_proposals import PageSubject
 from app.research.staged_reviews import ConfirmedItem, StagedConfirmation, StagedDecision
+from app.services.craft_resolver import CraftIndexStore
 from app.services.open_work_subjects import craft_subject
 from app.services.published_kinds import PublishedQuery
 from app.services.staged_published import published_lines
@@ -157,3 +162,34 @@ async def test_a_placed_stage_is_refused_while_it_holds_a_picture_then_leaves_it
     assert SLUG in confirmed.owners.crafts
     (removed,) = await audited(session, "stage.removed")
     assert (removed.detail["name"], removed.detail["ordinal"], removed.detail["reason"]) == ("Airing", 2, WHY)
+
+
+async def test_review_queue_lists_a_page_s_published_items_and_opens_one_with_its_fields(
+    seeded: tuple[AsyncSession, People],
+) -> None:
+    session, people = seeded
+    context = ToolContext(
+        session=session,
+        index=CraftIndexStore(),
+        site="https://kalavigyan.example",
+        user=people.admin,
+        scopes=frozenset({"read", "review"}),
+    )
+    page = PageSubject(kind="craft", slug=SLUG)
+    listed = await read_published(context, PublishedArguments(kind="IMAGES", subject=page))
+    assert [(item.id, item.label) for item in listed.items] == [
+        (PICTURE, "Picture: The vat turns yellow-green")
+    ]
+    assert listed.next_cursor is None and listed.item is None
+    opened = await read_published(context, PublishedArguments(kind="IMAGES", id=PICTURE))
+    assert opened.item is not None and opened.item.fields == {
+        "caption": "The vat turns yellow-green",
+        "alt_text": "A clay vat of yellow-green liquid",
+        "focal": None,
+        "place": {"stage_id": None, "material_id": None, "slot": None, "task_key": None},
+    }
+    removed_only = await read_published(context, PublishedArguments(kind="STAGES", id=PLACED))
+    assert removed_only.item is not None and (removed_only.item.label, removed_only.item.fields) == (
+        "Stage: Airing, in Dyeing",
+        {},
+    )
