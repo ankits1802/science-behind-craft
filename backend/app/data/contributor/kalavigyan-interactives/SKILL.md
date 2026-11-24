@@ -150,6 +150,8 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
   `VARIANT` with its own label (`<craft>/<field>/<name>`) that keeps the flagship's states and
   cites the craft's facts; a craft that only places it is linked with a `SUBJECT_LINK`. The
   family's facts stay the family's, and the mechanism is explained once on a page.
+- A craft that lacks the family facts a flagship's units cite cannot link or lay it out; give it a
+  `VARIANT` resting on its own facts.
 
 ## Proving it
 
