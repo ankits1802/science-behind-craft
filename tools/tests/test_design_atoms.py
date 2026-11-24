@@ -19,7 +19,7 @@ KIT_RULES = {
     "light": r":root \.bx-chem\{(--atom-c:[^}]*)\}",
     "dark": r':root\[data-theme="dark"\] \.bx-chem\{(--atom-c:[^}]*)\}',
 }
-DECLARATION = re.compile(r"--(atom-[a-z]+|mol-[a-z]+): ([^;]+);")
+DECLARATION = re.compile(r"--(atom-[a-z]+|mol-[a-z]+):\s*([^;]+?)\s*(?:;|$)")
 HELD = ("s", "cl", "fe", "cu", "al", "ca", "na", "k", "cr", "sn", "zn", "ag", "au", "pb", "ti", "hg")
 THEME_BLOCKS = {
     "light": ":root {",
