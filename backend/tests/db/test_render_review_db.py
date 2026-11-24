@@ -19,7 +19,7 @@ from app.services.page_proposals import propose_page
 from app.services.page_renders import drawing_refusal, record_drawing
 
 from .page_documents_seed import CRAFT_SLUG, seed
-from .test_page_bundles_db import NOW, SITE, SUBJECT, component, tools
+from .test_page_bundles_db import FACT_PART, NOW, SITE, SUBJECT, component, tools
 from .testimony_seed import rolled_back_session
 
 pytestmark = pytest.mark.db
@@ -43,7 +43,9 @@ async def session() -> AsyncIterator[AsyncSession]:
 
 
 def bundle() -> PageBundle:
-    return PageBundle.model_validate({"subject": SUBJECT, "components": [component(LABEL)]})
+    return PageBundle.model_validate(
+        {"subject": SUBJECT, "facts": [FACT_PART], "components": [component(LABEL)]}
+    )
 
 
 def drawing(state: str, *problems: DrawnProblem) -> DrawingReport:
