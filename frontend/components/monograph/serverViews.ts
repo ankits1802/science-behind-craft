@@ -1,7 +1,5 @@
-import { eitherView } from "@/components/monograph/eitherView";
-import { KitDiagramView } from "@/components/monograph/kinds/kit/KitDiagramView";
+import { DIAGRAM_VIEW } from "@/components/monograph/kinds/kit";
 import { PicturePlateView } from "@/components/monograph/kinds/plates/PicturePlateView";
-import { Diagram } from "@/components/monograph/kinds/science/Diagram";
 import { DipPlayer } from "@/components/monograph/kinds/science/DipPlayer";
 import { EquationCard } from "@/components/monograph/kinds/science/EquationCard";
 import { ModelExplainer } from "@/components/monograph/kinds/science/ModelExplainer";
@@ -10,12 +8,11 @@ import { ProcessReplay } from "@/components/monograph/kinds/science/ProcessRepla
 import { ReactionPlayer } from "@/components/monograph/kinds/science/ReactionPlayer";
 import { StagePlayer } from "@/components/monograph/kinds/science/StagePlayer";
 import { StructureDiagram } from "@/components/monograph/kinds/science/StructureDiagram";
-import { KIT_KIND } from "@/lib/componentSpecsKit";
 import type { ComponentViews } from "@/lib/componentViewContract";
 
 export const SERVER_VIEWS: ComponentViews = {
   picture_plate: PicturePlateView,
-  diagram: eitherView(Diagram, KitDiagramView, KIT_KIND),
+  diagram: DIAGRAM_VIEW,
   dip_player: DipPlayer,
   equation_card: EquationCard,
   model_explainer: ModelExplainer,

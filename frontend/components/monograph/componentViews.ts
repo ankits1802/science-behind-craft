@@ -3,7 +3,7 @@ import { VIEWS as BLOCK_VIEWS } from "@/components/monograph/kinds/blocks";
 import { VIEWS as DATA_VIEWS } from "@/components/monograph/kinds/data";
 import { KinCraftsView } from "@/components/monograph/kinds/data/KinCraftsView";
 import { DECLARED_VIEWS, VIEWS as GENERAL_VIEWS } from "@/components/monograph/kinds/general";
-import { DECLARED_KIT_VIEWS } from "@/components/monograph/kinds/kit";
+import { DIAGRAM_VIEW } from "@/components/monograph/kinds/kit";
 import { VIEWS as PLACE_VIEWS } from "@/components/monograph/kinds/place";
 import { VIEWS as PLATE_VIEWS } from "@/components/monograph/kinds/plates";
 import { VIEWS as SCIENCE_VIEWS } from "@/components/monograph/kinds/science";
@@ -14,7 +14,8 @@ export const COMPONENT_VIEWS: ComponentViews = {
   ...TOOL_VIEWS,
   ...PLATE_VIEWS,
   ...withDeclared(DATA_VIEWS, { ...DECLARED_VIEWS, related_crafts: KinCraftsView }),
-  ...withDeclared(SCIENCE_VIEWS, DECLARED_KIT_VIEWS),
+  ...SCIENCE_VIEWS,
+  diagram: DIAGRAM_VIEW,
   ...BLOCK_VIEWS,
   ...GENERAL_VIEWS,
   ...PLACE_VIEWS
