@@ -30,8 +30,8 @@ flowchart LR
 ```
 
 The server offers 23 tools in six groups to every connection (decision 0111; decision 0114 added
-`propose_dataset`, decision 0198 `compose_component`), and four more in a seventh group, `admin`, listed only to a token holding the
-`review` scope (decision 0170); each tool names its group in `tools/list` as
+`propose_dataset`, decision 0198 `compose_component`), and four more in a seventh group, `admin`,
+listed only to a token holding the `review` scope (decision 0170); each tool names its group in `tools/list` as
 `_meta["kalavigyan/group"]`, so a screen can group them without a list of names:
 
 | Group | Tools | Scope | Contract |
