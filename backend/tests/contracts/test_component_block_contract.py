@@ -105,7 +105,7 @@ def test_a_placed_component_stands_for_the_builder_of_the_same_purpose() -> None
 def test_the_block_kinds_moved_home_and_every_old_import_still_reads_them() -> None:
     assert enums.BLOCK_KINDS is block_kinds.BLOCK_KINDS
     assert block_kinds.BLOCK_KINDS[-1] == "component"
-    assert len(block_kinds.BLOCK_KINDS) == len(set(block_kinds.BLOCK_KINDS)) == 31
+    assert len(block_kinds.BLOCK_KINDS) == len(set(block_kinds.BLOCK_KINDS)) == 32
 
 
 def test_migration_0035_widens_the_piece_kinds_by_the_component_kind_only() -> None:
@@ -129,8 +129,21 @@ def test_migration_0072_widens_both_kind_checks_by_the_quantities_table_only() -
         "0072_quantities_kind",
         "0080_stream_stamps_differs_on",
     )
-    assert migration.BLOCK_KINDS == enums.BLOCK_KINDS
+    assert migration.BLOCK_KINDS == load("0111_answer_figures").BLOCK_KINDS_BEFORE
     assert set(migration.BLOCK_KINDS) - set(migration.BLOCK_KINDS_BEFORE) == {"quantities"}
+    assert migration.COMPONENT_KINDS == COMPONENT_KINDS
+    assert migration.KIND_CHECKS == ("KnowledgePiece", "ComponentProposal")
+
+
+def test_migration_0111_widens_both_kind_checks_by_the_kit_figure_only() -> None:
+    migration = load("0111_answer_figures")
+    assert (migration.revision, migration.down_revision) == (
+        "0111_answer_figures",
+        "0103_component_lifecycle",
+    )
+    assert migration.BLOCK_KINDS == enums.BLOCK_KINDS
+    assert set(migration.BLOCK_KINDS) - set(migration.BLOCK_KINDS_BEFORE) == {"kit_figure"}
+    assert migration.BLOCK_KINDS[-2:] == ("kit_figure", "component")
     assert migration.COMPONENT_KINDS == COMPONENT_KINDS
     assert migration.KIND_CHECKS == ("KnowledgePiece", "ComponentProposal")
 

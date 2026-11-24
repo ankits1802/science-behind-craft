@@ -90,11 +90,11 @@ flowchart LR
 | [0052](0052-opus-composes-at-medium-effort.md) | Opus 5.5 composes answers, at medium effort | · |
 | [0053](0053-curated-dossier-import.md) | Curated dossiers are imported on deploy and served as one craft page | [0142](0142-curated-crafts-read-only-curated-rows.md) and [0171](0171-imports-keep-approvals-and-differences-settle.md) |
 | [0054](0054-phase-c-contract.md) | Phase C contract: generated explainers, the what-if lab, zoom, timelines and film mode | [0147](0147-time-market-and-figures-kept-true.md) |
-| [0055](0055-generated-explainers.md) | Generated explainers: built from cited figures, checked, stored, reused and hidden | [0142](0142-curated-crafts-read-only-curated-rows.md) |
+| [0055](0055-generated-explainers.md) | Generated explainers: built from cited figures, checked, stored, reused and hidden | [0142](0142-curated-crafts-read-only-curated-rows.md), [0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
 | [0056](0056-what-if-lab.md) | The what-if lab's builder | [0140](0140-voice-and-listen-kept-true.md), [0152](0152-matter-read-once-and-the-science-seed-kept-true.md), [0169](0169-mcp-follow-ups-kept-true.md) |
 | [0057](0057-zoom-story-and-timeline-map.md) | Zoom story and timeline map builders | [0147](0147-time-market-and-figures-kept-true.md) and [0180](0180-places-abroad-yearly-series-picture-levels-figures-and-kin-crafts.md) |
 | [0058](0058-elevenlabs-music-sound-image-video.md) | ElevenLabs music, sound effects, image and video | [0154](0154-ai-media-and-film-scores-kept-true.md) |
-| [0059](0059-sandbox-and-what-if-renderers.md) | Sandbox and what-if renderers | · |
+| [0059](0059-sandbox-and-what-if-renderers.md) | Sandbox and what-if renderers | [0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
 | [0060](0060-zoom-timeline-and-film-renderers.md) | Zoom, timeline and film mode renderers | [0154](0154-ai-media-and-film-scores-kept-true.md) and [0180](0180-places-abroad-yearly-series-picture-levels-figures-and-kin-crafts.md) |
 | [0061](0061-phase-c-review-fixes.md) | Phase C review fixes | · |
 | [0062](0062-phase-d-contract.md) | Phase D contract: learning blocks, versions, alerts, lessons, exports and the map | [0067](0067-lessons-and-exports.md) and [0147](0147-time-market-and-figures-kept-true.md) |
@@ -241,7 +241,8 @@ flowchart LR
 | [0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) | A generated page's colour key is drawn by the site from its cited stage, dye and mordant colours, and a masthead without a photograph names the craft once | · |
 | [0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) | A contributor's map is drawn by the site, from places it resolves, on its own base map and layers | · |
 | [0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) | A craft's own reaction player, dip player, 3D molecule and what-if lab are composed by the server from its facts, and the kit plays them on every page as on Kutch Ajrakh's | · |
-| [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) | A figure is composed from a kit of parts the site draws, and hand-drawn art below the bar is refused at delivery | · |
+| [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) | A figure is composed from a kit of parts the site draws, and hand-drawn art below the bar is refused at delivery | [0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
+| [0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) | An answer's figure of cloth changing colour is composed from the kit with no model call, and a generated explainer's art is held to the bar or left out | · |
 
 ## How this document is kept true
 

@@ -258,6 +258,7 @@ the signature figures and the lesson slides): the summary "Sources differ: {diff
 | `climate_risk` | D | yes (0065) |
 | `measure`, `market_gi` | D | yes (0066) |
 | `quantities` | D | yes (0147) |
+| `kit_figure` | C | yes (0201: composed from the kit in a generated explainer's place, never a stored piece) |
 | `in_practice`, `open_questions` | D | declared |
 | `artisan_voice` | E | declared |
 | `designs` | deferred (owner, 2026-11-17) | declared |
@@ -1242,7 +1243,8 @@ Registered in `BLOCK_BUILDERS` from `services/simulation_builder.py` for `piece_
 (`PROCESS`, `CHEMISTRY`, `PHYSICS`, `MATERIALS`, `GEOGRAPHY`, `GEOLOGY`, `CLIMATE`), waiting
 `SIMULATION_WAIT_SECONDS` (75 s, under the expert panel's 90 s; 150 s before decision 0142), with
 `places_pieces` and `adds_pictures` (the one entry that may also return `images` blocks, its
-concept pictures). Its model calls draft within `SIMULATION_BUDGET_SECONDS` (60 s, the builder's
+concept pictures), and `draws` `{kit_figure}` (the one entry that may return a composed figure in
+its own block's place, decision 0201: the kit figure is tried first for each concept, below). Its model calls draft within `SIMULATION_BUDGET_SECONDS` (60 s, the builder's
 own `SimulationBudget`): a draft that runs past it adds nothing (`OUT_OF_TIME`), and a draft that
 fails its checks is redrafted only when the time left is at least the time the first draft took
 (else `NO_TIME_TO_REDRAFT`).
@@ -1298,7 +1300,9 @@ fails its checks is redrafted only when the time left is at least the time the f
   and one that plays stored reactions only while each still matches its stored row
   (`simulation_grounding.reactions_hold`); a placed block is never stored again
   (`piece_store.storable`). A reused section gets its stored
-  explainer the same way (`piece_reuse.with_simulation`, after the region story).
+  explainer the same way (`piece_reuse.with_simulation`, after the region story). A stored
+  explainer whose HTML falls below the bar (`ART`, below) is never chosen, by the builder or for a
+  reused section (`piece_reuse.reusable_simulation`, decision 0201).
 - **One call** (`composer/simulation`): the explainer route above, spending only from the
   answer's headroom, Master Admins uncapped. The system prompt holds the rules only; the question,
   the concept, the checked statements, the reactions, the offered values and the concepts of
@@ -1313,9 +1317,11 @@ fails its checks is redrafted only when the time left is at least the time the f
   statement or reaction, and at least one of them a cited claim's; then the static check over the
   data object `{key: value}` together with
   the coefficients of the reactions used (`blocks_play.simulation_data`), so an equation's
-  coefficients may be shown and no other figure; then the block's validators (`BLOCK`). On any problem one
+  coefficients may be shown and no other figure; then the block's validators (`BLOCK`); then the
+  design's bar (`research/simulation_art.simulation_art_problems`, rule `ART`, decision 0201, The
+  composed figure below). On any problem one
   redraft is asked with every failed check listed (inside an untrusted block); a second failure
-  adds nothing and logs the rules that failed. `model` is the answering route's model id
+  adds nothing and logs the rules that failed, so an explainer below the bar is left out. `model` is the answering route's model id
   (`StructuredReply.model`); a route that names none fails the build.
 - **Hidden stays hidden.** A draft with the concept and claim set of a hidden piece, in any field,
   adds nothing (logged `HIDDEN`), and the hidden concepts on offer are named to the model.
@@ -1323,6 +1329,48 @@ fails its checks is redrafted only when the time left is at least the time the f
   builds one: an any-craft answer, a facet with no topic and a follow-up's deepened section keep
   their generated explainers too (`piece_store.kept_pieces`, decision 0061); a newer piece
   supersedes an older one only for the same concept and the same claims (`CLAIM_KEYED_KINDS`).
+
+### The composed figure (decision 0201)
+
+- **`kit_figure`** (`research/blocks_kit.KitFigureBlock`, `lib/explainerKit.ts`): `{diagram, labels}`.
+  `diagram` is the page's declared diagram (`component_specs_kit.DeclaredDiagramSpec`: `head
+  {title, caption}`, `layout`, `alt`, `panels[{label, text?, via?, motion?, parts}]`, the nine
+  parts and their depicted materials, `docs/contracts/component-specs-general.md`, The figure kit);
+  `labels[{ref, text, citations?}]` names every unit the diagram draws exactly once, and every
+  part's and layer's label carries the citations of the quote that states it. It holds no
+  sentence (not translated, ledgered or read aloud); its label texts are shown labels; it is never
+  kept as a piece (`UNSTORED_BLOCK_KINDS`). The web draws it with `KitFigure`
+  (`components/answer/play/KitFigureView.tsx`): the kicker Diagram, the title, the panels with each
+  key's cited labels, the alt line, and Play only when a panel names a motion. Its citations count
+  in the answer's source numbering (`explainerView.blockCitations`). The shared fixture is
+  `shared/explainer.kit-figure.golden.json`, one figure in each of three layouts drawing every part.
+- **Composed, no model** (`science/kit_figures.concept_kit_figure`): for the section's concept, the
+  stage playing its reaction (or holding its resist), the concept's fact claims then the stage's;
+  the first claim that names cloth (`art_kit.parts_named_by`) and whose quote states the colour
+  before and after (`reaction_colours.step_colours`), both a depicted material by the colour key's
+  rule (`colour_key.depicted_material` over the stage's material and the reaction's species names).
+  A `before_after`: panel 1, named by the first colour, the cloth in the vessel the claims name
+  (`vat`, `pot`, `trough`, `pit`) as a `bath` part with the `dip` motion when the stage is a
+  `MORDANT` or `DYE` stage, else a `cloth` part; panel 2, named by the second colour, the cloth in
+  it with the `take` motion; the head is "{First} to {second}", the alt "Cloth drawn {first}[ in
+  the {vessel}], then {second}". Any part it cannot state is not drawn, and a concept it cannot
+  compose goes to reuse and the model as before. The block id is `{section}.kit`.
+- **The bar on a generated explainer's art** (`ART`): every colour in a declaration of a colour
+  property (`color`, `background`, `fill`, `stroke`, the borders, outlines and shadows), every
+  paint attribute and every quoted colour in a script is a design role; `--indigo` and its kin
+  only in CSS, for a control; no `--dye-*` or `--dip-*` material, which the kit draws; no hex,
+  `rgb()`, `hsl()` or named colour; `font-family` and `font` in `var(--font-ui)` or
+  `var(--font-reading)` at 12, 13, 14 or 16 px; no `opacity` below 1; a script with a timer reads
+  `dataset.reducedMotion`; no element with `role="img"` whose label names a kit subject; every
+  static `svg` passes `drawn_art.scene_problems` as a `drawing`.
+- **The frame** (`lib/sandboxFrame.sandboxDocument(html, values, look?)`, `useFrameLook`): with a
+  look, its document gains `<style>` with `:root` set to the page's values of the tokens the HTML
+  names (and the base `--sunk`, `--ink-1`, `--font-ui`, and any token those values name), a body on
+  `--sunk` in `--ink-1` and `--font-ui`, and `FRAME_MOTION_GUARD`, which turns animation and
+  transition off under `html[data-reduced-motion="true"]` and under `prefers-reduced-motion`; the
+  attribute is set when either switch is on, and the look is read again when the theme, contrast
+  or a switch changes. Without a look (the server's render) the document is as before. A value
+  holding `<`, `>`, `{`, `}`, `;` or `\` is dropped.
 
 ### Film mode (decision 0054)
 

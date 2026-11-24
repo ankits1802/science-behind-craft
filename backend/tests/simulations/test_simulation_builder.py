@@ -102,12 +102,27 @@ async def test_every_escape_attempt_is_refused_for_its_own_rule(
     assert f"{case['rule']}: " in model.calls[1]["user"]
 
 
+DRAWN_AT_THE_BAR = frozenset({"inline data image", "data figures shown", "button moving a marker"})
+
+
 @pytest.mark.parametrize("case", corpus()["accepted"], ids=lambda case: case["name"])
-async def test_every_accepted_explainer_is_kept_at_the_first_draft(case: dict[str, Any]) -> None:
+async def test_markup_the_sandbox_accepts_is_kept_at_the_first_draft_only_when_drawn_at_the_bar(
+    case: dict[str, Any], caplog: pytest.LogCaptureFixture
+) -> None:
     model = DraftModel([draft(case["html"])])
-    (block,) = await built(model)
-    assert block.html == case["html"].strip()
-    assert len(model.calls) == 1
+    with caplog.at_level(logging.INFO):
+        blocks = await built(model)
+    if case["name"] in DRAWN_AT_THE_BAR:
+        assert [block.html for block in blocks] == [case["html"].strip()]
+        assert len(model.calls) == 1
+    else:
+        assert blocks == [] and len(model.calls) == 2
+        assert logged_rules(caplog) == {"ART"}
+
+
+def test_the_corpus_holds_five_explainers_below_the_bar() -> None:
+    names = [case["name"] for case in corpus()["accepted"]]
+    assert len(names) == 8 and set(names) >= DRAWN_AT_THE_BAR
 
 
 @pytest.mark.parametrize(

@@ -66,7 +66,7 @@ REUSE_REFUSALS = (
 )
 PIECE_SENTENCE_PREFIX_CHARS = 12
 UNSTORED_BLOCK_KINDS = frozenset(
-    {"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice", "component"}
+    {"quiz", "compare", "concept_graph", "climate_risk", "artisan_voice", "kit_figure", "component"}
 )
 BASIN_SUBJECT_PREFIX = BASIN_PLACE_PREFIX
 SIMULATION_NAMESPACE = "concept"

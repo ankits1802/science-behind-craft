@@ -648,7 +648,10 @@ sequenceDiagram
    headroom chooses values and writes an HTML fragment that must pass the value, static
    (`research/sandbox`) and block checks, with one redraft, all within a 60 s budget, and no call
    at all when the section's facts state no quantity it can draw (dataset rows of the datasets the
-   section's blocks cite are offered beside the quoted figures, decision 0142); each builder's
+   section's blocks cite are offered beside the quoted figures, decision 0142); a concept whose
+   cited quotes state a cloth's colour before and after is drawn instead as a `kit_figure` the site
+   composes from the figure kit (`science/kit_figures`), with no model call, and a fragment or a
+   stored explainer below the design's bar (`research/simulation_art`) is left out (decision 0201); each builder's
    outcome and time is recorded under the answer's `plan.builds` (`services/builder_record`);
    it is kept as a cross-craft piece by
    concept and claim set from any section (also an any-craft answer and a deepened follow-up), and
@@ -886,6 +889,8 @@ The CSP's `frame-src` names only Google's sign-in frames: a generated explainer 
 bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The frame's first
 script is the client's own guard: it removes the peer connection constructors and keeps the frame
 from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
+Its document carries the values of the design tokens the fragment names and sets
+`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201).
 
 ## Checks
 

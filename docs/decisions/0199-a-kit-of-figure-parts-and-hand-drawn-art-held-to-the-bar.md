@@ -25,6 +25,7 @@ The hand-drawn figure, checks 7 and 8) and `docs/contracts/component-specs-scien
 | The design system the parts are drawn in | [decision 0092](0092-design-system.md) and the kalavigyan-design skill, sections 2.5, 2.7 and 2.13 |
 | The hand-drawn map refused the same way | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
 | The families each part serves | `.claude/skills/kalavigyan-interactives/references/flagships.md` |
+| The kit drawing an answer's figure composed from its cited sentences (amends this record) | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context
