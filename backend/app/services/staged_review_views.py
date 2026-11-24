@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import StagedReview, StagedReviewItem, User
+from app.research.published_edits import field_changes
 from app.research.staged_reviews import (
     BATCHES_SHOWN,
     OPEN,
@@ -55,14 +56,16 @@ async def batch_view(
 
 
 def _item_view(item: StagedReviewItem) -> StagedItemView:
+    decision = StagedDecision.model_validate(item.decision)
     return StagedItemView(
         id=item.id,
         position=item.position,
         label=item.label,
-        decision=StagedDecision.model_validate(item.decision),
+        decision=decision,
         state=item.state,
         applied=None if item.applied is None else StagedDecision.model_validate(item.applied),
         outcome=item.outcome,
+        changes=[] if decision.edit is None else field_changes(decision.edit),
     )
 
 

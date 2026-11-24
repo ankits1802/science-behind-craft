@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { StagedItemResult } from "@/components/review/StagedItemRow";
+import { StagedItemEditor, StagedItemResult } from "@/components/review/StagedItemRow";
 import { parseShape, ShapeError } from "@/lib/shape";
 import {
   isKnownStagedItem,
@@ -20,18 +20,21 @@ import {
 import {
   actsOnPublished,
   batchHeading,
+  changesOf,
   batchTally,
   confirmBody,
   confirmedItemOf,
   confirmProblem,
   decisionShown,
   draftOf,
+  kindLabel,
   outcomeLine,
   pageLine,
   reasonProblem,
   sourceProblem,
   STAGED_KIND_ACTIONS,
   stagedActions,
+  takesPage,
   withBatch,
   withDraft,
   type SourceDraft
@@ -55,8 +58,8 @@ test("the staged batches parse exactly as the backend writes them", () => {
   const list = parseStagedBatchList(golden());
   expect(list).toEqual(golden());
   expect(list.batches).toHaveLength(1);
-  expect(list.batches[0].items.map((item) => item.decision.kind)).toEqual(["FACTS", "SOURCES", "SOURCES_DIFFER", "COMPONENTS"]);
-  expect(list.batches[0].items.map((item) => item.state)).toEqual(["STAGED", "STAGED", "REFUSED", "STAGED"]);
+  expect(list.batches[0].items.map((item) => item.decision.kind)).toEqual(["FACTS", "SOURCES", "SOURCES_DIFFER", "COMPONENTS", "IMAGES", "STRUCTURE"]);
+  expect(list.batches[0].items.map((item) => item.state)).toEqual(["STAGED", "STAGED", "REFUSED", "STAGED", "STAGED", "STAGED"]);
 });
 
 test("a staged list off its contract is refused", () => {
@@ -93,15 +96,16 @@ test("an item is known only when its kind, action and source kind are all known"
 test("each kind offers only the actions the backend allows it", () => {
   const pair = ["approve", "reject"];
   expect(STAGED_KIND_ACTIONS).toEqual({
-    FACTS: ["approve", "raise", "reject", "retract"],
-    COMPONENTS: [...pair, "remove"],
-    LAYOUTS: pair,
-    STRUCTURE: pair,
-    READINGS: pair,
-    LAYERS: pair,
-    STAGES: pair,
-    SOURCES: ["correct"],
-    SOURCES_DIFFER: ["clear"]
+    FACTS: ["approve", "raise", "reject", "retract", "edit"],
+    COMPONENTS: [...pair, "remove", "edit"],
+    LAYOUTS: [...pair, "remove"],
+    STRUCTURE: [...pair, "remove", "edit"],
+    READINGS: [...pair, "remove"],
+    LAYERS: [...pair, "remove"],
+    STAGES: [...pair, "remove"],
+    SOURCES: ["correct", "remove"],
+    SOURCES_DIFFER: ["clear"],
+    IMAGES: ["remove", "edit"]
   });
   expect(Object.keys(STAGED_KIND_ACTIONS).sort()).toEqual([...STAGED_KINDS].sort());
 });
@@ -229,8 +233,39 @@ test("a confirmed batch replaces the open one, and an edited draft replaces its 
     items: batch.items.map((item) => ({ ...item, state: "APPLIED", outcome: null }))
   });
   expect(withBatch([batch], confirmed)).toEqual([confirmed]);
-  expect(batchTally(confirmed)).toBe("4 applied · 0 refused · 0 skipped");
+  expect(batchTally(confirmed)).toBe("6 applied · 0 refused · 0 skipped");
   const drafts = items().map(draftOf);
   const edited = withDraft(drafts, { ...drafts[1], selected: false });
-  expect(edited.map((draft) => draft.selected)).toEqual([true, false, true, true]);
+  expect(edited.map((draft) => draft.selected)).toEqual([true, false, true, true, true, true]);
+});
+
+test("an edit of published content shows each field before and after and stays the edit it was staged as", () => {
+  const picture = items()[4];
+  expect(picture.decision.edit?.fields).toEqual({ alt_text: "A clay vat of indigo turning yellow-green", focal: null });
+  expect(changesOf(picture).map((change) => [change.field, change.before, change.after])).toEqual([
+    ["Alt text", "A copper pot of yellow-green liquid", "A clay vat of indigo turning yellow-green"],
+    ["Focal", '{"height": 0.5, "width": 0.5, "x": 0.1, "y": 0.2}', null]
+  ]);
+  expect([stagedActions("IMAGES", "edit"), stagedActions("FACTS", "edit"), stagedActions("FACTS", "retract")]).toEqual([["edit"], ["edit"], ["approve", "raise", "reject", "retract"]]);
+  expect([kindLabel("IMAGES", "edit"), takesPage("IMAGES", "remove"), takesPage("COMPONENTS", "remove")]).toEqual(["Published picture", false, true]);
+  expect(confirmedItemOf(draftOf(picture))).toEqual({ id: picture.id, action: "edit", reason: "The alt text names the wrong vessel.", craft: null, family: null, source: null });
+  const result = renderToStaticMarkup(createElement(StagedItemResult, { item: picture }));
+  for (const shown of ["Published picture", "Change it as shown", "What the edit changes", "Before", "A copper pot of yellow-green liquid", "After", "A clay vat of indigo turning yellow-green", "None"]) {
+    expect(result).toContain(shown);
+  }
+  expect(result).not.toContain("Off");
+  const editor = renderToStaticMarkup(createElement(StagedItemEditor, { item: picture, draft: draftOf(picture), problems: null, onChange: () => undefined }));
+  expect(editor).toContain("What the edit changes");
+  expect(editor).toContain("Change it as shown");
+});
+
+test("a structure entry's removal names its entry and leaves the page line to a component's removal", () => {
+  const entry = items()[5];
+  expect([entry.decision.entry, entry.changes]).toEqual(["NATIVE_NAME", undefined]);
+  expect(changesOf(entry)).toEqual([]);
+  const markup = renderToStaticMarkup(createElement(StagedItemResult, { item: entry }));
+  expect(markup).toContain("Published structure entry");
+  expect(markup).toContain("Take it off its pages");
+  expect(markup).not.toContain("Every page that places it");
+  expect(markup).not.toContain("What the edit changes");
 });

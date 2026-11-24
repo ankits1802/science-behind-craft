@@ -4,7 +4,7 @@ import uuid
 from collections.abc import Mapping
 from datetime import datetime, timedelta
 from types import MappingProxyType
-from typing import Annotated, Literal, Self
+from typing import Annotated, Any, Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -15,14 +15,30 @@ from app.models.admin_work import (
     STAGED_ACTION_VALUES,
     STAGED_CORRECTION_KINDS,
     STAGED_KIND_VALUES,
+    STAGED_PUBLISHED_KINDS,
     STAGED_QUEUE_KINDS,
 )
 from app.models.enums import SOURCE_KINDS
 from app.models.knowledge import CONTAINER_TITLE_CHARS
 
-from .base import ContractModel
+from .base import ContractModel, absent, empty
 from .crafts import SLUG_MAX_CHARS
-from .review_queue import APPROVE, COMPONENTS, FACTS, KIND_ACTIONS, ONE_HOME, REASON_MAX_CHARS
+from .published_edits import FieldChange, StagedEdit
+from .review_queue import (
+    APPROVE,
+    COMPONENTS,
+    FACTS,
+    IMAGES,
+    KIND_ACTIONS,
+    LAYERS,
+    LAYOUTS,
+    ONE_HOME,
+    READINGS,
+    REASON_MAX_CHARS,
+    STAGES,
+    STRUCTURE,
+)
+from .structure_proposals import StructureKind
 
 __all__ = [
     "APPLIED",
@@ -34,11 +50,14 @@ __all__ = [
     "CORRECT",
     "DECISIONS_PER_CALL_MAX",
     "DISCARDED",
+    "EDIT",
     "EXPIRED",
     "MCP_QUEUE_KINDS",
     "OPEN",
     "PUBLISHED_ACTIONS",
     "PUBLISHED_ACTION_VALUES",
+    "PUBLISHED_KIND_VALUES",
+    "PUBLISHED_ONLY_KINDS",
     "REFUSED",
     "REMOVE",
     "SKIPPED",
@@ -60,6 +79,7 @@ __all__ = [
     "batch_expiry",
     "batch_status",
     "day_allowance_problem",
+    "stored_decision",
 ]
 
 STAGED_SCHEMA_VERSION = 1
@@ -77,14 +97,30 @@ EXPIRED = "EXPIRED"
 STAGED, APPLIED, REFUSED, SKIPPED = ITEM_STATES
 MCP_QUEUE_KINDS: tuple[str, ...] = STAGED_QUEUE_KINDS
 SOURCES, SOURCES_DIFFER = STAGED_CORRECTION_KINDS
-CORRECT, CLEAR, REMOVE = STAGED_ACTION_VALUES[4:]
-PUBLISHED_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType({COMPONENTS: (REMOVE,)})
+PUBLISHED_ONLY_KINDS: tuple[str, ...] = STAGED_PUBLISHED_KINDS
+CORRECT, CLEAR, REMOVE, EDIT = STAGED_ACTION_VALUES[4:]
+REMOVED_AND_EDITED = (REMOVE, EDIT)
+PUBLISHED_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType(
+    {
+        FACTS: (EDIT,),
+        COMPONENTS: REMOVED_AND_EDITED,
+        LAYOUTS: (REMOVE,),
+        STRUCTURE: REMOVED_AND_EDITED,
+        READINGS: (REMOVE,),
+        LAYERS: (REMOVE,),
+        STAGES: (REMOVE,),
+        SOURCES: (REMOVE,),
+        IMAGES: REMOVED_AND_EDITED,
+    }
+)
 PUBLISHED_ACTION_VALUES = frozenset(action for actions in PUBLISHED_ACTIONS.values() for action in actions)
+PUBLISHED_KIND_VALUES: tuple[str, ...] = tuple(PUBLISHED_ACTIONS)
 STAGED_KIND_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {
         **{kind: (*KIND_ACTIONS[kind], *PUBLISHED_ACTIONS.get(kind, ())) for kind in MCP_QUEUE_KINDS},
-        SOURCES: (CORRECT,),
+        SOURCES: (CORRECT, *PUBLISHED_ACTIONS[SOURCES]),
         SOURCES_DIFFER: (CLEAR,),
+        **{kind: PUBLISHED_ACTIONS[kind] for kind in PUBLISHED_ONLY_KINDS},
     }
 )
 NOT_FOR_KIND = "A {kind} item is {actions}, not {action}."
@@ -93,10 +129,20 @@ ONE_PAGE = (
     "A removal takes the item off every page, or off the one page named: a craft's slug as craft, or a "
     "category's as family, not both."
 )
+PAGE_FOR_COMPONENTS = (
+    "Only a component's removal names the one page it leaves; anything else is removed or edited wherever it "
+    "is shown."
+)
 STAYS_PUBLISHED = (
     "A decision on published content stays one, and a decision on a waiting item stays one: stage the other "
     "anew."
 )
+STAYS_AN_EDIT = (
+    "An edit is confirmed as it was staged, its reason alone open to change, and a removal stays a removal: "
+    "stage the other anew."
+)
+EDIT_NEEDED = "An edit names the fields it changes as edit, and only an edit names them."
+ENTRY_ONLY = "Only a removal or an edit of a structure entry names the entry's kind."
 SOURCE_ONLY = "Only a source correction carries a source's corrected fields."
 SOURCE_NEEDED = "A source correction names at least one corrected field."
 OVER_DAY = (
@@ -138,6 +184,8 @@ class _Choice(ContractModel):
 class StagedDecision(_Choice):
     kind: StagedKind
     id: uuid.UUID
+    entry: StructureKind | None = Field(default=None, exclude_if=absent)
+    edit: StagedEdit | None = Field(default=None, exclude_if=absent)
 
     @model_validator(mode="after")
     def _fits_its_kind(self) -> Self:
@@ -147,17 +195,19 @@ class StagedDecision(_Choice):
                 NOT_FOR_KIND.format(kind=self.kind, actions=" or ".join(allowed), action=self.action)
             )
         problem = _page_problem(self) if acts_on_published(self.action) else _filing_problem(self)
+        problem = problem or _parts_problem(self)
         if problem is not None:
             raise ValueError(problem)
-        if (self.source is not None) != (self.kind == SOURCES):
-            raise ValueError(SOURCE_NEEDED if self.kind == SOURCES else SOURCE_ONLY)
         return self
 
     def changed_to(self, choice: ConfirmedItem) -> StagedDecision:
         if acts_on_published(choice.action) != acts_on_published(self.action):
             raise InvalidInput(STAYS_PUBLISHED)
+        if acts_on_published(self.action) and choice.action != self.action:
+            raise InvalidInput(STAYS_AN_EDIT)
         fields = choice.model_dump(exclude={"id"})
-        return StagedDecision.model_validate({**fields, "kind": self.kind, "id": self.id})
+        target = {"kind": self.kind, "id": self.id, "entry": self.entry, "edit": self.edit}
+        return StagedDecision.model_validate({**fields, **target})
 
 
 class ConfirmedItem(_Choice):
@@ -176,6 +226,7 @@ class StagedItemView(ContractModel):
     state: ItemState
     applied: StagedDecision | None = None
     outcome: str | None = None
+    changes: list[FieldChange] = Field(default_factory=list, exclude_if=empty)
 
 
 class StagedBatchView(ContractModel):
@@ -194,6 +245,13 @@ class StagedBatchView(ContractModel):
 class StagedBatchList(ContractModel):
     schema_version: Literal[1] = STAGED_SCHEMA_VERSION
     batches: list[StagedBatchView] = Field(max_length=BATCHES_SHOWN)
+
+
+def stored_decision(decision: StagedDecision) -> dict[str, Any]:
+    stored = decision.model_dump(mode="json", exclude_none=True)
+    if decision.edit is not None:
+        stored["edit"] = decision.edit.model_dump(mode="json")
+    return stored
 
 
 def batch_status(stored: str, expires_at: datetime, *, now: datetime) -> str:
@@ -226,6 +284,20 @@ def acts_on_published(action: str) -> bool:
 
 
 def _page_problem(decision: StagedDecision) -> str | None:
+    if decision.craft is None and decision.family is None:
+        return None
+    if (decision.kind, decision.action) != (COMPONENTS, REMOVE):
+        return PAGE_FOR_COMPONENTS
     if decision.craft is not None and decision.family is not None:
         return ONE_PAGE
+    return None
+
+
+def _parts_problem(decision: StagedDecision) -> str | None:
+    if (decision.edit is not None) != (decision.action == EDIT):
+        return EDIT_NEEDED
+    if decision.entry is not None and not (decision.kind == STRUCTURE and acts_on_published(decision.action)):
+        return ENTRY_ONLY
+    if (decision.source is not None) != (decision.kind == SOURCES and decision.action == CORRECT):
+        return SOURCE_NEEDED if decision.action == CORRECT else SOURCE_ONLY
     return None

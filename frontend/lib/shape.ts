@@ -40,6 +40,7 @@ export const text = shape("text", (value): value is string => typeof value === "
 export const number = shape("a number", (value): value is number => typeof value === "number" && Number.isFinite(value));
 export const integer = shape("an integer", (value): value is number => Number.isInteger(value));
 export const boolean = shape("true or false", (value): value is boolean => typeof value === "boolean");
+export const anything: Shape<unknown> = { expected: "any value", parse: (value) => value };
 
 export function ruled<T>(inner: Shape<T>, expected: string, rule: (value: T) => boolean): Shape<T> {
   return {

@@ -5,11 +5,12 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, time
 
+from pydantic import ValidationError
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.clock import INDIA_TZ
-from app.core.errors import InvalidInput
+from app.core.errors import AppError, InvalidInput
 from app.core.roles import Capability, can
 from app.models import ArtisanContribution, Claim, StagedReview, StagedReviewItem, User
 from app.research.review_labels import cut_label, queue_label
@@ -20,6 +21,7 @@ from app.research.staged_reviews import (
     acts_on_published,
     batch_expiry,
     day_allowance_problem,
+    stored_decision,
 )
 
 from .oauth_bearer import McpCaller
@@ -27,8 +29,8 @@ from .review_queue import QueueAdapters, open_review_item
 from .review_queue_decisions import ItemRef
 from .review_queue_errors import NotYourQueue
 from .source_corrections import source_label
-from .staged_published import published_label
-from .staged_review_apply import dry_run
+from .staged_published import published_before, published_label
+from .staged_review_apply import dry_run, refusal_of
 from .testimony_views import Turns
 
 __all__ = ["Staged", "StagedRefusal", "stage_decisions", "staged_today"]
@@ -36,7 +38,7 @@ __all__ = ["Staged", "StagedRefusal", "stage_decisions", "staged_today"]
 NOT_AN_ADMIN = "Staging review decisions is for Admins and Master Admins."
 TWICE = "This item is already decided earlier in the same call."
 NOT_WAITING = "No {kind} item with this id is in the review queue you review."
-NOT_PUBLISHED = "No published {kind} item has this id; a removal names a registered or placed one."
+NOT_PUBLISHED = "No published {kind} item has this id; review_queue with published lists them by page."
 NO_SOURCE = "No source has this id."
 NO_FACT = "No fact has this id."
 NO_TRANSCRIPTS = "Testimony is reviewed on the site, not over MCP."
@@ -48,6 +50,13 @@ class StagedRefusal:
     kind: str
     id: uuid.UUID
     reason: str
+
+
+@dataclass(frozen=True)
+class _Checked:
+    decision: StagedDecision
+    label: str | None = None
+    problem: str | None = None
 
 
 @dataclass
@@ -68,12 +77,13 @@ async def stage_decisions(
     kept: list[tuple[StagedDecision, str]] = []
     seen: set[tuple[str, uuid.UUID]] = set()
     for index, decision in enumerate(asked):
-        label, problem = await _checked(session, decision, proposer, seen=seen, now=now)
-        if problem is not None or label is None:
-            staged.refused.append(StagedRefusal(index, decision.kind, decision.id, problem or NOT_WAITING))
+        checked = await _checked(session, decision, proposer, seen=seen, now=now)
+        if checked.problem is not None or checked.label is None:
+            reason = checked.problem or NOT_WAITING
+            staged.refused.append(StagedRefusal(index, decision.kind, decision.id, reason))
             continue
         seen.add((decision.kind, decision.id))
-        kept.append((decision, label))
+        kept.append((checked.decision, checked.label))
     over = day_allowance_problem(staged.today, len(kept))
     if over is not None:
         raise InvalidInput(over)
@@ -100,13 +110,17 @@ async def _checked(
     *,
     seen: set[tuple[str, uuid.UUID]],
     now: datetime,
-) -> tuple[str | None, str | None]:
+) -> _Checked:
     if (decision.kind, decision.id) in seen:
-        return None, TWICE
-    label = await _label(session, decision, proposer, now=now)
-    if label is None:
-        return None, _missing(decision)
-    return label, await dry_run(session, decision, proposer, now=now)
+        return _Checked(decision, problem=TWICE)
+    try:
+        filled = await published_before(session, decision)
+        label = None if filled is None else await _label(session, filled, proposer, now=now)
+    except (AppError, ValidationError) as refused:
+        return _Checked(decision, problem=refusal_of(refused))
+    if filled is None or label is None:
+        return _Checked(decision, problem=_missing(decision))
+    return _Checked(filled, label, await dry_run(session, filled, proposer, now=now))
 
 
 async def _label(
@@ -157,7 +171,7 @@ async def _stored(
             kind=decision.kind,
             itemId=decision.id,
             action=decision.action,
-            decision=decision.model_dump(mode="json", exclude_none=True),
+            decision=stored_decision(decision),
             label=label,
         )
         for position, (decision, label) in enumerate(kept)

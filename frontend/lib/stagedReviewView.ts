@@ -10,6 +10,7 @@ import {
   STAGED_REASON_MIN,
   type BatchStatus,
   type ConfirmedItem,
+  type FieldChange,
   type ItemState,
   type SourceFix,
   type SourceKind,
@@ -37,18 +38,33 @@ export type DraftProblems = { reason: string | null; source: string | null };
 
 const QUEUE_PAIR: readonly StagedAction[] = ["approve", "reject"];
 
-export const PUBLISHED_ACTIONS: Partial<Record<StagedKind, readonly StagedAction[]>> = { COMPONENTS: ["remove"] };
+const REMOVED: readonly StagedAction[] = ["remove"];
+const REMOVED_AND_EDITED: readonly StagedAction[] = ["remove", "edit"];
+
+export const PUBLISHED_ACTIONS: Record<StagedKind, readonly StagedAction[]> = {
+  FACTS: ["edit"],
+  COMPONENTS: REMOVED_AND_EDITED,
+  LAYOUTS: REMOVED,
+  STRUCTURE: REMOVED_AND_EDITED,
+  READINGS: REMOVED,
+  LAYERS: REMOVED,
+  STAGES: REMOVED,
+  SOURCES: REMOVED,
+  SOURCES_DIFFER: [],
+  IMAGES: REMOVED_AND_EDITED
+};
 
 export const STAGED_KIND_ACTIONS: Record<StagedKind, readonly StagedAction[]> = {
-  FACTS: ["approve", "raise", "reject", "retract"],
-  COMPONENTS: [...QUEUE_PAIR, ...(PUBLISHED_ACTIONS.COMPONENTS ?? [])],
-  LAYOUTS: QUEUE_PAIR,
-  STRUCTURE: QUEUE_PAIR,
-  READINGS: QUEUE_PAIR,
-  LAYERS: QUEUE_PAIR,
-  STAGES: QUEUE_PAIR,
-  SOURCES: ["correct"],
-  SOURCES_DIFFER: ["clear"]
+  FACTS: ["approve", "raise", "reject", "retract", ...PUBLISHED_ACTIONS.FACTS],
+  COMPONENTS: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.COMPONENTS],
+  LAYOUTS: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.LAYOUTS],
+  STRUCTURE: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.STRUCTURE],
+  READINGS: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.READINGS],
+  LAYERS: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.LAYERS],
+  STAGES: [...QUEUE_PAIR, ...PUBLISHED_ACTIONS.STAGES],
+  SOURCES: ["correct", ...PUBLISHED_ACTIONS.SOURCES],
+  SOURCES_DIFFER: ["clear"],
+  IMAGES: PUBLISHED_ACTIONS.IMAGES
 };
 
 export const STAGED_KIND_LABELS: Record<StagedKind, string> = {
@@ -60,14 +76,16 @@ export const STAGED_KIND_LABELS: Record<StagedKind, string> = {
   LAYERS: KIND_NOUNS.LAYERS,
   STAGES: KIND_NOUNS.STAGES,
   SOURCES: "Source correction",
-  SOURCES_DIFFER: "Sources differ mark"
+  SOURCES_DIFFER: "Sources differ mark",
+  IMAGES: KIND_NOUNS.IMAGES
 };
 
 export const STAGED_ACTION_LABELS: Record<StagedAction, string> = {
   ...ACTION_LABELS,
   correct: "Correct the source",
   clear: "Clear the mark",
-  remove: "Take it off its pages"
+  remove: "Take it off its pages",
+  edit: "Change it as shown"
 };
 
 export const BATCH_STATUS_LABELS: Record<BatchStatus, string> = {
@@ -85,26 +103,40 @@ export const ITEM_STATE_LABELS: Record<ItemState, string> = {
 };
 
 export function actsOnPublished(kind: StagedKind, action: StagedAction): boolean {
-  return (PUBLISHED_ACTIONS[kind] ?? []).includes(action);
+  return PUBLISHED_ACTIONS[kind].includes(action);
 }
 
 export function stagedActions(kind: StagedKind, staged: StagedAction): readonly StagedAction[] {
-  const published = actsOnPublished(kind, staged);
-  return STAGED_KIND_ACTIONS[kind].filter((action) => actsOnPublished(kind, action) === published);
+  if (actsOnPublished(kind, staged)) return [staged];
+  return STAGED_KIND_ACTIONS[kind].filter((action) => !actsOnPublished(kind, action));
+}
+
+export function takesPage(kind: StagedKind, action: StagedAction): boolean {
+  return kind === "COMPONENTS" && action === "remove";
 }
 
 export function refilesUnder(kind: StagedKind, action: StagedAction): boolean {
   return kind === "FACTS" && action === "approve";
 }
 
-const PUBLISHED_KIND_LABELS: Partial<Record<StagedKind, string>> = { COMPONENTS: "Published component" };
+const PUBLISHED_KIND_LABELS: Partial<Record<StagedKind, string>> = {
+  FACTS: "Published fact",
+  COMPONENTS: "Published component",
+  LAYOUTS: "Published layout",
+  STRUCTURE: "Published structure entry",
+  READINGS: "Published reading",
+  LAYERS: "Published map layer",
+  STAGES: "Published stage",
+  SOURCES: "Published source",
+  IMAGES: "Published picture"
+};
 
 export function kindLabel(kind: StagedKind, action: StagedAction): string {
   return (actsOnPublished(kind, action) ? PUBLISHED_KIND_LABELS[kind] : undefined) ?? STAGED_KIND_LABELS[kind];
 }
 
 export function keepsPage(kind: StagedKind, action: StagedAction): boolean {
-  return refilesUnder(kind, action) || actsOnPublished(kind, action);
+  return refilesUnder(kind, action) || takesPage(kind, action);
 }
 
 export function pageLine(decision: StagedDecision): string {
@@ -230,6 +262,14 @@ export function batchTally(batch: StagedBatchView): string {
 
 export function decisionShown(item: StagedItemView): StagedDecision {
   return item.applied ?? item.decision;
+}
+
+export function changesOf(item: StagedItemView): readonly FieldChange[] {
+  return item.changes ?? [];
+}
+
+export function changeValue(value: string | null): string {
+  return value ?? "None";
 }
 
 export function filingLine(decision: StagedDecision): string | null {

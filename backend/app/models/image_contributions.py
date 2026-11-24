@@ -1,8 +1,9 @@
 import uuid
 from datetime import datetime
+from typing import Any
 
 from sqlalchemy import Boolean, CheckConstraint, DateTime, ForeignKey, Index, String, Text, text
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, created_at, one_of, updated_at, uuid_pk
@@ -16,6 +17,7 @@ REVIEW_NOTE_CHARS = 500
 DIGEST_CHARS = 64
 SLOT_CHARS = 16
 ONE_TARGET = 'num_nonnulls("stageId", "materialId", "slot") <= 1'
+FOCAL_OBJECT = '"focal" IS NULL OR jsonb_typeof("focal") = \'object\''
 AI_GENERATED = "AI_GENERATED"
 WITH_FILE = ("PENDING", "APPROVED")
 REVIEWED = ("APPROVED", "REJECTED")
@@ -50,6 +52,7 @@ class ImageContribution(Base):
     prompt: Mapped[str | None] = mapped_column(Text)
     caption: Mapped[str] = mapped_column(String(IMAGE_TEXT_CHARS), nullable=False)
     altText: Mapped[str] = mapped_column(String(IMAGE_TEXT_CHARS), nullable=False)
+    focal: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     termsVersion: Mapped[str] = mapped_column(String(TERMS_VERSION_CHARS), nullable=False)
     rightsConfirmedAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     status: Mapped[str] = mapped_column(String(16), nullable=False, server_default="AWAITING_FILE")
@@ -77,6 +80,7 @@ class ImageContribution(Base):
         CheckConstraint(f'NOT {one_of("status", WITH_FILE)} OR "assetId" IS NOT NULL', name="file"),
         CheckConstraint(f'NOT {one_of("status", REVIEWED)} OR "reviewedAt" IS NOT NULL', name="reviewed"),
         CheckConstraint(ONE_TARGET, name="one_target"),
+        CheckConstraint(FOCAL_OBJECT, name="focal"),
         Index(None, "status", "createdAt"),
         Index(None, "craftId"),
         Index(None, "contributorId"),

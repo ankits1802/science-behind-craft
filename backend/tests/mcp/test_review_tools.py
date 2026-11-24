@@ -3,8 +3,12 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
+from pydantic import ValidationError
 
+from app.api.mcp_review_arguments import StagedChoice
+from app.api.mcp_review_tools import staged_decision
 from app.api.mcp_tools import TOOLS, ToolContext, answer
+from app.data.admin_guide import ADMIN_GUIDE_URI
 from app.services.craft_resolver import CraftIndexStore
 
 SITE = "https://kalavigyan.example"
@@ -82,3 +86,29 @@ def test_the_staging_tool_says_plainly_that_nothing_is_published_until_a_person_
     assert "Nothing is published" in description and "never applies what an app proposes" in description
     assert TOOLS["stage_reviews"].annotations["destructiveHint"] is False
     assert TOOLS["review_queue"].annotations["readOnlyHint"] is True
+
+
+def test_a_staged_edit_carries_its_fields_and_a_structure_entry_its_kind() -> None:
+    choice = StagedChoice.model_validate(
+        DECISION
+        | {"kind": "STRUCTURE", "action": "edit", "entry": "NATIVE_NAME", "edit": {"text": "Ajrakh", "script": None}}
+    )
+    staged = staged_decision(choice)
+    assert staged.entry == "NATIVE_NAME" and staged.edit is not None
+    assert (staged.edit.fields, staged.edit.before) == ({"text": "Ajrakh", "script": None}, None)
+    with pytest.raises(ValidationError):
+        StagedChoice.model_validate(DECISION | {"action": "edit", "edit": {}})
+
+
+async def test_the_admin_tools_point_to_the_served_guide_to_removing_and_editing() -> None:
+    for tool in ("review_queue", "stage_reviews"):
+        assert ADMIN_GUIDE_URI in TOOLS[tool].description, tool
+    read = await answer(
+        {"jsonrpc": "2.0", "id": 2, "method": "resources/read", "params": {"uri": ADMIN_GUIDE_URI}},
+        context("ADMIN", "read", "review"),
+    )
+    assert read is not None
+    text = read["result"]["contents"][0]["text"]
+    assert text.startswith("# Removing and editing published content\n\n")
+    for kind in ("FACTS", "COMPONENTS", "IMAGES", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "SOURCES"):
+        assert f"| `{kind}` |" in text, kind

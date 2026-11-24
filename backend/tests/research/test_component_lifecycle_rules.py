@@ -116,14 +116,14 @@ def test_a_held_page_waits_three_days_then_expires_unconfirmed() -> None:
         HoldDecision.model_validate({"decision": "PUBLISH"})
 
 
-def test_removal_is_a_staged_action_on_published_components_only() -> None:
-    assert STAGED_KIND_ACTIONS["COMPONENTS"] == ("approve", "reject", "remove")
-    assert all(
-        "remove" not in actions for kind, actions in STAGED_KIND_ACTIONS.items() if kind != "COMPONENTS"
-    )
+def test_a_component_removal_names_at_most_one_page_and_no_other_removal_names_one() -> None:
+    assert STAGED_KIND_ACTIONS["COMPONENTS"] == ("approve", "reject", "remove", "edit")
     assert StagedDecision.model_validate(removal()).craft is None
     assert StagedDecision.model_validate(removal(craft="Sanganeri-Hand-Block-Printing")).family is None
-    for refused in (removal(kind="LAYOUTS"), removal(craft="Bagh-Print", family="Textiles")):
+    for refused in (
+        removal(kind="LAYOUTS", craft="Bagh-Print"),
+        removal(craft="Bagh-Print", family="Textiles"),
+    ):
         with pytest.raises(ValidationError):
             StagedDecision.model_validate(refused)
     with pytest.raises(ValidationError, match="Only an approved fact is filed"):

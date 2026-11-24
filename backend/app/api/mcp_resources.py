@@ -6,6 +6,7 @@ from functools import partial
 from types import MappingProxyType
 from typing import Any
 
+from app.data.admin_guide import ADMIN_GUIDE_TITLE, ADMIN_GUIDE_URI, admin_guide
 from app.data.answer_kit import answer_kit, answer_view
 from app.data.contributor_kit import SITE_SKILL_PATH, contributor_skill, design_tokens
 from app.data.drawing_kit import DESIGN_KIT
@@ -137,6 +138,15 @@ INDEX = Resource(
     MARKDOWN,
     server_index,
 )
+ADMIN_GUIDE = Resource(
+    ADMIN_GUIDE_URI,
+    "kalavigyan-admin-published-content",
+    ADMIN_GUIDE_TITLE,
+    "For Admins with the review scope: finding published content with review_queue, and staging its "
+    "removal or edit with stage_reviews for a person to confirm, with the gates each edit passes.",
+    MARKDOWN,
+    admin_guide,
+)
 SKILLS = (
     Resource(
         CONTRIBUTOR_SKILL_URI,
@@ -191,6 +201,7 @@ RESOURCES: Mapping[str, Resource] = MappingProxyType(
             *(_skill_file(skill_file) for skill_file in SKILL_FILES.values()),
             *(_reference(reference) for reference in REFERENCES.values()),
             *(_contract(contract) for contract in CONTRACTS.values()),
+            ADMIN_GUIDE,
             *DESIGN,
             *(_component_schema(kind) for kind in COMPONENT_KINDS),
         )

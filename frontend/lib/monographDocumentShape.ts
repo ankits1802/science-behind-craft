@@ -15,7 +15,7 @@ import {
   type MonographUnit
 } from "@/lib/monographDocument";
 import { fieldCoverageShape } from "@/lib/fieldCoverage";
-import { dictionary, integer, list, matching, nullable, object, oneOf, optional, parseShape, ShapeError, text, type Shape } from "@/lib/shape";
+import { anything, dictionary, integer, list, matching, nullable, object, oneOf, optional, parseShape, ShapeError, text, type Shape } from "@/lib/shape";
 
 export const CATEGORY_MONOGRAPH_DOCUMENT_PATH = (slug: string) => `/categories/${encodeURIComponent(slug)}/monograph`;
 export const MONOGRAPH_PREVIEW_SUBJECTS = ["craft", "category"] as const;
@@ -28,7 +28,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-const anything: Shape<unknown> = { expected: "any value", parse: (value) => value };
 
 const record: Shape<Record<string, unknown>> = {
   expected: "an object",

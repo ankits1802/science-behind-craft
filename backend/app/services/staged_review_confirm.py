@@ -24,6 +24,7 @@ from app.research.staged_reviews import (
     StagedConfirmation,
     StagedDecision,
     batch_status,
+    stored_decision,
 )
 
 from . import audit
@@ -132,7 +133,7 @@ async def _confirm_item(
     await savepoint.commit()
     changed = final != proposed
     item.state, item.outcome = APPLIED, applied.message
-    item.applied = final.model_dump(mode="json", exclude_none=True) if changed else None
+    item.applied = stored_decision(final) if changed else None
     confirmed = run.confirmed
     confirmed.owners = merged_owners(confirmed.owners, applied.owners)
     if applied.decided is not None:

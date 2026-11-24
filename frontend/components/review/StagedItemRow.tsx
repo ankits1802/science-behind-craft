@@ -4,11 +4,13 @@ import { Field, Select, TextArea } from "@/components/FormControls";
 import type { StatusTone } from "@/components/records/statusTone";
 import { FilingPicker } from "@/components/review/FilingPicker";
 import { ReviewTerm } from "@/components/review/ReviewTerm";
+import { StagedChanges } from "@/components/review/StagedChanges";
 import { StagedSourceFields } from "@/components/review/StagedSourceFields";
 import { StatusBadge } from "@/components/StatusBadge";
 import { STAGED_REASON_MAX, STAGED_REASON_MIN, type ItemState, type StagedAction, type StagedItemView } from "@/lib/stagedReviewContract";
 import {
   actsOnPublished,
+  changesOf,
   decisionShown,
   filingLine,
   ITEM_STATE_LABELS,
@@ -18,6 +20,7 @@ import {
   refilesUnder,
   STAGED_ACTION_LABELS,
   stagedActions,
+  takesPage,
   type DraftProblems,
   type StagedDraft
 } from "@/lib/stagedReviewView";
@@ -67,11 +70,12 @@ export function StagedItemEditor({ item, draft, problems, onChange }: EditorProp
           </Field>
         </div>
         {refilesUnder(draft.kind, draft.action) ? <FilingPicker value={draft.fileUnder} onChange={(fileUnder) => onChange({ ...draft, fileUnder })} current={null} /> : null}
-        {actsOnPublished(draft.kind, draft.action) ? (
+        {takesPage(draft.kind, draft.action) ? (
           <dl className="grid font-ui text-label">
             <ReviewTerm term="Off" value={pageLine(item.decision)} />
           </dl>
         ) : null}
+        <StagedChanges changes={changesOf(item)} />
         {draft.source ? (
           <StagedSourceFields draft={draft.source} problem={problems?.source ?? null} onChange={(source) => onChange({ ...draft, source })} />
         ) : null}
@@ -93,9 +97,10 @@ export function StagedItemResult({ item }: { item: StagedItemView }) {
       <dl className="grid gap-x-6 gap-y-2 font-ui text-label sm:grid-cols-2">
         <ReviewTerm term="Action" value={STAGED_ACTION_LABELS[shown.action]} />
         <ReviewTerm term="Reason" value={shown.reason} />
-        {actsOnPublished(shown.kind, shown.action) ? <ReviewTerm term="Off" value={pageLine(shown)} /> : null}
+        {takesPage(shown.kind, shown.action) ? <ReviewTerm term="Off" value={pageLine(shown)} /> : null}
         {filing && !actsOnPublished(shown.kind, shown.action) ? <ReviewTerm term="File under" value={filing} /> : null}
       </dl>
+      <StagedChanges changes={changesOf(item)} />
     </li>
   );
 }

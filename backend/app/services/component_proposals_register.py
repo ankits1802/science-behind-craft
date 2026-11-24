@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import uuid
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from sqlalchemy import select
@@ -19,7 +19,7 @@ from .component_lifecycle import retire_replaced
 from .open_work_components import registered_pieces
 from .review_queue_errors import DecisionConflict
 
-__all__ = ["TOPIC_PREFIX", "register_component", "registers"]
+__all__ = ["TOPIC_PREFIX", "cited_sources", "content_hash", "register_component", "registers"]
 
 TOPIC_PREFIX = "component:"
 TOPIC_KEY_MAX = 200
@@ -44,7 +44,7 @@ async def register_component(session: AsyncSession, row: ComponentProposal) -> u
     waiting = [str(claim) for claim in claim_ids if claim not in visible]
     if waiting:
         raise DecisionConflict(NOT_SHOWN.format(ids=", ".join(waiting)))
-    source_ids = await _source_ids(session, claim_ids)
+    source_ids = await cited_sources(session, claim_ids)
     if not source_ids:
         raise DecisionConflict(NO_SOURCE)
     piece = KnowledgePiece(**_piece_values(row, claim_ids, source_ids))
@@ -68,11 +68,15 @@ async def _linked(session: AsyncSession, row: ComponentProposal) -> uuid.UUID:
     return piece_id
 
 
-async def _source_ids(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> list[str]:
+async def cited_sources(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> list[str]:
     rows = await session.scalars(
         select(ClaimSource.sourceId).where(ClaimSource.claimId.in_(list(claim_ids))).distinct()
     )
     return sorted(str(source_id) for source_id in rows)
+
+
+def content_hash(described: Mapping[str, Any]) -> str:
+    return hashlib.sha256(json.dumps(described, sort_keys=True).encode("utf-8")).hexdigest()
 
 
 def _piece_values(
@@ -98,7 +102,7 @@ def _piece_values(
         "payload": payload,
         "claimIds": claim_ids,
         "sourceIds": source_ids,
-        "contentHash": hashlib.sha256(json.dumps(described, sort_keys=True).encode("utf-8")).hexdigest(),
+        "contentHash": content_hash(described),
         "label": row.label,
         "title": row.title,
         "description": row.description,

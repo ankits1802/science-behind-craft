@@ -40,7 +40,10 @@
             "family": null,
             "source": {
               "title": "Sanganer dyes and their effluents",
-              "authors": ["A. Sharma", "R. Gupta"],
+              "authors": [
+                "A. Sharma",
+                "R. Gupta"
+              ],
               "year": 2007,
               "containerTitle": "Journal of Environmental Biology",
               "kind": "PAPER"
@@ -89,6 +92,68 @@
             "source": null,
             "kind": "COMPONENTS",
             "id": "6f1c2a4e-8d3b-4c5a-9e7f-0a1b2c3d4e24"
+          },
+          "state": "STAGED",
+          "applied": null,
+          "outcome": null
+        },
+        {
+          "id": "6f1c2a4e-8d3b-4c5a-9e7f-0a1b2c3d4e15",
+          "position": 4,
+          "label": "Edit Picture: The vat turns yellow-green",
+          "decision": {
+            "action": "edit",
+            "reason": "The alt text names the wrong vessel.",
+            "craft": null,
+            "family": null,
+            "source": null,
+            "kind": "IMAGES",
+            "id": "6f1c2a4e-8d3b-4c5a-9e7f-0a1b2c3d4e25",
+            "edit": {
+              "fields": {
+                "alt_text": "A clay vat of indigo turning yellow-green",
+                "focal": null
+              },
+              "before": {
+                "alt_text": "A copper pot of yellow-green liquid",
+                "focal": {
+                  "x": 0.1,
+                  "y": 0.2,
+                  "width": 0.5,
+                  "height": 0.5
+                }
+              }
+            }
+          },
+          "state": "STAGED",
+          "applied": null,
+          "outcome": null,
+          "changes": [
+            {
+              "field": "Alt text",
+              "before": "A copper pot of yellow-green liquid",
+              "after": "A clay vat of indigo turning yellow-green"
+            },
+            {
+              "field": "Focal",
+              "before": "{\"height\": 0.5, \"width\": 0.5, \"x\": 0.1, \"y\": 0.2}",
+              "after": null
+            }
+          ]
+        },
+        {
+          "id": "6f1c2a4e-8d3b-4c5a-9e7f-0a1b2c3d4e16",
+          "position": 5,
+          "label": "Remove Native name: Ajrakh (hi)",
+          "decision": {
+            "action": "remove",
+            "reason": "Its source names another craft's cloth.",
+            "craft": null,
+            "family": null,
+            "source": null,
+            "kind": "STRUCTURE",
+            "id": "6f1c2a4e-8d3b-4c5a-9e7f-0a1b2c3d4e26",
+            "entry": "NATIVE_NAME"
           },
           "state": "STAGED",
           "applied": null,

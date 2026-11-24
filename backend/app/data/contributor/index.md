@@ -71,6 +71,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `kalavigyan://contracts/component-specs-general.md`: The declared component kinds, a KalaVigyan contract.
 - `kalavigyan://contracts/image-contributions.md`: Picture contributions, a KalaVigyan contract.
 - `kalavigyan://contracts/mcp-ask-and-upload.md`: Asking and uploading over MCP, a KalaVigyan contract.
+- `kalavigyan://admin/published-content.md`: Removing and editing published content.
 - `kalavigyan://design/tokens.json`: The KalaVigyan design tokens.
 - `kalavigyan://design/answer-kit.md`: How a KalaVigyan answer is drawn.
 - `ui://kalavigyan/answer.html`: A KalaVigyan answer.

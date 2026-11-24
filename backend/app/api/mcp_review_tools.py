@@ -9,6 +9,7 @@ from pydantic import Field, ValidationError
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import REVIEW_SCOPE
 from app.core.roles import Capability, can
+from app.data.admin_guide import ADMIN_GUIDE_URI
 from app.models import ArtisanContribution, User
 from app.research.base import ContractModel
 from app.research.crafts import CraftRef
@@ -25,10 +26,11 @@ from app.services.staged_published import published_id
 from app.services.staged_reviews import stage_decisions
 from app.services.testimony_views import Turns
 
+from .mcp_published_read import PublishedRead, read_published
 from .mcp_review_arguments import ReviewQueueArguments, StageArguments, StagedChoice
 from .mcp_tool_base import ADMIN_GROUP, READ_ONLY, WRITES, Arguments, Tool, ToolContext
 
-__all__ = ["REVIEW_TOOLS", "QueueReply", "RefreshReply", "StageReply"]
+__all__ = ["REVIEW_TOOLS", "QueueReply", "RefreshReply", "StageReply", "staged_decision"]
 
 REVIEW_PAGE = "/admin/review"
 NOT_AN_ADMIN = "{tool} is for Admin and Master Admin accounts signed in with the review scope."
@@ -37,17 +39,18 @@ QUEUE_DESCRIPTION = (
     "Admins: list the review queue (facts, components, layouts, structure, readings, map layers, stages), "
     "filtered by kinds, craft and origin, newest first; or open one item whole with everything its card on "
     "the Review page shows: quotes, sources, gate checks, filing verdict, held reason and suggested craft. "
-    "Re-read a source and check a quote with read_source. Testimony and pictures are reviewed on the site."
+    "With published instead, list a page's published items of one kind or open one with the fields an edit "
+    f"changes, as {ADMIN_GUIDE_URI} shows. Re-read a source and check a quote with read_source. Testimony and "
+    "waiting pictures are reviewed on the site."
 )
 STAGE_DESCRIPTION = (
     "Admins: stage up to 20 decisions for a person to confirm. Nothing is published, changed or shown to "
     "readers until an Admin confirms the batch on the Review page; the server never applies what an app "
     "proposes. Each decision names the item's kind and id, an action the Review page allows (approve or "
     "reject; raise or retract a fact; approve a fact with craft or family to re-file it; correct a source's "
-    "title, authors, year, journal or kind; clear a fact's sources-differ mark; remove a registered component, "
-    "named by its label, from every page or from the one page craft_slug or family_slug names, kept in the "
-    "record) and a reason of at least 12 characters. Each is checked by the rules the Review page applies; "
-    "refused ones say why. "
+    "title, authors, year, journal or kind; clear a fact's sources-differ mark; remove or edit published "
+    f"content, kept in the record, as {ADMIN_GUIDE_URI} shows) and a reason of at least 12 characters. Each "
+    "is checked by the rules the Review page and the original gates apply; refused ones say why. "
     f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days."
 )
 REFRESH_DESCRIPTION = (
@@ -60,11 +63,15 @@ STAGED_MESSAGE = (
     "{url}, within {days} days. {refused}"
 )
 NONE_STAGED = "Nothing was staged: every decision was refused. Nothing is published or changed."
-UNNAMED = "Name the item by its id, or a component to remove by its label."
+UNNAMED = "Name the item by its id, or a component by its label."
 NO_LABEL = "No published {kind} item has the label {label}; list_components gives the labels."
 QUEUE_MESSAGE = (
     "{total} items wait. Decisions you stage with stage_reviews are not published until an Admin confirms "
     "them on {url}."
+)
+PUBLISHED_MESSAGE = (
+    "This is published content as readers see it. A removal or edit you stage with stage_reviews changes "
+    "nothing until an Admin confirms it on {url}."
 )
 
 
@@ -78,12 +85,13 @@ class QueueSummary(ContractModel):
 
 
 class QueueReply(ContractModel):
-    kinds: list[str]
-    counts: dict[str, int]
-    total: int
+    kinds: list[str] = Field(default_factory=list)
+    counts: dict[str, int] = Field(default_factory=dict)
+    total: int | None = None
     items: list[QueueSummary] = Field(default_factory=list)
     next_cursor: str | None = None
     item: dict[str, Any] | None = None
+    published: PublishedRead | None = None
     message: str
 
 
@@ -141,6 +149,11 @@ ADAPTERS = QueueAdapters(objects=None, turns_of=_no_transcripts)
 
 async def _review_queue(context: ToolContext, arguments: ReviewQueueArguments) -> QueueReply:
     user, now = _admin(context, "review_queue"), datetime.now(UTC)
+    if arguments.published is not None:
+        read = await read_published(context, arguments.published)
+        return QueueReply(
+            published=read, message=PUBLISHED_MESSAGE.format(url=f"{context.site}{REVIEW_PAGE}")
+        )
     within = [kind for kind in MCP_QUEUE_KINDS if arguments.kinds is None or kind in arguments.kinds]
     filters = ReviewFilters(
         craft_slug=arguments.craft_slug,
@@ -184,7 +197,7 @@ async def _stage_reviews(context: ToolContext, arguments: StageArguments) -> Sta
     refused: list[StagedLine] = []
     for index, choice in enumerate(arguments.decisions):
         try:
-            read.append((index, _decision(await _named(context, choice))))
+            read.append((index, staged_decision(await _named(context, choice))))
         except ValidationError as unread:
             reason = "; ".join(str(problem["msg"]) for problem in unread.errors())
             refused.append(StagedLine(index=index, kind=choice.kind, id=choice.id, reason=reason))
@@ -230,9 +243,12 @@ async def _named(context: ToolContext, choice: StagedChoice) -> StagedChoice:
     return choice.model_copy(update={"id": found})
 
 
-def _decision(choice: StagedChoice) -> StagedDecision:
-    given = choice.model_dump(exclude_none=True, exclude={"craft_slug", "family_slug", "label"})
-    return StagedDecision.model_validate(given | {"craft": choice.craft_slug, "family": choice.family_slug})
+def staged_decision(choice: StagedChoice) -> StagedDecision:
+    given = choice.model_dump(exclude_none=True, exclude={"craft_slug", "family_slug", "label", "edit"})
+    edit = None if choice.edit is None else {"fields": choice.edit}
+    return StagedDecision.model_validate(
+        given | {"craft": choice.craft_slug, "family": choice.family_slug, "edit": edit}
+    )
 
 
 def _staged_message(count: int, refused: int, url: str) -> str:

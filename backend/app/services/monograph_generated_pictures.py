@@ -191,6 +191,7 @@ def contributed_plate(
         attribution=credit,
         facts=tuple(row.claimIds) if ai else (),
         themed=asset.mime == SVG,
+        focal=row.focal,
     )
 
 
@@ -211,6 +212,7 @@ def open_plate(
         credit=opened.credit,
         attribution=f"{opened.author}, {opened.licence}",
         credit_url=opened.page_url,
+        focal=row.focal,
     )
 
 

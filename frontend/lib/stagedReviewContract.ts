@@ -1,11 +1,11 @@
 import { apiFetch } from "@/lib/api";
 import { INSTANT, UUID } from "@/lib/answerShapes";
 import { REASON_MAX } from "@/lib/reviewQueueContract";
-import { count, integer, knownOnly, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
+import { anything, count, dictionary, integer, knownOnly, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
 
 export const STAGED_PATH = "/review-queue/staged";
-export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "SOURCES", "SOURCES_DIFFER"] as const;
-export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear", "remove"] as const;
+export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "SOURCES", "SOURCES_DIFFER", "IMAGES"] as const;
+export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear", "remove", "edit"] as const;
 export const SOURCE_KINDS = [
   "PAPER",
   "BOOK",
@@ -54,7 +54,10 @@ export type StagedChoice = {
   source: SourceFix | null;
 };
 
-export type StagedDecision = StagedChoice & { kind: StagedKind; id: string };
+export type StagedEdit = { fields: Record<string, unknown>; before?: Record<string, unknown> };
+export type FieldChange = { field: string; before: string | null; after: string | null };
+
+export type StagedDecision = StagedChoice & { kind: StagedKind; id: string; entry?: string; edit?: StagedEdit };
 export type ConfirmedItem = StagedChoice & { id: string };
 export type StagedConfirmation = { items: ConfirmedItem[] };
 
@@ -66,6 +69,7 @@ export type StagedItemView = {
   state: ItemState;
   applied: StagedDecision | null;
   outcome: string | null;
+  changes?: FieldChange[];
 };
 
 export type StagedBatchView = {
@@ -91,6 +95,15 @@ const sourceFixShape: Shape<SourceFix> = object<SourceFix>({
   kind: optional(nullable(oneOf(SOURCE_KINDS)))
 });
 
+const FIELD_NAME = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+const editShape: Shape<StagedEdit> = object<StagedEdit>({
+  fields: dictionary(FIELD_NAME, anything),
+  before: optional(dictionary(FIELD_NAME, anything))
+});
+
+const changeShape: Shape<FieldChange> = object<FieldChange>({ field: text, before: nullable(text), after: nullable(text) });
+
 const decisionShape: Shape<StagedDecision> = object<StagedDecision>({
   kind: oneOf(STAGED_KINDS),
   id: UUID,
@@ -98,7 +111,9 @@ const decisionShape: Shape<StagedDecision> = object<StagedDecision>({
   reason: text,
   craft: nullable(text),
   family: nullable(text),
-  source: nullable(sourceFixShape)
+  source: nullable(sourceFixShape),
+  entry: optional(text),
+  edit: optional(editShape)
 });
 
 const itemShape: Shape<StagedItemView> = object<StagedItemView>({
@@ -108,7 +123,8 @@ const itemShape: Shape<StagedItemView> = object<StagedItemView>({
   decision: decisionShape,
   state: oneOf(ITEM_STATES),
   applied: nullable(decisionShape),
-  outcome: nullable(text)
+  outcome: nullable(text),
+  changes: optional(list(changeShape))
 });
 
 function includes(values: readonly string[], value: unknown): boolean {
