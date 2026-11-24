@@ -91,7 +91,12 @@ def test_the_staging_tool_says_plainly_that_nothing_is_published_until_a_person_
 def test_a_staged_edit_carries_its_fields_and_a_structure_entry_its_kind() -> None:
     choice = StagedChoice.model_validate(
         DECISION
-        | {"kind": "STRUCTURE", "action": "edit", "entry": "NATIVE_NAME", "edit": {"text": "Ajrakh", "script": None}}
+        | {
+            "kind": "STRUCTURE",
+            "action": "edit",
+            "entry": "NATIVE_NAME",
+            "edit": {"text": "Ajrakh", "script": None},
+        }
     )
     staged = staged_decision(choice)
     assert staged.entry == "NATIVE_NAME" and staged.edit is not None
@@ -110,5 +115,15 @@ async def test_the_admin_tools_point_to_the_served_guide_to_removing_and_editing
     assert read is not None
     text = read["result"]["contents"][0]["text"]
     assert text.startswith("# Removing and editing published content\n\n")
-    for kind in ("FACTS", "COMPONENTS", "IMAGES", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "SOURCES"):
+    for kind in (
+        "FACTS",
+        "COMPONENTS",
+        "IMAGES",
+        "LAYOUTS",
+        "STRUCTURE",
+        "READINGS",
+        "LAYERS",
+        "STAGES",
+        "SOURCES",
+    ):
         assert f"| `{kind}` |" in text, kind

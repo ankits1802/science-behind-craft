@@ -68,7 +68,10 @@ def test_an_edit_changes_only_the_fields_it_names_and_passes_the_entry_s_own_rul
     two = curated_page(native_names=[*page.native_names, second])
     (named,) = entries_of(two, HELD_C, "NATIVE_NAME")
     clash = checked_item(named, {"text": "Ajrakh"})
-    assert target_problem(without_entry(two, named), clash) == "the page already gives the native name Ajrakh in hi"
+    assert (
+        target_problem(without_entry(two, named), clash)
+        == "the page already gives the native name Ajrakh in hi"
+    )
     assert target_problem(without_entry(two, named), checked_item(named, {"text": "Ajarakh"})) is None
 
 

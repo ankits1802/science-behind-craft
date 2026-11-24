@@ -211,8 +211,9 @@ is a `picture_plate` labelled `<craft>/pictures/contributed-<first 12 hex of its
 curated pictures: `MASTHEAD` as the hero when the page has none (else leading At a glance),
 `RECORD` in Market and GI, a stage's in How it is made, a material's in its field's chapter, one for
 facts in the chapter most of them belong to, any other At a glance. Caption first, the credit after
-(the same two lines), the alt text on the picture; an AI image only when every fact it was made from
-is shown. An open-licence picture's credit unit is "Photo: " then a link to its page holding the
+(the same two lines), the alt text on the picture, and its own focal box when it has one
+(`ImageContribution.focal`, a layout entry's crop taking its place); an AI image only when every fact
+it was made from is shown. An open-licence picture's credit unit is "Photo: " then a link to its page holding the
 rest of its credit, as every curated picture's is; a Commons one is drawn from its Commons original
 (`src` the upload address, `width` and `height` the original's), so the web serves it at the
 standard widths through `commonsThumb`, and any other from its stored copy at its own size. A draft
@@ -230,6 +231,14 @@ on its own runs nothing; 404 for a contribution that is not approved and shared.
 picture moves the page stamp (its count and latest change, and its file's), so the page is rebuilt
 on its next read. A picture placed by its `slot`, material or task on the page is the craft page's
 work (`craft-page.md`).
+
+**Removed or edited by an Admin** (decision 0194). An Admin's AI may stage the removal of an
+approved picture, or an edit of its caption and alt text (3 to 300 characters), its focal box
+(`{x, y, width, height}` inside the picture, or none) or its place (a stage or material of its craft,
+a slot, or loose), and a person confirms it on the Review page (`review-queue.md`, Staged over MCP).
+A removal makes its file `PRIVATE`, so it leaves its pages and is no longer served, and keeps its
+record, credit and file (audit `picture.removed`); an edit is audited `picture.edited` with the values
+it replaced. The contributor still cannot take back an approved picture.
 
 ## From MCP
 
