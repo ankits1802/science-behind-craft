@@ -187,7 +187,7 @@ Each item has `id`, `kind`, `origin`, `submittedAt`, `craft {slug, name, path}` 
   live processes that are not curated, by name, each with its stages in order; a curated process is
   the dossier's and changes through structure proposals) and `facts [{id, text, sources}]`, up to 12
   shown facts about the stage, oldest first, with their sources and quotes.
-- `picture`: the `ImageContributionView` of `image-contributions.md`.
+- `picture`: the `ImageContributionView` of `image-contributions.md`; an open-licence picture's carries its licence evidence as `openSource` (decision 0192), which `PictureReviewCard.tsx` shows beside it.
 - `testimony`: the review item of the testimony review (`/api/testimony/review/{id}`).
 
 Refusals: 403 for an account that reviews nothing, 404 for an unknown craft, 422 for a malformed

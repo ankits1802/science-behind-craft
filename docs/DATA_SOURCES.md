@@ -291,10 +291,21 @@ with no referrer, and the card links to its page. The one exception is an export
 the file sits in the private bucket's `exports/` prefix for seven days and goes only to its
 builder.
 
+An open-licence picture a contributor's agent gives by its page (`give_pictures` with `page_url`,
+decision 0192) is the other exception. Its licence, author, title and original file are read from
+the source's own record (Commons `extmetadata`, Openverse's record, Flickr's oEmbed; an Openverse
+record of a Commons or Flickr picture is read from that site), only public domain, CC0, CC BY and
+CC BY-SA pass, and the file (Commons' 1920 px rendering, or the original elsewhere) is fetched
+through the fetcher, screened and kept privately in the media bucket for review with its licence
+evidence (`OpenPicture`). Once approved it is credited "Photo: author, licence, via site" linked to
+its page; a Commons picture is then drawn from Commons at the standard widths and any other from the
+kept copy, which the public picture route serves.
+
 | Adapter | Service | Terms and credit |
 |---|---|---|
 | `wikimedia_commons` | Wikimedia Commons file search (`imageinfo`, 960 px thumbnails) | Each file's own licence; shown inline only under CC0, CC BY, CC BY-SA or public domain with its author, credited author, licence (linked) and Wikimedia Commons; otherwise a link card |
-| `openverse` | Openverse image search (`api.openverse.org`, anonymous) | Only `by`, `by-sa`, `cc0` and `pdm` results with a creator; credited creator, licence and source site (Flickr, Wikimedia Commons, ...); the Openverse thumbnail is shown |
+| `openverse` | Openverse image search (`api.openverse.org`, anonymous), and one image's record (`/v1/images/<id>/`) for a picture given by its page | Only `by`, `by-sa`, `cc0` and `pdm` results with a creator; credited creator, licence and source site (Flickr, Wikimedia Commons, ...); the Openverse thumbnail is shown; a picture given by its page from another site is credited "via Openverse from" that site |
+| `flickr` | Flickr's oEmbed (`www.flickr.com/services/oembed/`, anonymous, no key), only for a picture given by its Flickr page (decision 0192) | The photo's own licence as Flickr states it (name, URL and number), its author's Flickr name, title, page and file; credited "Photo: author, licence, via Flickr" linked to its page; anything but public domain, CC0, CC BY and CC BY-SA is refused |
 | `europe_pmc_figures` | Europe PMC REST search of figure legends (`FIG:`) in open-access full texts (`www.ebi.ac.uk/europepmc/webservices/rest`, anonymous), the article's JATS full text, and the figure image from the PMC CDN (`cdn.ncbi.nlm.nih.gov/pmc/blobs/...`); asked only for a zoom's fibre level after Commons and Openverse (decision 0180) | Only articles under CC BY, CC BY-SA or CC0 (the search record's licence and the full text's licence link both open); each figure carries its article's licence (linked), its article's first author ("et al." for more) and Europe PMC as its site, and links its article's DOI page; a figure with its own permissions or a legend that cites another work or says reprinted, reproduced, adapted, permission, copyright or courtesy is third-party material and is never offered |
 | `searxng` | SearXNG image results | No licence is known, so always a link card: the source site's own image as thumbnail, the page title and site, opening the page |
 | `brave` | Brave Image Search API (`/res/v1/images/search`, only with `BRAVE_SEARCH_API_KEY`), asked for an answer's section when SearXNG finds fewer than two link cards or fails (decision 0166) | Brave Search API terms; no licence is known, so always a link card: the source site's own image (`properties.url`, never Brave's proxied `thumbnail`), the page title and site, opening the page |

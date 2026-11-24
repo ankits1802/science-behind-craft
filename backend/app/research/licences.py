@@ -1,8 +1,19 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
+from types import MappingProxyType
 
-__all__ = ["OPEN_LICENCE_NAMES", "OPEN_LICENCE_URL_PREFIXES", "RESTRICTING_PHRASES", "open_licence"]
+__all__ = [
+    "ALL_RIGHTS_RESERVED",
+    "NON_COMMERCIAL",
+    "NO_DERIVATIVES",
+    "OPEN_LICENCE_NAMES",
+    "OPEN_LICENCE_URL_PREFIXES",
+    "RESTRICTING_PHRASES",
+    "licence_restriction",
+    "open_licence",
+]
 
 OPEN_LICENCE_NAMES = frozenset(
     {
@@ -28,17 +39,21 @@ OPEN_LICENCE_URL_PREFIXES = (
     "creativecommons.org/publicdomain/mark/",
     "opendatacommons.org/licenses/pddl/",
 )
-RESTRICTING_PHRASES = (
-    "nc",
-    "nd",
-    "noncommercial",
-    "non commercial",
-    "noderivatives",
-    "noderivs",
-    "no derivatives",
-    "no derivs",
-    "all rights reserved",
+NON_COMMERCIAL, NO_DERIVATIVES, ALL_RIGHTS_RESERVED = "NC", "ND", "ALL_RIGHTS_RESERVED"
+RESTRICTIONS: Mapping[str, str] = MappingProxyType(
+    {
+        "nc": NON_COMMERCIAL,
+        "nd": NO_DERIVATIVES,
+        "noncommercial": NON_COMMERCIAL,
+        "non commercial": NON_COMMERCIAL,
+        "noderivatives": NO_DERIVATIVES,
+        "noderivs": NO_DERIVATIVES,
+        "no derivatives": NO_DERIVATIVES,
+        "no derivs": NO_DERIVATIVES,
+        "all rights reserved": ALL_RIGHTS_RESERVED,
+    }
 )
+RESTRICTING_PHRASES = tuple(RESTRICTIONS)
 PLACE_LIMITED_NAMES = frozenset({("public", "domain")})
 PLACE_WORD = "in"
 URL = re.compile(r"(?:https?://|www\.)\S+|(?:creativecommons|opendatacommons)\.org/\S+")
@@ -63,9 +78,17 @@ def open_licence(licence: str | None) -> bool:
     return _licence_name(words) in _OPEN_NAMES or _names_an_open_licence(words)
 
 
+def licence_restriction(licence: str | None) -> str | None:
+    return _restriction(WORD.findall((licence or "").strip().casefold()))
+
+
 def _restricted(words: list[str]) -> bool:
+    return _restriction(words) is not None
+
+
+def _restriction(words: list[str]) -> str | None:
     joined = f" {' '.join(words)} "
-    return any(f" {phrase} " in joined for phrase in RESTRICTING_PHRASES)
+    return next((RESTRICTIONS[phrase] for phrase in RESTRICTING_PHRASES if f" {phrase} " in joined), None)
 
 
 def _open_url(text: str) -> bool:

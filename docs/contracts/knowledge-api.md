@@ -242,8 +242,11 @@ twice.
   pictures `research/images.openly_licensed` accepts that name an author, credits each as the
   sources reference asks ("Photo: author, licence, via site"), and gives a Commons file's
   thumbnails at the widths the site draws (`source_lookup_pictures.COMMONS_WIDTHS`, the same as
-  `frontend/lib/commonsPicture.ts`), never wider than the file. They are pictures from elsewhere,
-  placed by the team through the dossier route; `give_pictures` is only for a picture a person holds.
+  `frontend/lib/commonsPicture.ts`), never wider than the file. They are pictures from elsewhere:
+  an agent places one with `give_pictures` by its `page_url`, which reads its licence and author
+  again from the source's own record and credits it the same way (decision 0192,
+  `image-contributions.md`, Open-licence pictures); the dossier route still carries a picture's
+  focal box and stand-in note.
 - **Archiving.** `read_source` with archive asks `sources/wayback_save.WaybackSaver`, as the nightly upkeep
   does, and returns the snapshot.
 - A source or the fetcher that cannot be reached is a tool error naming it; nothing was stored.

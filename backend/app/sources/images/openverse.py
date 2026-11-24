@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any
 from urllib.parse import urlsplit
 
-from app.core.errors import ExternalFailure
+from app.core.errors import ExternalFailure, InvalidInput
 from app.research.images import (
     IMAGE_DESCRIPTION_MAX_CHARS,
     ImageCandidate,
@@ -12,10 +12,11 @@ from app.research.images import (
     clipped,
     openly_licensed,
 )
+from app.research.open_pictures import OPENVERSE, OpenPictureRecord
 
 from ..adapter import Clock, checked_k, usable_records, utc_now
 from ..http import RatePolicy, SourceHttp
-from ..records import UnusableRecord, clean_text, https_or_none, title_of
+from ..records import UnusableRecord, clean_text, https_or_none, markup_text, title_of
 
 __all__ = [
     "OPENVERSE_ENDPOINT",
@@ -23,6 +24,7 @@ __all__ = [
     "OPENVERSE_PAGE_MAX",
     "OPENVERSE_RATE",
     "OpenverseAdapter",
+    "openverse_picture",
 ]
 
 OPENVERSE_ENDPOINT = "https://api.openverse.org/v1/images/"
@@ -31,6 +33,10 @@ OPENVERSE_PAGE_MAX = 20
 OPENVERSE_LICENCES = {"by": "CC BY", "by-sa": "CC BY-SA", "cc0": "CC0", "pdm": "Public Domain Mark"}
 SOURCE_SITES = {"wikimedia": "Wikimedia Commons", "flickr": "Flickr"}
 WWW = "www."
+NOT_FOUND = "not_found"
+NO_RECORD = "Openverse holds no picture {identifier}"
+NOT_A_PICTURE = "Openverse's record {identifier} gives no https page and file for the picture"
+MATURE = "Openverse marks the picture {identifier} as mature"
 
 
 class OpenverseAdapter:
@@ -90,6 +96,55 @@ class OpenverseAdapter:
         if not openly_licensed(candidate):
             raise UnusableRecord(f"licence {licence!r} is not on the open allow-list")
         return candidate
+
+    async def picture(self, identifier: str) -> OpenPictureRecord:
+        url = f"{OPENVERSE_ENDPOINT}{identifier}/"
+        try:
+            response = await self.http.get(url, headers={"Accept": "application/json"})
+        except ExternalFailure as failure:
+            if failure.kind == NOT_FOUND:
+                raise InvalidInput(NO_RECORD.format(identifier=identifier)) from None
+            raise
+        record = response.json(self.name)
+        if not isinstance(record, dict):
+            raise ExternalFailure("openverse answered a record that is not an object", service=self.name)
+        return openverse_picture(record, identifier=identifier, record_url=url, read_at=self.clock())
+
+
+def openverse_picture(
+    record: dict[str, Any], *, identifier: str, record_url: str, read_at: datetime
+) -> OpenPictureRecord:
+    if record.get("mature"):
+        raise InvalidInput(MATURE.format(identifier=identifier))
+    page = https_or_none(record.get("foreign_landing_url"))
+    original = https_or_none(record.get("url"))
+    if page is None or original is None:
+        raise InvalidInput(NOT_A_PICTURE.format(identifier=identifier))
+    width, height = _size(record)
+    return OpenPictureRecord(
+        site=OPENVERSE,
+        page_url=page,
+        file_url=original,
+        fetch_url=original,
+        record_url=record_url,
+        title=clipped(markup_text(record.get("title")) or identifier),
+        author=clean_text(record.get("creator")),
+        licence=_stated_licence(record),
+        licence_url=https_or_none(record.get("license_url")),
+        width=width,
+        height=height,
+        original_site=_site(record.get("source"), page),
+        read_at=read_at,
+    )
+
+
+def _stated_licence(record: dict[str, Any]) -> str | None:
+    code = clean_text(record.get("license"))
+    if code is None:
+        return None
+    name = OPENVERSE_LICENCES.get(code.casefold()) or f"CC {code.upper()}"
+    version = clean_text(record.get("license_version"))
+    return f"{name} {version}" if version else name
 
 
 def _results(payload: Any) -> list[Any]:

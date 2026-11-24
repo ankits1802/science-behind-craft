@@ -85,8 +85,8 @@ The contracts are `docs/contracts/open-work.md` (Withdrawn, replaced, borrowed a
 
 ## Consequences
 
-- Migration `0103_component_lifecycle` (parent `0101_oauth_code_token_version`; the lead relinks it
-  if the pictures lane's `0102` lands first) adds `ComponentProposal.replacesLabel` with its check,
+- Migration `0103_component_lifecycle` (parent `0102_open_pictures`, decision 0192's, which reached
+  main first) adds `ComponentProposal.replacesLabel` with its check,
   the tables `KnowledgePieceUnlink` and `PageHold` (row-level security on, no grants to `anon` or
   `authenticated`) and the staged action `remove`; the release before reads and writes every table.
 - The web reads `OwnProposal.registered`, `ComponentReview.replaces` and the staged `remove`

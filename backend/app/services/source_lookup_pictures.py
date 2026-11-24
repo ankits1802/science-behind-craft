@@ -7,6 +7,7 @@ from collections.abc import Sequence
 from app.core.errors import ExternalFailure, InvalidInput
 from app.planner.policy import SEARCH_TIMEOUT_SECONDS
 from app.research.images import ImageCandidate, ImageQuery, ImageSource, openly_licensed
+from app.research.open_pictures import photo_credit
 from app.sources.reference.commons_urls import commons_thumbnail_url
 
 from .source_lookup_models import FoundPicture, FoundPictures, PictureWidth
@@ -72,6 +73,6 @@ def _picture(candidate: ImageCandidate, author: str) -> FoundPicture:
         licence=candidate.licence,
         licence_url=candidate.licence_url,
         open_licence=openly_licensed(candidate),
-        credit=f"Photo: {author}, {licence}, via {candidate.site}",
+        credit=photo_credit(author, licence, candidate.site),
         widths=picture_widths(candidate.original_url, candidate.width),
     )

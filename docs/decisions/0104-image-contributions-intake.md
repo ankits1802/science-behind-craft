@@ -11,6 +11,7 @@ recommendations; the owner asked how an MCP user adds a picture made with ChatGP
 |---|---|
 | What superseded part of it | [0109 Pictures in every common format, given from the chat and screened before review](0109-image-formats-and-screens.md): item 3, the no-imaging-library rule; the rest stands |
 | What it builds on | [0101 One knowledge architecture for every craft: facts, sections, components, monographs](0101-knowledge-architecture-for-every-craft.md): the backend of item 17's contributed pictures |
+| An open-licence picture given by its page, its licence read by the server instead of declared | [decision 0192](0192-open-licence-pictures-placed-by-their-page.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

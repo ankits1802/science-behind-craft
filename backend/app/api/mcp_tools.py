@@ -33,7 +33,7 @@ from .mcp_review_tools import REVIEW_TOOLS
 from .mcp_source_tools import SOURCE_TOOLS
 from .mcp_structure_tools import STRUCTURE_TOOLS
 from .mcp_studio_sources import STUDIO_SOURCE_TOOLS
-from .mcp_tool_base import Tool, ToolContext, listed_to, scope_refusal
+from .mcp_tool_base import Tool, ToolContext, listed_to, scope_refusal, shown_images
 from .mcp_work_tools import WORK_TOOLS
 
 __all__ = ["TOOLS", "ToolContext", "answer", "tool_list"]
@@ -123,7 +123,7 @@ async def _call(params: dict[str, Any], context: ToolContext) -> dict[str, Any]:
         return tool_error(str(refused))
     if tool.commits:
         await context.session.commit()
-    return tool_result(reply.model_dump(mode="json", by_alias=True))
+    return tool_result(reply.model_dump(mode="json", by_alias=True), shown_images(reply))
 
 
 def _problems(refused: ValidationError) -> str:

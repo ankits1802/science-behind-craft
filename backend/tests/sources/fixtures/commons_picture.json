@@ -1,0 +1,49 @@
+{
+ "batchcomplete": true,
+ "query": {
+  "normalized": [
+   {
+    "fromencoded": false,
+    "from": "File:Printing_with_Hand_Carved_Block.jpg",
+    "to": "File:Printing with Hand Carved Block.jpg"
+   }
+  ],
+  "pages": [
+   {
+    "pageid": 141516171,
+    "ns": 6,
+    "title": "File:Printing with Hand Carved Block.jpg",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "size": 3897120,
+      "width": 4000,
+      "height": 3000,
+      "thumburl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Printing_with_Hand_Carved_Block.jpg/1920px-Printing_with_Hand_Carved_Block.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "thumbwidth": 1920,
+      "thumbheight": 1440,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Printing_with_Hand_Carved_Block.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Printing_with_Hand_Carved_Block.jpg",
+      "mime": "image/jpeg",
+      "extmetadata": {
+       "ObjectName": {"value": "Printing with Hand Carved Block", "source": "mediawiki-metadata"},
+       "ImageDescription": {"value": "A printer presses a carved block onto cloth in Sanganer.", "source": "commons-desc-page"},
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/wiki/User:Ketayun\" title=\"User:Ketayun\">Ketayun Katz</a>",
+        "source": "commons-desc-page"
+       },
+       "Credit": {"value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>", "source": "commons-desc-page"},
+       "LicenseShortName": {"value": "CC BY-SA 4.0", "source": "commons-desc-page"},
+       "LicenseUrl": {"value": "https://creativecommons.org/licenses/by-sa/4.0", "source": "commons-desc-page"},
+       "AttributionRequired": {"value": "true", "source": "commons-desc-page"}
+      }
+     }
+    ],
+    "contentmodel": "wikitext",
+    "pagelanguage": "en",
+    "fullurl": "https://commons.wikimedia.org/wiki/File:Printing_with_Hand_Carved_Block.jpg",
+    "canonicalurl": "https://commons.wikimedia.org/wiki/File:Printing_with_Hand_Carved_Block.jpg"
+   }
+  ]
+ }
+}

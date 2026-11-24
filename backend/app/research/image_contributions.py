@@ -6,17 +6,19 @@ from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from app.models.enums import IMAGE_CONTRIBUTION_STATUSES, IMAGE_ORIGINS
+from app.models.enums import DECLARED_ORIGINS, IMAGE_CONTRIBUTION_STATUSES, IMAGE_ORIGINS, OPEN_LICENCE
 from app.models.open_work import TASK_KEY_COLUMN_CHARS
 
 from .base import ContractModel
 from .crafts import SLUG_MAX_CHARS
 from .image_screens import ScreenSummary
+from .open_pictures import OpenSource
 
 __all__ = [
     "AI_GENERATED",
     "BATCH_PICTURES_MAX",
     "IMAGE_TERMS_VERSION",
+    "OPEN_LICENCE",
     "ORIGIN_LABELS",
     "PICTURE_SLOTS",
     "BatchPicture",
@@ -29,6 +31,7 @@ __all__ = [
     "PictureSlot",
     "PictureTarget",
     "SharedDeclaration",
+    "ShownOrigin",
     "declaration_problem",
     "shown_label",
     "target_problem",
@@ -48,13 +51,15 @@ ORIGIN_LABELS = {
     "PHOTOGRAPH": "Photograph",
     "DRAWING": "Drawing",
     AI_GENERATED: "Illustration, made with {tool}",
+    OPEN_LICENCE: "Open-licence picture",
 }
 AI_NEEDS = "An AI-made image names its tool and model, its prompt and the facts it shows"
 ONLY_AI_CARRIES = "Only an AI-made image carries a tool and a prompt"
 EACH_FACT_ONCE = "Each fact is named once"
 ONE_TARGET = "A picture shows one stage, one material or one picture slot, not several"
 
-ImageOrigin = Literal[*IMAGE_ORIGINS]
+ImageOrigin = Literal[*DECLARED_ORIGINS]
+ShownOrigin = Literal[*IMAGE_ORIGINS]
 ImageContributionStatus = Literal[*IMAGE_CONTRIBUTION_STATUSES]
 TermsVersion = Literal[*IMAGE_TERMS_VERSIONS]
 PictureSlot = Literal[*PICTURE_SLOTS]
@@ -168,7 +173,7 @@ class ImageContributionView(ContractModel):
     slot: PictureSlot | None
     task_key: str | None
     claim_ids: list[uuid.UUID]
-    origin: ImageOrigin
+    origin: ShownOrigin
     label: str
     generator: str | None
     prompt: str | None
@@ -184,6 +189,7 @@ class ImageContributionView(ContractModel):
     created_at: datetime
     reviewed_at: datetime | None
     review_note: str | None
+    open_source: OpenSource | None = None
 
 
 class ImageQueue(ContractModel):

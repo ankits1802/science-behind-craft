@@ -5,6 +5,8 @@ __all__ = [
     "DECLARATION_FIELD",
     "GIVE_DESCRIPTION",
     "LINK_STEP",
+    "OPEN_STEP",
+    "PAGE_FIELD",
     "SHELL_STEP",
 ]
 
@@ -23,7 +25,21 @@ GIVE_DESCRIPTION = (
     "and one look by the cheapest vision model for identity documents (Aadhaar, PAN, passports, any card with a "
     "face and a number), faces in AI images and unsafe content; a flagged picture always waits for an Admin, and "
     "location and camera details are removed. An AI image is always shown as an illustration, never of a real "
-    "person, place or object. Each picture is answered on its own: shown, waiting, refused and why, or its slot."
+    "person, place or object. An open-licence picture from Wikimedia Commons, Openverse or Flickr comes as "
+    "page_url, its page, with the facts it illustrates and a caption written from them, and needs no "
+    "declaration: the server reads its licence, author and file from the source's own API, takes only public "
+    "domain, CC0, CC BY and CC BY-SA, credits it 'Photo: Author, licence, via site' linked to its page, "
+    "screens it the same way and refuses a picture already on the page; each one accepted comes back with "
+    "a small thumbnail to look at and its plate's label for a draft's layout. Each picture is answered on its "
+    "own: shown, waiting, refused and why, or its slot."
+)
+PAGE_FIELD = (
+    "An open-licence picture's page: commons.wikimedia.org/wiki/File:..., openverse.org/image/<id> or "
+    "flickr.com/photos/<owner>/<id>; no declaration, the server reads its licence and author"
+)
+OPEN_STEP = (
+    "Look at each thumbnail before you place it; place the masthead with slot MASTHEAD and a stage's picture "
+    "with stage_id, then lay each plate out in the draft by its label."
 )
 DECLARATION_FIELD = (
     "Only after the person confirmed it in the chat: origin PHOTOGRAPH, DRAWING or AI_GENERATED, generator (the "

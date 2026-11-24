@@ -1,14 +1,15 @@
 # Image contributions
 
 Pictures that readers with the right to propose knowledge give to a craft: photographs, drawings
-and AI-made illustrations. Each is declared, checked on our side, screened, stored privately, and
-shared on approval. A Professor's, Admin's or Master Admin's picture is approved at once when the
+and AI-made illustrations, and open-licence pictures from Wikimedia Commons, Openverse or Flickr
+that a contributor's agent gives by their page (decision 0192). Each is declared or has its licence
+read by the server, checked on our side, screened, stored privately, and shared on approval. A Professor's, Admin's or Master Admin's picture is approved at once when the
 screen clears it; anyone else's, and every picture the screen flags or could not look at, waits for an Admin.
 Engineers, reviewers and a contributor's agent (over MCP) read it before a picture is given or decided.
 
 | For | Read |
 |---|---|
-| Why pictures are taken this way | [decision 0101](../decisions/0101-knowledge-architecture-for-every-craft.md), items 12 and 17; [0104](../decisions/0104-image-contributions-intake.md); [0109](../decisions/0109-image-formats-and-screens.md) |
+| Why pictures are taken this way | [decision 0101](../decisions/0101-knowledge-architecture-for-every-craft.md), items 12 and 17; [0104](../decisions/0104-image-contributions-intake.md); [0109](../decisions/0109-image-formats-and-screens.md); [0192](../decisions/0192-open-licence-pictures-placed-by-their-page.md) for open-licence pictures |
 | The declaration's own words | [legal/image-declaration.md](../legal/image-declaration.md) |
 | Giving a picture from a chat, and upload links | [mcp-ask-and-upload.md](mcp-ask-and-upload.md) |
 | Where an approved picture is placed | [craft-page.md](craft-page.md), Contributed pictures |
@@ -64,7 +65,7 @@ holds, one's own picture), 413 over 10 MB, 422 for a declaration or file that fa
 | `craftSlug`; `claimIds` | at most 20 fact ids, each a fact a signed-out reader is shown |
 | One target, at most | `stageId` (one of the craft's stages), `materialId` (one of the materials its stages use) or `slot` (`MASTHEAD`, the page's first picture; `RECORD`, the GI record's picture) |
 | `taskKey` | optional, a `MISSING_PICTURE` task of this craft (`open-work.md`), whose target is used when none is given and must match one that is |
-| `origin` | `PHOTOGRAPH`, `DRAWING` or `AI_GENERATED` |
+| `origin` | `PHOTOGRAPH`, `DRAWING` or `AI_GENERATED`; a person never declares `OPEN_LICENCE`, which only the server sets on a picture it read by its page (below) |
 | `generator`, `prompt` | an AI-made picture names its `generator` (tool and model, 2 to 120 characters), its `prompt` (up to 4,000 characters) and at least one fact it shows. Other origins carry neither |
 | `caption`, `altText` | 3 to 300 characters each |
 | `rightsConfirmed: true`, `termsVersion: "2026-11-19"` | the declaration's version (its text: `docs/legal/image-declaration.md`): the uploader holds the rights to give the picture under the contribution terms |
@@ -112,6 +113,53 @@ Cheap first; the vision call is the last step and runs only for a picture that p
 The verdict is `CLEAR` (no flag), `FLAGGED` or `UNSCREENED` (`NOT_SCREENED` among the flags). Only
 a `CLEAR` picture of a Professor or above is approved at once.
 
+## Open-licence pictures (decision 0192)
+
+`give_pictures` takes a picture by its page (`page_url`): a Wikimedia Commons file page
+(`commons.wikimedia.org/wiki/File:...`, the mobile host, `w/index.php?title=File:...` or the upload
+address), an Openverse image (`openverse.org/image/<id>`, with or without a language, or its API
+record) or a Flickr photo (`flickr.com/photos/<owner>/<id>` or `flic.kr/p/<code>`), with its facts
+(`claim_ids`, at least one), its caption written from them, its alt text and its place: `slot`
+`MASTHEAD` or `RECORD`, a `stage_id`, a `material_id`, a `task_key`, or none, when its facts' field
+picks its chapter (`research/open_pictures.py`, `services/open_pictures.py`). It needs no
+declaration: the server, never the agent, decides the licence and the credit.
+
+1. **The source's own record.** Commons: `imageinfo` with `extmetadata` (`Artist`,
+   `LicenseShortName`, `LicenseUrl`, `ObjectName`), the original file and its size, and the
+   1920 px rendering (`iiurlwidth`), which is what is fetched and screened (an SVG or TIFF comes as
+   its PNG or JPEG rendering). Openverse: the image's record (`creator`, `license`,
+   `license_version`, `license_url`, `foreign_landing_url`, `url`, `source`); a record of a Commons
+   or Flickr picture is read from that site instead. Flickr: the keyless oEmbed
+   (`www.flickr.com/services/oembed/`: `author_name`, `license`, `license_url`, `web_page`, `url`).
+   A source that cannot be read is a refusal saying so; nothing is filed.
+2. **The licence.** Public domain (and the public domain mark and PDDL), CC0, CC BY and CC BY-SA of
+   any version and port are taken, by name or by licence address (`research/licences.open_licence`);
+   a name or address naming NC, ND or all rights reserved is refused saying which
+   (`licence_restriction`), and anything else ("No known copyright restrictions", GFDL, none stated)
+   is refused naming the licence. The credit names the licence as the source states it, or by its
+   Creative Commons address when the stated name is not one ("Attribution-ShareAlike License" with
+   `.../by-sa/2.0/` is CC BY-SA 2.0).
+3. **The author.** A picture whose author is missing, empty once hidden direction and control marks
+   are removed, or a placeholder (unknown, anonymous, not provided) is refused.
+4. **Not on the page twice.** A picture whose page or file is already one of the craft's curated
+   pictures or a live open-licence picture of the craft is refused before its file is read.
+5. **The same screen.** The file is fetched through the picture fetcher (`/fetch-picture`) and goes
+   through every step above: type, size and sides, metadata removed, a file whose own metadata says
+   an AI made it refused, repeats and near-identical pictures refused, near ones flagged, the vision
+   screen. The same picture twice in one call is refused.
+6. **Filed for review by trust tier.** An accepted picture is an `ImageContribution` with origin
+   `OPEN_LICENCE`, `termsVersion` `open-licence-2026-11-24`, `rightsConfirmedAt` the moment its
+   licence was read and no `PictureDeclaration`, its file stored and screened as above, and an
+   `OpenPicture` row with the licence evidence: the site, the page, the original file, the record
+   read (`recordUrl`), the title, the author, the licence and its address, the credit, the
+   original's size and when it was read. It waits for an Admin or, from a Professor or above with a
+   `CLEAR` screen, is approved at once.
+7. **The answer.** Each picture is answered on its own, accepted with its `openSource` and its
+   plate's label (`plate`, `<craft>/pictures/contributed-<12 hex>`, for a draft's layout) or refused
+   and why; each accepted raster also comes back as image content in the tool result, a JPEG of at
+   most 320 px a side after a text line "Picture <n>: <credit>", so the agent sees what it placed.
+
+
 ## Storage
 
 The cleaned file goes to the media bucket at `media/<contributor id>/<token>/<name>`, named
@@ -125,21 +173,27 @@ The cleaned file goes to the media bucket at `media/<contributor id>/<token>/<na
 | `ImageScreen` | one per contribution: the received MIME type and size, the fingerprint, the nearest stored picture and its distance, the verdict, flags and reasons, and the screen's provider, model, usage event, tokens and `costUsd` |
 | `ImageFingerprint` | one per stored picture, keyed by its `MediaAsset`: the signed 64-bit fingerprint. `python -m app.scripts.fingerprint_pictures` fills it for pictures stored before |
 | `PictureDeclaration` | one declaration for one or more pictures, with its channel (`WEB`, `LINK`, `SLOT`, `MCP`), origin, generator, terms version, when the rights were confirmed and, from MCP, the person's words of confirmation, under the contributor |
+| `OpenPicture` | one per open-licence contribution, keyed by it: `site` (`COMMONS`, `OPENVERSE`, `FLICKR`), `pageUrl`, `fileUrl`, `recordUrl`, `title`, `author`, `licence`, `licenceUrl`, `credit`, `width` and `height` of the original, `readAt` |
 
-Migration `0050_image_screens`. Row level security is on and the public roles have no grants.
+Migrations `0050_image_screens` and `0102_open_pictures` (the `OPEN_LICENCE` origin and
+`OpenPicture`; its downgrade removes the open-licence contributions). Row level security is on and
+the public roles have no grants.
 
 ## `ImageContributionView`
 
 `{id, craftSlug, craftName, stageId, materialId, slot, taskKey, claimIds, origin, label, generator,
 prompt, caption, altText, status, aiMarked, mime, width, height, fileUrl, screen, createdAt,
-reviewedAt, reviewNote}`. `label` is how a page names the picture: "Photograph", "Drawing" or
-"Illustration, made with <generator>". `fileUrl` is a ten-minute presigned link to view the stored
-file. `screen` is `{verdict, flags, reasons}` or null for a picture without its file.
+reviewedAt, reviewNote, openSource}`. `label` is how a page names the picture: "Photograph",
+"Drawing", "Illustration, made with <generator>" or "Open-licence picture". `fileUrl` is a
+ten-minute presigned link to view the stored file. `screen` is `{verdict, flags, reasons}` or null
+for a picture without its file. `openSource` is the licence evidence of an open-licence picture,
+`{site, pageUrl, fileUrl, recordUrl, title, author, licence, licenceUrl, credit, width, height,
+readAt}`, and null for any other; the web accepts it as optional (`lib/imageContributionContract.ts`).
 
 ## Screens
 
 - `/contributions/pictures` (Researcher and above): the declaration and the upload in one form (craft, what it is, the AI tool and prompt, the craft's facts to choose from, caption, description, the picture with a preview of it as it will be shown, caption first and credit after, the declaration; or up to ten pictures of one craft under one declaration through `POST /batch`, each with its own caption, description and prompt, sent one by one), and the contributor's own pictures with the screen's reasons while one is held, and Take it back while one still waits.
-- `/admin/pictures` (Admin and Master Admin): the queue by status, each picture with its label, caption, description, prompt, facts, AI mark and the screen's reasons, Approve, and Refuse with a note.
+- `/admin/pictures` (Admin and Master Admin): the queue by status, each picture with its label, caption, description, prompt, facts, AI mark and the screen's reasons, an open-licence picture's evidence (its credit linked to its page, its licence linked to its deed, its title, and the source's record it was read from with the day), Approve, and Refuse with a note. The contributor's own list shows an open-licence picture's credit linked to its page.
 
 ## On craft pages
 
@@ -148,7 +202,9 @@ Contributed pictures): a stage's picture beside its stage, a picture for facts i
 their field, any other at a glance; an AI image only when every fact it was made from is on the
 page. Each plate shows the caption first and the credit after, with the alt text on the picture.
 The credit never names the contributor: "Contributed to KalaVigyan" for a photograph or drawing,
-"Illustration, made with <generator>" for an AI image, which is never shown as a photograph.
+"Illustration, made with <generator>" for an AI image, which is never shown as a photograph, and
+for an open-licence picture its own credit, "Photo: <author>, <licence>, via Wikimedia Commons"
+("via Flickr", or "via Openverse from <site>"), linked to its page (`ContributedPlate.sourceUrl`).
 
 In a generated document (round 7, `services/monograph_generated_pictures.py`), an approved picture
 is a `picture_plate` labelled `<craft>/pictures/contributed-<first 12 hex of its id>`, after the
@@ -156,7 +212,11 @@ curated pictures: `MASTHEAD` as the hero when the page has none (else leading At
 `RECORD` in Market and GI, a stage's in How it is made, a material's in its field's chapter, one for
 facts in the chapter most of them belong to, any other At a glance. Caption first, the credit after
 (the same two lines), the alt text on the picture; an AI image only when every fact it was made from
-is shown. A page bundle's picture may name a picture this account already gave
+is shown. An open-licence picture's credit unit is "Photo: " then a link to its page holding the
+rest of its credit, as every curated picture's is; a Commons one is drawn from its Commons original
+(`src` the upload address, `width` and `height` the original's), so the web serves it at the
+standard widths through `commonsThumb`, and any other from its stored copy at its own size. A draft
+places it in a chapter or beside a sentence by its label, as any picture. A page bundle's picture may name a picture this account already gave
 (`contributionId`, waiting or approved): `preview_page` draws it in place from
 `GET /api/knowledge/pages/pictures/{id}`, which serves its bytes to its own contributor only
 (`private, no-store`, `nosniff`, the SVG policy), and `propose_page` accepts it as given, starting no
@@ -173,8 +233,9 @@ work (`craft-page.md`).
 
 ## From MCP
 
-`give_pictures` takes a picture from the chat itself, or with `upload: true` hands back the upload
-page's link and a presigned slot (`docs/contracts/mcp-ask-and-upload.md`). A page draft (decision
+`give_pictures` takes a picture from the chat itself, an open-licence picture by its page
+(`page_url`, above), or with `upload: true` hands back the upload page's link and a presigned slot
+(`docs/contracts/mcp-ask-and-upload.md`). A page draft (decision
 0110, `open-work.md`, Drafts) holds pictures as a bundle does: `{contribution_id}` for a picture the
 account gave, drawn in its place by `preview_page`, or a new picture's facts and declaration, whose
 upload starts when the draft is proposed with `propose_page`. The draft's report counts the page's
@@ -192,6 +253,7 @@ CC0, Public domain), or `NAMED_IN_CREDIT`.
 | Placement in generated documents and the public picture route | `backend/tests/db/test_contributed_pictures_db.py` and `backend/tests/public/test_contributed_picture_route.py` |
 | `MISSING_PICTURE` tasks | `backend/tests/db/test_open_work_pictures_db.py` |
 | Pictures from MCP | `backend/tests/mcp/test_give_pictures.py` and `backend/tests/db/test_given_pictures_db.py` |
+| Open-licence pictures: pages, licences, authors, credits, the source records, the screen, the tier, the thumbnail and the plates | `backend/tests/research/test_open_pictures.py`, `backend/tests/sources/test_open_picture_pages.py`, `backend/tests/mcp/test_give_open_pictures.py`, `backend/tests/db/test_open_pictures_db.py`, `backend/tests/curation/test_contributed_plates.py` and `backend/tests/test_open_pictures_migration.py` |
 | The screens and the plates' credit | `frontend/e2e/image-contributions-unit.spec.ts` and `backend/tests/curation/test_contributed_plates.py` |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/image-contributions.md` byte for byte equal to this file |
 

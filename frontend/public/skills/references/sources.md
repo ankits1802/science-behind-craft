@@ -23,7 +23,7 @@ through the very same adapters, keys and limits:
 | Reference | Wikipedia, Wikidata | `search_sources`; `lookup` for one item |
 | Web | SearXNG, then Brave when it finds too little | `search_sources` |
 | Compounds | PubChem, with its GHS hazard records | `lookup` |
-| Pictures | Wikimedia Commons, Openverse | `search_sources` with kinds pictures |
+| Pictures | Wikimedia Commons, Openverse; Flickr pages too when placing one | `search_sources` with kinds pictures, then `give_pictures` with its `page_url` |
 | Snapshots | the Wayback Machine | `read_source` with archive; it names an existing one too |
 
 A source found anywhere else is judged by the same rules below.
@@ -84,12 +84,17 @@ never shown; pages show only the short quote and its citation.
   short verbatim quotes; its licence decides whether those quotes are shown to the public or kept
   for researchers. A licence declared open that the page itself contradicts is refused. The
   source tools mark each stated licence open or not by the very test the gates apply.
-- **A picture from elsewhere** (Wikimedia Commons) needs an open licence that allows reuse and
-  changes: CC0, the public domain or the public domain mark, PDDL, CC BY or CC BY-SA, any version.
-  Never a non-commercial (NC) or no-derivatives (ND) licence, "all rights reserved", or a picture
-  whose page states no licence. It is credited where it is shown: "Photo: Author, licence, via
-  Wikimedia Commons". A pictures search lists only pictures whose licence passes this rule and that
-  name their author, each with that credit line.
+- **A picture from elsewhere** (Wikimedia Commons, Openverse or Flickr) needs an open licence that
+  allows reuse and changes: CC0, the public domain or the public domain mark, PDDL, CC BY or
+  CC BY-SA, any version. Never a non-commercial (NC) or no-derivatives (ND) licence, "all rights
+  reserved", "no known copyright restrictions", or a picture whose page states no licence or names
+  no author. It is credited where it is shown: "Photo: Author, licence, via Wikimedia Commons" ("via
+  Flickr", or "via Openverse from" the site that holds it), linked to its page. A pictures search
+  lists only pictures whose licence passes this rule and that name their author, each with that
+  credit line. Place one with `give_pictures` by its `page_url`: the server reads its licence and
+  author again from the source's own record, refuses one that fails saying why, writes the credit
+  itself, screens the file as it screens every picture and returns a thumbnail to look at. Never
+  write the licence or the credit yourself, and never give such a picture as a person's own.
 - **A picture a person gives** carries the person's own declaration instead of a licence (the
   contributor skill, Pictures).
 - **A dataset** follows the dataset guide (`datasets.md`): the licences it may carry, how it is
@@ -100,6 +105,7 @@ never shown; pages show only the short quote and its citation.
 | Rule | Kept true by |
 |---|---|
 | The licences a picture from elsewhere may and may not carry | `test_reference_limits.py` in `backend/tests/mcp`, against `research/licences.open_licence` |
+| A picture placed by its page: the licence and author read, the refusals and the credit | `test_open_pictures.py` in `backend/tests/research` and `test_open_picture_pages.py` in `backend/tests/sources` |
 | The grades and licence marks a search shows | `test_lookup_tools.py` in `backend/tests/mcp` |
 | The SOURCE gate's grading and refusals | `test_candidate_gates.py` and `test_gate_orchestration.py` in `backend/tests/knowledge_writes` |
 | A supplied work's grade | `test_supplied_sources_db.py` in `backend/tests/db` |

@@ -7,6 +7,7 @@ import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { apiErrorMessage } from "@/lib/api";
 import { HeldReasons } from "@/components/contributions/HeldReasons";
+import { OpenPictureEvidence } from "@/components/contributions/OpenPictureEvidence";
 import { heldReasons, type ImageContribution } from "@/lib/imageContributionContract";
 import { decideQueueItem, REASON_MIN } from "@/lib/reviewQueueContract";
 
@@ -46,6 +47,7 @@ export function PictureReviewCard({ item, onDecided }: { item: ImageContribution
         <p className="text-body-sm font-reading text-ink-1">{item.caption}</p>
         <p className="text-label font-ui text-ink-2">Description: {item.altText}</p>
         {item.prompt ? <p className="text-label font-ui text-ink-2">Prompt: {item.prompt}</p> : null}
+        {item.openSource ? <OpenPictureEvidence source={item.openSource} detail="evidence" /> : null}
         <p className="text-label font-ui text-ink-3">
           {item.claimIds.length} {item.claimIds.length === 1 ? "fact" : "facts"} · {item.width && item.height ? `${item.width} × ${item.height}` : "no file"}
           {item.aiMarked ? " · its own metadata says an AI made it" : ""}

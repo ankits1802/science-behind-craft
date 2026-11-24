@@ -54,6 +54,7 @@ def contributed_plate(ctx: ChapterContext, record: ContributedRecord) -> Contrib
     if ai and not every_fact_listed(ctx, record.claim_ids):
         return None
     made_with = record.generator if ai else None
+    opened = record.open_source
     return ContributedPlate(
         contribution_id=record.contribution_id,
         url=contributed_url(record.contribution_id),
@@ -64,7 +65,8 @@ def contributed_plate(ctx: ChapterContext, record: ContributedRecord) -> Contrib
         made_with=made_with,
         caption=record.caption,
         alt_text=record.alt_text,
-        credit=contributed_credit(record.origin, made_with),
+        credit=opened.credit if opened is not None else contributed_credit(record.origin, made_with),
+        source_url=opened.page_url if opened is not None else None,
         stage_id=record.stage_id,
         sentences=ctx.facts(record.claim_ids, f"contributed-{str(record.contribution_id)[:8]}"),
     )

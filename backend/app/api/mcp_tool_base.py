@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass, field
 from types import MappingProxyType
-from typing import Any
+from typing import Any, Protocol, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -16,6 +16,7 @@ from app.services.craft_resolver import CraftIndexStore
 from app.services.oauth_bearer import McpCaller
 from app.services.page_refresh_jobs import Background
 
+from .mcp_protocol import ToolImage
 from .mcp_schemas import input_schema, output_schema
 
 __all__ = [
@@ -36,11 +37,13 @@ __all__ = [
     "WRITES",
     "Arguments",
     "NoArguments",
+    "ShowsImages",
     "Tool",
     "ToolContext",
     "contributor",
     "listed_to",
     "scope_refusal",
+    "shown_images",
     "signed_in",
 ]
 
@@ -82,6 +85,15 @@ class Arguments(BaseModel):
 
 class NoArguments(Arguments):
     pass
+
+
+@runtime_checkable
+class ShowsImages(Protocol):
+    def tool_images(self) -> list[ToolImage]: ...
+
+
+def shown_images(reply: BaseModel) -> list[ToolImage]:
+    return reply.tool_images() if isinstance(reply, ShowsImages) else []
 
 
 @dataclass(frozen=True)

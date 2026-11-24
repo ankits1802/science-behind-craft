@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from datetime import datetime
 from typing import Any
+from urllib.parse import urlencode
 
 from app.core.errors import InvalidInput
 from app.research.evidence import EvidenceItem, SearchQuery, SourceDocument
@@ -13,6 +14,7 @@ from app.research.images import (
     clipped,
     without_tracking,
 )
+from app.research.open_pictures import COMMONS, OpenPictureRecord
 
 from ..adapter import HttpSourceAdapter, build_document, checked_k, usable_records
 from ..records import UnusableRecord, https_or_none, markup_text, title_of
@@ -28,7 +30,15 @@ from .mediawiki import (
     with_language,
 )
 
-__all__ = ["COMMONS_RATE", "COMMONS_SITE", "IMAGE_THUMB_WIDTH", "WikimediaCommonsAdapter", "file_metadata"]
+__all__ = [
+    "COMMONS_RATE",
+    "COMMONS_SITE",
+    "IMAGE_THUMB_WIDTH",
+    "PICTURE_FETCH_WIDTH",
+    "WikimediaCommonsAdapter",
+    "commons_picture",
+    "file_metadata",
+]
 
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 COMMONS_RATE = WIKIMEDIA_RATE
@@ -67,6 +77,11 @@ DOCUMENT_LINES = (
     ("credit", "Credit: "),
     ("licence", "Licence: "),
 )
+PICTURE_FETCH_WIDTH = 1920
+PICTURE_PROPS = IMAGE_PROPS | {"iiurlwidth": str(PICTURE_FETCH_WIDTH)}
+RECORD_PROPS = {"action": "query", "prop": "imageinfo", "iiprop": "extmetadata", "format": "json"}
+NO_FILE = "Wikimedia Commons has no file named {title}"
+NOT_A_PICTURE = "{title} on Wikimedia Commons is not a picture"
 PAGE_ID = re.compile(r"^[1-9]\d*$")
 MEDIA_KIND = "MEDIA"
 DOCUMENT_KIND = "OTHER"
@@ -169,6 +184,46 @@ class WikimediaCommonsAdapter(HttpSourceAdapter):
             licence_url=meta["licence_url"],
             retrieved_at=retrieved_at,
         )
+
+    async def picture(self, title: str) -> OpenPictureRecord:
+        params = PICTURE_PROPS | {
+            "action": "query",
+            "titles": title,
+            "redirects": "1",
+            "iiextmetadatalanguage": "en",
+        }
+        pages = pages_in_order(await action_api(self.http, COMMONS_API, params))
+        if not pages or pages[0].get("missing") or pages[0].get("ns") != FILE_NAMESPACE:
+            raise InvalidInput(NO_FILE.format(title=title))
+        record_url = f"{COMMONS_API}?{urlencode(RECORD_PROPS | {'titles': title})}"
+        return commons_picture(pages[0], record_url=record_url, read_at=self.clock())
+
+
+def commons_picture(page: dict[str, Any], *, record_url: str, read_at: datetime) -> OpenPictureRecord:
+    named = title_of(page.get("title"))
+    meta = file_metadata(page)
+    info = (page.get("imageinfo") or [{}])[0]
+    if not str(info.get("mime") or "").startswith(IMAGE_MIME_PREFIX):
+        raise InvalidInput(NOT_A_PICTURE.format(title=named))
+    page_url = https_or_none(page.get("canonicalurl") or page.get("fullurl"))
+    original = https_or_none(info.get("url"))
+    fetched = https_or_none(info.get("thumburl")) or original
+    if page_url is None or original is None or fetched is None:
+        raise InvalidInput(NOT_A_PICTURE.format(title=named))
+    return OpenPictureRecord(
+        site=COMMONS,
+        page_url=page_url,
+        file_url=without_tracking(original),
+        fetch_url=without_tracking(fetched),
+        record_url=record_url,
+        title=clipped(meta["title"] or named.removeprefix("File:")),
+        author=meta["author"],
+        licence=meta["licence"],
+        licence_url=meta["licence_url"],
+        width=info.get("width") or None,
+        height=info.get("height") or None,
+        read_at=read_at,
+    )
 
 
 def file_metadata(page: dict[str, Any]) -> dict[str, str | None]:

@@ -520,6 +520,13 @@ A craft release (decision 0130): give `craft` its exact slug, for Kutch Ajrakh `
   one, every picture waits for a person as `UNSCREENED`. After the deploy that adds them, run
   `python -m app.scripts.fingerprint_pictures` once so stored pictures get their perceptual
   hashes, and restart `kv-fetcher` if a deploy did not.
+- **Open-licence pictures** (`give_pictures` with `page_url`, decision 0192) need no key: the API
+  reads `commons.wikimedia.org`, `api.openverse.org` and Flickr's oEmbed
+  (`www.flickr.com/services/oembed/`) with the research contact as its user agent, and the fetcher
+  reads the file. A picture refused with "<site> could not be read just now" means that site did
+  not answer; check the API's outbound reach to it before anything else. Each one is an
+  `ImageContribution` with origin `OPEN_LICENCE` and an `OpenPicture` row holding its licence
+  evidence, reviewed in the queue like any picture.
 - **Live research write-back** can be checked read-only with `python -m app.scripts.write_back_report`
   (the runs of the last 14 days, their gate checks and states).
 - **Where each write-back belongs** (decision 0136): `python -m app.scripts.write_back_filing
