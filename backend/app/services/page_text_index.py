@@ -31,6 +31,7 @@ __all__ = [
 
 CHAPTER_MAX = 80
 INDEX_EDITION = "i2"
+EDITION_SEPARATOR = "-"
 TAG_MAX = 16
 ROWS_PER_INSERT = 500
 PRIMARY_KEY = ("subjectKind", "subjectSlug", "unitKey")
@@ -41,16 +42,18 @@ Specs = Mapping[str, Mapping[str, Any]]
 
 
 def stored_tag(version: int, content_hash: str) -> str:
-    return f"v{version}-{content_hash}-{INDEX_EDITION}"
+    return f"v{version}-{content_hash}"
 
 
 async def indexed_tag(session: AsyncSession, page: PageKey) -> str | None:
     kind, slug = page
-    return await session.scalar(
+    filed = await session.scalar(
         select(PageTextUnit.documentTag)
         .where(PageTextUnit.subjectKind == kind, PageTextUnit.subjectSlug == slug)
         .limit(1)
     )
+    edition = f"{EDITION_SEPARATOR}{INDEX_EDITION}"
+    return filed.removesuffix(edition) if filed is not None and filed.endswith(edition) else None
 
 
 async def refresh_page_texts(
@@ -103,7 +106,7 @@ def _index_rows(
             "chapter": passage.chapter[:CHAPTER_MAX],
             "tag": passage.tag[:TAG_MAX],
             "leaves": [asdict(leaf) for leaf in passage.leaves()],
-            "documentTag": tag,
+            "documentTag": f"{tag}{EDITION_SEPARATOR}{INDEX_EDITION}",
             "refreshedAt": now,
         }
         for position, passage in enumerate(passages)

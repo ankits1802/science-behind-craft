@@ -4,6 +4,7 @@ import asyncio
 import uuid
 from collections.abc import Callable, Mapping
 from types import MappingProxyType
+from typing import TYPE_CHECKING
 
 from app.core.errors import InvalidInput
 from app.research.export_links import PAGE_EXPORT_FORMATS, ExportLink
@@ -13,10 +14,9 @@ from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 from .export_files import ExportTools
 from .export_store import BuiltExport, ExportFile, stored_export_link
 from .naming import export_file_name
-from .page_export_document import export_specs, page_export
-from .page_export_docx import page_docx
-from .page_export_model import PageExport
-from .page_export_pdf import page_pdf
+
+if TYPE_CHECKING:
+    from .page_export_model import PageExport
 
 __all__ = [
     "PAGE_ENTITIES",
@@ -32,17 +32,35 @@ PAGE_EXPORT_WHAT = "Export"
 PAGE_ENTITIES: Mapping[str, str] = MappingProxyType(
     {"craft": "Craft-Page", "family": "Family-Page", "category": "Category-Page"}
 )
-RENDERERS: Mapping[str, Callable[[PageExport], bytes]] = MappingProxyType(
-    {"pdf": page_pdf, "docx": page_docx}
-)
 NOT_A_FORMAT = "A page is exported as {formats}, not {fmt!r}"
+
+
+def _laid_out(document: MonographDocument) -> PageExport:
+    from .page_export_document import export_specs, page_export
+
+    return page_export(document, export_specs(document))
+
+
+def _pdf(document: MonographDocument) -> bytes:
+    from .page_export_pdf import page_pdf
+
+    return page_pdf(_laid_out(document))
+
+
+def _docx(document: MonographDocument) -> bytes:
+    from .page_export_docx import page_docx
+
+    return page_docx(_laid_out(document))
+
+
+RENDERERS: Mapping[str, Callable[[MonographDocument], bytes]] = MappingProxyType({"pdf": _pdf, "docx": _docx})
 
 
 def page_file(document: MonographDocument, fmt: str) -> bytes:
     render = RENDERERS.get(fmt)
     if render is None:
         raise InvalidInput(NOT_A_FORMAT.format(formats=" or ".join(PAGE_EXPORT_FORMATS), fmt=fmt))
-    return render(page_export(document, export_specs(document)))
+    return render(document)
 
 
 def page_file_name(document: MonographDocument, fmt: str, tools: ExportTools) -> str:

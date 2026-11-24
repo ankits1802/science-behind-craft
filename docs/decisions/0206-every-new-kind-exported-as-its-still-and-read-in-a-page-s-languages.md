@@ -71,8 +71,9 @@ other languages), `docs/contracts/component-specs-science.md` (Rules) and
    `<component label>#<path>`, and `research/page_passages` is the one list of a page's passages
    that the index, the translation view, proposals, the preview and the variant read. The variant
    puts a served translation back at its path. `track` became `HookLabel` (a data hook, never
-   shown); a stage named in its own language keeps its name. The index's tag gained the edition
-   `i2`, so every page is indexed again once with its labels.
+   shown); a stage named in its own language keeps its name. The index is filed with its edition
+   (`i2`); an index of an earlier edition reads as none, so every page is indexed again once with
+   its labels, and the document's tag is unchanged.
 
 ## Consequences
 

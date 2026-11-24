@@ -388,8 +388,9 @@ stateDiagram-v2
   the web's `UnitView` sets the same attributes, so a reader and a screen reader always know which
   language a passage is in and the page marks each English passage with the word English.
 - **The index** (`PageTextUnit`): every passage of a page's English document, its position, hash,
-  chapter, tag and leaves, under the document's tag (`v<version>-<content hash>-i2`, the index's
-  edition `i2` since its labels joined, so every page is indexed again once). The monograph
+  chapter, tag and leaves, under the document's tag (`v<version>-<content hash>`), filed with the
+  index's edition (`-i2` since a component's labels joined it, decision 0206): an index of an
+  earlier edition reads as no index, so every page is indexed again once. The monograph
   routes, the translation view and every translation part write it again when the tag changed, so
   open work counts passages without building documents.
 - **Reads.** `GET /api/pages/{kind}/{slug}/languages` (public): each answer language the page is
