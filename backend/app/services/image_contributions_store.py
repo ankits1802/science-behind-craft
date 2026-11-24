@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.roles import PROFESSOR, has_rank
 from app.models import Craft, ImageContribution, MediaAsset, User
-from app.research.image_contributions import AI_GENERATED
+from app.research.image_contributions import AI_GENERATED, OPEN_LICENCE
 from app.research.image_intake_types import AVIF, JPEG, PNG, SVG, WEBP
 
 from .image_screens import Screened, recorded_screen
@@ -23,7 +23,7 @@ REJECTED = "REJECTED"
 SHARED = "CRAFT_SHARED"
 PRIVATE = "PRIVATE"
 EXTENSIONS = {PNG: "png", JPEG: "jpg", WEBP: "webp", AVIF: "avif", SVG: "svg"}
-FILE_WHAT = {"PHOTOGRAPH": "Photo", "DRAWING": "Drawing", AI_GENERATED: "Illustration"}
+FILE_WHAT = {"PHOTOGRAPH": "Photo", "DRAWING": "Drawing", AI_GENERATED: "Illustration", OPEN_LICENCE: "Photo"}
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api";
-import { boolean, integer, list, nullable, object, oneOf, parseShape, text, type Shape } from "@/lib/shape";
+import { formatDate } from "@/lib/format";
+import { boolean, integer, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
 
 export const IMAGE_CONTRIBUTIONS_PATH = "/contributions/images";
 export const IMAGE_FILE_PATH = (id: string) => `/contributions/images/${encodeURIComponent(id)}/file`;
@@ -9,6 +10,8 @@ export const IMAGE_BATCH_PATH = "/contributions/images/batch";
 export const IMAGE_REVIEW_PATH = "/contributions/images/review";
 
 export const IMAGE_ORIGINS = ["PHOTOGRAPH", "DRAWING", "AI_GENERATED"] as const;
+export const SHOWN_ORIGINS = [...IMAGE_ORIGINS, "OPEN_LICENCE"] as const;
+export const OPEN_SITES = ["COMMONS", "OPENVERSE", "FLICKR"] as const;
 export const IMAGE_STATUSES = ["AWAITING_FILE", "PENDING", "APPROVED", "REJECTED", "WITHDRAWN"] as const;
 export const IMAGE_TERMS_VERSION = "2026-11-19";
 export const IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp", "image/avif", "image/gif", "image/heic", "image/heif", "image/tiff", "image/bmp", "image/svg+xml"] as const;
@@ -23,6 +26,8 @@ export const IMAGE_TEXT_MAX = 300;
 export const IMAGE_FACTS_MAX = 20;
 
 export type ImageOrigin = (typeof IMAGE_ORIGINS)[number];
+export type ShownOrigin = (typeof SHOWN_ORIGINS)[number];
+export type OpenSite = (typeof OPEN_SITES)[number];
 export type ImageStatus = (typeof IMAGE_STATUSES)[number];
 export type PictureSlot = (typeof PICTURE_SLOTS)[number];
 export type ScreenVerdict = (typeof SCREEN_VERDICTS)[number];
@@ -61,6 +66,21 @@ export type ImageDeclaration = {
   altText: string;
 };
 
+export type OpenSource = {
+  site: OpenSite;
+  pageUrl: string;
+  fileUrl: string;
+  recordUrl: string;
+  title: string;
+  author: string;
+  licence: string;
+  licenceUrl: string | null;
+  credit: string;
+  width: number | null;
+  height: number | null;
+  readAt: string;
+};
+
 export type ImageContribution = {
   id: string;
   craftSlug: string;
@@ -70,7 +90,7 @@ export type ImageContribution = {
   slot: PictureSlot | null;
   taskKey: string | null;
   claimIds: string[];
-  origin: ImageOrigin;
+  origin: ShownOrigin;
   label: string;
   generator: string | null;
   prompt: string | null;
@@ -86,11 +106,27 @@ export type ImageContribution = {
   createdAt: string;
   reviewedAt: string | null;
   reviewNote: string | null;
+  openSource?: OpenSource | null;
 };
 
 export type ImageQueue = { status: ImageStatus; items: ImageContribution[] };
 
 const screenSummaryShape: Shape<ScreenSummary> = object<ScreenSummary>({ verdict: oneOf(SCREEN_VERDICTS), flags: list(text), reasons: list(text) });
+
+export const openSourceShape: Shape<OpenSource> = object<OpenSource>({
+  site: oneOf(OPEN_SITES),
+  pageUrl: text,
+  fileUrl: text,
+  recordUrl: text,
+  title: text,
+  author: text,
+  licence: text,
+  licenceUrl: nullable(text),
+  credit: text,
+  width: nullable(integer),
+  height: nullable(integer),
+  readAt: text
+});
 
 export const imageContributionShape: Shape<ImageContribution> = object<ImageContribution>({
   id: text,
@@ -101,7 +137,7 @@ export const imageContributionShape: Shape<ImageContribution> = object<ImageCont
   slot: nullable(oneOf(PICTURE_SLOTS)),
   taskKey: nullable(text),
   claimIds: list(text),
-  origin: oneOf(IMAGE_ORIGINS),
+  origin: oneOf(SHOWN_ORIGINS),
   label: text,
   generator: nullable(text),
   prompt: nullable(text),
@@ -116,7 +152,8 @@ export const imageContributionShape: Shape<ImageContribution> = object<ImageCont
   screen: nullable(screenSummaryShape),
   createdAt: text,
   reviewedAt: nullable(text),
-  reviewNote: nullable(text)
+  reviewNote: nullable(text),
+  openSource: optional(nullable(openSourceShape))
 });
 
 export const imageQueueShape: Shape<ImageQueue> = object<ImageQueue>({ status: oneOf(IMAGE_STATUSES), items: list(imageContributionShape) });
@@ -169,6 +206,17 @@ export function previewable(file: Pick<File, "type">): boolean {
 export function shownCredit(origin: ImageOrigin, generator: string | null): string {
   const tool = generator?.trim();
   return origin === "AI_GENERATED" ? `Illustration, made with ${tool || "the AI tool you name"}` : "Contributed to KalaVigyan";
+}
+
+export const OPEN_SITE_NAMES: Record<OpenSite, string> = { COMMONS: "Wikimedia Commons", OPENVERSE: "Openverse", FLICKR: "Flickr" };
+const PHOTO_PREFIX = "Photo: ";
+
+export function openCredit(source: Pick<OpenSource, "credit">): { prefix: string; linked: string } {
+  return source.credit.startsWith(PHOTO_PREFIX) ? { prefix: PHOTO_PREFIX, linked: source.credit.slice(PHOTO_PREFIX.length) } : { prefix: "", linked: source.credit };
+}
+
+export function openReadNote(source: Pick<OpenSource, "site" | "readAt">): string {
+  return `Licence and author as ${OPEN_SITE_NAMES[source.site]} records them, read ${formatDate(source.readAt)}`;
 }
 
 export function heldReasons(item: Pick<ImageContribution, "screen">): string[] {

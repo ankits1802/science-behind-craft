@@ -10,17 +10,16 @@ from app.core.errors import InvalidInput
 from app.models import Craft, ImageContribution, PictureDeclaration, User
 from app.research.image_contributions import BatchPicture, ImageDeclaration, SharedDeclaration, shown_label
 from app.research.image_contributions_give import GivenPicture, GivenPictures, given_next_step
-from app.research.image_intake_pixels import fingerprint_distance
-from app.research.image_screens import NEAR_IDENTICAL_BITS, ScreenTools
+from app.research.image_screens import ScreenTools
 from app.research.upload_links import SlotCraft
 
 from . import image_contributions as images
 from .image_contributions_checks import check_claims, checked_craft, checked_target
 from .image_contributions_errors import ContributionRefused
-from .image_screens import Screened, screened
+from .image_screens import Screened, same_picture, screened
 from .object_store import ObjectStore
 
-__all__ = ["MCP_CHANNEL", "GivenFile", "Giving", "Handing", "give_pictures"]
+__all__ = ["MCP_CHANNEL", "REPEATED", "GivenFile", "Giving", "Handing", "give_pictures", "refusal_detail"]
 
 MCP_CHANNEL = "MCP"
 REPEATED = "The same picture is given twice in this call"
@@ -74,7 +73,7 @@ async def give_pictures(
         try:
             batch.accepted.append(await _screened_file(session, batch, given, handing.tools))
         except (InvalidInput, ContributionRefused) as refused:
-            outcomes[given.position] = GivenPicture(position=given.position, refused=_detail(refused))
+            outcomes[given.position] = GivenPicture(position=given.position, refused=refusal_detail(refused))
     record = await _filed(session, batch, handing)
     for item, row in record:
         outcomes[item.given.position] = _outcome(item, row)
@@ -99,7 +98,7 @@ async def _screened_file(
     aimed = await checked_target(session, batch.craft, declaration)
     await check_claims(session, aimed.claim_ids)
     screen = await screened(session, given.data, origin=aimed.origin, user=batch.user, tools=tools)
-    if any(_same(screen, earlier.screen) for earlier in batch.accepted):
+    if any(same_picture(screen, earlier.screen) for earlier in batch.accepted):
         raise ContributionRefused(REPEATED)
     return _Accepted(given, aimed, screen)
 
@@ -140,14 +139,6 @@ def _declared(craft: Craft, shared: SharedDeclaration, picture: BatchPicture) ->
         raise InvalidInput("; ".join(str(problem["msg"]) for problem in refused.errors())) from None
 
 
-def _same(screen: Screened, earlier: Screened) -> bool:
-    if screen.digest == earlier.digest:
-        return True
-    if screen.fingerprint is None or earlier.fingerprint is None:
-        return False
-    return fingerprint_distance(screen.fingerprint, earlier.fingerprint) <= NEAR_IDENTICAL_BITS
-
-
 def _outcome(item: _Accepted, row: ImageContribution) -> GivenPicture:
     image = item.screen.image
     return GivenPicture(
@@ -163,5 +154,5 @@ def _outcome(item: _Accepted, row: ImageContribution) -> GivenPicture:
     )
 
 
-def _detail(refused: InvalidInput | ContributionRefused) -> str:
+def refusal_detail(refused: InvalidInput | ContributionRefused) -> str:
     return refused.detail if isinstance(refused, ContributionRefused) else str(refused)

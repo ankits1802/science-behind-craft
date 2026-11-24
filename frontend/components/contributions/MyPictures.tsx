@@ -3,6 +3,7 @@
 import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { HeldReasons } from "@/components/contributions/HeldReasons";
+import { OpenPictureEvidence } from "@/components/contributions/OpenPictureEvidence";
 import { canWithdraw, heldReasons, IMAGE_STATUS_LABELS, type ImageContribution } from "@/lib/imageContributionContract";
 
 export function MyPictures({
@@ -32,6 +33,7 @@ export function MyPictures({
           <div className="grid content-start gap-1">
             <p className="kicker">{item.craftName} · {item.label}</p>
             <p className="text-body-sm font-reading text-ink-1">{item.caption}</p>
+            {item.openSource ? <OpenPictureEvidence source={item.openSource} detail="credit" /> : null}
             <p className="text-label font-ui text-ink-3">{IMAGE_STATUS_LABELS[item.status]}</p>
             {item.status === "PENDING" ? <HeldReasons reasons={heldReasons(item)} /> : null}
             {item.reviewNote ? <p className="text-label font-ui text-ink-2">{item.reviewNote}</p> : null}

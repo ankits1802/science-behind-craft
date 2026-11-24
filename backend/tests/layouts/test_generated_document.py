@@ -168,7 +168,13 @@ def test_a_picture_is_drawn_from_its_spec_with_the_layouts_crop_and_caption(
     caption, credit = plate_units(document, "bagh-print/pictures/i04")
     assert units[caption].nodes == ["Picture I04"]
     assert opener["picture"]["focal"] == {"x": 0.0, "y": 0.1, "width": 1.0, "height": 0.8}
-    assert "CC BY-SA 4.0" in units[credit].nodes[0] and units[credit].nodes[0].startswith("Photo: ")
+    prefix, link = units[credit].nodes
+    assert (
+        prefix == "Photo: "
+        and link["m"] == "link"
+        and link["c"] == ["A. Printer, CC BY-SA 4.0, via Wikimedia Commons"]
+    )
+    assert link["href"] == "https://commons.wikimedia.org/wiki/File:I04.jpg"
     entry = next(c for c in document.content.components if c.label == HERO)
     assert (entry.kind, entry.chapter, entry.field, entry.subjects) == (
         "picture_plate",

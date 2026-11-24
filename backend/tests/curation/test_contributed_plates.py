@@ -156,3 +156,30 @@ def test_a_shelf_draws_each_picture_once_and_at_most_six() -> None:
         ContributedPart.model_validate({"kind": "contributed", "pictures": many})
     with pytest.raises(ValidationError):
         ContributedPart.model_validate({"kind": "contributed", "pictures": []})
+
+
+OPEN_PAGE = "https://commons.wikimedia.org/wiki/File:Printing_with_Hand_Carved_Block.jpg"
+OPEN_CREDIT = "Photo: Ketayun Katz, CC BY-SA 4.0, via Wikimedia Commons"
+
+
+def test_an_open_licence_picture_is_credited_to_its_author_and_licence_linked_to_its_page() -> None:
+    shown = ContributedPlate.model_validate(
+        plate(origin="OPEN_LICENCE", credit=OPEN_CREDIT, sourceUrl=OPEN_PAGE)
+    )
+    dumped = shown.model_dump(mode="json", by_alias=True)
+    assert (dumped["credit"], dumped["sourceUrl"]) == (OPEN_CREDIT, OPEN_PAGE)
+    assert set(dumped) == PLATE_FIELDS | {"sourceUrl"}
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"origin": "OPEN_LICENCE", "credit": OPEN_CREDIT},
+        {"origin": "OPEN_LICENCE", "credit": "Contributed to KalaVigyan", "sourceUrl": OPEN_PAGE},
+        {"origin": "PHOTOGRAPH", "credit": "Contributed to KalaVigyan", "sourceUrl": OPEN_PAGE},
+    ],
+    ids=["no link to its page", "credited to KalaVigyan", "a contributor's photograph linked elsewhere"],
+)
+def test_an_open_licence_picture_without_its_own_credit_and_link_is_refused(changes: dict[str, Any]) -> None:
+    with pytest.raises(ValidationError):
+        ContributedPlate.model_validate(plate(**changes))

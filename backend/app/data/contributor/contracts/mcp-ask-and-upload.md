@@ -3,13 +3,15 @@
 Two signed-in MCP tools. `ask` runs our answer pipeline for the signed-in person and returns the
 finished answer as structured data, with a design kit and an MCP App view to draw it.
 `give_pictures` takes pictures that are already in the chat, by link or as base64, with the
-declaration the person confirmed there, and hands out a single-use link to our site (and, for
-agents with a shell, a presigned upload slot) for each picture that travels outside the chat.
+declaration the person confirmed there, open-licence pictures by their page on Wikimedia Commons,
+Openverse or Flickr with no declaration (decision 0192), and hands out a single-use link to our
+site (and, for agents with a shell, a presigned upload slot) for each picture that travels outside
+the chat.
 A contributor's agent reads it over MCP, and engineers read it before changing either tool.
 
 | For | Read |
 |---|---|
-| Why these tools are this way | [decision 0101](../decisions/0101-knowledge-architecture-for-every-craft.md), items 15 and 17; [0109](../decisions/0109-image-formats-and-screens.md); [0111](../decisions/0111-fewer-mcp-tools.md) |
+| Why these tools are this way | [decision 0101](../decisions/0101-knowledge-architecture-for-every-craft.md), items 15 and 17; [0109](../decisions/0109-image-formats-and-screens.md); [0111](../decisions/0111-fewer-mcp-tools.md); [0192](../decisions/0192-open-licence-pictures-placed-by-their-page.md) |
 | The endpoint, framing, streaming and the read tools | [knowledge-api.md](knowledge-api.md) |
 | Signing in and the `ask` and `contribute` scopes | [mcp-oauth.md](mcp-oauth.md) |
 | What a picture's file goes through | [image-contributions.md](image-contributions.md) |
@@ -19,6 +21,8 @@ A contributor's agent reads it over MCP, and engineers read it before changing e
 %%{init: {"theme":"base","fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif","themeVariables":{"fontSize":"15px","primaryColor":"#F2E9FE","primaryTextColor":"#1E1B2E","primaryBorderColor":"#9148D2","secondaryColor":"#FAEECD","secondaryTextColor":"#1E1B2E","secondaryBorderColor":"#CD9200","tertiaryColor":"#F3F1FA","tertiaryTextColor":"#1E1B2E","tertiaryBorderColor":"#A7A3BC","mainBkg":"#F2E9FE","nodeBorder":"#9148D2","nodeTextColor":"#1E1B2E","lineColor":"#AA69E9","textColor":"#857F9E","edgeLabelBackground":"#F9F5FF","clusterBkg":"#F9F5FF","clusterBorder":"#D6B6FB","titleColor":"#762CB1"}}}%%
 flowchart LR
   G["give_pictures"] --> IN{"In the chat?"}
+  IN -->|page_url| OL["Licence and author<br/>read from the source"]
+  OL --> SC
   IN -->|link or base64| SC["Checked and screened<br/>one by one"]
   SC --> PD["One PictureDeclaration<br/>channel MCP"]
   PD --> RQ["Review queue"]
@@ -39,6 +43,7 @@ flowchart LR
 | The tool `ask` (`ASK_TOOLS`) | `api/mcp_ask_tools.py`, registered in `api/mcp_tools.py` |
 | The tool `give_pictures` (`PICTURE_TOOLS`), its arguments and texts, and `start_picture`, which page bundles share | `api/mcp_picture_tools.py`, `api/mcp_picture_arguments.py`, `api/mcp_picture_texts.py`, registered in `api/mcp_tools.py` |
 | Giving pictures from the chat: per picture checks, screens, one declaration | `services/upload_links_give.py`, contracts in `research/image_contributions_give.py` |
+| Open-licence pictures by their page: the source records, the licence and credit, the screens, the thumbnails | `services/open_pictures.py`, `services/open_picture_rows.py`, `sources/images/open_picture_pages.py` (Commons, Openverse, `sources/images/flickr.py`), `research/open_pictures.py`; the image content `api/mcp_protocol.ToolImage` |
 | Fetching a picture's link | the fetcher's `POST /fetch-picture` (`fetcher/pictures.py`), its client `services/upload_links_fetch.py`, contract `research/image_intake_fetch.py` |
 | The vision screen's call | `providers/picture_vision.py` |
 | The answer kit and the answer view resources | `api/mcp_resources.py`, `data/answer_kit.py`, `data/design/answer-kit.md`, `data/design/answer-view.html` |
@@ -132,12 +137,23 @@ never fills the declaration in for them.
 Arguments: `craft_slug`; `declaration` (the shared part: `origin`, `generator` for an AI image,
 `rights_confirmed` true, `terms_version` `2026-11-19`); `confirmation` (the person's words, 2 to 500
 characters); and `pictures[]`, one to ten, each with exactly one of `image_url` (https),
-`image_base64` (base64 or a `data:` URI, at most 6 MB decoded, 12 MB of base64 at most in one call)
-or `upload: true`, and its own target (at most one of `stage_id`, `material_id` and `slot`
-(`MASTHEAD`, `RECORD`), and an optional `task_key`, a `MISSING_PICTURE` task of the craft whose
-target is used when none is given), `claim_ids` (0 to 20, each once; an AI image names one, an
-upload names at least one), `prompt`, `caption` and `alt_text`. A picture given in the call carries
-its caption and alt text, and any such picture needs the declaration and the confirmation.
+`image_base64` (base64 or a `data:` URI, at most 6 MB decoded, 12 MB of base64 at most in one call),
+`upload: true` or `page_url` (an open-licence picture's page), and its own target (at most one of
+`stage_id`, `material_id` and `slot` (`MASTHEAD`, `RECORD`), and an optional `task_key`, a
+`MISSING_PICTURE` task of the craft whose target is used when none is given), `claim_ids` (0 to 20,
+each once; an AI image names one, an upload and a picture given by its page at least one),
+`prompt` (an AI image's only), `caption` and `alt_text`. A picture given in the call or by its page
+carries its caption and alt text; a picture given in the call needs the declaration and the
+confirmation, and a picture given by its page needs neither.
+
+### A picture given by its page (`page_url`, decision 0192)
+
+The server reads the picture's licence, author, title, original file and size from the source's
+own record and decides the licence and the credit; the agent's words never do. The steps, the
+licences taken and refused, the credit and the `OpenPicture` evidence are in
+`image-contributions.md`, Open-licence pictures. Each picture counts once against `IMAGE_UPLOADS`
+before its page is read. Accepted pictures are filed one by one as `OPEN_LICENCE` contributions
+under no `PictureDeclaration` and reviewed by trust tier like any other.
 
 ### A picture given in the call
 
@@ -185,8 +201,15 @@ opened refuses that picture only, with its reason.
 
 `PicturesReply`: `{schemaVersion: 1, craft, declarationId, given, refused, pictures[{position,
 contributionId, status, label, received, mime, width, height, screen{verdict, flags, reasons},
-refused}], uploads[{position, upload, refused}], nextStep}`. Positions count the call's pictures
-from 1; a refused picture or upload carries only its position and the reason. `refused` counts both.
+refused, openSource?, plate?}], uploads[{position, upload, refused}], nextStep}`. Positions count
+the call's pictures from 1; a refused picture or upload carries only its position and the reason.
+`refused` counts both, and `given` the pictures given in the call and by their page together. A
+picture given by its page also carries `openSource` (its licence evidence and credit, as
+`ImageContributionView.openSource`) and `plate`, its picture's label for a draft's layout. The
+result's `content` holds the reply's JSON text first, then for each accepted raster picture given by
+its page a text line "Picture <position>: <credit>" and an `image` item (`data` base64, `mimeType`
+`image/jpeg`), its thumbnail of at most 320 px a side, so the agent sees what it placed;
+`structuredContent` holds the reply alone.
 
 ## HTTP routes (`/api/upload-links`)
 
@@ -235,6 +258,7 @@ new link; a link of another account says so and points to the picture page witho
 | The answer kit and the views as resources | `backend/tests/mcp/test_answer_kit.py` |
 | The `fields` provenance and its seats | `backend/tests/answering/test_answer_eval.py` |
 | `give_pictures`: per-picture checks, one declaration, the reply | `backend/tests/mcp/test_give_pictures.py` and `backend/tests/db/test_given_pictures_db.py` |
+| `give_pictures` by page: its arguments, the merged reply and the thumbnails as image content | `backend/tests/mcp/test_give_open_pictures.py`, and `image-contributions.md`'s open-licence rows |
 | Fetching a picture's link | `backend/tests/fetcher/test_pictures.py` and `test_picture_client.py` |
 | Links, slots, their states and the HTTP routes | `backend/tests/mcp/test_upload_links.py`, `test_upload_link_routes.py` and `backend/tests/db/test_upload_links_db.py` |
 | The routes' classes | `backend/tests/public/test_route_inventory.py` |

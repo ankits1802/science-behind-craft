@@ -16,7 +16,7 @@ from app.core.roles import role_value
 from app.models import ImageContribution, ImageFingerprint, ImageScreen, MediaAsset, User
 from app.research.image_contributions import AI_GENERATED
 from app.research.image_intake import InspectedImage, inspected_image
-from app.research.image_intake_pixels import PREVIEW_MIME, Pixels, pixels_of
+from app.research.image_intake_pixels import PREVIEW_MIME, Pixels, fingerprint_distance, pixels_of
 from app.research.image_screens import (
     NEAR_BITS,
     NEAR_IDENTICAL_BITS,
@@ -39,6 +39,7 @@ __all__ = [
     "Screened",
     "nearest_stored",
     "recorded_screen",
+    "same_picture",
     "screen_summaries",
     "screened",
 ]
@@ -92,6 +93,14 @@ async def screened(
     vision = await _vision(tools, pixels, ai_made=origin == AI_GENERATED, user=user)
     fingerprint = pixels.fingerprint if pixels is not None else None
     return Screened(image, len(data), digest, fingerprint, near, vision, screen_flags(vision, near))
+
+
+def same_picture(screen: Screened, earlier: Screened) -> bool:
+    if screen.digest == earlier.digest:
+        return True
+    if screen.fingerprint is None or earlier.fingerprint is None:
+        return False
+    return fingerprint_distance(screen.fingerprint, earlier.fingerprint) <= NEAR_IDENTICAL_BITS
 
 
 async def nearest_stored(session: AsyncSession, fingerprint: int) -> Near | None:

@@ -46,7 +46,9 @@ The rules below refer to them.
 2. **The best photograph is in the first viewport**: the masthead picture beside the lede on
    desktop and under the name on a phone, cropped from its focal box so people and work stay in
    frame. The picture given for the masthead is the page's best; a stand-in picture says what it
-   actually shows.
+   actually shows. A page with no masthead gets one before anything else: an open-licence picture
+   goes to `give_pictures` by its `page_url` with slot `MASTHEAD`, and its returned thumbnail is
+   looked at before it is placed.
 3. **One masthead.** One picture holds the masthead, and no card, label or component repeats the
    masthead's GI date, place or name.
 
@@ -66,7 +68,9 @@ The rules below refer to them.
    tellings (a comic, film subtitles, the student version) are the only exception.
 7. **Each picture appears once, and no two pictures look alike** (same scene, person, photographer
    and object). Replace one, or crop it to a clearly different subject, credited as cropped. Look
-   at the page's pictures before giving another.
+   at the page's pictures before giving another. The server refuses a picture whose page or file
+   the page already shows, and one too like a picture it holds; the thumbnails it returns are for
+   judging the rest, such as a second shot of the same workshop.
 8. **The media chapter is a gallery**: illustrations, video and film keyed to the section titles,
    with no text retold.
 9. **One citation panel** with tabs (this answer, the monograph), not stacked blocks. A component
@@ -86,7 +90,10 @@ The rules below refer to them.
 
 13. **No dead zones.** A picture shares its row with a quote, figure or caption; a framed box is
     sized to its content; a chapter lead never floats over an empty field.
-14. **A credit sits under its own figure**, after the caption, never a screen away from it.
+14. **A credit sits under its own figure**, after the caption, never a screen away from it. The
+    caption says what the picture shows from the facts it illustrates; the credit of a picture from
+    elsewhere is the one the server read from its source ("Photo: Author, licence, via site",
+    linked to its page), never written by hand.
 15. **A card with no sentence is not drawn.** A kin-craft or shared-concept panel joins crafts only
     through sentences that use the term in the same sense (rule 18).
 16. **The story closes before the tools**: a short coda (a practitioner's quote over the finished

@@ -154,10 +154,12 @@ From the repository root: `python tools/curation/propose.py <working dossier> [-
 The API and the MCP server also take structure (`propose_structure`: a stage's `after` or why,
 native names, reactions, botanical names, glossary, conflicts, open questions, the GI record), new
 sources for held facts (`propose_source`), components and whole page bundles (`knowledge-writes.md`,
-`open-work.md`), and the curation skill sends every change it can that way. The placements of
-open-licence pictures from elsewhere and a new craft's first dossier still enter through a bulk
-import: a new dossier version built on the export, verified and checked, committed by the lead and
-imported on deploy, after which `--diff` reports `SAME` for it.
+`open-work.md`), and the curation skill sends every change it can that way. An open-licence picture
+from elsewhere is given by its page with `give_pictures` and kept as an open-licence contribution
+with its credit and licence evidence, not in the dossier (decision 0192, `image-contributions.md`).
+A curated picture's focal box and stand-in note, and a new craft's first dossier, still enter
+through a bulk import: a new dossier version built on the export, verified and checked, committed
+by the lead and imported on deploy, after which `--diff` reports `SAME` for it.
 
 ## Versioning
 

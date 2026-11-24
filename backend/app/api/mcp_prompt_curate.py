@@ -79,11 +79,12 @@ COMPONENTS_STEP = (
     "{proposal, cites}, and with the layout on the version `get_page` gave."
 )
 PICTURES_STEP = (
-    "Give the pictures the page lacks: an illustration you generate is declared AI-made with its tool, model, "
-    "prompt and the facts it shows; a photograph comes from the person who holds its rights. Ask the person "
-    "for the declaration in their own words, never fill it in, then call `give_pictures` and `edit_draft` "
-    "with each picture in add as {contribution_id}. A Commons picture `search_sources` finds with kinds "
-    "pictures is placed by a curator: name its file page in the draft's note."
+    "Give the pictures the page lacks, the masthead first: an open-licence picture `search_sources` finds "
+    "with kinds pictures goes to `give_pictures` as page_url with the facts it illustrates and a caption "
+    "written from them, and the server reads its licence and author, credits it and returns a thumbnail to "
+    "look at; an illustration you generate is declared AI-made with its tool, model, prompt and the facts it "
+    "shows; a photograph comes from the person who holds its rights, who gives the declaration in their own "
+    "words, never filled in by you. Then call `edit_draft` with each picture in add as {contribution_id}."
 )
 PREVIEW_STEP = (
     "Call `preview_page` with the draft_id. Fix every rule the report fails with `edit_draft`'s add or "

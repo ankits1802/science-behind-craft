@@ -391,11 +391,14 @@ each as a `ContributedPlate` (`research/craft_contributed.py`) in one `contribut
   shows only the listed facts of its picture, as cited sentences.
 
 `ContributedPlate {contributionId, url, mime, width, height, origin, madeWith, caption, altText,
-credit, stageId, sentences}`. `url` is `/api/crafts/contributed/{contributionId}`. The credit never
-names the contributor (item 13): "Contributed to KalaVigyan" for a photograph or drawing, and for
-an AI image always "Illustration, made with <madeWith>", its tool as declared; `madeWith` is set
-exactly when an AI made the picture. The models refuse any other credit, a plate whose address is
-not its own, a hypothesis among its sentences, and a picture shown twice on a page.
+credit, stageId, sentences, sourceUrl?}`. `url` is `/api/crafts/contributed/{contributionId}`. The
+credit never names the contributor (item 13): "Contributed to KalaVigyan" for a photograph or
+drawing, and for an AI image always "Illustration, made with <madeWith>", its tool as declared;
+`madeWith` is set exactly when an AI made the picture. An open-licence picture (`origin`
+`OPEN_LICENCE`, decision 0192) carries the credit the server read for it, "Photo: <author>,
+<licence>, via <site>", and `sourceUrl`, its page, which the credit links; `sourceUrl` is absent
+from every other plate. The models refuse any other credit, a plate whose address is not its own,
+a hypothesis among its sentences, and a picture shown twice on a page.
 
 Schema note: the page stays at schema version 3. `contributed` is a part kind beside the others;
 a page with no approved picture has no such part and is byte for byte what it was, so neither

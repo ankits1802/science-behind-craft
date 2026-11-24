@@ -10,6 +10,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import ImageContribution, MediaAsset
 from app.research.chapter_keys import CHAPTER_KEYS
 from app.research.craft_contributed import CONTRIBUTED_MIMES, CONTRIBUTED_PER_CHAPTER_MAX
+from app.research.image_contributions import OPEN_LICENCE
+from app.research.open_pictures import OpenSource
+
+from .open_picture_rows import open_sources
 
 __all__ = [
     "APPROVED",
@@ -38,6 +42,7 @@ class ContributedRecord:
     mime: str
     width: int
     height: int
+    open_source: OpenSource | None = None
 
 
 @dataclass(frozen=True)
@@ -69,7 +74,8 @@ async def approved_pictures(session: AsyncSession, craft_id: uuid.UUID) -> tuple
             .limit(CONTRIBUTED_READ_MAX)
         )
     ).all()
-    return tuple(_record(row, asset) for row, asset in rows)
+    opened = await open_sources(session, [row.id for row, _ in rows if row.origin == OPEN_LICENCE])
+    return tuple(_record(row, asset, opened.get(row.id)) for row, asset in rows)
 
 
 async def shown_picture(session: AsyncSession, contribution_id: uuid.UUID) -> ShownPicture | None:
@@ -96,7 +102,7 @@ def _shown() -> ColumnElement[bool]:
     )
 
 
-def _record(row: ImageContribution, asset: MediaAsset) -> ContributedRecord:
+def _record(row: ImageContribution, asset: MediaAsset, opened: OpenSource | None) -> ContributedRecord:
     return ContributedRecord(
         contribution_id=row.id,
         origin=row.origin,
@@ -108,4 +114,5 @@ def _record(row: ImageContribution, asset: MediaAsset) -> ContributedRecord:
         mime=asset.mime,
         width=int(asset.width or 0),
         height=int(asset.height or 0),
+        open_source=opened,
     )

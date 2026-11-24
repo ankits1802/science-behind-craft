@@ -147,8 +147,9 @@ def picture_steps(values: Mapping[str, str]) -> list[str]:
         "The reply says for each picture whether it waits for review or was refused, and why; `my_work` shows "
         "the task closed once an Admin approves it, and the picture is then drawn in its place on the page.",
         "When the person holds no picture of what the task needs, call `search_sources` with kinds pictures, "
-        "words for it and the craft_slug, and tell the person which open-licence pictures fit: KalaVigyan's team "
-        "places those, credited to their authors, and they are never given as the person's own.",
+        "words for it and the craft_slug, and give an open-licence picture that fits to `give_pictures` as "
+        "page_url with the task as task_key, its facts and a caption written from them: the server reads its "
+        "licence and author, credits it to its author, never as the person's own, and returns its thumbnail.",
     ]
 
 

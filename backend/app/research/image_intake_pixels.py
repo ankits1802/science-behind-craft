@@ -23,6 +23,7 @@ __all__ = [
     "IMAGE_PIXELS_MAX",
     "PREVIEW_MIME",
     "PREVIEW_SIDE",
+    "THUMBNAIL_SIDE",
     "Converted",
     "Pixels",
     "converted",
@@ -30,6 +31,7 @@ __all__ = [
     "fingerprint_distance",
     "pixels_of",
     "sized",
+    "thumbnail",
 ]
 
 IMAGE_PIXELS_MAX = 40_000_000
@@ -40,6 +42,8 @@ HASH_LOW = 8
 PREVIEW_SIDE = 768
 PREVIEW_MIME = "image/jpeg"
 PREVIEW_QUALITY = 80
+THUMBNAIL_SIDE = 320
+THUMBNAIL_QUALITY = 75
 CROP_QUALITY = 90
 WEBP_QUALITY = 90
 WEBP_METHOD = 4
@@ -123,8 +127,18 @@ def pixels_of(data: bytes) -> Pixels:
             image.draft("RGB", (PREVIEW_SIDE, PREVIEW_SIDE))
         _loaded(image)
         _operations().exif_transpose(image, in_place=True)
-        source = _on_white(image if image.mode in DIRECT_MODES else _flat(image))
-        return Pixels(fingerprint=_fingerprint(source), preview=_preview(source))
+        source = _on_white(image if image.mode in DIRECT_MODES else _flat(image), PREVIEW_SIDE)
+        return Pixels(fingerprint=_fingerprint(source), preview=_preview(source, PREVIEW_QUALITY))
+
+
+def thumbnail(data: bytes, side: int = THUMBNAIL_SIDE) -> bytes:
+    with _opened(data) as image:
+        if image.format == "JPEG":
+            image.draft("RGB", (side, side))
+        _loaded(image)
+        _operations().exif_transpose(image, in_place=True)
+        small = _on_white(image if image.mode in DIRECT_MODES else _flat(image), side)
+        return _preview(small, THUMBNAIL_QUALITY)
 
 
 def fingerprint_distance(first: int, second: int) -> int:
@@ -191,8 +205,8 @@ def _flat(image: Picture) -> Picture:
         raise InvalidInput(f"A picture in the colour mode {image.mode} cannot be shown") from None
 
 
-def _on_white(image: Picture) -> Picture:
-    scale = min(1.0, PREVIEW_SIDE / max(image.width, image.height))
+def _on_white(image: Picture, side: int) -> Picture:
+    scale = min(1.0, side / max(image.width, image.height))
     size = (max(1, round(image.width * scale)), max(1, round(image.height * scale)))
     pillow = _pillow()
     small = image.resize(size, pillow.Resampling.LANCZOS, reducing_gap=3.0)
@@ -203,9 +217,9 @@ def _on_white(image: Picture) -> Picture:
     return ground
 
 
-def _preview(image: Picture) -> bytes:
+def _preview(image: Picture, quality: int) -> bytes:
     out = io.BytesIO()
-    image.save(out, "JPEG", quality=PREVIEW_QUALITY)
+    image.save(out, "JPEG", quality=quality)
     return out.getvalue()
 
 

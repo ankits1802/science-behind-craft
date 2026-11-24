@@ -12,6 +12,7 @@ no-imaging-library rule of decision 0104, item 3; the rest of 0104 stands.
 | For | Read |
 |---|---|
 | What it supersedes in part | [0104 Image contributions: declared, read byte by byte, private until approved](0104-image-contributions-intake.md): item 3, the no-imaging-library rule; the rest stands |
+| Open-licence pictures given by their page through the same screens | [decision 0192](0192-open-licence-pictures-placed-by-their-page.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

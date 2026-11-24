@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from typing import Literal, Self
 
-from pydantic import Field, ValidationError, model_validator
+from pydantic import Field, PrivateAttr, ValidationError, model_validator
 
 from app.core.errors import InvalidInput
 from app.research.base import ContractModel, HttpsUrl
@@ -21,10 +21,14 @@ from app.research.image_contributions_give import CONFIRMATION_MAX_CHARS, GIVEN_
 from app.research.image_intake_fetch import IMAGE_BASE64_BYTES_MAX, base64_chars_max
 from app.research.upload_links import SlotCraft, SlotDeclaration, UploadSlot, UploadStart
 
-from .mcp_picture_texts import CONFIRMATION_FIELD, DECLARATION_FIELD
+from .mcp_picture_texts import CONFIRMATION_FIELD, DECLARATION_FIELD, PAGE_FIELD
+from .mcp_protocol import ToolImage
 from .mcp_studio_arguments import StudioArguments
 
 __all__ = [
+    "GIVEN",
+    "OPEN",
+    "UPLOADED",
     "GivePictures",
     "GivenOrUploaded",
     "PicturesReply",
@@ -33,9 +37,11 @@ __all__ = [
     "upload_slot",
 ]
 
-ONE_WAY = "give each picture as image_url, image_base64 or upload true, exactly one of them"
-NEEDS_WORDS = "a picture given in the call carries its caption and alt_text"
-NEEDS_FACTS = "an uploaded picture names the facts it shows (claim_ids)"
+GIVEN, UPLOADED, OPEN = "given", "uploaded", "open"
+ONE_WAY = "give each picture as image_url, image_base64, upload true or page_url, exactly one of them"
+NEEDS_WORDS = "a picture given in the call or by its page carries its caption and alt_text"
+NEEDS_FACTS = "an uploaded picture or one given by its page names the facts it shows (claim_ids)"
+OPEN_NEEDS_NO_PROMPT = "a picture given by its page is not AI-made and carries no prompt"
 NEEDS_DECLARATION = (
     "pictures given in the call need the declaration the person confirmed in the chat and their words of "
     "confirmation"
@@ -56,6 +62,7 @@ class GivenOrUploaded(PictureTarget):
         description="The picture's bytes in base64 or a data: URI, at most 6 MB before encoding",
     )
     upload: bool = Field(default=False, description="True for a single-use upload slot instead")
+    page_url: HttpsUrl | None = Field(default=None, description=PAGE_FIELD)
     claim_ids: list[uuid.UUID] = Field(
         default_factory=list, max_length=CLAIMS_MAX, description="The facts the picture shows, from get_facts"
     )
@@ -67,17 +74,32 @@ class GivenOrUploaded(PictureTarget):
 
     @model_validator(mode="after")
     def _one_way(self) -> Self:
-        ways = [self.image_url is not None, self.image_base64 is not None, self.upload]
+        ways = [
+            self.image_url is not None,
+            self.image_base64 is not None,
+            self.upload,
+            self.page_url is not None,
+        ]
         if sum(ways) != 1:
             raise ValueError(ONE_WAY)
         if not self.upload and (self.caption is None or self.alt_text is None):
             raise ValueError(NEEDS_WORDS)
-        if self.upload and not self.claim_ids:
+        if self.way != GIVEN and not self.claim_ids:
             raise ValueError(NEEDS_FACTS)
+        if self.way == OPEN and self.prompt is not None:
+            raise ValueError(OPEN_NEEDS_NO_PROMPT)
         return self
 
+    @property
+    def way(self) -> str:
+        if self.upload:
+            return UPLOADED
+        return OPEN if self.page_url is not None else GIVEN
+
     def batch_picture(self) -> BatchPicture:
-        return BatchPicture.model_validate(self.model_dump(exclude={"image_url", "image_base64", "upload"}))
+        return BatchPicture.model_validate(
+            self.model_dump(exclude={"image_url", "image_base64", "upload", "page_url"})
+        )
 
 
 class GivePictures(StudioArguments):
@@ -93,15 +115,13 @@ class GivePictures(StudioArguments):
         sent = sum(len(picture.image_base64 or "") for picture in self.pictures)
         if sent > base64_chars_max(GIVEN_BASE64_BYTES_MAX):
             raise ValueError(TOO_MUCH_BASE64)
-        given = any(not picture.upload for picture in self.pictures)
+        given = any(picture.way == GIVEN for picture in self.pictures)
         if given and (self.declaration is None or self.confirmation is None):
             raise ValueError(NEEDS_DECLARATION)
         return self
 
-    def placed(self, uploaded: bool) -> list[tuple[int, GivenOrUploaded]]:
-        return [
-            (at, picture) for at, picture in enumerate(self.pictures, start=1) if picture.upload is uploaded
-        ]
+    def placed(self, way: str) -> list[tuple[int, GivenOrUploaded]]:
+        return [(at, picture) for at, picture in enumerate(self.pictures, start=1) if picture.way == way]
 
 
 class UploadPlace(ContractModel):
@@ -119,6 +139,14 @@ class PicturesReply(ContractModel):
     pictures: list[GivenPicture] = Field(default_factory=list)
     uploads: list[UploadPlace] = Field(default_factory=list)
     next_step: str
+    _images: list[ToolImage] = PrivateAttr(default_factory=list)
+
+    def showing(self, images: list[ToolImage]) -> PicturesReply:
+        self._images = list(images)
+        return self
+
+    def tool_images(self) -> list[ToolImage]:
+        return list(self._images)
 
 
 def upload_slot(craft_slug: str, picture: GivenOrUploaded) -> UploadSlot:

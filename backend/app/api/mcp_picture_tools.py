@@ -7,7 +7,7 @@ from app.core.mcp_scopes import CONTRIBUTE_SCOPE
 from app.core.rate_limit import IMAGE_UPLOADS
 from app.models import User
 from app.providers.picture_vision import picture_screen_tools
-from app.research.image_contributions_give import GivenPictures
+from app.research.image_contributions_give import GivenPictures, given_next_step
 from app.research.image_intake_fetch import PictureFetcher, decoded_base64
 from app.research.upload_links import (
     SlotDeclaration,
@@ -17,11 +17,22 @@ from app.research.upload_links import (
     upload_page_url,
 )
 from app.services import upload_links
-from app.services.object_store import media_bucket
+from app.services.object_store import ObjectStore, media_bucket
+from app.services.open_pictures import (
+    OpenGiven,
+    OpenPlacing,
+    OpenTools,
+    PlacedPictures,
+    open_picture_reader,
+    place_open_pictures,
+)
 from app.services.upload_links_fetch import picture_fetcher
 from app.services.upload_links_give import GivenFile, Giving, Handing, give_pictures
 
 from .mcp_picture_arguments import (
+    GIVEN,
+    OPEN,
+    UPLOADED,
     GivenOrUploaded,
     GivePictures,
     PicturesReply,
@@ -29,7 +40,8 @@ from .mcp_picture_arguments import (
     slot_declaration,
     upload_slot,
 )
-from .mcp_picture_texts import GIVE_DESCRIPTION, LINK_STEP, SHELL_STEP
+from .mcp_picture_texts import GIVE_DESCRIPTION, LINK_STEP, OPEN_STEP, SHELL_STEP
+from .mcp_protocol import ToolImage
 from .mcp_tool_base import OPEN_WRITES, PICTURES, Tool, ToolContext, signed_in
 from .oauth_hosts import endpoints_or_none
 from .proposal_limits import refuse_tool_when_spent, spent_limit
@@ -79,15 +91,20 @@ async def _uploaded(
     return UploadPlace(position=position, upload=started)
 
 
-async def _given(context: ToolContext, user: User, arguments: GivePictures) -> GivenPictures:
+def _bucket() -> ObjectStore:
     objects = media_bucket()
     if objects is None:
         raise InvalidInput(NO_BUCKET)
+    return objects
+
+
+async def _given(context: ToolContext, user: User, arguments: GivePictures) -> GivenPictures:
+    objects = _bucket()
     shared, words = arguments.declaration, arguments.confirmation
     if shared is None or words is None:
         raise InvalidInput(NOTHING)
     async with picture_fetcher() as fetcher:
-        files = [await _file(at, picture, fetcher, user) for at, picture in arguments.placed(False)]
+        files = [await _file(at, picture, fetcher, user) for at, picture in arguments.placed(GIVEN)]
     giving = Giving(craft_slug=arguments.craft_slug, shared=shared, confirmation=words, files=files)
     handing = Handing(objects=objects, tools=picture_screen_tools(), now=datetime.now(UTC))
     return await give_pictures(context.session, user, giving, handing=handing)
@@ -110,23 +127,69 @@ async def _file(position: int, picture: GivenOrUploaded, fetcher: PictureFetcher
     return GivenFile(position, batch, data)
 
 
+async def _opened(context: ToolContext, user: User, arguments: GivePictures) -> PlacedPictures:
+    objects = _bucket()
+    pictures = [await _open(at, picture, user) for at, picture in arguments.placed(OPEN)]
+    placing = OpenPlacing(craft_slug=arguments.craft_slug, pictures=pictures)
+    async with picture_fetcher() as fetcher, open_picture_reader() as pages:
+        tools = OpenTools(
+            pages=pages,
+            fetcher=fetcher,
+            screen=picture_screen_tools(),
+            objects=objects,
+            now=datetime.now(UTC),
+        )
+        return await place_open_pictures(context.session, user, placing, tools=tools)
+
+
+async def _open(position: int, picture: GivenOrUploaded, user: User) -> OpenGiven:
+    spent = await spent_limit(IMAGE_UPLOADS, user)
+    refused = None if spent is None else spent.message
+    return OpenGiven(position, str(picture.page_url), picture.batch_picture(), refused)
+
+
 async def _give_pictures(context: ToolContext, arguments: GivePictures) -> PicturesReply:
     user = signed_in(context)
-    given = await _given(context, user, arguments) if arguments.placed(False) else None
-    uploads = [await _uploaded(context, arguments, at, picture) for at, picture in arguments.placed(True)]
+    given = await _given(context, user, arguments) if arguments.placed(GIVEN) else None
+    opened = await _opened(context, user, arguments) if arguments.placed(OPEN) else None
+    uploads = [await _uploaded(context, arguments, at, picture) for at, picture in arguments.placed(UPLOADED)]
     started = [place.upload for place in uploads if place.upload is not None]
     steps = [given.next_step] if given is not None else []
+    steps += _open_steps(opened)
     steps += [started[0].next_step] if started else []
-    craft = given.craft if given is not None else (started[0].craft if started else None)
-    return PicturesReply(
-        craft=craft,
+    crafts = [given.craft] if given is not None else []
+    crafts += [opened.craft] if opened is not None else []
+    crafts += [started[0].craft] if started else []
+    pictures = [*(given.pictures if given else []), *(opened.pictures if opened else [])]
+    reply = PicturesReply(
+        craft=crafts[0] if crafts else None,
         declaration_id=None if given is None else given.declaration_id,
-        given=0 if given is None else given.given,
-        refused=(0 if given is None else given.refused) + len(uploads) - len(started),
-        pictures=[] if given is None else given.pictures,
+        given=(given.given if given else 0) + (opened.given if opened else 0),
+        refused=(given.refused if given else 0)
+        + (opened.refused if opened else 0)
+        + len(uploads)
+        - len(started),
+        pictures=sorted(pictures, key=lambda picture: picture.position),
         uploads=uploads,
         next_step=" ".join(steps) or NOTHING,
     )
+    return reply.showing(_thumbnails(opened))
+
+
+def _open_steps(opened: PlacedPictures | None) -> list[str]:
+    if opened is None:
+        return []
+    shown = given_next_step(opened.given, opened.approved)
+    return [shown, OPEN_STEP] if opened.given else [shown]
+
+
+def _thumbnails(opened: PlacedPictures | None) -> list[ToolImage]:
+    if opened is None:
+        return []
+    return [
+        ToolImage(caption=f"Picture {shown.position}: {shown.credit}", data=shown.data, mime=shown.mime)
+        for shown in opened.thumbnails
+    ]
 
 
 GIVE_PICTURES = Tool(

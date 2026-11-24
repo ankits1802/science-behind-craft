@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import uuid
 from collections import Counter
 from collections.abc import Callable, Collection, Mapping, Sequence
@@ -15,18 +16,21 @@ from app.models import Claim, ImageContribution, MediaAsset
 from app.models.enums import DISCIPLINES
 from app.research.chapter_keys import CHAPTER_KEYS
 from app.research.component_specs import checked_spec
+from app.research.component_specs_plates_parts import PICTURE_PATTERN
 from app.research.coverage_chapters import field_chapter
-from app.research.craft_contributed import contributed_credit, contributed_url
-from app.research.image_contributions import AI_GENERATED
+from app.research.craft_contributed import contributed_credit, contributed_key, contributed_url
+from app.research.image_contributions import AI_GENERATED, OPEN_LICENCE
 from app.research.image_intake_svg import SVG
 from app.research.media_refs import MediaRef
 from app.research.monograph_page import TextUnit
+from app.research.open_pictures import COMMONS, PHOTO_PREFIX, OpenSource, photo_credit
 from app.research.page_layout import HERO_CHAPTER, PICTURE_ROLES, PageLayoutEntry
 from app.research.unit_ids import PLATE_UNITS
 
 from .contributed_pictures import CONTRIBUTED_READ_MAX, shown_contributions
 from .curated_index import IndexPicture
 from .monograph_generated_units import MASTHEAD_CHAPTER
+from .open_picture_rows import open_sources
 from .page_layouts_backfill import picture_placement
 
 __all__ = [
@@ -34,13 +38,14 @@ __all__ = [
     "PlateSource",
     "contributed_plate",
     "contributed_plates",
+    "credit_unit",
     "curated_plate",
+    "open_plate",
     "plate_spec",
     "plates_of",
 ]
 
-KEY_PREFIX = "contributed-"
-KEY_HEX_CHARS = 12
+CREDIT_LINK = {"rel": "noopener", "target": "_blank"}
 SLOT_PLACEMENTS: Mapping[str, tuple[str, str]] = MappingProxyType(
     {
         "MASTHEAD": (HERO_CHAPTER, PICTURE_ROLES["MASTHEAD"]),
@@ -69,6 +74,7 @@ class PlateSource:
     focal: Mapping[str, Any] | None = None
     facts: tuple[uuid.UUID, ...] = ()
     themed: bool = False
+    credit_url: str | None = None
 
     def shown_with(self, visible: Collection[uuid.UUID]) -> bool:
         return all(fact in visible for fact in self.facts)
@@ -81,7 +87,7 @@ def plate_spec(
         return None
     caption_id, credit_id = (PLATE_UNITS.unit(2 * drawn + n) for n in (0, 1))
     caption = entry.caption if entry is not None and entry.caption else source.caption
-    units = {caption_id: _plain_unit(caption), credit_id: _plain_unit(source.credit)}
+    units = {caption_id: _plain_unit(caption), credit_id: credit_unit(source.credit, source.credit_url)}
     crop = (
         entry.crop.model_dump(mode="json") if entry is not None and entry.crop is not None else source.focal
     )
@@ -119,9 +125,19 @@ def curated_plate(picture: IndexPicture, media: MediaRef) -> PlateSource:
         height=media.height,
         alt=media.alt,
         caption=picture.caption,
-        credit=f"Photo: {named}, via {media.site}" if named else f"Photo: {media.site}",
+        credit=photo_credit(media.author, media.licence, media.site),
         attribution=named or None,
         focal=picture.focal.model_dump(mode="json") if picture.focal is not None else None,
+        credit_url=str(media.page_url),
+    )
+
+
+def credit_unit(credit: str, link: str | None) -> TextUnit:
+    if link is None or not credit.startswith(PHOTO_PREFIX):
+        return _plain_unit(credit)
+    named = {"m": "link", "href": link, **CREDIT_LINK, "c": [credit.removeprefix(PHOTO_PREFIX)]}
+    return TextUnit(
+        chapter=MASTHEAD_CHAPTER, tag="span", field=None, nodes=[PHOTO_PREFIX, named], claim_ids=[]
     )
 
 
@@ -144,16 +160,26 @@ async def plates_of(
     address: Callable[[uuid.UUID], str],
 ) -> list[PlateSource]:
     fields = await _fact_fields(session, [claim for row, _ in rows for claim in row.claimIds])
-    return [contributed_plate(row, asset, address(row.id), _placement(row, fields)) for row, asset in rows]
+    opened = await open_sources(session, [row.id for row, _ in rows if row.origin == OPEN_LICENCE])
+    return [
+        contributed_plate(row, asset, address(row.id), _placement(row, fields), opened.get(row.id))
+        for row, asset in rows
+    ]
 
 
 def contributed_plate(
-    row: ImageContribution, asset: MediaAsset, src: str, placed: tuple[str, str]
+    row: ImageContribution,
+    asset: MediaAsset,
+    src: str,
+    placed: tuple[str, str],
+    opened: OpenSource | None = None,
 ) -> PlateSource:
+    if opened is not None:
+        return open_plate(row, asset, src, placed, opened)
     ai = row.origin == AI_GENERATED
     credit = contributed_credit(row.origin, row.generator if ai else None)
     return PlateSource(
-        key=f"{KEY_PREFIX}{row.id.hex[:KEY_HEX_CHARS]}",
+        key=contributed_key(row.id),
         chapter=placed[0],
         role=placed[1],
         src=src,
@@ -166,6 +192,31 @@ def contributed_plate(
         facts=tuple(row.claimIds) if ai else (),
         themed=asset.mime == SVG,
     )
+
+
+def open_plate(
+    row: ImageContribution, asset: MediaAsset, src: str, placed: tuple[str, str], opened: OpenSource
+) -> PlateSource:
+    commons = _commons_file(opened)
+    sized = commons is not None and opened.width is not None and opened.height is not None
+    return PlateSource(
+        key=contributed_key(row.id),
+        chapter=placed[0],
+        role=placed[1],
+        src=commons if commons is not None and sized else src,
+        width=opened.width if sized else asset.width,
+        height=opened.height if sized else asset.height,
+        alt=row.altText,
+        caption=row.caption,
+        credit=opened.credit,
+        attribution=f"{opened.author}, {opened.licence}",
+        credit_url=opened.page_url,
+    )
+
+
+def _commons_file(opened: OpenSource) -> str | None:
+    shown = opened.site == COMMONS and re.fullmatch(PICTURE_PATTERN, opened.file_url) is not None
+    return opened.file_url if shown else None
 
 
 def _placement(row: ImageContribution, fields: Mapping[uuid.UUID, str]) -> tuple[str, str]:

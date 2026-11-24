@@ -5,10 +5,11 @@ from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from .base import ContractModel, HttpsUrl
+from .base import ContractModel, HttpsUrl, absent
 from .image_contributions import BatchPicture, ImageContributionStatus
 from .image_intake_fetch import IMAGE_BASE64_BYTES_MAX, base64_chars_max
 from .image_screens import ScreenSummary
+from .open_pictures import OpenSource
 from .upload_links import SlotCraft
 
 __all__ = [
@@ -70,6 +71,8 @@ class GivenPicture(ContractModel):
     height: int | None = None
     screen: ScreenSummary | None = None
     refused: str | None = None
+    open_source: OpenSource | None = Field(default=None, exclude_if=absent)
+    plate: str | None = Field(default=None, exclude_if=absent)
 
 
 class GivenPictures(ContractModel):

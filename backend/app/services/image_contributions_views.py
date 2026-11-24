@@ -10,12 +10,14 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Craft, ImageContribution, MediaAsset
-from app.research.image_contributions import ImageContributionView, shown_label
+from app.research.image_contributions import OPEN_LICENCE, ImageContributionView, shown_label
 from app.research.image_screens import ScreenSummary
+from app.research.open_pictures import OpenSource
 
 from .image_screens import screen_summaries
 from .naming import content_disposition
 from .object_store import ObjectStore
+from .open_picture_rows import open_sources
 
 __all__ = ["LINK_SECONDS", "views"]
 
@@ -27,6 +29,7 @@ class _Shown:
     crafts: Mapping[uuid.UUID, Craft]
     assets: Mapping[uuid.UUID, MediaAsset]
     screens: Mapping[uuid.UUID, ScreenSummary]
+    sources: Mapping[uuid.UUID, OpenSource]
     objects: ObjectStore | None
     now: datetime
 
@@ -38,6 +41,7 @@ async def views(
         crafts=await _by_id(session, Craft, {row.craftId for row in rows}),
         assets=await _by_id(session, MediaAsset, {row.assetId for row in rows if row.assetId is not None}),
         screens=await screen_summaries(session, [row.id for row in rows]),
+        sources=await open_sources(session, [row.id for row in rows if row.origin == OPEN_LICENCE]),
         objects=objects,
         now=now,
     )
@@ -79,6 +83,7 @@ def _view(row: ImageContribution, shown: _Shown) -> ImageContributionView:
         created_at=row.createdAt,
         reviewed_at=row.reviewedAt,
         review_note=row.reviewNote,
+        open_source=shown.sources.get(row.id),
     )
 
 

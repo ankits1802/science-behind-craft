@@ -111,6 +111,7 @@ from app.models.oauth import (
     OAuthToken,
 )
 from app.models.open_data import OpenDataRelease
+from app.models.open_pictures import OpenPicture
 from app.models.open_work import ComponentProposal, TaskReservation
 from app.models.paces import SourceLease, SourcePace
 from app.models.page_layouts import PageLayout
@@ -240,6 +241,7 @@ __all__ = [
     "OAuthToken",
     "Objection",
     "OpenDataRelease",
+    "OpenPicture",
     "PageDraft",
     "PageLayout",
     "PagePreview",

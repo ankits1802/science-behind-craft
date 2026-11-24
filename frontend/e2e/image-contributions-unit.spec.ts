@@ -8,11 +8,14 @@ import {
   heldReasons,
   IMAGE_TERMS_VERSION,
   imageContributionShape,
+  openCredit,
+  openReadNote,
   previewable,
   sentNotice,
   shownCredit,
   type ImageContribution,
-  type ImageDeclaration
+  type ImageDeclaration,
+  type OpenSource
 } from "../lib/imageContributionContract";
 import { ROUTE_GUARDS } from "../lib/permissions";
 import { parseShape } from "../lib/shape";
@@ -123,6 +126,33 @@ test("the server's picture view parses, and an unknown status is refused", () =>
   expect(() => parseShape(imageContributionShape, { ...VIEW, status: "HIDDEN" })).toThrow();
   expect(() => parseShape(imageContributionShape, { ...VIEW, slot: "COVER" })).toThrow();
   expect(parseShape(imageContributionShape, { ...VIEW, screen: null })).toEqual({ ...VIEW, screen: null });
+});
+
+const OPENED: OpenSource = {
+  site: "COMMONS",
+  pageUrl: "https://commons.wikimedia.org/wiki/File:Printing_with_Hand_Carved_Block.jpg",
+  fileUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Printing_with_Hand_Carved_Block.jpg",
+  recordUrl: "https://commons.wikimedia.org/w/api.php?action=query&titles=File%3APrinting_with_Hand_Carved_Block.jpg",
+  title: "Printing with Hand Carved Block",
+  author: "Ketayun Katz",
+  licence: "CC BY-SA 4.0",
+  licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+  credit: "Photo: Ketayun Katz, CC BY-SA 4.0, via Wikimedia Commons",
+  width: 4000,
+  height: 3000,
+  readAt: "2026-11-24T09:30:00Z"
+};
+
+test("an open-licence picture's view parses with the licence evidence the server read", () => {
+  const open = { ...VIEW, origin: "OPEN_LICENCE" as const, label: "Open-licence picture", generator: null, prompt: null, openSource: OPENED };
+  expect(parseShape(imageContributionShape, open)).toEqual(open);
+  expect(parseShape(imageContributionShape, { ...VIEW, openSource: null })).toEqual({ ...VIEW, openSource: null });
+  expect(() => parseShape(imageContributionShape, { ...open, openSource: { ...OPENED, site: "PINTEREST" } })).toThrow();
+});
+
+test("an open-licence picture is credited in the design's form, linked after Photo:", () => {
+  expect(openCredit(OPENED)).toEqual({ prefix: "Photo: ", linked: "Ketayun Katz, CC BY-SA 4.0, via Wikimedia Commons" });
+  expect(openReadNote(OPENED)).toBe("Licence and author as Wikimedia Commons records them, read 24 Nov 2026");
 });
 
 test("the picture pages are guarded by the capabilities the API requires", () => {
