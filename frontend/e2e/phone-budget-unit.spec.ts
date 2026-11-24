@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { blockingScripts, blockingTime, budgetBreaches, layoutShift, medianMeasure, phoneLimit, phoneMeasure, phoneRecord, shortUrl, type PhoneMeasure, type PhoneNumbers, type RawLoad, type Sent, type Shift } from "./phoneBudget";
+import { blockingScripts, blockingTime, budgetBreaches, layoutShift, medianMeasure, PHONE_PAGES, phoneLimit, phoneMeasure, phoneRecord, shortUrl, type PhoneMeasure, type PhoneNumbers, type RawLoad, type Sent, type Shift } from "./phoneBudget";
 
 const ORIGIN = "http://localhost:3000";
 const PAGE = "/crafts/Kutch-Ajrakh";
@@ -129,8 +129,10 @@ test("scripts are named by their address on the site, a picture with its widths"
   expect(blockingScripts([{ url: "inline", duration: 10.4 }, { url: "inline", duration: 20.3 }])).toEqual([{ url: "inline", duration: 31 }]);
 });
 
-test("the recorded budget reads as its shape", () => {
+test("the recorded budget reads as its shape and budgets exactly the pages the phone spec measures", () => {
   const record = phoneRecord();
   expect(record.schemaVersion).toBe(1);
+  expect(Object.keys(record.pages).sort()).toEqual([...PHONE_PAGES].sort());
+  expect(record.run).toBeGreaterThan(0);
   expect(() => phoneRecord('{"schemaVersion": 1, "recordedAt": "x", "run": 1, "pages": {"/a": {"scriptBytes": -1}}}')).toThrow();
 });

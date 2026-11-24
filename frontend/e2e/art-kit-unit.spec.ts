@@ -6,6 +6,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { KitSheet } from "../app/design/kit/KitSheet";
+import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { KitFigure } from "../components/artkit/KitFigure";
 import { kitIds, partIds } from "../components/artkit/kitIds";
 import { KitPartArt } from "../components/artkit/KitPartArt";
@@ -21,6 +22,8 @@ import { appDrawn } from "../lib/monographScopes";
 import { parseShape, ShapeError } from "../lib/shape";
 
 import { FRONTEND } from "./moduleGraph";
+
+test.beforeAll(() => nearBlocksLoaded());
 import { primitivesPage } from "./primitivesPage";
 
 const SHARED = join(FRONTEND, "..", "shared");

@@ -770,7 +770,12 @@ with the named motions, set in their layouts by `KitFigure` and drawn on a page 
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
 part in every depicted material (decision 0199). The players, the toggle's stage box and the label
 card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
-page kit plays a shown scene's part (decision 0200). Practice rules are `frontend-practices`.
+page kit plays a shown scene's part (decision 0200). A kind whose code is heavy (the declared map layer and
+timeline map, the why-here ground map and the six page tools) is drawn whole on the server and its
+code reaches the browser only as its holder nears the viewport (`components/answer/nearBlock.tsx`,
+the loaders in `components/monograph/kinds/nearViews.tsx`); the smoke job measures Kutch Ajrakh and
+a page of every kind on a slowed phone at 360 against their recorded numbers
+(`frontend/e2e/phone-budget.json`, decision 0205). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub
@@ -897,7 +902,7 @@ from opening nested windows, because Chromium ignores the policy's `webrtc 'bloc
 | Workflow | Runs |
 |---|---|
 | Backend checks | ruff, DB-free pytest, tools tests (hygiene, curation), hygiene check, the curation check of every dossier and the index (`tools/curation/check.py --check-index`, no network), offline migration render; then migrations, seeds and DB tests against PostGIS with pgvector in three shards, each with its own database (`DB_TEST_SHARD`, decision 0163), then the curated dossier import (decision 0053) and every table loaded through the models of each release before, the one production serves and the base (decision 0186) |
-| Frontend checks | typecheck, lint and unit specs (after the lockfile audit and the no-comments check); the production build; the smoke specs against that build in a browser, among them the voice dock's recorded bit rate (decision 0161) |
+| Frontend checks | typecheck, lint and unit specs (after the lockfile audit and the no-comments check); the production build; the smoke specs against that build in a browser, among them the voice dock's recorded bit rate (decision 0161); then Kutch Ajrakh and a page of every kind measured on a slowed phone at 360 against their budget (decision 0205) |
 | Hygiene | the hygiene check over the whole repository on every push to `main` and every pull request, whatever the paths, since Backend checks runs only for backend paths; it also fails a change that leaves `docs/TECH_DEBT.md` with more entries than its baseline (decision 0163) |
 | README check | on a pull request, or a push to `main` or a round branch, that changes `README.md`, a Markdown file under `docs/` or `.claude/skills/`, the README kit or its workflow: the kit rebuilt and diffed, every SVG checked, every mermaid block drawn by mermaid-cli and on github.com, every page rendered by GitHub (`docs/readme-kit/README_STYLE.md`, CI) |
 | Craft data | master-list sha1, lint and tests of `etl/crafts`; weekly regeneration |

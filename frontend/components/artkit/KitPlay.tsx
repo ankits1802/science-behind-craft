@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import type { KitMotion } from "@/lib/artKit";
 import { kitSchedule, kitStatus, kitStillStep, kitTimings } from "@/lib/artKitMotion";
 
-type PlayProps = { figureId: string; labels: string[]; motions: (KitMotion | null)[] };
+export type KitPlayProps = { figureId: string; labels: string[]; motions: (KitMotion | null)[] };
 
 function readToken(token: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(token);
@@ -27,7 +27,7 @@ function mark(figure: HTMLElement | null, panel: number | null): void {
   });
 }
 
-export function KitPlay({ figureId, labels, motions }: PlayProps) {
+export function KitPlay({ figureId, labels, motions }: KitPlayProps) {
   const [status, setStatus] = useState("");
   const [playing, setPlaying] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);

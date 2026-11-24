@@ -27,6 +27,7 @@ left of the authored shell. The contracts are `docs/contracts/knowledge-writes.m
 | The shared template drawing the parts the shell held for every generated page (amends item 5) | [decision 0183](0183-the-shared-template-draws-the-approved-page.md) |
 | A difference named only when every differing pair names it (amends item 2) | [decision 0188](0188-an-unscored-answer-any-craft-filing-chapters-apart-and-one-named-difference.md) |
 | A served timeline map fixture carries its recorded placement (amends this record) | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
+| The phone measured in CI and held to a budget, where item 7 left it to the lead's Lighthouse (amends item 7) | [decision 0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -849,6 +849,14 @@ fixture or the category page (`docs/contracts/category-page.md`).
   `-f audit=false` skips it. To ratchet the budgets, copy `audit-baseline.candidate.json` from a
   production run's artifact over `frontend/e2e/release/audit-baseline.json`. A new axe rule on a
   recorded page is fixed, never accepted by the candidate.
+- **Phone budget**: the Frontend checks' smoke job measures `/crafts/Kutch-Ajrakh` and
+  `/crafts/Phone-Fixtures` (every kind, served by the smoke API) at 360 with the CPU slowed four
+  times and Lighthouse's slow 4G, three loads each and a read to the end, and fails when a page
+  passes the limits drawn from its recorded numbers in `frontend/e2e/phone-budget.json`, naming the
+  scripts, pictures, element or nodes that grew (decision 0205). Each page's `phone-measure.json`
+  is in the run's `frontend-smoke` artifact under `phone-budget/`. To record a deliberate change,
+  copy each page's `numbers` from that artifact into the record with the run id and date, in the
+  change that says why.
 
 ## Roll back
 
