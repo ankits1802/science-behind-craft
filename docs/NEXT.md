@@ -67,7 +67,7 @@ shipping, and release each change on its own.
 - **Phone speed** (Lighthouse at 360, median of three, release dab903fd): Kutch Ajrakh 83 with an LCP
   of 4.68 s, the generated Bagru page 87 with 3.93 s, sign-in 92 with 3.34 s, against the 2.5 s
   target (`docs/TECH_DEBT.md`, Speed left after the quality lane); 98 to 100 at 1440.
-- **The register** (`docs/TECH_DEBT.md`) holds 46 entries, most waiting on the owner or on time.
+- **The register** (`docs/TECH_DEBT.md`) holds 45 entries, most waiting on the owner or on time.
   Among the lead's: the ElevenLabs tool calls, languages and CSP hosts; the relief bands' rebuild;
   a rollback's window before its pages are rebuilt; the Listen dock's first focus; the write-back
   rows stored before decision 0188.

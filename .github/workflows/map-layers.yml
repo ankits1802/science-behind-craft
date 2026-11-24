@@ -1,0 +1,87 @@
+name: Map layers
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/maplayers/**"
+      - "tools/maplayers_build.py"
+      - "tools/tests/test_maplayers*.py"
+      - ".github/workflows/map-layers.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: map-layers-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.14"
+  NATURAL_EARTH: https://naciscdn.org/naturalearth/10m/physical
+  NATURAL_EARTH_MIRROR: https://naturalearth.s3.amazonaws.com/10m_physical
+  AGENT: "KalaVigyan map layers build (GitHub Actions)"
+  ETOPO_URL: "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
+  MRDS_URL: https://mrdata.usgs.gov/mrds/mrds-csv.zip
+
+jobs:
+  build:
+    name: Rebuild the rivers, relief and mineral layers from their downloads and test the relief bands
+    runs-on: ubuntu-26.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install the geo ETL environment and what the relief test reads of the API
+        run: >-
+          python -m pip install --disable-pip-version-check -e etl/geo
+          pytest pydantic pydantic-settings "sqlalchemy>=2.1.9" pgvector geoalchemy2
+      - name: Download Natural Earth, ETOPO1 and the USGS mineral sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p downloads
+          fetch() { echo "fetching $2"; curl -fsSL --retry 5 --retry-delay 15 --retry-all-errors -A "$AGENT" -o "$1" "$2" || { echo "::warning::$2 was refused"; return 1; }; }
+          for name in ne_10m_rivers_lake_centerlines ne_10m_lakes ne_10m_geography_regions_polys ne_10m_geography_regions_elevation_points; do
+            fetch "downloads/$name.zip" "$NATURAL_EARTH/$name.zip" || fetch "downloads/$name.zip" "$NATURAL_EARTH_MIRROR/$name.zip"
+            unzip -q -o "downloads/$name.zip" -d "downloads/$name"
+            test -f "downloads/$name/$name.shp" || { echo "::error::$name.zip holds no $name.shp"; exit 1; }
+          done
+          fetch downloads/etopo1_india.asc "$ETOPO_URL"
+          head -c 200 downloads/etopo1_india.asc | grep -qi "ncols" || { echo "::error::the ETOPO1 download is not an ESRI ASCII grid"; exit 1; }
+          fetch downloads/mrds-csv.zip "$MRDS_URL"
+          ls -la downloads
+      - name: Rebuild the layers and mirror the measured ones into the API
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python maplayers_build.py ../downloads | tee ../map-layers.txt
+          if git diff --quiet -- ../frontend/public/layers/relief.json; then echo "::error::relief.json was not rewritten, so the build did not run"; exit 1; fi
+      - name: Test the relief bands, failing when a test is skipped
+        working-directory: tools
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q -rs tests/test_maplayers_relief.py tests/test_maplayers.py | tee ../map-layers-tests.txt
+          if grep -q "SKIPPED" ../map-layers-tests.txt; then echo "::error::a map layer test was skipped, so the relief bands were not checked"; exit 1; fi
+      - name: Say what changed
+        shell: bash
+        run: |
+          {
+            echo "## Rebuilt map layers"
+            echo
+            git diff --stat -- frontend/public/layers backend/app/data/layers
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the rebuilt layers
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: map-layers-${{ github.run_id }}
+          path: |
+            frontend/public/layers
+            backend/app/data/layers
+            map-layers.txt
+            map-layers-tests.txt
+          retention-days: 30

@@ -495,22 +495,6 @@ Last reviewed: 2026-11-22.
 
 ## Climate and risk, and ask the map (decision 0065)
 
-### A place's elevation still reads the smoothed relief bands
-
-- **What:** decision 0189 made `tools/maplayers/relief.py` draw the hypsometric bands from the
-  ETOPO1 grid as read (only the 0.018° simplification), keeping the smoothing for the hillshade,
-  but the committed `relief.json` and its mirror in `backend/app/data/layers` are still the bands
-  drawn from the twice-smoothed, halved grid. A craft place on a narrow valley floor among high
-  ridges can therefore still read an elevation band above its own (`geo/ground_measure`), and
-  `tools/tests/test_maplayers_relief.py` is skipped in Backend checks, which has no numpy or
-  rasterio.
-- **Why left:** the rebuild needs the ETOPO1 and outline downloads, which the development machine
-  may not run.
-- **Clears it:** run `tools/maplayers_build.py` with its downloads where they may run (a workflow
-  or the box), commit the rebuilt `relief.json` and its mirror, replace the pending sentence in
-  `docs/DATA_SOURCES.md` (Relief bands), and run the relief test where numpy and rasterio are
-  installed.
-
 ### Groundwater values only for Rajasthan, and not yet loaded
 
 - **What:** `climate_risk.groundwater` can show stored groundwater figures only for Rajasthan's 33
