@@ -17,6 +17,8 @@ THEMES_KEY = "themes"
 SVG_KEY = "svg"
 TOKEN = re.compile(r"^--([a-z0-9-]+)$")
 NODE_TAGS = frozenset(SVG_TAGS)
+ATOM_KEY_PATH = re.compile(r"key\[\d+\]\.swatch")
+ATOM_ROLE = re.compile(r"atom-[a-z]+")
 
 
 def spec_design_problems(spec: Mapping[str, Any]) -> list[str]:
@@ -85,7 +87,11 @@ def _tokens(value: Any, path: str, material: bool) -> Iterator[tuple[str, str, b
 
 
 def _token_problems(path: str, token: str, material: bool) -> list[str]:
-    if material and token not in MATERIAL_ROLES:
+    if material and token not in MATERIAL_ROLES and not _atom_key(path, token):
         return [f"{path} names --{token}; a swatch or dip shows a depicted --dye-* or --dip-* material"]
     problem = role_problem(token, molecules=True)
     return [f"{path}: {problem}"] if problem else []
+
+
+def _atom_key(path: str, token: str) -> bool:
+    return ATOM_KEY_PATH.fullmatch(path) is not None and ATOM_ROLE.fullmatch(token) is not None

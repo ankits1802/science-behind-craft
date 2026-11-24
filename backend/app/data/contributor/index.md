@@ -36,6 +36,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `edit_draft`: Build a page in a draft.
 - `preview_page`: Preview a page.
 - `propose_page`: Propose a page or one of its parts.
+- `compose_component`: Compose a craft's own interactive.
 - `give_pictures`: Give pictures of a craft.
 - `review_queue`: Read the review queue (Admins).
 - `stage_reviews`: Stage review decisions for a person to confirm (Admins).

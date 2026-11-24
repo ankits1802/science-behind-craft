@@ -20,8 +20,8 @@ from .craft_page_unwritten import listed_units
 from .document_components import DocumentStructure, StructureBlock
 from .document_components_data import (
     READER_SCOPE,
-    borrowed_data,
     fragment_sentences,
+    kit_data,
     merged_data,
     monograph_data,
     reader_data,
@@ -249,6 +249,7 @@ def _drawn(parts: GeneratedParts, page: _Page, drawings: Drawings, component: Re
         page.specs[component.label] = themed_spec(component.kind, drawn.spec)
         page.drafts.update(drawn.drafts)
         page.held[component.label] = list(drawn.drafts)
+        merged_data(page.data, kit_data({}, component.kind, page.specs[component.label]))
         return True
     if component.monograph is None:
         return False
@@ -291,7 +292,7 @@ def _borrow_data(page: _Page, drawings: Drawings, book: SourceBook) -> None:
     for label, monograph in {**page.reused, **page.borrowed_specs}.items():
         if monograph not in read:
             read[monograph] = monograph_data(drawings.root, monograph)
-        found = borrowed_data(read[monograph], page.components[label].kind, page.specs.get(label))
+        found = kit_data(read[monograph], page.components[label].kind, page.specs.get(label))
         merged_data(page.data, found)
         if home_scopes(monograph).get(label) == READER_SCOPE:
             numbers = drawings.source_numbers(monograph, book)

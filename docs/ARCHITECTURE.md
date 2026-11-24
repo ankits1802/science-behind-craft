@@ -211,7 +211,10 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. The research write-back asks the worker's judge ladder, cheapest
+are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+lab is composed by the server from the craft's own curated page and facts (`compose_component`,
+`services/compose_components`, decision 0198), never borrowed from another craft's page, and the
+monograph kit plays it on any page as it plays Kutch Ajrakh's. The research write-back asks the worker's judge ladder, cheapest
 model first (`providers/judge_routes.thrifty_judges`, decision 0169), and a write-back the filing
 ladder cannot place waits for a reviewer, who may file it under a craft or a family's science
 (decision 0159). Beside facts the queue holds a process stage an answer found (`STAGES`, decision

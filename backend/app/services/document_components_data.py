@@ -14,8 +14,8 @@ __all__ = [
     "READER_DATA",
     "READER_SCOPE",
     "REGION_DATA",
-    "borrowed_data",
     "fragment_sentences",
+    "kit_data",
     "merged_data",
     "monograph_data",
     "reader_data",
@@ -35,6 +35,9 @@ KIND_DATA: Mapping[str, str] = {
 MONOGRAPH_SLUG = re.compile(r"^[A-Za-z0-9-]+$")
 MOLECULES_KEY = "molecules"
 CID_KEY = "cid"
+GEOMETRY_KEY = "geometry"
+GEOMETRY_RADIUS_KEY = "radius"
+ATOMS_KEY, BONDS_KEY, RADIUS_KEY, MARKS_KEY = "atoms", "bonds", "R", "marks"
 SENTENCES_KEY = "sents"
 SOURCES_KEY = "sources"
 NUMBER_KEY = "n"
@@ -52,16 +55,33 @@ def monograph_data(root: Path, monograph: str) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
-def borrowed_data(data: Mapping[str, Any], kind: str, spec: Mapping[str, Any] | None) -> dict[str, Any]:
+def kit_data(data: Mapping[str, Any], kind: str, spec: Mapping[str, Any] | None) -> dict[str, Any]:
     key = KIND_DATA.get(kind)
-    if key is None or key not in data:
+    if key is None:
         return {}
-    block = data[key]
-    if key != MOLECULE_DATA or not isinstance(block, Mapping) or spec is None:
-        return {key: block}
-    molecules = spec.get(MOLECULES_KEY, [])
-    cids = {str(molecule.get(CID_KEY)) for molecule in molecules if isinstance(molecule, Mapping)}
-    return {key: {cid: value for cid, value in block.items() if cid in cids}}
+    block = data.get(key)
+    if key != MOLECULE_DATA or spec is None:
+        return {} if block is None else {key: block}
+    held = block if isinstance(block, Mapping) else {}
+    found: dict[str, Any] = {}
+    for molecule in spec.get(MOLECULES_KEY, []):
+        if not isinstance(molecule, Mapping):
+            continue
+        cid, geometry = str(molecule.get(CID_KEY)), molecule.get(GEOMETRY_KEY)
+        if isinstance(geometry, Mapping):
+            found[cid] = _turned_model(geometry)
+        elif cid in held:
+            found[cid] = held[cid]
+    return {key: found} if found else {}
+
+
+def _turned_model(geometry: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        ATOMS_KEY: geometry.get(ATOMS_KEY, []),
+        BONDS_KEY: geometry.get(BONDS_KEY, []),
+        RADIUS_KEY: geometry.get(GEOMETRY_RADIUS_KEY),
+        MARKS_KEY: [],
+    }
 
 
 def reader_data(

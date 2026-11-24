@@ -38,6 +38,7 @@ CONTRIBUTOR_TOOLS = (
     "edit_draft",
     "preview_page",
     "propose_page",
+    "compose_component",
     "give_pictures",
 )
 ADMIN_TOOLS = ("review_queue", "stage_reviews", "refresh_pages", "admin_reports")
