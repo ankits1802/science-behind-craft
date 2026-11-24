@@ -675,10 +675,13 @@ Last reviewed: 2026-11-22.
 
 ### Speed left after the quality lane
 
-- **What:** on a phone (Lighthouse at 360, median of three, 2026-11-22) Kutch Ajrakh scored 78 with
-  an LCP of 5.7 s against the 2.5 s target, with about 1 MB requested before its masthead picture
-  paints (the preloaded first-screen faces, the kit stylesheet and about 400 KB of scripts); signed
-  out, `/ask` lands on the sign-in page (83, LCP 4.7 s). Decision 0177 measured, from the computed
+- **What:** on a phone (Lighthouse at 360, median of three) Kutch Ajrakh scored 78 with an LCP of
+  5.7 s on 2026-11-22 and 83 with 4.68 s on 2026-11-24 (capture run 45294669263 on release
+  dab903fd, where the generated Bagru Hand Block Print page scored 87 with 3.93 s), against the
+  2.5 s target, with about 1 MB requested before its masthead picture paints (the preloaded
+  first-screen faces, the kit stylesheet and about 400 KB of scripts); signed out, `/ask` lands on
+  the sign-in page (83 with 4.7 s, then 92 with 3.34 s). At 1440 every one of the three scores 98
+  to 100. Decision 0177 measured, from the computed
   styles of the text each first screen at 360 shows (`e2e/first-screen-fonts.smoke.spec.ts`), which
   faces they draw: Kutch Ajrakh's Newsreader roman and italic (its standfirst) and Plex Sans 400,
   500 and 600; the landing's Newsreader roman and italic (the hero title's emphasis) and Plex Sans
