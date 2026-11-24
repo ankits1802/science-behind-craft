@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p downloads
-          fetch() { curl -fsSL --retry 4 --retry-all-errors -A "$AGENT" -o "$1" "$2"; }
+          fetch() { echo "fetching $2"; curl -fsSL --retry 5 --retry-delay 15 --retry-all-errors -A "$AGENT" -o "$1" "$2" || { echo "::warning::$2 was refused"; return 1; }; }
           for name in ne_10m_rivers_lake_centerlines ne_10m_lakes ne_10m_geography_regions_polys ne_10m_geography_regions_elevation_points; do
             fetch "downloads/$name.zip" "$NATURAL_EARTH/$name.zip" || fetch "downloads/$name.zip" "$NATURAL_EARTH_MIRROR/$name.zip"
             unzip -q -o "downloads/$name.zip" -d "downloads/$name"
