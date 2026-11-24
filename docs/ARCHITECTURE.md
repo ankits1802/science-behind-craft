@@ -760,7 +760,12 @@ evidence marks, specimen label, masthead, plates, fact grid, chapter rail, margi
 `components/editorial/`, and their CSS through `app/primitives.css` and `app/editorial.css`.
 Named motions are owned by `app/motion.css` with the hooks in `components/motion/`, declarative
 motion by framer-motion; GSAP is gone (decision 0094). `/design` draws every primitive in every
-state. Practice rules are `frontend-practices`.
+state. The figure kit is `components/artkit/`: the designed parts a composed `diagram` names
+(cloth, block, bath, paste, heat, water, tool, section, piece), drawn as inline SVG in the tokens
+with the named motions, set in their layouts by `KitFigure` and drawn on a page by
+`components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
+copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
+part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub

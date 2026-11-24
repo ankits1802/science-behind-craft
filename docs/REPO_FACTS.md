@@ -91,12 +91,11 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## MCP server
 
-**27 tools**, each a `Tool(...)` declared in `backend/app/api/`.
+**26 tools**, each a `Tool(...)` declared in `backend/app/api/`.
 
 | Module | Tools |
 | --- | ---: |
 | `mcp_ask_tools.py` | 1 |
-| `mcp_compose_tools.py` | 1 |
 | `mcp_dataset_tools.py` | 1 |
 | `mcp_fact_tools.py` | 2 |
 | `mcp_lookup_tools.py` | 3 |
@@ -115,15 +114,15 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 790 | 5839 |
-| Backend, on Postgres | 220 | 987 |
+| Backend, without a database | 785 | 5828 |
+| Backend, on Postgres | 219 | 985 |
 | Tools | 26 | 204 |
 | Craft data ETL | 7 | 51 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 202 | 1443 |
+| Unit specs (`*-unit.spec.ts`) | 202 | 1446 |
 | Browser and release specs | 20 | 64 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -142,13 +141,13 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1485 | 209,034 |
-| `backend/tests` | 1182 | 151,839 |
+| `backend/app` | 1474 | 207,795 |
+| `backend/tests` | 1174 | 151,378 |
 | `backend/migrations` | 89 | 11,547 |
-| `frontend/app` | 112 | 10,127 |
-| `frontend/components` | 641 | 43,879 |
-| `frontend/lib` | 275 | 27,573 |
-| `frontend/e2e` | 327 | 35,949 |
+| `frontend/app` | 114 | 10,234 |
+| `frontend/components` | 662 | 45,151 |
+| `frontend/lib` | 279 | 27,857 |
+| `frontend/e2e` | 326 | 35,790 |
 | `etl` | 80 | 11,545 |
 | `tools` | 102 | 8,546 |
 | `infra` | 17 | 2,292 |

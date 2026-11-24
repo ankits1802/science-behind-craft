@@ -24,10 +24,12 @@ from .component_specs_general import (
     GeneralTableSpec,
     GeneralTimelineSpec,
 )
+from .component_specs_kit import DeclaredDiagramSpec, kit_label_problems
 from .component_specs_timeline_map import TIMELINE_MAP, DeclaredTimelineMapSpec, server_parts_sent
 from .component_specs_timeline_map_delivery import SERVER_SENT, timeline_map_problems
 from .component_specs_tools import spec_unit_refs
 from .drawing_spec_rules import THEMES_KEY, spec_design_problems
+from .drawn_art import drawn_art_problems
 from .drawn_maps import drawn_map_problems
 from .quotes import numbers_in, unsupported_figures
 from .unit_ids import UNIT_REF, UNIT_REF_PATTERN
@@ -117,7 +119,9 @@ def spec_problems(kind: str, spec: Mapping[str, Any], units: Mapping[str, Delive
         problems.append(THEMES_SENT)
     if kind == TIMELINE_MAP and server_parts_sent(spec):
         problems.append(SERVER_SENT)
-    problems += drawn_map_problems(kind, dumped) + spec_design_problems(dumped)
+    texts = {ref: unit.text for ref, unit in units.items()}
+    problems += drawn_map_problems(kind, dumped) + drawn_art_problems(kind, dumped, texts)
+    problems += spec_design_problems(dumped)
     return problems + _value_problems(kind, checked, units)
 
 
@@ -162,9 +166,12 @@ def renamed_spec(value: Any, names: Mapping[str, str]) -> Any:
 def _value_problems(kind: str, spec: Any, units: Mapping[str, DeliveredUnit]) -> list[str]:
     if kind == GENERAL_TABLE and isinstance(spec, GeneralTableSpec):
         return _table_problems(spec, units)
+    cited = {ref for ref, unit in units.items() if unit.claim_ids}
     if isinstance(spec, DeclaredTimelineMapSpec):
         texts = {ref: unit.text for ref, unit in units.items()}
-        return timeline_map_problems(spec, texts, {ref for ref, unit in units.items() if unit.claim_ids})
+        return timeline_map_problems(spec, texts, cited)
+    if isinstance(spec, DeclaredDiagramSpec):
+        return kit_label_problems(spec, cited)
     return [
         f"the value {value:g} is not stated by its unit {ref}"
         for value, ref in _stated_values(kind, spec)

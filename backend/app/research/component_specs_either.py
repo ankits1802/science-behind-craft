@@ -21,6 +21,8 @@ from .component_specs_general import (
     GeneralTimelineSpec,
     is_declared,
 )
+from .component_specs_kit import KIT_DIAGRAM, DeclaredDiagramSpec
+from .component_specs_science_figures import DiagramSpec
 from .component_specs_timeline_map import DECLARED_MARK, TIMELINE_MAP, DeclaredTimelineMapSpec
 from .kin_crafts import KIN_KIND, KinCraftsSpec
 
@@ -32,6 +34,7 @@ __all__ = [
     "EITHER_FORMS",
     "SPEC_MODELS_EITHER",
     "ChartKindSpec",
+    "DiagramKindSpec",
     "FactTableKindSpec",
     "MapLayerKindSpec",
     "RelatedCraftsKindSpec",
@@ -120,6 +123,17 @@ class RelatedCraftsKindSpec(
     pass
 
 
+class DiagramKindSpec(
+    RootModel[
+        Annotated[
+            Annotated[DeclaredDiagramSpec, Tag(DECLARED)] | Annotated[DiagramSpec, Tag(AUTHORED)],
+            Discriminator(spec_form),
+        ]
+    ]
+):
+    pass
+
+
 class TimelineMapKindSpec(
     RootModel[
         Annotated[
@@ -139,6 +153,7 @@ EITHER_FORMS: Mapping[str, Mapping[str, type[ContractModel]]] = MappingProxyType
         GENERAL_MAP_LAYER: MappingProxyType({DECLARED: GeneralMapLayerSpec, AUTHORED: MapLayerSpec}),
         KIN_KIND: MappingProxyType({DECLARED: KinCraftsSpec, AUTHORED: RelatedCraftsSpec}),
         TIMELINE_MAP: MappingProxyType({DECLARED: DeclaredTimelineMapSpec, AUTHORED: TimelineMapSpec}),
+        KIT_DIAGRAM: MappingProxyType({DECLARED: DeclaredDiagramSpec, AUTHORED: DiagramSpec}),
     }
 )
 SPEC_MODELS_EITHER: Mapping[str, type[BaseModel]] = MappingProxyType(
@@ -149,6 +164,7 @@ SPEC_MODELS_EITHER: Mapping[str, type[BaseModel]] = MappingProxyType(
         GENERAL_MAP_LAYER: MapLayerKindSpec,
         KIN_KIND: RelatedCraftsKindSpec,
         TIMELINE_MAP: TimelineMapKindSpec,
+        KIT_DIAGRAM: DiagramKindSpec,
     }
 )
 

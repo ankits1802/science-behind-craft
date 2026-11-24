@@ -28,6 +28,7 @@ KIND_FIXTURE_ORDER = (
     "dip_player",
     "reaction_player",
     "diagram",
+    "diagram_kit",
     "equation_card",
     "structure_diagram",
     "molecule_3d",

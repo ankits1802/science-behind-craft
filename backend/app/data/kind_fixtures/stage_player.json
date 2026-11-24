@@ -20,21 +20,122 @@
     "drawing": {
       "tag": "svg",
       "attrs": {
-        "viewBox": "0 0 200 120",
+        "viewBox": "0 0 320 200",
         "role": "img",
         "aria-label": "A dhokra figure on its stand"
       },
       "children": [
         {
-          "tag": "ellipse",
+          "tag": "defs",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pattern",
+              "attrs": {
+                "id": "dhokra-stage-tex",
+                "width": "6",
+                "height": "6",
+                "patternUnits": "userSpaceOnUse"
+              },
+              "children": [
+                {
+                  "tag": "circle",
+                  "attrs": {
+                    "cx": "1.5",
+                    "cy": "2",
+                    "r": ".6",
+                    "fill": "var(--ink-1)",
+                    "fill-opacity": ".3"
+                  }
+                },
+                {
+                  "tag": "circle",
+                  "attrs": {
+                    "cx": "4.5",
+                    "cy": "5",
+                    "r": ".5",
+                    "fill": "var(--raised)",
+                    "fill-opacity": ".35"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "rect",
           "attrs": {
-            "cx": "100",
-            "cy": "60",
-            "rx": "40",
-            "ry": "50",
-            "fill": "var(--dye-field-soil)",
+            "x": "118",
+            "y": "164",
+            "width": "84",
+            "height": "12",
+            "fill": "var(--raised)",
+            "stroke": "var(--ink-1)",
+            "stroke-width": "1.2"
+          }
+        },
+        {
+          "tag": "path",
+          "attrs": {
+            "d": "M40 176 H280",
             "stroke": "var(--ink-1)",
             "stroke-width": "1.5"
+          }
+        },
+        {
+          "tag": "path",
+          "attrs": {
+            "d": "M152 66 C146 70 140 78 138 90 L130 150 C130 158 136 164 160 164 C184 164 190 158 190 150 L182 90 C180 78 174 70 168 66 Z",
+            "fill": "var(--dye-field-soil)"
+          }
+        },
+        {
+          "tag": "path",
+          "attrs": {
+            "d": "M152 66 C146 70 140 78 138 90 L130 150 C130 158 136 164 160 164 C184 164 190 158 190 150 L182 90 C180 78 174 70 168 66 Z",
+            "fill": "url(#dhokra-stage-tex)",
+            "stroke": "var(--ink-1)",
+            "stroke-width": "1.5"
+          }
+        },
+        {
+          "tag": "circle",
+          "attrs": {
+            "cx": "160",
+            "cy": "50",
+            "r": "16",
+            "fill": "var(--dye-field-soil)"
+          }
+        },
+        {
+          "tag": "circle",
+          "attrs": {
+            "cx": "160",
+            "cy": "50",
+            "r": "16",
+            "fill": "url(#dhokra-stage-tex)",
+            "stroke": "var(--ink-1)",
+            "stroke-width": "1.5"
+          }
+        },
+        {
+          "tag": "path",
+          "attrs": {
+            "d": "M141 92 C129 100 123 112 121 126",
+            "fill": "none",
+            "stroke": "var(--ink-1)",
+            "stroke-width": "4",
+            "stroke-linecap": "round"
+          }
+        },
+        {
+          "tag": "path",
+          "attrs": {
+            "d": "M179 92 C191 100 197 112 199 126",
+            "fill": "none",
+            "stroke": "var(--ink-1)",
+            "stroke-width": "4",
+            "stroke-linecap": "round"
           }
         }
       ]

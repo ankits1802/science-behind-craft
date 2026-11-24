@@ -3,9 +3,9 @@
   "kind": "drawing",
   "craft": "Bastar-Dhokra",
   "craftName": "Bastar Dhokra",
-  "label": "bastar-dhokra/process/mould-in-section",
-  "title": "A dhokra mould in section",
-  "description": "A section through a Bastar dhokra mould: the black soil core, the wax skin wound from strings, and the coats of riverside and termite-hill soil. Place it where the lost-wax mould is described.",
+  "label": "bastar-dhokra/process/wax-strings-on-the-model",
+  "title": "Wax strings round a dhokra model",
+  "description": "A line drawing of a Bastar dhokra model wound in close turns of wax string over its dry, green-coated core. Place it where the wax model is described.",
   "field": "PROCESS",
   "within": null,
   "spec": {
@@ -13,46 +13,28 @@
       "title": "u0001",
       "caption": "u0002"
     },
-    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\"><ellipse cx=\"160\" cy=\"100\" rx=\"150\" ry=\"90\" fill=\"none\" stroke=\"var(--ink-3)\" stroke-width=\"2\" stroke-dasharray=\"6 4\" /><ellipse cx=\"160\" cy=\"100\" rx=\"128\" ry=\"74\" fill=\"var(--dye-river-soil)\" stroke=\"var(--ink-1)\" stroke-width=\"1.5\" /><ellipse cx=\"160\" cy=\"100\" rx=\"104\" ry=\"58\" fill=\"none\" stroke=\"var(--ink-1)\" stroke-width=\"5\" /><ellipse cx=\"160\" cy=\"100\" rx=\"96\" ry=\"52\" fill=\"var(--dye-field-soil)\" stroke=\"var(--ink-1)\" stroke-width=\"1\" /></svg>",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\"><defs><pattern id=\"dhokra-grain\" width=\"8\" height=\"6\" patternUnits=\"userSpaceOnUse\"><path d=\"M0 2 Q2 1 4 2 T8 2 M0 5 Q2 4 4 5 T8 5\" fill=\"none\" stroke=\"var(--ink-3)\" stroke-opacity=\".4\" stroke-width=\".6\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"320\" height=\"200\" fill=\"var(--sunk)\"/><rect x=\"118\" y=\"164\" width=\"84\" height=\"12\" fill=\"var(--raised)\" stroke=\"var(--ink-1)\" stroke-width=\"1.2\"/><path d=\"M40 176 H280\" stroke=\"var(--ink-1)\" stroke-width=\"1.5\"/><path d=\"M152 66 C146 70 140 78 138 90 L130 150 C130 158 136 164 160 164 C184 164 190 158 190 150 L182 90 C180 78 174 70 168 66 Z\" fill=\"var(--raised)\"/><path d=\"M152 66 C146 70 140 78 138 90 L130 150 C130 158 136 164 160 164 C184 164 190 158 190 150 L182 90 C180 78 174 70 168 66 Z\" fill=\"url(#dhokra-grain)\" stroke=\"var(--ink-1)\" stroke-width=\"1.5\"/><circle cx=\"160\" cy=\"50\" r=\"16\" fill=\"var(--raised)\"/><circle cx=\"160\" cy=\"50\" r=\"16\" fill=\"url(#dhokra-grain)\" stroke=\"var(--ink-1)\" stroke-width=\"1.5\"/><path d=\"M141 92 C129 100 123 112 121 126\" fill=\"none\" stroke=\"var(--ink-1)\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M179 92 C191 100 197 112 199 126\" fill=\"none\" stroke=\"var(--ink-1)\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M136.9 98 C150.9 103 169.1 103 183.1 98\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M135.9 106 C149.9 111 170.1 111 184.1 106\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M134.8 114 C148.8 119 171.2 119 185.2 114\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M133.7 122 C147.7 127 172.3 127 186.3 122\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M132.7 130 C146.7 135 173.3 135 187.3 130\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M131.6 138 C145.6 143 174.4 143 188.4 138\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M130.5 146 C144.5 151 175.5 151 189.5 146\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M129.5 154 C143.5 159 176.5 159 190.5 154\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"160\" cy=\"50\" r=\"10\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2\"/><circle cx=\"160\" cy=\"50\" r=\"4.5\" fill=\"none\" stroke=\"var(--ink-2)\" stroke-width=\"2\"/></svg>",
     "alt": "u0003"
   },
   "units": {
     "u0001": {
-      "text": "Wax strings wrap the soil core, and coats of riverside and termite-hill soil cover the wax.",
+      "text": "Wax strings wound closely round the model",
       "claims": [
-        "C061",
-        "C064",
-        "C066"
+        "C061"
       ]
     },
     "u0002": {
-      "text": "The core is black field soil kneaded with rice husk; the riverside soil is red.",
+      "text": "Wax strings are wrapped closely around the hard, green-coated model, and further designs are added in plain wax.",
       "claims": [
-        "C050",
-        "C111"
+        "C061"
       ]
     },
     "u0003": {
-      "text": "A dhokra mould in section: soil core, wax skin and two soil coats",
+      "text": "Wax strings wound in close turns round a dry, green-coated model",
       "claims": []
     }
   },
   "facts": {
-    "C050": {
-      "text": "The core of a figure is shaped from black soil brought from the fields and kneaded with paddy husk, then left to dry in the sun.",
-      "quotes": [
-        {
-          "source": "S13",
-          "locator": "lines 4-5",
-          "quote": "सबसे पहले खेत से लायी गयी काली मिटटी में धान का छिलका मिलाकर गूंथ लिया जाता है । इस प्रकार तैयार की गई मिटटी से मूर्ति का ढांचा या कोर बनाया जाता है ।"
-        },
-        {
-          "source": "S15",
-          "locator": "lines 1113-1115",
-          "quote": "A basic model is prepared by using black soil mixed with rice husk in appropriate ratio. Soft pliable dough is made by adding water in it. A basic model of craft is made and dried in the sun."
-        }
-      ]
-    },
     "C061": {
       "text": "Wax strings are wrapped closely around the hard, green-coated model, and further designs are added in plain wax.",
       "quotes": [
@@ -67,41 +49,6 @@
           "quote": "7. Wrapping of strings (Tikkal Chadana): Wax strings are tightly wrapped around the dry clay form"
         }
       ]
-    },
-    "C064": {
-      "text": "The waxed model is first coated with sieved riverside soil and powdered wood coal, mixed in proportions of about 85-90% soil to 10-15% coal.",
-      "quotes": [
-        {
-          "source": "S03",
-          "locator": "lines 1424-1427",
-          "quote": "Powdered sticky riverside soil and powdered wood coal are sieved separately through clean cloth. Mixed in the proportions 90-85% and 10-15%, water is added and kneaded to make dough like consistency and applied over the model."
-        }
-      ]
-    },
-    "C066": {
-      "text": "A final layer of powdered termite-hill soil covers the model, with larger wax channels added to form an inverted funnel for pouring the metal.",
-      "quotes": [
-        {
-          "source": "S03",
-          "locator": "lines 1460-1461",
-          "quote": "Soil from the termite hill is brought, powdered and kneaded to make a smooth mixture."
-        },
-        {
-          "source": "S03",
-          "locator": "lines 1461-1464",
-          "quote": "a bigger channel or channels from wax are added to the earlier channels (for pouring metal) made at the bottom and covered with termite soil mixture to make the passage ready (inverted funnel shape) and dried."
-        }
-      ]
-    },
-    "C111": {
-      "text": "The riverside soil, called rui mitti, comes from river beds and is red, very soft and easy to shape, file and finish.",
-      "quotes": [
-        {
-          "source": "S03",
-          "locator": "lines 1276-1279",
-          "quote": "River side soil (Rui mitti): This soil is procured from the river beds. The soil is very soft and easy to shape, mould, file and hence provide good final shape and finishing. The soil is red in color."
-        }
-      ]
     }
   },
   "sources": {
@@ -111,20 +58,6 @@
       "year": 2008,
       "url": "https://ipindia.nic.in/girindia/journal/24.pdf",
       "reliability": "A"
-    },
-    "S13": {
-      "title": "घढ़वा धातु ढलाई पद्यति / Gadhwa metal casting: process and technique",
-      "publisher": "Sahapedia",
-      "year": null,
-      "url": "https://www.sahapedia.org/%E0%A4%98%E0%A5%9D%E0%A4%B5%E0%A4%BE-%E0%A4%A7%E0%A4%BE%E0%A4%A4%E0%A5%81-%E0%A4%A2%E0%A4%B2%E0%A4%BE%E0%A4%88-%E0%A4%AA%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A4%A4%E0%A4%BF-gadhwa-metal-casting-process-and-technique",
-      "reliability": "B"
-    },
-    "S15": {
-      "title": "Dhokra Shilp: The Bell Metal Craft of Bastar",
-      "publisher": "D'source, Industrial Design Centre, IIT Bombay",
-      "year": null,
-      "url": "https://dsource.in/sites/default/files/resource/dhokra-shilp/downloads/file/dhokra_shilp_bell_metal_craft_bastar.pdf",
-      "reliability": "B"
     },
     "S23": {
       "title": "Dhokra craft Kondagaon",

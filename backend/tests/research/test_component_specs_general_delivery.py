@@ -94,9 +94,12 @@ def test_a_citation_held_in_the_spec_is_refused_for_one_through_a_unit() -> None
         "source": {"tag": "p", "text": ["Rain in ", cite]},
     }
     delivered = units({"u0001": {"text": "Rain at Bhuj", "claimIds": [str(FACT)]}})
-    assert spec_problems("chart", {"form": "figure", "figure": figure}, delivered) == [
-        "a citation in the spec's own text is not allowed: cite a fact through a unit's claimIds"
-    ]
+    problems = spec_problems("chart", {"form": "figure", "figure": figure}, delivered)
+    assert (
+        problems[0]
+        == "a citation in the spec's own text is not allowed: cite a fact through a unit's claimIds"
+    )
+    assert all(problem.startswith("the chart's drawing at figure.drawing ") for problem in problems[1:])
 
 
 def test_a_component_citing_no_fact_is_refused() -> None:

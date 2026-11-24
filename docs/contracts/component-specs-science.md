@@ -105,7 +105,10 @@ Ajrakh: `kutch-ajrakh/process/cloth-after-each-stage`.
 `DiagramSpec`: either a whole `drawing` (the borewell depth and the Bhuj distances) or a `chain`
 of links, each a kicker and ordered parts: text blocks, drawings, step links into a reaction
 player (`#rp-blue`, step n, with the figure reference) and a grouped equation with its tick count.
-Ajrakh: three.
+Ajrakh: three. A `diagram` with a `head` is the other form, composed from the figure kit and drawn
+by its own view (`DeclaredDiagramSpec`, `components/monograph/kinds/kit/KitDiagramView.tsx`,
+[component-specs-general.md](component-specs-general.md), The figure kit, decision 0199); a
+delivered drawing of either form meets the bar for hand-drawn art there (The hand-drawn figure).
 
 ## molecule_3d
 

@@ -159,7 +159,7 @@ flowchart LR
 | [0111](0111-fewer-mcp-tools.md) | Twenty-one MCP tools in six groups, with small schemas | [0114](0114-kinds-and-datasets.md), [0117](0117-pages-in-other-languages.md), [0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md), [0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) and [0191](0191-room-for-the-page-quality-tools.md) |
 | [0112](0112-reviewed-field-photographs.md) | Each field photograph filed on an artisan is reviewed by a person before it is shown | · |
 | [0113](0113-questions-become-work.md) | Questions KalaVigyan cannot answer well become open work | [0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md) |
-| [0114](0114-kinds-and-datasets.md) | Component kinds any craft can use, and one dataset record | [0131](0131-drawings-in-the-design.md), [0169](0169-mcp-follow-ups-kept-true.md), [0177](0177-differences-named-and-the-monograph-shell-measured.md) and [0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
+| [0114](0114-kinds-and-datasets.md) | Component kinds any craft can use, and one dataset record | [0131](0131-drawings-in-the-design.md), [0169](0169-mcp-follow-ups-kept-true.md), [0177](0177-differences-named-and-the-monograph-shell-measured.md), [0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) and [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | [0115](0115-client-id-metadata-documents.md) | MCP clients sign in with their published identity | [0148](0148-a-client-that-can-sign-in-publicly-is-signed-in-publicly.md) |
 | [0116](0116-open-data-with-a-doi.md) | KalaVigyan's knowledge is an open dataset with a DOI | [0130](0130-a-craft-release.md) and [0149](0149-a-fact-readers-can-see.md) |
 | [0117](0117-pages-in-other-languages.md) | A page in another language is the same page, translated passage by passage | · |
@@ -175,7 +175,7 @@ flowchart LR
 | [0127](0127-coherent-answers.md) | An answer says each fact once, never admits a gap, keeps the stages it is asked and paces its sources | [0138](0138-answers-composed-from-the-asked-fields.md) and [0139](0139-sources-and-providers-reach-outside-services-once.md) |
 | [0129](0129-first-stage-retrieval.md) | The stored search finds the right facts as the knowledge grows | · |
 | [0130](0130-a-craft-release.md) | One craft can be released as its own dataset with its own DOI | · |
-| [0131](0131-drawings-in-the-design.md) | Whatever an AI draws for KalaVigyan speaks the design and follows the reader's theme | [0141](0141-design-system-and-answer-screens-without-debt.md) |
+| [0131](0131-drawings-in-the-design.md) | Whatever an AI draws for KalaVigyan speaks the design and follows the reader's theme | [0141](0141-design-system-and-answer-screens-without-debt.md) and [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | [0132](0132-a-ranking-votes-with-its-first-thirty.md) | A ranking votes with its first thirty; deeper finds only fill the rerank pool | [0151](0151-a-release-the-live-side-can-read.md) |
 | [0133](0133-the-evaluation-scores-what-answers-read.md) | The evaluation scores what answers read | [0151](0151-a-release-the-live-side-can-read.md) |
 | [0134](0134-each-sentence-once-in-a-block.md) | A block says each sentence once, and the judge reads it as a reader does | [0147](0147-time-market-and-figures-kept-true.md), [0165](0165-answers-counted-as-settled-asked-as-asked.md) and [0168](0168-a-table-under-a-said-sentence-and-python-within-budget.md) |
@@ -241,6 +241,7 @@ flowchart LR
 | [0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) | A generated page's colour key is drawn by the site from its cited stage, dye and mordant colours, and a masthead without a photograph names the craft once | · |
 | [0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) | A contributor's map is drawn by the site, from places it resolves, on its own base map and layers | · |
 | [0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) | A craft's own reaction player, dip player, 3D molecule and what-if lab are composed by the server from its facts, and the kit plays them on every page as on Kutch Ajrakh's | · |
+| [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) | A figure is composed from a kit of parts the site draws, and hand-drawn art below the bar is refused at delivery | · |
 
 ## How this document is kept true
 

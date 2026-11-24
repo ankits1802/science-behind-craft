@@ -117,7 +117,7 @@ def test_dip_phases_are_the_spec_s_own_words_each_named_once() -> None:
 def test_the_preview_is_served_its_fixtures_in_page_order_with_each_drawing_s_four_themes() -> None:
     served = served_kind_fixtures()
     assert [fixture["label"] for fixture in served] == [fixture["label"] for fixture in kind_fixtures()]
-    assert len(served) == len(KIND_FIXTURE_ORDER) == 25
+    assert len(served) == len(KIND_FIXTURE_ORDER) == 26
     (drawing,) = [fixture for fixture in served if fixture["kind"] == "drawing"]
     themes = drawing["spec"]["themes"]
     assert list(themes) == list(THEMES) == ["light", "dark", "hcLight", "hcDark"]

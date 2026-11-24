@@ -49,6 +49,7 @@ def test_one_kind_per_job_takes_the_declared_and_the_authored_spec() -> None:
         "map_layer",
         "related_crafts",
         "timeline_map",
+        "diagram",
     }
     assert EITHER_FORMS["timeline_map"]["declared"] is DeclaredTimelineMapSpec
     assert EITHER_FORMS["timeline_map"]["authored"] is TimelineMapSpec

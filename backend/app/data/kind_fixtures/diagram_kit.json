@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "kind": "diagram",
+  "craft": "Bidriware",
+  "craftName": "Bidriware",
+  "label": "bidriware/process/white-to-black-in-the-bath",
+  "title": "From zinc-white to black",
+  "description": "A composed diagram from the kit: the sanded zinc-white vessel with its silver inlay, the vessel in the boiling fort-earth bath, and the vessel lifted out black. Place it where the blackening is described.",
+  "field": "PROCESS",
+  "within": null,
+  "spec": {
+    "head": {
+      "title": "u0001",
+      "caption": "u0002"
+    },
+    "layout": "sequence",
+    "alt": "u0003",
+    "panels": [
+      {
+        "label": "u0004",
+        "text": "u0005",
+        "parts": [
+          {
+            "part": "piece",
+            "shape": "vessel",
+            "material": "--dye-bidri-white",
+            "inlay": {
+              "motif": "lines",
+              "material": "--dye-bidri-silver"
+            },
+            "label": "u0006"
+          }
+        ]
+      },
+      {
+        "label": "u0007",
+        "via": "u0008",
+        "text": "u0009",
+        "motion": "dip",
+        "parts": [
+          {
+            "part": "bath",
+            "vessel": "pot",
+            "piece": "--dye-bidri-black",
+            "label": "u0010"
+          }
+        ]
+      },
+      {
+        "label": "u0011",
+        "via": "u0012",
+        "text": "u0013",
+        "parts": [
+          {
+            "part": "piece",
+            "shape": "vessel",
+            "material": "--dye-bidri-black",
+            "inlay": {
+              "motif": "lines",
+              "material": "--dye-bidri-silver"
+            },
+            "label": "u0014"
+          }
+        ]
+      }
+    ]
+  },
+  "units": {
+    "u0001": {
+      "text": "From zinc-white to black",
+      "claims": []
+    },
+    "u0002": {
+      "text": "The finished article is dipped in a boiling solution of fort earth and ammonium chloride, which turns the zinc alloy black while the silver keeps its colour.",
+      "claims": [
+        "C071"
+      ]
+    },
+    "u0003": {
+      "text": "A vessel sanded zinc-white with silver inlay, the same vessel in its boiling bath, and the vessel lifted out black with its silver bright.",
+      "claims": [
+        "C070",
+        "C071"
+      ]
+    },
+    "u0004": {
+      "text": "Sanded level",
+      "claims": []
+    },
+    "u0005": {
+      "text": "The inlaid surface is filed or sanded level, and the temporary black vanishes to leave a smooth, zinc-white surface.",
+      "claims": [
+        "C070"
+      ]
+    },
+    "u0006": {
+      "text": "Zinc-white alloy, inlaid with silver",
+      "claims": [
+        "C001",
+        "C070"
+      ]
+    },
+    "u0007": {
+      "text": "In the bath",
+      "claims": []
+    },
+    "u0008": {
+      "text": "dipped",
+      "claims": []
+    },
+    "u0009": {
+      "text": "The blackening slurry is boiled in an open iron or aluminium vessel and the engraved piece is rolled in it.",
+      "claims": [
+        "C073"
+      ]
+    },
+    "u0010": {
+      "text": "Boiling fort earth and ammonium chloride",
+      "claims": [
+        "C071",
+        "C073"
+      ]
+    },
+    "u0011": {
+      "text": "Lifted out",
+      "claims": []
+    },
+    "u0012": {
+      "text": "taken out and dried",
+      "claims": []
+    },
+    "u0013": {
+      "text": "After the dip the article is taken out of the solution and dried for five to ten minutes.",
+      "claims": [
+        "C076"
+      ]
+    },
+    "u0014": {
+      "text": "Black alloy, lustrous silver",
+      "claims": [
+        "C004",
+        "C071"
+      ]
+    }
+  },
+  "facts": {
+    "C001": {
+      "text": "Bidriware is a metal craft of Bidar in which designs engraved on a cast zinc-copper alloy are inlaid with silver.",
+      "quotes": [
+        {
+          "source": "S02",
+          "locator": "lines 109-110",
+          "quote": "Bidri ware is a famous handicraft of Bidar District."
+        },
+        {
+          "source": "S02",
+          "locator": "lines 224-227",
+          "quote": "Bidriware is an alloy ofzinc , copper and other non ferrous metals. Pretty designs are engtaved on it and there after inlaid with pure silver ware."
+        },
+        {
+          "source": "S08",
+          "locator": "line 5",
+          "quote": "The technique consists of casting objects from a high-zinc alloy and then inlaying them with silver or brass, or a combination of both."
+        }
+      ]
+    },
+    "C070": {
+      "text": "In tarkashi and tainishan work the inlaid surface is then filed or sanded level, and the temporary black vanishes to leave a smooth, zinc-white surface.",
+      "quotes": [
+        {
+          "source": "S03",
+          "locator": "lines 1331-1333",
+          "quote": "filing the above piece with a flat iron file so that the embedded silver and the base material's surface form a smooth single level"
+        },
+        {
+          "source": "S03",
+          "locator": "lines 1333-1334",
+          "quote": "This is done only in the case of tarkashi and taihnishan techniques."
+        },
+        {
+          "source": "S02",
+          "locator": "lines 291-295",
+          "quote": "the whole surface is again rubbed with sand paper or buffrng machine. Thereafter the temporary black colour vanishes and the surface becomes smooth and zinc-white."
+        }
+      ]
+    },
+    "C071": {
+      "text": "The finished article is dipped in a boiling solution of fort earth and ammonium chloride, which turns the zinc alloy black while the silver keeps its colour.",
+      "quotes": [
+        {
+          "source": "S02",
+          "locator": "lines 296-299",
+          "quote": "The polished article is then dipped in a boiled solution of ammonium chloride and earth collected and available only from the fort area"
+        },
+        {
+          "source": "S02",
+          "locator": "lines 305-307",
+          "quote": "By this process, the zinc portion ofthe articles become black and the silver portion retains its own colour."
+        },
+        {
+          "source": "S03",
+          "locator": "lines 1348-1349",
+          "quote": "The finished article is now given a dip in this hot solution."
+        },
+        {
+          "source": "S03",
+          "locator": "lines 1350-1351",
+          "quote": "The zinc alloy turns permanently jet black while the silver retains its brilliance."
+        }
+      ]
+    },
+    "C073": {
+      "text": "The blackening slurry is boiled in an open iron or aluminium vessel and the engraved piece is rolled in it.",
+      "quotes": [
+        {
+          "source": "S04",
+          "locator": "line 119",
+          "quote": "the poultice is boiled in an open iron or aluminium vessel (Fig. 3b)."
+        },
+        {
+          "source": "S04",
+          "locator": "lines 120-121",
+          "quote": "the engraved artefact (Fig. 3c) is introduced into the boiling slurry and rolled."
+        }
+      ]
+    },
+    "C076": {
+      "text": "After the dip the article is taken out of the solution and dried for five to ten minutes.",
+      "quotes": [
+        {
+          "source": "S02",
+          "locator": "lines 307-309",
+          "quote": "The article is taken out from the solution and dried for five to ten minutes."
+        }
+      ]
+    },
+    "C004": {
+      "text": "The black background of bidri ware contrasts strikingly with its lustrous silver inlay.",
+      "quotes": [
+        {
+          "source": "S02",
+          "locator": "lines 116-119",
+          "quote": "The contrast between the black oxidized background and lustrous silver inlay gives a beauty to the Bidri ware."
+        },
+        {
+          "source": "S05",
+          "locator": "line 29",
+          "quote": "The inlays contrast strikingly with the matt black patina of the vessel."
+        }
+      ]
+    }
+  },
+  "sources": {
+    "S02": {
+      "title": "Form GI-1: Application for the registration of a geographical indication, Bidriware (statement of case)",
+      "publisher": "Karnataka State Handicrafts Development Corporation Limited",
+      "year": null,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/13-bidriware.pdf",
+      "reliability": "A"
+    },
+    "S08": {
+      "title": "Huqqa base, Bidar, ca. 1850, museum number 136-1852",
+      "publisher": "Victoria and Albert Museum",
+      "year": null,
+      "url": "https://collections.vam.ac.uk/item/O16017/huqqa-base-unknown/",
+      "reliability": "A"
+    },
+    "S03": {
+      "title": "Census of India 1961, Volume II, Andhra Pradesh, Part VII-A (3): Selected Crafts of Andhra Pradesh (monograph: Bidriware of Hyderabad City)",
+      "publisher": "Census of India",
+      "year": null,
+      "url": "https://censusindia.gov.in/nada/index.php/catalog/31726/download/34907/22310_1961_SEL.pdf",
+      "reliability": "A"
+    },
+    "S04": {
+      "title": "Surface patina and clay characterization: multi-analytical investigations into Bidri handicraft",
+      "publisher": "International Journal of Conservation Science",
+      "year": 2023,
+      "url": "https://ijcs.ro/public/IJCS-23-95_Rolla.pdf",
+      "reliability": "A"
+    },
+    "S05": {
+      "title": "The technical examination of Bidri ware",
+      "publisher": "The International Institute for Conservation of Historic and Artistic Works",
+      "year": 1987,
+      "url": "https://mci.si.edu/node/1221430",
+      "reliability": "A"
+    }
+  }
+}
