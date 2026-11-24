@@ -148,7 +148,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 | `frontend/app` | 114 | 10,282 |
 | `frontend/components` | 663 | 45,291 |
 | `frontend/lib` | 280 | 27,973 |
-| `frontend/e2e` | 335 | 36,918 |
+| `frontend/e2e` | 335 | 36,961 |
 | `etl` | 80 | 11,545 |
 | `tools` | 104 | 8,836 |
 | `infra` | 18 | 2,390 |

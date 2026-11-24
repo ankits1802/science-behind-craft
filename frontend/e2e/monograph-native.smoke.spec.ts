@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 
 import { nativeComponents } from "./monographNative";
-import { anchorPlans, mainLines, markAnchors, markOverlays, openedPage, OVERLAYS_HIDDEN, pageAnswers, type AnchorPlan, type PageAnswers } from "./monographNativeBrowser";
+import { anchorPlans, mainLines, markAnchors, markOverlays, openedPage, OVERLAYS_HIDDEN, pageAnswers, PageStalled, type AnchorPlan, type PageAnswers } from "./monographNativeBrowser";
 import { lineDiff, pixelDifference, type PixelDifference } from "./parity/parityMeasure";
 import { alignPhase } from "./parity/parityPhase";
 import { restingVat } from "./parity/parityRest";
@@ -21,8 +21,10 @@ const RUN_TIMEOUT_MS = 8 * 60_000;
 const WIDTHS: readonly Width[] = [SMALL_PHONE, TABLET, DESKTOP];
 const SMOKE_PROJECT = "desktop";
 const REACT_FAILURE = /Minified React error|hydrat/i;
+const OPENS_MOST = 2;
 
 type Shot = PixelDifference | Unplaced | "hidden";
+type Prepare = (page: Page) => Promise<void> | void;
 type Pages = { approved: Page; native: Page; fragments: Page; errors: string[] };
 type Run = { key: string; width: Width; scheme: Scheme };
 
@@ -58,25 +60,37 @@ async function componentShot(pages: Pages, plan: AnchorPlan, run: Run): Promise<
   return shot;
 }
 
-async function reactPage(browser: Browser, run: Run, path: string, errors: string[]): Promise<Page> {
-  const context = await browser.newContext(contextOptions(run.width, run.scheme));
-  await restingVat(context);
-  const page = await context.newPage();
-  page.on("pageerror", (error) => errors.push(`${path}: ${error.message}`));
-  page.on("console", (message) => {
-    if (message.type() === "error" && REACT_FAILURE.test(message.text())) errors.push(`${path}: ${message.text()}`);
-  });
-  await openedPage(page, path);
-  return page;
+async function freshPage(browser: Browser, run: Run, path: string, prepare: Prepare): Promise<Page> {
+  for (let open = 1; ; open += 1) {
+    const context = await browser.newContext(contextOptions(run.width, run.scheme));
+    await restingVat(context);
+    const page = await context.newPage();
+    await prepare(page);
+    try {
+      await openedPage(page, path);
+      return page;
+    } catch (error) {
+      await context.close();
+      if (!(error instanceof PageStalled) || open === OPENS_MOST) throw error;
+    }
+  }
+}
+
+function watched(path: string, errors: string[]): Prepare {
+  return (page) => {
+    page.on("pageerror", (error) => errors.push(`${path}: ${error.message}`));
+    page.on("console", (message) => {
+      if (message.type() === "error" && REACT_FAILURE.test(message.text())) errors.push(`${path}: ${message.text()}`);
+    });
+  };
 }
 
 async function allPages(browser: Browser, run: Run): Promise<Pages> {
   const errors: string[] = [];
-  const native = await reactPage(browser, run, NATIVE, errors);
-  const fragments = await reactPage(browser, run, FRAGMENTS, errors);
-  const approved = await native.context().newPage();
-  await servedFaces(approved, await selfHostedFaces(native));
-  await openedPage(approved, APPROVED);
+  const native = await freshPage(browser, run, NATIVE, watched(NATIVE, errors));
+  const fragments = await freshPage(browser, run, FRAGMENTS, watched(FRAGMENTS, errors));
+  const faces = await selfHostedFaces(native);
+  const approved = await freshPage(browser, run, APPROVED, (page) => servedFaces(page, faces));
   return { approved, native, fragments, errors };
 }
 
@@ -104,6 +118,7 @@ async function checkRun(browser: Browser, run: Run): Promise<void> {
   const shots = await componentShots(pages, run);
   const answers = { approved: await drawnAnswers(pages.approved), native: await drawnAnswers(pages.native) };
   keep(`${run.key}-native-parity.json`, JSON.stringify({ text, shots, answers, errors: pages.errors }, null, 1));
+  await pages.approved.context().close();
   await pages.native.context().close();
   await pages.fragments.context().close();
   expect.soft(pages.errors, `${run.key}: errors the React pages threw`).toEqual([]);
