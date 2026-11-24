@@ -14,6 +14,7 @@ __all__ = [
     "POOLER_HEADROOM",
     "POOLER_SESSIONS",
     "PROCESS_VARIABLE",
+    "RENDERER",
     "RUN_CONNECTIONS",
     "SCRIPT",
     "UNNAMED_COUNTING",
@@ -34,6 +35,7 @@ PROCESS_VARIABLE = "KV_PROCESS"
 API = "api"
 CONTRIBUTIONS = "contributions"
 FETCHER = "fetcher"
+RENDERER = "renderer"
 SCRIPT = "script"
 WORKER = "worker"
 
@@ -70,7 +72,7 @@ BUDGETS: Mapping[str, ProcessBudget] = MappingProxyType(
         SCRIPT: ProcessBudget(main=PoolBudget(kept=1, burst=2), counting=PoolBudget(kept=1, burst=0)),
     }
 )
-NO_DATABASE = frozenset({FETCHER})
+NO_DATABASE = frozenset({FETCHER, RENDERER})
 UNNAMED_COUNTING = PoolBudget(kept=2, burst=6)
 
 

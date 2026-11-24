@@ -1,6 +1,6 @@
 ---
 name: kalavigyan-craft-pages
-description: How to make or deepen a KalaVigyan craft, family or category page to the Kutch Ajrakh bar through the KalaVigyan MCP server, by the same method and references every contributor follows - sources found, read and checked with the same registries, reader and quote matcher the gates use (search_sources with its pictures, read_source with its quote checks and archive, lookup), facts through propose_facts and get_proposal, structure (a stage's colour after and its why, native names, reactions, botanical names, the GI record, glossary, conflicts, open questions) through propose_structure, new sources through propose_source, components delivered finished as spec and units, whole pages built in a draft (curate_page, edit_draft, preview_page's checklist report, propose_page) or given as one bundle to preview_page then propose_page, sources only the contributor can open through supply_source, pictures through give_pictures, open-licence pictures given by their page through give_pictures - cheaply, one page per agent, with the gates, the checker and the preview as the judges. The rules are the shared references (the page checklist and its 27 rules, sources and licences, quotes and locators, the sixteen fields, components, datasets); the dossiers in backend/app/data/curation are the database's export, edited by hand only for a bulk import. Load it before creating, deepening, fixing or reviewing any page's content, dossier, check file or proposed fact, and before briefing an agent to do so.
+description: How to make or deepen a KalaVigyan craft, family or category page to the Kutch Ajrakh bar through the KalaVigyan MCP server, by the same method and references every contributor follows - sources found, read and checked with the same registries, reader and quote matcher the gates use (search_sources with its pictures, read_source with its quote checks and archive, lookup), facts through propose_facts and get_proposal, structure (a stage's colour after and its why, native names, reactions, botanical names, the GI record, glossary, conflicts, open questions) through propose_structure, new sources through propose_source, components delivered finished as spec and units, whole pages built in a draft (curate_page, edit_draft, preview_page's checklist report, propose_page) or given as one bundle to preview_page then propose_page, sources only the contributor can open through supply_source, pictures through give_pictures, open-licence pictures given by their page through give_pictures - cheaply, one page per agent, with the gates, the checker and the preview as the judges. The rules are the shared references (the page checklist and its 28 rules, sources and licences, quotes and locators, the sixteen fields, components, datasets); the dossiers in backend/app/data/curation are the database's export, edited by hand only for a bulk import. Load it before creating, deepening, fixing or reviewing any page's content, dossier, check file or proposed fact, and before briefing an agent to do so.
 ---
 
 # KalaVigyan craft and category pages
@@ -24,7 +24,7 @@ One source per rule, served to every contributor over MCP and read here from the
 
 | Reference | In the repository | Over MCP |
 |---|---|---|
-| The page checklist: the three lists a page derives first and its 27 rules | `backend/app/data/contributor/references/page-checklist.md` | `kalavigyan://skills/references/page-checklist.md` |
+| The page checklist: the three lists a page derives first and its 28 rules | `backend/app/data/contributor/references/page-checklist.md` | `kalavigyan://skills/references/page-checklist.md` |
 | What counts as a source: grades, recording, licences | `backend/app/data/contributor/references/sources.md` | `kalavigyan://skills/references/sources.md` |
 | Quotes and locators, and one fact per sentence | `backend/app/data/contributor/references/quotes.md` | `kalavigyan://skills/references/quotes.md` |
 | The fields and what each holds | `backend/app/data/contributor/references/fields.md` | `kalavigyan://skills/references/fields.md` |
@@ -38,6 +38,10 @@ identical by the tests for the documents that name it. The server also serves th
 client follows, copied whole from `docs/contracts` (`kalavigyan://contracts/knowledge-writes.md`,
 `open-work.md`, `component-specs-general.md`, `image-contributions.md`, `mcp-ask-and-upload.md`),
 and `kalavigyan://index.md`, one line for each tool, prompt and resource.
+
+Over MCP each reference is also paged (`get_page`'s `guide`, `contents/1`), and the page tools hand
+an agent the page for its step; a page's first components wait for the design pages' `read_token`.
+Brief an agent to read every page a result hands it.
 
 ## Connect
 
@@ -59,7 +63,7 @@ and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 | A quote before it is sent | `read_source` with the quote in its `quotes`: the QUOTES gate's verdict, and the nearest passage when it misses |
 | A compound's record and hazards, a plant's taxon name, a place's or craft's item | `lookup`, with kind compound or entity |
 | Finding open pictures | `search_sources` with kinds pictures (Commons and Openverse, open licences only, with author, credit and the site's widths), then `give_pictures` with its `page_url` |
-| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`) |
+| A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`); a player's or card's scene as a kit scene in its slot |
 | A map of the page's places, their years and moves | a declared `timeline_map` in the draft or bundle (the dataset guide, Maps of places); never a drawing |
 | A fact that stands alone | `propose_facts` (up to 25, each with an `idempotency_key` and the claimed `task_key`), then `get_proposal` until it is DONE; a working dossier's new facts in one run with `tools/curation/propose.py` |
 | A new source for a held fact, or for a fact that lost its quotes | `propose_source`, naming the fact as `claim_id` |
@@ -137,11 +141,15 @@ family figure only when the page holds every fact its units cite.
    through `propose_facts`, structure through `propose_structure`, a held fact's new source through
    `propose_source`, components by the component guide, figures from data by the datasets skill,
    and open pictures through `give_pictures` by `page_url` (the server reads the licence and the
-   author and returns a thumbnail to check).
+   author and returns a thumbnail to check). Quote a colour change as the source states it, first
+   colour and then the colour it turns. Answers then draw that stage from the kit, citing your fact.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
-   call `preview_page` with it, fix every rule its report fails, judge the rest on the private link at
+   call `preview_page` with it, read its pictures, fix every rule its report fails (rule 28 names each
+   drawing problem), preview again until rule 28 passes, then judge the rest on the private link at
    360 and 1440 px in both themes, preview again, then `propose_page` with it. A page given in one call
-   goes through `preview_page` and `propose_page` the same way. Compose the page's interactives with
+   goes through `preview_page` and `propose_page` the same way. Before composing a `dip_player`, give
+   each bath stage its `STAGE_AFTER` with the colours its fact states and name its dyes, mordants and
+   resists by substance; the dip then draws without a colour the team recorded. Compose the page's interactives with
    `compose_component`, never borrowed from Kutch Ajrakh; propose what `missing` names first. Preview
    the page with them and read its pictures: step every player, dip every dip, turn and zoom every
    molecule and choose every option at 360 and 1440 px before `propose_page`.

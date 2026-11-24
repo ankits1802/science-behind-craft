@@ -797,6 +797,12 @@ KV.boot('chem', function (document) {
   function inRange(spec, s) {
     return spec.split(',').some(function (r) { var a = r.split('-'); return a.length > 1 ? s >= +a[0] && s <= +a[1] : s === +a[0]; });
   }
+  function kitMove(el) {
+    arr(el.querySelectorAll('[data-kit-move]')).forEach(function (m) {
+      m.removeAttribute('data-playing'); void m.getBoundingClientRect(); m.setAttribute('data-playing', '');
+      m.addEventListener('animationend', function () { m.removeAttribute('data-playing'); }, { once: true });
+    });
+  }
   var players = [];
   function Player(fig) {
     var n = +fig.getAttribute('data-steps');
@@ -845,7 +851,7 @@ KV.boot('chem', function (document) {
         var r = rxs[s - 1];
         arr(r.querySelectorAll('svg[data-fit]')).forEach(fit);
         if (opts.user && !reduced()) {
-          void r.offsetWidth; r.classList.add('run');
+          void r.offsetWidth; r.classList.add('run'); kitMove(r);
           clearTimeout(runT); runT = setTimeout(function () { r.classList.remove('run'); }, 2800);
         }
       } else apply(s);
@@ -976,16 +982,22 @@ KV.boot('chem', function (document) {
   function initDips(fig) {
     var strip = arr(fig.querySelectorAll('.vs')), dips = arr(fig.querySelectorAll('.dips li'));
     var btn = fig.querySelector('.vat-dip'), status = fig.querySelector('.vat-status'), box = fig.querySelector('.vat-scene');
+    var keys = fig.querySelector('.vat-key'), restKey = keys ? keys.querySelector('.kv-kit-key') : null;
     if (!btn || !status || strip.length < 2) return;
     var rest = box ? box.querySelector('svg') : null, last = strip.length - 1, total = Math.max(1, dips.length);
     var S = { dip: Math.min(total, Math.max(1, +fig.getAttribute('data-dips') || total)), at: last }, timers = [];
     function said(i) {
       return arr(strip[i].querySelectorAll('.vs-k, .vs-t')).map(function (p) { return p.textContent.trim(); }).filter(Boolean).join(': ');
     }
-    function scene(i) {
-      var shown = box ? box.querySelector('svg') : null, drawn = i === last ? rest : strip[i].querySelector('svg');
+    function swap(holder, sel, kept, from) {
+      var shown = holder ? holder.querySelector(sel) : null, drawn = from ? from.querySelector(sel) : kept;
       if (!shown || !drawn || drawn === shown) return;
-      shown.replaceWith(drawn === rest ? rest : drawn.cloneNode(true));
+      shown.replaceWith(drawn === kept ? kept : drawn.cloneNode(true));
+    }
+    function scene(i) {
+      swap(box, 'svg', rest, i === last ? null : strip[i]);
+      swap(keys, '.kv-kit-key', restKey, i === last ? null : strip[i]);
+      if (box && !reduced()) kitMove(box);
     }
     function show(i) {
       S.at = i;
@@ -1010,7 +1022,7 @@ KV.boot('chem', function (document) {
 
   var molData = {};
   try { molData = JSON.parse(document.getElementById('mol-data').textContent); } catch (e) {}
-  var RAD = { C: 0.38, N: 0.36, O: 0.36, H: 0.2 };
+  var RAD = { C: 0.38, H: 0.2, N: 0.36, O: 0.36, Ag: 0.55, Al: 0.55, Au: 0.55, Ca: 0.55, Cl: 0.51, Cr: 0.55, Cu: 0.55, Fe: 0.55, Hg: 0.55, K: 0.55, Na: 0.55, Pb: 0.55, S: 0.53, Sn: 0.55, Ti: 0.55, Zn: 0.55 };
   function Viewer(fig) {
     var m = molData[fig.getAttribute('data-cid')];
     if (!m || !fig.querySelector('.mol-dial svg g.mol-g')) return null;
@@ -1358,6 +1370,7 @@ KV.boot('pt', function (document) {
   all('[data-comp="cloth"]').forEach(function (lc) {
     var stages = JSON.parse(lc.getAttribute('data-stages'));
     var svg = lc.querySelector('.lc-bsvg');
+    if (!svg) return;
     var L = { base: svg.querySelector('[data-l="base"]'), top: svg.querySelector('[data-l="top"]'), ox: svg.querySelector('[data-l="ox"]') };
     var dipg = svg.querySelector('.dipg'), oxg = svg.querySelector('.oxg'), title = svg.querySelector('title');
     var btns = all('.rb', lc), items = all('.lc-step', lc);

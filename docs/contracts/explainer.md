@@ -1362,7 +1362,7 @@ fails its checks is redrafted only when the time left is at least the time the f
   `rgb()`, `hsl()` or named colour; `font-family` and `font` in `var(--font-ui)` or
   `var(--font-reading)` at 12, 13, 14 or 16 px; no `opacity` below 1; a script with a timer reads
   `dataset.reducedMotion`; no element with `role="img"` whose label names a kit subject; every
-  static `svg` passes `drawn_art.scene_problems` as a `drawing`.
+  static `svg` passes `drawn_art.drawn_art_problems` as a `drawing`.
 - **The frame** (`lib/sandboxFrame.sandboxDocument(html, values, look?)`, `useFrameLook`): with a
   look, its document gains `<style>` with `:root` set to the page's values of the tokens the HTML
   names (and the base `--sunk`, `--ink-1`, `--font-ui`, and any token those values name), a body on

@@ -56,6 +56,7 @@ from .page_proposals_parts import (
     resolved_component,
     structure_subject_problem,
 )
+from .page_renders import refuse_a_failed_drawing
 from .page_translations import checked_translation
 from .structure_proposals import propose_structure
 
@@ -95,6 +96,7 @@ async def propose_page(
     session: AsyncSession, user: User, bundle: PageBundle, *, tools: PageTools, now: datetime
 ) -> PageProposalResult:
     subject = await subject_by_key(session, bundle.subject.kind, bundle.subject.slug)
+    await refuse_a_failed_drawing(session, user.id, subject, now=now)
     run = _Run(session, user, bundle, subject, tools, now)
     for index, fact in enumerate(bundle.facts):
         await _record(run, FACT, index, partial(_fact, run, index, fact))

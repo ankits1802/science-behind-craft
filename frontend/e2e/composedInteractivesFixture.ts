@@ -41,11 +41,10 @@ const rect = (fill: string, box: [number, number, number, number]): Node => ({
   attrs: { x: String(box[0]), y: String(box[1]), width: String(box[2]), height: String(box[3]), fill, stroke: "var(--ink-2)", "stroke-width": "1.5" }
 });
 
-const piece = (token: string): Node => ({
-  tag: "svg",
-  attrs: { viewBox: "0 0 240 160", "aria-hidden": "true", focusable: "false" },
-  children: [{ tag: "rect", attrs: { x: "0", y: "0", width: "240", height: "160", fill: "var(--sunk)" } }, rect(`var(${token})`, [40, 30, 160, 100])]
-});
+export const HARDA_SAID = "After the harda bath the cloth turns yellow.";
+export const MADDER_SAID = "After the madder bath the cloth is red where alum was printed.";
+
+const cloth = (u: Units, material: string, said: string) => ({ parts: [{ part: "cloth", form: "swatch", material, label: u.add(said) }], motion: "take" });
 
 function step(u: Units, name: string, words: [string, string, string]) {
   const [kicker, heading, paragraph] = words;
@@ -65,10 +64,11 @@ function step(u: Units, name: string, words: [string, string, string]) {
 
 function player(u: Units) {
   const group = (on: number, fill: string): Node => ({ tag: "g", attrs: { "data-on": String(on), ...(on === 2 ? {} : { class: "off" }) }, children: [rect(fill, [40 + on * 80, 58, 64, 64])] });
+  const outline = "var(--raised)";
   const scene: Node = {
     tag: "svg",
     attrs: { class: "scene", viewBox: "0 0 640 180", "aria-hidden": "true", focusable: "false" },
-    children: [{ tag: "rect", attrs: { x: "0", y: "0", width: "640", height: "180", fill: "var(--sunk)" } }, group(1, "var(--dye-kut)"), group(2, "var(--dye-madder)")]
+    children: [{ tag: "rect", attrs: { x: "0", y: "0", width: "640", height: "180", fill: "var(--sunk)" } }, group(1, outline), group(2, outline)]
   };
   return {
     id: "rp-bagh-print",
@@ -87,11 +87,11 @@ function dip(u: Units) {
     id: "dip-bagh-print",
     head: head(u, "The colour of Bagh Print after each stage"),
     phase: u.add("Madder bath"),
-    scene: piece("--dye-madder"),
+    scene: cloth(u, "--dye-madder", MADDER_SAID),
     stripLabel: "The stages, in order",
     phases: [
-      { pose: "harda", drawing: piece("--dye-harda"), kicker: u.add("Harda"), text: u.add("Yellow") },
-      { pose: "madder-bath", drawing: piece("--dye-madder"), kicker: u.add("Madder bath"), text: u.add("Red where alum was printed") }
+      { pose: "harda", drawing: cloth(u, "--dye-harda", HARDA_SAID), kicker: u.add("Harda"), text: u.add("Yellow") },
+      { pose: "madder-bath", drawing: cloth(u, "--dye-madder", MADDER_SAID), kicker: u.add("Madder bath"), text: u.add("Red where alum was printed") }
     ],
     dipAgain: "Dip again",
     status: u.add("Madder bath"),

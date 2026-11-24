@@ -70,8 +70,8 @@ Last reviewed: 2026-11-24.
 | Shapes | `frontend/lib/componentSpecsGeneral.ts` |
 | Views | `frontend/components/monograph/kinds/general/` (`index.ts` exports `VIEWS`, registered in `componentViews.ts`) |
 | The declared timeline map | spec `backend/app/research/component_specs_timeline_map.py`, its delivery rules `component_specs_timeline_map_delivery.py`, its places `backend/app/services/timeline_map_places.py` and placement `services/timeline_maps.py` (`placed_spec`); the hand-drawn map test `backend/app/research/drawn_maps.py`; shape `frontend/lib/componentSpecsTimelineMap.ts`, view `frontend/components/monograph/kinds/general/TimelineMapDeclaredView.tsx` on the answers' `components/answer/journey/TimelineMap.tsx` (`TimelineMapFrame`) with `components/map/TimelineMapLayers.tsx` and `placesFrame.ts` |
-| The figure kit | the vocabulary `backend/app/research/art_kit.py` (`KIT_PARTS`, `kit_vocabulary`, both sides' golden `shared/art-kit.golden.json`), the composed diagram `component_specs_kit.py` (`DeclaredDiagramSpec`, `kit_label_problems`), the bar for hand-drawn art `drawn_art.py` (`drawn_art_problems`); the web's `frontend/lib/artKit.ts`, `componentSpecsKit.ts`, `artKitMotion.ts`, `artKitSheet.ts`, the parts `frontend/components/artkit/` and the view `components/monograph/kinds/kit/KitDiagramView.tsx`; the kit sheet `/design/kit` (`app/design/kit`) |
-| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `test_art_kit.py`, `test_component_specs_kit.py`, `test_drawn_art.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `timeline-map-declared-unit.spec.ts`, `art-kit-unit.spec.ts` |
+| The figure kit | the vocabulary `backend/app/research/art_kit.py` (`KIT_PARTS`, `kit_vocabulary`, `choice_named`, both sides' golden `shared/art-kit.golden.json`), the composed diagram `component_specs_kit.py` (`DeclaredDiagramSpec`, `kit_label_problems`), the kit scene `component_specs_kit_scene.py` (`KitScene`, `KIT_SCENE_KINDS`, `kit_scene_label_problems`), the bar for hand-drawn art `drawn_art.py` (`drawn_art_problems`, `scene_problems`); the web's `frontend/lib/artKit.ts`, `componentSpecsKit.ts`, `componentSpecsKitScene.ts`, `artKitMotion.ts`, `artKitSheet.ts`, the parts `frontend/components/artkit/` (`KitScene.tsx` for a player's scenes) and the view `components/monograph/kinds/kit/KitDiagramView.tsx`; the kit sheet `/design/kit` (`app/design/kit`) |
+| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `test_art_kit.py`, `test_component_specs_kit.py`, `test_kit_scenes.py`, `test_drawn_art.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `timeline-map-declared-unit.spec.ts`, `art-kit-unit.spec.ts` |
 
 ## A delivered component
 
@@ -103,13 +103,16 @@ and a count of the rest):
    timeline event's year (without its sign) is stated by its `when` unit, a map place's value by its
    `reading` unit, and a numeric table column's cells state a number; a timeline map's years,
    places, moves and coordinates are stated by their units (The declared timeline map, below); a
-   composed diagram's every part label and section layer label cites a fact (The figure kit, below);
+   composed diagram's every part label and section layer label cites a fact, and so does every part
+   label of a kit scene in a player, a toggle's stage box or a label card's seal (The figure kit,
+   below);
 8. the spec speaks the design's vocabulary (`drawing_spec_rules.spec_design_problems`): every
    drawing node of a science kind (`SvgNode`), every swatch, dip and colour token and a drawing's
    SVG name colours only by design role, name no font, keep text at 12 px or more and blend no two
    roles in a gradient (The design's vocabulary, below); a swatch or dip names a depicted material;
-   a spec sends no `themes`, which the server draws; and every free drawing meets the bar for
-   hand-drawn art (The hand-drawn figure, below).
+   a spec sends no `themes`, which the server draws; and every free drawing of a `drawing`, a
+   `diagram`, a player, a toggle or a label card meets the bar for hand-drawn art (The hand-drawn
+   figure, below).
 
 The close-match search of `open-work.md` runs first: a copy of a registered component is refused
 before its spec is read.
@@ -317,29 +320,41 @@ the line from 640 px, mirrored right to left; a section sets its drawing beside 
 640 px. **The kit sheet** (`/design/kit`) draws every part in every form and every depicted
 material and the four layouts, at the sheet's widths, in the theme its switches choose.
 
-**The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8 for a `drawing` and
-a `diagram`): every free drawing such a delivery carries (a `drawing`'s SVG, a `diagram`'s drawing
-and chain drawings; icons excepted) is refused, naming the kit part to use, when it breaks one of
-the rules below. A player's scene, phase and stage drawings, a card's seal and a panel's art are held
-to the same bar (`drawn_art.scene_problems`, the molecule drawings of `structure_diagram` and
-`molecule_3d` excepted) once those kinds can place kit parts; until then the delivery does not
-apply it to them, so the scenes the composer builds are not refused for want of a part. A drawing
-held to the bar is refused when it
+**Kit scenes** (decision 0200). A player's step, phase and stage drawing, a toggle's stage box and a
+label card's seal take a kit scene beside the free drawing: `{parts, motion?}`, one to three parts
+of the same vocabulary, each labelled by a cited unit (`component_specs_kit_scene.KitScene`, told
+from a drawing by `parts`). The five kinds are `KIT_SCENE_KINDS`: `reaction_player` (a step's
+`scene.art`, its where icon then optional), `dip_player` (`scene` and each phase's `drawing`),
+`stage_player` (`drawing`), `choice_toggle` (a `stage` part's `drawing`) and `label_card`
+(`seal`). Only a scene the reader shows again may name a motion (a reaction step, a dip phase, a dip
+player's scene); a stage player's drawing, a stage box and a seal rest as drawn and name none. The
+web draws it inside the slot's frame with the key beside it (`components/artkit/KitScene.tsx`), and
+the page kit plays the shown scene's moving part (`kitMove`) and never under either reduced-motion
+switch.
+
+**The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8): every free drawing
+a `drawing` or `diagram` delivery carries (a `drawing`'s SVG, a `diagram`'s drawing and chain
+drawings) and every free scene of the five kinds that take a kit scene (`drawn_art.scene_problems`:
+a player's scenes, phase and stage drawings, a toggle's stage box, a card's seal; icons excepted)
+is refused, naming the kit part to use, when it
 
 - sets text off the type scale: drawn at 320 px wide, a text is 12, 13, 14 or 16 px, within a
   quarter of a pixel (`UI_SIZES_PX`; under 12 px the vocabulary's floor refuses it);
 - draws fewer than six shapes (`SHAPES_MIN`, outside its definitions) or has no line work in ink
   (no stroke in `--ink-1` to `--ink-3`, a mix of one, or `currentColor`);
-- in a `drawing` or `diagram`, paints a depicted material by hand (the kit's `cloth`, `bath`,
-  `paste`, `section` or `piece` part draws it, or the one its words name), or says it shows what
-  a kit part draws (its title, description and labels and, for a `drawing`, its title and alt
-  units, naming a part's subject: `art_kit.parts_named_by`); these two point to a composed
-  diagram (`KIT_POINTER`);
-- elsewhere, paints a depicted material with no texture: a shape filled with a material needs a
-  shape of the same geometry over it filled with an in-drawing `<pattern>`.
+- paints a depicted material by hand, textured or not (the kit's `cloth`, `bath`, `paste`,
+  `section` or `piece` part draws it, or the one its own words name); a figure points to a composed
+  diagram (`KIT_POINTER`), a scene to a kit scene in its own slot (`SCENE_POINTER`);
+- in a `drawing` or `diagram`, says it shows what a kit part draws (its title, description and
+  labels and, for a `drawing`, its title and alt units, naming a part's subject:
+  `art_kit.parts_named_by`), pointing to a composed diagram.
 
-Kutch Ajrakh's authored figures are its page's own and never pass through the delivery check, so
-the bar does not re-check them.
+A free scene in line work, painting no depicted material, is kept: a molecule's structure or an
+emblem drawn in ink. The other kinds' drawings, the molecule drawings of `structure_diagram` and
+`molecule_3d` among them, are not held to the bar.
+
+Kutch Ajrakh's authored figures and players are its page's own and never pass through the delivery
+check, so the bar does not re-check them.
 
 ## How this document is kept true
 
@@ -359,6 +374,7 @@ the bar does not re-check them.
 | The kit's vocabulary, its families and the golden both sides read | `backend/tests/research/test_art_kit.py` and `frontend/e2e/art-kit-unit.spec.ts` |
 | The composed diagram's spec, its layouts, motions, materials and cited labels | `backend/tests/research/test_component_specs_kit.py` |
 | The hand-drawn figure refused and allowed, rule by rule, with Kutch Ajrakh's authored figures left alone | `backend/tests/research/test_drawn_art.py` |
+| Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |
 | Every part in every material, each layout at phone and desktop, light and dark, motion off under both switches, and the kit sheet | `frontend/e2e/art-kit-unit.spec.ts` |
 | The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |

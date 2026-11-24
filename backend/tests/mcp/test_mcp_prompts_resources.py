@@ -297,10 +297,14 @@ async def test_the_contributor_skill_and_the_design_tokens_are_resources() -> No
             {"uri": skill["uri"], "mimeType": "text/markdown", "text": SKILL.read_bytes().decode("utf-8")}
         ]
     }
-    (template,) = (await result("resources/templates/list"))["resourceTemplates"]
+    template, pages = (await result("resources/templates/list"))["resourceTemplates"]
     assert (template["uriTemplate"], template["mimeType"]) == (
         "kalavigyan://components/{kind}.schema.json",
         "application/schema+json",
+    )
+    assert (pages["uriTemplate"], pages["mimeType"]) == (
+        "kalavigyan://guides/{topic}/{page}",
+        "text/markdown",
     )
 
 

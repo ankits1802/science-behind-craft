@@ -27,4 +27,12 @@ DEPICTED_MATERIALS = (
     "field-soil",
     "sem-green",
     "river-soil",
+    "turmeric",
+    "pomegranate",
+    "kali-mitti",
+    "cinnabar",
+    "red-ochre",
+    "orpiment",
+    "lamp-black",
+    "conch-white",
 )

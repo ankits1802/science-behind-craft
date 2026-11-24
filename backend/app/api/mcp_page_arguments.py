@@ -27,6 +27,7 @@ from app.research.page_proposals import (
 )
 from app.research.structure_proposals import StructureProposal
 
+from .mcp_guide_steps import ReadToken
 from .mcp_studio_arguments import StudioArguments
 from .mcp_tool_base import Arguments
 
@@ -38,6 +39,7 @@ __all__ = [
     "DraftRemoval",
     "EditDraft",
     "PageWork",
+    "PreviewWork",
     "bundle_parts",
     "bundle_schema",
     "undelivered",
@@ -145,6 +147,7 @@ class EditDraft(StudioArguments):
             "(fact:N of this draft, or a stored fact's id); replaces the draft's"
         ),
     )
+    read_token: ReadToken = None
 
     @model_validator(mode="after")
     def _one_page(self) -> Self:
@@ -158,6 +161,10 @@ class EditDraft(StudioArguments):
     def removals(self) -> list[tuple[str, int]]:
         ordered = sorted(self.remove, key=lambda item: (item.part == FACT, -item.index))
         return [(item.part, item.index) for item in ordered]
+
+    def component_kinds(self) -> list[str]:
+        added = self.add.components if self.add is not None else []
+        return [component.proposal.kind for component in added]
 
     def addition(self) -> DraftAddition | None:
         given = self.add.model_dump(exclude_none=True) if self.add is not None and self.add.holds() else {}
@@ -223,3 +230,10 @@ class PageWork(StudioArguments):
         )
         schema.pop("$defs", None)
         return {**schema, "properties": {**schema["properties"], "bundle": bundle_schema()}}
+
+
+class PreviewWork(PageWork):
+    read_token: ReadToken = None
+
+    def builds_components(self) -> bool:
+        return self.bundle is not None and bool(self.bundle.components)

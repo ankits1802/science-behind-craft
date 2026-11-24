@@ -31,7 +31,9 @@ flowchart LR
     WK["kv-worker"]
     FE["kv-fetcher"]
     CW["kv-contributions"]
+    RD["kv-renderer"]
   end
+  RD -->|pass header| V
   WK --> PG
   CW --> PG
   classDef accent fill:#762CB1,stroke:#5F1C93,color:#FFFFFF
@@ -47,7 +49,7 @@ flowchart LR
 | Origin | nginx `:80` on EC2 `kalavigyan-api` (ap-south-1) | 403 without `X-Origin-Verify` |
 | API | `uvicorn app.main:app` | blue/green on 8000/8001 |
 | Database | Postgres 17 on Supabase | session pooler `:5432`, each process on the box within its own connection budget (`core/connection_budget`, decision 0163); vector, postgis, pg_trgm, unaccent, citext |
-| Workers on the box | `kv-worker`, `kv-fetcher` and `kv-contributions` | the media queue (decision 0018), the daily voice upkeep (decision 0140), the daily sweep of score clips no manifest names and a heartbeat the media routes read (decision 0154), the fetcher sandbox (decision 0007) and the contribution queue's gates (round 7), as `docs/RUNBOOK.md` lists them under On the box |
+| Workers on the box | `kv-worker`, `kv-fetcher`, `kv-contributions` and `kv-renderer` | the media queue (decision 0018), the daily voice upkeep (decision 0140), the daily sweep of score clips no manifest names and a heartbeat the media routes read (decision 0154), the fetcher sandbox (decision 0007), the contribution queue's gates (round 7) and the page renderer, a headless browser that draws `preview_page`'s private link at 390 and 1440 px and reaches only the site (decision 0195), as `docs/RUNBOOK.md` lists them under On the box |
 | Logs | the CloudWatch agent on the box | each service's journal lines and nginx's access and error logs, shipped to the CloudWatch Logs groups `/kalavigyan/<service>` and kept 30 days (decision 0150, `docs/RUNBOOK.md` Logs) |
 
 Media goes to the private S3 bucket through presigned URLs. Ids, names and the deploy sequence
@@ -63,7 +65,7 @@ are in `docs/RUNBOOK.md`; what the box assumes from the code is in `docs/contrac
 | `frontend/` | Next.js web client (npm, Node 26) |
 | `infra/` | Terraform, deploy scripts, systemd units, secret seeding, Supabase lockdown SQL |
 | `shared/` | Files checked by more than one side (`craft-master.sha1`, the `*.golden.*` contract files) |
-| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `repo_facts_build.py` and the `repo_facts` package, which write `docs/REPO_FACTS.md`; `curation/` (fetch, verify, check, schema and migrate for curated dossiers, decisions 0051 and 0095); `design/` and `design_tokens.py`, the design token generator that writes `frontend/app/tokens.css` and the skill's references (decision 0092); their tests |
+| `tools/` | Developer tooling: `hygiene_check.py` and the `hygiene` package; `repo_facts_build.py` and the `repo_facts` package, which write `docs/REPO_FACTS.md`; `curation/` (fetch, verify, check, schema and migrate for curated dossiers, decisions 0051 and 0095); `design/` and `design_tokens.py`, the design token generator that writes `frontend/app/tokens.css`, the skill's references and the server's lists of depicted materials and drawn atoms (decisions 0092 and 0202); their tests |
 | `docs/` | Plan, architecture, catalogue, contracts, decisions, debt, progress, runbook, data sources, the design boards, the contributors' terms, the generated repository facts and the README kit (`docs/README.md` is the index) |
 | `.claude/skills/` | Practice skills (engineering, backend, frontend), naming, the frontend design system (`kalavigyan-design`), the contributor's method skills (`kalavigyan-craft-pages`, `kalavigyan-datasets`, `kalavigyan-interactives`), the vendored security audit, and the retired `motion` pointer |
 
@@ -89,6 +91,7 @@ flowchart TD
   RE["retrieval/"]
   SO["sources/"]
   FE["fetcher/"]
+  RD["renderer/"]
   CU["curation/"]
   RS["Contracts<br/>research/"]
   CR["Shared<br/>core/"]
@@ -96,7 +99,7 @@ flowchart TD
     MO["models/"]
     DA["data/"]
   end
-  E --> Pipelines --> PR --> Domain --> PL --> CO --> RE --> SO --> FE --> CU --> RS --> CR --> Foundation
+  E --> Pipelines --> PR --> Domain --> PL --> CO --> RE --> SO --> FE --> RD --> CU --> RS --> CR --> Foundation
   classDef accent fill:#762CB1,stroke:#5F1C93,color:#FFFFFF
   class RS accent
 ```
@@ -118,6 +121,7 @@ The diagram is the stack from the top down; the edges that may really be importe
 | retrieval | `retrieval/` | stored-knowledge search: craft-scoped claims and chunks, full text and pgvector fused by RRF, chunking and embedding fill |
 | sources | `sources/` | external research sources: paced HTTP, record rules, one adapter per service (`sources/scholarly/`: OpenAlex, Crossref, ..., Zenodo, the open-copy locator and publisher full text, on one pace shared by every process; `sources/reference/`: Wikipedia, Wikidata, PubChem, Commons; `sources/web/`: SearXNG, Brave, the fallback; `sources/images/`: Openverse, Flickr's oEmbed, an open-licence picture read by its page, the image sources and the Europe PMC figures), the fetcher client |
 | fetcher | `fetcher/` | the separate kv-fetcher process: address-pinned https fetch (one client per host and address per fetch), RFC 9309 robots.txt, caps, trafilatura and pypdf extraction in killable parser processes (no DB, no AWS) |
+| renderer | `renderer/` | the separate kv-renderer process (`python -m app.renderer`): one pinned chrome-headless-shell per render driven over the DevTools protocol, one render at a time, a request guard that lets the browser reach only the site and its picture host, the shared drawing checks (`data/design/drawing-checks.js`) and the screenshots; imports `research/`, `core/` and `data/` only, no DB, no AWS (decision 0195) |
 | curation | `curation/` | curated craft dossiers: the model, the offline rules, the check file and the index, read by `tools/curation` and the importer; imports `research/`, `models/` and `data/` only (decision 0051) |
 | contracts | `research/` | research and answering types, protocols, post-check rules; the explainer document, blocks, stored pieces and depth by role (decision 0030); dataset rows, rivers, the calendar words, reaction rules and the expert panel (decision 0042) |
 | shared | `core/` | settings, db, security (passwords, tokens, secret keys), the managed key store, roles, deps, logging, rate limits and allowances shared by every process, each process's connection budget and the retries of a full pooler (decision 0163), India time, HTTP revalidation, work shielded from a leaving caller |
@@ -211,10 +215,16 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+are `docs/contracts/open-work.md`. The method's guides are served in numbered pages
+(`data/guide_pages.py`, `api/mcp_guides.py`) and each page tool hands the agent the page for the step
+it is on, a page's first components waiting until the design pages are handed over
+(`api/mcp_guide_steps.py`, decision 0203). An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
-monograph kit plays it on any page as it plays Kutch Ajrakh's. The research write-back asks the worker's judge ladder, cheapest
+monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's
+colour through the colour key's substance-to-token mapping (`research/colour_key`), and a molecule
+draws any of the twenty elements of the design generator's atom table (`science/molecule_elements`,
+decision 0202). The research write-back asks the worker's judge ladder, cheapest
 model first (`providers/judge_routes.thrifty_judges`, decision 0169), and a write-back the filing
 ladder cannot place waits for a reviewer, who may file it under a craft or a family's science
 (decision 0159). Beside facts the queue holds a process stage an answer found (`STAGES`, decision
@@ -768,7 +778,9 @@ state. The figure kit is `components/artkit/`: the designed parts a composed `di
 with the named motions, set in their layouts by `KitFigure` and drawn on a page by
 `components/monograph/kinds/kit/KitDiagramView.tsx`; its vocabulary is `lib/artKit.ts`, the web's
 copy of `research/art_kit.py` through `shared/art-kit.golden.json`, and `/design/kit` draws every
-part in every depicted material (decision 0199). Practice rules are `frontend-practices`.
+part in every depicted material (decision 0199). The players, the toggle's stage box and the label
+card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their own frames, and the
+page kit plays a shown scene's part (decision 0200). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub

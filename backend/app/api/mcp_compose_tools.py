@@ -13,6 +13,7 @@ from app.research.page_proposals import PageComponent
 from app.services.compose_components import COMPOSED_KINDS, ComposeDeps, compose_component
 from app.services.compose_held import About
 
+from .mcp_guide_steps import HandedGuide, storyboard_guide
 from .mcp_studio_arguments import STUDIO_DOES, StudioArguments
 from .mcp_tool_base import LOOKS, PAGES, Arguments, Tool, ToolContext, contributor
 
@@ -32,14 +33,14 @@ ONE_ABOUT = "name at most one of stage, reaction, material and compound"
 DESCRIPTION = (
     "Compose a craft's own interactive from the facts and structure its page holds, as the server builds "
     "it: reaction_player from its stored reactions in the order of their stages, dip_player from its stages in "
-    "a bath with their colour after and the recorded colours of the dyes and mordants they use, molecule_3d "
+    "a bath with their colour after, drawn as the depicted colour of the dye, mordant or resist named, molecule_3d "
     "from a compound its materials name with PubChem's 3D conformer (atoms, bonds, turned and zoomed by "
     "pointer, touch and keyboard), experiment_lab from the alternatives its facts compare, with a toggle for "
     "each. Every state and label cites only that craft's own facts; nothing is borrowed from another page. "
     "about narrows it to one stage, reaction or material key (get_facts gives them) or a compound's CID. The "
     "result is finished components ({proposal, cites}) to place with edit_draft's add, with your task_key set "
     "on the proposal; preview_page, then propose_page. When the facts are not enough it composes nothing and "
-    "missing lists exactly which facts or structure to propose first."
+    "missing lists exactly which facts or structure to propose first. guide hands over the storyboard's pages."
 )
 COMPOSED = "Composed {count} component{s} for {slug} from its own facts."
 REFUSED = "Nothing was composed for {slug}: propose what missing lists first, then compose again."
@@ -88,6 +89,7 @@ class ComposeReply(ContractModel):
     message: str
     next_step: str
     notices: list[str] = Field(default_factory=list)
+    guide: HandedGuide
 
     @field_serializer("components")
     def _as_edit_draft_takes_them(self, components: list[PageComponent]) -> list[dict[str, Any]]:
@@ -114,6 +116,7 @@ def _run(deps: ComposeDeps) -> Callable[[ToolContext, ComposeComponent], Awaitab
             message=said if result.composed else REFUSED.format(slug=arguments.craft),
             next_step=PLACE if result.composed else PROPOSE,
             notices=arguments.notices(),
+            guide=storyboard_guide(),
         )
 
     return run

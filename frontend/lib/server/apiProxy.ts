@@ -11,6 +11,9 @@ export const VIEWER_ADDRESS_HEADER = "x-viewer-address";
 export const UNKNOWN_VIEWER = "unknown";
 
 export const API_SESSION_TOKEN_HEADER = "x-session-token";
+export const RENDER_PASS_HEADER = "x-kv-render-pass";
+export const OWN_PICTURES_PATH = "/api/knowledge/pages/pictures/";
+export const DRAWN_PICTURES_PATH = "/api/knowledge/pages/drawn-pictures/";
 
 const FALLBACK_LIFETIME_SECONDS = 7 * 24 * 60 * 60;
 
@@ -49,7 +52,8 @@ const FORWARDED_REQUEST_HEADERS = new Set([
   "x-client-app",
   "x-confirm-provider",
   "x-confirm-sign-in",
-  "x-sign-in-proof"
+  "x-sign-in-proof",
+  RENDER_PASS_HEADER
 ]);
 
 const DROPPED_RESPONSE_HEADERS = [
@@ -184,9 +188,15 @@ export function upstreamHeaders(request: Request, token: string | null, source: 
   return headers;
 }
 
-export function upstreamUrl(request: Request, origin: string): string {
+export function upstreamPath(request: Request): string {
   const url = new URL(request.url);
-  return `${origin}${url.pathname}${url.search}`;
+  const drawn = request.headers.has(RENDER_PASS_HEADER) && url.pathname.startsWith(OWN_PICTURES_PATH);
+  const path = drawn ? `${DRAWN_PICTURES_PATH}${url.pathname.slice(OWN_PICTURES_PATH.length)}` : url.pathname;
+  return `${path}${url.search}`;
+}
+
+export function upstreamUrl(request: Request, origin: string): string {
+  return `${origin}${upstreamPath(request)}`;
 }
 
 export function tokenLifetimeSeconds(token: string, nowMs: number = Date.now()): number {

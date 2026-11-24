@@ -120,3 +120,33 @@ def test_the_records_file_is_where_the_generator_reads_it() -> None:
     assert (REPO_ROOT / "tools" / "design" / "materials.json").is_file()
     assert OUTPUTS["depicted_materials.py"].startswith('__all__ = ["DEPICTED_MATERIALS"]')
     assert '"bidri-black"' in OUTPUTS["depictedMaterials.ts"]
+
+
+LANE_RECORDS = {
+    "dye-turmeric": ("Bagru-Hand-Block-Print", "M16", ("C088",), "yellow"),
+    "dye-pomegranate": ("Bagru-Hand-Block-Print", "M17", ("C088",), "light yellow"),
+    "dye-kali-mitti": ("Dabu-Hand-Block-Printing", "M01", ("C007", "C077"), "black"),
+    "dye-cinnabar": ("Orissa-Pattachitra", "M05", ("C083",), "vermillion red"),
+    "dye-red-ochre": ("Orissa-Pattachitra", "M06", ("C083",), "brick red"),
+    "dye-orpiment": ("Orissa-Pattachitra", "M07", ("C085", "C095"), "vivid yellow"),
+    "dye-lamp-black": ("Orissa-Pattachitra", "M08", ("C055",), "black"),
+    "dye-conch-white": ("Orissa-Pattachitra", "M04", ("C081",), "white"),
+}
+
+
+@pytest.mark.parametrize("token", sorted(LANE_RECORDS))
+def test_each_dye_and_pigment_the_crafts_name_is_recorded_with_the_quote_that_states_its_colour(
+    token: str,
+) -> None:
+    craft, material, claims, words = LANE_RECORDS[token]
+    (record,) = [found for found in SYSTEM.materials if found.token == token]
+    assert (record.craft, record.material, record.claims, record.stated) == (craft, material, claims, True)
+    quotes = [
+        quote["quote"].casefold()
+        for row in _dossier(craft)["claims"]
+        if row["id"] in claims
+        for quote in row["quotes"]
+    ]
+    assert any(words in quote for quote in quotes), token
+    assert f"--{token}: {record.hex};" in OUTPUTS["tokens.css"]
+    assert f'"{token.removeprefix("dye-")}"' in OUTPUTS["depicted_materials.py"]

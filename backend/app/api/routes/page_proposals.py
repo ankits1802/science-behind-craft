@@ -4,7 +4,7 @@ import uuid
 from collections.abc import Awaitable
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Response, status
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -19,13 +19,14 @@ from app.core.roles import Capability
 from app.models import User
 from app.research.image_intake_svg import SVG_POLICY
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult
+from app.research.page_render import RENDER_PASS_HEADER
 from app.research.review_switch import CONTRIBUTION
 from app.services.drawing_themes import THEME_PATTERN, themed_picture
 from app.services.object_store import media_bucket
 from app.services.own_proposals import require_terms
 from app.services.page_preview import preview_page
-from app.services.page_preview_links import UnknownPreview, preview_document
-from app.services.page_preview_pictures import own_picture_file
+from app.services.page_preview_links import UnknownPreview, pass_document, preview_document
+from app.services.page_preview_pictures import OwnPicture, own_picture_file, pass_picture_file
 
 router = APIRouter(prefix="/knowledge/pages", tags=["knowledge"])
 proposer = require(Capability.PROPOSE_KNOWLEDGE)
@@ -75,6 +76,34 @@ async def read_own_picture(
     session: AsyncSession = Depends(get_session),
 ) -> Response:
     found = await own_picture_file(session, user, contribution_id)
+    return await _picture(session, found, theme)
+
+
+@router.get("/previews/{token}/drawn")
+async def read_drawn_preview(
+    token: str = Path(pattern=TOKEN_PATTERN),
+    render_pass: str = Header(alias=RENDER_PASS_HEADER, pattern=TOKEN_PATTERN),
+    session: AsyncSession = Depends(get_session),
+) -> JSONResponse:
+    try:
+        document = await pass_document(session, render_pass, token, now=datetime.now(UTC))
+    except UnknownPreview as missing:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, str(missing), headers=PREVIEW_HEADERS) from None
+    return JSONResponse(document, headers=PREVIEW_HEADERS)
+
+
+@router.get("/drawn-pictures/{contribution_id}")
+async def read_drawn_picture(
+    contribution_id: uuid.UUID,
+    theme: str | None = Query(default=None, pattern=THEME_PATTERN),
+    render_pass: str = Header(alias=RENDER_PASS_HEADER, pattern=TOKEN_PATTERN),
+    session: AsyncSession = Depends(get_session),
+) -> Response:
+    found = await pass_picture_file(session, render_pass, contribution_id, now=datetime.now(UTC))
+    return await _picture(session, found, theme)
+
+
+async def _picture(session: AsyncSession, found: OwnPicture | None, theme: str | None) -> Response:
     await release_connection(session)
     bucket = media_bucket()
     if found is None or bucket is None:

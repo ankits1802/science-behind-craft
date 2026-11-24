@@ -3,25 +3,26 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 
 import { nativeComponents } from "./monographNative";
-import { anchorPlans, mainLines, markAnchors, markOverlays, openedPage, OVERLAYS_HIDDEN, pageAnswers, type AnchorPlan } from "./monographNativeBrowser";
+import { anchorPlans, mainLines, markAnchors, markOverlays, openedPage, OVERLAYS_HIDDEN, pageAnswers, type AnchorPlan, type PageAnswers } from "./monographNativeBrowser";
 import { lineDiff, pixelDifference, type PixelDifference } from "./parity/parityMeasure";
 import { alignPhase } from "./parity/parityPhase";
 import { restingVat } from "./parity/parityRest";
 import { selfHostedFaces, servedFaces } from "./parity/parityStyles";
 import { contextOptions, DESKTOP, SCHEMES, SMALL_PHONE, TABLET, type Scheme, type Width } from "./production/matrix";
 import { FRAGMENT_VERSION, smokeApiAddress } from "./smokeApi";
+import { framesDrawn, roomBelow, tiledCapture, type Unplaced } from "./tiledCapture";
 
 const APPROVED = "/monographs/kutch-ajrakh/index.html";
 const NATIVE = "/crafts/Kutch-Ajrakh/monograph";
 const FRAGMENTS = `/crafts/Kutch-Ajrakh/v${FRAGMENT_VERSION}`;
 const PIXEL_TOLERANCE = 0.02;
 const SHOT_TIMEOUT_MS = 10_000;
-const RUN_TIMEOUT_MS = 10 * 60_000;
+const RUN_TIMEOUT_MS = 8 * 60_000;
 const WIDTHS: readonly Width[] = [SMALL_PHONE, TABLET, DESKTOP];
 const SMOKE_PROJECT = "desktop";
 const REACT_FAILURE = /Minified React error|hydrat/i;
 
-type Shot = PixelDifference | "missing" | "hidden";
+type Shot = PixelDifference | Unplaced | "hidden";
 type Pages = { approved: Page; native: Page; fragments: Page; errors: string[] };
 type Run = { key: string; width: Width; scheme: Scheme };
 
@@ -30,7 +31,7 @@ test.beforeAll(() => {
 });
 
 function differs(shot: Shot): boolean {
-  return shot === "missing" || (typeof shot === "object" && shot.ratio > PIXEL_TOLERANCE);
+  return typeof shot === "string" ? shot !== "hidden" : shot.ratio > PIXEL_TOLERANCE;
 }
 
 function keep(name: string, body: Buffer | string): void {
@@ -42,10 +43,11 @@ async function componentShot(pages: Pages, plan: AnchorPlan, run: Run): Promise<
   const selector = `[data-native-parity="${plan.index}"]`;
   const before = pages.fragments.locator(selector);
   if (!(await before.count()) || !(await before.isVisible())) return "hidden";
-  const capture = { animations: "disabled" as const, timeout: SHOT_TIMEOUT_MS, style: OVERLAYS_HIDDEN };
-  const left = await before.screenshot(capture).catch(() => null);
-  const right = await pages.native.locator(selector).screenshot(capture).catch(() => null);
-  if (!left || !right) return "missing";
+  const capture = { style: OVERLAYS_HIDDEN, timeout: SHOT_TIMEOUT_MS };
+  const left = await tiledCapture(pages.fragments, selector, capture);
+  if (typeof left === "string") return left;
+  const right = await tiledCapture(pages.native, selector, capture);
+  if (typeof right === "string") return right;
   const shot = await pixelDifference(left, right);
   if (differs(shot)) {
     keep(`${run.key}-${plan.index}.fragment.png`, left);
@@ -84,9 +86,15 @@ async function componentShots(pages: Pages, run: Run): Promise<Record<string, Sh
   await markAnchors(pages.native, plans);
   await markOverlays(pages.fragments);
   await markOverlays(pages.native);
+  await roomBelow(pages.fragments);
+  await roomBelow(pages.native);
   const shots: Record<string, Shot> = {};
-  for (const plan of plans) shots[`${plan.index} ${plan.label}`] = await componentShot(pages, plan, run);
+  for (const plan of plans) shots[`${plan.index} ${plan.label}`] = Object.values(shots).includes("stalled") ? "stalled" : await componentShot(pages, plan, run);
   return shots;
+}
+
+async function drawnAnswers(page: Page): Promise<PageAnswers | null> {
+  return (await framesDrawn(page)) ? pageAnswers(page) : null;
 }
 
 async function checkRun(browser: Browser, run: Run): Promise<void> {
@@ -94,7 +102,7 @@ async function checkRun(browser: Browser, run: Run): Promise<void> {
   const text = lineDiff(await mainLines(pages.approved), await mainLines(pages.native));
   await alignPhase(pages.native, pages.fragments);
   const shots = await componentShots(pages, run);
-  const answers = { approved: await pageAnswers(pages.approved), native: await pageAnswers(pages.native) };
+  const answers = { approved: await drawnAnswers(pages.approved), native: await drawnAnswers(pages.native) };
   keep(`${run.key}-native-parity.json`, JSON.stringify({ text, shots, answers, errors: pages.errors }, null, 1));
   await pages.native.context().close();
   await pages.fragments.context().close();

@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from alembic import op
 
 revision: str = "0111_answer_figures"
-down_revision: str | Sequence[str] | None = "0103_component_lifecycle"
+down_revision: str | Sequence[str] | None = "0108_render_review"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

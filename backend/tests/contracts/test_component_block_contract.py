@@ -139,7 +139,7 @@ def test_migration_0111_widens_both_kind_checks_by_the_kit_figure_only() -> None
     migration = load("0111_answer_figures")
     assert (migration.revision, migration.down_revision) == (
         "0111_answer_figures",
-        "0103_component_lifecycle",
+        "0108_render_review",
     )
     assert migration.BLOCK_KINDS == enums.BLOCK_KINDS
     assert set(migration.BLOCK_KINDS) - set(migration.BLOCK_KINDS_BEFORE) == {"kit_figure"}

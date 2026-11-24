@@ -5,7 +5,7 @@ from collections.abc import Iterable, Iterator
 
 from .art_kit import parts_named_by
 from .drawing_roles import DRAWING_ROLES, INDIGO, MATERIAL_ROLES, css_declarations
-from .drawn_art import KIT_POINTER, UI_SIZES_PX, scene_problems
+from .drawn_art import KIT_POINTER, UI_SIZES_PX, drawn_art_problems
 from .sandbox_markup import SandboxProblem
 from .simulation_art_markup import ArtMarkup
 
@@ -75,7 +75,7 @@ def simulation_art_problems(html: str) -> list[SandboxProblem]:
         *_rest_problems(markup.styles),
         *_motion_problems(markup.scripts),
         *_pictured_problems(markup.pictured),
-        *scene_problems(DRAWING_KIND, {FIGURE_KEY: markup.drawings}, {}),
+        *drawn_art_problems(DRAWING_KIND, {FIGURE_KEY: markup.drawings}, {}),
     ]
     return [SandboxProblem(ART_RULE, detail) for detail in dict.fromkeys(found)]
 

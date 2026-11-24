@@ -9,9 +9,11 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.models.base import Base, created_at, one_of, uuid_pk
 from app.models.monograph_documents import SLUG_CHARS, SUBJECT_KIND_CHARS
 
-__all__ = ["PREVIEW_SUBJECT_KINDS", "PagePreview"]
+__all__ = ["PREVIEW_DRAWINGS", "PREVIEW_DRAWING_CHARS", "PREVIEW_SUBJECT_KINDS", "PagePreview"]
 
 PREVIEW_SUBJECT_KINDS = ("craft", "family", "category")
+PREVIEW_DRAWINGS = ("CHECKED", "FAILED", "UNMADE")
+PREVIEW_DRAWING_CHARS = 16
 
 
 class PagePreview(Base):
@@ -26,10 +28,13 @@ class PagePreview(Base):
     document: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
     expiresAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     createdAt: Mapped[datetime] = created_at()
+    drawing: Mapped[str | None] = mapped_column(String(PREVIEW_DRAWING_CHARS), nullable=True)
+    drawingProblems: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB, nullable=True)
 
     __table_args__ = (
         CheckConstraint(one_of("subjectKind", PREVIEW_SUBJECT_KINDS), name="subjectKind"),
         CheckConstraint('"expiresAt" > "createdAt"', name="expires"),
         CheckConstraint("jsonb_typeof(\"document\") = 'object'", name="document"),
+        CheckConstraint(one_of("drawing", PREVIEW_DRAWINGS), name="drawing"),
         Index(None, "userId", "expiresAt"),
     )

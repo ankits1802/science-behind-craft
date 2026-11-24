@@ -5,7 +5,7 @@ gets a `kit_figure` block, composed by the server from those sentences and drawn
 the figure kit of decision 0199, in place of asking the model for an HTML explainer. Every
 generated explainer the model still writes is held to the design's bar (roles for every colour,
 the type scale, no painted material, a still first paint, motion read from both reduced-motion
-switches, and the scene bar of `research/drawn_art.scene_problems` for its drawings); a draft below
+switches, and the figure bar of `research/drawn_art.drawn_art_problems` for its drawings); a draft below
 it is redrafted once like any failed check and then left out, and a stored one below it is never
 placed again. The frame carries the design's tokens and the reduced-motion switch.
 
@@ -20,7 +20,7 @@ tokens and the reduced-motion switch) and [decision 0199](0199-a-kit-of-figure-p
 
 | For | Read |
 |---|---|
-| The kit, its parts and the scene bar | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
+| The kit, its parts and the figure bar | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | The generated explainer, its builder and its checks | [decision 0055](0055-generated-explainers.md), [decision 0087](0087-generated-explainers-per-concept.md) |
 | The frame and its policy | [decision 0059](0059-sandbox-and-what-if-renderers.md), [decision 0061](0061-phase-c-review-fixes.md) |
 | The depicted colours a cited colour and substance name | [decision 0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) |
@@ -78,7 +78,7 @@ below the bar on colour, type, rest and motion; the kut one also paints a materi
    (`--indigo` only on a control, never a drawing, never a `--dye-*` or `--dip-*` material, the
    kit's to draw); text in `var(--font-ui)` or `var(--font-reading)` at 12, 13, 14 or 16 px; no
    `opacity` below 1 at rest; any timer reads `dataset.reducedMotion`; no picture said to show a
-   kit subject; and every static `svg` passes `drawn_art.scene_problems` as a `drawing` (the type
+   kit subject; and every static `svg` passes `drawn_art.drawn_art_problems` as a `drawing` (the type
    scale, six shapes or more, ink line work, no hand-painted material). The prompt states the bar.
    A draft below it is redrafted once within the 60 s budget with the problems listed, like any
    failed check, and a second failure **leaves the block out**; no new kind of call is added. A

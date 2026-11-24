@@ -7,7 +7,7 @@ Every count that changes with the code, generated from the working tree by `tool
 | What | Count |
 | --- | ---: |
 | Tables (`__tablename__` in `backend/app/models/`) | 157 |
-| Migrations (`backend/migrations/versions/`) | 89 |
+| Migrations (`backend/migrations/versions/`) | 90 |
 
 Newest migration: `0111_answer_figures`.
 
@@ -15,7 +15,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## HTTP API
 
-**253 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 133 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**255 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 135 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -35,6 +35,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `explainers.py` | 6 |
 | `image_contributions.py` | 6 |
 | `oauth_consent.py` | 6 |
+| `page_proposals.py` | 6 |
 | `password_links.py` | 6 |
 | `shared.py` | 6 |
 | `artisan_conversations.py` | 5 |
@@ -45,7 +46,6 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `coverage.py` | 4 |
 | `knowledge_writes.py` | 4 |
 | `page_documents.py` | 4 |
-| `page_proposals.py` | 4 |
 | `secrets.py` | 4 |
 | `testimony_review.py` | 4 |
 | `upload_links.py` | 4 |
@@ -115,15 +115,15 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 796 | 5885 |
-| Backend, on Postgres | 220 | 987 |
-| Tools | 26 | 204 |
+| Backend, without a database | 811 | 5994 |
+| Backend, on Postgres | 221 | 991 |
+| Tools | 27 | 211 |
 | Craft data ETL | 7 | 51 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 204 | 1461 |
+| Unit specs (`*-unit.spec.ts`) | 209 | 1488 |
 | Browser and release specs | 20 | 64 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -132,7 +132,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 195 |
+| Decision records (`docs/decisions/`) | 199 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 29 |
 | Curated craft dossiers | 32 |
@@ -142,16 +142,16 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1492 | 210,272 |
-| `backend/tests` | 1189 | 152,831 |
-| `backend/migrations` | 90 | 11,651 |
-| `frontend/app` | 114 | 10,234 |
-| `frontend/components` | 664 | 45,224 |
-| `frontend/lib` | 280 | 27,985 |
-| `frontend/e2e` | 329 | 36,303 |
+| `backend/app` | 1515 | 212,856 |
+| `backend/tests` | 1206 | 155,135 |
+| `backend/migrations` | 91 | 11,680 |
+| `frontend/app` | 114 | 10,282 |
+| `frontend/components` | 665 | 45,366 |
+| `frontend/lib` | 281 | 28,063 |
+| `frontend/e2e` | 336 | 37,067 |
 | `etl` | 80 | 11,545 |
-| `tools` | 102 | 8,546 |
-| `infra` | 17 | 2,292 |
+| `tools` | 104 | 8,836 |
+| `infra` | 18 | 2,390 |
 
 Code files are `.py`, `.ts`, `.tsx`, `.mjs`, `.css`, `.sh`, `.tf` and `.sql`; lines are newlines.
 

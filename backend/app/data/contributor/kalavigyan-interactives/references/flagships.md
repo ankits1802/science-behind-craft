@@ -308,9 +308,9 @@ Each section gives:
   `MISSING_COMPONENT:craft:Firozabad-Glass:reaction-player` (MEDIUM).
 - **Carried by**: `reaction_player`; the pigment step names cinnabar and orpiment as the family's
   facts identify them, with their PubChem records and hazards from `lookup`.
-- **Missing**: specimen tokens for the mineral pigments, the chalk ground and the lacquer; what a
-  gum binder does as the paint dries (no fact states it); glass's melting reactions as a source
-  writes them (the facts give the fluxes, the carbon dioxide and the silicates, not an equation).
+- **Missing**: specimen tokens for the chalk ground and the lacquer; what a gum binder does as the
+  paint dries (no fact states it); glass's melting reactions as a source writes them (the facts
+  give the fluxes, the carbon dioxide and the silicates, not an equation).
 
 ### The states and their facts
 
@@ -355,8 +355,8 @@ and a page that places them for another craft fails its checks.
 | Kind | Composed from the craft's own | Propose first when it is missing |
 |---|---|---|
 | `reaction_player` | two reactions or more, stepped in the order of their stages, each with its species, its facts, its stage's time and its equation where the server balanced one | `propose_structure` REACTION with the stage it happens in |
-| `dip_player` | two stages in a bath or more (scouring, mordanting, dyeing, resist, washing), each with its colour after, drawn in the depicted colour the team recorded with the fact that states it | `propose_structure` STAGE_AFTER with its colours; the team's specimen colour recorded with that fact |
-| `molecule_3d` | up to two compounds its materials are held as, turned from PubChem's 3D conformer, of carbon, hydrogen, nitrogen and oxygen | the fact naming what the material is; the team's atom colour for any other element |
+| `dip_player` | two stages in a bath or more (scouring, mordanting, dyeing, resist, washing), each with its colour after, drawn in the specimen colour its named dye, mordant or resist depicts (or the one the team recorded with its fact), any other colour outlined and named | `propose_structure` STAGE_AFTER with its colours, its materials named by substance |
+| `molecule_3d` | up to two compounds its materials are held as, turned from PubChem's 3D conformer, of the kit's twenty elements | the fact naming what the material is; an element outside the kit names itself in `missing` |
 | `experiment_lab` | a toggle for each of two or three materials with a stated stand-in, each option cited by its material's own facts | `propose_structure` ALTERNATIVE naming the material and its stand-in |
 
 The family's own flagship on its category page is still storyboarded and drawn as this skill

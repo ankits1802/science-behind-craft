@@ -38,7 +38,7 @@ and not trivial, and rebuild the section prose on our side from the facts that p
 
 Every contributor follows the same rules, whether in KalaVigyan's own team or over its MCP server,
 and each rule lives in one reference. Read the references your work touches before you start; the
-prompts carry them as well.
+tools hand you their pages as you work.
 
 | Reference | MCP resource | On the site | Read it before |
 |---|---|---|---|
@@ -51,6 +51,13 @@ prompts carry them as well.
 
 For data behind a figure, load the datasets skill too, and for a family's flagship interactive the
 interactives skill (the map above).
+
+Every reference, skill, contract and design page is also served in numbered pages of at most 6,000
+bytes, `kalavigyan://guides/<topic>/<page>`, which `get_page` reads with `guide` set to the address
+(`page-checklist/2`); `contents/1` lists every page. The tools hand you the page for your step: the
+checklist's opening and the Kutch Ajrakh bar with a page's coverage, each kind's design rules as you
+add it, the page of each rule a preview fails, the picture rules and the storyboard. Read each page
+a result hands you before your next call.
 
 ## Connect
 
@@ -221,6 +228,18 @@ callers share one allowance between them.
   lime, ferrous sulphate, scrap iron): a substance with a depicted material is drawn as its swatch,
   any other colour is named in words. Two colours make the key; never deliver `swatch_cards` by
   hand for colours your stages name.
+- The same afters compose the craft's dip player: `compose_component` `dip_player` draws each bath
+  stage in the depicted material of the dye, mordant or resist it uses, found by its substance
+  name; a colour no material shows is outlined and named in words, and a stage whose after names no
+  colour is left out. So propose each bath stage's `STAGE_AFTER` with every colour its fact states
+  and text naming them ("yellow from turmeric and pomegranate rind"), its materials named by
+  substance with their local and botanical names. Depicted today: indigo; madder or alizarin; harda
+  or myrobalan; turmeric (haldi); pomegranate rind (naspal); orpiment (haritala); kut, syahi, kasim,
+  ferrous sulphate or scrap iron; kali mitti; lamp black; lime; conch; gach or dabu mud; kesari;
+  cobalt; quartz; sem; cinnabar (hingula); red ochre (geru). Any other colour comes back in
+  `leftOut` asking for a specimen record, which the team adds only with the fact that quotes it.
+- `molecule_3d` composes any compound of the kit's twenty elements that PubChem holds a 3D
+  conformer for; another element is named in `missing`.
 - A community or person a source names in connection with a craft goes in as `GROUP_NAME` (`name`,
   `group_kind` `COMMUNITY` or `PERSON`, the sources whose quotes state it, no field, statement or
   task), on any craft: approved, it only keeps that name out of AI pictures and is never shown.
@@ -244,6 +263,8 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Deliver it finished by the component guide: its kind, its spec as the kind's schema gives it
   (`kalavigyan://components/<kind>.schema.json`) and its units, each unit resting on shown facts or
   on the facts of the same draft or bundle.
+- A page's first components are answered with the design pages and nothing changes: read them,
+  then send the same call again with the `read_token` that came with them.
 - A craft's interactives are composed, not written: `compose_component` with the craft's slug and
   one kind (`reaction_player`, `dip_player`, `molecule_3d` or `experiment_lab`), and `about` for one
   stage, reaction, material or compound, returns them finished from that craft's own facts and
@@ -292,7 +313,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
   not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
   part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
-  depicted material by hand or names a kit part is refused with the part to use.
+  depicted material by hand or names a kit part is refused with the part to use. A player's or
+  card's scene is given as a kit scene in its slot; a scene painting a depicted material by hand is
+  refused with the part to use.
 
 ## Pages
 
@@ -316,6 +339,13 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - The preview's `report` checks the page against the page checklist: each rule a machine can check
   passes or fails with its evidence, and the rest are yours to judge on the link. Clients that draw
   MCP Apps show it from `ui://kalavigyan/page-preview.html`. Fix every failure before you propose.
+- The preview also comes back as pictures of the page's opening view, on a phone and on a wide
+  screen, and of each chapter. Look at each as a reader would: the masthead picture and the name in the first screen, nothing
+  cut off or past the column, every figure, map and interactive whole. Rule 28 runs the release's
+  drawing checks on every component and names each failure; fix it, preview again, and look again.
+  `propose_page` refuses a page while its latest preview fails rule 28. When the pictures could not
+  be made, judge the page on the link and preview again later. The report's `bar` sets the page
+  beside Kutch Ajrakh as guidance only.
 - An account whose work goes live at once gets back `held.confirm_url` instead of a report when it
   proposes a draft or a several-part bundle. Send that link to your user and stop; they confirm it
   once while signed in. Never park a finished redesign in a preview to avoid publishing.
@@ -416,6 +446,8 @@ asked in the last 90 days, the fields that would answer it and what the answer l
 - The question closes by itself once a nightly retrieval run for it finds at least two cited facts
   in each of its fields.
 - Never try to reach the person who asked, and never put a personal detail from a question in a fact.
+- An `ask` answer may draw figures the site composes from its kit, at `answerUrl`. Never draw cloth,
+  a vat, a paste or a dye in your own chat; link the answer (`kalavigyan://design/answer-kit.md`).
 
 ## Pages in other languages
 

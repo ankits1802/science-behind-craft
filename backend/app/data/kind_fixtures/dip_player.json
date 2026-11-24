@@ -19,144 +19,16 @@
     },
     "phase": "u0004",
     "scene": {
-      "tag": "svg",
-      "attrs": {
-        "viewBox": "0 0 200 120",
-        "role": "img",
-        "aria-label": "A bidri piece above its bath"
-      },
-      "children": [
+      "parts": [
         {
-          "tag": "defs",
-          "attrs": {},
-          "children": [
-            {
-              "tag": "pattern",
-              "attrs": {
-                "id": "bidri-dip-tex-0",
-                "width": "4",
-                "height": "4",
-                "patternUnits": "userSpaceOnUse"
-              },
-              "children": [
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M0 4 L4 0",
-                    "stroke": "var(--ink-1)",
-                    "stroke-opacity": ".16",
-                    "stroke-width": ".6"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M0 0 L4 4",
-                    "stroke": "var(--raised)",
-                    "stroke-opacity": ".22",
-                    "stroke-width": ".5"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "tag": "path",
-          "attrs": {
-            "d": "M22 70 L178 70 L170 114 L30 114 Z",
-            "fill": "var(--sunk)",
-            "stroke": "var(--ink-1)",
-            "stroke-width": "1.4"
-          }
-        },
-        {
-          "tag": "path",
-          "attrs": {
-            "d": "M26 82 L174 82",
-            "stroke": "var(--ink-2)",
-            "stroke-width": "1"
-          }
-        },
-        {
-          "tag": "path",
-          "attrs": {
-            "d": "M25 82 L175 82 L170 114 L30 114 Z",
-            "fill": "color-mix(in srgb, var(--ink-3) 22%, var(--sunk))",
-            "fill-opacity": ".85"
-          }
-        },
-        {
-          "tag": "path",
-          "attrs": {
-            "d": "M44 92 q5 -3 10 0 t10 0",
-            "fill": "none",
-            "stroke": "var(--ink-3)",
-            "stroke-width": "1"
-          }
-        },
-        {
-          "tag": "path",
-          "attrs": {
-            "d": "M122 92 q5 -3 10 0 t10 0",
-            "fill": "none",
-            "stroke": "var(--ink-3)",
-            "stroke-width": "1"
-          }
-        },
-        {
-          "tag": "g",
-          "attrs": {
-            "transform": "translate(30 -8.6) scale(.7)"
+          "part": "piece",
+          "shape": "vessel",
+          "material": "--dye-bidri-black",
+          "inlay": {
+            "motif": "lines",
+            "material": "--dye-bidri-silver"
           },
-          "children": [
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                "fill": "var(--dye-bidri-white)"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                "fill": "url(#bidri-dip-tex-0)",
-                "stroke": "var(--ink-1)",
-                "stroke-width": "1.5"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M80 58 C92 64 108 64 120 58",
-                "fill": "none",
-                "stroke": "var(--dye-bidri-silver)",
-                "stroke-width": "2",
-                "stroke-linecap": "round"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M78 70 C92 77 108 77 122 70",
-                "fill": "none",
-                "stroke": "var(--dye-bidri-silver)",
-                "stroke-width": "2",
-                "stroke-linecap": "round"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M94 24 L106 24",
-                "fill": "none",
-                "stroke": "var(--dye-bidri-silver)",
-                "stroke-width": "2",
-                "stroke-linecap": "round"
-              }
-            }
-          ]
+          "label": "u0016"
         }
       ]
     },
@@ -165,146 +37,15 @@
       {
         "pose": "solution",
         "drawing": {
-          "tag": "svg",
-          "attrs": {
-            "viewBox": "0 0 200 120",
-            "role": "img",
-            "aria-label": "u0005"
-          },
-          "children": [
+          "parts": [
             {
-              "tag": "defs",
-              "attrs": {},
-              "children": [
-                {
-                  "tag": "pattern",
-                  "attrs": {
-                    "id": "bidri-dip-tex-1",
-                    "width": "4",
-                    "height": "4",
-                    "patternUnits": "userSpaceOnUse"
-                  },
-                  "children": [
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 4 L4 0",
-                        "stroke": "var(--ink-1)",
-                        "stroke-opacity": ".16",
-                        "stroke-width": ".6"
-                      }
-                    },
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 0 L4 4",
-                        "stroke": "var(--raised)",
-                        "stroke-opacity": ".22",
-                        "stroke-width": ".5"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M22 70 L178 70 L170 114 L30 114 Z",
-                "fill": "var(--sunk)",
-                "stroke": "var(--ink-1)",
-                "stroke-width": "1.4"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M26 82 L174 82",
-                "stroke": "var(--ink-2)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "g",
-              "attrs": {
-                "transform": "translate(30 36) scale(.7)"
-              },
-              "children": [
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "var(--dye-bidri-white)"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "url(#bidri-dip-tex-1)",
-                    "stroke": "var(--ink-1)",
-                    "stroke-width": "1.5"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M80 58 C92 64 108 64 120 58",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M78 70 C92 77 108 77 122 70",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M94 24 L106 24",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                }
-              ]
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M25 82 L175 82 L170 114 L30 114 Z",
-                "fill": "color-mix(in srgb, var(--ink-3) 22%, var(--sunk))",
-                "fill-opacity": ".85"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M44 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M122 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
+              "part": "bath",
+              "vessel": "pot",
+              "piece": "--dye-bidri-black",
+              "label": "u0013"
             }
-          ]
+          ],
+          "motion": "dip"
         },
         "kicker": "u0005",
         "text": "u0006"
@@ -312,144 +53,16 @@
       {
         "pose": "lifted",
         "drawing": {
-          "tag": "svg",
-          "attrs": {
-            "viewBox": "0 0 200 120",
-            "role": "img",
-            "aria-label": "u0007"
-          },
-          "children": [
+          "parts": [
             {
-              "tag": "defs",
-              "attrs": {},
-              "children": [
-                {
-                  "tag": "pattern",
-                  "attrs": {
-                    "id": "bidri-dip-tex-2",
-                    "width": "4",
-                    "height": "4",
-                    "patternUnits": "userSpaceOnUse"
-                  },
-                  "children": [
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 4 L4 0",
-                        "stroke": "var(--ink-1)",
-                        "stroke-opacity": ".16",
-                        "stroke-width": ".6"
-                      }
-                    },
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 0 L4 4",
-                        "stroke": "var(--raised)",
-                        "stroke-opacity": ".22",
-                        "stroke-width": ".5"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M22 70 L178 70 L170 114 L30 114 Z",
-                "fill": "var(--sunk)",
-                "stroke": "var(--ink-1)",
-                "stroke-width": "1.4"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M26 82 L174 82",
-                "stroke": "var(--ink-2)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M25 82 L175 82 L170 114 L30 114 Z",
-                "fill": "color-mix(in srgb, var(--ink-3) 22%, var(--sunk))",
-                "fill-opacity": ".85"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M44 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M122 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "g",
-              "attrs": {
-                "transform": "translate(30 -8.6) scale(.7)"
+              "part": "piece",
+              "shape": "vessel",
+              "material": "--dye-bidri-black",
+              "inlay": {
+                "motif": "lines",
+                "material": "--dye-bidri-silver"
               },
-              "children": [
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "var(--dye-bidri-black)"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "url(#bidri-dip-tex-2)",
-                    "stroke": "var(--ink-1)",
-                    "stroke-width": "1.5"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M80 58 C92 64 108 64 120 58",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M78 70 C92 77 108 77 122 70",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M94 24 L106 24",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                }
-              ]
+              "label": "u0014"
             }
           ]
         },
@@ -459,155 +72,16 @@
       {
         "pose": "oiled",
         "drawing": {
-          "tag": "svg",
-          "attrs": {
-            "viewBox": "0 0 200 120",
-            "role": "img",
-            "aria-label": "u0009"
-          },
-          "children": [
+          "parts": [
             {
-              "tag": "defs",
-              "attrs": {},
-              "children": [
-                {
-                  "tag": "pattern",
-                  "attrs": {
-                    "id": "bidri-dip-tex-3",
-                    "width": "4",
-                    "height": "4",
-                    "patternUnits": "userSpaceOnUse"
-                  },
-                  "children": [
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 4 L4 0",
-                        "stroke": "var(--ink-1)",
-                        "stroke-opacity": ".16",
-                        "stroke-width": ".6"
-                      }
-                    },
-                    {
-                      "tag": "path",
-                      "attrs": {
-                        "d": "M0 0 L4 4",
-                        "stroke": "var(--raised)",
-                        "stroke-opacity": ".22",
-                        "stroke-width": ".5"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M22 70 L178 70 L170 114 L30 114 Z",
-                "fill": "var(--sunk)",
-                "stroke": "var(--ink-1)",
-                "stroke-width": "1.4"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M26 82 L174 82",
-                "stroke": "var(--ink-2)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M25 82 L175 82 L170 114 L30 114 Z",
-                "fill": "color-mix(in srgb, var(--ink-3) 22%, var(--sunk))",
-                "fill-opacity": ".85"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M44 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "path",
-              "attrs": {
-                "d": "M122 92 q5 -3 10 0 t10 0",
-                "fill": "none",
-                "stroke": "var(--ink-3)",
-                "stroke-width": "1"
-              }
-            },
-            {
-              "tag": "g",
-              "attrs": {
-                "transform": "translate(30 -8.6) scale(.7)"
+              "part": "piece",
+              "shape": "vessel",
+              "material": "--dye-bidri-black",
+              "inlay": {
+                "motif": "lines",
+                "material": "--dye-bidri-silver"
               },
-              "children": [
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "var(--dye-bidri-black)"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M92 18 L108 18 L106 26 C106 32 116 36 122 46 C130 58 128 76 118 86 C114 90 110 92 108 94 L110 100 L90 100 L92 94 C90 92 86 90 82 86 C72 76 70 58 78 46 C84 36 94 32 94 26 Z",
-                    "fill": "url(#bidri-dip-tex-3)",
-                    "stroke": "var(--ink-1)",
-                    "stroke-width": "1.5"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M80 58 C92 64 108 64 120 58",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M78 70 C92 77 108 77 122 70",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M94 24 L106 24",
-                    "fill": "none",
-                    "stroke": "var(--dye-bidri-silver)",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                },
-                {
-                  "tag": "path",
-                  "attrs": {
-                    "d": "M86 50 C82 58 82 66 86 74",
-                    "fill": "none",
-                    "stroke": "var(--raised)",
-                    "stroke-opacity": ".6",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round"
-                  }
-                }
-              ]
+              "label": "u0015"
             }
           ]
         },
@@ -681,9 +155,52 @@
     "u0012": {
       "text": "The surface before and after",
       "claims": []
+    },
+    "u0013": {
+      "text": "Boiling fort earth and ammonium chloride",
+      "claims": [
+        "C071",
+        "C073"
+      ]
+    },
+    "u0014": {
+      "text": "The zinc alloy black, the silver its own colour",
+      "claims": [
+        "C018",
+        "C071"
+      ]
+    },
+    "u0015": {
+      "text": "Polished with groundnut oil to a shine",
+      "claims": [
+        "C018",
+        "C077"
+      ]
+    },
+    "u0016": {
+      "text": "The blackened vessel, its silver bright",
+      "claims": [
+        "C018",
+        "C071"
+      ]
     }
   },
   "facts": {
+    "C018": {
+      "text": "Bidri vessels have been made in India from at least the 17th century until the present day.",
+      "quotes": [
+        {
+          "source": "S05",
+          "locator": "line 29",
+          "quote": "Bidri vessels have been manufactured in India from at least the 17th century until the present day"
+        },
+        {
+          "source": "S06",
+          "locator": "line 1",
+          "quote": "produced in India from the 17th century or earlier and which is still being made today"
+        }
+      ]
+    },
     "C071": {
       "text": "The finished article is dipped in a boiling solution of fort earth and ammonium chloride, which turns the zinc alloy black while the silver keeps its colour.",
       "quotes": [
@@ -706,6 +223,21 @@
           "source": "S03",
           "locator": "lines 1350-1351",
           "quote": "The zinc alloy turns permanently jet black while the silver retains its brilliance."
+        }
+      ]
+    },
+    "C073": {
+      "text": "The blackening slurry is boiled in an open iron or aluminium vessel and the engraved piece is rolled in it.",
+      "quotes": [
+        {
+          "source": "S04",
+          "locator": "line 119",
+          "quote": "the poultice is boiled in an open iron or aluminium vessel (Fig. 3b)."
+        },
+        {
+          "source": "S04",
+          "locator": "lines 120-121",
+          "quote": "the engraved artefact (Fig. 3c) is introduced into the boiling slurry and rolled."
         }
       ]
     },
@@ -755,12 +287,26 @@
       "url": "https://censusindia.gov.in/nada/index.php/catalog/31726/download/34907/22310_1961_SEL.pdf",
       "reliability": "A"
     },
+    "S04": {
+      "title": "Surface patina and clay characterization: multi-analytical investigations into Bidri handicraft",
+      "publisher": "International Journal of Conservation Science",
+      "year": 2023,
+      "url": "https://ijcs.ro/public/IJCS-23-95_Rolla.pdf",
+      "reliability": "A"
+    },
     "S05": {
       "title": "The technical examination of Bidri ware",
       "publisher": "The International Institute for Conservation of Historic and Artistic Works",
       "year": 1987,
       "url": "https://mci.si.edu/node/1221430",
       "reliability": "A"
+    },
+    "S06": {
+      "title": "Bidri ware and its black patina",
+      "publisher": "National Institute of Advanced Studies",
+      "year": 2015,
+      "url": "https://pennds.org/archaeobib/items/show/22389",
+      "reliability": "B"
     },
     "S14": {
       "title": "Bidriware",
