@@ -163,8 +163,8 @@ export function unloadedHeavyChunk(loaded: readonly Sent[]): string {
 }
 
 export function withScript(path: string, script: string): (page: Page) => Promise<void> {
-  return (page) =>
-    page.route(
+  return async (page) => {
+    await page.route(
       (url) => url.pathname === path,
       async (route) => {
         const response = await route.fetch();
@@ -172,4 +172,5 @@ export function withScript(path: string, script: string): (page: Page) => Promis
         await route.fulfill({ response, body });
       }
     );
+  };
 }
