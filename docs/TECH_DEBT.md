@@ -361,6 +361,19 @@ Last reviewed: 2026-11-22.
 
 ## Listen and the switched-off call (decision 0035)
 
+### Listen's dock opens without keyboard focus or an announced first line
+
+- **What:** pressing Listen in an answer's reading tools band replaces the Listen button with the
+  dock, so a keyboard reader's focus drops to the page; and the dock's first "Preparing the
+  audio…" line is mounted together with its `role="status"` region, so many screen readers never
+  announce it. Decision 0187 kept the dock's play button focusable through its waits and its later
+  status lines announced, but not these two first moments.
+- **Why left:** the review lane that found them owned the five confirmed findings; these came up
+  while fixing them.
+- **Clears it:** when the dock opens from a focused Listen button, focus moves to the dock's play
+  button; the reading tools band keeps one always-mounted status region whose text the dock sets,
+  so the first line is announced; a unit spec checks both with the keyboard.
+
 ### Listen's voices heard in English and Hindi only
 
 - **What:** the paid checks of 2026-11-23 heard both voices. `eleven_v4` on `/with-timestamps`
