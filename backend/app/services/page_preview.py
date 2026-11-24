@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
 from app.models import User
+from app.research.component_proposals import SUBJECT_LINK
 from app.research.knowledge_writes import FactProposal
 from app.research.page_layout import PageLayout
 from app.research.page_proposals import (
@@ -30,6 +31,7 @@ from app.research.page_proposals import (
 from app.research.structure_proposals import CONFLICT, StructureProposal
 from app.research.structure_proposals_values import stated_check
 
+from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
 from .component_proposals_spec import checked_delivery
 from .monograph_document import has_authored_content
 from .monograph_generated import generated_parts
@@ -38,6 +40,7 @@ from .monograph_generated_drawings import Drawings
 from .open_work_subjects import WorkSubject, subject_by_key
 from .page_layout_proposals import STALE, current_version
 from .page_layouts import subject_path
+from .page_preview_lifecycle import previewed_link, previewed_withdrawals
 from .page_preview_links import preview_path, store_preview
 from .page_preview_parts import PreviewDraft, previewed_component
 from .page_preview_pictures import given_plates
@@ -103,6 +106,7 @@ async def preview_page(
     reports = [
         *await _reports(session, bundle, subject, draft),
         *await _pictures(session, user, bundle, subject, draft),
+        *await previewed_withdrawals(session, user, bundle, draft),
     ]
     parts = await generated_parts(session, subject, draft.additions())
     document = None if parts is None else assembled_document(parts, Drawings())
@@ -141,7 +145,7 @@ async def _reports(
         work = partial(_component, session, (bundle, subject), draft, index, component)
         reports.append(await checked_part(session, COMPONENT, index, work))
     if bundle.layout is not None:
-        work = partial(_layout, session, subject, draft, bundle.layout)
+        work = partial(_layout, session, (bundle, subject), draft, bundle.layout)
         reports.append(await checked_part(session, LAYOUT, 0, work))
     return reports
 
@@ -212,6 +216,9 @@ async def _component(
     bundle, subject = page
     resolved = resolved_component(component, draft.facts)
     refuse_on(keyed_problem(bundle, subject, index, resolved))
+    refuse_on(await borrowed_problem(session, subject, linked_labels([component])))
+    if resolved.extension == SUBJECT_LINK and resolved.extends is not None:
+        return await previewed_link(session, subject, draft, index, resolved)
     if not resolved.delivered:
         raise InvalidInput(NO_SPEC)
     delivery = await checked_delivery(session, resolved, known=known_texts(draft.facts, resolved))
@@ -220,11 +227,13 @@ async def _component(
 
 
 async def _layout(
-    session: AsyncSession, subject: WorkSubject, draft: PreviewDraft, part: PageLayoutPart
+    session: AsyncSession, page: tuple[PageBundle, WorkSubject], draft: PreviewDraft, part: PageLayoutPart
 ) -> PartReport:
+    bundle, subject = page
     current = await current_version(session, subject)
     if part.base_version != current:
         raise InvalidInput(STALE.format(slug=subject.slug, current=current, base=part.base_version))
+    refuse_on(await borrowed_problem(session, subject, placed_labels(bundle.components, part)))
     draft.layout = PageLayout(
         subject_kind=subject.kind, subject_slug=subject.slug, version=current + 1, entries=list(part.entries)
     )

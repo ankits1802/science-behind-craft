@@ -17,11 +17,13 @@ from app.research.page_proposals import (
     NOTE_MAX_CHARS,
     PICTURES_MAX,
     STRUCTURE_MAX,
+    WITHDRAWALS_MAX,
     PageBundle,
     PageComponent,
     PageLayoutPart,
     PagePicture,
     PageSubject,
+    PageWithdrawal,
 )
 from app.research.structure_proposals import StructureProposal
 
@@ -44,7 +46,7 @@ __all__ = [
 FACT = "fact"
 BUNDLE = (
     "One page's parts: subject {kind, slug} and any of facts, structure, components ({proposal, cites}), "
-    "layout {base_version, entries}, pictures and a note, each part exactly as edit_draft's add takes it "
+    "layout {base_version, entries}, pictures, withdrawals and a note, each part exactly as edit_draft's add takes it "
     "(its input schema holds every part's fields), and translation; one part alone works"
 )
 NEEDS_SPEC = (
@@ -65,7 +67,7 @@ def undelivered(components: Sequence[PageComponent]) -> str | None:
 
 
 def bundle_parts(bundle: PageBundle) -> int:
-    held = (bundle.facts, bundle.structure, bundle.components, bundle.pictures)
+    held = (bundle.facts, bundle.structure, bundle.components, bundle.pictures, bundle.withdrawals)
     translated = 0 if bundle.translation is None else len(bundle.translation.passages)
     return sum(len(part) for part in held) + int(bundle.layout is not None) + translated
 
@@ -95,6 +97,11 @@ class DraftAdd(Arguments):
     supplied_sources: list[uuid.UUID] = Field(
         default_factory=list, max_length=SUPPLIED_PER_DRAFT_MAX, description="Ids from supply_source"
     )
+    withdrawals: list[PageWithdrawal] = Field(
+        default_factory=list,
+        max_length=WITHDRAWALS_MAX,
+        description="{label, reason} of your registered components",
+    )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
     @model_validator(mode="after")
@@ -105,7 +112,14 @@ class DraftAdd(Arguments):
         return self
 
     def holds(self) -> bool:
-        listed = (self.facts, self.structure, self.components, self.pictures, self.supplied_sources)
+        listed = (
+            self.facts,
+            self.structure,
+            self.components,
+            self.pictures,
+            self.supplied_sources,
+            self.withdrawals,
+        )
         return any(listed) or self.layout is not None or self.note is not None
 
 
@@ -168,6 +182,7 @@ def bundle_schema() -> dict[str, Any]:
         "components": _parts(COMPONENTS_MAX),
         "layout": {"type": "object"},
         "pictures": _parts(PICTURES_MAX),
+        "withdrawals": _parts(WITHDRAWALS_MAX),
         "translation": {"type": "object"},
         "note": {"type": "string", "maxLength": NOTE_MAX_CHARS},
     }

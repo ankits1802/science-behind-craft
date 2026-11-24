@@ -30,6 +30,8 @@ from app.research.page_drafts import (
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult, PageSubject
 from app.research.page_report import PageReport
 
+from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
+from .component_lifecycle import retirable_piece
 from .open_work_subjects import subject_by_key
 
 __all__ = [
@@ -119,6 +121,7 @@ async def add_to_draft(
 ) -> PageDraft:
     row = await own_draft(session, user, draft_id, now=now, lock=True)
     await _refuse_foreign_sources(session, user.id, added.supplied_sources)
+    await _refuse_what_cannot_pass(session, user, row, added)
     _write(row, _parts_or_refusal(lambda: with_added(held_parts(row), added)), now)
     await session.flush()
     return row
@@ -250,6 +253,21 @@ async def _refuse_foreign_sources(session: AsyncSession, user_id: uuid.UUID, wan
     foreign = [str(ident) for ident in wanted if ident not in mine]
     if foreign:
         raise InvalidInput(NOT_YOURS.format(ids=", ".join(foreign)))
+
+
+async def _refuse_what_cannot_pass(
+    session: AsyncSession, user: User, row: PageDraft, added: DraftAddition
+) -> None:
+    for withdrawal in added.withdrawals:
+        await retirable_piece(session, user, withdrawal.label)
+    components = [*held_parts(row).components, *added.components]
+    labels = [*linked_labels(added.components), *placed_labels(components, added.layout)]
+    if not labels:
+        return
+    subject = await subject_by_key(session, row.subjectKind, row.subjectSlug)
+    problem = await borrowed_problem(session, subject, labels)
+    if problem is not None:
+        raise InvalidInput(problem)
 
 
 async def _open(session: AsyncSession, user_id: uuid.UUID, kind: str, slug: str) -> PageDraft | None:

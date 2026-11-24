@@ -21,6 +21,7 @@ __all__ = [
     "STALE_LAYOUT",
     "layout_of",
     "page_layout",
+    "page_path",
     "store_layout",
     "subject_path",
     "write_layout",
@@ -36,7 +37,11 @@ USER, SYSTEM = "USER", "SYSTEM"
 
 
 def subject_path(subject: WorkSubject) -> str:
-    return category_path(subject.slug) if subject.kind == CATEGORY else f"/crafts/{subject.slug}"
+    return page_path(subject.kind, subject.slug)
+
+
+def page_path(kind: str, slug: str) -> str:
+    return category_path(slug) if kind == CATEGORY else f"/crafts/{slug}"
 
 
 async def page_layout(session: AsyncSession, kind: str, slug: str) -> PageLayout | None:

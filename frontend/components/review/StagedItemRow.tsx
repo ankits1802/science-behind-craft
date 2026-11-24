@@ -8,13 +8,15 @@ import { StagedSourceFields } from "@/components/review/StagedSourceFields";
 import { StatusBadge } from "@/components/StatusBadge";
 import { STAGED_REASON_MAX, STAGED_REASON_MIN, type ItemState, type StagedAction, type StagedItemView } from "@/lib/stagedReviewContract";
 import {
+  actsOnPublished,
   decisionShown,
   filingLine,
   ITEM_STATE_LABELS,
+  kindLabel,
   outcomeLine,
+  pageLine,
   refilesUnder,
   STAGED_ACTION_LABELS,
-  STAGED_KIND_LABELS,
   stagedActions,
   type DraftProblems,
   type StagedDraft
@@ -26,7 +28,7 @@ const STATE_TONES: Record<ItemState, StatusTone> = { STAGED: "waiting", APPLIED:
 type EditorProps = { item: StagedItemView; draft: StagedDraft; problems: DraftProblems | null; onChange: (next: StagedDraft) => void };
 
 function ActionField({ draft, onChange }: { draft: StagedDraft; onChange: (next: StagedDraft) => void }) {
-  const actions = stagedActions(draft.kind);
+  const actions = stagedActions(draft.kind, draft.action);
   if (actions.length === 1) {
     return (
       <dl className="grid content-start font-ui text-label">
@@ -53,7 +55,7 @@ export function StagedItemEditor({ item, draft, problems, onChange }: EditorProp
       <label className="flex min-h-target items-start gap-3">
         <input type="checkbox" className="mt-1.5 h-4 w-4 shrink-0" checked={draft.selected} onChange={(event) => onChange({ ...draft, selected: event.target.checked })} />
         <span className="grid min-w-0 gap-1">
-          <span className="kicker">{STAGED_KIND_LABELS[draft.kind]}</span>
+          <span className="kicker">{kindLabel(draft.kind, draft.action)}</span>
           <span className="font-reading text-body-sm text-ink-1 [overflow-wrap:anywhere]">{item.label}</span>
         </span>
       </label>
@@ -65,6 +67,11 @@ export function StagedItemEditor({ item, draft, problems, onChange }: EditorProp
           </Field>
         </div>
         {refilesUnder(draft.kind, draft.action) ? <FilingPicker value={draft.fileUnder} onChange={(fileUnder) => onChange({ ...draft, fileUnder })} current={null} /> : null}
+        {actsOnPublished(draft.kind, draft.action) ? (
+          <dl className="grid font-ui text-label">
+            <ReviewTerm term="Off" value={pageLine(item.decision)} />
+          </dl>
+        ) : null}
         {draft.source ? (
           <StagedSourceFields draft={draft.source} problem={problems?.source ?? null} onChange={(source) => onChange({ ...draft, source })} />
         ) : null}
@@ -79,14 +86,15 @@ export function StagedItemResult({ item }: { item: StagedItemView }) {
   const filing = filingLine(shown);
   return (
     <li className="grid gap-2 border-t border-rule pt-4" data-testid="staged-item" data-state={item.state}>
-      <p className="kicker">{STAGED_KIND_LABELS[shown.kind]}</p>
+      <p className="kicker">{kindLabel(shown.kind, shown.action)}</p>
       <p className="font-reading text-body-sm text-ink-1 [overflow-wrap:anywhere]">{item.label}</p>
       <StatusBadge tone={STATE_TONES[item.state]} label={ITEM_STATE_LABELS[item.state]} />
       {outcome ? <p className="max-w-measure font-ui text-ui text-ink-1">{outcome}</p> : null}
       <dl className="grid gap-x-6 gap-y-2 font-ui text-label sm:grid-cols-2">
         <ReviewTerm term="Action" value={STAGED_ACTION_LABELS[shown.action]} />
         <ReviewTerm term="Reason" value={shown.reason} />
-        {filing ? <ReviewTerm term="File under" value={filing} /> : null}
+        {actsOnPublished(shown.kind, shown.action) ? <ReviewTerm term="Off" value={pageLine(shown)} /> : null}
+        {filing && !actsOnPublished(shown.kind, shown.action) ? <ReviewTerm term="File under" value={filing} /> : null}
       </dl>
     </li>
   );

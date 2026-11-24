@@ -30,24 +30,18 @@ __all__ = [
     "REFRESH_STATUSES",
     "RUNNING_JOB_INDEX",
     "STAGED_ACTION_VALUES",
+    "STAGED_CORRECTION_KINDS",
     "STAGED_KIND_VALUES",
+    "STAGED_QUEUE_KINDS",
     "PageRefreshJob",
     "StagedReview",
     "StagedReviewItem",
 ]
 
-STAGED_KIND_VALUES = (
-    "FACTS",
-    "COMPONENTS",
-    "LAYOUTS",
-    "STRUCTURE",
-    "READINGS",
-    "LAYERS",
-    "STAGES",
-    "SOURCES",
-    "SOURCES_DIFFER",
-)
-STAGED_ACTION_VALUES = ("approve", "reject", "raise", "retract", "correct", "clear")
+STAGED_QUEUE_KINDS = ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES")
+STAGED_CORRECTION_KINDS = ("SOURCES", "SOURCES_DIFFER")
+STAGED_KIND_VALUES = (*STAGED_QUEUE_KINDS, *STAGED_CORRECTION_KINDS)
+STAGED_ACTION_VALUES = ("approve", "reject", "raise", "retract", "correct", "clear", "remove")
 BATCH_STATUSES = ("OPEN", "CONFIRMED", "DISCARDED")
 ITEM_STATES = ("STAGED", "APPLIED", "REFUSED", "SKIPPED")
 REFRESH_SCOPES = ("CHANGED", "EVERY", "NAMED")

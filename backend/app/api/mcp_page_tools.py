@@ -14,13 +14,19 @@ from app.research.page_drafts import DraftView, PageLists, parts_counts
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult
 from app.research.page_report import PageReport
 from app.research.review_switch import AGENT
-from app.services import page_drafts, page_preview, page_report
+from app.services import page_drafts, page_holds, page_preview, page_report
+from app.services.borrowed_placements import held_refusal
+from app.services.component_lifecycle import withdrawn_owners
+from app.services.page_revalidation import refresh_pages
+from app.services.trust_tiers import publishes_at_once
 
 from .mcp_page_arguments import ONE_PAGE, ONE_WORK, EditDraft, PageWork, bundle_parts
 from .mcp_page_texts import (
     ADD,
+    CONFIRM,
     CREATED,
     EDIT_DESCRIPTION,
+    FIX_FIRST,
     FOLLOW,
     HELD,
     PREVIEW,
@@ -120,16 +126,49 @@ async def _preview_page(context: ToolContext, arguments: PageWork) -> PreviewRep
 async def _propose_page(context: ToolContext, arguments: PageWork) -> PageReply:
     user, now = contributor(context, "propose_page", STUDIO_DOES), datetime.now(UTC)
     bundle, row, _ = await _work(context, user, arguments, now)
-    if row is not None or bundle_parts(bundle) > 1:
+    whole = row is not None or bundle_parts(bundle) > 1
+    if whole:
         await refuse_tool_when_spent(PAGE_PROPOSALS, user)
+    if whole and await publishes_at_once(context.session, user.id, AGENT):
+        return await _hold_page(context, user, (bundle, row), arguments, now)
     result = await page_proposed(context.session, bundle, user, origin=AGENT, site=context.site)
     if row is not None:
         await page_drafts.record_submission(context.session, row, result, now=now)
+    await _refresh_withdrawn(context, result)
+    return _page_reply(result, arguments, FOLLOW if row is None else SUBMITTED)
+
+
+async def _hold_page(
+    context: ToolContext,
+    user: User,
+    work: tuple[PageBundle, PageDraft | None],
+    arguments: PageWork,
+    now: datetime,
+) -> PageReply:
+    bundle, row = work
+    refused = await held_refusal(context.session, bundle, site=context.site)
+    if refused is not None:
+        return _page_reply(refused, arguments, FIX_FIRST)
+    client = context.caller.client_name if context.caller is not None else None
+    place = page_holds.HoldPlace(site=context.site, client_name=client, now=now)
+    result = await page_holds.hold_page(context.session, user, bundle, row, place)
+    return _page_reply(result, arguments, CONFIRM)
+
+
+async def _refresh_withdrawn(context: ToolContext, result: PageProposalResult) -> None:
+    owners = await withdrawn_owners(context.session, result.parts)
+    if owners.empty:
+        return
+    await context.session.commit()
+    await refresh_pages(owners)
+
+
+def _page_reply(result: PageProposalResult, arguments: PageWork, step: str) -> PageReply:
     return PageReply.model_validate(
         {
             **result.model_dump(),
             "draftId": arguments.draft_id,
-            "nextStep": FOLLOW if row is None else SUBMITTED,
+            "nextStep": step,
             "notices": arguments.notices(),
         }
     )

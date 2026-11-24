@@ -6,7 +6,7 @@ from collections.abc import Mapping, Sequence
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import ColumnElement, select
+from sqlalchemy import ColumnElement, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -30,6 +30,7 @@ from app.research.knowledge_api import ComponentSummary
 from app.research.open_work_texts import counted
 
 from .component_library import library_components
+from .component_lifecycle import check_replacement
 from .component_proposals_register import register_component, registers
 from .component_proposals_spec import NO_KNOWN, CheckedDelivery, checked_delivery
 from .knowledge_api import known_craft
@@ -44,6 +45,10 @@ PENDING = "PENDING"
 OPEN_CONCEPT = "OPEN"
 PLACE_KEY = re.compile(PLACE_KEY_PATTERN)
 WAITING = "A proposal for {label} already waits for review or building."
+LABEL_KEPT = (
+    "{label} is kept in the record by a component withdrawn, hidden or replaced; give the new one a label of "
+    "its own."
+)
 NOT_IN_LIBRARY = "{labels} {verb} not in the component library; list_components gives the labels."
 REFUSED = "{count} in the library already {verb} this; nothing was stored. Take one of the two ways on."
 STORED = {
@@ -81,6 +86,7 @@ async def propose_component(
     if problem is not None:
         raise InvalidInput(problem)
     await _check_labels(session, draft)
+    await check_replacement(session, user, draft.replaces)
     owner = None if draft.craft_slug is None else await known_craft(session, draft.craft_slug)
     await _check_subjects(session, draft)
     matches = close_matches(draft, await _candidates(session, draft))
@@ -143,6 +149,14 @@ async def _check_labels(session: AsyncSession, draft: ComponentProposalDraft) ->
         raise InvalidInput(NOT_IN_LIBRARY.format(labels=", ".join(missing), verb=verb))
     if draft.extension == SUBJECT_LINK:
         return
+    retired = await session.scalar(
+        select(KnowledgePiece.id).where(
+            KnowledgePiece.label == draft.label,
+            or_(KnowledgePiece.hiddenAt.is_not(None), KnowledgePiece.supersededById.is_not(None)),
+        )
+    )
+    if retired is not None:
+        raise InvalidInput(LABEL_KEPT.format(label=draft.label))
     waiting = await session.scalar(
         select(ComponentProposal.id).where(
             ComponentProposal.label == draft.label,
@@ -245,6 +259,7 @@ def _proposal(
         consideredLabels=list(draft.considered_labels),
         extendsLabel=draft.extends,
         extension=draft.extension,
+        replacesLabel=draft.replaces,
         taskKey=draft.task_key,
         status=APPROVED if approved else PENDING,
         reviewedById=user.id if approved else None,

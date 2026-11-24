@@ -5,7 +5,7 @@ import { count, integer, knownOnly, list, nullable, object, oneOf, optional, par
 
 export const STAGED_PATH = "/review-queue/staged";
 export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "SOURCES", "SOURCES_DIFFER"] as const;
-export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear"] as const;
+export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear", "remove"] as const;
 export const SOURCE_KINDS = [
   "PAPER",
   "BOOK",

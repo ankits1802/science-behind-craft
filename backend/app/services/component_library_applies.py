@@ -4,13 +4,14 @@ import uuid
 from collections.abc import Sequence
 from typing import Any
 
-from sqlalchemy import ColumnElement, CompoundSelect, Select, func, select, union
+from sqlalchemy import ColumnElement, CompoundSelect, Select, exists, func, select, union
 
 from app.models import (
     Concept,
     CraftLocation,
     KnowledgePiece,
     KnowledgePieceSubject as Subject,
+    KnowledgePieceUnlink as Unlink,
     Material,
     Process,
     ProcessStage,
@@ -34,8 +35,15 @@ def registered_pieces() -> list[ColumnElement[bool]]:
     ]
 
 
-def applies_to(craft_ids: Sequence[uuid.UUID]) -> CompoundSelect[Any]:
-    crafts = list(craft_ids)
+def applies_to(craft_ids: Sequence[uuid.UUID]) -> Select[Any]:
+    applying = _applying(list(craft_ids)).subquery()
+    unlinked = select(Unlink.id).where(
+        Unlink.pieceId == applying.c[APPLIED_PIECE], Unlink.craftId == applying.c[APPLIED_CRAFT]
+    )
+    return select(applying.c[APPLIED_CRAFT], applying.c[APPLIED_PIECE]).where(~exists(unlinked))
+
+
+def _applying(crafts: list[uuid.UUID]) -> CompoundSelect[Any]:
     own = select(KnowledgePiece.craftId.label(APPLIED_CRAFT), KnowledgePiece.id.label(APPLIED_PIECE))
     by_concept = _keyed(Concept.craftId).join(Concept, Concept.id == Subject.conceptId)
     return union(

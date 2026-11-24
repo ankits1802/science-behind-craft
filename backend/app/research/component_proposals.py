@@ -104,6 +104,8 @@ KIND_DESCRIPTION = (
     "A component kind that takes a spec: one of kalavigyan://components/{kind}.schema.json, which "
     "resources/templates/list names"
 )
+REPLACES_DESCRIPTION = "The label of a registered component this one takes the place of on every page"
+REPLACES_ITSELF = "a replacement takes a label of its own and is never a SUBJECT_LINK"
 
 
 class ComponentProposalDraft(BaseModel):
@@ -120,6 +122,9 @@ class ComponentProposalDraft(BaseModel):
     considered_labels: list[str] = Field(default_factory=list, max_length=CONSIDERED_MAX)
     extends: str | None = Field(default=None, max_length=TITLE_COLUMN_CHARS, pattern=LABEL_PATTERN)
     extension: Extension | None = None
+    replaces: str | None = Field(
+        default=None, max_length=TITLE_COLUMN_CHARS, pattern=LABEL_PATTERN, description=REPLACES_DESCRIPTION
+    )
     task_key: str | None = Field(default=None, min_length=1, max_length=TASK_KEY_MAX_CHARS)
     spec: dict[str, Any] | None = None
     units: dict[UnitKey, DeliveredUnit] = Field(default_factory=dict, max_length=UNITS_MAX)
@@ -152,6 +157,8 @@ class ComponentProposalDraft(BaseModel):
             raise ValueError(
                 "a SUBJECT_LINK keys the registered component to new subjects and carries no spec"
             )
+        if self.replaces is not None and (self.replaces == self.label or self.extension == SUBJECT_LINK):
+            raise ValueError(REPLACES_ITSELF)
         return self
 
 
@@ -209,7 +216,7 @@ def close_matches(
     seen: set[str] = set()
     found = []
     for candidate in candidates:
-        if candidate.label in seen or candidate.label == draft.extends:
+        if candidate.label in seen or candidate.label in (draft.extends, draft.replaces):
             continue
         seen.add(candidate.label)
         reasons = match_reasons(draft, candidate)

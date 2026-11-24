@@ -52,6 +52,7 @@ export type OwnProposal = {
   createdAt: string;
   reasons: string[];
   gates: GateReport[];
+  registered?: boolean;
 };
 
 export type TaskSubject = { kind: "craft" | "family" | "category"; slug: string; name: string; pageUrl: string };
@@ -124,7 +125,8 @@ export const ownProposalShape: Shape<OwnProposal> = object<OwnProposal>({
   craftSlug: nullable(text),
   createdAt: text,
   reasons: list(text),
-  gates: list(gateReportShape)
+  gates: list(gateReportShape),
+  registered: optional(boolean)
 });
 
 const ownProposalsShape = object<{ schemaVersion: 1; items: OwnProposal[] }>({ schemaVersion: oneOf([1] as const), items: list(ownProposalShape) });
@@ -166,7 +168,11 @@ export async function termsAccepted(terms: TermsStatus): Promise<TermsStatus> {
 }
 
 export function canWithdraw(item: OwnProposal): boolean {
-  return item.state === "WAITING";
+  return item.state === "WAITING" || isRegistered(item);
+}
+
+export function isRegistered(item: OwnProposal): boolean {
+  return item.kind === "COMPONENT" && item.state === "APPROVED" && item.registered === true;
 }
 
 export function withdrawPath(item: OwnProposal): string {

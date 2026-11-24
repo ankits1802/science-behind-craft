@@ -21,18 +21,22 @@ from app.research.page_proposals import (
     PICTURE,
     REFUSED,
     STRUCTURE,
+    WITHDRAWAL,
     PageBundle,
     PageComponent,
     PageLayoutPart,
     PagePicture,
     PageProposalResult,
     PageSubject,
+    PageWithdrawal,
     PartReport,
 )
 from app.research.review_switch import REFUSED as FACT_REFUSED
 from app.research.structure_proposals import REFUSED as STRUCTURE_REFUSED, StructureProposal
 from app.research.upload_links import OPEN, SlotDeclaration, UploadSlot, UploadStart
 
+from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
+from .component_lifecycle import withdraw_registered
 from .component_proposals import propose_component
 from .fact_proposals import ProposalAdapters, propose_fact
 from .open_work_subjects import WorkSubject, subject_by_key
@@ -61,6 +65,8 @@ PictureStarter = Callable[[UploadSlot, SlotDeclaration | None], Awaitable[Upload
 SUMMARY = (
     "{accepted} of {total} parts of the bundle were accepted and {refused} refused, each with its reason."
 )
+WITHDRAWN_STATUS = "WITHDRAWN"
+WITHDRAWN = "Withdrawn: {label} is off every page that placed it, and kept in the record."
 
 
 @dataclass(frozen=True)
@@ -104,6 +110,8 @@ async def propose_page(
         run.reports += await checked_translation(
             session, user, subject, bundle.translation, origin=tools.origin, now=now
         )
+    for index, withdrawal in enumerate(bundle.withdrawals):
+        await _record(run, WITHDRAWAL, index, partial(_withdrawal, run, index, withdrawal))
     count = sum(report.outcome == REFUSED for report in run.reports)
     total = len(run.reports)
     return PageProposalResult(
@@ -147,6 +155,7 @@ async def _structure(run: _Run, index: int, proposal: StructureProposal) -> Part
 async def _component(run: _Run, index: int, component: PageComponent) -> PartReport:
     draft = resolved_component(component, run.facts)
     refuse_on(keyed_problem(run.bundle, run.subject, index, draft))
+    refuse_on(await borrowed_problem(run.session, run.subject, linked_labels([component])))
     await run.tools.spend(COMPONENT_PROPOSALS)
     result = await propose_component(
         run.session, run.user, draft, now=run.now, known=known_texts(run.facts, draft)
@@ -157,6 +166,8 @@ async def _component(run: _Run, index: int, component: PageComponent) -> PartRep
 
 
 async def _layout(run: _Run, part: PageLayoutPart) -> PartReport:
+    placed = placed_labels(run.bundle.components, part)
+    refuse_on(await borrowed_problem(run.session, run.subject, placed))
     await run.tools.spend(LAYOUT_PROPOSALS)
     draft = LayoutProposalDraft(
         subject=LayoutSubject(kind=run.subject.kind, slug=run.subject.slug),
@@ -168,6 +179,15 @@ async def _layout(run: _Run, part: PageLayoutPart) -> PartReport:
         run.session, run.user, draft, origin=run.tools.origin, site=run.tools.site, now=run.now
     )
     return accepted(LAYOUT, 0, status=result.status, ident=result.proposal_id, message=result.message)
+
+
+async def _withdrawal(run: _Run, index: int, withdrawal: PageWithdrawal) -> PartReport:
+    await run.tools.spend(COMPONENT_PROPOSALS)
+    retired = await withdraw_registered(
+        run.session, run.user, withdrawal.label, reason=withdrawal.reason, now=run.now
+    )
+    message = WITHDRAWN.format(label=retired.label)
+    return accepted(WITHDRAWAL, index, status=WITHDRAWN_STATUS, ident=retired.piece_id, message=message)
 
 
 async def _picture(run: _Run, index: int, picture: PagePicture) -> PartReport:

@@ -21,9 +21,10 @@ from app.research.trust_tiers import (
     TrustStanding,
     TrustStandings,
     earned_tier,
+    tier_placement,
 )
 
-from . import audit
+from . import app_settings, audit
 from .proposal_writes import PROPOSAL_CLAIM_ORIGIN
 
 __all__ = [
@@ -33,6 +34,7 @@ __all__ = [
     "TIER_SET_ACTION",
     "WAITING_STATUSES",
     "account_standing",
+    "publishes_at_once",
     "set_tier",
     "standing_of",
     "tier_records",
@@ -68,6 +70,14 @@ async def account_standing(session: AsyncSession, user_id: uuid.UUID) -> TrustSt
         raise InvalidInput(NO_ACCOUNT.format(user_id=user_id))
     records = await tier_records(session, [user_id])
     return standing_of(user, records[user_id], await session.get(TrustTierOverride, user_id))
+
+
+async def publishes_at_once(session: AsyncSession, user_id: uuid.UUID, origin: str) -> bool:
+    standing = await account_standing(session, user_id)
+    switch = await app_settings.review_switch(session)
+    reviews = has_rank(standing.role, PROFESSOR)
+    tiered = tier_placement(switch.mode(origin), proposer_reviews=reviews, tier=standing.tier, drawn=False)
+    return tiered.placed.live
 
 
 def standing_of(user: User, record: TierRecord, override: TrustTierOverride | None) -> TrustStanding:

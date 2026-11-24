@@ -5,7 +5,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from sqlalchemy import or_, select
+from sqlalchemy import exists, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
@@ -18,6 +18,7 @@ from app.models import (
     CuratedCategoryClaim,
     KnowledgePiece,
     KnowledgePieceSubject as Subject,
+    KnowledgePieceUnlink as Unlink,
 )
 from app.models.enums import DISCIPLINES
 from app.research.component_specs_general_delivery import DeliveredComponent
@@ -39,6 +40,8 @@ __all__ = [
     "RegisteredComponent",
     "StoredSection",
     "component_binding_of",
+    "piece_subject_keys",
+    "registered_component",
     "subject_components",
     "subject_pictures",
     "subject_record",
@@ -135,9 +138,9 @@ async def subject_components(
         found = list(await session.scalars(select(KnowledgePiece).where(KnowledgePiece.label.in_(labels))))
     owner = None if subject.kind == CATEGORY else subject.id
     rows = [row for row in found if row.craftId is None or row.craftId == owner]
-    subjects = await _subject_keys(session, [row.id for row in rows])
+    subjects = await piece_subject_keys(session, [row.id for row in rows])
     return sorted(
-        (_component(row, subjects.get(row.id, ()), owner) for row in rows if row.label is not None),
+        (registered_component(row, subjects.get(row.id, ()), owner) for row in rows if row.label is not None),
         key=lambda component: component.label,
     )
 
@@ -165,18 +168,20 @@ async def _category_pieces(
         return []
     concepts = select(Claim.subjectId).where(Claim.id.in_(claims), Claim.subjectType == CONCEPT_SUBJECT)
     linked = select(Subject.pieceId).where(Subject.conceptId.in_(concepts))
+    unlinked = select(Unlink.id).where(Unlink.pieceId == KnowledgePiece.id, Unlink.categoryId == category_id)
     rows = await session.scalars(
         select(KnowledgePiece).where(
             KnowledgePiece.label.is_not(None),
             KnowledgePiece.hiddenAt.is_(None),
             KnowledgePiece.supersededById.is_(None),
             or_(KnowledgePiece.id.in_(linked), KnowledgePiece.claimIds.overlap(claims)),
+            ~exists(unlinked),
         )
     )
     return list(rows.all())
 
 
-async def _subject_keys(
+async def piece_subject_keys(
     session: AsyncSession, piece_ids: Sequence[uuid.UUID]
 ) -> dict[uuid.UUID, tuple[str, ...]]:
     if not piece_ids:
@@ -208,7 +213,7 @@ def _subject_key(subject: Subject, craft_slug: str | None, cid: int | None) -> s
     return None
 
 
-def _component(
+def registered_component(
     row: KnowledgePiece, subjects: tuple[str, ...], owner: uuid.UUID | None
 ) -> RegisteredComponent:
     payload = row.payload if isinstance(row.payload, dict) else {}

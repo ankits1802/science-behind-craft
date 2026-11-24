@@ -8,13 +8,21 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
-from app.models.admin_work import BATCH_STATUSES, ITEM_STATES, STAGED_ACTION_VALUES, STAGED_KIND_VALUES
+from app.core.errors import InvalidInput
+from app.models.admin_work import (
+    BATCH_STATUSES,
+    ITEM_STATES,
+    STAGED_ACTION_VALUES,
+    STAGED_CORRECTION_KINDS,
+    STAGED_KIND_VALUES,
+    STAGED_QUEUE_KINDS,
+)
 from app.models.enums import SOURCE_KINDS
 from app.models.knowledge import CONTAINER_TITLE_CHARS
 
 from .base import ContractModel
 from .crafts import SLUG_MAX_CHARS
-from .review_queue import APPROVE, FACTS, KIND_ACTIONS, ONE_HOME, REASON_MAX_CHARS
+from .review_queue import APPROVE, COMPONENTS, FACTS, KIND_ACTIONS, ONE_HOME, REASON_MAX_CHARS
 
 __all__ = [
     "APPLIED",
@@ -29,7 +37,10 @@ __all__ = [
     "EXPIRED",
     "MCP_QUEUE_KINDS",
     "OPEN",
+    "PUBLISHED_ACTIONS",
+    "PUBLISHED_ACTION_VALUES",
     "REFUSED",
+    "REMOVE",
     "SKIPPED",
     "SOURCES",
     "SOURCES_DIFFER",
@@ -45,6 +56,7 @@ __all__ = [
     "StagedConfirmation",
     "StagedDecision",
     "StagedItemView",
+    "acts_on_published",
     "batch_expiry",
     "batch_status",
     "day_allowance_problem",
@@ -63,18 +75,28 @@ YEAR_MIN, YEAR_MAX = 1000, 2100
 OPEN, CONFIRMED, DISCARDED = BATCH_STATUSES
 EXPIRED = "EXPIRED"
 STAGED, APPLIED, REFUSED, SKIPPED = ITEM_STATES
-MCP_QUEUE_KINDS: tuple[str, ...] = STAGED_KIND_VALUES[:-2]
-SOURCES, SOURCES_DIFFER = STAGED_KIND_VALUES[-2:]
-CORRECT, CLEAR = STAGED_ACTION_VALUES[-2:]
+MCP_QUEUE_KINDS: tuple[str, ...] = STAGED_QUEUE_KINDS
+SOURCES, SOURCES_DIFFER = STAGED_CORRECTION_KINDS
+CORRECT, CLEAR, REMOVE = STAGED_ACTION_VALUES[4:]
+PUBLISHED_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType({COMPONENTS: (REMOVE,)})
+PUBLISHED_ACTION_VALUES = frozenset(action for actions in PUBLISHED_ACTIONS.values() for action in actions)
 STAGED_KIND_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {
-        **{kind: KIND_ACTIONS[kind] for kind in MCP_QUEUE_KINDS},
+        **{kind: (*KIND_ACTIONS[kind], *PUBLISHED_ACTIONS.get(kind, ())) for kind in MCP_QUEUE_KINDS},
         SOURCES: (CORRECT,),
         SOURCES_DIFFER: (CLEAR,),
     }
 )
 NOT_FOR_KIND = "A {kind} item is {actions}, not {action}."
 REFILE_ONLY = "Only an approved fact is filed under a craft or a family's science."
+ONE_PAGE = (
+    "A removal takes the item off every page, or off the one page named: a craft's slug as craft, or a "
+    "category's as family, not both."
+)
+STAYS_PUBLISHED = (
+    "A decision on published content stays one, and a decision on a waiting item stays one: stage the other "
+    "anew."
+)
 SOURCE_ONLY = "Only a source correction carries a source's corrected fields."
 SOURCE_NEEDED = "A source correction names at least one corrected field."
 OVER_DAY = (
@@ -124,15 +146,16 @@ class StagedDecision(_Choice):
             raise ValueError(
                 NOT_FOR_KIND.format(kind=self.kind, actions=" or ".join(allowed), action=self.action)
             )
-        if self.craft is not None and self.family is not None:
-            raise ValueError(ONE_HOME)
-        if (self.craft or self.family) is not None and (self.kind, self.action) != (FACTS, APPROVE):
-            raise ValueError(REFILE_ONLY)
+        problem = _page_problem(self) if acts_on_published(self.action) else _filing_problem(self)
+        if problem is not None:
+            raise ValueError(problem)
         if (self.source is not None) != (self.kind == SOURCES):
             raise ValueError(SOURCE_NEEDED if self.kind == SOURCES else SOURCE_ONLY)
         return self
 
     def changed_to(self, choice: ConfirmedItem) -> StagedDecision:
+        if acts_on_published(choice.action) != acts_on_published(self.action):
+            raise InvalidInput(STAYS_PUBLISHED)
         fields = choice.model_dump(exclude={"id"})
         return StagedDecision.model_validate({**fields, "kind": self.kind, "id": self.id})
 
@@ -185,3 +208,24 @@ def day_allowance_problem(today: int, asked: int, *, most: int = STAGED_ITEMS_PE
     if asked == 0 or today + asked <= most:
         return None
     return OVER_DAY.format(asked=asked, most=most, left=max(most - today, 0))
+
+
+def _filing_problem(decision: StagedDecision) -> str | None:
+    if decision.craft is not None and decision.family is not None:
+        return ONE_HOME
+    if (decision.craft or decision.family) is not None and (decision.kind, decision.action) != (
+        FACTS,
+        APPROVE,
+    ):
+        return REFILE_ONLY
+    return None
+
+
+def acts_on_published(action: str) -> bool:
+    return action in PUBLISHED_ACTION_VALUES
+
+
+def _page_problem(decision: StagedDecision) -> str | None:
+    if decision.craft is not None and decision.family is not None:
+        return ONE_PAGE
+    return None

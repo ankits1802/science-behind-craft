@@ -69,6 +69,7 @@ __all__ = [
     "claim_lexical_ranking",
     "claim_vector_ranking",
     "facet_disciplines",
+    "family_science",
     "field_condition",
     "field_passages",
     "filed_under",
@@ -118,13 +119,13 @@ def _owners(scope: CraftScope) -> list[ColumnElement[bool]]:
     if scope.sub_category_id is not None:
         owners.append(and_(Concept.craftId.is_(None), Concept.subCategoryId == scope.sub_category_id))
     if scope.category_id is not None:
-        owners.append(_family_science(scope.category_id))
+        owners.append(family_science(scope.category_id))
     if scope.linked_ids:
         owners.append(Concept.id.in_(list(scope.linked_ids)))
     return owners
 
 
-def _family_science(category_id: uuid.UUID) -> ColumnElement[bool]:
+def family_science(category_id: uuid.UUID) -> ColumnElement[bool]:
     marked = aliased(Claim, name="family_claim")
     curated = (
         select(marked.subjectId)

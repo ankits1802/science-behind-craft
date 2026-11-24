@@ -300,9 +300,13 @@ async def test_a_draft_is_proposed_once_as_the_agent(monkeypatch: pytest.MonkeyP
             message="2 of 2.",
         )
 
+    async def reviews_first(session: Any, user_id: uuid.UUID, origin: str) -> bool:
+        return False
+
     monkeypatch.setattr(mcp_page_tools.page_drafts, "own_draft", owned(row))
     monkeypatch.setattr(mcp_page_tools.page_drafts, "record_submission", noop)
     monkeypatch.setattr(mcp_page_tools, "page_proposed", proposed)
+    monkeypatch.setattr(mcp_page_tools, "publishes_at_once", reviews_first)
     content = (await call("propose_page", {"draft_id": str(DRAFT_ID)}))["structuredContent"]
     assert seen == {"origin": "AGENT", "components": 1}
     assert content["draftId"] == str(DRAFT_ID) and content["accepted"] == 2

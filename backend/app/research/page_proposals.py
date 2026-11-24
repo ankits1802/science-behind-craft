@@ -8,6 +8,8 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
+from app.models.knowledge_pieces import LABEL_COLUMN_CHARS, LABEL_PATTERN
+
 from .base import ContractModel, absent, empty
 from .component_proposals import ComponentMatch
 from .component_specs_general_delivery import CLAIMS_PER_UNIT_MAX, UnitKey
@@ -38,14 +40,18 @@ __all__ = [
     "SHOWN",
     "STRUCTURE",
     "TRANSLATION",
+    "WITHDRAWAL",
+    "WITHDRAWALS_MAX",
     "FactRef",
     "PageBundle",
     "PageComponent",
+    "PageHeld",
     "PageLayoutPart",
     "PagePicture",
     "PagePreviewResult",
     "PageProposalResult",
     "PageSubject",
+    "PageWithdrawal",
     "PartReport",
     "fact_index",
 ]
@@ -55,14 +61,17 @@ FACTS_MAX = 20
 STRUCTURE_MAX = 20
 COMPONENTS_MAX = 10
 PICTURES_MAX = 10
+WITHDRAWALS_MAX = 10
 NOTE_MAX_CHARS = 500
-FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION = PART_KINDS = (
+WITHDRAW_REASON_MIN_CHARS = 3
+FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION, WITHDRAWAL = PART_KINDS = (
     "fact",
     "structure",
     "component",
     "layout",
     "picture",
     "translation",
+    "withdrawal",
 )
 ACCEPTED, REFUSED = PROPOSAL_OUTCOMES = ("ACCEPTED", "REFUSED")
 SHOWN, LISTED = "SHOWN", "LISTED"
@@ -131,6 +140,11 @@ class PagePicture(ContractModel):
         return self
 
 
+class PageWithdrawal(ContractModel):
+    label: str = Field(max_length=LABEL_COLUMN_CHARS, pattern=LABEL_PATTERN)
+    reason: str | None = Field(default=None, min_length=WITHDRAW_REASON_MIN_CHARS, max_length=NOTE_MAX_CHARS)
+
+
 class PageBundle(ContractModel):
     schema_version: Literal[1] = PAGE_PROPOSAL_SCHEMA_VERSION
     subject: PageSubject
@@ -140,16 +154,22 @@ class PageBundle(ContractModel):
     layout: PageLayoutPart | None = None
     pictures: list[PagePicture] = Field(default_factory=list, max_length=PICTURES_MAX)
     translation: PageTranslationPart | None = Field(default=None, exclude_if=absent)
+    withdrawals: list[PageWithdrawal] = Field(
+        default_factory=list, max_length=WITHDRAWALS_MAX, exclude_if=empty
+    )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
     @model_validator(mode="after")
     def _holds_work(self) -> Self:
         held = (self.facts, self.structure, self.components, self.layout, self.pictures, self.translation)
-        if not any(held):
+        if not any(held) and not self.withdrawals:
             raise ValueError(
-                "a page bundle holds at least one fact, structure item, component, layout, picture or "
-                "translation"
+                "a page bundle holds at least one fact, structure item, component, layout, picture, "
+                "translation or withdrawal"
             )
+        withdrawn = [withdrawal.label for withdrawal in self.withdrawals]
+        if len(set(withdrawn)) != len(withdrawn):
+            raise ValueError("a bundle withdraws each component once")
         named = [ref for component in self.components for refs in component.cites.values() for ref in refs]
         named += _refs(picture.claim_ids for picture in self.pictures)
         beyond = sorted({ref for ref in named if (fact_index(ref) or 0) >= len(self.facts)})
@@ -172,6 +192,12 @@ class PartReport(ContractModel):
     ways_on: list[str] = Field(default_factory=list, exclude_if=empty)
 
 
+class PageHeld(ContractModel):
+    id: uuid.UUID
+    confirm_url: str
+    expires_at: datetime
+
+
 class PageProposalResult(ContractModel):
     schema_version: Literal[1] = PAGE_PROPOSAL_SCHEMA_VERSION
     subject: PageSubject
@@ -180,6 +206,7 @@ class PageProposalResult(ContractModel):
     refused: int = Field(ge=0)
     parts: list[PartReport]
     message: str
+    held: PageHeld | None = Field(default=None, exclude_if=absent)
 
 
 class PagePreviewResult(ContractModel):

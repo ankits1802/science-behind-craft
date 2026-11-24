@@ -16,12 +16,14 @@ from .page_proposals import (
     NOTE_MAX_CHARS,
     PICTURES_MAX,
     STRUCTURE_MAX,
+    WITHDRAWALS_MAX,
     PageBundle,
     PageComponent,
     PageLayoutPart,
     PagePicture,
     PageProposalResult,
     PageSubject,
+    PageWithdrawal,
     fact_index,
 )
 from .structure_proposals import StructureProposal
@@ -60,13 +62,14 @@ SUPPLIED_PER_DRAFT_MAX = 40
 LIST_ITEMS_MAX = 12
 SUMMARY_CHARS = 140
 OPEN, SUBMITTED = DRAFT_STATES = ("OPEN", "SUBMITTED")
-FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, SUPPLIED = DRAFT_PARTS = (
+FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, SUPPLIED, WITHDRAWAL = DRAFT_PARTS = (
     "fact",
     "structure",
     "component",
     "layout",
     "picture",
     "supplied_source",
+    "withdrawal",
 )
 STILL_CITED = (
     "fact:{index} is still named by {by}; remove or change that part first, so no part points at a fact "
@@ -90,6 +93,7 @@ class DraftParts(ContractModel):
     layout: PageLayoutPart | None = None
     pictures: list[PagePicture] = Field(default_factory=list, max_length=PICTURES_MAX)
     supplied_sources: list[uuid.UUID] = Field(default_factory=list, max_length=SUPPLIED_PER_DRAFT_MAX)
+    withdrawals: list[PageWithdrawal] = Field(default_factory=list, max_length=WITHDRAWALS_MAX)
     lists: PageLists | None = None
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
@@ -99,7 +103,7 @@ class DraftAddition(DraftParts):
     def _adds_something(self) -> Self:
         if not any(parts_counts(self).model_dump().values()) and self.lists is None and self.note is None:
             raise ValueError(
-                "add at least one fact, structure item, component, layout, picture, source or list"
+                "add at least one fact, structure item, component, layout, picture, source, withdrawal or list"
             )
         return self
 
@@ -111,6 +115,7 @@ class DraftCounts(ContractModel):
     layout: int = Field(ge=0, le=1)
     pictures: int = Field(ge=0)
     supplied_sources: int = Field(ge=0)
+    withdrawals: int = Field(default=0, ge=0)
 
 
 LIMITS = DraftCounts(
@@ -120,6 +125,7 @@ LIMITS = DraftCounts(
     layout=1,
     pictures=PICTURES_MAX,
     supplied_sources=SUPPLIED_PER_DRAFT_MAX,
+    withdrawals=WITHDRAWALS_MAX,
 )
 
 
@@ -166,6 +172,7 @@ def parts_counts(parts: DraftParts) -> DraftCounts:
         layout=int(parts.layout is not None),
         pictures=len(parts.pictures),
         supplied_sources=len(parts.supplied_sources),
+        withdrawals=len(parts.withdrawals),
     )
 
 
@@ -177,6 +184,7 @@ def with_added(held: DraftParts, added: DraftAddition) -> DraftParts:
         "layout": added.layout if added.layout is not None else held.layout,
         "pictures": [*held.pictures, *added.pictures],
         "supplied_sources": list(dict.fromkeys([*held.supplied_sources, *added.supplied_sources])),
+        "withdrawals": _withdrawn_once([*held.withdrawals, *added.withdrawals]),
         "lists": added.lists if added.lists is not None else held.lists,
         "note": added.note if added.note is not None else held.note,
     }
@@ -195,6 +203,7 @@ def without(held: DraftParts, part: str, index: int) -> DraftParts:
         COMPONENT: "components",
         PICTURE: "pictures",
         SUPPLIED: "supplied_sources",
+        WITHDRAWAL: "withdrawals",
     }
     held_list: list[Any] = list(getattr(held, field[part]))
     if not 0 <= index < len(held_list):
@@ -211,6 +220,7 @@ def draft_bundle(subject: PageSubject, parts: DraftParts) -> PageBundle:
         components=list(parts.components),
         layout=parts.layout,
         pictures=list(parts.pictures),
+        withdrawals=list(parts.withdrawals),
         note=parts.note,
     )
 
@@ -222,6 +232,7 @@ def part_summaries(parts: DraftParts) -> list[DraftPart]:
         *(_part(COMPONENT, n, _component_line(c)) for n, c in enumerate(parts.components)),
         *(_part(PICTURE, n, _picture_line(picture)) for n, picture in enumerate(parts.pictures)),
         *(_part(SUPPLIED, n, f"supplied source {ident}") for n, ident in enumerate(parts.supplied_sources)),
+        *(_part(WITHDRAWAL, n, f"withdraw {gone.label}") for n, gone in enumerate(parts.withdrawals)),
     ]
     if parts.layout is not None:
         layout = parts.layout
@@ -255,6 +266,11 @@ def _naming(held: DraftParts, ref: str) -> list[str]:
     if held.lists is not None and str(held.lists.signature) == ref:
         named.append("the signature fact")
     return named
+
+
+def _withdrawn_once(withdrawals: list[PageWithdrawal]) -> list[PageWithdrawal]:
+    latest = {withdrawal.label: withdrawal for withdrawal in withdrawals}
+    return list(latest.values())
 
 
 def _shifted(removed: int) -> Callable[[str], str]:

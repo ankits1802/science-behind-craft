@@ -20,6 +20,7 @@ PROPOSAL_EXTENSIONS = ("SUBJECT_LINK", "VARIANT")
 LIVE_PROPOSALS = ("PENDING", "APPROVED")
 REVIEWED_PROPOSALS = ("APPROVED", "REJECTED")
 NEW_COMPONENT = "\"extension\" IS DISTINCT FROM 'SUBJECT_LINK'"
+REPLACES_ANOTHER = f'"replacesLabel" IS NULL OR ("replacesLabel" <> "label" AND {NEW_COMPONENT})'
 DELIVERED_SPEC = (
     '("spec" IS NULL AND "units" IS NULL) OR '
     "(jsonb_typeof(\"spec\") = 'object' AND jsonb_typeof(\"units\") = 'object')"
@@ -79,6 +80,7 @@ class ComponentProposal(Base):
     )
     extendsLabel: Mapped[str | None] = mapped_column(String(LABEL_COLUMN_CHARS))
     extension: Mapped[str | None] = mapped_column(String(STATUS_COLUMN_CHARS))
+    replacesLabel: Mapped[str | None] = mapped_column(String(LABEL_COLUMN_CHARS))
     taskKey: Mapped[str | None] = mapped_column(String(TASK_KEY_COLUMN_CHARS))
     status: Mapped[str] = mapped_column(String(STATUS_COLUMN_CHARS), nullable=False, server_default="PENDING")
     reviewedById: Mapped[uuid.UUID | None] = mapped_column(
@@ -114,6 +116,7 @@ class ComponentProposal(Base):
         CheckConstraint(
             f'NOT {one_of("status", REVIEWED_PROPOSALS)} OR "reviewedAt" IS NOT NULL', name="reviewed"
         ),
+        CheckConstraint(REPLACES_ANOTHER, name="replaces"),
         Index(
             "ComponentProposal_label_live_key",
             "label",

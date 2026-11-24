@@ -37,9 +37,11 @@ export type DraftProblems = { reason: string | null; source: string | null };
 
 const QUEUE_PAIR: readonly StagedAction[] = ["approve", "reject"];
 
+export const PUBLISHED_ACTIONS: Partial<Record<StagedKind, readonly StagedAction[]>> = { COMPONENTS: ["remove"] };
+
 export const STAGED_KIND_ACTIONS: Record<StagedKind, readonly StagedAction[]> = {
   FACTS: ["approve", "raise", "reject", "retract"],
-  COMPONENTS: QUEUE_PAIR,
+  COMPONENTS: [...QUEUE_PAIR, ...(PUBLISHED_ACTIONS.COMPONENTS ?? [])],
   LAYOUTS: QUEUE_PAIR,
   STRUCTURE: QUEUE_PAIR,
   READINGS: QUEUE_PAIR,
@@ -64,7 +66,8 @@ export const STAGED_KIND_LABELS: Record<StagedKind, string> = {
 export const STAGED_ACTION_LABELS: Record<StagedAction, string> = {
   ...ACTION_LABELS,
   correct: "Correct the source",
-  clear: "Clear the mark"
+  clear: "Clear the mark",
+  remove: "Take it off its pages"
 };
 
 export const BATCH_STATUS_LABELS: Record<BatchStatus, string> = {
@@ -81,12 +84,32 @@ export const ITEM_STATE_LABELS: Record<ItemState, string> = {
   SKIPPED: "Skipped"
 };
 
-export function stagedActions(kind: StagedKind): readonly StagedAction[] {
-  return STAGED_KIND_ACTIONS[kind];
+export function actsOnPublished(kind: StagedKind, action: StagedAction): boolean {
+  return (PUBLISHED_ACTIONS[kind] ?? []).includes(action);
+}
+
+export function stagedActions(kind: StagedKind, staged: StagedAction): readonly StagedAction[] {
+  const published = actsOnPublished(kind, staged);
+  return STAGED_KIND_ACTIONS[kind].filter((action) => actsOnPublished(kind, action) === published);
 }
 
 export function refilesUnder(kind: StagedKind, action: StagedAction): boolean {
   return kind === "FACTS" && action === "approve";
+}
+
+const PUBLISHED_KIND_LABELS: Partial<Record<StagedKind, string>> = { COMPONENTS: "Published component" };
+
+export function kindLabel(kind: StagedKind, action: StagedAction): string {
+  return (actsOnPublished(kind, action) ? PUBLISHED_KIND_LABELS[kind] : undefined) ?? STAGED_KIND_LABELS[kind];
+}
+
+export function keepsPage(kind: StagedKind, action: StagedAction): boolean {
+  return refilesUnder(kind, action) || actsOnPublished(kind, action);
+}
+
+export function pageLine(decision: StagedDecision): string {
+  const page = decision.craft ?? decision.family;
+  return page ? `The page of ${page}` : "Every page that places it";
 }
 
 export function isSourceKind(value: string): value is SourceKind {
@@ -139,7 +162,7 @@ export function sourceFixOf(draft: SourceDraft): SourceFix {
 }
 
 export function confirmedItemOf(draft: StagedDraft): ConfirmedItem {
-  const filing = refilesUnder(draft.kind, draft.action) ? filingOf(draft.fileUnder) : null;
+  const filing = keepsPage(draft.kind, draft.action) ? filingOf(draft.fileUnder) : null;
   return {
     id: draft.id,
     action: draft.action,

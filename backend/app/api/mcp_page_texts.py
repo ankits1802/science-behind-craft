@@ -2,8 +2,10 @@ from __future__ import annotations
 
 __all__ = [
     "ADD",
+    "CONFIRM",
     "CREATED",
     "EDIT_DESCRIPTION",
+    "FIX_FIRST",
     "FOLLOW",
     "HELD",
     "PREVIEW",
@@ -21,13 +23,20 @@ ADD = (
 PREVIEW = "Call preview_page with the draft_id to see the page and its checklist report; fix each failure and preview again."
 SUBMITTED = "Follow each part with get_proposal or my_work; the draft stays readable until it expires."
 FOLLOW = "Follow each part with get_proposal or my_work."
+CONFIRM = (
+    "Give the person the confirm_url: nothing is proposed or shown until they, signed in to this account, press "
+    "Confirm on it once. Then follow each part with get_proposal or my_work."
+)
+FIX_FIRST = "Fix each refused part (its message says how) and propose the page again; nothing was held."
 EDIT_DESCRIPTION = (
     "Build one craft, family or category page in a private draft over many calls, kept for this account for 14 "
     "days after its last change (one open draft a page, ten at once, 600 kB each). Name the page as subject: the "
     "first edit opens its draft, and an edit with nothing to change returns it whole; a draft_id reads one, a "
     "submitted one with its outcome too. add takes facts, structure items, finished components and dataset "
-    "figures ({proposal, cites}, cites naming the draft's facts as fact:0 and on), the layout, pictures and "
-    "supplied sources; remove takes parts by kind and index (removing a fact renumbers the later ones wherever "
+    "figures ({proposal, cites}, cites naming the draft's facts as fact:0 and on), the layout, pictures, "
+    "supplied sources and withdrawals ({label, reason}: your registered components to take off every page); a "
+    "component borrowed from another page whose units cite facts this page does not hold is refused, naming "
+    "them; remove takes parts by kind and index (removing a fact renumbers the later ones wherever "
     "they are named; a fact still named is kept); lists sets the page's mechanisms, ambiguous terms and "
     "signature fact, which the preview checks. Each part is checked for its shape and the draft for its limits "
     "(20 facts, 20 structure items, 10 components, 10 pictures, 40 supplied sources); nothing is proposed "
@@ -52,6 +61,11 @@ PROPOSE_DESCRIPTION = (
     "it with the matches and two ways on, the layout against the page's version, a new picture starting its "
     "upload, a translation's passages against their current English (a TRANSLATE task's). "
     "A refused part leaves the others standing; the report gives each part's outcome, id and reason. "
-    "Each part counts against its own hour's allowance, and a draft or a bundle of several parts also against "
-    "the page bundles. Preview it first with preview_page."
+    "A withdrawal takes your registered component off every page, kept in the record; a component naming the "
+    "one it replaces takes its place in every layout once registered. A component borrowed from another page "
+    "(a SUBJECT_LINK, or a library label in the layout) whose units cite facts this page does not hold is "
+    "refused: build the page's own on its facts. From an account whose proposals publish at once, a draft or a "
+    "bundle of several parts is held, nothing proposed, until the person signed in to it presses Confirm once "
+    "on the reply's confirm_url. Each part counts against its own hour's allowance (a withdrawal as a component), "
+    "and a draft or a bundle of several parts also against the page bundles. Preview it first with preview_page."
 )

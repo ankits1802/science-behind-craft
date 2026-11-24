@@ -27,6 +27,7 @@ from app.research.own_proposals import (
     TermsStatus,
 )
 from app.services import component_library, own_proposals
+from app.services.page_revalidation import refresh_pages
 
 router = APIRouter(prefix="/contributions/proposals", tags=["contributions"])
 contributor = require(Capability.PROPOSE_KNOWLEDGE)
@@ -50,7 +51,10 @@ async def withdraw_fact(
 async def withdraw_component(
     proposal_id: uuid.UUID, user: User = Depends(contributor), session: AsyncSession = Depends(get_session)
 ) -> OwnProposal:
-    return await _written(session, own_proposals.withdraw_component(session, user, proposal_id))
+    withdrawing = own_proposals.withdraw_component(session, user, proposal_id, now=datetime.now(UTC))
+    withdrawn = await _written(session, withdrawing)
+    await refresh_pages(withdrawn.owners)
+    return withdrawn.item
 
 
 @router.post("/components", dependencies=[Depends(proposal_limit(COMPONENT_PROPOSALS, contributor))])

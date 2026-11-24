@@ -28,6 +28,7 @@ class PageAdditions:
     delivered: tuple[RegisteredComponent, ...] = ()
     layout: PageLayout | None = None
     given: tuple[PlateSource, ...] = ()
+    withdrawn: frozenset[str] = frozenset()
 
     def pictures(self, found: Sequence[PlateSource]) -> tuple[PlateSource, ...]:
         held = {picture.key for picture in found}
@@ -43,9 +44,10 @@ class PageAdditions:
         return sorted(by_field.values(), key=lambda section: FIELD_ORDER.get(section.field, len(FIELD_ORDER)))
 
     def components(self, found: Sequence[RegisteredComponent]) -> tuple[RegisteredComponent, ...]:
-        replaced = {component.label for component in self.delivered}
+        replaced = {component.label for component in self.delivered} | self.withdrawn
         kept = [component for component in found if component.label not in replaced]
-        return tuple(sorted([*kept, *self.delivered], key=lambda component: component.label))
+        drawn = [*kept, *(component for component in self.delivered if component.label not in self.withdrawn)]
+        return tuple(sorted(drawn, key=lambda component: component.label))
 
 
 NO_ADDITIONS = PageAdditions()

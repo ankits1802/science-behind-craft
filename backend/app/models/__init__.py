@@ -16,6 +16,7 @@ from app.models.answer_gaps import AnswerGap, AnswerVerdict
 from app.models.article_sections import ArticleSection
 from app.models.base import Base
 from app.models.candidate_checks import CandidateCheck
+from app.models.component_lifecycle import KnowledgePieceUnlink, PageHold
 from app.models.contributions import CraftSteward, QueuedProposal, TrustTierOverride
 from app.models.conversation import (
     Answer,
@@ -219,6 +220,7 @@ __all__ = [
     "Job",
     "KnowledgePiece",
     "KnowledgePieceSubject",
+    "KnowledgePieceUnlink",
     "LayoutProposal",
     "LessonPack",
     "ManagedSecret",
@@ -241,6 +243,7 @@ __all__ = [
     "Objection",
     "OpenDataRelease",
     "PageDraft",
+    "PageHold",
     "PageLayout",
     "PagePreview",
     "PageRefreshJob",

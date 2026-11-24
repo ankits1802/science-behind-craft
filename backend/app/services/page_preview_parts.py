@@ -36,6 +36,7 @@ class PreviewDraft:
     components: list[RegisteredComponent] = field(default_factory=list)
     layout: PageLayout | None = None
     pictures: list[PlateSource] = field(default_factory=list)
+    withdrawn: set[str] = field(default_factory=set)
 
     def drafted(
         self, key: str, field_name: str, statement: str, sources: Sequence[ProposedSource]
@@ -65,6 +66,7 @@ class PreviewDraft:
             delivered=tuple(self.components),
             layout=self.layout,
             given=tuple(self.pictures),
+            withdrawn=frozenset(self.withdrawn),
         )
 
     def _source(self, source: ProposedSource) -> uuid.UUID:

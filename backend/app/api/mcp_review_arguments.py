@@ -7,6 +7,7 @@ from pydantic import Field
 
 from app.models.admin_work import STAGED_ACTION_VALUES, STAGED_KIND_VALUES
 from app.models.enums import SOURCE_KINDS
+from app.models.knowledge_pieces import LABEL_COLUMN_CHARS, LABEL_PATTERN
 from app.research.crafts import SLUG_MAX_CHARS
 from app.research.review_queue import CURSOR_MAX_CHARS, REASON_MAX_CHARS
 from app.research.review_switch import PROPOSAL_ORIGINS
@@ -50,7 +51,16 @@ class SourceFixArguments(Arguments):
 
 class StagedChoice(Arguments):
     kind: Literal[*STAGED_KIND_VALUES]
-    id: uuid.UUID = Field(description="The queue item, or the source (SOURCES) or fact (SOURCES_DIFFER)")
+    id: uuid.UUID | None = Field(
+        default=None,
+        description="The queue item, the source (SOURCES), the fact (SOURCES_DIFFER) or a removal's item",
+    )
+    label: str | None = Field(
+        default=None,
+        max_length=LABEL_COLUMN_CHARS,
+        pattern=LABEL_PATTERN,
+        description="Or a removed component's label",
+    )
     action: Literal[*STAGED_ACTION_VALUES]
     reason: str = Field(min_length=STAGED_REASON_MIN_CHARS, max_length=REASON_MAX_CHARS)
     craft_slug: str | None = Field(default=None, min_length=1, max_length=SLUG_MAX_CHARS)

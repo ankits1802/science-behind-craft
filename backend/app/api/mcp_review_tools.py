@@ -21,6 +21,7 @@ from app.services.page_refresh_jobs import RefreshAsk, RefreshRefused, refresh_s
 from app.services.page_refresh_run import launch_refresh
 from app.services.review_queue import QueueAdapters, list_review_queue, open_review_item
 from app.services.review_queue_decisions import ItemRef
+from app.services.staged_published import published_id
 from app.services.staged_reviews import stage_decisions
 from app.services.testimony_views import Turns
 
@@ -43,8 +44,10 @@ STAGE_DESCRIPTION = (
     "readers until an Admin confirms the batch on the Review page; the server never applies what an app "
     "proposes. Each decision names the item's kind and id, an action the Review page allows (approve or "
     "reject; raise or retract a fact; approve a fact with craft or family to re-file it; correct a source's "
-    "title, authors, year, journal or kind; clear a fact's sources-differ mark) and a reason of at least 12 "
-    "characters. Each is checked by the rules the Review page applies; refused ones say why. "
+    "title, authors, year, journal or kind; clear a fact's sources-differ mark; remove a registered component, "
+    "named by its label, from every page or from the one page craft_slug or family_slug names, kept in the "
+    "record) and a reason of at least 12 characters. Each is checked by the rules the Review page applies; "
+    "refused ones say why. "
     f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days."
 )
 REFRESH_DESCRIPTION = (
@@ -57,6 +60,8 @@ STAGED_MESSAGE = (
     "{url}, within {days} days. {refused}"
 )
 NONE_STAGED = "Nothing was staged: every decision was refused. Nothing is published or changed."
+UNNAMED = "Name the item by its id, or a component to remove by its label."
+NO_LABEL = "No published {kind} item has the label {label}; list_components gives the labels."
 QUEUE_MESSAGE = (
     "{total} items wait. Decisions you stage with stage_reviews are not published until an Admin confirms "
     "them on {url}."
@@ -85,7 +90,7 @@ class QueueReply(ContractModel):
 class StagedLine(ContractModel):
     index: int
     kind: str
-    id: uuid.UUID
+    id: uuid.UUID | None = None
     action: str | None = None
     label: str | None = None
     reason: str | None = None
@@ -179,10 +184,12 @@ async def _stage_reviews(context: ToolContext, arguments: StageArguments) -> Sta
     refused: list[StagedLine] = []
     for index, choice in enumerate(arguments.decisions):
         try:
-            read.append((index, _decision(choice)))
+            read.append((index, _decision(await _named(context, choice))))
         except ValidationError as unread:
             reason = "; ".join(str(problem["msg"]) for problem in unread.errors())
             refused.append(StagedLine(index=index, kind=choice.kind, id=choice.id, reason=reason))
+        except InvalidInput as unknown:
+            refused.append(StagedLine(index=index, kind=choice.kind, label=choice.label, reason=str(unknown)))
     staged = await stage_decisions(context.session, [decision for _, decision in read], caller, now=now)
     refused += [
         StagedLine(index=read[each.index][0], kind=each.kind, id=each.id, reason=each.reason)
@@ -212,8 +219,19 @@ async def _stage_reviews(context: ToolContext, arguments: StageArguments) -> Sta
     )
 
 
+async def _named(context: ToolContext, choice: StagedChoice) -> StagedChoice:
+    if choice.id is not None:
+        return choice
+    if choice.label is None:
+        raise InvalidInput(UNNAMED)
+    found = await published_id(context.session, choice.kind, choice.label)
+    if found is None:
+        raise InvalidInput(NO_LABEL.format(kind=choice.kind.lower(), label=choice.label))
+    return choice.model_copy(update={"id": found})
+
+
 def _decision(choice: StagedChoice) -> StagedDecision:
-    given = choice.model_dump(exclude_none=True, exclude={"craft_slug", "family_slug"})
+    given = choice.model_dump(exclude_none=True, exclude={"craft_slug", "family_slug", "label"})
     return StagedDecision.model_validate(given | {"craft": choice.craft_slug, "family": choice.family_slug})
 
 

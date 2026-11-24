@@ -196,12 +196,16 @@ async def test_a_withdrawn_component_frees_its_label_and_a_reviewed_one_stays(se
     rejected = await session.scalar(
         select(ComponentProposal.id).where(ComponentProposal.label == REJECTED_LABEL)
     )
-    withdrawn = await own_proposals.withdraw_component(session, researcher, pending)
-    assert withdrawn.state == "WITHDRAWN"
+    withdrawn = await own_proposals.withdraw_component(session, researcher, pending, now=NOW)
+    assert (withdrawn.item.state, withdrawn.item.registered, withdrawn.owners.empty) == (
+        "WITHDRAWN",
+        False,
+        True,
+    )
     with pytest.raises(Refused, match="nothing to withdraw"):
-        await own_proposals.withdraw_component(session, researcher, rejected)
+        await own_proposals.withdraw_component(session, researcher, rejected, now=NOW)
     with pytest.raises(own_proposals.UnknownProposal):
-        await own_proposals.withdraw_component(session, await person(session, OTHER), pending)
+        await own_proposals.withdraw_component(session, await person(session, OTHER), pending, now=NOW)
     again = ComponentProposalBody.model_validate({**_component_body(), "label": PENDING_LABEL})
     stored = await propose_component(session, researcher, again, now=NOW)
     assert (stored.outcome, stored.label) == ("STORED", PENDING_LABEL)

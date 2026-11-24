@@ -93,6 +93,7 @@ class OwnProposal(ContractModel):
     created_at: datetime
     reasons: list[str] = Field(default_factory=list)
     gates: list[GateReport] = Field(default_factory=list)
+    registered: bool = False
 
 
 class OwnProposals(ContractModel):

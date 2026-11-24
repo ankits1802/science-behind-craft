@@ -17,6 +17,7 @@ from app.research.staged_reviews import (
     SOURCES,
     SOURCES_DIFFER,
     StagedDecision,
+    acts_on_published,
     batch_expiry,
     day_allowance_problem,
 )
@@ -26,6 +27,7 @@ from .review_queue import QueueAdapters, open_review_item
 from .review_queue_decisions import ItemRef
 from .review_queue_errors import NotYourQueue
 from .source_corrections import source_label
+from .staged_published import published_label
 from .staged_review_apply import dry_run
 from .testimony_views import Turns
 
@@ -34,6 +36,7 @@ __all__ = ["Staged", "StagedRefusal", "stage_decisions", "staged_today"]
 NOT_AN_ADMIN = "Staging review decisions is for Admins and Master Admins."
 TWICE = "This item is already decided earlier in the same call."
 NOT_WAITING = "No {kind} item with this id is in the review queue you review."
+NOT_PUBLISHED = "No published {kind} item has this id; a removal names a registered or placed one."
 NO_SOURCE = "No source has this id."
 NO_FACT = "No fact has this id."
 NO_TRANSCRIPTS = "Testimony is reviewed on the site, not over MCP."
@@ -109,6 +112,8 @@ async def _checked(
 async def _label(
     session: AsyncSession, decision: StagedDecision, proposer: User, *, now: datetime
 ) -> str | None:
+    if acts_on_published(decision.action):
+        return await published_label(session, decision)
     if decision.kind == SOURCES:
         title = await source_label(session, decision.id)
         return None if title is None else cut_label(f"Source: {title}")
@@ -123,6 +128,8 @@ async def _label(
 
 
 def _missing(decision: StagedDecision) -> str:
+    if acts_on_published(decision.action):
+        return NOT_PUBLISHED.format(kind=decision.kind.lower())
     if decision.kind == SOURCES:
         return NO_SOURCE
     if decision.kind == SOURCES_DIFFER:

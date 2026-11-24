@@ -18,6 +18,7 @@ import {
   type StagedItemView
 } from "@/lib/stagedReviewContract";
 import {
+  actsOnPublished,
   batchHeading,
   batchTally,
   confirmBody,
@@ -26,9 +27,11 @@ import {
   decisionShown,
   draftOf,
   outcomeLine,
+  pageLine,
   reasonProblem,
   sourceProblem,
   STAGED_KIND_ACTIONS,
+  stagedActions,
   withBatch,
   withDraft,
   type SourceDraft
@@ -52,8 +55,8 @@ test("the staged batches parse exactly as the backend writes them", () => {
   const list = parseStagedBatchList(golden());
   expect(list).toEqual(golden());
   expect(list.batches).toHaveLength(1);
-  expect(list.batches[0].items.map((item) => item.decision.kind)).toEqual(["FACTS", "SOURCES", "SOURCES_DIFFER"]);
-  expect(list.batches[0].items.map((item) => item.state)).toEqual(["STAGED", "STAGED", "REFUSED"]);
+  expect(list.batches[0].items.map((item) => item.decision.kind)).toEqual(["FACTS", "SOURCES", "SOURCES_DIFFER", "COMPONENTS"]);
+  expect(list.batches[0].items.map((item) => item.state)).toEqual(["STAGED", "STAGED", "REFUSED", "STAGED"]);
 });
 
 test("a staged list off its contract is refused", () => {
@@ -91,7 +94,7 @@ test("each kind offers only the actions the backend allows it", () => {
   const pair = ["approve", "reject"];
   expect(STAGED_KIND_ACTIONS).toEqual({
     FACTS: ["approve", "raise", "reject", "retract"],
-    COMPONENTS: pair,
+    COMPONENTS: [...pair, "remove"],
     LAYOUTS: pair,
     STRUCTURE: pair,
     READINGS: pair,
@@ -101,6 +104,28 @@ test("each kind offers only the actions the backend allows it", () => {
     SOURCES_DIFFER: ["clear"]
   });
   expect(Object.keys(STAGED_KIND_ACTIONS).sort()).toEqual([...STAGED_KINDS].sort());
+});
+
+test("a removal of published content stays a removal and keeps the one page it names", () => {
+  const removal = items()[3];
+  expect(stagedActions("COMPONENTS", "remove")).toEqual(["remove"]);
+  expect(stagedActions("COMPONENTS", "approve")).toEqual(["approve", "reject"]);
+  expect([actsOnPublished("COMPONENTS", "remove"), actsOnPublished("COMPONENTS", "approve"), actsOnPublished("FACTS", "approve")]).toEqual([true, false, false]);
+  expect(confirmedItemOf(draftOf(removal))).toEqual({
+    id: removal.id,
+    action: "remove",
+    reason: "Its units cite only Kutch Ajrakh's facts, none this page holds.",
+    craft: "Sanganeri-Hand-Block-Printing",
+    family: null,
+    source: null
+  });
+  expect(pageLine(removal.decision)).toBe("The page of Sanganeri-Hand-Block-Printing");
+  expect(pageLine({ ...removal.decision, craft: null })).toBe("Every page that places it");
+  const markup = renderToStaticMarkup(createElement(StagedItemResult, { item: removal }));
+  expect(markup).toContain("Published component");
+  expect(markup).toContain("Take it off its pages");
+  expect(markup).toContain("The page of Sanganeri-Hand-Block-Printing");
+  expect(markup).not.toContain("File under");
 });
 
 test("a draft starts as the staged decision, selected", () => {
@@ -204,8 +229,8 @@ test("a confirmed batch replaces the open one, and an edited draft replaces its 
     items: batch.items.map((item) => ({ ...item, state: "APPLIED", outcome: null }))
   });
   expect(withBatch([batch], confirmed)).toEqual([confirmed]);
-  expect(batchTally(confirmed)).toBe("3 applied · 0 refused · 0 skipped");
+  expect(batchTally(confirmed)).toBe("4 applied · 0 refused · 0 skipped");
   const drafts = items().map(draftOf);
   const edited = withDraft(drafts, { ...drafts[1], selected: false });
-  expect(edited.map((draft) => draft.selected)).toEqual([true, false, true]);
+  expect(edited.map((draft) => draft.selected)).toEqual([true, false, true, true]);
 });

@@ -42,7 +42,14 @@ READY = "The preview draws the page in {language} as the site will once the show
 
 
 def only_translation(bundle: PageBundle) -> bool:
-    others = (bundle.facts, bundle.structure, bundle.components, bundle.layout, bundle.pictures)
+    others = (
+        bundle.facts,
+        bundle.structure,
+        bundle.components,
+        bundle.layout,
+        bundle.pictures,
+        bundle.withdrawals,
+    )
     return bundle.translation is not None and not any(others)
 
 

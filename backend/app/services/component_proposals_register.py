@@ -15,6 +15,7 @@ from app.research.component_proposals import SUBJECT_LINK
 from app.research.component_specs_general_delivery import DELIVERED_KEY
 
 from . import knowledge_view
+from .component_lifecycle import retire_replaced
 from .open_work_components import registered_pieces
 from .review_queue_errors import DecisionConflict
 
@@ -53,6 +54,7 @@ async def register_component(session: AsyncSession, row: ComponentProposal) -> u
     except IntegrityError as taken:
         raise DecisionConflict(TAKEN.format(label=row.label)) from taken
     await _write_subjects(session, piece.id, row.subjects)
+    await retire_replaced(session, row, piece.id)
     return piece.id
 
 

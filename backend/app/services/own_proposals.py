@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import uuid
 from collections.abc import Sequence
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
@@ -9,7 +10,17 @@ from sqlalchemy import ColumnElement, and_, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import AppError, Refused
-from app.models import AuditLog, CandidateCheck, Claim, ComponentProposal, Concept, Craft, ReviewEvent, User
+from app.models import (
+    AuditLog,
+    CandidateCheck,
+    Claim,
+    ComponentProposal,
+    Concept,
+    Craft,
+    KnowledgePiece,
+    ReviewEvent,
+    User,
+)
 from app.research.candidate_gates import GATES
 from app.research.component_proposals import ComponentProposalResult
 from app.research.knowledge_writes import GateReport
@@ -31,8 +42,11 @@ from app.research.own_proposals import (
     newest_first,
     withdraw_refusal,
 )
+from app.research.page_revalidation import PageOwners
 
 from . import audit
+from .component_library_applies import registered_pieces
+from .component_lifecycle import proposal_of, withdraw_registered
 from .component_proposals import propose_component
 from .knowledge_api import field_list
 from .proposal_writes import PROPOSAL_CLAIM_ORIGIN, PROPOSAL_PREDICATE
@@ -42,6 +56,7 @@ __all__ = [
     "TERMS_ACCEPTED",
     "TERMS_NEEDED",
     "UnknownProposal",
+    "WithdrawnComponent",
     "accept_terms",
     "own_proposals",
     "proposal_form",
@@ -55,7 +70,6 @@ __all__ = [
 USER_ACTOR = "USER"
 CONCEPT_SUBJECT = "CONCEPT"
 WAITING_FACT = "DRAFT"
-WAITING_COMPONENT = "PENDING"
 WITHDRAWN_STATUS = "WITHDRAWN"
 REJECTED_STATUS = "REJECTED"
 WITHDRAWN_NOTE = "withdrawn by its proposer while it waited for review"
@@ -69,6 +83,12 @@ NO_SUCH_PROPOSAL = "No proposal of yours has that id."
 
 class UnknownProposal(AppError):
     pass
+
+
+@dataclass(frozen=True)
+class WithdrawnComponent:
+    item: OwnProposal
+    owners: PageOwners
 
 
 async def own_proposals(session: AsyncSession, user: User) -> OwnProposals:
@@ -100,23 +120,25 @@ async def withdraw_fact(session: AsyncSession, user: User, claim_id: uuid.UUID) 
     return item
 
 
-async def withdraw_component(session: AsyncSession, user: User, proposal_id: uuid.UUID) -> OwnProposal:
-    status = await session.scalar(
-        select(ComponentProposal.status)
+async def withdraw_component(
+    session: AsyncSession, user: User, proposal_id: uuid.UUID, *, now: datetime
+) -> WithdrawnComponent:
+    row = await session.scalar(
+        select(ComponentProposal)
         .where(ComponentProposal.id == proposal_id, ComponentProposal.proposerId == user.id)
         .with_for_update()
     )
-    if status is None:
+    if row is None:
         raise UnknownProposal(NO_SUCH_PROPOSAL)
-    _refuse_unless_waiting(component_state(status))
-    await session.execute(
-        update(ComponentProposal)
-        .where(ComponentProposal.id == proposal_id, ComponentProposal.status == WAITING_COMPONENT)
-        .values(status=WITHDRAWN_STATUS)
-    )
+    owners = PageOwners()
+    if str(row.id) in await _registered_proposals(session, [row.label]):
+        owners = (await withdraw_registered(session, user, row.label, reason=None, now=now)).owners
+    else:
+        _refuse_unless_waiting(component_state(row.status))
+        row.status = WITHDRAWN_STATUS
     await session.flush()
     (item,) = await _component_items(session, user.id, ComponentProposal.id == proposal_id)
-    return item
+    return WithdrawnComponent(item=item, owners=owners)
 
 
 async def terms_status(session: AsyncSession, user: User) -> TermsStatus:
@@ -226,10 +248,15 @@ async def _component_items(
             .limit(OWN_PROPOSALS_MAX)
         )
     ).all()
-    return [_component_item(proposal, name, slug) for proposal, name, slug in rows]
+    live = await _registered_proposals(session, [proposal.label for proposal, _, _ in rows])
+    return [
+        _component_item(proposal, (name, slug), str(proposal.id) in live) for proposal, name, slug in rows
+    ]
 
 
-def _component_item(proposal: ComponentProposal, craft_name: str | None, slug: str | None) -> OwnProposal:
+def _component_item(
+    proposal: ComponentProposal, craft: tuple[str | None, str | None], live: bool
+) -> OwnProposal:
     state = component_state(proposal.status)
     return OwnProposal(
         id=proposal.id,
@@ -241,11 +268,21 @@ def _component_item(proposal: ComponentProposal, craft_name: str | None, slug: s
         label=proposal.label,
         component_kind=proposal.kind,
         field=proposal.field,
-        subject_name=craft_name,
-        craft_slug=slug,
+        subject_name=craft[0],
+        craft_slug=craft[1],
         created_at=proposal.createdAt,
         reasons=component_reasons(state, proposal.reviewNote),
+        registered=live,
     )
+
+
+async def _registered_proposals(session: AsyncSession, labels: Sequence[str]) -> set[str]:
+    if not labels:
+        return set()
+    pieces = await session.scalars(
+        select(KnowledgePiece).where(KnowledgePiece.label.in_(list(labels)), *registered_pieces())
+    )
+    return {str(proposal_id) for piece in pieces.all() if (proposal_id := proposal_of(piece)) is not None}
 
 
 async def _gates(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, list[GateReport]]:

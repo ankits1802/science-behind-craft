@@ -20,7 +20,7 @@ from app.research.review_queue import (
     QueueDecision,
     QueueRejection,
 )
-from app.research.staged_reviews import SOURCES, SOURCES_DIFFER, StagedDecision
+from app.research.staged_reviews import SOURCES, SOURCES_DIFFER, StagedDecision, acts_on_published
 
 from . import review_queue_decisions as decisions
 from .page_revalidation import merged_owners
@@ -28,6 +28,7 @@ from .review_queue_errors import NotYourQueue
 from .review_queue_refile import filed_owners
 from .review_queue_refresh import decision_owners
 from .source_corrections import clear_sources_differ, correct_source
+from .staged_published import carry_out
 
 __all__ = ["Applied", "apply_decision", "dry_run", "refusal_of"]
 
@@ -46,6 +47,9 @@ class Applied:
 async def apply_decision(
     session: AsyncSession, decision: StagedDecision, reviewer: User, *, now: datetime
 ) -> Applied:
+    if acts_on_published(decision.action):
+        carried = await carry_out(session, decision, reviewer, now=now)
+        return Applied(carried.message, carried.owners)
     if decision.kind in (SOURCES, SOURCES_DIFFER):
         return await _corrected(session, decision, reviewer)
     ref = decisions.ItemRef(decision.kind, decision.id)

@@ -4,7 +4,7 @@ from collections.abc import Iterable
 
 from pydantic import Field
 
-from .base import ContractModel
+from .base import ContractModel, absent
 from .component_proposals import (
     ComponentProposalDraft,
     ProposedSubject,
@@ -62,3 +62,4 @@ class ComponentReview(ContractModel):
     task_key: str | None
     closest: list[ClosestComponent]
     delivery: DeliveredReview | None = None
+    replaces: str | None = Field(default=None, exclude_if=absent)

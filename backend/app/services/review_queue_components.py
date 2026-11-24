@@ -122,6 +122,7 @@ async def _item(session: AsyncSession, row: ComponentProposal, craft: Craft | No
             task_key=row.taskKey,
             closest=await _closest(session, draft),
             delivery=await delivered_review(session, row, draft.craft_slug),
+            replaces=row.replacesLabel,
         ),
     )
 
@@ -147,5 +148,6 @@ def _draft(row: ComponentProposal, craft_slug: str | None) -> ComponentProposalD
         considered_labels=list(row.consideredLabels),
         extends=row.extendsLabel,
         extension=row.extension,
+        replaces=row.replacesLabel,
         task_key=row.taskKey,
     )
