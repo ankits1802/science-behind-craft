@@ -148,7 +148,9 @@ The rules below refer to them.
     font, sets no text under 12 px at its narrowest width, draws its words as text and blends no two
     roles in a gradient. The server draws every drawing in the light, dark and high-contrast themes,
     and every figure and picture says in its alt text what it shows. The preview's report fails a
-    delivered figure that breaks this and names the element.
+    delivered figure that breaks this and names the element. Figures of materials, sections and
+    steps are composed from the figure kit; the delivery refuses hand-drawn art below the bar and
+    names the kit part to use.
 
 ## How a page is checked
 

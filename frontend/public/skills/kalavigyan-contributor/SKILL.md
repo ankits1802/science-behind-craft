@@ -289,6 +289,10 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - Delivering a `drawing`, a science drawing or an SVG picture: use those same roles. The server
   refuses a typed colour, a font, small text or words in outlines and names the element, serves
   each drawing in all four themes, and the preview's report checks every figure on rule 27.
+- A figure of cloth, a vat, a paste, heat, water, a tool, a section or a shaped piece is composed,
+  not drawn: deliver a `diagram` with a `head`, a `layout` and `panels` naming kit parts, each
+  part's label a cited unit (`kalavigyan://components/diagram.schema.json`). A drawing that paints a
+  depicted material by hand or names a kit part is refused with the part to use.
 
 ## Pages
 

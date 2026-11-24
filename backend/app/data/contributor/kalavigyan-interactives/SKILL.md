@@ -71,6 +71,10 @@ it. Write the storyboard (`references/storyboard.md`) before any drawing.
 
 ## Choose the kind that carries it
 
+Until a player takes kit parts, draw a state's scene to the bar: materials textured by a pattern
+laid over the same shape, ink edges, six shapes or more. Show the same states at rest as a composed
+`diagram`.
+
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
 | a sequence of changes, chemical or physical, each stated by sources | `reaction_player` | rail, Play and status from the page's kit; two steps or more, each naming its materials in a lane and giving its balanced equation or a note saying why it has none |

@@ -39,7 +39,7 @@ Choose by what the reader must see:
 | dated events in order | `timeline` |
 | where a craft is practised, began, spread or moved, and when | `timeline_map` (A map of places, below) |
 | a value at each place, from a dataset | `map_layer` |
-| a mechanism, a section, a tool or an object | `drawing`, or `diagram` for a chain of linked steps |
+| a mechanism, a section, a tool or an object | a composed `diagram` (The figure kit), or `drawing` for what no kit part draws |
 | one stated equation | `equation_card` |
 | molecules | `structure_diagram` (flat, with their PubChem records from `lookup`) or `molecule_3d` |
 | a reaction a source states step by step | `reaction_player` |
@@ -226,8 +226,21 @@ stated by their units.
   in to this account opens it within 3 days and presses Confirm once, or Discard. A component, a
   layout or a fact sent alone goes by the account's tier as before.
 
+## The figure kit
+
+Cloth, vats, pastes, heat, water, tools, layered sections and shaped pieces are composed from the
+site's kit, never drawn: a `diagram` with a `head`, a `layout` (`steps`, `before_after`, `section` or `sequence`), an `alt`
+unit and `panels`, each panel naming one to three parts with a cited `label`. The parts are
+`cloth`, `block`, `bath`, `paste`, `heat`, `water`, `tool`, `section` and `piece`; each takes a
+depicted material, a named form or a layer list, never a coordinate, size or colour. A panel's
+`motion` (`dip`, `take`, `dry`) plays only on Play and rests complete. What each part takes, draws
+and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure kit), and
+`/design/kit` shows every part in every material.
+
 ## The design rules for a contributed figure
 
+- **At the bar.** Text at 12, 13, 14 or 16 px at 320 px wide; six shapes or more; line work in
+  ink; a depicted material only through the kit, or textured in a player.
 - **Give data, not styling.** A declared kind's view sets every colour, size and position itself:
   bars and lines in the chart series colour with the one mark the title names emphasised, places as
   numbered paper discs on India's outline in the map colours, tables in tabular figures. A spec
