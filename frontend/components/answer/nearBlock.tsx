@@ -4,7 +4,7 @@ import { createElement, Suspense, use, useEffect, useRef, useState, type Compone
 
 import { BlockBoundary, retryableLazy } from "@/components/answer/lazyBlock";
 
-export const NEAR_MARGIN = "1200px 0px";
+export const NEAR_MARGIN = "200% 0px";
 export const NEAR_ATTRIBUTE = "data-kv-near";
 
 export type NearSignal = { reached: boolean; promise: Promise<void>; reach: () => void };

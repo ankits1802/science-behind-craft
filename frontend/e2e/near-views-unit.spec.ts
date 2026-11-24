@@ -97,12 +97,13 @@ function fakeObserver(): { make: NearObserverMaker; seen: (entries: NearEntry[])
   return { make, seen: (entries) => react(entries), watched, margins, stopped: () => stops };
 }
 
-test("a holder reaches the viewport once, a screen and a half ahead, and stops watching", () => {
+test("a holder reaches the viewport once, two screens ahead, and stops watching", () => {
   const observer = fakeObserver();
   const reached: string[] = [];
   const holder = {} as Element;
   const stop = whenNear(holder, () => reached.push("near"), observer.make);
   expect(observer.watched).toEqual([holder]);
+  expect(NEAR_MARGIN).toBe("200% 0px");
   expect(observer.margins).toEqual([NEAR_MARGIN]);
   observer.seen([{ isIntersecting: false }]);
   expect(reached).toEqual([]);

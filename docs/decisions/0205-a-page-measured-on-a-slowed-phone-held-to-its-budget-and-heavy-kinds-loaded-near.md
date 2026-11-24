@@ -56,7 +56,7 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
    four times and Lighthouse's slow 4G as DevTools applies it (562.5 ms a request, 1,474.56 kbit/s
    down, 675 up), each load waited on until the kit is bound, the rest of the page has arrived and
    no task has run for two seconds; the third load then reads to the end, 0.8 of a screen every
-   300 ms. A load records, from the browser's own network events, the bytes sent of scripts,
+   800 ms, a skim of a screen a second. A load records, from the browser's own network events, the bytes sent of scripts,
    stylesheets, pictures, the document and fonts; the pictures shown in the first screen; the last
    largest contentful paint and its element; every task over 50 ms with the scripts each long
    animation frame ran; and every layout shift with the nodes it moved. The numbers are each
@@ -87,10 +87,10 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
    is loaded once when the server starts it, and until then the render waits on it, so the page's
    HTML always holds the complete still state. In the browser the view inside the holder is kept
    as the server drew it, unhydrated, until an `IntersectionObserver` sees the holder within
-   1,200 px (a screen and a half of a phone); then its chunk loads and it hydrates in place. Where
+   two screens (1,600 px on a phone 800 px tall); then its chunk loads and it hydrates in place. Where
    the browser draws a part itself (the rest of a page read after its lead chapter), the holder
-   shows a figure-shaped skeleton until it nears, then draws the view a screen and a half before
-   the reader reaches it. The kinds are the declared map layer and timeline map, the why-here
+   shows a figure-shaped skeleton until it nears, then draws the view two screens before the
+   reader reaches it. The kinds are the declared map layer and timeline map, the why-here
    ground map and the six page tools (`components/monograph/kinds/nearViews.tsx`, which the family
    registries name), and a composed kit figure's Play (`components/artkit/NearKitPlay.tsx`); a
    stylesheet one of them brings is imported with the loaders, so the still state is styled at
@@ -118,9 +118,12 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
   framework chunk drawing the rest of the page and 201 in the kit. The page of every kind sends
   715,853 bytes of JavaScript (88,765 fewer) and 73,696 bytes of pictures (81,683 fewer: the maps
   below its first screen load nothing until they near), is blocked 227 ms (107 fewer) and paints
-  its largest element at 5,180 ms; as it is read, its near views replace their reserve ahead of the
-  reader and move it by 0.0325 (`section#k26`), within the 0.1 of a page that is still, at a read
-  of 0.8 of a screen every 300 ms, faster than a reader scrolls. With the build's largest chunk it
+  its largest element at 5,180 ms. Read then at 0.8 of a screen every 300 ms, a fling, with the
+  views drawn a screen and a half ahead, it moved by 0.0325 (`section#k26`) in that run and by
+  0.7733 in the next (run 45481973342: `section#k26`, `section#sources`), because the fling
+  outran the views' code on this network and their reserve was replaced in view; the margin was
+  widened to two screens and the read slowed to a skim of a screen a second, and the record was
+  taken again (below). With the build's largest chunk it
   does not load added to its document, Kutch Ajrakh sends 865,932 bytes, past its 767,591-byte
   budget, and the spec names `/_next/static/chunks/2np8vbiqedr4p.js` first.
 - **A page past its budget fails the pull request**, with the sentence that names what grew, and
