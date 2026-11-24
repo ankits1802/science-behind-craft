@@ -56,7 +56,8 @@ What this skill leaves open is decided elsewhere:
 ## Storyboard it as cited states
 
 A state is one moment of the mechanism drawn whole: what is there, what changed and what changed
-it. Write the storyboard (`references/storyboard.md`) before any drawing.
+it. Write the storyboard (`references/storyboard.md`) before any drawing. `compose_component`
+hands back the storyboard's pages with what it composes; read them before you place the result.
 
 - Every state names the facts that state it, by id, and the page sentences it illustrates (or the
   units you will write, each citing those facts). A state with no fact is not drawn: research it

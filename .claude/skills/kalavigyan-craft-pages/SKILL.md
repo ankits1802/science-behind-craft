@@ -39,6 +39,10 @@ client follows, copied whole from `docs/contracts` (`kalavigyan://contracts/know
 `open-work.md`, `component-specs-general.md`, `image-contributions.md`, `mcp-ask-and-upload.md`),
 and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 
+Over MCP each reference is also paged (`get_page`'s `guide`, `contents/1`), and the page tools hand
+an agent the page for its step; a page's first components wait for the design pages' `read_token`.
+Brief an agent to read every page a result hands it.
+
 ## Connect
 
 - The session's client adds the KalaVigyan MCP server at `<PUBLIC_API_URL>/api/mcp`
