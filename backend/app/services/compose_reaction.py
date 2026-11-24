@@ -156,7 +156,9 @@ def _step(craft: CraftHeld, entry: Played, book: UnitBook, names: list[str]) -> 
     return {"name": name, "text": text, "chemistry": chemistry, "scene": None}
 
 
-def _drawn_steps(craft: CraftHeld, played: Sequence[Played], steps: list[dict[str, Any]], book: UnitBook) -> None:
+def _drawn_steps(
+    craft: CraftHeld, played: Sequence[Played], steps: list[dict[str, Any]], book: UnitBook
+) -> None:
     stages = [stage for _, stage in played if stage is not None]
     if len(stages) < len(played) or not all(stage_scene(craft, stage, UnitBook()) for stage in stages):
         return

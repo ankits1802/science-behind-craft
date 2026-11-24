@@ -122,7 +122,9 @@ class StepScene(SpecModel):
     @model_validator(mode="after")
     def _drawn_art_shows_where(self) -> Self:
         if isinstance(self.art, list) and self.where_icon is None:
-            raise ValueError("a step drawn by hand shows its where icon; a kit scene draws where it happens itself")
+            raise ValueError(
+                "a step drawn by hand shows its where icon; a kit scene draws where it happens itself"
+            )
         return self
 
 
