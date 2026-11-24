@@ -121,6 +121,9 @@ A category page has no stages, native names or GI record; it has pictures placed
 
 ## Method, cheapest first
 
+A redesign retires what it replaces in the same draft (withdrawals, or `replaces`), and borrows a
+family figure only when the page holds every fact its units cite.
+
 1. **Read the page** and derive its three lists (the page checklist).
 2. **Use what is held.** Structure that held facts already state goes in through
    `propose_structure`, each item with the fact and the quote that state it: a stage's after and

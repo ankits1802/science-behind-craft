@@ -65,8 +65,9 @@ interactives skill (the map above).
 - Every tool names its group in its `_meta` as `kalavigyan/group`: reading, sources, work,
   proposing, pages or pictures.
 - Contributions show no contributor name. Who proposed what is kept privately, for moderation and
-  audit only. A published contribution stays published; only what still waits for review can be
-  withdrawn.
+  audit only. A published contribution stays published and only what waits for review can be
+  withdrawn, save one thing: a registered component of yours can leave its pages or give way to a
+  better one.
 
 ## The tools, in order
 
@@ -143,7 +144,8 @@ own kind:
 
 `supply_source` counts as a fact proposal and `preview_page` as a page preview. `propose_page` with
 a draft, or with a bundle of more than one part, counts as a page bundle as well as each part
-against its own kind; a bundle of one part counts against that part's kind alone.
+against its own kind; a bundle of one part counts against that part's kind alone. A withdrawal
+counts against the component proposals.
 
 A spent allowance says how long to wait; nothing was stored.
 
@@ -246,6 +248,12 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - A new layer for the site's own maps goes the same way with a `layer` and a GeoJSON file in
   place of the CSV (`datasets.md`, Map layers over MCP). It is drawn nowhere until an Admin
   approves it and an engineer ships it.
+- To retire a figure you made, put its label under the draft's `withdrawals`; to improve it,
+  propose the new one with `replaces` set to the old label, and approval moves it into the old
+  one's place on every layout (`components.md`, Withdrawing, replacing and borrowing).
+- Read a library component's facts before you link it or lay it out on another page: if this page
+  lacks any of them the server refuses it by those ids, and the cure is a component of the same
+  kind built from this page's facts.
 
 ## Drawing in KalaVigyan's design
 
@@ -282,6 +290,9 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - The preview's `report` checks the page against the page checklist: each rule a machine can check
   passes or fails with its evidence, and the rest are yours to judge on the link. Clients that draw
   MCP Apps show it from `ui://kalavigyan/page-preview.html`. Fix every failure before you propose.
+- An account whose work goes live at once gets back `held.confirm_url` instead of a report when it
+  proposes a draft or a several-part bundle. Send that link to your user and stop; they confirm it
+  once while signed in. Never park a finished redesign in a preview to avoid publishing.
 
 ## Drafts
 

@@ -59,7 +59,8 @@ The rules below refer to them.
    inferred.
 5. **Provenance counts only this page's own sentences.** Sources borrowed from the family, the
    category or kin crafts are counted and numbered separately, and a family's fact is never filed
-   as the craft's own.
+   as the craft's own. A component borrowed from another page rests only on facts this page holds;
+   the server refuses the others before they are proposed.
 
 ## Repetition
 
