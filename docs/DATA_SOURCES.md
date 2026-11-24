@@ -425,10 +425,11 @@ the copy mirrored into `backend/app/data/layers`. `tools/maplayers/relief.py` dr
 (`relief_bands`) from the ETOPO1 1 arc-minute grid as it was read, each band simplified at 0.018
 degree (about 2 km, the `RELIEF_BANDS` tolerance) and nothing else, so a place reads the band of
 the ETOPO1 cells it stands on, within that simplification. Only the shaded relief is smoothed (one
-3 by 3 mean), since it is drawn and never read as a value. The layer files in the repository were
-last built before this rule, from a grid smoothed twice by a 3 by 3 mean and halved, and stay so
-until `tools/maplayers_build.py` is run again with the downloads it names; that run replaces this
-sentence.
+3 by 3 mean), since it is drawn and never read as a value. The committed files were rebuilt this
+way on 2026-11-24 by the Map layers workflow (`.github/workflows/map-layers.yml`, run 45364276690),
+which downloads what `tools/maplayers_build.py` names, rebuilds and mirrors the layers, runs the
+relief tests with numpy and rasterio installed, and offers the rebuilt files as an artifact to
+commit; it runs on a change under `tools/maplayers` and on request.
 
 ### River lines (decision 0043)
 
