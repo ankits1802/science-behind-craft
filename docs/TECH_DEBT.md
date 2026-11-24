@@ -114,24 +114,25 @@ Last reviewed: 2026-11-22.
 
 ### ElevenLabs behaviour not yet verified
 
-- **What:** the voice binding rests on `custom_llm.request_headers` substituting
-  `{{system__conversation_id}}` into `X-KV-Conversation-Id`, which ElevenLabs' official pages do
-  not state. The bearer is settled: with the call switched on for the paid check of 2026-11-24
-  (run 45304855493, release db1efa4a), ElevenLabs' three custom-LLM requests passed the bearer
-  check, and decision 0184's refusal log shows each was refused at the session record check ("no
-  session holds this conversation"), although the check had bound its session (a 33-character
-  `conv_` id) before it sent the question. Either the header arrives without substitution or
-  ElevenLabs calls the model before the bind commits; the log does not yet say which. Also
+- **What:** the agent's custom-LLM header is not substituted. With the call switched on for the
+  paid checks of 2026-11-24 (runs 45304855493 on db1efa4a and 45339662817 on 6cd9385e), ElevenLabs'
+  custom-LLM requests passed the bearer check, so `custom_llm.api_key` arrives as the bearer, and
+  each was refused at the session record check; decision 0189's log shows the
+  `X-KV-Conversation-Id` header arrived as 27 characters not starting with `conv_`, the length of
+  the literal `{{system__conversation_id}}` that `voice/agent.py` writes into
+  `custom_llm.request_headers` as a plain string. So no agent turn has been answered yet. Also
   unverified are custom-LLM tool calls reaching `end_call` and client tools, Hindi in agents, the
   CSP hosts and the plan's retention minimum (`docs/contracts/voice.md`). Relay text to speech
   cannot run with zero retention (`enable_logging=false` is enterprise only).
-- **Waits on:** the media review lane (decision 0189), which logs the header's length and prefix and
-  waits briefly for a bind that races the call; then the lead runs the agent-only paid check once
-  more with the call switched on (`/kalavigyan/env/VOICE_CALL_ENABLED`, `box_voice_toggle.sh`)
-  and commits the agent turn's events as `backend/tests/voice/fixtures/agent_turn_events.json`
-  once a turn is answered (`voice.transport` stays `RELAY` until it passes). Tool calls, Hindi in
-  agents, the CSP hosts and retention need a browser call on the box; retention also needs an
-  enterprise plan or the Gemini voice.
+- **Waits on:** the owner's approval to change the ElevenLabs agent: `voice/agent.py` names the
+  header's value in the form ElevenLabs substitutes (a dynamic-variable reference to
+  `system__conversation_id` rather than the template string, checked against ElevenLabs' agent
+  schema), the reader agent is updated through `provision_voice_agent`, and the agent-only paid
+  check runs once more with the call switched on (`/kalavigyan/env/VOICE_CALL_ENABLED`,
+  `box_voice_toggle.sh`); then its events are committed as
+  `backend/tests/voice/fixtures/agent_turn_events.json` once a turn is answered (`voice.transport`
+  stays `RELAY` until it passes). Tool calls, Hindi in agents, the CSP hosts and retention need a
+  browser call on the box; retention also needs an enterprise plan or the Gemini voice.
 
 ## Voice backend (decision 0017)
 
