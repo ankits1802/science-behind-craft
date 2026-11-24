@@ -19,6 +19,8 @@ concurrency:
 env:
   PYTHON_VERSION: "3.14"
   NATURAL_EARTH: https://naciscdn.org/naturalearth/10m/physical
+  NATURAL_EARTH_MIRROR: https://naturalearth.s3.amazonaws.com/10m_physical
+  AGENT: "KalaVigyan map layers build (GitHub Actions)"
   ETOPO_URL: "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
   MRDS_URL: https://mrdata.usgs.gov/mrds/mrds-csv.zip
 
@@ -42,14 +44,15 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p downloads
+          fetch() { curl -fsSL --retry 4 --retry-all-errors -A "$AGENT" -o "$1" "$2"; }
           for name in ne_10m_rivers_lake_centerlines ne_10m_lakes ne_10m_geography_regions_polys ne_10m_geography_regions_elevation_points; do
-            curl -fsSL --retry 4 --retry-all-errors -o "downloads/$name.zip" "$NATURAL_EARTH/$name.zip"
+            fetch "downloads/$name.zip" "$NATURAL_EARTH/$name.zip" || fetch "downloads/$name.zip" "$NATURAL_EARTH_MIRROR/$name.zip"
             unzip -q -o "downloads/$name.zip" -d "downloads/$name"
             test -f "downloads/$name/$name.shp" || { echo "::error::$name.zip holds no $name.shp"; exit 1; }
           done
-          curl -fsSL --retry 4 --retry-all-errors -o downloads/etopo1_india.asc "$ETOPO_URL"
+          fetch downloads/etopo1_india.asc "$ETOPO_URL"
           head -c 200 downloads/etopo1_india.asc | grep -qi "ncols" || { echo "::error::the ETOPO1 download is not an ESRI ASCII grid"; exit 1; }
-          curl -fsSL --retry 4 --retry-all-errors -o downloads/mrds-csv.zip "$MRDS_URL"
+          fetch downloads/mrds-csv.zip "$MRDS_URL"
           ls -la downloads
       - name: Rebuild the layers and mirror the measured ones into the API
         working-directory: tools
