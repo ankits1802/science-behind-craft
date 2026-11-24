@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import uuid
 from collections.abc import Sequence
 from dataclasses import dataclass
+from datetime import datetime
 
 from sqlalchemy import ColumnElement, and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +16,7 @@ from app.research.page_proposals import ACCEPTED, PICTURE, PartReport
 
 from .monograph_generated_pictures import PlateSource, plates_of
 from .open_work_subjects import CATEGORY, WorkSubject
+from .page_preview_links import UnknownPreview, passed_preview
 
 __all__ = [
     "GIVEN_STATUSES",
@@ -21,6 +24,7 @@ __all__ = [
     "given_picture_report",
     "given_plates",
     "own_picture_file",
+    "pass_picture_file",
     "preview_picture_url",
 ]
 
@@ -78,6 +82,19 @@ async def own_picture_file(
         )
     ).first()
     return None if found is None else OwnPicture(key=found.s3Key, mime=found.mime)
+
+
+async def pass_picture_file(
+    session: AsyncSession, render_pass: str, contribution_id: uuid.UUID, *, now: datetime
+) -> OwnPicture | None:
+    try:
+        row = await passed_preview(session, render_pass, now=now)
+    except UnknownPreview:
+        return None
+    if preview_picture_url(contribution_id) not in json.dumps(row.document):
+        return None
+    owner = await session.get(User, row.userId)
+    return None if owner is None else await own_picture_file(session, owner, contribution_id)
 
 
 async def _given(

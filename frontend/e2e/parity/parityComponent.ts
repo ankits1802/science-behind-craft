@@ -1,5 +1,6 @@
 import type { ElementHandle, Page } from "@playwright/test";
 
+import { drawingProblems } from "./drawingChecks";
 import { sameText } from "./parityBorrowed";
 import { styleDifferences, type StyleDifference, type StyleRecord } from "./parityStyles";
 
@@ -37,11 +38,6 @@ const PROPERTIES = [
 export const GRAPHIC_TAGS = ["svg", "img", "canvas", "video", "picture"];
 const NODE_CAP = 500;
 const BOX_TOLERANCE_PX = 2;
-const ICON_VIEW_MAX = 32;
-const ICON_VIEW_LEAST = 8;
-const ICON_WIDTH_MAX_PX = 64;
-const FIGURE_TEXT_MAX_PX = 96;
-const SVG_TEXT_MAX_PX = 48;
 
 export async function generatedRoot(page: Page, label: string, depth: number): Promise<ElementHandle<Element> | null> {
   const handle = await page.evaluateHandle(
@@ -118,26 +114,6 @@ export function gatedDifferences(approved: StyleRecord, rendered: StyleRecord): 
 }
 
 export async function sanityProblems(page: Page, label: string, root: ElementHandle<Element>): Promise<SanityProblem[]> {
-  const found = await root.evaluate(
-    (element, limits) => {
-      const problems: string[] = [];
-      const box = element.getBoundingClientRect();
-      if (box.height < 1 || box.width < 1) problems.push(`draws ${Math.round(box.width)} by ${Math.round(box.height)}`);
-      for (const svg of element.querySelectorAll("svg")) {
-        const view = (svg as SVGSVGElement).viewBox?.baseVal;
-        const width = svg.getBoundingClientRect().width;
-        if (view && view.width >= limits.iconLeast && view.width <= limits.icon && width > limits.iconWidth) problems.push(`an icon of ${view.width} units draws ${Math.round(width)}px wide`);
-      }
-      for (const node of element.querySelectorAll("*")) {
-        const size = parseFloat(getComputedStyle(node).fontSize);
-        const height = node.getBoundingClientRect().height;
-        const shown = height > 0 && node.textContent?.trim();
-        if (shown && size > limits.text) problems.push(`${node.tagName.toLowerCase()} text draws at ${Math.round(size)}px`);
-        if (shown && node.tagName.toLowerCase() === "text" && height > limits.svgText) problems.push(`an SVG label draws ${Math.round(height)}px tall`);
-      }
-      return [...new Set(problems)].slice(0, 12);
-    },
-    { icon: ICON_VIEW_MAX, iconLeast: ICON_VIEW_LEAST, iconWidth: ICON_WIDTH_MAX_PX, text: FIGURE_TEXT_MAX_PX, svgText: SVG_TEXT_MAX_PX }
-  );
+  const found = await drawingProblems(page, root);
   return found.map((problem) => ({ label: `${page.url()} ${label}`, problem }));
 }

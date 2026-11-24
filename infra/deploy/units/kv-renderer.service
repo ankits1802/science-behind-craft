@@ -1,0 +1,50 @@
+[Unit]
+Description=KalaVigyan page renderer (a sandboxed headless browser that draws page previews)
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/opt/kalavigyan/current/backend/app/renderer/__main__.py
+
+[Service]
+DynamicUser=yes
+ProtectProc=invisible
+WorkingDirectory=/opt/kalavigyan/current/backend
+Environment=MALLOC_ARENA_MAX=2
+Environment=PYTHONUNBUFFERED=1
+Environment=HOME=/tmp
+Environment=RENDERER_HOST=127.0.0.1
+Environment=RENDERER_PORT=8091
+Environment=RENDERER_BROWSER=/opt/chrome-headless-shell/current/chrome-headless-shell
+EnvironmentFile=/opt/kalavigyan/renderer.env
+Environment=KV_PROCESS=renderer
+SyslogIdentifier=kv-renderer
+ExecStart=/opt/kalavigyan/current/backend/.venv/bin/python -m app.renderer
+MemoryAccounting=yes
+MemoryHigh=1200M
+MemoryMax=1536M
+MemorySwapMax=0
+TasksMax=512
+LimitNOFILE=4096
+LimitFSIZE=256M
+CPUQuota=150%
+Restart=always
+RestartSec=5
+KillMode=control-group
+TimeoutStopSec=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+IPAddressDeny=169.254.0.0/16 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 fd00::/8 fe80::/10
+InaccessiblePaths=-/opt/kalavigyan/.env -/opt/kalavigyan/fetcher.env -/etc/kalavigyan -/root
+
+[Install]
+WantedBy=multi-user.target

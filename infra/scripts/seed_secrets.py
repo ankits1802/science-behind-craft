@@ -272,6 +272,7 @@ def standing_values(tf, params, current):
             "REDIS_URL": "redis://127.0.0.1:6379/0",
             "SEARXNG_URL": "http://127.0.0.1:8888",
             "FETCHER_URL": "http://127.0.0.1:8090",
+            "RENDERER_URL": "http://127.0.0.1:8091",
             "MAIL_SES_REGION": REGION,
             "MAIL_FROM_NAME": "KalaVigyan",
         }

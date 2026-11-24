@@ -29,6 +29,11 @@
             "log_stream_name": "{instance_id}"
           },
           {
+            "file_path": "/var/log/kalavigyan/kv-renderer.log",
+            "log_group_name": "/kalavigyan/kv-renderer",
+            "log_stream_name": "{instance_id}"
+          },
+          {
             "file_path": "/var/log/nginx/kalavigyan-access.log",
             "log_group_name": "/kalavigyan/nginx-access",
             "log_stream_name": "{instance_id}"

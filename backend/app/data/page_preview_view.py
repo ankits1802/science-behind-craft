@@ -26,8 +26,9 @@ PAGE_PREVIEW_VIEW = (
     "kalavigyan-page-preview",
     "A KalaVigyan page preview",
     "The MCP App that draws a page preview's report in KalaVigyan's design, from the preview result's "
-    "structured data alone: the private link, each checklist rule with its verdict and evidence, coverage by "
-    "field, figures, sources by grade and pictures by licence. It loads nothing from the network.",
+    "structured data alone: the private link, each checklist rule with its verdict and evidence, how the page "
+    "draws at 390 and 1440 px, coverage by field, figures, sources by grade, pictures by licence and the page's "
+    "counts beside Kutch Ajrakh's. It loads nothing from the network.",
 )
 STATUS_COLOURS = ("success", "success-wash", "error", "error-wash", "info", "info-wash")
 

@@ -31,7 +31,9 @@ flowchart LR
     WK["kv-worker"]
     FE["kv-fetcher"]
     CW["kv-contributions"]
+    RD["kv-renderer"]
   end
+  RD -->|pass header| V
   WK --> PG
   CW --> PG
   classDef accent fill:#762CB1,stroke:#5F1C93,color:#FFFFFF
@@ -47,7 +49,7 @@ flowchart LR
 | Origin | nginx `:80` on EC2 `kalavigyan-api` (ap-south-1) | 403 without `X-Origin-Verify` |
 | API | `uvicorn app.main:app` | blue/green on 8000/8001 |
 | Database | Postgres 17 on Supabase | session pooler `:5432`, each process on the box within its own connection budget (`core/connection_budget`, decision 0163); vector, postgis, pg_trgm, unaccent, citext |
-| Workers on the box | `kv-worker`, `kv-fetcher` and `kv-contributions` | the media queue (decision 0018), the daily voice upkeep (decision 0140), the daily sweep of score clips no manifest names and a heartbeat the media routes read (decision 0154), the fetcher sandbox (decision 0007) and the contribution queue's gates (round 7), as `docs/RUNBOOK.md` lists them under On the box |
+| Workers on the box | `kv-worker`, `kv-fetcher`, `kv-contributions` and `kv-renderer` | the media queue (decision 0018), the daily voice upkeep (decision 0140), the daily sweep of score clips no manifest names and a heartbeat the media routes read (decision 0154), the fetcher sandbox (decision 0007), the contribution queue's gates (round 7) and the page renderer, a headless browser that draws `preview_page`'s private link at 390 and 1440 px and reaches only the site (decision 0195), as `docs/RUNBOOK.md` lists them under On the box |
 | Logs | the CloudWatch agent on the box | each service's journal lines and nginx's access and error logs, shipped to the CloudWatch Logs groups `/kalavigyan/<service>` and kept 30 days (decision 0150, `docs/RUNBOOK.md` Logs) |
 
 Media goes to the private S3 bucket through presigned URLs. Ids, names and the deploy sequence
@@ -89,6 +91,7 @@ flowchart TD
   RE["retrieval/"]
   SO["sources/"]
   FE["fetcher/"]
+  RD["renderer/"]
   CU["curation/"]
   RS["Contracts<br/>research/"]
   CR["Shared<br/>core/"]
@@ -96,7 +99,7 @@ flowchart TD
     MO["models/"]
     DA["data/"]
   end
-  E --> Pipelines --> PR --> Domain --> PL --> CO --> RE --> SO --> FE --> CU --> RS --> CR --> Foundation
+  E --> Pipelines --> PR --> Domain --> PL --> CO --> RE --> SO --> FE --> RD --> CU --> RS --> CR --> Foundation
   classDef accent fill:#762CB1,stroke:#5F1C93,color:#FFFFFF
   class RS accent
 ```
@@ -118,6 +121,7 @@ The diagram is the stack from the top down; the edges that may really be importe
 | retrieval | `retrieval/` | stored-knowledge search: craft-scoped claims and chunks, full text and pgvector fused by RRF, chunking and embedding fill |
 | sources | `sources/` | external research sources: paced HTTP, record rules, one adapter per service (`sources/scholarly/`: OpenAlex, Crossref, ..., Zenodo, the open-copy locator and publisher full text, on one pace shared by every process; `sources/reference/`: Wikipedia, Wikidata, PubChem, Commons; `sources/web/`: SearXNG, Brave, the fallback; `sources/images/`: Openverse, Flickr's oEmbed, an open-licence picture read by its page, the image sources and the Europe PMC figures), the fetcher client |
 | fetcher | `fetcher/` | the separate kv-fetcher process: address-pinned https fetch (one client per host and address per fetch), RFC 9309 robots.txt, caps, trafilatura and pypdf extraction in killable parser processes (no DB, no AWS) |
+| renderer | `renderer/` | the separate kv-renderer process (`python -m app.renderer`): one pinned chrome-headless-shell per render driven over the DevTools protocol, one render at a time, a request guard that lets the browser reach only the site and its picture host, the shared drawing checks (`data/design/drawing-checks.js`) and the screenshots; imports `research/`, `core/` and `data/` only, no DB, no AWS (decision 0195) |
 | curation | `curation/` | curated craft dossiers: the model, the offline rules, the check file and the index, read by `tools/curation` and the importer; imports `research/`, `models/` and `data/` only (decision 0051) |
 | contracts | `research/` | research and answering types, protocols, post-check rules; the explainer document, blocks, stored pieces and depth by role (decision 0030); dataset rows, rivers, the calendar words, reaction rules and the expert panel (decision 0042) |
 | shared | `core/` | settings, db, security (passwords, tokens, secret keys), the managed key store, roles, deps, logging, rate limits and allowances shared by every process, each process's connection budget and the retries of a full pooler (decision 0163), India time, HTTP revalidation, work shielded from a leaving caller |

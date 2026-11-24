@@ -18,19 +18,28 @@ from app.research.monograph_document import MonographDocument
 __all__ = [
     "LIVE_PREVIEWS_MAX",
     "PREVIEW_LIFETIME",
+    "RENDER_PASS_LIFETIME",
     "UnknownPreview",
+    "issued_pass",
+    "pass_document",
+    "passed_preview",
     "preview_document",
     "preview_key",
     "preview_path",
+    "preview_token",
+    "render_key",
     "signed_token",
     "store_preview",
     "token_preview",
 ]
 
 PREVIEW_LIFETIME = timedelta(hours=24)
+RENDER_PASS_LIFETIME = timedelta(minutes=2)
 LIVE_PREVIEWS_MAX = 20
 PREVIEW_PATH = "/preview/{token}"
+PREVIEW_SEGMENT = "/preview/"
 KEY_CONTEXT = b"kalavigyan page preview"
+RENDER_CONTEXT = b"kalavigyan page render"
 TOKEN = re.compile(r"^([0-9a-f]{32})\.(\d{1,12})\.([0-9a-f]{64})$")
 UNKNOWN = "No preview of yours has this link, or it has expired: call preview_page again."
 
@@ -40,8 +49,15 @@ class UnknownPreview(Exception):
 
 
 def preview_key() -> bytes:
-    secret = secret_key("JWT_SECRET", get_settings().jwt_secret)
-    return hmac.new(secret, KEY_CONTEXT, hashlib.sha256).digest()
+    return _derived(KEY_CONTEXT)
+
+
+def render_key() -> bytes:
+    return _derived(RENDER_CONTEXT)
+
+
+def preview_token(preview_url: str) -> str:
+    return preview_url.rsplit(PREVIEW_SEGMENT, 1)[-1]
 
 
 def preview_path(token: str) -> str:
@@ -103,6 +119,35 @@ async def _prune(session: AsyncSession, user_id: uuid.UUID, now: datetime) -> No
     stale = live[LIVE_PREVIEWS_MAX - 1 :]
     if stale:
         await session.execute(delete(PagePreview).where(PagePreview.id.in_(stale)))
+
+
+def issued_pass(preview_url: str, user: User, *, now: datetime) -> str:
+    preview_id = token_preview(preview_token(preview_url), user.id, preview_key(), now=now)
+    return signed_token(preview_id, user.id, now + RENDER_PASS_LIFETIME, render_key())
+
+
+async def passed_preview(session: AsyncSession, render_pass: str, *, now: datetime) -> PagePreview:
+    found = TOKEN.match(render_pass)
+    row = None if found is None else await session.get(PagePreview, uuid.UUID(hex=found.group(1)))
+    if row is None or row.expiresAt <= now:
+        raise UnknownPreview(UNKNOWN)
+    if token_preview(render_pass, row.userId, render_key(), now=now) != row.id:
+        raise UnknownPreview(UNKNOWN)
+    return row
+
+
+async def pass_document(
+    session: AsyncSession, render_pass: str, token: str, *, now: datetime
+) -> dict[str, Any]:
+    row = await passed_preview(session, render_pass, now=now)
+    if token_preview(token, row.userId, preview_key(), now=now) != row.id:
+        raise UnknownPreview(UNKNOWN)
+    return row.document
+
+
+def _derived(context: bytes) -> bytes:
+    secret = secret_key("JWT_SECRET", get_settings().jwt_secret)
+    return hmac.new(secret, context, hashlib.sha256).digest()
 
 
 def _mac(body: str, user_id: uuid.UUID, key: bytes) -> str:

@@ -77,6 +77,8 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     JUDGE: { word: "Yours to judge", css: "kv-judge", path: "M12 16v-4M12 8h.01" }
   };
   var OUTCOMES = { SHOWN: "Shown", LISTED: "Listed", REFUSED: "Refused", ACCEPTED: "Accepted" };
+  var DRAWN = { CHECKED: "Drawn at both widths and checked: nothing fails", FAILED: "Drawn at both widths, and these fail", UNMADE: "The pictures could not be made, so nothing here says the page draws well" };
+  var COUNTED = ["pictures", "figures", "interactives", "maps"];
   var CHANNEL = "kalavigyan-page-preview";
   var SHOW = "Show the full report";
   var HIDE = "Hide the full report";
@@ -278,6 +280,39 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     return block;
   }
 
+  function drawn(report) {
+    var drawing = report.drawing && typeof report.drawing === "object" ? report.drawing : null;
+    if (!drawing) return null;
+    var block = el("section");
+    block.appendChild(el("h2", null, "How the page draws"));
+    block.appendChild(el("p", "kv-meta", DRAWN[drawing.state] || words(drawing.state)));
+    if (drawing.reason) block.appendChild(el("p", null, drawing.reason));
+    var rows = list(drawing.problems).map(function (found) {
+      return [count(found.width) + " px", String(found.label || ""), String(found.problem || "")];
+    });
+    if (rows.length) block.appendChild(table("Each drawing problem, at the width it was found", ["Width", "Component", "Problem"], rows, [true, false, false]));
+    var shots = list(drawing.images).map(function (image) {
+      return [String(image.caption || image.name || ""), count(image.width) + " by " + count(image.height) + " px"];
+    });
+    if (shots.length) block.appendChild(table("The pictures that came back beside this report", ["Picture", "Size"], shots, [false, true]));
+    return block;
+  }
+
+  function counted(name, mine, theirs) {
+    return [name].concat(COUNTED.map(function (key) { return count((mine || {})[key]) + " · " + count((theirs || {})[key]); }));
+  }
+
+  function beside(report) {
+    var bar = report.bar && typeof report.bar === "object" ? report.bar : null;
+    if (!bar) return null;
+    var block = el("section");
+    block.appendChild(el("h2", null, "Beside Kutch Ajrakh"));
+    block.appendChild(el("p", "kv-meta", bar.note));
+    var rows = [counted("All chapters", bar.page, bar.bar)].concat(list(bar.chapters).map(function (line) { return counted(words(line.chapter), line.page, line.bar); }));
+    block.appendChild(table("This page · Kutch Ajrakh, chapter by chapter", ["Chapter", "Pictures", "Figures", "Interactives", "Maps"], rows, [false, true, true, true, true]));
+    return block;
+  }
+
   function bundleParts(result) {
     var block = el("section");
     block.appendChild(el("h2", null, "Each part of the bundle"));
@@ -331,7 +366,7 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     var report = result.report && typeof result.report === "object" ? result.report : null;
     var parts = head(result, report);
     var contents = [];
-    if (report) contents.push(rules(report), details(report));
+    if (report) [rules(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
     if (list(result.parts).length) contents.push(bundleParts(result));
     var foot = el("footer");
     foot.appendChild(el("p", null, "Drawn from the preview's own result; every text is shown as text and nothing is loaded from the network. Only the newest preview opens on its own; opening one folds the others."));

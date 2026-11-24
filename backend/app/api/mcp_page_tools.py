@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import base64
 import uuid
 from datetime import UTC, datetime
 
-from pydantic import Field
+from pydantic import Field, PrivateAttr
 
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE
@@ -12,11 +13,13 @@ from app.data.page_preview_view import PAGE_PREVIEW_VIEW_URI
 from app.models import PageDraft, User
 from app.research.page_drafts import DraftView, PageLists, parts_counts
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult
+from app.research.page_render import RenderedImage
 from app.research.page_report import PageReport
 from app.research.review_switch import AGENT
-from app.services import page_drafts, page_holds, page_preview, page_report
+from app.services import page_drafts, page_holds, page_preview, page_report, page_reviews
 from app.services.borrowed_placements import held_refusal
 from app.services.component_lifecycle import withdrawn_owners
+from app.services.page_renders import page_renderer
 from app.services.page_revalidation import refresh_pages
 from app.services.trust_tiers import publishes_at_once
 
@@ -34,12 +37,15 @@ from .mcp_page_texts import (
     PROPOSE_DESCRIPTION,
     SUBMITTED,
 )
+from .mcp_protocol import ToolImage
 from .mcp_studio_arguments import STUDIO_DOES
 from .mcp_tool_base import PAGES, READ_ONLY, WRITES, Tool, ToolContext, contributor
 from .page_proposal_deps import page_proposed
 from .proposal_limits import refuse_tool_when_spent
 
-__all__ = ["PAGE_TOOLS", "DraftReply", "PageReply", "PreviewReply"]
+__all__ = ["PAGE_TOOLS", "PICTURE_MIME", "DraftReply", "PageReply", "PreviewReply"]
+
+PICTURE_MIME = "image/jpeg"
 
 
 class DraftReply(DraftView):
@@ -50,6 +56,14 @@ class PreviewReply(PagePreviewResult):
     draft_id: uuid.UUID | None = None
     report: PageReport | None = None
     notices: list[str] = Field(default_factory=list)
+    _images: list[ToolImage] = PrivateAttr(default_factory=list)
+
+    def showing(self, images: list[ToolImage]) -> PreviewReply:
+        self._images = list(images)
+        return self
+
+    def tool_images(self) -> list[ToolImage]:
+        return list(self._images)
 
 
 class PageReply(PageProposalResult):
@@ -111,16 +125,27 @@ async def _preview_page(context: ToolContext, arguments: PageWork) -> PreviewRep
     await refuse_tool_when_spent(PAGE_PREVIEWS, user)
     previewed = await page_preview.preview_page(context.session, user, bundle, site=context.site, now=now)
     report = await page_report.preview_report(context.session, user, bundle, previewed, lists=lists, now=now)
+    drawn = await page_reviews.drawn_preview(
+        context.session, user, previewed, report, renderer=page_renderer(), now=now
+    )
     if row is not None:
-        await page_drafts.record_preview(context.session, row, previewed, report)
-    return PreviewReply.model_validate(
+        await page_drafts.record_preview(context.session, row, previewed, drawn.report)
+    reply = PreviewReply.model_validate(
         {
             **previewed.model_dump(),
             "draftId": arguments.draft_id,
-            "report": report,
+            "report": drawn.report,
             "notices": arguments.notices(),
         }
     )
+    return reply.showing(_pictures(drawn.images))
+
+
+def _pictures(images: list[RenderedImage]) -> list[ToolImage]:
+    return [
+        ToolImage(caption=image.caption, data=base64.b64decode(image.data), mime=PICTURE_MIME)
+        for image in images
+    ]
 
 
 async def _propose_page(context: ToolContext, arguments: PageWork) -> PageReply:

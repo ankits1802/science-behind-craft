@@ -11,6 +11,8 @@ from app.models.enums import DISCIPLINES
 
 from .base import ContractModel
 from .coverage_chapters import field_chapter
+from .page_counts import BarCounts, bar_counts
+from .page_render import DrawingReport
 from .page_report_rules import (
     DENSE_SENTENCES,
     FAIL,
@@ -28,6 +30,7 @@ __all__ = [
     "CHECKLIST_RULES",
     "LICENCE_CLASSES",
     "PAGE_REPORT_SCHEMA_VERSION",
+    "READY",
     "STANDINGS",
     "FieldLine",
     "FigureLine",
@@ -40,7 +43,7 @@ __all__ = [
 ]
 
 PAGE_REPORT_SCHEMA_VERSION = 1
-CHECKLIST_RULES = 27
+CHECKLIST_RULES = 28
 DENSE, THIN, ABSENT = STANDINGS = ("DENSE", "THIN", "ABSENT")
 UNGRADED = "UNGRADED"
 CONTRIBUTED, AI_ILLUSTRATION, NAMED_IN_CREDIT = LICENCE_CLASSES = (
@@ -110,6 +113,8 @@ class PageReport(ContractModel):
     pictures: list[PictureLine]
     pictures_by_licence: dict[str, int]
     message: str
+    drawing: DrawingReport | None = None
+    bar: BarCounts | None = None
 
 
 def page_report(given: ReportInput, titles: Mapping[int, str]) -> PageReport:
@@ -138,6 +143,7 @@ def page_report(given: ReportInput, titles: Mapping[int, str]) -> PageReport:
         pictures=pictures,
         pictures_by_licence=dict(Counter(picture.licence for picture in pictures)),
         message=READY.format(passed=counted[PASS], failed=counted[FAIL], judged=counted[JUDGE]),
+        bar=None if given.bar is None else bar_counts(given.document.content, given.bar),
     )
 
 

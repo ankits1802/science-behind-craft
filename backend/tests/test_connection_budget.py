@@ -13,6 +13,7 @@ from app.core.connection_budget import (
     FETCHER,
     POOLER_HEADROOM,
     POOLER_SESSIONS,
+    RENDERER,
     RUN_CONNECTIONS,
     SCRIPT,
     UNNAMED_COUNTING,
@@ -58,7 +59,7 @@ def test_every_unit_that_reads_the_database_settings_names_a_budgeted_process() 
 
 def test_the_box_at_its_busiest_stays_inside_the_pooler_with_headroom() -> None:
     instances = box_instances()
-    assert instances == {API: 2, CONTRIBUTIONS: 1, WORKER: 1, FETCHER: 1, SCRIPT: 1}
+    assert instances == {API: 2, CONTRIBUTIONS: 1, WORKER: 1, FETCHER: 1, RENDERER: 1, SCRIPT: 1}
     assert peak_sessions(instances) == 2 * (10 + 2) + (8 + 1) + (2 + 1) + (3 + 1)
     assert peak_sessions(instances) + POOLER_HEADROOM <= POOLER_SESSIONS
 
@@ -105,7 +106,7 @@ def test_a_named_process_takes_its_budget_whatever_the_settings_say() -> None:
     assert process_pools(settings) == BUDGETS[WORKER]
 
 
-@pytest.mark.parametrize("named", ["fetcher", "nightly", "API"])
+@pytest.mark.parametrize("named", ["fetcher", "renderer", "nightly", "API"])
 def test_a_role_without_a_budget_is_refused(named: str) -> None:
     with pytest.raises(ValueError, match="budget"):
         process_role(named, production=True)

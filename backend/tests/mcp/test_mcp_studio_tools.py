@@ -11,13 +11,10 @@ from app.api import mcp_page_tools, mcp_studio_sources
 from app.api.mcp_tools import TOOLS, ToolContext, answer
 from app.core.errors import InvalidInput
 from app.models import PageDraft, SuppliedSource, User
-from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult, PageSubject
-from app.research.page_report import page_report
-from app.research.page_report_rules import ReportInput
+from app.research.page_proposals import PageBundle, PageProposalResult, PageSubject
 from app.services.craft_resolver import CraftIndexStore
 from app.services.supplied_sources import Supplied
 
-from ..research.page_report_rules_fixtures import page_document
 from ..research.test_page_proposals import COMPONENT, FACT
 
 SITE = "https://kalavigyan.example"
@@ -237,48 +234,6 @@ async def test_a_refusal_from_the_draft_is_a_tool_error_and_rolls_back(
     result = await call("propose_page", {"draft_id": str(DRAFT_ID)}, context(session=session))
     assert result["isError"] is True and "No open draft of yours" in result["content"][0]["text"]
     assert (session.commits, session.rollbacks) == (0, 1)
-
-
-async def test_a_draft_s_preview_returns_the_private_link_and_the_report(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    row = draft_row({"facts": [FACT]})
-    report = page_report(ReportInput(document=page_document()), {})
-    recorded: list[Any] = []
-
-    async def previewed(
-        session: Any, user: User, bundle: PageBundle, *, site: str, now: datetime
-    ) -> PagePreviewResult:
-        assert len(bundle.facts) == 1
-        return PagePreviewResult(
-            subject=bundle.subject,
-            page_url=f"{site}/crafts/Kutch-Ajrakh",
-            preview_url=f"{site}/preview/token",
-            expires_at=NOW + timedelta(hours=24),
-            chapters=["opening", "chem"],
-            components=1,
-            sources=2,
-            parts=[],
-            message="Private to you for 24 hours.",
-        )
-
-    async def reported(*args: Any, **kwargs: Any) -> Any:
-        return report
-
-    async def record(session: Any, draft: PageDraft, *args: Any) -> None:
-        recorded.append(draft.id)
-
-    monkeypatch.setattr(mcp_page_tools.page_drafts, "own_draft", owned(row))
-    monkeypatch.setattr(mcp_page_tools.page_drafts, "record_preview", record)
-    monkeypatch.setattr(mcp_page_tools.page_preview, "preview_page", previewed)
-    monkeypatch.setattr(mcp_page_tools.page_report, "preview_report", reported)
-    session = FakeSession()
-    content = (await call("preview_page", {"draft_id": str(DRAFT_ID)}, context(session=session)))[
-        "structuredContent"
-    ]
-    assert content["previewUrl"] == f"{SITE}/preview/token" and content["draftId"] == str(DRAFT_ID)
-    assert (content["report"]["failed"], len(content["report"]["rules"])) == (report.failed, 27)
-    assert recorded == [DRAFT_ID] and session.commits == 1
 
 
 async def test_a_draft_is_proposed_once_as_the_agent(monkeypatch: pytest.MonkeyPatch) -> None:

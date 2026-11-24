@@ -155,7 +155,7 @@ flowchart LR
 | [0107](0107-craft-articles-in-english-with-room-for-translation.md) | Craft articles are written in English, with room for translations | [0117](0117-pages-in-other-languages.md) |
 | [0108](0108-structure-proposals-become-curated-facts.md) | An approved structure proposal becomes a curated fact of its dossier | [0111](0111-fewer-mcp-tools.md), [0162](0162-unused-craft-page-chapters-retired.md), [0169](0169-mcp-follow-ups-kept-true.md), [0171](0171-imports-keep-approvals-and-differences-settle.md) |
 | [0109](0109-image-formats-and-screens.md) | Pictures in every common format, given from the chat and screened before review | [0192](0192-open-licence-pictures-placed-by-their-page.md) |
-| [0110](0110-contributor-supplied-sources.md) | Sources a contributor's AI can read and we cannot, and a studio to build a page in | [0111](0111-fewer-mcp-tools.md) and [0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
+| [0110](0110-contributor-supplied-sources.md) | Sources a contributor's AI can read and we cannot, and a studio to build a page in | [0111](0111-fewer-mcp-tools.md), [0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) and [0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
 | [0111](0111-fewer-mcp-tools.md) | Twenty-one MCP tools in six groups, with small schemas | [0114](0114-kinds-and-datasets.md), [0117](0117-pages-in-other-languages.md), [0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md), [0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) and [0191](0191-room-for-the-page-quality-tools.md) |
 | [0112](0112-reviewed-field-photographs.md) | Each field photograph filed on an artisan is reviewed by a person before it is shown | · |
 | [0113](0113-questions-become-work.md) | Questions KalaVigyan cannot answer well become open work | [0159](0159-places-kept-reviews-filed-and-mcp-kept-small.md) |
@@ -237,7 +237,8 @@ flowchart LR
 | [0190](0190-a-voice-turn-bound-and-answered-and-a-page-built-while-its-inputs-move.md) | A voice agent turn is bound by a variable header and answered within ElevenLabs' longest wait, and a page built while its inputs move is built again without an alarm | · |
 | [0191](0191-room-for-the-page-quality-tools.md) | The MCP tool list has room for the page-quality tools | · |
 | [0192](0192-open-licence-pictures-placed-by-their-page.md) | An agent places open-licence pictures by their page, and the server reads their licence and credit | · |
-| [0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) | A contributor withdraws or replaces its own registered component, an Admin's staged removal takes published content off its pages, a borrowed component citing facts the page does not hold is refused before it is proposed, and a trusted account's whole page waits for one confirmation | · |
+| [0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) | A contributor withdraws or replaces its own registered component, an Admin's staged removal takes published content off its pages, a borrowed component citing facts the page does not hold is refused before it is proposed, and a trusted account's whole page waits for one confirmation | [0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
+| [0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) | A preview is drawn in a sandboxed browser at a phone's width and a desktop's, the agent sees its pictures, the release's drawing checks run before proposing, and the page is set beside Kutch Ajrakh | · |
 
 ## How this document is kept true
 

@@ -1,0 +1,3 @@
+CHROME_VERSION=158.0.8127.88
+CHROME_URL=https://storage.googleapis.com/chrome-for-testing-public/158.0.8127.88/linux64/chrome-headless-shell-linux64.zip
+CHROME_SHA256=63401333cc587645bfaeea7f0c90958b327d249251e23954a47f30112ca23d5b

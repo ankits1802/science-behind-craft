@@ -74,7 +74,7 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
             Reference(
                 "page-checklist",
                 "The page checklist",
-                "The 27 rules every craft, family, category and answer page meets, and the three lists each "
+                "The 28 rules every craft, family, category and answer page meets, and the three lists each "
                 "page derives first",
             ),
             Reference(
