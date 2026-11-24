@@ -6,11 +6,14 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.db import sessionmaker
 from app.core.errors import ExternalFailure, InvalidInput, NotConfigured
 from app.core.rate_limit import PAID_SEARCHES, SOURCE_ARCHIVES, SOURCE_READS, SOURCE_SEARCHES
 from app.models import User
 from app.research.knowledge_writes import ProposedQuote
+from app.sources.reference.wikidata import WikidataAdapter
 
+from .entity_points import entity_points
 from .source_lookup import SearchAsk, found_sources, query_for
 from .source_lookup_allowance import (
     LookupCaller,
@@ -142,7 +145,10 @@ async def entity_call(ask: LookupAsk, name: str | None, qid: str | None) -> Enti
     source = (await ask.sources()).entities
     if source is None:
         raise InvalidInput(NO_ADAPTER.format(name="Wikidata"))
-    return await external(entity_lookup(source, name=name, qid=qid))
+    found = await external(entity_lookup(source, name=name, qid=qid))
+    if not isinstance(source, WikidataAdapter):
+        return found
+    return await entity_points(found, source, sessionmaker())
 
 
 async def pictures_call(ask: LookupAsk, query: str, craft_slug: str | None) -> FoundPictures:

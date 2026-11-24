@@ -10,6 +10,7 @@ import { SLOT_CLASS } from "@/components/monograph/slotClass";
 import type { MonographSources } from "@/lib/monographRender";
 import { nodeElements } from "@/lib/monographRenderElements";
 import { fragmentSlots, slotId, type ComponentBundle } from "@/lib/monographRenderLayout";
+import { unitTexts } from "@/lib/unitTexts";
 
 export { SLOT_CLASS };
 export const SLOT_ELEMENT = "kv-slot[component]";
@@ -23,12 +24,13 @@ export function BundleView({ label }: { label: string }) {
   const { bundles, sources, bare } = useMonographSlot();
   const bundle: ComponentBundle | undefined = bundles[label];
   const renderUnit = useMemo(() => unitRenderer(bundle, sources), [bundle, sources]);
+  const unitText = useMemo(() => unitTexts(bundle), [bundle]);
   if (!bundle) return null;
   const View = bundle.spec ? COMPONENT_VIEWS[bundle.component.kind] : undefined;
   if (bundle.spec && View) {
     const view = (
       <NestedComponents.Provider value={renderNested}>
-        <View component={bundle.component} spec={bundle.spec} unitRefs={Object.keys(bundle.units)} renderUnit={renderUnit} renderComponent={renderNested} />
+        <View component={bundle.component} spec={bundle.spec} unitRefs={Object.keys(bundle.units)} renderUnit={renderUnit} unitText={unitText} renderComponent={renderNested} />
       </NestedComponents.Provider>
     );
     if (bare) return view;

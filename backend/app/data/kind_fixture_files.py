@@ -18,6 +18,7 @@ KIND_FIXTURE_ORDER = (
     "stat_tiles",
     "map_sequence",
     "map_sequence_dhokra",
+    "timeline_map",
     "source_disagreements",
     "label_card",
     "swatch_cards",

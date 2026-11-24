@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 
 import { inFrame } from "@/components/answer/journey/journeyGeometry";
 import { AnswerFigure } from "@/components/answer/place/AnswerFigure";
@@ -8,14 +8,19 @@ import { AnswerMapSource } from "@/components/answer/place/AnswerMapSource";
 import { PIN_DISC } from "@/components/answer/place/figureMarks";
 import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
 import { AbroadInset, type InsetPin, type InsetRoute } from "@/components/map/AbroadInset";
+import type { MapBox } from "@/components/map/basemap";
 import { IndiaMap, type MapPoint } from "@/components/map/IndiaMap";
-import { VIEW_BOX } from "@/components/map/projection";
+import { frameScale, WHOLE_MAP } from "@/components/map/layout";
 import { listText } from "@/lib/format";
 import type { BoundaryNote } from "@/lib/regionContract";
 import { wikidataUrl } from "@/lib/supplyView";
 import { abroadSummary, type PlacedPlace, type TimelineRouteLine } from "@/lib/timelineView";
 
-function RouteLines({ routes }: { routes: readonly TimelineRouteLine[] }) {
+export type TimelineMapParts = { frame?: MapBox; underlay?: ReactNode; overlay?: (scale: number) => ReactNode; key?: ReactNode; credits?: ReactNode; titled?: boolean; coordinates?: boolean };
+
+type Route = Pick<TimelineRouteLine<unknown>, "key" | "start" | "end">;
+
+function RouteLines({ routes, ring }: { routes: readonly Route[]; ring: number }) {
   return (
     <g className="pointer-events-none" data-testid="timeline-routes">
       {routes.map((route) => {
@@ -25,7 +30,7 @@ function RouteLines({ routes }: { routes: readonly TimelineRouteLine[] }) {
           <g key={route.key} data-testid="timeline-route">
             <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="var(--map-label-halo)" strokeWidth={6} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="var(--terracotta)" strokeWidth={2.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-            <circle cx={to.x} cy={to.y} r={7} fill="var(--map-marker)" stroke="var(--map-marker-ring)" strokeWidth={2} />
+            <circle cx={to.x} cy={to.y} r={7 * ring} fill="var(--map-marker)" stroke="var(--map-marker-ring)" strokeWidth={2 * ring} />
           </g>
         );
       })}
@@ -33,7 +38,7 @@ function RouteLines({ routes }: { routes: readonly TimelineRouteLine[] }) {
   );
 }
 
-function Abroad({ places, routes }: { places: readonly PlacedPlace[]; routes: readonly TimelineRouteLine[] }) {
+function Abroad({ places, routes }: { places: readonly PlacedPlace[]; routes: readonly Route[] }) {
   const pins = useMemo<InsetPin[]>(() => places.map((place) => ({ key: `abroad:${place.index}`, label: String(place.pin), name: place.name, longitude: place.longitude, latitude: place.latitude })), [places]);
   const lines = useMemo<InsetRoute[]>(
     () => routes.filter((route) => route.start.beyond || route.end.beyond).map((route) => ({ key: route.key, from: route.start, to: route.end })),
@@ -67,11 +72,12 @@ function PlaceLinks({ placed }: { placed: readonly PlacedPlace[] }) {
   );
 }
 
-type PinsProps = { placed: readonly PlacedPlace[]; reached: ReadonlySet<number>; routes: readonly TimelineRouteLine[]; boundary: BoundaryNote | null };
+type PinsProps = { placed: readonly PlacedPlace[]; reached: ReadonlySet<number>; routes: readonly Route[]; boundary: BoundaryNote | null; parts?: TimelineMapParts };
 
-export function TimelinePins({ placed, reached, routes, boundary }: PinsProps) {
-  const frame = useRef<HTMLDivElement | null>(null);
-  const scale = useFitScale(frame, VIEW_BOX.width);
+export function TimelinePins({ placed, reached, routes, boundary, parts = {} }: PinsProps) {
+  const frame = parts.frame ?? WHOLE_MAP;
+  const box = useRef<HTMLDivElement | null>(null);
+  const scale = useFitScale(box, frame.width);
   const [hovered, setHovered] = useState<string | null>(null);
   const [pinned, setPinned] = useState<string | null>(null);
   const shown = useMemo(() => placed.filter((place) => reached.has(place.index)), [placed, reached]);
@@ -83,13 +89,25 @@ export function TimelinePins({ placed, reached, routes, boundary }: PinsProps) {
     [shown]
   );
   const abroad = useMemo(() => shown.filter((place) => place.beyond), [shown]);
-  const overlay = <RouteLines routes={routes} />;
-  const texts = { title: listText(placed.map((place) => place.name)), source: <AnswerMapSource boundary={boundary} coordinates /> };
+  const overlay = (
+    <>
+      {parts.overlay ? parts.overlay(scale) : null}
+      <RouteLines routes={routes} ring={frameScale(frame)} />
+    </>
+  );
+  const source = (
+    <>
+      <AnswerMapSource boundary={boundary} coordinates={parts.coordinates ?? true} />
+      {parts.credits}
+    </>
+  );
+  const texts = { title: parts.titled === false ? undefined : listText(placed.map((place) => place.name)), source };
   return (
     <AnswerFigure texts={texts} className="lg:sticky lg:top-24" data-testid="timeline-pins">
-      <div ref={frame} style={fitStyle(scale)} className="min-w-0">
-        <IndiaMap points={points} hoveredKey={hovered} selectedKey={pinned} onHover={setHovered} onSelect={(key) => setPinned((current) => (current === key ? null : key))} overlay={overlay} />
+      <div ref={box} style={fitStyle(scale)} className="min-w-0">
+        <IndiaMap points={points} hoveredKey={hovered} selectedKey={pinned} onSelect={(key) => setPinned((current) => (current === key ? null : key))} onHover={setHovered} underlay={parts.underlay} overlay={overlay} frame={frame} />
       </div>
+      {parts.key}
       {abroad.length > 0 ? <Abroad places={abroad} routes={routes} /> : null}
       <PlaceLinks placed={placed} />
     </AnswerFigure>

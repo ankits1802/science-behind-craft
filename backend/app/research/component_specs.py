@@ -7,12 +7,18 @@ from typing import Any
 from pydantic import BaseModel
 
 from app.core.errors import InvalidInput
-from app.models.component_kinds import AUTHORED_ART_KINDS, AUTHORED_SCRIPT_KINDS, PAGE_TOOL_KINDS, PIECE_KINDS
+from app.models.component_kinds import (
+    AUTHORED_ART_KINDS,
+    AUTHORED_SCRIPT_KINDS,
+    DECLARED_ONLY_KINDS,
+    PAGE_TOOL_KINDS,
+    PIECE_KINDS,
+)
 
 from .base import ContractModel
 from .component_specs_blocks import SPEC_MODELS_BLOCKS
 from .component_specs_data import SPEC_MODELS_DATA
-from .component_specs_either import SPEC_MODELS_EITHER, form_model
+from .component_specs_either import SPEC_MODELS_EITHER, declared_form, form_model
 from .component_specs_general import SPEC_MODELS_GENERAL
 from .component_specs_plates import SPEC_MODELS_PLATES
 from .component_specs_science import SPEC_MODELS_SCIENCE
@@ -21,9 +27,11 @@ from .why_here import SPEC_MODELS_WHY_HERE
 
 __all__ = [
     "CONTRIBUTABLE_KINDS",
+    "MAP_POINTER",
     "SPEC_MODELS",
     "checked_spec",
     "not_contributable",
+    "withheld_form",
 ]
 
 SPEC_GROUPS: tuple[Mapping[str, type[ContractModel]], ...] = (
@@ -39,9 +47,13 @@ PAGE_TOOL = "the site builds the {kind} of every page from its data, so it is ne
 AUTHORED_ART = (
     "a {kind} draws an authored page's own art; give pictures with give_pictures and the site places them"
 )
-AUTHORED_SCRIPT = (
-    "a {kind} runs an authored page's own script; deliver a drawing, a timeline or a map_layer instead"
+MAP_POINTER = (
+    "deliver a declared timeline_map instead: name each place by its Wikidata item, its LGD district or a "
+    "cited coordinate, with the points, routes or undated facts that caption them, and the site resolves "
+    "the places and draws the map on its own base map"
 )
+AUTHORED_SCRIPT = "a {kind} runs an authored page's own script; deliver a drawing or a diagram instead"
+AUTHORED_FORM = "a {kind} without places is an authored page's own route map; " + MAP_POINTER
 WITHHELD = (*PAGE_TOOL_KINDS, *AUTHORED_ART_KINDS, *AUTHORED_SCRIPT_KINDS)
 
 
@@ -75,4 +87,10 @@ def not_contributable(kind: str) -> str | None:
         return AUTHORED_ART.format(kind=kind)
     if kind in AUTHORED_SCRIPT_KINDS:
         return AUTHORED_SCRIPT.format(kind=kind)
+    return None
+
+
+def withheld_form(kind: str, spec: Mapping[str, Any]) -> str | None:
+    if kind in DECLARED_ONLY_KINDS and not declared_form(kind, spec):
+        return AUTHORED_FORM.format(kind=kind)
     return None

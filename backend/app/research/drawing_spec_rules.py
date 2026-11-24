@@ -10,7 +10,7 @@ from .component_specs_science_parts import SVG_TAGS
 from .drawing_roles import MATERIAL_ROLES, role_problem
 from .drawing_rules import drawing_problems
 
-__all__ = ["MATERIAL_KEYS", "THEMES_KEY", "drawing_nodes", "spec_design_problems"]
+__all__ = ["MATERIAL_KEYS", "SVG_KEY", "THEMES_KEY", "drawing_nodes", "node_element", "spec_design_problems"]
 
 MATERIAL_KEYS = frozenset({"swatch", "dips"})
 THEMES_KEY = "themes"
@@ -54,19 +54,19 @@ def _markup_problems(markup: str) -> list[str]:
 
 
 def _node_problems(node: Mapping[str, Any]) -> list[str]:
-    root = _element(node)
+    root = node_element(node)
     box = svg_view_box(root.get("viewBox")) if root.tag == "svg" else None
     return drawing_problems(root, box[2] if box else 0.0, molecules=True)
 
 
-def _element(node: Mapping[str, Any]) -> ElementTree.Element:
+def node_element(node: Mapping[str, Any]) -> ElementTree.Element:
     attrs = node.get("attrs") or {}
     element = ElementTree.Element(str(node.get("tag")), {str(k): str(v) for k, v in attrs.items()})
     children = node.get("children") or []
     element.text = "".join(child for child in children if isinstance(child, str)) or None
     for child in children:
         if isinstance(child, Mapping):
-            element.append(_element(child))
+            element.append(node_element(child))
     return element
 
 

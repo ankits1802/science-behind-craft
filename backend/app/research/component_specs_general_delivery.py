@@ -11,7 +11,7 @@ from pydantic import Field, ValidationError, model_validator
 from app.core.errors import InvalidInput
 
 from .base import ContractModel
-from .component_specs import checked_spec, not_contributable
+from .component_specs import checked_spec, not_contributable, withheld_form
 from .component_specs_general import (
     GENERAL_CHART,
     GENERAL_MAP_LAYER,
@@ -24,8 +24,11 @@ from .component_specs_general import (
     GeneralTableSpec,
     GeneralTimelineSpec,
 )
+from .component_specs_timeline_map import TIMELINE_MAP, DeclaredTimelineMapSpec, server_parts_sent
+from .component_specs_timeline_map_delivery import SERVER_SENT, timeline_map_problems
 from .component_specs_tools import spec_unit_refs
 from .drawing_spec_rules import THEMES_KEY, spec_design_problems
+from .drawn_maps import drawn_map_problems
 from .quotes import numbers_in, unsupported_figures
 from .unit_ids import UNIT_REF, UNIT_REF_PATTERN
 
@@ -89,7 +92,7 @@ def delivered_claim_ids(units: Mapping[str, DeliveredUnit]) -> list[uuid.UUID]:
 
 
 def spec_problems(kind: str, spec: Mapping[str, Any], units: Mapping[str, DeliveredUnit]) -> list[str]:
-    refused = not_contributable(kind)
+    refused = not_contributable(kind) or withheld_form(kind, spec)
     if refused is not None:
         return [refused]
     try:
@@ -99,11 +102,12 @@ def spec_problems(kind: str, spec: Mapping[str, Any], units: Mapping[str, Delive
     except InvalidInput as wrong:
         return [str(wrong)]
     named = set(spec_unit_refs(checked))
+    dumped = checked.model_dump(mode="json")
     problems = [
         f"the spec names the unit {ref}, which units does not hold" for ref in sorted(named - set(units))
     ]
     problems += [f"the unit {ref} is in no place of the spec" for ref in sorted(set(units) - named)]
-    if _held_citations(checked.model_dump(mode="json")):
+    if _held_citations(dumped):
         problems.append(
             "a citation in the spec's own text is not allowed: cite a fact through a unit's claimIds"
         )
@@ -111,7 +115,9 @@ def spec_problems(kind: str, spec: Mapping[str, Any], units: Mapping[str, Delive
         problems.append("the component cites no fact: at least one unit names the facts it rests on")
     if THEMES_KEY in spec:
         problems.append(THEMES_SENT)
-    problems += spec_design_problems(checked.model_dump(mode="json"))
+    if kind == TIMELINE_MAP and server_parts_sent(spec):
+        problems.append(SERVER_SENT)
+    problems += drawn_map_problems(kind, dumped) + spec_design_problems(dumped)
     return problems + _value_problems(kind, checked, units)
 
 
@@ -156,6 +162,9 @@ def renamed_spec(value: Any, names: Mapping[str, str]) -> Any:
 def _value_problems(kind: str, spec: Any, units: Mapping[str, DeliveredUnit]) -> list[str]:
     if kind == GENERAL_TABLE and isinstance(spec, GeneralTableSpec):
         return _table_problems(spec, units)
+    if isinstance(spec, DeclaredTimelineMapSpec):
+        texts = {ref: unit.text for ref, unit in units.items()}
+        return timeline_map_problems(spec, texts, {ref for ref, unit in units.items() if unit.claim_ids})
     return [
         f"the value {value:g} is not stated by its unit {ref}"
         for value, ref in _stated_values(kind, spec)

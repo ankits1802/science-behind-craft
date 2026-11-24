@@ -16,7 +16,7 @@ from app.services.kind_fixture_specs import served_kind_fixtures
 REPO = Path(__file__).resolve().parents[3]
 DOSSIERS = REPO / "backend" / "app" / "data" / "curation"
 KUTCH = "Kutch-Ajrakh"
-WITHHELD = ("language_switch", "citation_tool", "credits", "picture_plate", "model_explainer", "timeline_map")
+WITHHELD = ("language_switch", "citation_tool", "credits", "picture_plate", "model_explainer")
 
 
 def _fixtures() -> list[dict[str, Any]]:
@@ -44,7 +44,7 @@ FIXTURE_LIST = _fixtures()
 
 def test_every_contributable_kind_is_proven_on_a_craft_other_than_kutch_ajrakh() -> None:
     assert {fixture["kind"] for fixture in FIXTURE_LIST} == set(CONTRIBUTABLE_KINDS)
-    assert len(CONTRIBUTABLE_KINDS) == 22
+    assert len(CONTRIBUTABLE_KINDS) == 23
     assert all(fixture["craft"] != KUTCH for fixture in FIXTURE_LIST)
     assert {"Bidriware", "Blue-Pottery-Of-Jaipur", "Bastar-Dhokra"} <= {f["craft"] for f in FIXTURE_LIST}
 
@@ -56,6 +56,7 @@ def test_page_tools_and_the_authored_page_s_own_kinds_are_not_contributable() ->
     )
     assert "runs an authored page's own script" in (not_contributable("model_explainer") or "")
     assert not_contributable("chart") is None
+    assert not_contributable("timeline_map") is None
 
 
 @pytest.mark.parametrize("fixture", FIXTURE_LIST, ids=lambda fixture: fixture["label"])
@@ -116,7 +117,7 @@ def test_dip_phases_are_the_spec_s_own_words_each_named_once() -> None:
 def test_the_preview_is_served_its_fixtures_in_page_order_with_each_drawing_s_four_themes() -> None:
     served = served_kind_fixtures()
     assert [fixture["label"] for fixture in served] == [fixture["label"] for fixture in kind_fixtures()]
-    assert len(served) == len(KIND_FIXTURE_ORDER) == 24
+    assert len(served) == len(KIND_FIXTURE_ORDER) == 25
     (drawing,) = [fixture for fixture in served if fixture["kind"] == "drawing"]
     themes = drawing["spec"]["themes"]
     assert list(themes) == list(THEMES) == ["light", "dark", "hcLight", "hcDark"]
@@ -125,7 +126,7 @@ def test_the_preview_is_served_its_fixtures_in_page_order_with_each_drawing_s_fo
     others = [
         (served_one, filed)
         for served_one, filed in zip(served, kind_fixtures(), strict=True)
-        if filed["kind"] != "drawing"
+        if filed["kind"] not in ("drawing", "timeline_map")
     ]
     assert all(served_one == filed for served_one, filed in others)
     assert all("themes" not in fixture["spec"] for fixture in kind_fixtures())

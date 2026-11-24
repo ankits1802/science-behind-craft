@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "kind": "timeline_map",
+  "craft": "Bidriware",
+  "craftName": "Bidriware",
+  "label": "bidriware/history/where-bidri-was-made",
+  "title": "Where bidri was made, from Bidar to Lucknow",
+  "description": "A timeline map of bidri from its start at Bidar under Ahmed Shah Bahamani to the courts of Purnia, Murshidabad and Lucknow and the move of artisans to Hyderabad. Place it in the history of the craft.",
+  "field": "HISTORY",
+  "within": null,
+  "sources": {
+    "S02": {
+      "title": "Form GI-1: Application for the registration of a geographical indication, Bidriware (statement of case)",
+      "publisher": "Karnataka State Handicrafts Development Corporation Limited",
+      "year": null,
+      "url": "https://www.origin-gi.com/wp-content/uploads/2017/01/13-bidriware.pdf",
+      "reliability": "A"
+    },
+    "S03": {
+      "title": "Census of India 1961, Volume II, Andhra Pradesh, Part VII-A (3): Selected Crafts of Andhra Pradesh (monograph: Bidriware of Hyderabad City)",
+      "publisher": "Census of India",
+      "year": null,
+      "url": "https://censusindia.gov.in/nada/index.php/catalog/31726/download/34907/22310_1961_SEL.pdf",
+      "reliability": "A"
+    },
+    "S12": {
+      "title": "Life of Bidri: 600 Years of Survival",
+      "publisher": "Sahapedia",
+      "year": null,
+      "url": "https://www.sahapedia.org/life-of-bidri-600-years-of-survival",
+      "reliability": "B"
+    },
+    "S14": {
+      "title": "Bidriware",
+      "publisher": "Impart Encyclopedia of Art (MAP Academy)",
+      "year": 2023,
+      "url": "https://imp-art.org/articles/bidriware/",
+      "reliability": "B"
+    }
+  },
+  "facts": {
+    "C028": {
+      "text": "The technique flourished in Bidar and Hyderabad between the sixteenth and nineteenth centuries and appeared regularly in Deccan paintings from the seventeenth century.",
+      "quotes": [
+        {
+          "source": "S14",
+          "locator": "line 9",
+          "quote": "The technique flourished in Bidar and Hyderabad between the sixteenth and nineteenth century and regularly appeared in Deccan paintings from the seventeenth century onwards."
+        }
+      ]
+    },
+    "C009": {
+      "text": "The start of bidri at Bidar is attributed to the reign of Ahmed Shah Bahamani, who ruled from 1422 to 1436.",
+      "quotes": [
+        {
+          "source": "S02",
+          "locator": "lines 251-255",
+          "quote": "Its name is derived from Bidar where the skill in this art was developed during time of Ahmed Shah Bahamani (1422 A.D.- 1436 A.D)"
+        },
+        {
+          "source": "S12",
+          "locator": "line 3",
+          "quote": "The history of bidriware is said to have begun with the reign of Ahmed Shah Al Wali Baihmani."
+        },
+        {
+          "source": "S12",
+          "locator": "line 3",
+          "quote": "Ahmed Shah Al Wali Baihmani (1422-1436), the ninth king of the Baihmani dynasty ruled for a period of 13 years and was a great patron of the arts."
+        }
+      ]
+    },
+    "C031": {
+      "text": "Many artisans from Bidar migrated to Hyderabad, the new capital of the Deccan, where the art began to flourish.",
+      "quotes": [
+        {
+          "source": "S12",
+          "locator": "line 29",
+          "quote": "Many artisans from Bidar migrated to Hyderabad, which was the new capital of the Deccan. The art started to flourish in Hyderabad."
+        }
+      ]
+    },
+    "C032": {
+      "text": "After the 1956 reorganisation of states placed Bidar in Mysore State, many bidri artisans migrated to Hyderabad City in 1956 and 1957.",
+      "quotes": [
+        {
+          "source": "S03",
+          "locator": "lines 729-730",
+          "quote": "At the time of Re-organisation of States in the year 1956 Bidar was included in Mysore State."
+        },
+        {
+          "source": "S03",
+          "locator": "lines 736-737",
+          "quote": "So, many of them chose to migrate to Hyderabad City and came there in the years 1956 and 1957."
+        },
+        {
+          "source": "S12",
+          "locator": "line 37",
+          "quote": "Most artisans moved to Hyderabad in search of better livelihoods as it remained a hub for trade."
+        }
+      ]
+    },
+    "C025": {
+      "text": "By the late eighteenth century bidri had spread to the courts of Purnia and Murshidabad, and by the nineteenth century to Lucknow.",
+      "quotes": [
+        {
+          "source": "S14",
+          "locator": "line 9",
+          "quote": "By the late eighteenth century, the technique had spread to the Muslim courts of Purnia (in present-day Bihar) and Murshidabad (in present-day Bengal), and by the nineteenth century, to Lucknow (in present-day Uttar Pradesh)."
+        }
+      ]
+    }
+  },
+  "units": {
+    "u0001": {
+      "text": "Where bidri was made, from Bidar to Lucknow",
+      "claims": []
+    },
+    "u0002": {
+      "text": "The technique flourished in Bidar and Hyderabad between the sixteenth and nineteenth centuries.",
+      "claims": [
+        "C028"
+      ]
+    },
+    "u0003": {
+      "text": "Bidar",
+      "claims": []
+    },
+    "u0004": {
+      "text": "Hyderabad",
+      "claims": []
+    },
+    "u0005": {
+      "text": "Purnia",
+      "claims": []
+    },
+    "u0006": {
+      "text": "Murshidabad",
+      "claims": []
+    },
+    "u0007": {
+      "text": "Lucknow",
+      "claims": []
+    },
+    "u0008": {
+      "text": "The start of bidri at Bidar is attributed to the reign of Ahmed Shah Bahamani, who ruled from 1422 to 1436.",
+      "claims": [
+        "C009"
+      ]
+    },
+    "u0009": {
+      "text": "Many artisans from Bidar migrated to Hyderabad, and after the 1956 reorganisation of states many came to Hyderabad City in 1956 and 1957.",
+      "claims": [
+        "C031",
+        "C032"
+      ]
+    },
+    "u0010": {
+      "text": "By the late eighteenth century bidri had spread to the courts of Purnia and Murshidabad, and by the nineteenth century to Lucknow.",
+      "claims": [
+        "C025"
+      ]
+    }
+  },
+  "spec": {
+    "head": {
+      "title": "u0001",
+      "caption": "u0002"
+    },
+    "places": [
+      {
+        "name": "u0003",
+        "district": 529,
+        "home": true
+      },
+      {
+        "name": "u0004",
+        "district": 507,
+        "home": false
+      },
+      {
+        "name": "u0005",
+        "district": 214,
+        "home": false
+      },
+      {
+        "name": "u0006",
+        "district": 319,
+        "home": false
+      },
+      {
+        "name": "u0007",
+        "district": 162,
+        "home": false
+      }
+    ],
+    "points": [
+      {
+        "place": 0,
+        "yearFrom": 1422,
+        "yearTo": 1436,
+        "text": "u0008"
+      },
+      {
+        "place": 2,
+        "yearFrom": 1701,
+        "yearTo": 1800,
+        "text": "u0010"
+      },
+      {
+        "place": 3,
+        "yearFrom": 1701,
+        "yearTo": 1800,
+        "text": "u0010"
+      },
+      {
+        "place": 4,
+        "yearFrom": 1801,
+        "yearTo": 1900,
+        "text": "u0010"
+      }
+    ],
+    "routes": [
+      {
+        "start": 0,
+        "end": 1,
+        "yearFrom": 1956,
+        "yearTo": 1956,
+        "text": "u0009"
+      }
+    ],
+    "layers": [
+      "relief",
+      "rivers"
+    ]
+  },
+  "placed": {
+    "places": [
+      {
+        "latitude": 17.766,
+        "longitude": 77.144,
+        "districtLgd": 529
+      },
+      {
+        "latitude": 17.379,
+        "longitude": 78.453,
+        "districtLgd": 507
+      },
+      {
+        "latitude": 25.938,
+        "longitude": 87.416,
+        "districtLgd": 214
+      },
+      {
+        "latitude": 24.112,
+        "longitude": 88.299,
+        "districtLgd": 319
+      },
+      {
+        "latitude": 26.719,
+        "longitude": 80.955,
+        "districtLgd": 162
+      }
+    ],
+    "datasets": [
+      {
+        "code": "DR_DISTRICT_SHAPES",
+        "title": "Indian district boundaries, matched to LGD codes",
+        "publisher": "Indian districts GeoJSON on Kaggle",
+        "edition": "2026",
+        "period": "2026",
+        "nativeResolution": "simplified to 0.01 degree, 0.001 degree coordinate grid",
+        "licence": "For reference only",
+        "licenceUrl": null,
+        "attribution": "District boundaries are indicative.",
+        "citation": null,
+        "url": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson",
+        "version": "2026",
+        "crs": "EPSG:4326",
+        "redistributable": false,
+        "landingUrl": "https://www.kaggle.com/datasets/adityaradha007/indian-districts-geojson"
+      },
+      {
+        "code": "ETOPO1_ICE",
+        "title": "ETOPO1 1 Arc-Minute Global Relief Model, ice surface",
+        "publisher": "NOAA National Centers for Environmental Information",
+        "edition": "ice surface, grid-registered",
+        "period": "2009",
+        "nativeResolution": "1 arc-minute",
+        "licence": "Public domain (U.S. Government work)",
+        "licenceUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem:316",
+        "attribution": "NOAA National Centers for Environmental Information, ETOPO1",
+        "citation": "Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. https://doi.org/10.7289/V5C8276M",
+        "url": "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.html",
+        "version": "1",
+        "crs": "EPSG:4326",
+        "redistributable": true,
+        "doi": "10.7289/V5C8276M",
+        "landingUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem:316"
+      },
+      {
+        "code": "NATURAL_EARTH_10M_PHYSICAL",
+        "title": "Natural Earth 1:10m physical vectors",
+        "publisher": "Natural Earth",
+        "edition": "1:10m",
+        "period": "static",
+        "nativeResolution": "1:10 million",
+        "licence": "Public domain",
+        "licenceUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+        "attribution": "Made with Natural Earth.",
+        "citation": "Natural Earth. Free vector and raster map data at naturalearthdata.com.",
+        "url": "https://naciscdn.org/naturalearth/10m/physical/",
+        "version": "5.0.0",
+        "crs": "EPSG:4326",
+        "redistributable": true,
+        "landingUrl": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/"
+      }
+    ],
+    "boundaryCaption": "External boundaries of India as depicted by Survey of India. District boundaries are indicative."
+  }
+}

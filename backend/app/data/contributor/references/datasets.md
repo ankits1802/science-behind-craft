@@ -102,6 +102,8 @@ Shapes that share a border are simplified together, so they still meet.
 - A place is drawn where a source puts it: a district-level place at its district, a point at the
   coordinates of an open gazetteer record (Wikidata, CC0) of that village or town, read with
   `lookup`, never a guessed or estimated position. A craft's place is shown only with the source that names it.
+- Never draw a map yourself. A map of places is a declared `timeline_map`: you name each place and
+  the server resolves it and draws the map (Maps of places, below).
 - A trend is the dataset's series fitted by its stated method, with its period; never a line drawn
   by eye.
 
@@ -114,11 +116,41 @@ export tables, a registry's records, prices over the years):
   source, as `propose_facts` takes each.
 - Build the component from those facts by the component guide (`components.md`): a series over
   years or places is a `chart`, rows of attributes a `fact_table`, dated events a `timeline`,
-  places with readings a `map_layer`. Each value is stated by its reading unit, which cites its
-  fact.
+  places with readings a `map_layer`, places with the years, moves or facts that caption them a
+  `timeline_map`. Each value is stated by its reading unit, which cites its fact.
 - Put the facts and the component in one page bundle, see it with `preview_page`, then send it with
   `propose_page`: the facts are proposed with the component, never twice. A bundle holds at most
   20 facts; a figure of more values rests on a contributed dataset instead.
+
+## Maps of places
+
+A `timeline_map` is the map for a page's places: where the craft is practised, where it began,
+where it spread, where its artisans moved and when. You give the places and the facts; the site
+draws the map on its own base map, with India's outline as the Survey of India depicts it, framed
+to your places.
+
+1. Name each place one way: its Wikidata item (`wikidata`), which `lookup` with kind entity has
+   found (its reply gives the item's `latitude` and `longitude`, and the server keeps that point);
+   its LGD district code (`district`), from `get_page`'s `keys` or the district register; or a
+   coordinate a fact states (`longitude`, `latitude` and `at`, a unit citing that fact and stating
+   both numbers as the fact gives them). The server resolves every place through the place finder
+   the answers use and refuses one it cannot, by name; resolve it and deliver again. Mark the
+   page's own place `home: true` and the site hatches its district in terracotta.
+2. Caption the places with facts: a point (`place`, `yearFrom`, `yearTo`, `text`), a route (`start`,
+   `end`, the years, `text`) or an undated fact (`place`, `text`). A point's or route's unit states
+   its years, a point's or undated fact's unit names its place, and a route's unit states the move
+   from its start to its end, as the facts say it. Every listed place is named by an entry.
+3. Ask for what lies beneath by name, at most one area layer: `relief` (ETOPO1 elevation bands),
+   `rivers` (Natural Earth rivers and lakes), `minerals` (USGS MRDS deposits) or a district layer
+   the site holds (the ids of `/api/map/layers`, such as `annual-precipitation`). A layer the site
+   does not hold is refused; a new one is proposed as Map layers over MCP, below, and drawn only
+   once an engineer ships it.
+4. Send no coordinates the server finds, no datasets and no credits: the server writes the places'
+   points, the boundary record and every layer's dataset record into the stored spec, and the page
+   prints the boundary note and each credit under the map.
+
+A map you draw yourself, as a `drawing` or a `map_layer` of your own SVG (an outline, a base map's
+colours, place dots), is refused with a pointer to the `timeline_map`.
 
 ## Contributed datasets
 
@@ -208,6 +240,7 @@ In the repository:
 | Each layer's simplification tolerance | that test again, reading the constants of `tools/maplayers`, `tools/basemap` and `etl/geo` |
 | How many facts a bundle holds | that test again, against `research/page_proposals` |
 | A map layer's classes, limits and frame | `test_map_layer_proposals.py` in `backend/tests/research`, against `research/map_layer_proposals` and `research/map_layer_geojson` |
+| A map of places: how a place is named, its entries and the layers it may ask for | `test_timeline_map_specs.py` in `backend/tests/research`, against `research/component_specs_timeline_map` |
 | This text, as every prompt and the site serve it | `test_skill_references.py` in `backend/tests/mcp` |
 
 Read it again whenever a layer's tolerance, the map's frame or the dataset registry's rules change.

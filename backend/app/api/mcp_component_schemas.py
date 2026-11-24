@@ -5,6 +5,7 @@ from functools import cache
 from typing import Any
 
 from app.research.component_specs import CONTRIBUTABLE_KINDS, SPEC_MODELS
+from app.research.component_specs_either import DELIVERED_FORMS
 
 from .mcp_schemas import compact
 
@@ -32,7 +33,8 @@ def component_schema_uri(kind: str) -> str:
 
 @cache
 def component_schema_text(kind: str) -> str:
-    schema = compact(SPEC_MODELS[kind].model_json_schema(by_alias=True))
+    model = DELIVERED_FORMS.get(kind, SPEC_MODELS[kind])
+    schema = compact(model.model_json_schema(by_alias=True))
     described = {
         "$schema": DRAFT,
         "$id": component_schema_uri(kind),

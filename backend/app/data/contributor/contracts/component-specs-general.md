@@ -1,9 +1,11 @@
 # Component specs: delivered components and the declared kinds
 
 A component arrives finished: its kind's spec data and the texts it places, each resting on shown
-facts. The 22 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
+facts. The 23 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
 way; five of them (`drawing`, `chart`, `fact_table`, `timeline`, `map_layer`) also take a declared
-spec that draws anything new from data. Nothing a contributor sends is ever run as code. A
+spec that draws anything new from data, and `timeline_map` is delivered only in its declared form,
+a map the site draws from places it resolves (decision 0196). Nothing a contributor sends is ever
+run as code. A
 contributor's agent reads this over MCP before it delivers one, and engineers before they change a kind.
 
 | For | Read |
@@ -37,9 +39,13 @@ by the kind's own view (`component_specs_either.EITHER_FORMS`, `form_model`;
 `frontend/components/monograph/eitherView.tsx`). `drawing` has only the declared form, and the page
 tool `related_crafts` takes both too: its declared form is the kin crafts the site builds for a
 generated craft document (`research/kin_crafts.KinCraftsSpec`, decision 0180). The page
-tools (`PAGE_TOOL_KINDS`), the authored art (`AUTHORED_ART_KINDS`) and the authored scripts
-(`AUTHORED_SCRIPT_KINDS`: `model_explainer`, `timeline_map`) are refused with a reason
-(`component_specs.not_contributable`). Each contributable kind has a fixture for a craft other
+tools (`PAGE_TOOL_KINDS`), the authored art (`AUTHORED_ART_KINDS`) and the authored script
+(`AUTHORED_SCRIPT_KINDS`: `model_explainer`) are refused with a reason
+(`component_specs.not_contributable`). `timeline_map` (`DECLARED_ONLY_KINDS`) takes two forms told
+apart by `places` rather than `head` (`component_specs_either.declared_form`, `DECLARED_MARKS`): a
+spec with `places` is declared and contributable; one without is Kutch Ajrakh's authored route map,
+kept for that page and refused from a contributor with a pointer to the declared form
+(`component_specs.withheld_form`, `MAP_POINTER`). Each contributable kind has a fixture for a craft other
 than Kutch Ajrakh in `backend/app/data/kind_fixtures/` (`data/kind_fixture_files.kind_fixtures`, in
 the preview's order), checked by the gates in `backend/tests/research/test_kind_fixtures.py`, drawn
 by its view in `frontend/e2e/kind-fixtures-unit.spec.ts` and placed together on `/design/kinds`,
@@ -47,7 +53,7 @@ which reads them from `GET /api/design/kind-fixtures` with each drawing's four t
 `services/drawing_themes.themed_spec`, as a delivered drawing is served (decision 0177), so the
 preview draws its drawing in every theme at first paint.
 
-Last reviewed: 2026-11-23.
+Last reviewed: 2026-11-24.
 
 | Side | File |
 |---|---|
@@ -59,7 +65,8 @@ Last reviewed: 2026-11-23.
 | Drawing a registered delivery | `backend/app/services/component_proposals_drawn.py`, called by `monograph_generated_assembly._drawn` and `monograph_generated.generated_parts` |
 | Shapes | `frontend/lib/componentSpecsGeneral.ts` |
 | Views | `frontend/components/monograph/kinds/general/` (`index.ts` exports `VIEWS`, registered in `componentViews.ts`) |
-| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `backend/tests/db/test_delivered_components_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts` |
+| The declared timeline map | spec `backend/app/research/component_specs_timeline_map.py`, its delivery rules `component_specs_timeline_map_delivery.py`, its places `backend/app/services/timeline_map_places.py` and placement `services/timeline_maps.py` (`placed_spec`); the hand-drawn map test `backend/app/research/drawn_maps.py`; shape `frontend/lib/componentSpecsTimelineMap.ts`, view `frontend/components/monograph/kinds/general/TimelineMapDeclaredView.tsx` on the answers' `components/answer/journey/TimelineMap.tsx` (`TimelineMapFrame`) with `components/map/TimelineMapLayers.tsx` and `placesFrame.ts` |
+| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `timeline-map-declared-unit.spec.ts` |
 
 ## A delivered component
 
@@ -89,7 +96,8 @@ and a count of the rest):
    unit citing nothing is a label of at most 80 characters and states no number;
 7. the general kinds' values: a chart point's value is a number its `reading` unit states, a
    timeline event's year (without its sign) is stated by its `when` unit, a map place's value by its
-   `reading` unit, and a numeric table column's cells state a number;
+   `reading` unit, and a numeric table column's cells state a number; a timeline map's years,
+   places, moves and coordinates are stated by their units (The declared timeline map, below);
 8. the spec speaks the design's vocabulary (`drawing_spec_rules.spec_design_problems`): every
    drawing node of a science kind (`SvgNode`), every swatch, dip and colour token and a drawing's
    SVG name colours only by design role, name no font, keep text at 12 px or more and blend no two
@@ -196,6 +204,66 @@ variants and a figure or picture without its alt text (checklist rule 27). Agent
 KalaVigyan's knowledge themselves read `kalavigyan://design/tokens.css` and
 `kalavigyan://design/drawing.md`.
 
+## The declared timeline map (decision 0196)
+
+A map of a page's places is drawn by the site, never by the contributor: a spec names its places
+and the dated points, routes and undated facts that caption them, the server resolves every place
+through the place finder the answers use, and the web draws it with the answers' timeline map on
+the site's own base map. A contributed `drawing` or authored `map_layer` that is a map by hand is
+refused with the same pointer (The hand-drawn map, below).
+
+| Part | What it holds |
+|---|---|
+| `head` | `{title, caption?}`, as every declared kind |
+| `places` | 1 to 30, each `{name, home?}` and one of `wikidata` (a Wikidata item, Q and digits), `district` (an LGD district code) or a cited coordinate (`longitude`, `latitude` and `at`, the unit that states both numbers and cites the fact that holds them); `name` is a label unit; `home: true` marks the page's own place, hatched in terracotta |
+| `points` | up to 40 `{place, yearFrom, yearTo, text}`: a place at a span of years |
+| `routes` | up to 40 `{start, end, yearFrom, yearTo, text}`: a move between two places |
+| `undated` | up to 40 `{place?, text}`: a fact of a place with no year, pinned at every year |
+| `layers` | up to 3 names the site holds, drawn beneath the places: `relief`, `rivers`, `minerals` (`tools/maplayers`, mirrored in `backend/app/data/layers`) or a district layer of `geo/layers.MAP_LAYERS` with stored values; at most one area layer (relief or a district layer) |
+
+The model (`DeclaredTimelineMapSpec`) refuses a place named two ways or none, a coordinate without
+its `at`, a map with no point, route or undated fact, an index past the places, a place no entry
+names, a place listed twice, a route from a place to itself, a span whose `yearFrom` is after its
+`yearTo`, a layer named twice and two area layers. Check 7 adds the answers' own rules, unit by
+unit (`component_specs_timeline_map_delivery.timeline_map_problems`): a point's and a route's years
+are stated by its `text` unit (`timeline.years_named`), a point's and an undated fact's unit names
+its place (`blocks.named_in_texts`), a route's unit states the move from its start to its end
+(`timeline.states_movement`), and a cited coordinate's `at` unit states both numbers and cites a
+fact. A spec that sends the server's parts (`found`, `datasets`, `boundaryCaption`) is refused.
+
+**Placement** (`services/timeline_maps.placed_spec`, run by `checked_delivery` after the cells): a
+`district` is the register's point (`AdminDistrict.centroid`); a `wikidata` item is the site's held
+point (`WikidataPoint`), then the place finder's kept answer (`PlaceLookup`, `item:<Q>`, which
+`lookup` with kind entity now keeps for every item it finds, `services/entity_points.py`), then a
+place finder the caller passes; a cited coordinate stands as given. Each point takes the district
+whose shape holds it (`ST_Contains`), and a `home` place outside every district is refused. Each
+unresolved place is refused by name: "look it up with lookup (kind entity, qid Q…) and deliver it
+again". The layers are checked against what the site holds (`map_credits`: the layer files and
+`map_layer_store.listed_layers`), and the spec is stored with `places[].found {latitude, longitude,
+wikidataId?, districtLgd?}`, `datasets` (the boundary record `DR_DISTRICT_SHAPES` first, then each
+layer's records from the registry) and `boundaryCaption` (`datasets.BOUNDARY_CAPTION`).
+
+**Drawing** (`TimelineMapDeclaredView`): `withDeclared` tells the forms apart by kind
+(`lib/componentSpecsTimelineMap.declaredForm`), so Kutch Ajrakh's authored route map keeps its own
+view. The declared view turns the spec into the answers' timeline source
+(`timelineMapSource`, each entry's sentence a unit) and draws it with `TimelineMapFrame`, the
+answers' timeline map: the year slider, the entries through time with `aria-current="step"`, the
+undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracotta and places beyond
+India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
+and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
+physical layers' own drawings and keys, a district layer's fills and legend) with the home
+districts in the place hatch, and the source line gives the boundary note and every layer's
+dataset credit at first paint. It rests on its last year with every place pinned; motion is only
+the entries' colour change, which both reduced-motion switches turn off.
+
+**The hand-drawn map** (`research/drawn_maps.drawn_map_problems`, in check 8 for `drawing` and
+`map_layer`): a drawing is a map, and refused with `component_specs.MAP_POINTER`, when it paints the
+base map's land, coast, borders or salt flats (`BASE_MAP_ROLES`), draws with the page kit's map
+frame and pins (`KIT_MAP_CLASSES`, `data-pin`), marks two or more places as dots in the place
+colours (`PLACE_ROLES`: terracotta, the map marker and place roles), or draws an outline of 60 or
+more points (`OUTLINE_VERTICES_MIN`) with two or more dots on it. A section, a mechanism, a vat or
+a drawing with one place dot is not a map.
+
 ## How this document is kept true
 
 | Claim | Kept true by |
@@ -208,6 +276,10 @@ KalaVigyan's knowledge themselves read `kalavigyan://design/tokens.css` and
 | Registration and drawing on generated pages | `backend/tests/db/test_delivered_components_db.py` |
 | Each kind's fixture for a craft other than Kutch Ajrakh | `backend/tests/research/test_kind_fixtures.py` and `frontend/e2e/kind-fixtures-unit.spec.ts` |
 | The views | `frontend/e2e/monograph-kinds-general-unit.spec.ts` |
+| The declared timeline map's spec, its delivery rules and its authored form refused | `backend/tests/research/test_timeline_map_specs.py` |
+| Its places resolved and refused, its layers held and credited, a looked-up item's point kept | `backend/tests/db/test_timeline_map_places_db.py` |
+| The hand-drawn map refused, both ways | `backend/tests/research/test_drawn_maps.py` |
+| The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |
 

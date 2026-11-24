@@ -2,11 +2,15 @@ import type { ReactNode } from "react";
 
 import { safeOutboundUrl } from "@/lib/citations";
 import { GENERAL_KICKERS, type DatasetCite, type GeneralHead, type GeneralKind } from "@/lib/componentSpecsGeneral";
+import { TIMELINE_MAP_KIND } from "@/lib/componentSpecsTimelineMap";
 
 export type RenderUnit = (ref: string) => ReactNode;
+export type FigureKind = GeneralKind | typeof TIMELINE_MAP_KIND;
+
+const KICKERS: Readonly<Record<FigureKind, string>> = { ...GENERAL_KICKERS, [TIMELINE_MAP_KIND]: GENERAL_KICKERS.map_layer };
 
 type FigureProps = {
-  kind: GeneralKind;
+  kind: FigureKind;
   head: GeneralHead;
   titleId: string;
   renderUnit: RenderUnit;
@@ -36,7 +40,7 @@ export function GeneralFigure({ kind, head, titleId, renderUnit, values, dataset
   return (
     <figure className="kv-figure grid gap-3.5" data-general={kind} data-testid="general-figure">
       <figcaption className="grid gap-1.5">
-        <p className="kv-fig-no">{GENERAL_KICKERS[kind]}</p>
+        <p className="kv-fig-no">{KICKERS[kind]}</p>
         <p id={titleId} className="max-w-measure font-reading text-h3 text-ink-1 [font-variant-numeric:lining-nums]">
           {renderUnit(head.title)}
         </p>
