@@ -129,7 +129,7 @@ def _painted(
     element: ElementTree.Element, inherited: Mapping[str, frozenset[str]]
 ) -> Iterator[tuple[ElementTree.Element, frozenset[str]]]:
     paints = {**inherited, **_own_paints(element)}
-    yield element, frozenset().union(*paints.values())
+    yield element, frozenset[str]().union(*paints.values())
     for child in element:
         yield from _painted(child, paints)
 

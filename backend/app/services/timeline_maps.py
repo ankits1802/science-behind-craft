@@ -66,7 +66,8 @@ async def placed_spec(
 
 async def map_credits(session: AsyncSession, layers: Sequence[str]) -> MapCredits:
     listing = await listed_layers(session)
-    if listing.boundary is None:
+    boundary = listing.boundary
+    if boundary is None:
         return MapCredits(problems=[NO_BOUNDARY])
     held = {layer.spec.id: layer.spec.dataset_code for layer in listing.layers}
     wanted: dict[str, str] = {}
@@ -83,7 +84,7 @@ async def map_credits(session: AsyncSession, layers: Sequence[str]) -> MapCredit
         NO_RECORD.format(name=name, code=code) for code, name in wanted.items() if code not in records
     ]
     datasets = [
-        region_dataset(listing.boundary),
+        region_dataset(boundary),
         *(region_dataset(records[code]) for code in wanted if code in records),
     ]
     return MapCredits(datasets=datasets, problems=problems)
