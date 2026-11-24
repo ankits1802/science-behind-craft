@@ -704,6 +704,23 @@ Last reviewed: 2026-11-22.
 
 ## Round 7 (2026-11-20)
 
+### Write-back rows stored before decision 0188 keep the old filing and subject
+
+- **What:** decision 0188 files an any-craft write-back under the one catalogued craft it names
+  (or refuses it when it names several, or a practice abroad), and stores a duplicate check's
+  "differs on" subject only when every differing pair names the same one. Rows stored before it
+  keep the old outcome: any-craft facts filed on shared concepts that name one craft (and so reach
+  every craft the concept links to since decision 0179), and `CandidateCheck.differsOn` values,
+  with the `Claim.differsOn` written from them, that name the first pair's subject for every
+  related fact.
+- **Why left:** stored facts on production are a person's to review, and storing each pair's own
+  subject needs a migration the review lane did not have.
+- **Clears it:** the lead runs `python -m app.scripts.write_back_filing` on production and re-files
+  or rejects each shared-concept fact that now files under a craft; reads the `CandidateCheck` rows
+  with several related facts and a `differsOn` and clears the subject on the claims it misnames
+  (as `review.sources_differ_cleared` was cleared on 2026-11-22); and a later change stores a
+  subject per held fact.
+
 ### Speed left after the quality lane
 
 - **What:** on a phone (Lighthouse at 360, median of three) Kutch Ajrakh scored 78 with an LCP of
