@@ -14,6 +14,7 @@ const BY_ATTRIBUTE = /^\[([\w-]+)="([^"]*)"\]$/;
 const SETTLE_MS = 1500;
 const KIT_TIMEOUT_MS = 30_000;
 const SCROLL_PAUSE_MS = 30;
+const STEP_MOST_MS = 15_000;
 const AJRAKH = "Kutch-Ajrakh";
 
 export function nativeDocumentPath(): string {
@@ -57,16 +58,43 @@ export async function markAnchors(page: Page, plans: readonly AnchorPlan[]): Pro
   }, plans);
 }
 
+export class PageStalled extends Error {}
+
+function answered<T>(work: Promise<T>, what: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const stalled = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new PageStalled(`${what} did not answer within ${STEP_MOST_MS} ms`)), STEP_MOST_MS);
+  });
+  work.catch(() => undefined);
+  return Promise.race([work, stalled]).finally(() => clearTimeout(timer));
+}
+
+async function scrolledTo(page: Page, path: string, top: number): Promise<{ end: number; screen: number }> {
+  const step = page.evaluate(
+    async ({ y, pause }) => {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, pause));
+      return { end: document.body.scrollHeight, screen: window.innerHeight };
+    },
+    { y: top, pause: SCROLL_PAUSE_MS }
+  );
+  return answered(step, `${path} scrolled to ${top}px`);
+}
+
+async function scrolledThrough(page: Page, path: string): Promise<void> {
+  let top = 0;
+  let reached = await scrolledTo(page, path, top);
+  while (top + reached.screen < reached.end) {
+    top += reached.screen;
+    reached = await scrolledTo(page, path, top);
+  }
+  await scrolledTo(page, path, 0);
+}
+
 export async function openedPage(page: Page, path: string): Promise<void> {
   await page.goto(path, { waitUntil: "networkidle" });
   await page.waitForFunction(() => "KV" in window, undefined, { timeout: KIT_TIMEOUT_MS }).catch(() => undefined);
-  await page.evaluate(async (pause) => {
-    for (let y = 0; y < document.body.scrollHeight; y += window.innerHeight) {
-      window.scrollTo(0, y);
-      await new Promise((resolve) => setTimeout(resolve, pause));
-    }
-    window.scrollTo(0, 0);
-  }, SCROLL_PAUSE_MS);
+  await scrolledThrough(page, path);
   await page.waitForTimeout(SETTLE_MS);
   await fullSizePictures(page);
   await playersAtRest(page);

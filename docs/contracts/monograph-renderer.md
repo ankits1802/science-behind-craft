@@ -316,7 +316,11 @@ each one stands (one placed by another native view has no slot: its owner draws 
   and its box unmoved across two frames: a capture never inherits the scroll an earlier one left,
   which had shifted whole views by one device pixel, and never goes beyond the screen, where a
   capture had stalled the page for good. A page that stops drawing frames fails within seconds,
-  naming every view it could not capture. Each width and scheme is its own test of at most 8
+  naming every view it could not capture. Each of the three pages opens in a browser context of
+  its own and is scrolled through one screen a step, each step answered within 15 seconds; a page
+  that stops answering while it opens (the approved page twice stalled there for good, on 24
+  November) is closed with its context and opened once more, and a second stall fails the run
+  naming the page and the scroll it stopped at. Each width and scheme is its own test of at most 8
   minutes (each took 1.9 to 3.6 on GitHub), so three of them in turn on each of the job's two
   workers end inside 24, and the job's 45 hold them and the phone budget's runs after them
   (decision 0205). A Vercel preview cannot show a
