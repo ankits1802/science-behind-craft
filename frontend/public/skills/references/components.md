@@ -43,7 +43,7 @@ Choose by what the reader must see:
 | molecules | `structure_diagram` (flat, with their PubChem records from `lookup`) or `molecule_3d` |
 | a reaction a source states step by step | `reaction_player` |
 | a process stage by stage | `stage_player`, or `dip_player` for successive immersions |
-| what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours |
+| what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours; `swatch_cards` may show one swatch, none, and a `why`, and a page whose stages name their colours gets its key from the site |
 | sources that disagree | `source_disagreements` |
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
 

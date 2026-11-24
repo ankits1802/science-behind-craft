@@ -24,6 +24,7 @@ item 3 (the one renderer). The contracts are `docs/contracts/monograph-renderer.
 | The design system the kit's look belongs to | [decision 0092](0092-design-system.md) |
 | How the web draws a document | [monograph-renderer.md](../contracts/monograph-renderer.md) |
 | A popover docked in a run's margin seen whole past its passage's foot (amends item 4) | [decision 0187](0187-listen-asked-when-pressed-and-a-docked-popover-seen-whole.md) |
+| A masthead without a photograph: the plate and a label of the GI line and place, the name read once (amends item 1) | [decision 0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

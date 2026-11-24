@@ -30,6 +30,7 @@ from .document_components_data import (
 from .document_components_homes import home_scopes
 from .drawing_themes import themed_spec
 from .knowledge_view import ClaimView
+from .monograph_generated_colours import place_colour_key
 from .monograph_generated_drawings import Drawings, spec_unit_keys
 from .monograph_generated_grids import StatedValue, fact_grid
 from .monograph_generated_kin import KinRead, place_kin
@@ -185,6 +186,7 @@ def _structure(parts: GeneratedParts, page: _Page) -> PlacedStructure:
     page.units.update(placed.units)
     page.components.update(placed.components)
     page.blocks.update(placed.blocks)
+    place_colour_key(parts, page, placed.leading)
     return placed
 
 
@@ -348,11 +350,9 @@ def _chapter_head(chapter: str, record: SubjectRecord, page: _Page) -> list[Layo
 
 def _entry(chapter: str, ref: str, within: str | None, page: _Page) -> list[LayoutEntry]:
     kind = "component" if ref in page.components else "unit"
-    placed = LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within)
-    return [
-        placed,
-        *(LayoutEntry(chapter=chapter, kind="unit", ref=unit, within=ref) for unit in page.held.get(ref, [])),
-    ]
+    units = page.held.get(ref, [])
+    inside = [LayoutEntry(chapter=chapter, kind="unit", ref=unit, within=ref) for unit in units]
+    return [LayoutEntry(chapter=chapter, kind=kind, ref=ref, within=within), *inside]
 
 
 def _cite(

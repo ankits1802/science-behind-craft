@@ -9,6 +9,7 @@ from app.core.errors import InvalidInput
 __all__ = [
     "AUTHORED_UNITS",
     "DELIVERED_UNITS",
+    "KEY_UNITS",
     "PLATE_UNITS",
     "UNIT_PREFIX",
     "UNIT_REF",
@@ -50,5 +51,6 @@ class UnitRange:
 
 
 AUTHORED_UNITS = UnitRange("authored", 1, 5000)
-DELIVERED_UNITS = UnitRange("delivered", 5001, 8999)
+DELIVERED_UNITS = UnitRange("delivered", 5001, 8900)
+KEY_UNITS = UnitRange("colour key", 8901, 8999)
 PLATE_UNITS = UnitRange("picture", 9001, 9999)

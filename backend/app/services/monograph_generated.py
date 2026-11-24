@@ -11,6 +11,7 @@ from app.research.monograph_document import MonographDocument
 
 from . import knowledge_view
 from .claim_holds import unheld_by_id
+from .colour_key import key_claim_ids
 from .component_places_held import subject_places
 from .component_proposals_drawn import with_delivered_claims
 from .coverage import coverage_of
@@ -70,7 +71,7 @@ async def generated_parts(
     structure = await subject_structure(session, subject)
     unwritten = await unwritten_facts(session, subject, shown_claim_ids(stored, structure))
     sections = with_page_claims(stored, structure, listed=unwritten.views().keys())
-    written = [*_sentence_claims(sections), *structure_claim_ids(structure)]
+    written = [*_sentence_claims(sections), *structure_claim_ids(structure), *key_claim_ids(structure)]
     found = await _written_views(session, sections, written, additions)
     if found is None:
         return None

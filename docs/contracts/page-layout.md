@@ -147,7 +147,8 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
   the dossier's focal box), role, size, claimIds}`. A spec names its units by the one unit id
   pattern every document's specs use, `u` and four digits (`research/unit_ids.py`, decision 0145),
   in ranges by origin: an authored page's own units `u0001` to `u5000`, delivered components'
-  `u5001` to `u8999`, generated pictures' captions and credits `u9001` to `u9999`.
+  `u5001` to `u8900`, the site-drawn colour key's `u8901` to `u8999` (decision 0197), generated
+  pictures' captions and credits `u9001` to `u9999`.
 - **Registered components** that apply: for a craft or family
   `services/component_library.library_components` with its slug; for a category every labelled,
   visible component keyed to a concept its curated or section facts are about, or resting on one of
@@ -173,6 +174,25 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
   `kin-<n>` cited like any other, with the family line for its swatch. The spec is the declared form
   of `related_crafts` (`research/kin_crafts.KinCraftsSpec`, with `head`); Kutch Ajrakh's authored
   form keeps its own view. No kin sentence, no component.
+- **Colour key** (decision 0197): for a craft, a `swatch_cards` component labelled
+  `<slug>/chemistry/colour-key` at the head of the `chem` chapter (after its pictures), drawn by
+  the site from the page's structure (`services/colour_key.key_colours`): each colour a stage's
+  `after` names, with the stage's dyes, mordants and resists as its agent, its why sentence beside
+  it and the stage as its swatch caption; each swatch of a mordant bath (`<dye> on <mordant>`);
+  and each colour a dye or mordant material card's fact states (`gives`, `develops`, `turns`, as
+  `science/reaction_colours.step_colours` reads a quote). A colour is kept only when its sentence
+  names it and every fact it rests on is shown and not a hypothesis; a why or sentence the page
+  already tells as a `p` is left off, so no held unit repeats a sentence (rule 25). One card per
+  colour, the first with a depicted material winning, in the order the page tells them. Its swatch
+  is the specimen token `research/colour_key.DEPICTED_COLOURS` names for that colour and one of its
+  substances among the agent's names (`depicted_material`: indigo blue is `indigo`, madder red
+  `madder`, iron black on tannin `kut`, harda yellow `harda`, lime white `lime`, and so on); a
+  quote that states the change ("at first green, it turns blue") adds the before swatch joined by
+  `becomes`; a colour no token depicts is its name and sentence in words. The units are `KEY_UNITS`
+  (`u8901` on): the kicker "Colour key", the title "<Count> colours and what gives each", the
+  colours named as the intro, then each card's captions, name and agent as plain units and its
+  sentence and why as cited `span` units. Fewer than two colours, or a `swatch_cards` component
+  the page already registers, and the page draws no key.
 - **Order**: by chapter, the hero with the masthead, then each chapter's pictures (hero and opener
   first), its text by field, then its components; then the page's layout record as above.
 - **Data**: `content.data["page-layout"]` is the layout record the page was ordered by, so a

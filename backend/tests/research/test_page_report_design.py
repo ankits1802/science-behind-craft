@@ -22,8 +22,8 @@ def evidence_for(
 
 
 def test_a_delivered_unit_is_one_the_page_renamed_into_the_delivery_range() -> None:
-    assert delivered(["u0001", "u5001"]) and delivered(["u8999"])
-    assert not delivered(["u0001", "u4999", "u9001", "cite"])
+    assert delivered(["u0001", "u5001"]) and delivered(["u8900"])
+    assert not delivered(["u0001", "u4999", "u8901", "u9001", "cite"])
 
 
 def test_a_delivered_drawing_in_roles_and_four_themes_with_its_alt_text_passes() -> None:

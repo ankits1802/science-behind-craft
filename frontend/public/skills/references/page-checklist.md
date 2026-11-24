@@ -50,7 +50,8 @@ The rules below refer to them.
    goes to `give_pictures` by its `page_url` with slot `MASTHEAD`, and its returned thumbnail is
    looked at before it is placed.
 3. **One masthead.** One picture holds the masthead, and no card, label or component repeats the
-   masthead's GI date, place or name.
+   masthead's GI date, place or name. Without a photograph the title and the family's plate name
+   the craft, and a screen reader hears it once.
 
 ## Counting and labels
 
@@ -113,7 +114,8 @@ The rules below refer to them.
     sentence follows the chemistry and the quote stays as it is.
 20. **Every mechanism on the list gets equal depth**: a drawing or structure plus its key step and
     a cited sentence for each. The thinnest mechanism sets the page's level, so none is left at one
-    line.
+    line. A dyed or printed craft's colours are keyed from their facts: every stage's after with its
+    colours and why, every mordant's colour, every dye named by its substance.
 21. **Equations are balanced for atoms and charge, and quantities are plausible** (units,
     magnitudes, temperatures) before anything is proposed or drawn.
 22. **A source error stays verbatim and is marked**: the quote keeps the source's words, and the

@@ -74,7 +74,12 @@ A specimen label card of a `variant` (`gi`): kicker, seal drawing beside its sen
 
 The "four colours, four chemistries" section: chapter number, title with its id, intro, the weave
 pattern id, and per colour a before and after swatch (dye and caption unit) joined by "→" or "or",
-its name, agent and text.
+its name, agent and text. A colour may instead show its after swatch alone (no `before`, no
+`join`), or no swatch at all, when no depicted material shows it: it is then its name, agent and
+text in words. A `before` comes only with its `join` and its `after`; the optional `why` is a
+second cited unit drawn after the text in the same paragraph. The site draws a generated page's
+colour key in this form (decision 0197, `page-layout.md`); Kutch Ajrakh's four colours keep every
+field.
 
 ### swatch_pair
 
@@ -143,5 +148,6 @@ held text (a credit the template holds with its link).
 | The spec files are what extraction writes, and extraction is strict | `backend/tests/research/test_spec_extraction_plates.py`, and `python -m app.scripts.extract_specs_plates Kutch-Ajrakh --check` |
 | Each view draws the approved page's elements, classes and text | `frontend/e2e/monograph-kinds-plates-unit.spec.ts` with `e2e/monographKinds.ts`, and the Monograph parity run |
 | The depicted materials are generated, never typed | `tools/design_tokens.py --check` and `tools/tests/test_design_tokens.py` |
+| A colour's single swatch, its colour in words and its why | `backend/tests/research/test_component_specs_plates.py` and `frontend/e2e/colour-key-unit.spec.ts` |
 
 Re-read it when a plate kind gains a field, a held citation becomes a unit, or the GI card's anchor is corrected.
