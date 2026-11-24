@@ -7,9 +7,11 @@ from app.models.component_kinds import GENERAL_KINDS, PIECE_KINDS
 from app.research.component_specs import SPEC_MODELS, checked_spec
 from app.research.component_specs_data import ChartSpec, FactTableSpec
 from app.research.component_specs_data_lists import RelatedCraftsSpec
+from app.research.component_specs_data_maps import TimelineMapSpec
 from app.research.component_specs_either import EITHER_FORMS
 from app.research.component_specs_general import DECLARED_SPEC_MODELS, SPEC_MODELS_GENERAL, GeneralTableSpec
 from app.research.component_specs_general_svg import cleaned_svg, drawing_tags, svg_view_box
+from app.research.component_specs_timeline_map import DeclaredTimelineMapSpec
 from app.research.kin_crafts import KinCraftsSpec
 
 from .general_spec_fixtures import CHART, DRAWING, MAP_LAYER, SVG, TABLE, TIMELINE
@@ -40,7 +42,16 @@ def test_the_five_kinds_with_a_declared_form_are_piece_kinds_and_no_general_name
 
 
 def test_one_kind_per_job_takes_the_declared_and_the_authored_spec() -> None:
-    assert set(EITHER_FORMS) == {"chart", "fact_table", "timeline", "map_layer", "related_crafts"}
+    assert set(EITHER_FORMS) == {
+        "chart",
+        "fact_table",
+        "timeline",
+        "map_layer",
+        "related_crafts",
+        "timeline_map",
+    }
+    assert EITHER_FORMS["timeline_map"]["declared"] is DeclaredTimelineMapSpec
+    assert EITHER_FORMS["timeline_map"]["authored"] is TimelineMapSpec
     assert EITHER_FORMS["related_crafts"]["declared"] is KinCraftsSpec
     assert EITHER_FORMS["related_crafts"]["authored"] is RelatedCraftsSpec
     assert isinstance(checked_spec("fact_table", TABLE), GeneralTableSpec)

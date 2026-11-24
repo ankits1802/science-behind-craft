@@ -17,7 +17,7 @@ import { appDrawn } from "../lib/monographScopes";
 import { parseShape } from "../lib/shape";
 import { timelineEntries, timelineStops } from "../lib/timelineView";
 
-import { attribute, gridTracks, SHRINKABLE_TRACK, shownText } from "./explainerRender";
+import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownText } from "./explainerRender";
 import { primitivesPage } from "./primitivesPage";
 
 const BACKEND_DATA = join(__dirname, "..", "..", "backend", "app", "data");
@@ -94,16 +94,25 @@ test("the figure names its places, cites every sentence's unit and credits the b
   expect(html).toContain('type="range"');
 });
 
-test("phone first: every grid track can shrink, so the map never pushes the page sideways at 360px", async ({ page }) => {
+test("phone first: every grid track can shrink and the map fills its column at 360 and 1440px", async ({ page }) => {
   const html = drawn(BIDRIWARE);
   const tracks = gridTracks(html);
   expect(tracks.length).toBeGreaterThan(0);
   for (const track of tracks) expect(track).toMatch(SHRINKABLE_TRACK);
+  expect(html).not.toMatch(FIXED_WIDE_WIDTH);
   expect(html).toContain("lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]");
+  const drawnWidths: number[] = [];
   for (const width of [360, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.setContent(primitivesPage(`${SVG_FIT}<main style="padding:0 16px">${html}</main>`));
-    const sideways = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(sideways, `at ${width}px`).toBeLessThanOrEqual(0);
+    await page.setContent(primitivesPage(`${SVG_FIT}<main id="column" style="padding:0 16px">${html}</main>`));
+    const sizes = await page.evaluate(() => {
+      const map = document.querySelector('[data-testid="timeline-pins"] svg[viewBox]');
+      const column = document.getElementById("column");
+      return { map: map?.getBoundingClientRect().width ?? 0, column: column ? column.clientWidth - 32 : 0 };
+    });
+    expect(sizes.map, `at ${width}px`).toBeGreaterThan(0);
+    expect(sizes.map, `at ${width}px`).toBeLessThanOrEqual(sizes.column);
+    drawnWidths.push(sizes.map);
   }
+  expect(drawnWidths[1]).toBeGreaterThan(drawnWidths[0]);
 });
