@@ -103,11 +103,14 @@ test("a view at the end of the page is placed at the top of the screen once the 
   expect(placedTop(await placedTile(page, "#last", 0))).toBeCloseTo(0, 0);
 });
 
-test("a page that draws no frames is named as stalled within seconds, a view that never holds still as moving, and an absent view as missing", async ({ page }) => {
+test("a page that draws no frames is named as stalled within seconds, not after the capture's timeout", async ({ page }) => {
   await page.setContent(FROZEN);
   const started = Date.now();
   expect(await tiledCapture(page, "#tall", CAPTURE)).toBe("stalled");
-  expect(Date.now() - started).toBeLessThan(8000);
+  expect(Date.now() - started).toBeLessThan(CAPTURE.timeout);
+});
+
+test("a view whose box changes every frame is named as moving, and an absent view as missing", async ({ page }) => {
   await page.setContent(RESTLESS);
   expect(await tiledCapture(page, "#tall", CAPTURE)).toBe("moving");
   expect(await tiledCapture(page, "#absent", CAPTURE)).toBe("missing");

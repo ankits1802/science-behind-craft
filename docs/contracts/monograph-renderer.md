@@ -311,7 +311,9 @@ each one stands (one placed by another native view has no slot: its owner draws 
   and its box unmoved across two frames: a capture never inherits the scroll an earlier one left,
   which had shifted whole views by one device pixel, and never goes beyond the screen, where a
   capture had stalled the page for good. A page that stops drawing frames fails within seconds,
-  naming every view it could not capture. A Vercel preview cannot show a
+  naming every view it could not capture. Each width and scheme is its own test of at most 5
+  minutes (each took 1.9 to 3.6 on GitHub), so three of them in turn on each of the job's two
+  workers end inside the job's 20. A Vercel preview cannot show a
   branch's `native.json`, because it reads the production API's stored document.
 - **Native (73 of 80, 2026-11-23).** All except the ground figure
   `kutch-ajrakh/geography/why-here`, whose fragment is the React page's drawing captured in a
