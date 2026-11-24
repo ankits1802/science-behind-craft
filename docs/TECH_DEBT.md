@@ -25,6 +25,20 @@ Last reviewed: 2026-11-22.
 
 ## Infrastructure
 
+### A rollback serves stored pages its release cannot read until they are rebuilt
+
+- **What:** since decision 0186 a release rebuilds stored documents only once it serves, and a
+  rollback rebuilds them with the release it goes back to right after its switch. Until that
+  rebuild reaches a page (at most about 16 minutes), the older release reads the newer body with
+  its own closed models and may answer that page with an error when a later release added a field.
+- **Why left:** the readers of a stored body (`page_translation_serving`,
+  `monograph_document.stored_document`, `page_english`) validate strictly, and a lenient read
+  protects only releases that ship it; the review lane that found this owned the deploy only.
+- **Clears it:** every reader of a stored body validates with unknown keys ignored (pydantic
+  `model_validate(..., extra="ignore")` or a reading model without `extra="forbid"`), with a test
+  that a body carrying a key the reader does not know is served; after one release carrying it,
+  a rollback to that release or later has no window.
+
 ### CloudFront to origin is plain HTTP
 
 - **What:** CloudFront reaches nginx on the EC2 box over HTTP on port 80 (`docs/RUNBOOK.md`,
