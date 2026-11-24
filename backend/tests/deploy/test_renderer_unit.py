@@ -102,3 +102,14 @@ def test_the_runbook_says_how_the_renderer_runs_and_what_to_do_when_it_is_down()
         "journalctl -u kv-renderer",
     ):
         assert named in section, named
+
+
+def test_a_library_ubuntu_renamed_with_t64_is_installed_by_its_new_name_and_found_without_a_broken_pipe() -> (
+    None
+):
+    script = read(INSTALL)
+    candidate = script[script.index("candidate() {") : script.index("resolved() {")]
+    resolved = script[script.index("resolved() {") : script.index("install_libraries() {")]
+    assert '"$(apt-cache policy "$1" 2>/dev/null)"' in candidate and "| grep" not in candidate
+    assert 'candidate "${name}t64"' in resolved and 'name="${name}t64"' in resolved
+    assert "wanted_libraries | resolved" in script

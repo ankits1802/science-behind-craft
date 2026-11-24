@@ -2,15 +2,18 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 
+from app.data.skill_library import demoted
 from app.research.open_work import SUBJECT_KINDS
 
+from .mcp_guide_steps import opening_guide
+from .mcp_guides import CONTENTS_ADDRESS
 from .mcp_prompt_steps import CLAIM_STEP
 
 __all__ = [
+    "CURATE_GUIDE_HEADING",
     "CURATE_PAGE_PROMPT",
-    "CURATE_REFERENCES",
-    "CURATE_SECTIONS",
     "SOURCES_LANE_TOOLS",
+    "curate_guide",
     "curate_intro",
     "curate_page_prompt",
     "curate_steps",
@@ -21,18 +24,21 @@ CURATE_TITLE = "Curate a page, start to finish"
 CURATE_DESCRIPTION = (
     "Walk the whole job of one craft, family or category page: pick the work, research with your own reach, "
     "supply and check sources, build facts, structure, components, figures and pictures in a draft, preview it "
-    "against the checklist report, fix, propose it once and follow the outcome."
+    "against the checklist report, fix, propose it once and follow the outcome; the tools hand over the guide "
+    "page by page as you work."
 )
-CURATE_SECTIONS = (
-    "Proposals and their progress",
-    "Finding and reading sources",
-    "Structure and sources",
-    "Components",
-    "Pages",
-    "Pictures",
-)
-CURATE_REFERENCES = ("sources", "quotes", "fields", "page-checklist", "components", "datasets")
 SOURCES_LANE_TOOLS = ("search_sources", "read_source", "lookup")
+CURATE_GUIDE_HEADING = "## The guide, page by page"
+CURATE_GUIDE = (
+    f"{CURATE_GUIDE_HEADING}\n\n"
+    "This prompt carries the page checklist's opening and the Kutch Ajrakh bar, not the whole guide: each tool "
+    "hands you the page for the step you are on, and `get_page` with guide reads any other page by its address "
+    f"({CONTENTS_ADDRESS} lists every page). `get_page` gives the checklist's opening and the bar again with a "
+    "page's coverage; `edit_draft` each component kind's design rules as you add it, and the design pages "
+    "before a page's first components, which wait for the read_token that comes with those pages; "
+    "`preview_page` the checklist page of every rule its report fails; `give_pictures` the picture rules; "
+    "`compose_component` the storyboard."
+)
 CATEGORY = "category"
 KIND_DESCRIPTION = f"Optional, the page's kind: {', '.join(SUBJECT_KINDS)}"
 SLUG_DESCRIPTION = "Optional, the page's slug, from find_crafts; without it, pick the page in step 1"
@@ -74,9 +80,11 @@ STRUCTURE_STEP = (
 )
 COMPONENTS_STEP = (
     "Call `list_components` first and place an existing component by its label. Build what is missing "
-    "finished, by the component guide below: its spec and units, a declared chart, fact_table, timeline "
+    "finished, by the component guide: its spec and units, a declared chart, fact_table, timeline "
     "or map_layer from a dataset, every value stated by a cited fact or a stored row. Call `edit_draft` with each in add as "
-    "{proposal, cites}, and with the layout on the version `get_page` gave."
+    "{proposal, cites}, and with the layout on the version `get_page` gave. The page's first components are "
+    "answered with the design pages and wait for the read_token they carry; each later add hands you its "
+    "kind's design rules."
 )
 PICTURES_STEP = (
     "Give the pictures the page lacks, the masthead first: an open-licence picture `search_sources` finds "
@@ -88,7 +96,7 @@ PICTURES_STEP = (
 )
 PREVIEW_STEP = (
     "Call `preview_page` with the draft_id. Fix every rule the report fails with `edit_draft`'s add or "
-    "remove, open the private link at 360 and 1440 px in light and dark for every rule left to you to judge, "
+    "remove, by the checklist page the result hands you for each, open the private link at 360 and 1440 px in light and dark for every rule left to you to judge, "
     "and preview again until no failure you can fix remains."
 )
 PROPOSE_STEP = (
@@ -110,9 +118,15 @@ def curate_page_prompt[P, A](make: Callable[..., P], argument: Callable[..., A])
         arguments,
         curate_intro,
         curate_steps,
-        CURATE_SECTIONS,
-        CURATE_REFERENCES,
+        (),
+        (),
+        curate_guide,
     )
+
+
+def curate_guide() -> str:
+    pages = [demoted(sheet.served()) for sheet in opening_guide().pages]
+    return "\n\n".join([CURATE_GUIDE, *pages])
 
 
 def curate_intro(values: Mapping[str, str]) -> str:

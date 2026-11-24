@@ -56,7 +56,8 @@ What this skill leaves open is decided elsewhere:
 ## Storyboard it as cited states
 
 A state is one moment of the mechanism drawn whole: what is there, what changed and what changed
-it. Write the storyboard (`references/storyboard.md`) before any drawing.
+it. Write the storyboard (`references/storyboard.md`) before any drawing. `compose_component`
+hands back the storyboard's pages with what it composes; read them before you place the result.
 
 - Every state names the facts that state it, by id, and the page sentences it illustrates (or the
   units you will write, each citing those facts). A state with no fact is not drawn: research it
@@ -79,6 +80,12 @@ where icon. Only a state the reader shows again names a `motion`; the kit plays 
 never under either reduced-motion switch. A free scene stays in line work: one painting a depicted
 material by hand is refused naming the kit part. `compose_component` builds a craft's reaction and
 dip scenes from the kit.
+
+An answer draws its own kit figure, with no model call, when a cited quote names cloth and states
+its colour before and after ("At first bright green, the cloth rapidly becomes blue"), and both
+colours are depicted materials (decision 0201). Record a stage's colour change in the source's own
+before-and-after words, so answers draw it. A generated explainer the model writes is held to the
+design's bar or left out.
 
 | The family's mechanism | Carried by | Its rule |
 |---|---|---|
@@ -132,6 +139,9 @@ dip scenes from the kit.
 - At first paint the figure is finished on its rest state, every state's text is already in the
   page (hidden, not missing), and each state is one press away on the rail. The rail marks the
   state shown as pressed and the status line names it; nothing on it reads as work in progress.
+- Paper rests where the page rests: the export draws a player's `current` step, a dip's scene and
+  its dips, a stage player's drawing, and a molecule at its `yaw` and `pitch`, with every step and
+  choice listed. Choose `current` and the rest angle as the state that explains most when still.
 - Motion explains a change between two cited states and nothing else: the design system's named
   motions and durations, on the element that changes. Play is the reader's choice, never autoplay,
   never a loop, never decoration.
@@ -184,6 +194,8 @@ dip scenes from the kit.
   page, at rest; and the release controls spec (`frontend/e2e/release/controls.spec.ts` with
   `playerControls.ts`) choosing a step, returning to the first, playing, seeing it move and pausing
   on a live page. A new kind adds its own case to each.
+- A kind whose React view is heavy joins `kinds/nearViews.tsx`, and the phone budget holds the pages
+  that draw it.
 
 ## Cost rules
 

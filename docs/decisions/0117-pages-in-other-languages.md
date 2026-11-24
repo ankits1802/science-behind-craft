@@ -21,6 +21,7 @@ and 0111 (the MCP tools, at most 22). The contracts are `docs/contracts/monograp
 | What it builds on | [0111 Twenty-one MCP tools in six groups, with small schemas](0111-fewer-mcp-tools.md): the MCP tools, at most 22, which gain no tool |
 | How pages are translated, served and reviewed today | [monograph-document.md](../contracts/monograph-document.md), Pages in other languages |
 | The `TRANSLATE` tasks as they stand | [open-work.md](../contracts/open-work.md), Pages in other languages |
+| A component's labels translated as passages, and a page exported in its language (amends this record) | [decision 0206](0206-every-new-kind-exported-as-its-still-and-read-in-a-page-s-languages.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

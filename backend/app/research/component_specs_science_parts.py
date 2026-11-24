@@ -7,6 +7,7 @@ from pydantic import AfterValidator, ConfigDict, Field, field_validator
 
 from .base import ContractModel
 from .depicted_materials import DEPICTED_MATERIALS
+from .shown_text import SHOWN_TEXT
 from .unit_ids import UNIT_REF_PATTERN
 
 __all__ = [
@@ -24,8 +25,10 @@ __all__ = [
     "EquationLine",
     "FigureHead",
     "FigureKey",
+    "HookLabel",
     "Label",
     "Rich",
+    "ShownRich",
     "SpecModel",
     "Species",
     "StyleName",
@@ -101,7 +104,8 @@ def _depicted(token: str) -> str:
 
 
 ColourToken = Annotated[str, Field(pattern=COLOUR_TOKEN_PATTERN), AfterValidator(_depicted)]
-Label = Annotated[str, Field(min_length=1, max_length=2000)]
+Label = Annotated[str, Field(min_length=1, max_length=2000), SHOWN_TEXT]
+HookLabel = Annotated[str, Field(min_length=1, max_length=2000)]
 
 
 class SpecModel(ContractModel):
@@ -114,6 +118,7 @@ class Styled(SpecModel):
 
 
 Rich = Annotated[list[str | Styled], Field(min_length=1)]
+ShownRich = Annotated[list[str | Styled], Field(min_length=1), SHOWN_TEXT]
 
 
 class SvgNode(SpecModel):

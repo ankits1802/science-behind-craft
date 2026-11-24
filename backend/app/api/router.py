@@ -40,6 +40,7 @@ from app.api.routes import (
     open_work,
     own_proposals,
     page_documents,
+    page_exports,
     page_holds,
     page_proposals,
     page_translations,
@@ -82,6 +83,7 @@ api_router.include_router(users.router)
 api_router.include_router(categories.router)
 api_router.include_router(crafts.router)
 api_router.include_router(craft_monograph.router)
+api_router.include_router(page_exports.router)
 api_router.include_router(coverage.router)
 api_router.include_router(contributed_pictures.router)
 api_router.include_router(craft_media.router)

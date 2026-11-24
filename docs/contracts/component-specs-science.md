@@ -25,6 +25,12 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
 - **Text units by id only.** A unit is named by its id (`u0123`) and drawn through
   `props.renderUnit`. Cited text is never copied into a spec. Labels the page shows uncited (control
   labels, drawing labels, molecule names, step names, the replay's source titles) are spec text.
+- **Spec text is translated as a page's passages are** (decision 0206). Every field typed `Label`
+  and a lane species' `name` (`ShownRich`) carry `SHOWN_TEXT` (`research/shown_text.py`), so
+  `research/spec_texts.spec_texts` offers each as a passage keyed `<component label>#<path>` and
+  the variant draws its served translation in place. A `Rich` formula, a reaction player's `track`
+  (`HookLabel`, a data hook, never shown), keys, ids, colours and drawings are not spec text, and a
+  stage named in its own language (`local`) keeps its `name` as its source gives it.
 - **Drawings are typed geometry.** `SvgNode {tag, attrs, children}` holds drawing elements only
   (`svg`, `g`, shapes, `text`, gradients, masks, patterns and the colour filters the page uses; no
   `script`, `foreignObject`, `a` or `use`). Attributes refuse `on*` handlers, `javascript:` and any

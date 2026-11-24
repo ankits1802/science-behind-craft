@@ -18,6 +18,7 @@ from app.research.lessons import LessonPack
 from app.services.apa_references import apa_references
 from app.services.citation_dates import accessed_dates
 from app.services.export_files import (
+    EXPLAINER_ENTITY,
     ExportTools,
     explainer_citations,
     explainer_cited,
@@ -26,7 +27,7 @@ from app.services.export_files import (
     opened_export_tools,
 )
 from app.services.export_store import EXPORT_BUILDS_AT_ONCE
-from app.services.naming import content_disposition, explainer_file_name
+from app.services.naming import content_disposition, export_file_name
 from app.services.object_store import media_bucket
 
 __all__ = [
@@ -65,10 +66,11 @@ def citation_file_response(
 ) -> Response:
     written = citation_file(export, fmt)
     crafts = document.explainer.understood.crafts
-    name = explainer_file_name(
+    name = export_file_name(
+        entity=EXPLAINER_ENTITY,
         made_at=document.mark.created_at,
         craft=crafts[0].name if crafts else None,
-        question=document.mark.question,
+        subject=document.mark.question,
         version=document.mark.version,
         what=CITATIONS_WHAT,
         ext=written.extension,

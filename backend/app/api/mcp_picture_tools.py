@@ -29,6 +29,7 @@ from app.services.open_pictures import (
 from app.services.upload_links_fetch import picture_fetcher
 from app.services.upload_links_give import GivenFile, Giving, Handing, give_pictures
 
+from .mcp_guide_steps import picture_guide
 from .mcp_picture_arguments import (
     GIVEN,
     OPEN,
@@ -172,6 +173,7 @@ async def _give_pictures(context: ToolContext, arguments: GivePictures) -> Pictu
         pictures=sorted(pictures, key=lambda picture: picture.position),
         uploads=uploads,
         next_step=" ".join(steps) or NOTHING,
+        guide=picture_guide(),
     )
     return reply.showing(_thumbnails(opened))
 

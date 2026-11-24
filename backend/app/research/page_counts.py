@@ -19,7 +19,9 @@ __all__ = [
     "Counts",
     "bar_counts",
     "chapter_key",
+    "chapter_order",
     "content_counts",
+    "total_counts",
 ]
 
 BAR_SLUG = "Kutch-Ajrakh"
@@ -73,12 +75,26 @@ def content_counts(content: MonographContent) -> dict[str, Counts]:
 
 def bar_counts(page: MonographContent, bar: MonographContent) -> BarCounts:
     mine, theirs = content_counts(page), content_counts(bar)
-    order = dict.fromkeys([*_ordered(page), *mine, *_ordered(bar), *theirs])
+    order = dict.fromkeys([*chapter_order(page), *mine, *chapter_order(bar), *theirs])
     chapters = [
         ChapterCounts(chapter=key, page=mine.get(key, Counts()), bar=theirs.get(key, Counts()))
         for key in order
     ]
-    return BarCounts(page=_total(mine.values()), bar=_total(theirs.values()), chapters=chapters)
+    return BarCounts(page=total_counts(mine.values()), bar=total_counts(theirs.values()), chapters=chapters)
+
+
+def total_counts(rows: Iterable[Counts]) -> Counts:
+    listed = list(rows)
+    return Counts(
+        pictures=sum(row.pictures for row in listed),
+        figures=sum(row.figures for row in listed),
+        interactives=sum(row.interactives for row in listed),
+        maps=sum(row.maps for row in listed),
+    )
+
+
+def chapter_order(content: MonographContent) -> list[str]:
+    return list(dict.fromkeys(chapter_key(entry.chapter) for entry in content.layout))
 
 
 def _added(counts: Counts, kind: str) -> Counts:
@@ -91,17 +107,3 @@ def _added(counts: Counts, kind: str) -> Counts:
             "maps": counts.maps + (kind in MAP_KINDS),
         }
     )
-
-
-def _total(rows: Iterable[Counts]) -> Counts:
-    listed = list(rows)
-    return Counts(
-        pictures=sum(row.pictures for row in listed),
-        figures=sum(row.figures for row in listed),
-        interactives=sum(row.interactives for row in listed),
-        maps=sum(row.maps for row in listed),
-    )
-
-
-def _ordered(content: MonographContent) -> list[str]:
-    return list(dict.fromkeys(chapter_key(entry.chapter) for entry in content.layout))

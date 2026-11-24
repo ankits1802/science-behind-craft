@@ -218,4 +218,4 @@ def test_kutch_ajrakh_s_authored_figures_would_be_refused_from_a_contributor_and
         for path in APP.rglob("*.py")
         if "drawn_art import" in path.read_text(encoding="utf-8")
     )
-    assert importers == ["research/component_specs_general_delivery.py"]
+    assert importers == ["research/component_specs_general_delivery.py", "research/simulation_art.py"]

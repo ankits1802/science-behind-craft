@@ -25,6 +25,7 @@ __all__ = [
     "Colour",
     "PdfWriter",
     "Point",
+    "TextAlign",
     "TextStyle",
 ]
 
@@ -167,8 +168,9 @@ class PdfWriter:
         self._paint(fill, line, dashed=False)
         self._pdf.polygon(list(points), style=_style(fill, line))
 
-    def stroke(self, points: Sequence[Point], colour: Colour) -> None:
+    def stroke(self, points: Sequence[Point], colour: Colour, *, width: float = LINE_MM) -> None:
         self._paint(None, colour, dashed=False)
+        self._pdf.set_line_width(width)
         for start, end in pairwise(points):
             self._pdf.line(*start, *end)
 

@@ -157,7 +157,7 @@ jobs:
     name: Smoke in a browser
     needs: build
     runs-on: ubuntu-26.04
-    timeout-minutes: 35
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: frontend

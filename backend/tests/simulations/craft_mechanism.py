@@ -44,15 +44,17 @@ def recorded_draft() -> dict[str, Any]:
     }
 
 
-def ajrakh_matter_and_ask() -> tuple[CraftMatter, BuildAsk]:
+def ajrakh_matter_and_ask(
+    claim: uuid.UUID = KUT_BLACK, question: str = QUESTION
+) -> tuple[CraftMatter, BuildAsk]:
     records = dossier_records(AJRAKH)
     ctx = chapter_context(records, preview_rows(records, family=FAMILY, inputs=None))
-    (view,) = [view for view in records.views if view.id == KUT_BLACK]
+    (view,) = [view for view in records.views if view.id == claim]
     cited_ids = {citation["sourceId"] for citation in view.citations}
     sources = {sid: records.sources[sid].model_dump(mode="json", by_alias=True) for sid in cited_ids}
     cited = CitedClaims(views={view.id: view}, sources=sources)
     prose = prose_block("s1.b1", [KeptSentence(view.text, (view.id,), (), False)], cited)
-    request = PlanRequest(question=QUESTION, mode="HYBRID", craft=records.process.craft, depth="EXPERT")
+    request = PlanRequest(question=question, mode="HYBRID", craft=records.process.craft, depth="EXPERT")
     return ctx.matter(), BuildAsk(ANSWER, SECTION, request, (prose,), cited)
 
 

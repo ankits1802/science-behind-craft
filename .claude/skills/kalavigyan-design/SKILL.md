@@ -376,6 +376,9 @@ thumb.
   retired look's `guideMotion.ts` factories (springs, stagger, rise, slide) are deleted (decision
   0141); scroll to an anchor with `scrollToAnchor()` (`components/motion/`), which reads both
   switches. The thread motion is retired (SYSTEM.md section 9).
+- A view whose code is heavy (a map, the ground map, a page tool, a kit figure's Play) loads through
+  `nearBlock`; the monograph's are listed in `kinds/nearViews.tsx`. The server draws it whole, and
+  its code loads within two screens of the viewport. Its stylesheet is imported with the loaders.
 - **Never**: Ken Burns drift, word-by-word or letter headline reveals, staggered rise-in of cards,
   parallax, scroll-linked decoration, a first paint at opacity 0 for the largest element, overshoot
   anywhere but a switch thumb, two animation systems on one property, smooth scrolling under a
@@ -595,6 +598,12 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - Native-script names only with a recorded, reviewed source that names the craft.
 - Existing unit specs still pass; a spec that pinned the old look is updated to the system, never
   deleted to make a run green. The hygiene check (`tools/hygiene_check.py`) passes.
+- **The phone budget.** Frontend checks load Kutch Ajrakh and `/crafts/Phone-Fixtures` at 360, CPU
+  slowed 4×, on slow 4G (three loads, then a scroll to the end at a screen a second), and fail a
+  page past the limits drawn from `e2e/phone-budget.json`: JS, CSS and first-screen pictures 10%
+  over the record; largest element 2.5 s or 1.5×; blocking 200 ms or 2×; layout shift, loading or
+  scrolling, 0.1 or 0.05 over. The failure names what grew; a page that must grow re-records from
+  its run and says why (decision 0205).
 
 ## 13. Trap index
 
@@ -674,6 +683,8 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - **Gap copy in an empty state**: say what fills it and offer one way forward.
 - **Pipeline words or typed counts** on reader screens: counts come from the catalogue endpoint.
 - **A second animation library or GSAP**: framer-motion and token keyframes only.
+- **A heavy view imported directly** into a registry or client component ships to every page; load
+  it with `nearBlock`. `e2e/near-views-unit.spec.ts` names the chain.
 - **Writing outside the files a task owns** while other lanes run: shared changes reach their
   components through tokens and the shared primitives above.
 

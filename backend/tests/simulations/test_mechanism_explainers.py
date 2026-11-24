@@ -21,6 +21,7 @@ from app.services.simulation_grounding import AnswerConcepts, explainer_limit
 from ..contracts.golden import golden_json
 from ..matter.fixtures import PA_CLAIM, RED_CLAIM, chemistry_ask, matter, view
 from ..science.golden_process import ALIZARIN, IRON_ACETATE, claim_id, golden_records, known_claim
+from .at_the_bar import IRON_AT_THE_BAR
 from .fixtures import OPUS, DraftModel, PictureSearches, builder, golden_block, golden_simulation
 
 ALIZARIN_LAKE = uuid.UUID("26229ecd-184c-5adf-86d0-b45c56394f27")
@@ -37,7 +38,7 @@ def mechanism_golden() -> dict[str, Any]:
 
 
 def mechanism_html() -> str:
-    return mechanism_golden()["block"]["html"]
+    return IRON_AT_THE_BAR
 
 
 def mechanism_draft(**changes: Any) -> dict[str, Any]:

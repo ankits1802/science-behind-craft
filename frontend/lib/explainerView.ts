@@ -74,6 +74,7 @@ export function blockCitations(block: TypedBlock): Citation[] {
   if (block.kind === "process_ladder") return block.stages.flatMap(stageCitations);
   if (block.kind === "reaction_player") return reactionPlayerCitations(block);
   if (block.kind === "simulation") return block.values.flatMap((value) => value.citations);
+  if (block.kind === "kit_figure") return block.labels.flatMap((label) => label.citations ?? []);
   const cited = blockSentences(block).flatMap((sentence) => sentence.citations);
   if (block.kind !== "measure") return cited;
   return [...cited, ...block.rows.flatMap((row) => (row.conversion.citation ? [row.conversion.citation] : []))];

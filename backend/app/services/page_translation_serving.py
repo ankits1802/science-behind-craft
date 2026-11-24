@@ -16,7 +16,7 @@ from .monograph_document import authored_document, has_authored_content
 from .page_text_index import PageKey, indexed_tag, write_page_texts
 from .page_translation_store import served_translations
 
-__all__ = ["DIGEST_SHOWN", "ServedPage", "ShownPage", "page_in_language", "variant_body"]
+__all__ = ["DIGEST_SHOWN", "ServedPage", "ShownPage", "body_specs", "page_in_language", "variant_body"]
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ async def page_in_language(
     wrote = await indexed_tag(session, page) != tag
     if wrote:
         content = MonographContent.model_validate(english.body["content"])
-        await write_page_texts(session, page, tag, content)
+        await write_page_texts(session, page, tag, content, body_specs(english.body))
     if language == ENGLISH:
         return ShownPage(english, wrote)
     served = await served_translations(session, page, language)
@@ -62,19 +62,27 @@ def variant_body(
     english: Mapping[str, Any], content: MonographContent, served: ServedTranslations, language: str
 ) -> dict[str, Any] | None:
     version = int(english.get("version") or FIRST_VERSION)
-    variant = variant_content(content, served, language=language, source_version=version)
+    variant = variant_content(
+        content, served, language=language, source_version=version, specs=body_specs(english)
+    )
     if variant.translation.translated == 0:
         return None
     body = {
         **english,
         "language": language,
         "content": variant.content.model_dump(mode="json", by_alias=True),
+        "specs": dict(variant.specs),
         "translation": variant.translation.model_dump(mode="json", by_alias=True),
     }
     if not isinstance(english.get("shell"), str):
         return body
     shell = _authored_shell(english, variant.content)
     return None if shell is None else {**body, "shell": shell}
+
+
+def body_specs(body: Mapping[str, Any]) -> Mapping[str, Mapping[str, Any]]:
+    specs = body.get("specs")
+    return specs if isinstance(specs, Mapping) else {}
 
 
 def _authored_shell(english: Mapping[str, Any], content: MonographContent) -> str | None:

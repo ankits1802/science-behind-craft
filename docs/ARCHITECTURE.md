@@ -215,7 +215,10 @@ DUPLICATE, NOVELTY) off the request. The review switch (`knowledge.review_switch
 the contributor's trust tier decide whether a fact that passed goes live at once or waits in the
 review queue for a Professor or Admin (`docs/contracts/review-queue.md`). An agent signs in with
 OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the method served over MCP
-are `docs/contracts/open-work.md`. An agent's reaction player, dip player, 3D molecule or what-if
+are `docs/contracts/open-work.md`. The method's guides are served in numbered pages
+(`data/guide_pages.py`, `api/mcp_guides.py`) and each page tool hands the agent the page for the step
+it is on, a page's first components waiting until the design pages are handed over
+(`api/mcp_guide_steps.py`, decision 0203). An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
 monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's
@@ -398,6 +401,16 @@ flowchart LR
    signed link; citation files are answered directly. The files a share link's readers are given
    are recorded against its token (`SharedExportFile`) and deleted from the bucket when the share
    stops (`services/shared_files`, decision 0155).
+3. A page (decision 0206) is exported by `GET /api/crafts/{slug}/monograph/{pdf|docx}` in the
+   language it is served in: the route reads the served document as the monograph route does,
+   releases its connection and files the file under `exports/<page owner>/<sha256>/<name>`, the
+   hash taken over the served tag, so a new version or a new translation is a new file. In one
+   worker thread `services/page_export_document` lays the page out as chapters of passages and
+   figures, each component one figure built by its kind's builder (`page_export_kit`,
+   `page_export_science`, `page_export_labs`, every other kind its words and drawings through
+   `generic_figure`), its still drawn by the one still renderer (`services/export_still_*`, which
+   the answer report's kit figures and timeline maps share), then `page_export_pdf` writes the PDF
+   and `page_export_docx` the Word document (`docx_writer`, the standard library's zip and XML).
 
 ## How stored pieces stay current (decision 0033)
 
@@ -655,7 +668,10 @@ sequenceDiagram
    headroom chooses values and writes an HTML fragment that must pass the value, static
    (`research/sandbox`) and block checks, with one redraft, all within a 60 s budget, and no call
    at all when the section's facts state no quantity it can draw (dataset rows of the datasets the
-   section's blocks cite are offered beside the quoted figures, decision 0142); each builder's
+   section's blocks cite are offered beside the quoted figures, decision 0142); a concept whose
+   cited quotes state a cloth's colour before and after is drawn instead as a `kit_figure` the site
+   composes from the figure kit (`science/kit_figures`), with no model call, and a fragment or a
+   stored explainer below the design's bar (`research/simulation_art`) is left out (decision 0201); each builder's
    outcome and time is recorded under the answer's `plan.builds` (`services/builder_record`);
    it is kept as a cross-craft piece by
    concept and claim set from any section (also an any-craft answer and a deepened follow-up), and
@@ -900,6 +916,8 @@ The CSP's `frame-src` names only Google's sign-in frames: a generated explainer 
 bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The frame's first
 script is the client's own guard: it removes the peer connection constructors and keeps the frame
 from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
+Its document carries the values of the design tokens the fragment names and sets
+`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201).
 
 ## Checks
 
