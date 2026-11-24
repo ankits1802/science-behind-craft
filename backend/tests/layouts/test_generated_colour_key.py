@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import replace
 from typing import Any
 
 import pytest
@@ -138,7 +139,7 @@ def golden_document() -> MonographDocument:
         subject_slug="Kutch-Ajrakh",
         page_url="https://kalavigyan.example/crafts/Kutch-Ajrakh",
         record=SubjectRecord(name=page.craft.name, kicker="Textiles", place="Kachchh, Gujarat", gi=True),
-        sections=tuple(with_page_claims([], shown)),
+        sections=tuple(replace(section, version=1) for section in with_page_claims([], shown)),
         visible=visible,
         sources=sources,
         structure=shown,
