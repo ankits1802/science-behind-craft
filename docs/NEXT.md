@@ -11,36 +11,36 @@ recorded below or in decisions 0102 and 0103 for review.
 | How to deploy, switch on and roll back | [RUNBOOK.md](RUNBOOK.md) |
 | The owner's standing direction | [PLAN.md](PLAN.md), section 0 |
 
-This handoff began in the night session of 2026-11-19: the owner went to sleep and asked Claude to
-finish the release and start on decision 0101's database and MCP work on its own recommendations.
+The current handoff is the session of the night of 2026-11-23 to 2026-11-24: the owner asked the
+lead to work on its own recommendations, run an adversarial review of the whole codebase before
+shipping, and release each change on its own.
 
 ## Live now
 
-- **KalaVigyan `main` at `53d8b43`** (2026-11-21), round 7 shipped in steps (`d0167f9`, `90b79f6`,
-  `53d8b43`), each checked on GitHub and its Vercel build confirmed READY:
-  - **Contribution at scale:** the queued gates, batches, idempotency keys, trust tiers, task leases,
-    stewardship, delivered components and pages with a private preview, pictures in every format with
-    screens, healing (held facts, link rot) and the expert seats' capped research.
-  - **The MCP studio (decisions 0110, 0111):** 21 tools in six groups (reading, sources, work,
-    proposing, pages, pictures); KalaVigyan's own source registries, fetcher and quote matcher as
-    tools; sources only a contributor can read, supplied and checked against their text; a draft per
-    page with a preview report on the 27 checklist rules, drawn in the chat; the `curate_page` prompt;
-    every skill, reference and contract teaching it.
-  - **Pages:** every borrowed component drawn in its home's styles (the Textiles chemistry), figures
-    beside the sentences they illustrate, a view missing a unit left out instead of breaking the page,
-    and a parity check of each borrowed component after every deploy; Kutch Ajrakh at 90 on a phone.
-  - **Maps:** the Natural Earth base, relief, rivers and mineral layers with their palettes, the Survey
-    of India state lines on every map, and switching layers without an error.
-  - **Open, being built:** the round 7 fix lanes (release proof, integrity, connect and speed,
-    monograph follow-ups, artisan photographs), then questions becoming work, why here, kinds and
-    datasets, and design conformance (`docs/TECH_DEBT.md`, round 7).
+- **KalaVigyan `main` at `401f73ae`** (2026-11-24, decision 0190). Every release of the round was
+  verified on production before the next: `1e366637` (0182), `dab903fd` (0183), `db1efa4a` (0184),
+  `b9178d42` (0185, migration `0101_oauth_code_token_version`, the chain's head), `b72cd8b4` (0186),
+  `8dde0612` (0187), `6a56f435` (0188), `6cd9385e` (0189) and `401f73ae` (0190).
+  - **Generated craft pages** are drawn in the approved Kutch Ajrakh form (masthead, contents,
+    margin notes, the five source groups); Kutch Ajrakh keeps its authored shell.
+  - **Answers:** the last whole answer-quality run (45230293916) answered 24 of 24 at rubric 0.930
+    and judge 0.807; the rubric floor is 0.88 and an unscored question breaks it. Four-question
+    samples after the releases that touched answers held (rubric 0.976, judge 0.84 and 0.86, $0.48
+    and $0.26).
+  - **Voice:** the reader agent's turns are bound and answered (decision 0190: a cited reply in
+    10.1 s). The call stays switched off (`VOICE_CALL_ENABLED` false) and `voice.transport` stays
+    `RELAY` until the owner chooses the agent.
+  - **Security:** an MCP code approved before a password change no longer opens a connection; a
+    hostile robots.txt or compressed body can no longer hang or flood the fetcher.
+  - **Releases:** stored pages are rebuilt only by the release that serves them, and Deploy backend
+    refuses a commit older than the one production serves.
 - **Portals 0.0.8** (designer-portal `2d468af3`, documentation-portal `28abc96d`), released together:
   - field voices for KalaVigyan;
   - question takes name their section;
   - the designer portal's identity-photo PENDING stamp.
   - Android is not published with this release; the `PUBLICATION` consent value ships with the
     next Android build.
-- **Switches set this session:**
+- **Switches set in the sessions of 2026-11-19 to 2026-11-21:**
   - Parameter Store:
     - `ALERT_DIGEST_ENABLED=true` (SES has production access, and the domain is verified with DKIM);
     - `ARTISAN_CONVERSATION_ENABLED=true` with `ELEVENLABS_ARTISAN_AGENT_ID=agent_0901m7rcnsz5f379ejhxyd47bbqv`
@@ -61,29 +61,18 @@ finish the release and start on decision 0101's database and MCP work on its own
 
 ## Release status
 
-- **Done:**
-  - **Field voices refresh on both portal boxes:**
-    - designer portal: 2 images;
-    - documentation portal: 501 transcripts and 613 images, with 3 originals missing from the
-      bucket;
-    - KalaVigyan's `field-voices-sync.yml` applied all of them, ok.
-  - **Both portals' release gates** pass (`44431722874`, `44431727650`).
+- **Proof on production:** the first clean production questions run, 45292939163 (38 of 38,
+  2026-11-24); parity 25 of 25 after every release; CloudWatch without errors but one false
+  stored-page alarm, whose cause decision 0190 fixed.
+- **Phone speed** (Lighthouse at 360, median of three, release dab903fd): Kutch Ajrakh 83 with an LCP
+  of 4.68 s, the generated Bagru page 87 with 3.93 s, sign-in 92 with 3.34 s, against the 2.5 s
+  target (`docs/TECH_DEBT.md`, Speed left after the quality lane); 98 to 100 at 1440.
+- **The register** (`docs/TECH_DEBT.md`) holds 46 entries, most waiting on the owner or on time.
+  Among the lead's: the ElevenLabs tool calls, languages and CSP hosts; the relief bands' rebuild;
+  a rollback's window before its pages are rebuilt; the Listen dock's first focus; the write-back
+  rows stored before decision 0188.
 - **Never flip `field_voices.artisan_images`** before a person has reviewed the held list. It may
   contain Aadhaar cards.
-- **The production E2E** (latest run `44432649960`): 17 passed, 10 screen runs failed, 1 skipped.
-  - The Professor and Admin accounts now pass.
-  - Every curated craft page renders.
-  - The failures that remain are findings, not regressions from this release:
-    1. **The router's prefetch of `/crafts/Kutch-Ajrakh` answered 404** while the craft was
-       rewritten to its static page. Gone since 2026-11-20: the craft draws its document.
-    2. **Sanganeri's Region tab** runs about 70 screens before "All measurements", against a
-       limit of 3. This is a design problem of the tabbed craft page; the redesign or track 1,
-       step 2 replaces it.
-    3. **The monograph** has no app theme attribute, and some small labels spill out of their
-       boxes at some widths ("leucoindigo, on the fibre", the Devanagari brand). These are design
-       details of the approved page; see the critique.
-    4. **Occasional 500s from the five-connection database pool** under four parallel browsers
-       (`docs/TECH_DEBT.md`, Infrastructure).
 
 ## Owner decisions (2026-11-19)
 
@@ -140,8 +129,10 @@ Open:
      map is drawn from Natural Earth on the Survey of India outline with relief, rivers and
      minerals layers, curated documents read as the board, and the release gate checks every
      deploy (post-deploy pages and MCP, a real OAuth MCP client, accessibility and performance).
-   - **Round 7 quality (running):** citation accessibility, mobile speed (Kutch Ajrakh LCP), a
-     build that cannot time out on one slow page, answer maps matching /map.
+   - **Round 7 quality, the debt round and the review round (2026-11-21 to 2026-11-24, released):**
+     the register cleared lane by lane and kept so it can only shrink, two whole-codebase
+     adversarial reviews and their fixes, and every release proved on production
+     (`docs/PROGRESS.md`).
    - **Content:** arrives through MCP over time; the paid completeness run stays off.
 2. **The redesign of the whole app**:
    - the `kalavigyan-design` skill and the boards in `docs/design/`;
@@ -178,7 +169,11 @@ film). Bringing the other crafts and 9 categories to the Ajrakh level is track 1
 - **Portals release together.** Fix everything, then release once.
   - Both portals' terraform state is in the `default` workspace.
   - `REPO_FACTS.md` must be regenerated on a clean tree after the last change.
-- **Git Bash rewrites `/kalavigyan/...` paths** in `aws ssm` calls; set `MSYS_NO_PATHCONV=1`.
+- **Git Bash rewrites `/kalavigyan/...` paths** in `aws ssm` calls and `/crafts/...` workflow
+  inputs; set `MSYS_NO_PATHCONV=1`.
+- **One lane at a time** (owner, 2026-11-24): each change is released and verified on production
+  before the next; lanes that touch the same subsystem never run together, and this machine runs
+  at most two or three agents at once.
 - Debt is in `docs/TECH_DEBT.md`; progress is in `docs/PROGRESS.md`.
 
 ## How this document is kept true

@@ -11,7 +11,7 @@ section 17. Everyone building KalaVigyan reads it; a new session starts at [NEXT
 | What was left below standard | [TECH_DEBT.md](TECH_DEBT.md) |
 | The rounds at a glance | [README.md](../README.md#status) |
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-24.
 
 ## Done
 
@@ -1224,6 +1224,34 @@ Last updated: 2026-11-23.
     fits `section_done`; a source whose document cannot be built is skipped, not the answer; the
     rubric's everyCited part is a share of the shown sentences.
 
+- **Review and release round (2026-11-23 to 2026-11-24): the review findings fixed and each
+  release proved on production.** Decisions 0170 to 0190, each lane released and verified alone
+  (`/health`, `/api/version`, Vercel READY, the post-deploy check, parity 25 of 25, CloudWatch).
+  The first production questions run to pass clean was 45292939163 (38 of 38, release dab903fd).
+  - **Admin review over MCP (decision 0170):** an Admin's AI stages review decisions a person
+    confirms in one click; changed pages refreshed on demand.
+  - **The whole-codebase review of 2026-11-23 (decisions 0171 to 0174):** an import never undoes
+    approved structure; the web takes over every rotated session; a release keeps serving and its
+    way back open; answers fit and repeat nothing.
+  - **Follow-ups (decisions 0175 to 0183):** the production checks read what the page shows;
+    Listen plays as it narrates; differences named from the judge; goldens from recorded data;
+    transcript windows a chunk kind and one paid Gemini clip; places abroad in an inset and kin
+    crafts on generated pages; community names kept out of AI pictures; a section's pictures only
+    for what it shows; generated pages drawn in the approved Kutch Ajrakh form.
+  - **The lead's release (decision 0184):** the rubric floor raised to 0.88 from a whole run; the
+    recorded clip as the video fixture; every reader's chunk ACL `PUBLIC` alone (migration 0100);
+    a refused voice turn names its check; the fetcher and web search seen on the box.
+  - **The whole-codebase review of 2026-11-24 (decisions 0185 to 0189):** 19 confirmed findings,
+    fixed in five lanes: an MCP code bound to its approver's token version (migration 0101) and a
+    robots.txt rule matched without a regular expression; pages rebuilt only by the release that
+    serves them and no deploy of an older commit; Listen asked only when pressed and the docked
+    popover seen whole; an unscored answer breaks the floors and chapters behind one PDF kept
+    apart; lost paid media counted, artisan recordings kept with their rows, refunds on their hold's
+    day.
+  - **Voice and stored pages (decision 0190):** the agent's conversation header a variable
+    ElevenLabs fills, a 15 s wait and no backup model, so the first agent turn was answered (10.1
+    s, cited); a page rebuilt while its inputs move is built again without a false alarm.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
@@ -1300,7 +1328,8 @@ narrows or removes its line.
   `python -m app.scripts.provision_voice_agent` on the box, store the printed agent id as
   `ELEVENLABS_AGENT_ID`, run the spike, and set `AppSetting` `voice.transport` to `AGENT` only if
   the custom-LLM request proves to carry the conversation id (`docs/contracts/voice.md`); it stays
-  `RELAY` otherwise.
+  `RELAY` otherwise. Since decision 0190 it does: an agent turn was answered on 2026-11-24, so
+  switching `voice.transport` to `AGENT` (and `VOICE_CALL_ENABLED` on) is the owner's choice.
 
 - Yahoo sign-in is registered and live: sign in once with a rostered Yahoo address on the
   production login page to prove the whole round trip.
