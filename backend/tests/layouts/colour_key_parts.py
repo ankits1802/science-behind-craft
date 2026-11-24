@@ -38,7 +38,7 @@ SHIFTS = (
     (
         uuid.UUID("c0108000-0000-4000-8000-000000000203"),
         "Marigold flowers give the cloth a yellow.",
-        "the flowers give a deep yellow",
+        "the marigold gives a deep yellow",
     ),
 )
 
