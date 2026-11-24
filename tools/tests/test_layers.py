@@ -183,3 +183,10 @@ def test_providers_sit_below_services_and_services_call_them() -> None:
         "backend/app/providers/router.py:1: providers imports app.services (providers may not import services)"
     ]
     assert check("backend/app/services/managed_secrets.py", "from app.providers import anthropic_p\n") == []
+
+
+def test_the_renderer_builds_on_the_contracts_and_reaches_no_service_and_nothing_imports_it() -> None:
+    assert LAYER_IMPORTS["renderer"] == frozenset({"renderer", "research", "core", "data"})
+    assert check("backend/app/renderer/tab.py", "from app.data.drawing_checks import drawing_checks\n") == []
+    assert check("backend/app/renderer/tab.py", "from app.services import page_renders\n") != []
+    assert check("backend/app/services/page_renders.py", "from app.renderer import guard\n") != []

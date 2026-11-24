@@ -78,6 +78,7 @@ class Prompt:
     steps: Steps
     sections: tuple[str, ...]
     references: tuple[str, ...]
+    guide: Callable[[], str] | None = None
 
     def listed(self) -> dict[str, Any]:
         return {
@@ -91,6 +92,7 @@ class Prompt:
         parts = [
             *(skill_section(title) for title in self.sections),
             *(prompt_reference(name) for name in self.references),
+            *([] if self.guide is None else [self.guide()]),
             skill_section(CLOSING_SECTION),
         ]
         return "\n\n".join(parts)

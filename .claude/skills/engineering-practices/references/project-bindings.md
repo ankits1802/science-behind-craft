@@ -137,6 +137,7 @@ composer  -> research, core, models
 retrieval -> research, core, models
 sources   -> research, core, models
 fetcher   -> sources, research, core
+renderer  -> research, core, data
 curation  -> research, models, data
 research  -> core, models
 science   -> schemas, research, core

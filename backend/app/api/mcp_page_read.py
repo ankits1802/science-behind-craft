@@ -17,6 +17,8 @@ from app.services.open_work_subjects import CATEGORY, WorkSubject, subject_by_ke
 from app.services.page_keys import page_keys
 from app.services.page_layouts import layout_of, subject_path
 
+from .mcp_guide_steps import HandedGuide, opening_guide, page_guide
+from .mcp_guides import ADDRESS_PATTERN, CONTENTS_ADDRESS
 from .mcp_tool_base import Arguments, Tool, ToolContext
 
 __all__ = ["GET_PAGE", "PAGE_PARTS", "GetPage", "PageRead"]
@@ -30,7 +32,13 @@ DESCRIPTION = (
     "placed (chapter, order, role, a picture's crop, size and caption), its version, and null where the page "
     "has none; a layout never holds a fact. Each part's open field work comes with its task key. A craft's or "
     "family's page also gives its keys: the craft and its districts, as a component proposal names its "
-    "subjects. With no subject it lists the sixteen fields, each with what it covers and its chapter."
+    "subjects. With no subject it lists the sixteen fields, each with what it covers and its chapter. With "
+    "the fields or a page's coverage comes guide: the page checklist's opening and the Kutch Ajrakh bar, "
+    f"naming the next page; guide reads any page of the guide by its address ({CONTENTS_ADDRESS} lists them)."
+)
+GUIDE_DESCRIPTION = (
+    f"A page of the guide to read, by the address a result names, such as page-checklist/2; {CONTENTS_ADDRESS} "
+    "lists every page"
 )
 
 
@@ -46,6 +54,7 @@ class GetPage(Arguments):
         description="Any of coverage, sections and layout; every part the page has when absent",
     )
     field: Discipline | None = Field(default=None, description="One field's section only")
+    guide: str | None = Field(default=None, pattern=ADDRESS_PATTERN, description=GUIDE_DESCRIPTION)
 
     @model_validator(mode="after")
     def _parts_need_a_page(self) -> Self:
@@ -67,12 +76,15 @@ class PageRead(ContractModel):
     keys: list[ComponentSubject] = Field(default_factory=list, exclude_if=empty)
     open_work: list[OpenTask] = Field(default_factory=list)
     page_url: str | None = Field(default=None, exclude_if=absent)
+    guide: HandedGuide | None = Field(default=None, exclude_if=absent)
     attribution: str = ATTRIBUTION
 
 
 async def _get_page(context: ToolContext, arguments: GetPage) -> PageRead:
     if arguments.subject is None:
-        return PageRead(fields=knowledge_api.field_list().fields)
+        if arguments.guide is not None:
+            return PageRead(guide=page_guide(arguments.guide))
+        return PageRead(fields=knowledge_api.field_list().fields, guide=opening_guide())
     subject = await subject_by_key(context.session, arguments.subject.kind, arguments.subject.slug)
     parts = _parts(arguments)
     read: dict[str, object] = {
@@ -93,11 +105,17 @@ async def _get_page(context: ToolContext, arguments: GetPage) -> PageRead:
         work = [*work, *section.open_work]
     if LAYOUT in parts:
         read["layout"] = await layout_of(context.session, subject)
-    return PageRead.model_validate({**read, "open_work": _once(work)})
+    return PageRead.model_validate({**read, "open_work": _once(work), "guide": _guide(arguments, parts)})
 
 
 def _parts(arguments: GetPage) -> list[str]:
     return list(dict.fromkeys(arguments.parts or PAGE_PARTS))
+
+
+def _guide(arguments: GetPage, parts: list[str]) -> HandedGuide | None:
+    if arguments.guide is not None:
+        return page_guide(arguments.guide)
+    return opening_guide() if COVERAGE in parts else None
 
 
 async def _sections(context: ToolContext, subject: WorkSubject, field: str | None) -> CraftSection:

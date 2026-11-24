@@ -56,7 +56,8 @@ What this skill leaves open is decided elsewhere:
 ## Storyboard it as cited states
 
 A state is one moment of the mechanism drawn whole: what is there, what changed and what changed
-it. Write the storyboard (`references/storyboard.md`) before any drawing.
+it. Write the storyboard (`references/storyboard.md`) before any drawing. `compose_component`
+hands back the storyboard's pages with what it composes; read them before you place the result.
 
 - Every state names the facts that state it, by id, and the page sentences it illustrates (or the
   units you will write, each citing those facts). A state with no fact is not drawn: research it
@@ -174,7 +175,9 @@ dip scenes from the kit.
   every rule its report fails, then open the private link in both themes at 360, 834 and 1440 px,
   and again with reduced motion on; work it by keyboard alone; step every state and read each against its
   facts. Preview again after each fix, then `propose_page`. Preview the page with a composed
-  component and read its pictures before proposing.
+  component and read its pictures before proposing: look at the preview's pictures of the
+  interactive's chapter and fix every rule 28 failure naming it (drawn empty, loading or moving at
+  rest, too large, past its column) before opening the link.
 - **In the repository**: a valid and a refused spec of the kind in
   `backend/tests/research/test_component_specs_science.py`; the view resting on its state and
   pressing on the rail in `frontend/e2e/monograph-science-views-unit.spec.ts`; Monograph parity

@@ -37,8 +37,10 @@ def render(keys):
     return "".join(f"{k}='{values[k]}'\n" for k in sorted(keys))
 
 fetcher_keys = [k for k in values if k.startswith("FETCHER_") or k in {"APP_ENV", "LOG_LEVEL"}]
+renderer_keys = [k for k in values if k.startswith("RENDERER_") or k in {"APP_ENV", "LOG_LEVEL", "PUBLIC_WEB_URL"}]
 (work / "app.env").write_text(render(values))
 (work / "fetcher.env").write_text(render(fetcher_keys))
+(work / "renderer.env").write_text(render(renderer_keys))
 secret = values.get("ORIGIN_VERIFY_SECRET", "")
 if secret and re.fullmatch(r"[A-Za-z0-9]{32,}", secret):
     (work / "origin.conf").write_text(
@@ -48,7 +50,7 @@ if secret and re.fullmatch(r"[A-Za-z0-9]{32,}", secret):
         f'if ($http_x_origin_verify = "{secret}") {{ set $kv_origin_ok 1; }}\n'
         "if ($kv_origin_ok = 0) { return 403; }\n"
     )
-print(f"{len(values)} keys for the API, {len(fetcher_keys)} for the fetcher", file=sys.stderr)
+print(f"{len(values)} keys for the API, {len(fetcher_keys)} for the fetcher, {len(renderer_keys)} for the renderer", file=sys.stderr)
 PY
 
 place() {
@@ -63,6 +65,7 @@ place() {
 }
 place "$work/app.env" "$APP/.env"
 place "$work/fetcher.env" "$APP/fetcher.env"
+place "$work/renderer.env" "$APP/renderer.env"
 
 if [ -f "$work/origin.conf" ]; then
   if ! cmp -s "$work/origin.conf" "$SNIPPET"; then

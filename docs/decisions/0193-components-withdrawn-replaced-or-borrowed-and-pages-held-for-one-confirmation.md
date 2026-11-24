@@ -26,6 +26,7 @@ The contracts are `docs/contracts/open-work.md` (Withdrawn, replaced, borrowed a
 | Staged review and the one-click confirmation | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) |
 | Why no tool was added | [decision 0191](0191-room-for-the-page-quality-tools.md) |
 | Where a borrowed component's sources are counted | [decision 0106](0106-one-monograph-template-for-every-page.md) |
+| A held page refused while its latest preview fails its drawing checks | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

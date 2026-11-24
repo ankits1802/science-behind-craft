@@ -28,6 +28,7 @@ from . import audit
 from .open_work_subjects import subject_by_key
 from .page_drafts import record_submission
 from .page_layouts import page_path, subject_path
+from .page_renders import refuse_a_failed_drawing
 
 __all__ = [
     "CONFIRMED_ACTION",
@@ -79,6 +80,7 @@ async def hold_page(
     session: AsyncSession, user: User, bundle: PageBundle, draft: PageDraft | None, place: HoldPlace
 ) -> PageProposalResult:
     subject = await subject_by_key(session, bundle.subject.kind, bundle.subject.slug)
+    await refuse_a_failed_drawing(session, user.id, subject, now=place.now)
     await session.execute(
         update(PageHold)
         .where(

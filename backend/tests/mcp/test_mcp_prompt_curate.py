@@ -3,10 +3,11 @@ from typing import Any
 
 import pytest
 
-from app.api.mcp_prompt_curate import CURATE_REFERENCES, SOURCES_LANE_TOOLS
+from app.api.mcp_guides import guide_sheets
+from app.api.mcp_prompt_curate import CURATE_GUIDE_HEADING, SOURCES_LANE_TOOLS
 from app.api.mcp_prompts import PROMPTS
 from app.api.mcp_tools import TOOLS, ToolContext, answer
-from app.data.skill_library import REFERENCES, prompt_reference
+from app.data.skill_library import REFERENCES, demoted, prompt_reference
 from app.services.craft_resolver import CraftIndexStore
 
 CONTEXT = ToolContext(session=None, index=CraftIndexStore(), site="https://kalavigyan.example")  # type: ignore[arg-type]
@@ -77,12 +78,25 @@ async def test_it_says_what_to_do_when_each_gate_refuses() -> None:
     assert "`propose_source`" in whole and "a stale layout" in whole
 
 
-async def test_it_carries_every_reference_whole_and_names_only_real_tools() -> None:
+async def test_it_hands_the_checklist_s_opening_and_the_bar_not_the_whole_guide() -> None:
     whole = await text({"slug": "Kutch-Ajrakh"})
-    assert set(CURATE_REFERENCES) == set(REFERENCES) == set(PROMPTS["curate_page"].references)
-    for name in CURATE_REFERENCES:
-        assert prompt_reference(name) in whole, name
-    named = set(NAMED_TOOL.findall(whole.split("## Proposals and their progress")[0]))
+    prompt = PROMPTS["curate_page"]
+    assert (prompt.sections, prompt.references) == ((), ())
+    for name in REFERENCES:
+        assert prompt_reference(name) not in whole, name
+    opening, bar = guide_sheets("page-checklist")[0], guide_sheets("bar")[0]
+    assert demoted(opening.text) in whole and demoted(bar.text) in whole
+    assert "> The page checklist, page 1 of" in whole and "Next: page-checklist/2." in whole
+    assert guide_sheets("page-checklist")[1].text.strip() not in whole
+    assert in_order(
+        whole, (CURATE_GUIDE_HEADING, "## The page checklist", "## The bar: Kutch Ajrakh", "## Never")
+    )
+    assert "`get_page` with guide" in whole and "contents/1" in whole and "read_token" in whole
+
+
+async def test_it_names_only_real_tools_before_the_guide() -> None:
+    whole = await text({"slug": "Kutch-Ajrakh"})
+    named = set(NAMED_TOOL.findall(whole.split(CURATE_GUIDE_HEADING)[0]))
     assert named <= set(TOOLS) | set(SOURCES_LANE_TOOLS), named - set(TOOLS) - set(SOURCES_LANE_TOOLS)
     assert {"supply_source", "edit_draft", "preview_page", "propose_page", "give_pictures"} <= named
 

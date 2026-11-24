@@ -67,6 +67,7 @@ stateDiagram-v2
 | Tables | `models/open_work.py` (`TaskReservation`, `ComponentProposal`), migration `0038_open_work`; the delivered spec's columns and `models/page_previews.py` (`PagePreview`), migration `0049_delivered_components` |
 | MCP tools | `api/mcp_work_tools.py` (`WORK_TOOLS`: `list_open_work`, `my_work`, `reserve_tasks`, `steward_craft`) and `api/mcp_page_tools.py` (`PAGE_TOOLS`: `edit_draft`, `preview_page`, `propose_page`, with `mcp_page_arguments.py` and `mcp_page_texts.py`) and `api/mcp_compose_tools.py` (`COMPOSE_TOOLS`: `compose_component`, its service `services/compose_components.py` with `compose_reads.py` and a module a kind), registered in `api/mcp_tools.py`; each names its group in `_meta["kalavigyan/group"]` |
 | MCP prompts and resources | `api/mcp_prompts.py`, `api/mcp_resources.py`, dispatched in `api/mcp_tools.py` |
+| Guide pages and the page each step hands over (decision 0203) | `data/guide_pages.py` (the cut), `api/mcp_guides.py` (the guides, their pages, the bar, the contents and the resource template), `api/mcp_guide_steps.py` (the page at each step and the design pages' read token) |
 | Source tools (`search_sources`, `read_source`, `lookup`) | `api/mcp_lookup_tools.py` (`LOOKUP_TOOLS`), `services/source_lookup*.py`, limits `core/rate_limit.LOOKUP_LIMITS` (`knowledge-api.md`, Source tools) |
 | The contract resources and the index | `data/contributor/contracts/<name>.md`, copies of `docs/contracts/<name>.md`; `data/contributor/index.md`, written from the registry by `tools/mcp_index_build.py` (`api/mcp_index.index_text`: every tool, prompt and resource by its title); read by `data/skill_library.py` |
 | HTTP routes | `api/routes/open_work.py`; `api/routes/page_proposals.py` (bundles and previews, `api/page_proposal_deps.py`) |
@@ -502,10 +503,10 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `steward_craft` | work | contribute | writes | `StewardReply {schemaVersion 1, craftSlug, adopted, message, package: StewardPackage or null}` |
 | `get_proposal` | work | contribute | read-only | `ProposalTicket` (`knowledge-writes.md`) |
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
-| `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` |
-| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below) and `notices`; `_meta.ui` names `ui://kalavigyan/page-preview.html` |
+| `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` and, when the call adds components, `guide` (`HandedGuide`, Guide pages below) |
+| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
-| `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices}`, each component in the snake_case `edit_draft`'s add takes (decision 0198) |
+| `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices, guide}` (`guide`: the storyboard's pages), each component in the snake_case `edit_draft`'s add takes (decision 0198) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
 | `search_sources` | sources | contribute (read for pictures alone) | read-only, open-world | `SourceSearch` (`knowledge-api.md`, Source tools) |
 | `read_source` | sources | contribute | read-only, open-world | `SourceReading` |
@@ -543,8 +544,10 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   the account's role.
 - `initialize` declares `tools`, `prompts` (`listChanged` false) and `resources` (`subscribe` and
   `listChanged` false).
-- The server's `instructions` name the tools in the order of the work, the groups, the index and,
-  once for every tool, the data note (`api/mcp_protocol.py`).
+- The server's `instructions` say where to start, name the tools in the order of the work, say that
+  the tools hand the guide over page by page as the agent works and that `get_page` with `guide`
+  reads any other page (`contents/1` lists them), and name the groups, the index and, once for every
+  tool, the data note (`api/mcp_protocol.py`, decision 0203).
 
 ### Prompts
 
@@ -560,7 +563,7 @@ and reading sources and Never:
 | `deliver_page` (round 7) | `subject_kind`, `slug` | the method's three, Structure and sources, Components, Pages and Pictures | the four and components |
 | `give_picture` (round 7), the prompt of `MISSING_PICTURE` tasks | `craft_slug` | Pictures, Finding and reading sources and Never | none |
 | `deliver_dataset` (round 7) | `craft_slug`, `kind?` (one of the declared kinds but `drawing`) | the method's three, Components and Pages | the four, components and datasets |
-| `curate_page` (decision 0110) | `subject_kind?`, `slug?` | those of `deliver_page` | all six |
+| `curate_page` (decision 0110) | `subject_kind?`, `slug?` | Never only (decision 0203) | none whole: the page checklist's opening and the Kutch Ajrakh bar as guide pages (`Prompt.guide`) |
 
 - Each of the first six returns one user message: the task, the steps naming the tools in order
   (`list_open_work`, `reserve_tasks`, `get_facts` and `get_page`, `list_components` first for a
@@ -583,7 +586,10 @@ and reading sources and Never:
   layout in `edit_draft`'s add, pictures with `give_pictures` and `edit_draft`, `preview_page` with
   the draft and fix against the report until no fixable failure is left, `propose_page` with the
   draft once, follow with `get_proposal`, `my_work` and `edit_draft` by its id, and what to do when
-  each gate refuses. Its sections are those of `deliver_page`; its references are all six.
+  each gate refuses. Since decision 0203 it carries no skill section but Never and no reference
+  whole: under "The guide, page by page" it says which tool hands which page and carries the page
+  checklist's opening (`page-checklist/1`) and the Kutch Ajrakh bar (`bar/1`), each headed by where
+  it sits.
 
 ### Resources
 
@@ -601,6 +607,7 @@ and reading sources and Never:
 | The answer kit and view | `kalavigyan://design/answer-kit.md` and `ui://kalavigyan/answer.html` | `text/markdown`; `text/html;profile=mcp-app` |
 | The page preview view | `ui://kalavigyan/page-preview.html` | `text/html;profile=mcp-app` |
 | Each kind's spec schema (decision 0111) | `kalavigyan://components/{kind}.schema.json` | `application/schema+json` |
+| A page of a guide (decision 0203), from the template only | `kalavigyan://guides/{topic}/{page}` | `text/markdown` |
 
 - The page preview view is `data/design/page-preview-view.html` through `data/page_preview_view.py`:
   one self-contained page, `default-src 'none'` and its one script allowed by hash, the four themes'
@@ -610,7 +617,53 @@ and reading sources and Never:
   each part's outcome.
 - `resources/templates/list` gives `kalavigyan://components/{kind}.schema.json`, and every kind a
   contributor may deliver is also listed as its own resource (`api/mcp_component_schemas.py`): the
-  JSON schema of the kind's spec, the model the server checks a delivered spec with.
+  JSON schema of the kind's spec, the model the server checks a delivered spec with. It gives
+  `kalavigyan://guides/{topic}/{page}` second (Guide pages, below); the pages are read from the
+  template and not listed one by one.
+
+### Guide pages (decision 0203)
+
+A client such as Claude.ai shows its model the instructions, the tool descriptions and the tools'
+results, never a resource the model did not choose to open, so the guide travels in the results:
+
+- **The guides.** Every `text/markdown` resource but the index (the contributor skill, the datasets
+  and interactives skills and their references, the six references, the five contracts, the answer
+  kit and the drawing guide) is a guide named by its file (`page-checklist`, `components`,
+  `storyboard`, `drawing`, `open-work`, `kalavigyan-contributor`), beside two made by the server:
+  `bar`, Kutch Ajrakh's pictures, figures, interactives and maps chapter by chapter with its link,
+  and `contents`, every page of every other guide with the sections it holds (`api/mcp_guides.py`).
+- **The pages.** A guide is cut into numbered pages of at most 6,000 bytes (`data/guide_pages.paged`):
+  a page holds whole `## ` sections while they fit, a section longer than a page is cut at its
+  blank lines, a paragraph longer than a page at its lines, and a line at a character, never a
+  heading inside a fence. The pages joined are the guide byte for byte; the guide stays its rules'
+  one home. A page is `{address, title, page, pages, sections, next, whole, text}` (`GuideSheet`):
+  its address `<topic>/<n>`, the sections it holds (one it continues as "(continued)"), the next
+  page's address and the whole guide's uri. Read as `kalavigyan://guides/<topic>/<n>`, its text opens
+  on one line naming where it sits ("> The page checklist, page 1 of 3 (page-checklist/1): ... Next:
+  page-checklist/2. Whole: ..."); an unknown topic or page is `-32002`.
+- **Any page through a tool.** `get_page {guide: "<topic>/<n>"}` returns that page alone, an unknown
+  one a tool error naming the pages there are.
+- **The page at the step.** A result carries `guide` (`HandedGuide {pages (one or two), next, rules?,
+  readToken?, how}`), the pages for what the agent is doing, at most two, and `next`, the first page
+  it holds back or the page after one it gave: `get_page` with no subject or with a page's coverage,
+  and the `curate_page` prompt, the checklist's opening and the bar; `edit_draft` adding components,
+  each kind's design rules (`KIND_RULES`: a declared kind "The declared kinds", `timeline_map` "A map
+  of places", the swatches "Depicted materials", `drawing` "The design rules for a contributed
+  figure", `diagram` "The figure kit", a player the interactives skill's "What a state may show",
+  any other kind "Units and citations"), and for `drawing` and `diagram` also the contract's "The
+  figure kit (decision 0199)"; `preview_page`, the checklist page of every rule the report fails,
+  with `rules[{rule, page}]`; `give_pictures`, the pages of rules 2, 3, 7 and 14 with their `rules`;
+  `compose_component`, the storyboard.
+- **Read before building.** A draft's first `edit_draft` that adds components (the draft holds none
+  yet), and a `preview_page` of a bundle with components, are answered with a tool error that
+  changes nothing and carries the design pages (the pages holding components' "The design rules for
+  a contributed figure" and "The figure kit", at most two) and a `read_token`. The same call sent
+  again with `read_token` goes on. A session's reading is known by that token and kept by the
+  session that holds it: the token is `kvread-` and the first 16 hex digits of the SHA-256 of the
+  design pages' addresses and texts, so only a session handed those pages as they read now can send
+  it, and the server keeps nothing; a changed design page changes the token and is handed over
+  again. Any result that hands every design page carries the token too. A draft that already holds
+  components is not held back again; each later add still hands its kinds' pages.
 
 ## HTTP
 
@@ -702,7 +755,11 @@ and a draft or a bundle of more than one part also against the page bundles; a b
 counts against that part's kind alone, as its retired tool did. A part is also refused when it names
 another page (a fact's or structure item's subject), when a category's bundle carries structure or
 pictures, when a component is keyed to another craft (`craft_slug` or a `CRAFT` subject), or when it
-cites a bundle fact that was refused. A refused part rolls back only itself: the others stand, and
+cites a bundle fact that was refused. A page whose account's latest live preview of it failed its
+drawing checks (rule 28, below) is refused whole before any part runs, naming the problems; a later
+preview that does not fail them lifts it, and so does one whose pictures could not be made
+(`services/page_renders.refuse_a_failed_drawing`, run by `services/page_proposals.propose_page` and
+`services/page_holds.hold_page`). A refused part rolls back only itself: the others stand, and
 one report lists every part `{part, index, outcome ACCEPTED or REFUSED, status, id, message,
 upload?, matches?, waysOn?}` with the counts; a component refused for a close match carries the
 matches and the two ways on. A component citing a bundle fact that waits for review is stored, and
@@ -740,21 +797,57 @@ with `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow`. H
 `MonographPage` exactly as the site draws its pages, `noindex`; signed out it sends the reader to
 sign in and back, and any other answer is the not-found page.
 
+### Drawn as a reader sees it (decision 0195)
+
+Over MCP, once the report is made, `preview_page` commits the preview and asks the renderer
+(`kv-renderer`, `RENDERER_URL`, `POST /render` with `RenderRequest {previewUrl, renderPass, plan}`,
+`research/page_render.py`) to draw the private link. The pass is a token of the preview's shape,
+`<preview id hex>.<expiry epoch>.<HMAC-SHA256>`, signed for the account with a key of its own
+(`page_preview_links.render_key`) and alive two minutes; the renderer sends it as the
+`x-kv-render-pass` header on every request to the site and on nothing else. The session routes
+stay as they are; the pass opens two routes of its own. The web route reads the document with it in
+place of a session from `GET /api/knowledge/pages/previews/{token}/drawn` (`serverFetch.renderPassFetch`,
+`page_preview_links.pass_document`), and the site's proxy sends a picture request that carries the
+pass, `/api/knowledge/pages/pictures/{id}` as the document names it, to `GET
+/api/knowledge/pages/drawn-pictures/{id}` (`apiProxy.upstreamPath`), which serves only a picture that
+preview shows (`page_preview_pictures.pass_picture_file`). Both answer 404 to a pass of another
+preview, an expired one or the preview's own link, and 422 without a pass.
+
+The renderer opens the link at 390 by 844 px (as a phone) and at 1440 by 900 px, in light with
+motion reduced, lets every picture load and runs `backend/app/data/design/drawing-checks.js` on each
+component the document lists (`RenderPlan`: its label, its role from its kind, picture, chart, map,
+interactive or figure, and whether the layout places it; the masthead picture; the chapters), the
+same copy Monograph parity runs on live pages. It returns `RenderResult {problems[{width, label,
+problem}], images[{name, caption, width, height, data}], blocked[], seconds}`: the first screen at
+both widths (the desktop's at half size) and each chapter at 1440 px from its top, 1600 px at most,
+at two fifths size, JPEG, at most 1 MB in all, kept in that order (`kept_images`). `blocked` names
+what the browser was kept from. A renderer that is down, busy for 5 s, slower than 35 s or that
+cannot open the link answers `RenderUnmade {reason UNREACHABLE | BUSY | TIMEOUT | REFUSED | BROWSER |
+ELSEWHERE, message}` and the report is given all the same. The verdict is kept on the preview
+(`PagePreview.drawing` CHECKED, FAILED or UNMADE, `drawingProblems`).
+
 ## The checklist report (decision 0110)
 
 Over MCP, `preview_page`, of a bundle or a draft, reads back the stored preview document
 (`services/page_report.preview_report`) and reports it against the page checklist
 (`research/page_report.py`, the rules in `research/page_report_rules.py`); a preview whose document
 cannot be read back carries `report: null`. The rule titles are read from the checklist reference
-(`services/page_report.checklist_titles`), its one copy.
+(`services/page_report.checklist_titles`), its one copy. Rule 28 is judged until the page is drawn,
+then decided by the render (`research/page_report_drawing.with_drawing`), and the counts are recounted.
 
 `PageReport {schemaVersion 1, passed, failed, judged, rules[{rule, title, verdict PASS | FAIL | JUDGE,
-evidence[] (at most 12 lines)}] (all 26, in order), sentences, ledeSentences, fields[{field, chapter,
+evidence[] (at most 12 lines)}] (all 28, in order), sentences, ledeSentences, fields[{field, chapter,
 sentences, figures, held, standing DENSE | THIN | ABSENT}] (the sixteen, in vocabulary order),
 figures[{number, label, kind, title, field, chapter, cited}] (every component but pictures, numbered in
 reading order), figureKinds, sources, sourcesByGrade (A to D, or UNGRADED for a source the gates grade
 when it is proposed), suppliedSources, pictures[{label, chapter, caption, credit, licence}],
-picturesByLicence, message}`. A sentence is a placed `p` unit with facts outside a component; the lede
+picturesByLicence, message, drawing?, bar?}`. `drawing` is the render's `DrawingReport {state
+CHECKED | FAILED | UNMADE, widths[], problems[], images[{name, caption, width, height, bytes}],
+blocked[], reason?}`; `bar` is `BarCounts {barSlug Kutch-Ajrakh, page, bar, chapters[{chapter, page,
+bar}], note}`, each count `{pictures, figures, interactives, maps}` (a figure is any component but a
+picture plate; interactives and maps are figures too), the bar read from Kutch Ajrakh's content with
+its authored chapters under the generated page's names (`research/page_counts.py`); guidance only,
+never a verdict. A sentence is a placed `p` unit with facts outside a component; the lede
 is the sentences of the opening; a picture is a `picture_plate`.
 
 | Rule | Checked |
@@ -778,6 +871,7 @@ is the sentences of the opening; a picture is a `picture_plate`.
 | 25 | no sentence is told twice, and no figure's unit of 40 characters or more repeats one |
 | 26 | no text admits a gap ("not yet", "coming soon", "no data") and no field heading stands without a sentence |
 | 5 | judged, with the counts the masthead draws: the sources of the page's own sentences and, apart, those only a `related_crafts` component's sentences cite (`research/page_report_sources.py`) |
+| 28 | the render's problems at either width fail it, each as `<width> px, <label>: <problem>`; a render with none passes it; pictures that could not be made leave it judged with the reason, never passed |
 | 8, 11, 12, 13, 16, 19, 22 | judged, each with what to look at |
 
 ## Drafts (decision 0110)
@@ -891,11 +985,13 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Stewardship | `backend/tests/db/test_stewardship_db.py` |
 | Component proposals and their delivery | `backend/tests/research/test_component_proposals.py`, `backend/tests/db/test_component_proposals_db.py` and `test_delivered_components_db.py` |
 | Bundles, previews and the checklist report | `backend/tests/research/test_page_proposals.py`, `test_page_report.py`, `backend/tests/db/test_page_bundles_db.py`, `backend/tests/pages/test_page_preview_links.py` and `backend/tests/mcp/test_page_preview_view.py` |
+| The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
 | Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
 | A craft's own interactive, composed and placed as `edit_draft` takes it | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
 | The HTTP routes | `backend/tests/test_open_work_routes.py` and `backend/tests/public/test_route_inventory.py` |
 | The prompts and resources | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |
+| Guide pages, the page each tool hands over, the read token and the instructions | `backend/tests/mcp/test_guide_pages.py` and `test_step_guidance.py` |
 | The skills and references served | `backend/tests/mcp/test_contributor_kit.py`, `test_skill_references.py`, `test_reference_limits.py` and `test_interactives_skill.py` |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/open-work.md` byte for byte equal to this file |
 
@@ -903,5 +999,5 @@ The MCP section was last reviewed on 2026-11-21 (round 7: delivered components a
 source tools, supplied sources, drafts and the checklist report, decision 0110; the 21 tools of
 decision 0111), and every path, task kind and served skill here was checked against the code on
 2026-11-22; withdrawals, replacements, borrowed placements and held pages were added on 2026-11-24
-(decision 0193). Re-read it when a task kind, a prompt, a resource or a bundle part is added or changed;
+(decision 0193), and the guide pages handed over at each step the same day (decision 0203). Re-read it when a task kind, a prompt, a resource or a bundle part is added or changed;
 copy it to `backend/app/data/contributor/contracts/` in the same change.

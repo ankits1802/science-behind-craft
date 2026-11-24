@@ -145,6 +145,7 @@ class Settings(BaseSettings):
     )
     searxng_url: str = Field(default="http://127.0.0.1:8888", alias="SEARXNG_URL")
     fetcher_url: str = Field(default="http://127.0.0.1:8090", alias="FETCHER_URL")
+    renderer_url: str = Field(default="http://127.0.0.1:8091", alias="RENDERER_URL")
     exa_api_key: str | None = Field(default=None, alias="EXA_API_KEY")
     tavily_api_key: str | None = Field(default=None, alias="TAVILY_API_KEY")
     openalex_api_key: str | None = Field(default=None, alias="OPENALEX_API_KEY")

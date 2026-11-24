@@ -1,5 +1,5 @@
 locals {
-  box_log_streams = ["kv-api", "kv-worker", "kv-fetcher", "kv-contributions", "nginx-access", "nginx-error"]
+  box_log_streams = ["kv-api", "kv-worker", "kv-fetcher", "kv-contributions", "kv-renderer", "nginx-access", "nginx-error"]
 }
 
 resource "aws_cloudwatch_log_group" "box" {
