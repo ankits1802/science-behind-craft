@@ -102,6 +102,10 @@ REFUSALS: list[tuple[str, Callable[[dict[str, Any]], None]]] = [
         lambda spec: spec["textParts"][0]["chips"][0].update(source="KalaVigyan compound library"),
     ),
     ("experiment_lab", lambda spec: spec["experiments"].pop()),
+    (
+        "coded_figure",
+        lambda spec: spec.update(code=spec["code"].replace("(function () {", 'fetch("/x");', 1)),
+    ),
 ]
 
 
