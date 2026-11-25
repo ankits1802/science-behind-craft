@@ -58,7 +58,7 @@ export function sentenceCase(text: string): string {
   return text ? `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}` : text;
 }
 
-export function mineralSites(file: MineralsFile): MineralSite[] {
+export function mineralSites(file: Pick<MineralsFile, "sites" | "statuses">): MineralSite[] {
   return file.sites.map(([depId, name, state, longitude, latitude, classIndex, statusIndex, commodities]) => ({
     depId,
     name,
@@ -77,6 +77,13 @@ export function tally(keys: readonly string[], labels: (key: string) => string =
   const counts = new Map<string, number>();
   for (const key of keys) if (key) counts.set(key, (counts.get(key) ?? 0) + 1);
   return [...counts.entries()].map(([key, count]) => ({ key, label: labels(key), count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "en"));
+}
+
+export type MineralKeyRow = { id: string; label: string; count: number };
+
+export function mineralKeyRows(file: Pick<MineralsFile, "classes">, sites: readonly MineralSite[]): MineralKeyRow[] {
+  const counts = tally(sites.map((site) => String(site.classIndex)));
+  return file.classes.map((entry, at) => ({ id: entry.id, label: entry.label, count: counts.find((row) => row.key === String(at))?.count ?? 0 }));
 }
 
 export function mineralFinding(sites: readonly MineralSite[], classes: readonly { label: string }[]): string | null {

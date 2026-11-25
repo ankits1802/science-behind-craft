@@ -3,6 +3,7 @@ import { cache } from "react";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { parseNamedDocument } from "@/lib/monographRenderCitations";
 import { RENDER_PASS_HEADER } from "@/lib/server/apiProxy";
+import { withMapStills } from "@/lib/server/mapStills";
 import { incomingRequest, renderPassFetch, signedInFetch } from "@/lib/server/serverFetch";
 
 export const PREVIEW_TOKEN = /^[0-9a-f]{32}\.\d{1,12}\.[0-9a-f]{64}$/;
@@ -37,7 +38,7 @@ export const previewDocument = cache(async (token: string): Promise<PreviewRead>
   const result = pass
     ? await renderPassFetch(drawnApiPath(token), { parse: parseNamedDocument, pass })
     : await signedInFetch(previewApiPath(token), { parse: parseNamedDocument, request });
-  if (result.ok) return { kind: "shown", document: result.body };
+  if (result.ok) return { kind: "shown", document: await withMapStills(result.body) };
   if (result.status === SIGNED_OUT) return { kind: "signed-out" };
   if (result.status !== null && HIDDEN.has(result.status)) return { kind: "missing" };
   throw new Error(`${PREVIEW_UNAVAILABLE}: ${result.failure}`);

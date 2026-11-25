@@ -6,6 +6,7 @@ import { documentPart, documentPartPath, joinedDocument, laterRead, LATEST_READ,
 import { monographDocumentPath, type MonographPreviewSubject } from "@/lib/monographDocumentShape";
 import { parseNamedDocument } from "@/lib/monographRenderCitations";
 import { documentDigest } from "@/lib/monographRenderShell";
+import { withMapStills } from "@/lib/server/mapStills";
 import { prerenderedPages, STATIC_FETCH_TIMEOUT_MS } from "@/lib/server/readingPages";
 import { bodyOrAbsent, publicFetch, type ServerFetchResult } from "@/lib/server/serverFetch";
 import { STATIC_PAGE_REVALIDATE_SECONDS, type CraftParams } from "@/lib/sitePagesContract";
@@ -48,7 +49,7 @@ export async function documentRead(path: string, tag: string, read: PartRead): P
   if (first === null) return null;
   const later = Array.from({ length: first.parts - 1 }, (_, at) => partRead(documentPartPath(path, at + 1, laterRead(first, read.language)), tag));
   const parts = [first, ...(await Promise.all(later)).map(heldPart)];
-  return parseNamedDocument(joinedDocument(parts));
+  return withMapStills(parseNamedDocument(joinedDocument(parts)));
 }
 
 export const serverMonographDocument = cache(async (subject: MonographPreviewSubject, slug: string): Promise<MonographDocument | null> =>
