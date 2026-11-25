@@ -82,11 +82,12 @@ the lanes before the last four were released one at a time, the last four at onc
   2026-11-24); parity 25 of 25 after every release; CloudWatch without errors but one false
   stored-page alarm, whose cause decision 0190 fixed.
 - **Phone speed:** CI's phone budget (decision 0205: 360 px, CPU 4x, slow 4G, HTTP/1.1) measures
-  Kutch Ajrakh's largest element at 4.61 s after decision 0209 (4.78 s before), blocking 398 ms;
-  the 2.5 s target waits on the fonts preloaded ahead of the masthead photograph (Newsreader italic,
-  142.8 KB, for one caption line, is the design's choice) and the kit stylesheet's split
-  (`docs/TECH_DEBT.md`, Speed left after the quality lane). Lighthouse at 360 on release dab903fd:
-  Kutch Ajrakh 83 with an LCP of 4.68 s; 98 to 100 at 1440.
+  Kutch Ajrakh's largest element at 2.79 s after decision 0221 (4.61 s before), blocking 183 ms:
+  the masthead photograph is asked for before the faces and only the kit rules of the boxes a page
+  draws block its paint. The 2.5 s target waits on the two Newsreader faces sharing the network with
+  the photograph (their priority, and Newsreader italic's preload for one caption line, are the
+  design's choice) (`docs/TECH_DEBT.md`, Speed left after the quality lane). Lighthouse at 360 on
+  release dab903fd: Kutch Ajrakh 83 with an LCP of 4.68 s; 98 to 100 at 1440.
 - **The register** (`docs/TECH_DEBT.md`) holds 46 entries, most waiting on the owner or on time.
   Among the lead's: the ElevenLabs tool calls, languages and CSP hosts; the relief bands' rebuild;
   a rollback's window before its pages are rebuilt; the Listen dock's first focus; the write-back

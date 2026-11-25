@@ -709,7 +709,7 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
   sheet (`/monographs/kit/first/<scopes>.css`) holds only the kit rules of the `.bx-<scope>` boxes
   the server draws, and the whole kit arrives after hydration, so a box the reader is not named to
   draws unstyled until then. A component that draws a `bx-<scope>` box names it in
-  `components/monograph/kitFirstScopes.ts`; `e2e/kit-first-scopes-unit.spec.ts` fails on a drawn box
+  `components/monograph/kitFirstScopes.ts` (a shell's in `lib/kitShellScopes.ts`); `e2e/kit-first-scopes-unit.spec.ts` fails on a drawn box
   its page's sheet leaves out (decision 0221). Never link `MONOGRAPH_KIT_CSS` render-blocking on a
   reader page.
 - **Writing outside the files a task owns** while other lanes run: shared changes reach their

@@ -96,8 +96,8 @@ stylesheet (`MONOGRAPH_KIT_CSS`) styles it. Only the kit rules of the boxes the 
 the first paint (decision 0221): the page links one first sheet,
 `/monographs/kit/first/<scopes>.css` (`lib/kitFirstSheet.ts`, served by
 `app/monographs/kit/first/[sheet]/route.ts`), the kit less every rule whose selectors all need a
-`.bx-<scope>` box the page does not draw (`documentScopes` and `shellScopes` in
-`components/monograph/kitFirstScopes.ts` read the scopes from the chapters or shell nodes the server
+`.bx-<scope>` box the page does not draw (`documentScopes` in
+`components/monograph/kitFirstScopes.ts` and `shellScopes` in `lib/kitShellScopes.ts` read the scopes from the chapters or shell nodes the server
 draws: the masthead, the sub-rail and contents, each passage, each drawn slot's home and the boxes
 in its fragments, the sources); the scopes are named in the kit's order (`chem`, `pt`, `rm`, `mb`,
 `ask`, `sa`) and any other name is a 404. The whole kit follows as a React stylesheet of precedence

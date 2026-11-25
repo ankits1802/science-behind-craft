@@ -745,27 +745,23 @@ Last reviewed: 2026-11-22.
 ### Speed left after the quality lane
 
 - **What:** on the phone budget's slowed phone (360 px, the CPU slowed four times, slow 4G,
-  decision 0205) Kutch Ajrakh's masthead photograph paints at 4,612 ms and the page of every
-  kind's at 4,568 ms (run 45545594071, decision 0209), against the 2.5 s target. No long task runs
-  before the paint; the network holds it. (1) The photograph is asked for after the five preloaded
-  first-screen faces (336 KB), because React writes font preloads into the head before image
-  preloads and the browser serves a priority's requests in the order asked: on the smoke server's
-  six HTTP/1.1 connections it has one at about 1.75 s and then shares 1.47 Mbit/s with both
-  Newsreader faces (270 KB), the kit stylesheet and the first scripts until about 4.2 s. (2) The
-  kit stylesheet (84.6 KB, render-blocking, after the app's three) ends at 2.9 to 4.4 s. (3)
-  Newsreader italic (142.8 KB) is preloaded for one caption line of Kutch Ajrakh's first screen,
-  the landing's emphasis and the sign-in caption. After its first paint Kutch Ajrakh is blocked
-  398 ms, the framework chunk running 332 ms in long frames as it hydrates and draws the rest in a
-  transition, the kit 215 ms as it starts.
-- **Why left:** (1) needs the first-screen faces preloaded by the page instead of by `next/font`,
-  whose preloads React always writes first; (2) needs a first sheet per page, because a page's lead
-  holds any of the kit's six box scopes and the stylesheet interleaves them, so only the lead's own
-  scopes keep the cascade the approved page is built from (decision 0100); (3) is a design-system
-  decision on the faces a first screen draws. Binding the kit's players and dips as they near was
-  measured and bought nothing (decision 0209).
-- **Clears it:** each of the three, measured by the phone budget's path record (`phone-measure.json`
-  `paths`, decision 0209); the entry is deleted when both pages paint their largest element within
-  2.5 s, or rewritten to what is left.
+  decision 0205) Kutch Ajrakh's masthead photograph paints at 2,788 ms and the page of every
+  kind's at 2,920 ms (run 45604791573, decision 0221), against the 2.5 s target. No long task runs
+  before the paint, and the first paint (2.1 and 2.6 s) comes before the photograph ends. The
+  photograph is asked for first and has a connection at once, but shares 1.47 Mbit/s with both
+  Newsreader faces (270 KB), which the head asks for after it at High priority and so take the next
+  free connections ahead of the scripts, and with the first sheet and the app's sheets, until 2.77
+  and 2.86 s. Newsreader italic (142.8 KB) is preloaded for one caption line of Kutch Ajrakh's first
+  screen, the landing's emphasis and the sign-in caption. The page of every kind's lead draws three
+  of the kit's six box scopes, so its first sheet is 55.8 KB.
+- **Why left:** the faces' priority and Newsreader italic's preload are design-system decisions: a
+  face asked for at low priority, or not preloaded, would leave a first screen in its metric-matched
+  fallback face until after the photograph. A first sheet narrower than its sections would keep only
+  the rules a page's lead elements match, which needs the lead's markup at build or render, not its
+  scopes.
+- **Clears it:** each measured by the phone budget's path record (`phone-measure.json` `paths`,
+  decision 0209); the entry is deleted when both pages paint their largest element within 2.5 s,
+  or rewritten to what is left.
 
 ### The geo ETL stays on Python 3.14
 
