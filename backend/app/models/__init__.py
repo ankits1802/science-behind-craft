@@ -100,7 +100,7 @@ from app.models.knowledge import (
 from app.models.knowledge_pieces import KnowledgePiece, KnowledgePieceSubject
 from app.models.layout_proposals import LayoutProposal
 from app.models.lessons import LessonPack
-from app.models.media_refs import MediaRef, MediaRefClaim
+from app.models.media_refs import MediaRef, MediaRefClaim, PictureCheck
 from app.models.monograph_documents import MonographDocument
 from app.models.oauth import (
     McpTermsAcceptance,
@@ -253,6 +253,7 @@ __all__ = [
     "PageTranslation",
     "PasswordResetRequest",
     "PasswordResetToken",
+    "PictureCheck",
     "PictureDeclaration",
     "PlaceLookup",
     "Process",

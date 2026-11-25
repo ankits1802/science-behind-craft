@@ -26,7 +26,7 @@ from app.research.media_refs import MediaRef
 
 from .craft_picture_context import craft_picture_context
 from .live_sources import LiveSourcesStore
-from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, SqlMediaStore, StoredPicture
+from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, VISION_RELEVANCE, SqlMediaStore, StoredPicture
 from .picture_sites import blocked_picture
 from .served_pictures import served_picture
 
@@ -50,7 +50,6 @@ logger = logging.getLogger(__name__)
 
 CANDIDATES_PER_SOURCE = 10
 IMAGE_SEARCH_SECONDS = 6.0
-VISION_RELEVANCE = "VISION"
 
 SourcesOf = Callable[[], Awaitable[Sequence[ImageSource]]]
 ContextOf = Callable[[str | None], Awaitable[PictureContext]]
@@ -148,7 +147,7 @@ def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> 
     for picture in pictures:
         if served_picture(picture, context):
             linked.setdefault(picture.media.id, []).append(picture)
-    ordered = sorted(linked.values(), key=lambda links: links[0].media.display != INLINE_DISPLAY)
+    ordered = sorted(linked.values(), key=_shown_first)
     items: list[ImageItem] = []
     cards = 0
     for links in ordered:
@@ -158,6 +157,11 @@ def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> 
         cards += card
         items.append(_stored_item(links))
     return items[:SECTION_IMAGES_MAX]
+
+
+def _shown_first(links: Sequence[StoredPicture]) -> tuple[bool, bool]:
+    seen = any(link.relevance == VISION_RELEVANCE for link in links)
+    return links[0].media.display != INLINE_DISPLAY, not seen
 
 
 def _stored_item(links: Sequence[StoredPicture]) -> ImageItem:

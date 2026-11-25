@@ -31,6 +31,7 @@ import { NOTIFICATION_KINDS, SECTION_CHANGES } from "@/lib/learningContract";
 import { CITATION_FORMATS, LESSON_FORMATS, SLIDE_KINDS } from "@/lib/lessonContract";
 import { COLOUR_SIDES, FORMULA_BASES } from "@/lib/explainerMatter";
 import { MEDIA_JOB_STATUSES, MEDIA_KINDS } from "@/lib/mediaContract";
+import { CHECK_STATES, PICTURE_VERDICTS } from "@/lib/pictureCheckContract";
 import { UNIT_REF } from "@/lib/unitIds";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
 import { MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, STAGE_TYPES } from "@/lib/scienceContract";
@@ -129,6 +130,8 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["models/people_vocabulary.py", "TESTIMONY_SCREENS", TESTIMONY_SCREENS],
   ["models/people_vocabulary.py", "LOCATOR_PRECISIONS", LOCATOR_PRECISIONS],
   ["models/admin_work.py", "STAGED_KIND_VALUES", STAGED_KINDS],
+  ["models/media_refs.py", "PICTURE_VERDICTS", PICTURE_VERDICTS],
+  ["research/picture_checks.py", "CHECK_STATES", CHECK_STATES],
   ["models/admin_work.py", "STAGED_ACTION_VALUES", STAGED_ACTIONS],
   ["models/admin_work.py", "ITEM_STATES", ITEM_STATES],
   ["models/enums.py", "SOURCE_KINDS", SOURCE_KINDS],

@@ -200,14 +200,14 @@ def _fact(claim: Any, concept: Any) -> ClaimFacts:
 async def _stored_extras(session: AsyncSession, craft: Craft, records: CraftPageRecords) -> CraftPageRecords:
     claim_ids = [view.id for view in records.views]
     links = await session.execute(
-        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance)
+        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance, MediaRefClaim.refusedAt)
         .join(MediaRefClaim, MediaRefClaim.mediaRefId == MediaRefRow.id)
         .where(MediaRefClaim.claimId.in_(claim_ids), MediaRefRow.id.not_in(field_media()))
         .order_by(MediaRefRow.id, MediaRefClaim.claimId)
     )
     stored = [
-        StoredPicture(stored_media_ref(row), claim_id, relevance)
-        for row, claim_id, relevance in links.tuples()
+        StoredPicture(stored_media_ref(row), claim_id, relevance, refused_at is not None)
+        for row, claim_id, relevance, refused_at in links.tuples()
     ]
     pictures = stored_page_pictures(stored, await picture_context_of(session, craft))
     return replace(records, pictures=pictures, terms=await _terms(session, craft))

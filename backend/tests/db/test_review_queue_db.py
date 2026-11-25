@@ -64,6 +64,7 @@ async def test_an_admin_sees_every_pending_kind_from_other_people_newest_first(
         "READINGS",
         "LAYERS",
         "STAGES",
+        "PICTURE_CHECKS",
     ]
     assert (page.counts, page.total, page.next_cursor) == (
         {
@@ -76,6 +77,7 @@ async def test_an_admin_sees_every_pending_kind_from_other_people_newest_first(
             "READINGS": 0,
             "LAYERS": 0,
             "STAGES": 0,
+            "PICTURE_CHECKS": 0,
         },
         5,
         None,

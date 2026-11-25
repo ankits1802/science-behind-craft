@@ -19,6 +19,7 @@ from app.models import (
     ImageContribution,
     LayoutProposal,
     MapLayerProposal,
+    MediaRefClaim,
     StructureProposal,
     TaskReservation,
 )
@@ -45,6 +46,7 @@ from app.research.open_work import (
 from app.research.open_work_gap_tasks import OpenGap
 from app.research.open_work_links import DEAD_SOURCE, UNARCHIVED_SOURCE, sources_in_state
 from app.research.open_work_tasks import chosen_tasks, open_tasks, reviewed_queues, subject_tasks
+from app.research.picture_checks import CHECKED_QUEUE
 from app.research.review_queue import READINGS
 
 from .claim_holds import held_in_queue
@@ -55,9 +57,11 @@ from .open_work_flagships import category_component_kinds
 from .open_work_gaps import asked_tasks, open_gaps
 from .open_work_healing import Healing, subject_healing, with_healing
 from .open_work_pages import monograph_layouts
+from .open_work_picture_checks import picture_check_tasks
 from .open_work_pictures import picture_tasks
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key, work_subjects
 from .open_work_translations import translation_tasks
+from .picture_check_links import disputed_link
 from .review_queue_readings import reading_standing
 from .review_queue_select import waiting_stage
 
@@ -114,6 +118,7 @@ async def list_open_work(
         [
             *open_tasks(standings, queues, viewer),
             *await picture_tasks(session, standings),
+            *await picture_check_tasks(session, filters),
             *await translation_tasks(session, standings),
         ],
         filters,
@@ -172,6 +177,7 @@ async def review_queues(session: AsyncSession, queues: Sequence[str]) -> dict[st
         "STRUCTURE": (StructureProposal.createdAt, StructureProposal.status == PENDING),
         "LAYERS": (MapLayerProposal.createdAt, MapLayerProposal.status == PENDING),
         "STAGES": (Concept.createdAt, waiting_stage()),
+        CHECKED_QUEUE: (MediaRefClaim.createdAt, disputed_link()),
     }
     return {
         queue: await reading_standing(session)

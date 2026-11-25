@@ -10,6 +10,7 @@ from .base import ContractModel
 from .crafts import CraftRef
 from .image_contributions import ImageContributionView
 from .layout_proposals import LayoutReview
+from .picture_checks import PictureCheckReview
 from .review_queue_components import ComponentReview
 from .review_queue_layers import LayerReview
 from .review_queue_parts import FactSource, GateCheck
@@ -29,6 +30,7 @@ __all__ = [
     "HeldWriteBack",
     "LayerQueueItem",
     "LayoutItem",
+    "PictureCheckItem",
     "PictureItem",
     "Proposer",
     "QueueItem",
@@ -126,6 +128,11 @@ class StageQueueItem(_QueueItem):
     stage: StagePlacing
 
 
+class PictureCheckItem(_QueueItem):
+    kind: Literal["PICTURE_CHECKS"] = "PICTURE_CHECKS"
+    check: PictureCheckReview
+
+
 QueueItem = Annotated[
     FactItem
     | TestimonyItem
@@ -135,6 +142,7 @@ QueueItem = Annotated[
     | StructureQueueItem
     | ReadingQueueItem
     | LayerQueueItem
-    | StageQueueItem,
+    | StageQueueItem
+    | PictureCheckItem,
     Field(discriminator="kind"),
 ]

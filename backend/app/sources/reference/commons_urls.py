@@ -8,10 +8,12 @@ __all__ = [
     "COMMONS_WIDTHS",
     "commons_fitting_width",
     "commons_thumbnail_url",
+    "commons_upload_url",
     "standard_width",
 ]
 
 COMMONS_UPLOADS = "https://upload.wikimedia.org/wikipedia/commons/"
+COMMONS_THUMBS = "https://thumb.wikimedia.org/wikipedia/commons/thumb/"
 COMMONS_WIDTHS = (330, 500, 960, 1280, 1920)
 COMMONS_THUMB_NAME_MAX_BYTES = 120
 ORIGINAL = re.compile(
@@ -39,6 +41,12 @@ def commons_thumbnail_url(url: str, width: int) -> str | None:
     else:
         return None
     return f"{COMMONS_UPLOADS}thumb/{found['a']}/{found['ab']}/{name}/{width}px-{name}{suffix}"
+
+
+def commons_upload_url(url: str) -> str:
+    if not url.startswith(COMMONS_THUMBS):
+        return url
+    return f"{COMMONS_UPLOADS}thumb/{url.removeprefix(COMMONS_THUMBS).split('?', 1)[0]}"
 
 
 def standard_width(requested: int) -> int:

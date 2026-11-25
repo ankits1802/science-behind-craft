@@ -1,6 +1,11 @@
 import pytest
 
-from app.sources.reference.commons_urls import commons_fitting_width, commons_thumbnail_url, standard_width
+from app.sources.reference.commons_urls import (
+    commons_fitting_width,
+    commons_thumbnail_url,
+    commons_upload_url,
+    standard_width,
+)
 
 UPLOADS = "https://upload.wikimedia.org/wikipedia/commons/"
 
@@ -49,3 +54,36 @@ def test_a_requested_width_takes_the_first_standard_width_at_least_as_wide(
 )
 def test_a_standard_width_never_passes_the_original_s_own(original: int, width: int | None) -> None:
     assert commons_fitting_width(1051, original) == width
+
+
+@pytest.mark.parametrize(
+    ("url", "upload"),
+    [
+        (
+            "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Channapatna_toys107.jpg/"
+            "960px-Channapatna_toys107.jpg",
+            f"{UPLOADS}thumb/4/40/Channapatna_toys107.jpg/960px-Channapatna_toys107.jpg",
+        ),
+        (
+            "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Ajrak.jpg/960px-Ajrak.jpg"
+            "?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+            f"{UPLOADS}thumb/2/2a/Ajrak.jpg/960px-Ajrak.jpg",
+        ),
+        (f"{UPLOADS}5/54/AT_WORKSHOP.jpg", f"{UPLOADS}5/54/AT_WORKSHOP.jpg"),
+        (
+            "https://api.openverse.org/v1/images/04c049ef/thumb/",
+            "https://api.openverse.org/v1/images/04c049ef/thumb/",
+        ),
+    ],
+)
+def test_a_commons_thumbnail_served_from_the_thumb_host_is_read_from_the_upload_host(
+    url: str, upload: str
+) -> None:
+    assert commons_upload_url(url) == upload
+
+
+def test_a_thumb_host_picture_takes_a_standard_width_from_the_upload_host() -> None:
+    url = "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Toys.jpg/960px-Toys.jpg"
+    assert (
+        commons_thumbnail_url(commons_upload_url(url), 330) == f"{UPLOADS}thumb/4/40/Toys.jpg/330px-Toys.jpg"
+    )

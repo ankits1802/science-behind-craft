@@ -61,7 +61,9 @@ Services: `services/review_queue.py` (the page), `review_queue_select.py` (what 
 `review_queue_stages.py` (what a reviewer needs to judge an item, and the component, layout,
 structure, reading, map layer and stage decisions), `review_queue_decisions.py`,
 `review_queue_facts.py` (decisions),
-`review_queue_refresh.py` (the signed-out pages a decision refreshes) and `review_queue_errors.py`.
+`review_queue_refresh.py` (the signed-out pages a decision refreshes) and `review_queue_errors.py`;
+a picture check's body is `research/picture_checks.PictureCheckReview`, rendered and decided by
+`services/review_queue_picture_checks.py` (decision 0222).
 Route: `api/routes/review_queue.py`. The queue reads the rows each kind already keeps; a reading keeps
 its decision on its own row (`ConditionReading.reviewStatus`, `reviewedById`, `reviewedAt`,
 `reviewNote`; migration 0092), and its one table is `StageReview` (decision 0167): one row per
@@ -83,6 +85,7 @@ Each kind follows the capability its queue names in `research/open_work.py` (`RE
 | `READINGS` | `MARK_CLAIM_LEVEL` | Professor and above |
 | `LAYERS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
 | `STAGES` | `MARK_CLAIM_LEVEL` | Professor and above |
+| `PICTURE_CHECKS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
 
 So an Admin or Master Admin sees every kind (item 12); a Professor sees facts, testimony,
 structure, readings and stages. An
@@ -107,6 +110,7 @@ review already shows.
 | `READINGS` | `ConditionReading` | no `reviewStatus` yet, its process live, and `OUTSIDE` its stage's usual range: a bound, converted to the quantity's unit, falls below or above the stage type's envelope (`science/reading_checks.reading_check`, the same check the process view shows, `science.md`); the viewer did not write the fact it is read from. The envelope is computed when the queue is read, so a changed envelope changes what waits |
 | `LAYERS` | `MapLayerProposal` | `status` `PENDING` (its file passed the layer checks when it was uploaded), not the viewer's |
 | `STAGES` | `Concept` | a `PROCESS_STAGE` concept the write-back made for a craft (`originRef` `live_research`), with a shown fact about it, no `ProcessStage` naming it and no `StageReview`, whose craft has a live process with stages that is not the curated one (`review_queue_select.waiting_stage`) |
+| `PICTURE_CHECKS` | `MediaRefClaim` | a searched picture's link to a fact holding a `shows` and a `does_not_show` from two accounts and no Admin's ruling (`picture_check_links.disputed_link`; `open-work.md`, Picture checks); its origin is `AGENT`, it has no proposer, and a craft filter keeps the links whose fact the craft's page shows. Any checked link opens by its id, waiting or not |
 
 **Origins.** A fact's origin is `RESEARCH` when it was written back from an answer's research
 (`Claim.origin` `LIVE_RESEARCH`), `AGENT` when a source was found by an agent
@@ -127,7 +131,7 @@ reaction's stage). A map layer proposal belongs to no craft, so a craft filter s
 
 ## `GET /api/review-queue`
 
-Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES`), `craft` (a craft slug), `origin`
+Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES`, `PICTURE_CHECKS`), `craft` (a craft slug), `origin`
 (`RESEARCH`, `CONTRIBUTION`, `AGENT`, `TESTIMONY`), `cursor`, `limit` (1 to 50, default 25).
 
 Answer `ReviewQueuePage`:
@@ -220,6 +224,14 @@ A fact shown on its pages (`IN_REVIEW` or `APPROVED`) that is rejected or retrac
 rejected, drop the kept versions of their pages in the same transaction (decision 0213), so no
 earlier edition still states them: for a fact, of each of its pages with a copy, current or kept,
 that cites its id; for a reading, of every page it names (decision 0219).
+
+**Picture checks** (`review_queue_picture_checks.py`, decision 0222): approve and reject decide any
+searched picture's link, waiting or already decided by contributors' verdicts, as an Admin's
+`ruling` verdict (`PictureCheck.ruling`, the note or reason kept), with an audit entry
+`review.picture_check_<approved|rejected>`. Approve marks the link `VISION` and shows it again;
+reject hides it from its fact (`refusedAt`), the picture and its other links untouched. Either
+closes the link to further checks, and a later ruling reverses an earlier one. An Admin who checked
+the link themselves does not rule on it. The pages of the link's fact are refreshed.
 
 Approving or raising a waiting (`DRAFT`) fact publishes it and calls
 `candidate_writes.mark_sources_differ`, so a fact the duplicate gate found to differ from a held
@@ -342,7 +354,8 @@ instruction hidden in a quote or a contributed statement that the app reads and 
 most put a decision in front of a person, who sees it with its reason and the app that proposed it
 (decision 0170).
 
-- **Kinds.** `FACTS`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS` and `STAGES`, with
+- **Kinds.** `FACTS`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES` and
+  `PICTURE_CHECKS` (decision 0222, whose `StagedReviewItem` kind check migration `0119_picture_checks` widens), with
   the actions the routes above allow; `TESTIMONY` and `IMAGES` stay on the site, because they carry
   people's own voices, words and pictures, whose consent covers KalaVigyan's reviewers and not a
   third party's model. Two corrections are staged the same way: `SOURCES` (`correct` a source's
@@ -524,6 +537,7 @@ stay, and list decided items.
 | Structure proposals | `backend/tests/structure/`, `backend/tests/db/test_structure_proposals_db.py`, `test_structure_writes_db.py` and `test_structure_export_db.py` |
 | Readings outside their range | `backend/tests/science/test_reading_checks.py`, `backend/tests/db/test_reading_review_db.py` and `frontend/e2e/review-readings-unit.spec.ts` |
 | Map layer proposals | `backend/tests/research/test_map_layer_proposals.py` and `backend/tests/db/test_map_layer_proposals_db.py` |
+| Picture checks: disagreement in the queue, an Admin's ruling both ways | `backend/tests/db/test_picture_checks_db.py`, `backend/tests/images/test_picture_checks.py` and `frontend/e2e/review-picture-checks-unit.spec.ts` |
 | Refreshing signed-out pages | `backend/tests/test_page_revalidation.py`, `backend/tests/db/test_page_revalidation_db.py` and `test_review_queue_refresh_db.py` |
 | Staged over MCP: staging, confirming, expiry, the allowance and the corrections | `backend/tests/db/test_staged_reviews_db.py`, `backend/tests/mcp/test_staged_contract.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | Published content: a staged removal, its one code path and its page | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |

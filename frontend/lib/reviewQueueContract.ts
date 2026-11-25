@@ -2,6 +2,7 @@ import { apiFetch } from "@/lib/api";
 import { craftLinkShape, INSTANT, storedLevelShape, type CraftLink, type StoredLevel } from "@/lib/answerShapes";
 import { imageContributionShape, type ImageContribution } from "@/lib/imageContributionContract";
 import { layerReviewShape, type LayerReview } from "@/lib/layerReviewContract";
+import { pictureCheckShape, type PictureCheckReview } from "@/lib/pictureCheckContract";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { monographDocumentShape } from "@/lib/monographDocumentShape";
 import { boolean, dictionary, integer, knownOnly, list, nullable, number, object, oneOf, optional, parseShape, tagged, text, type Shape } from "@/lib/shape";
@@ -21,7 +22,7 @@ import { reviewEntryShape, type ClosedReviewItem, type RejectReason, type Review
 export type { FactSource, ReadingReview, SourceQuote, SuppliedProvenance };
 
 export const REVIEW_QUEUE_PATH = "/review-queue";
-export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES"] as const;
+export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS"] as const;
 export const REVIEW_ORIGINS = ["RESEARCH", "CONTRIBUTION", "AGENT", "TESTIMONY"] as const;
 export const QUEUE_ACTIONS = ["approve", "raise", "reject", "retract"] as const;
 export const LAYOUT_CHANGES = ["ADDED", "CHANGED", "REMOVED"] as const;
@@ -150,6 +151,7 @@ export type StructureItem = ItemBase & { kind: "STRUCTURE"; structure: Structure
 export type ReadingItem = ItemBase & { kind: "READINGS"; reading: ReadingReview };
 export type LayerItem = ItemBase & { kind: "LAYERS"; layer: LayerReview };
 export type StageItem = ItemBase & { kind: "STAGES"; stage: StagePlacing };
+export type PictureCheckItem = ItemBase & { kind: "PICTURE_CHECKS"; check: PictureCheckReview };
 export type QueueItem =
   | FactItem
   | TestimonyItem
@@ -159,7 +161,8 @@ export type QueueItem =
   | StructureItem
   | ReadingItem
   | LayerItem
-  | StageItem;
+  | StageItem
+  | PictureCheckItem;
 
 export type ReviewQueuePage = {
   schemaVersion: 1;
@@ -313,7 +316,8 @@ export const queueItemShape: Shape<QueueItem> = tagged<QueueItem>("kind", {
   STRUCTURE: object<StructureItem>({ ...base, kind: oneOf(["STRUCTURE"] as const), structure: structureShape }),
   READINGS: object<ReadingItem>({ ...base, kind: oneOf(["READINGS"] as const), reading: readingShape }),
   LAYERS: object<LayerItem>({ ...base, kind: oneOf(["LAYERS"] as const), layer: layerReviewShape }),
-  STAGES: object<StageItem>({ ...base, kind: oneOf(["STAGES"] as const), stage: placingShape })
+  STAGES: object<StageItem>({ ...base, kind: oneOf(["STAGES"] as const), stage: placingShape }),
+  PICTURE_CHECKS: object<PictureCheckItem>({ ...base, kind: oneOf(["PICTURE_CHECKS"] as const), check: pictureCheckShape })
 });
 
 export function isQueueKind(value: unknown): value is QueueKind {

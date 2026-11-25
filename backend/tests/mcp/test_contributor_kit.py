@@ -40,6 +40,7 @@ CONTRIBUTOR_TOOLS = (
     "propose_page",
     "compose_component",
     "give_pictures",
+    "check_pictures",
 )
 ADMIN_TOOLS = ("review_queue", "stage_reviews", "refresh_pages", "admin_reports")
 RETIRED_TOOLS = (

@@ -73,6 +73,7 @@ from app.retrieval.field_scope import FIELD_STALE_AFTER
 from app.retrieval.statements import CraftScope, scope_claims, scope_concepts
 
 from .contributed_pictures import shown_contributions
+from .media_ref_store import VISION_RELEVANCE
 from .page_code import page_code_fingerprint
 
 __all__ = [
@@ -219,9 +220,12 @@ def _reading_terms(stages: Select[Any]) -> Terms:
 
 def _picture_terms(shown: ColumnElement[bool]) -> Terms:
     linked = select(MediaRefClaim.mediaRefId).where(shown)
+    seen = shown & (MediaRefClaim.relevance == VISION_RELEVANCE)
     return {
         **counted_terms("pictures", MediaRefClaim.mediaRefId, MediaRefClaim.createdAt, shown),
         **counted_terms("mediaRefs", MediaRef.id, MediaRef.updatedAt, MediaRef.id.in_(linked)),
+        **counted_terms("picturesRefused", MediaRefClaim.refusedAt, MediaRefClaim.refusedAt, shown),
+        "picturesSeen": count_term(MediaRefClaim.mediaRefId, seen),
     }
 
 

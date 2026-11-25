@@ -614,7 +614,9 @@ sequenceDiagram
    pictures already stored for the cited claims first, a search only when none is (decision
    0166), a stored searched picture served only while its title names the craft's world (decision
    0207; the one rule, `services/served_pictures.served_picture`, is also what a craft page without
-   a dossier and the zoom story serve by, decision 0215); each service has 6 s, the step 8 s, and a failure or timeout sends no `images` block
+   a dossier and the zoom story serve by, decision 0215, and it drops a link a contributor's
+   verdict refused, serving a link a person saw first: decision 0222, whose `check_pictures` hands
+   stored searched links to contributors' AI clients to look at); each service has 6 s, the step 8 s, and a failure or timeout sends no `images` block
    and leaves the section ready.
 2. Terms: `seed_claims` also seeds the `Term` glossary (`services/term_glossary.seed_terms`) from
    craft names, aliases and matched Wikidata labels, the seed's local names with what they mean

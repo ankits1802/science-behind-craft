@@ -21,6 +21,7 @@ from .image_contributions_tasks import PICTURE_TASK, is_picture_detail
 from .open_work_flagship_backlog import FLAGSHIP_TASK
 from .open_work_gap_keys import GAP_TASK, is_gap_detail
 from .open_work_translation_keys import TRANSLATE_TASK, is_translation_detail
+from .picture_checks import CHECKED_QUEUE, PICTURE_CHECK_TASK, is_check_detail
 from .translation_passages import TaskPassage
 from .vocabulary import Discipline
 
@@ -88,10 +89,11 @@ TASK_KINDS = (
     "FIND_ANOTHER_SOURCE",
     "REVIEW",
     PICTURE_TASK,
+    PICTURE_CHECK_TASK,
     TRANSLATE_TASK,
     GAP_TASK,
 )
-UNRESERVABLE_KINDS = frozenset({"REVIEW"})
+UNRESERVABLE_KINDS = frozenset({"REVIEW", PICTURE_CHECK_TASK})
 PRIORITIES = ("HIGH", "MEDIUM", "LOW")
 SUBJECT_KINDS = ("craft", "family", "category")
 REVIEW_QUEUES: Mapping[str, Capability] = MappingProxyType(
@@ -105,6 +107,7 @@ REVIEW_QUEUES: Mapping[str, Capability] = MappingProxyType(
         "READINGS": Capability.MARK_CLAIM_LEVEL,
         "LAYERS": Capability.REVIEW_CONTRIBUTIONS,
         "STAGES": Capability.MARK_CLAIM_LEVEL,
+        CHECKED_QUEUE: Capability.REVIEW_CONTRIBUTIONS,
     }
 )
 REVIEW_QUEUE_LABELS: Mapping[str, str] = MappingProxyType(
@@ -118,6 +121,7 @@ REVIEW_QUEUE_LABELS: Mapping[str, str] = MappingProxyType(
         "READINGS": "readings outside their stage's range",
         "LAYERS": "map layer proposals",
         "STAGES": "process stages answers found",
+        CHECKED_QUEUE: "searched pictures whose checks disagree",
     }
 )
 COMPONENT_NEEDS: Mapping[str, tuple[str, ...]] = MappingProxyType(
@@ -362,6 +366,8 @@ def parse_task_key(key: str) -> TaskKey:
         if len(parts) != 2 or parts[1] not in REVIEW_QUEUES:
             raise InvalidInput(f"{key} names no review queue")
         return TaskKey(parts[0], detail=parts[1])
+    if parts[0] == PICTURE_CHECK_TASK:
+        return _check_key(key, parts)
     if len(parts) not in (3, 4) or parts[1] not in SUBJECT_KINDS or not SLUG_PATTERN.match(parts[2]):
         raise InvalidInput(f"{key} is not a task key; list_open_work gives the keys")
     detail = parts[3] if len(parts) == 4 else None
@@ -375,3 +381,11 @@ def parse_task_key(key: str) -> TaskKey:
     ):
         raise InvalidInput(f"{key} names neither a field nor a component need")
     return TaskKey(parts[0], parts[1], parts[2], detail)
+
+
+def _check_key(key: str, parts: list[str]) -> TaskKey:
+    if len(parts) == 1:
+        return TaskKey(parts[0])
+    if len(parts) != 2 or not is_check_detail(parts[1]):
+        raise InvalidInput(f"{key} names no searched picture's link; check_pictures gives them")
+    return TaskKey(parts[0], detail=parts[1])

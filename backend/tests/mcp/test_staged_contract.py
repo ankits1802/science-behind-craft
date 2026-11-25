@@ -42,7 +42,16 @@ def test_the_goldens_are_what_the_api_serves_field_for_field() -> None:
 
 
 def test_mcp_review_leaves_testimony_and_pictures_to_the_site() -> None:
-    assert MCP_QUEUE_KINDS == ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES")
+    assert MCP_QUEUE_KINDS == (
+        "FACTS",
+        "COMPONENTS",
+        "LAYOUTS",
+        "STRUCTURE",
+        "READINGS",
+        "LAYERS",
+        "STAGES",
+        "PICTURE_CHECKS",
+    )
     assert set(MCP_QUEUE_KINDS) == set(QUEUE_KINDS) - {"TESTIMONY", "IMAGES"}
 
 

@@ -345,6 +345,7 @@ ALL_QUEUES = (
     "READINGS",
     "LAYERS",
     "STAGES",
+    "PICTURE_CHECKS",
 )
 
 

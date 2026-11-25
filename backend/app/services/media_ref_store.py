@@ -26,6 +26,7 @@ __all__ = [
     "INLINE_DISPLAY",
     "LINK_CARD_DISPLAY",
     "TEXT_RELEVANCE",
+    "VISION_RELEVANCE",
     "SqlMediaStore",
     "StoredPicture",
     "field_media",
@@ -41,6 +42,7 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 TEXT_RELEVANCE = "TEXT"
+VISION_RELEVANCE = "VISION"
 INLINE_DISPLAY = "INLINE"
 LINK_CARD_DISPLAY = "LINK_CARD"
 KEY_SEPARATOR = "\x1f"
@@ -91,6 +93,7 @@ class StoredPicture:
     media: MediaRef
     claim_id: uuid.UUID
     relevance: str
+    refused: bool = False
 
 
 async def stored_pictures(
@@ -103,7 +106,7 @@ async def stored_pictures(
     if not order:
         return []
     rows = await session.execute(
-        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance)
+        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance, MediaRefClaim.refusedAt)
         .join(MediaRefClaim, MediaRefClaim.mediaRefId == MediaRefRow.id)
         .where(
             MediaRefClaim.claimId.in_(list(order)),
@@ -113,9 +116,9 @@ async def stored_pictures(
         .order_by(MediaRefRow.retrievedAt, MediaRefRow.id)
     )
     found: list[StoredPicture] = []
-    for row, claim_id, relevance in rows.tuples().all():
+    for row, claim_id, relevance, refused_at in rows.tuples().all():
         try:
-            found.append(StoredPicture(stored_media_ref(row), claim_id, relevance))
+            found.append(StoredPicture(stored_media_ref(row), claim_id, relevance, refused_at is not None))
         except ValidationError as refused:
             logger.error("stored media %s is off its contract and is not shown: %s", row.id, refused)
     return sorted(found, key=lambda picture: order[picture.claim_id])

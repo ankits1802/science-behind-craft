@@ -28,6 +28,8 @@ def searched_text_link(picture: StoredPicture) -> bool:
 
 def served_picture(picture: StoredPicture, context: PictureContext) -> bool:
     media = picture.media
+    if picture.refused:
+        return False
     if blocked_picture(page_url=media.page_url, image_url=media.image_url, title=media.title):
         return False
     return not searched_text_link(picture) or context.named_in(media.title)

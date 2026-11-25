@@ -1,6 +1,6 @@
 ---
 name: kalavigyan-contributor
-description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and the science behind them, through its MCP server and its 23 tools - find and reserve open work, read a page whole, search, read and check sources with the same registries, reader and quote matcher KalaVigyan uses itself (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators in batches and follow them through the queue, give structure and new sources, build whole pages in a draft (edit_draft) and see them with their checklist report (preview_page) before proposing them once (propose_page), deliver finished components and figures, and give pictures with the person's own declaration (give_pictures). The rules live in six references served beside it (the page checklist, sources, quotes and locators, the fields, components, datasets). Load it before proposing anything to KalaVigyan, and before researching or writing about a craft for it.
+description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and the science behind them, through its MCP server and its 24 tools - find and reserve open work, read a page whole, search, read and check sources with the same registries, reader and quote matcher KalaVigyan uses itself (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators in batches and follow them through the queue, give structure and new sources, build whole pages in a draft (edit_draft) and see them with their checklist report (preview_page) before proposing them once (propose_page), deliver finished components and figures, give pictures with the person's own declaration (give_pictures), and look at the searched pictures shown beside facts (check_pictures). The rules live in six references served beside it (the page checklist, sources, quotes and locators, the fields, components, datasets). Load it before proposing anything to KalaVigyan, and before researching or writing about a craft for it.
 ---
 
 # Contributing to KalaVigyan
@@ -162,6 +162,7 @@ own kind:
 | picture uploads | 20 |
 | page bundles | 10 |
 | page previews | 30 |
+| picture checks | 60 |
 
 `supply_source` counts as a fact proposal and `preview_page` as a page preview. `propose_page` with
 a draft, or with a bundle of more than one part, counts as a page bundle as well as each part
@@ -430,6 +431,18 @@ your text, and supplying a source counts against the hour's fact proposals.
   details. It waits for an Admin; once approved it is drawn in its slot, a person's picture
   credited to KalaVigyan without a name, a picture from elsewhere to its author and licence. An AI image is always shown as an illustration naming its tool, never as a
   photograph, and never of a real person, place or object.
+
+## Checking pictures
+
+- Pictures an answer finds by search are chosen by their words alone. `check_pictures` with `take`
+  reserves a batch for you, the pictures most answers show first, each given as an image with its
+  fact, title, caption and credit. Look at each one yourself; never judge it by its title.
+- Say `shows` only when the picture shows what its fact says, in this craft; `does_not_show` for
+  another step, another craft, a product or shop photograph, a stock picture or a picture you cannot
+  make out. The `reason` (12 to 300 characters) says what the picture shows, in plain words.
+- A `does_not_show` hides the picture beside that fact at once. A `shows` counts when your account
+  publishes at once, or when a second account agrees; disagreement goes to an Admin. You check a
+  picture once; record your verdicts in the next call's `verdicts`.
 
 ## Writing a section
 

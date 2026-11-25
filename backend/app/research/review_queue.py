@@ -33,6 +33,7 @@ from .review_queue_items import (
     HeldWriteBack,
     LayerQueueItem,
     LayoutItem,
+    PictureCheckItem,
     PictureItem,
     Proposer,
     QueueItem,
@@ -78,6 +79,7 @@ __all__ = [
     "PAGE_MAX",
     "PAST_TENSE",
     "PENDING_FACT_STATUSES",
+    "PICTURE_CHECKS",
     "QUEUE_KINDS",
     "RAISE",
     "READINGS",
@@ -106,6 +108,7 @@ __all__ = [
     "HeldWriteBack",
     "LayerQueueItem",
     "LayoutItem",
+    "PictureCheckItem",
     "PictureItem",
     "Proposer",
     "QueueApproval",
@@ -138,7 +141,9 @@ __all__ = [
 
 REVIEW_QUEUE_SCHEMA_VERSION = 1
 QUEUE_KINDS: tuple[str, ...] = tuple(REVIEW_QUEUES)
-FACTS, TESTIMONY, IMAGES, COMPONENTS, LAYOUTS, STRUCTURE, READINGS, LAYERS, STAGES = QUEUE_KINDS
+FACTS, TESTIMONY, IMAGES, COMPONENTS, LAYOUTS, STRUCTURE, READINGS, LAYERS, STAGES, PICTURE_CHECKS = (
+    QUEUE_KINDS
+)
 KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {
         FACTS: PROPOSAL_ORIGINS,
@@ -150,6 +155,7 @@ KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
         READINGS: PROPOSAL_ORIGINS,
         LAYERS: (CONTRIBUTION,),
         STAGES: (RESEARCH,),
+        PICTURE_CHECKS: (AGENT,),
     }
 )
 APPROVE, REJECT, RAISE, RETRACT = "approve", "reject", "raise", "retract"

@@ -73,6 +73,7 @@ Brief an agent to read every page a result hands it.
 | A whole page's additions given at once: facts, structure, components, layout, pictures | `preview_page`, then `propose_page` with the same bundle |
 | A source only your own access opens: a paywalled paper, a book or PDF you hold, an archive, a site that refuses the fetcher | `supply_source`, then `read_source`'s quote checks against your text; cite it as its `cite_as` gives it |
 | A picture a person took or made | `give_pictures`, in the chat or as an upload slot, with the declaration the person confirms |
+| A searched picture shown beside a fact that may show something else | `check_pictures`: look at each picture of the batch and record `shows` or `does_not_show` with what it shows (12 to 300 characters); a refusal hides it beside that fact at once, a `shows` counts from a trusted account or two agreeing (decision 0222) |
 | A curated picture's focal box and stand-in | the dossier route |
 | A new craft's first dossier, or any bulk import | the dossier route |
 | What is held | `get_facts`, `get_page` (coverage, sections, layout); against git, `export_dossiers --diff` (the lead) |

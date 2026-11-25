@@ -20,6 +20,7 @@ from app.models import (
     ImageContribution,
     LayoutProposal,
     MapLayerProposal,
+    MediaRefClaim,
     Process,
     ProcessStage,
     StageReview,
@@ -34,6 +35,7 @@ from app.research.review_queue import (
     LAYERS,
     LAYOUTS,
     PENDING_FACT_STATUSES,
+    PICTURE_CHECKS,
     STAGES,
     STRUCTURE,
     TESTIMONY,
@@ -41,6 +43,7 @@ from app.research.review_queue import (
     FactItem,
     LayerQueueItem,
     LayoutItem,
+    PictureCheckItem,
     PictureItem,
     QueueEntry,
     QueueKey,
@@ -57,6 +60,7 @@ from app.retrieval.statements import CraftScope, scope_claims
 from .claim_holds import held_in_queue
 from .claim_writer import LIVE_CONCEPT_ORIGIN
 from .curation_keys import CURATED_PROCESS_VARIANT
+from .picture_check_links import disputed_link
 
 __all__ = [
     "PENDING",
@@ -86,6 +90,7 @@ QUEUE_MODELS: Mapping[str, Any] = MappingProxyType(
         STRUCTURE: StructureProposal,
         LAYERS: MapLayerProposal,
         STAGES: Concept,
+        PICTURE_CHECKS: MediaRefClaim,
     }
 )
 
@@ -100,6 +105,7 @@ RenderedItem = (
     | ReadingQueueItem
     | LayerQueueItem
     | StageQueueItem
+    | PictureCheckItem
 )
 
 
@@ -263,6 +269,17 @@ def _stage_conditions(scope: QueueScope) -> list[ColumnElement[bool]]:
     return conditions
 
 
+def _check_conditions(scope: QueueScope) -> list[ColumnElement[bool]]:
+    conditions = [disputed_link()]
+    if scope.craft is not None:
+        craft = scope.craft
+        scoped = select(Claim.id).where(
+            scope_claims(CraftScope(craft_id=craft.id, sub_category_id=craft.subCategoryId))
+        )
+        conditions.append(MediaRefClaim.claimId.in_(scoped))
+    return conditions
+
+
 _CONDITIONS: Mapping[str, Callable[[QueueScope], list[ColumnElement[bool]]]] = MappingProxyType(
     {
         FACTS: _fact_conditions,
@@ -273,5 +290,6 @@ _CONDITIONS: Mapping[str, Callable[[QueueScope], list[ColumnElement[bool]]]] = M
         STRUCTURE: _structure_conditions,
         LAYERS: _layer_conditions,
         STAGES: _stage_conditions,
+        PICTURE_CHECKS: _check_conditions,
     }
 )

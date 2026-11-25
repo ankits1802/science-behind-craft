@@ -17,6 +17,7 @@ from app.research.open_work import (
     TaskHold,
     parse_task_key,
 )
+from app.research.picture_checks import PICTURE_CHECK_TASK
 
 from . import trust_tiers
 from .open_work import open_task, proposed_tasks
@@ -27,6 +28,7 @@ __all__ = [
     "claim_task",
     "claim_tasks",
     "complete_task",
+    "end_expired",
     "give_back_task",
     "holding",
     "release_task",
@@ -39,6 +41,9 @@ RELEASED = "RELEASED"
 COMPLETED = "COMPLETED"
 NOT_OPEN = "No open task has the key {key}; list_open_work gives the open tasks."
 QUEUE_NOT_RESERVED = "A review queue is worked item by item in admin settings; it is never reserved."
+CHECKS_NOT_RESERVED = (
+    "check_pictures reserves the pictures it gives to check; reserve_tasks never holds them."
+)
 TOO_MANY = (
     "This account holds {held} tasks, the most an account of its trust tier ({tier}) may hold at once; "
     "give one back with reserve_tasks, or finish one, before claiming another."
@@ -50,7 +55,7 @@ async def claim_task(
     session: AsyncSession, user_id: uuid.UUID, key: str, *, site: str, now: datetime
 ) -> TaskHold:
     task = await _open(session, key, site=site)
-    await _expire(session, key, now=now)
+    await end_expired(session, key, now=now)
     current = await _live(session, key)
     if current is not None and current.userId != user_id:
         raise Refused(
@@ -139,14 +144,14 @@ async def give_back_task(session: AsyncSession, user_id: uuid.UUID, key: str, *,
 async def _open(session: AsyncSession, key: str, *, site: str) -> OpenTask:
     parsed = parse_task_key(key)
     if parsed.kind in UNRESERVABLE_KINDS:
-        raise InvalidInput(QUEUE_NOT_RESERVED)
+        raise InvalidInput(CHECKS_NOT_RESERVED if parsed.kind == PICTURE_CHECK_TASK else QUEUE_NOT_RESERVED)
     task = await open_task(session, parsed, site=site)
     if task is None or key in await proposed_tasks(session):
         raise InvalidInput(NOT_OPEN.format(key=key))
     return task
 
 
-async def _expire(session: AsyncSession, key: str, *, now: datetime) -> None:
+async def end_expired(session: AsyncSession, key: str, *, now: datetime) -> None:
     await session.execute(
         update(TaskReservation)
         .where(

@@ -22,6 +22,7 @@ from app.research.review_queue import (
     IMAGES,
     LAYERS,
     LAYOUTS,
+    PICTURE_CHECKS,
     RAISE,
     READINGS,
     REJECT,
@@ -43,6 +44,7 @@ from .review_queue_errors import DecisionConflict, NotYourQueue, OwnItem, Unknow
 from .review_queue_facts import FactDecision, decide_fact
 from .review_queue_layers import approve_layer, reject_layer
 from .review_queue_layouts import approve_layout, reject_layout
+from .review_queue_picture_checks import approve_check, reject_check
 from .review_queue_readings import decide_reading
 from .review_queue_refile import refiling_problem
 from .review_queue_stages import approve_stage_item, reject_stage_item
@@ -298,6 +300,7 @@ _APPROVERS: Mapping[str, Decide] = MappingProxyType(
         READINGS: _approve_reading,
         LAYERS: _approve_layer,
         STAGES: approve_stage_item,
+        PICTURE_CHECKS: approve_check,
     }
 )
 _REJECTERS: Mapping[str, Decide] = MappingProxyType(
@@ -311,5 +314,6 @@ _REJECTERS: Mapping[str, Decide] = MappingProxyType(
         READINGS: _reject_reading,
         LAYERS: _reject_layer,
         STAGES: reject_stage_item,
+        PICTURE_CHECKS: reject_check,
     }
 )

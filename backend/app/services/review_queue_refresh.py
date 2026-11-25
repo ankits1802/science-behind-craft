@@ -15,6 +15,7 @@ from app.models import (
     CraftCategory,
     ImageContribution,
     LayoutProposal,
+    MediaRefClaim,
     StructureProposal,
 )
 from app.models.science import READING_REJECTED
@@ -24,6 +25,7 @@ from app.research.review_queue import (
     FACTS,
     IMAGES,
     LAYOUTS,
+    PICTURE_CHECKS,
     READINGS,
     STAGES,
     STRUCTURE,
@@ -51,6 +53,9 @@ async def refresh_after_decision(session: AsyncSession, decided: QueueDecision) 
 async def decision_owners(session: AsyncSession, decided: QueueDecision) -> PageOwners:
     if decided.kind == FACTS:
         return await claim_owners(session, [decided.id])
+    if decided.kind == PICTURE_CHECKS:
+        claims = await session.scalars(select(MediaRefClaim.claimId).where(MediaRefClaim.id == decided.id))
+        return await claim_owners(session, list(claims.all()))
     if decided.kind == COMPONENTS and decided.status == APPROVED:
         return await _component_owners(session, decided.id)
     if decided.kind == LAYOUTS and decided.status == APPROVED:

@@ -349,19 +349,22 @@ Last reviewed: 2026-11-22.
   of it: a searched picture must also name the craft's world in its title (its names, places or
   family's picture words), so the farm on Lime Avenue, the lemons and limes and the brick wall of
   the 2026-11-25 Kutch Ajrakh run are refused, and a stored `TEXT` link that fails is no longer
-  served. What is left: a picture whose title names the craft's world and shares two words with a
-  claim is still shown without anyone seeing it, even if it shows another step, another craft of
-  the family or the wrong thing under the right name. A picture stored for a claim is reused
-  rather than searched again (decision 0166), so a vision verdict would be paid once per picture,
-  not once per answer.
+  served. Decision 0222 hands the looking to contributors' AI clients at no cost to any answer:
+  `check_pictures` gives the stored searched links, most-served first, as images; a `does_not_show`
+  hides a link at once, and a `shows` marks it `VISION` from a trusted account or two agreeing,
+  every verdict kept and disagreement decided by an Admin. On 2026-11-25 production held 520 such
+  links (150 pictures, 248 facts), shown in 153 of 156 stored answers and on 13 crafts' pages. What
+  is left: a picture found for a new answer is unchecked until a client checks it; the 175 links of
+  SearXNG pictures on hosts the site's picture fetch does not read (shops, magazines, publishers)
+  cannot be offered for a look; a stored answer keeps the pictures it was given.
 - **Why left:** a `CAPTION` call on the top two candidates of every section adds two model calls
   and their image tokens to every answer, and the owner's rule of 2026-11-23 keeps each answer's
   model calls and input tokens at or below today's while answers are measured against Opus and
   Sonnet (decision 0165).
-- **Waits on:** the owner's choice after that measurement; then a `CAPTION` route call on the top
-  two candidates per section, recorded as `VISION` on `MediaRefClaim`, dropping a picture the model
-  says does not show the claim (`section_images.stored_items` already serves a stored `VISION`
-  verdict). The zoom story's own level pictures do not use decision 0207's rule yet.
+- **Waits on:** contributors' checks for what is stored; for the rest, the owner's choice after
+  that measurement, then a `CAPTION` route call on the top two candidates per section recorded as a
+  verdict, so `served_picture` drops a refused link as it does a contributor's refusal. The zoom
+  story's own level pictures do not use decision 0207's rule yet.
 
 ## Listen and the switched-off call (decision 0035)
 

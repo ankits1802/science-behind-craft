@@ -18,6 +18,7 @@ from app.research.review_queue import (
     KIND_ORIGINS,
     LAYERS,
     LAYOUTS,
+    PICTURE_CHECKS,
     READINGS,
     STAGES,
     STRUCTURE,
@@ -45,6 +46,7 @@ from .review_queue_errors import UnknownCraft
 from .review_queue_fact_views import fact_items
 from .review_queue_layers import layer_items
 from .review_queue_layouts import layout_items
+from .review_queue_picture_checks import picture_check_items
 from .review_queue_readings import ReadingScope, reading_count, reading_entries, reading_items
 from .review_queue_select import QueueScope, Rendered, RenderedItem, queue_count, queue_entries, rows_by_id
 from .review_queue_stages import stage_items
@@ -168,6 +170,8 @@ async def _rendered(
         return await layer_items(session, ids)
     if kind == STAGES:
         return await stage_items(session, ids)
+    if kind == PICTURE_CHECKS:
+        return await picture_check_items(session, ids)
     if kind == TESTIMONY:
         return await _testimony_items(session, ids, adapters=adapters, now=now)
     return await _picture_items(session, ids, adapters=adapters, now=now)

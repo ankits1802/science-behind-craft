@@ -52,6 +52,7 @@ ALL_KINDS = (
     "READINGS",
     "LAYERS",
     "STAGES",
+    "PICTURE_CHECKS",
 )
 NOON = datetime(2026, 11, 19, 12, 0, 0, 123456, tzinfo=UTC)
 
@@ -81,7 +82,7 @@ def test_only_admins_and_master_admins_see_who_proposed(role: str, shown: bool) 
     [
         ("RESEARCH", ("FACTS", "READINGS", "STAGES")),
         ("CONTRIBUTION", ("FACTS", "IMAGES", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS")),
-        ("AGENT", ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS")),
+        ("AGENT", ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "PICTURE_CHECKS")),
         ("TESTIMONY", ("TESTIMONY",)),
         (None, ALL_KINDS),
     ],
@@ -114,6 +115,8 @@ def test_a_kind_filter_never_reaches_past_the_viewers_kinds() -> None:
         (STRUCTURE, REJECT, Capability.MARK_CLAIM_LEVEL),
         (STAGES, APPROVE, Capability.MARK_CLAIM_LEVEL),
         (STAGES, REJECT, Capability.MARK_CLAIM_LEVEL),
+        ("PICTURE_CHECKS", APPROVE, Capability.REVIEW_CONTRIBUTIONS),
+        ("PICTURE_CHECKS", REJECT, Capability.REVIEW_CONTRIBUTIONS),
     ],
 )
 def test_each_decision_needs_its_kinds_capability(kind: str, action: str, capability: Capability) -> None:
@@ -129,6 +132,7 @@ def test_each_decision_needs_its_kinds_capability(kind: str, action: str, capabi
         (LAYOUTS, RETRACT),
         (STRUCTURE, RAISE),
         (STAGES, RAISE),
+        ("PICTURE_CHECKS", RETRACT),
     ],
 )
 def test_only_a_fact_is_raised_or_retracted(kind: str, action: str) -> None:

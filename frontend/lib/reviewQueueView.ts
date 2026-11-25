@@ -34,7 +34,8 @@ export const KIND_LABELS: Record<QueueKind, string> = {
   STRUCTURE: "Structure",
   READINGS: "Readings",
   LAYERS: "Map layers",
-  STAGES: "Process stages"
+  STAGES: "Process stages",
+  PICTURE_CHECKS: "Picture checks"
 };
 
 export const KIND_NOUNS: Record<QueueKind, string> = {
@@ -46,7 +47,8 @@ export const KIND_NOUNS: Record<QueueKind, string> = {
   STRUCTURE: "Structure proposal",
   READINGS: "Reading outside its range",
   LAYERS: "Map layer proposal",
-  STAGES: "Process stage"
+  STAGES: "Process stage",
+  PICTURE_CHECKS: "Searched picture beside a fact"
 };
 
 export const ORIGIN_LABELS: Record<ReviewOrigin, string> = {

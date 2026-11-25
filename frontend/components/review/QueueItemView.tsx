@@ -2,6 +2,7 @@ import { ComponentReviewCard } from "@/components/review/ComponentReviewCard";
 import { FactReviewCard } from "@/components/review/FactReviewCard";
 import { LayerReviewCard } from "@/components/review/LayerReviewCard";
 import { LayoutReviewCard } from "@/components/review/LayoutReviewCard";
+import { PictureCheckReviewCard } from "@/components/review/PictureCheckReviewCard";
 import { PictureReviewCard } from "@/components/review/PictureReviewCard";
 import { QueueItemHeader } from "@/components/review/QueueItemHeader";
 import { ReadingReviewCard } from "@/components/review/ReadingReviewCard";
@@ -24,6 +25,7 @@ export function QueueItemView({ item, handlers }: { item: QueueItem; handlers: Q
   if (item.kind === "STRUCTURE") return <StructureReviewCard item={item} onDecide={(action, words) => handlers.decide(item, action, words)} />;
   if (item.kind === "READINGS") return <ReadingReviewCard item={item} onDecide={(action, words) => handlers.decide(item, action, words)} />;
   if (item.kind === "LAYERS") return <LayerReviewCard item={item} onDecide={(action, words) => handlers.decide(item, action, words)} />;
+  if (item.kind === "PICTURE_CHECKS") return <PictureCheckReviewCard item={item} onDecide={(action, words) => handlers.decide(item, action, words)} />;
   return (
     <div className="grid gap-3">
       <QueueItemHeader item={item} />

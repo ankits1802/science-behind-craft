@@ -51,6 +51,7 @@ stateDiagram-v2
 | Component kinds per craft | `services/open_work_components.py`, over the library's one applies-to query (`services/component_library.applies_to`, with `registered_pieces`) |
 | The family flagships: the backlog, the task, its proposal check; the kinds a family page draws | `research/open_work_flagship_backlog.py` (from the interactives skill's `references/flagships.md`, kept equal by a test), `research/open_work_flagships.py`; `services/open_work_flagships.py` |
 | Picture tasks (`MISSING_PICTURE`) | `services/open_work_pictures.py`; their keys `research/image_contributions_tasks.py` |
+| Picture checks (`CHECK_PICTURES`, decision 0222) | contract, keys and the trust rule `research/picture_checks.py`; the links waiting, disputed and served counted `services/picture_check_links.py`; the batch `services/picture_check_batches.py`; verdicts `services/picture_check_records.py`; the task `services/open_work_picture_checks.py`; the queue and an Admin's ruling `services/review_queue_picture_checks.py`; the tool `api/mcp_check_tools.py`; table `PictureCheck` with `MediaRefClaim.id` and `refusedAt` (`models/media_refs.py`, migration `0119_picture_checks`) |
 | The nightly refresh of field work | `services/open_work_refresh.py` |
 | Pages in the monograph form | `services/open_work_pages.py`; the folder is `data/monograph_files.MONOGRAPHS_DIR` |
 | Listing, standings, review queues, live reservations | `services/open_work.py` |
@@ -104,6 +105,7 @@ at most 20 ids; `count` is the whole number.
 | `FIND_ANOTHER_SOURCE` | shown facts resting only on rotten sources (`nightly-upkeep.md`, 1a); `factIds` the facts, `sourceIds` the sources | `FIND_ANOTHER_SOURCE:<subject>:<slug>` | facts | none (`propose_source`) |
 | `REVIEW` | a review queue holds items, shown to its reviewers only | `REVIEW:<QUEUE>` | items waiting | none |
 | `MISSING_PICTURE` | a craft that is not curated has no picture waiting or approved for its masthead, its GI record (a GI craft), one of its stages or one of its materials; the target is `slot-masthead`, `slot-record`, `stage-<id>` or `material-<id>` (`image-contributions.md`) | `MISSING_PICTURE:craft:<slug>:<target>` | 1 | `give_picture` |
+| `CHECK_PICTURES` | searched pictures linked to shown facts by their words alone wait for a person's look (Picture checks, below); one task for the whole site, `HIGH`, listed when no page is asked for, never reserved with `reserve_tasks` | `CHECK_PICTURES` | links waiting | none (`check_pictures`) |
 | `TRANSLATE` | a page with a monograph has passages not yet translated into a language it is offered in (Pages in other languages, below) | `TRANSLATE:<subject>:<slug>:<language>` | passages to translate | none (`preview_page`, `propose_page`) |
 | `ANSWER_GAP` | readers asked about a craft or family and the answer was thin or found no cited evidence (Questions readers asked, below) | `ANSWER_GAP:<subject>:<slug>:gap-<32 hex>` | readers who asked in the last 90 days | `research_field` |
 
@@ -367,6 +369,51 @@ passages of each page's English document, `PageTextUnit`) and `services/open_wor
   of the page without a live translation; until then it stays held, so the work can go on over
   several bundles.
 
+## Picture checks (decision 0222)
+
+A picture an answer finds by search is linked to a fact by its words (decisions 0034, 0207, 0211,
+0215); nobody looks at it. `check_pictures` hands the looking to a contributor's AI client, which
+sees images, at no model call or token on any answer, and every verdict is kept for every later
+answer and page.
+
+- **What waits.** A link (`MediaRefClaim`, now with its own `id`) of a searched picture (not a
+  curator's pick, a field photo or a contributor's picture: `served_pictures.CHOSEN_PICTURE_PROVIDERS`
+  and `FieldImage` are left out) at relevance `TEXT`, not refused, to a fact readers see, whose
+  picture the site's own picture fetch reads (`sources/images/picture_files.PICTURE_HOSTS`, with
+  Commons thumbnails on `thumb.wikimedia.org` read from `upload.wikimedia.org`). A picture from any
+  other host (most SearXNG pictures) is not offered.
+- **The batch.** `check_pictures {take}` (1 to 10, default 5) takes the links this account has not
+  checked and no other account holds, those it already holds first, then the most served (the
+  answers that cite the link's fact), fetches each at 330 px within 8 seconds a picture, and reserves
+  each one it could read as a task of its own, `CHECK_PICTURES:<link id>`, for 2 hours, counted
+  against the account's tier like any task (Reservations, below). A picture that cannot be fetched is
+  left out and never reserved, never sent as a link. Each item gives the link id, the fact and its
+  craft, the picture's title, caption (alt text), credit and page, how many answers cite the fact,
+  and the reservation's end; the picture itself is image content after the result.
+- **A verdict.** `check_pictures {verdicts[{link_id, verdict shows | does_not_show, reason}]}` (at
+  most 10, a reason of 12 to 300 characters saying what the picture shows) is recorded before any
+  batch is taken. One account checks a link once (a partial unique index on `PictureCheck(linkId,
+  userId)` where not `ruling`); a link another account holds, or one an Admin decided, is refused;
+  each verdict counts against the account's 60 `picture checks` an hour (`core/rate_limit`). The
+  verdict ends the account's reservation of the link (`COMPLETED`).
+- **Trust, both ways** (`research/picture_checks.checked_state`, from every verdict of the link in
+  order). A `does_not_show` stops the link being served at once (`MediaRefClaim.refusedAt`); the
+  picture and its other links are untouched. A `shows` marks the link `VISION` only from an account
+  whose contributions publish at once (`trust_tiers.publishes_at_once` with the agent switch, kept
+  as `PictureCheck.trusted`) or with a second agreeing `shows` from another account; otherwise it
+  waits. A link holding both a `shows` and a `does_not_show` stays hidden and waits in the review
+  queue's `PICTURE_CHECKS` kind for an Admin (`review-queue.md`). An Admin's approve or reject is a
+  `ruling` verdict that decides the link and closes it to further checks; the latest ruling holds.
+- **Served.** `served_pictures.served_picture` drops a refused link, so answers, the zoom story and
+  uncurated craft pages stop showing it beside that fact; a `VISION` link is served before a `TEXT`
+  one in an answer's pictures. The craft page stamp counts refusals and `VISION` links, so a stored
+  page is rebuilt, and a verdict that hides or marks a link refreshes the pages of its fact.
+- **Kept.** `PictureCheck {id, linkId, userId (set null when the account goes), verdict, reason,
+  ruling, trusted, createdAt}`: every verdict, never edited or deleted; an Admin's ruling also writes
+  `review.picture_check_approved` or `review.picture_check_rejected` to the audit log.
+- **Left.** Pictures found for a new answer are unchecked until a client checks them; a stored
+  answer keeps the pictures it was given.
+
 ## Reservations (`TaskReservation`)
 
 - A claim reserves an open task for 2 hours; claiming it again renews it from now. The key must
@@ -519,6 +566,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `list_open_work` | work | read | read-only | `OpenWork` |
 | `my_work` | work | contribute | read-only (records what a steward has seen) | `MyWork {schemaVersion 1, tier, holding, holdingMax, reservationMinutes, claimed[{taskKey, reservedUntil, task (OpenTask, or null once closed)}], completed[{taskKey, ending COMPLETED, endedAt}] (the last 30 days, at most 50), outcomes[ProposalTicket] (the latest 20), crafts[StewardPackage], craftsMax, message}` |
 | `reserve_tasks` | work | contribute | writes | `ReservedTasks` (Reservations, above) |
+| `check_pictures` | pictures | contribute | writes, open-world (the pictures it fetches) | `ChecksReply {schemaVersion 1, recorded[{linkId, state SEEN \| WAITING \| HIDDEN \| IN_REVIEW, refused}], pictures[{position, linkId, factId, fact, craft, title, caption, credit, pageUrl, served, reservedUntil}], skipped, holding, holdingMax, message}` with each picture as image content (Picture checks, above) |
 | `steward_craft` | work | contribute | writes | `StewardReply {schemaVersion 1, craftSlug, adopted, message, package: StewardPackage or null}` |
 | `get_proposal` | work | contribute | read-only | `ProposalTicket` (`knowledge-writes.md`) |
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
@@ -999,6 +1047,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Healing tasks | `backend/tests/upkeep/test_healing_rules.py` and `test_healing_tasks.py` |
 | The family flagships | `backend/tests/research/test_open_work_flagships.py` and `backend/tests/db/test_flagship_tasks_db.py` |
 | Picture tasks | `backend/tests/db/test_open_work_pictures_db.py` and `test_my_tasks_db.py` |
+| Picture checks | `backend/tests/images/test_picture_checks.py`, `backend/tests/mcp/test_check_pictures_tool.py` and `backend/tests/db/test_picture_checks_db.py` |
 | Questions readers asked | `backend/tests/research/test_open_work_gaps.py`, `test_open_work_gap_tasks.py`, `test_open_work_gap_privacy.py`, `backend/tests/db/test_answer_gaps_db.py` and `test_gap_acceptance_db.py` |
 | Translation tasks | `backend/tests/research/test_translation_regions.py` and `backend/tests/db/test_translation_work_db.py` |
 | Reservations, claims and my work | `backend/tests/db/test_open_work_db.py`, `test_my_tasks_db.py`, `backend/tests/contribution_scale/test_mcp_task_tools.py` and `backend/tests/knowledge_writes/test_fact_task_key.py` |
