@@ -3,10 +3,11 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { useFrameLook } from "@/components/answer/play/useFrameLook";
-import { SANDBOX_ATTRIBUTE, type SimulationBlock } from "@/lib/explainerPlay";
+import { SANDBOX_ATTRIBUTE, type SimulationBlock, type SimulationValue } from "@/lib/explainerPlay";
 import { FRAME_DEFAULT_HEIGHT, NO_PIECES, ownFrameHeight, sandboxDocument, type FramePieces } from "@/lib/sandboxFrame";
 
-type FrameProps = { block: Pick<SimulationBlock, "title" | "html" | "values">; pieces?: FramePieces; startHeight?: number };
+type FrameBlock = Pick<SimulationBlock, "title" | "html"> & { values: readonly Pick<SimulationValue, "key" | "value">[] };
+type FrameProps = { block: FrameBlock; pieces?: FramePieces; startHeight?: number };
 
 export function SandboxFrame({ block, pieces = NO_PIECES, startHeight = FRAME_DEFAULT_HEIGHT }: FrameProps) {
   const frame = useRef<HTMLIFrameElement>(null);
