@@ -11,9 +11,13 @@ __KV_THEME__
 *{box-sizing:border-box}
 html{background:var(--ground);color:var(--ink-1)}
 body{margin:0;background:var(--ground);color:var(--ink-1);font-family:var(--font-ui);font-size:var(--text-ui);line-height:1.5;font-variant-numeric:lining-nums tabular-nums}
-main{max-width:72rem;margin:0 auto;padding:24px 16px 32px}
+main{max-width:72rem;margin:0 auto;padding:12px 16px}
 .kv-kicker{margin:0 0 8px;font-size:var(--text-caption);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)}
-h1{margin:0 0 8px;font-family:var(--font-headline);font-size:var(--text-h1);font-weight:470;line-height:1.03;letter-spacing:-0.022em;font-variant-numeric:lining-nums proportional-nums}
+.kv-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.kv-name{flex:1 1 14rem;min-width:0;margin:0;font-family:var(--font-headline);font-size:var(--text-h3);font-weight:480;line-height:1.2;font-variant-numeric:lining-nums proportional-nums;overflow-wrap:anywhere}
+main[data-open="true"] .kv-name{flex-basis:100%;font-size:var(--text-h1);font-weight:470;line-height:1.03;letter-spacing:-0.022em}
+.kv-counts{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.kv-line-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1 1 100%}
 h2{margin:0 0 12px;font-family:var(--font-headline);font-size:var(--text-h2);font-weight:480;line-height:1.08;letter-spacing:-0.016em;font-variant-numeric:lining-nums proportional-nums}
 p{margin:0 0 12px}
 .kv-lede{max-width:66ch;font-family:var(--font-reading);font-size:var(--text-body);line-height:1.63;color:var(--ink-2);font-variant-numeric:oldstyle-nums proportional-nums}
@@ -22,13 +26,12 @@ section{padding-top:20px;margin-top:24px;border-top:1px solid var(--ink-1)}
 a{color:var(--indigo);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{color:var(--indigo-hover);text-decoration-thickness:2px}
 a:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
-.kv-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 8px}
 .kv-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1px solid var(--rule-strong);color:var(--ink-1);background:var(--raised)}
 .kv-button:hover{background:var(--sunk);color:var(--ink-1)}
 .kv-button.kv-primary{background:var(--indigo);border-color:var(--indigo);color:var(--on-indigo)}
 .kv-button.kv-primary:hover{background:var(--indigo-hover);color:var(--on-indigo)}
-.kv-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:16px 0 0;background:var(--rule);border:1px solid var(--rule)}
-.kv-tile{margin:0;padding:12px;background:var(--ground)}
+.kv-tiles{display:flex;flex-wrap:wrap;gap:1px;margin:16px 0 0;background:var(--rule);border:1px solid var(--rule)}
+.kv-tile{flex:1 1 8rem;margin:0;padding:12px;background:var(--ground)}
 .kv-tile dt{font-size:var(--text-caption);color:var(--ink-3)}
 .kv-tile dd{margin:4px 0 0;font-family:var(--font-headline);font-size:1.5rem;line-height:1.1;color:var(--ink-1)}
 .kv-split{display:grid;gap:24px}
@@ -55,13 +58,14 @@ td.kv-num,th.kv-num{text-align:end}
 .kv-pairs dd{margin:0;text-align:end;color:var(--ink-1)}
 .kv-list{margin:0;padding-inline-start:1.5em;font-size:0.875rem}
 .kv-list li{margin:0 0 8px}
-.kv-toggle{margin:20px 0 0;min-height:44px;padding:0 20px;border-radius:999px;font:inherit;font-weight:600;color:var(--ink-1);background:var(--raised);border:1px solid var(--rule-strong);cursor:pointer}
+.kv-toggle{margin:0;min-height:44px;padding:0 20px;border-radius:999px;font:inherit;font-weight:600;color:var(--ink-1);background:var(--raised);border:1px solid var(--rule-strong);cursor:pointer}
 .kv-toggle:hover{background:var(--sunk)}
 .kv-toggle:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+.kv-full{padding:16px 0 12px}
 .kv-full[hidden]{display:none}
 footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-size:var(--text-caption);color:var(--ink-3)}
-@media (min-width:640px){.kv-actions{display:flex;flex-wrap:wrap}.kv-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}main{padding:32px 24px 40px}.kv-table-wrap{margin:0;padding:0}}
-@media (min-width:1024px){.kv-tiles{grid-template-columns:repeat(8,minmax(0,1fr))}.kv-split{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}}
+@media (min-width:640px){.kv-line-actions{display:flex;flex:0 0 auto}main{padding:12px 24px}.kv-table-wrap{margin:0;padding:0}}
+@media (min-width:1024px){.kv-split{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}}
 </style>
 </head>
 <body>
@@ -76,14 +80,16 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     FAIL: { word: "Fails", css: "kv-fail", path: "M18 6 6 18M6 6l12 12" },
     JUDGE: { word: "Yours to judge", css: "kv-judge", path: "M12 16v-4M12 8h.01" }
   };
+  var TALLIED = { PASS: "passed", FAIL: "failed", JUDGE: "yours to judge" };
   var OUTCOMES = { SHOWN: "Shown", LISTED: "Listed", REFUSED: "Refused", ACCEPTED: "Accepted" };
   var DRAWN = { CHECKED: "Drawn at both widths and checked: nothing fails", FAILED: "Drawn at both widths, and these fail", UNMADE: "The pictures could not be made, so nothing here says the page draws well" };
   var COUNTED = ["pictures", "figures", "interactives", "maps"];
   var CHANNEL = "kalavigyan-page-preview";
-  var SHOW = "Show the full report";
-  var HIDE = "Hide the full report";
+  var SHOW = "Show the full preview";
+  var HIDE = "Minimise the preview";
   var nextId = 1;
   var initId = null;
+  var reported = { width: 0, height: 0 };
   var shown = { id: null, at: 0, full: null, toggle: null, open: false };
   var channel = null;
   try { channel = typeof BroadcastChannel === "function" ? new BroadcastChannel(CHANNEL) : null; } catch (refused) { channel = null; }
@@ -158,24 +164,46 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     return box;
   }
 
+  function tally(verdict, value) {
+    var badge = status(verdict);
+    badge.lastChild.textContent = count(value) + " " + TALLIED[verdict];
+    return badge;
+  }
+
+  function counts(result, report) {
+    var line = el("p", "kv-counts");
+    if (!report) {
+      line.appendChild(el("span", "kv-meta", count(result.components) + " components · " + count(result.sources) + " sources"));
+      return line;
+    }
+    line.appendChild(tally("PASS", report.passed));
+    line.appendChild(tally("FAIL", report.failed));
+    line.appendChild(tally("JUDGE", report.judged));
+    return line;
+  }
+
+  function line(result, report) {
+    var subject = result.subject || {};
+    var top = el("header", "kv-line");
+    top.appendChild(el("h1", "kv-name", String(subject.slug || "").replace(/-/g, " ")));
+    top.appendChild(counts(result, report));
+    var actions = el("div", "kv-line-actions");
+    actions.appendChild(outLink("Open the private preview", result.previewUrl, "kv-button kv-primary"));
+    top.appendChild(actions);
+    return { top: top, actions: actions };
+  }
+
   function head(result, report) {
     var subject = result.subject || {};
     var parts = [el("p", "kv-kicker", "KalaVigyan · Page preview · " + words(subject.kind))];
-    parts.push(el("h1", null, String(subject.slug || "").replace(/-/g, " ")));
     parts.push(el("p", "kv-lede", (report && report.message) || result.message));
-    var actions = el("div", "kv-actions");
-    actions.appendChild(outLink("Open the private preview", result.previewUrl, "kv-button kv-primary"));
-    actions.appendChild(outLink("Open the page as it stands", result.pageUrl, "kv-button"));
-    parts.push(actions);
+    var standing = el("p");
+    standing.appendChild(outLink("Open the page as it stands", result.pageUrl));
+    parts.push(standing);
     var until = new Date(String(result.expiresAt || ""));
     if (!isNaN(until.getTime())) parts.push(el("p", "kv-meta", "Private to you until " + until.toLocaleString()));
     var tiles = el("dl", "kv-tiles");
-    if (report) {
-      tiles.appendChild(tile("Rules passed", count(report.passed)));
-      tiles.appendChild(tile("Rules failed", count(report.failed)));
-      tiles.appendChild(tile("Yours to judge", count(report.judged)));
-      tiles.appendChild(tile("Cited sentences", count(report.sentences)));
-    }
+    if (report) tiles.appendChild(tile("Cited sentences", count(report.sentences)));
     tiles.appendChild(tile("Chapters", list(result.chapters).length));
     tiles.appendChild(tile("Components", count(result.components)));
     tiles.appendChild(tile("Sources", count(result.sources)));
@@ -332,6 +360,7 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     if (!shown.full) return;
     shown.open = open;
     shown.full.hidden = !open;
+    root.setAttribute("data-open", open ? "true" : "false");
     shown.toggle.setAttribute("aria-expanded", open ? "true" : "false");
     shown.toggle.textContent = open ? HIDE : SHOW;
     report_size();
@@ -339,10 +368,7 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
 
   function heard(message) {
     if (!message || !shown.id || message.id === shown.id) return;
-    if (message.kind === "opened") { setOpen(false); return; }
-    if (message.kind !== "shown") return;
-    if (message.at > shown.at) { setOpen(false); return; }
-    if (shown.open) post("shown");
+    if (message.kind === "opened" || (message.kind === "shown" && message.at > shown.at)) setOpen(false);
   }
 
   function folded(contents) {
@@ -359,26 +385,34 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     });
     shown.full = full;
     shown.toggle = toggle;
-    return [toggle, full];
+    return { toggle: toggle, full: full };
   }
 
   function render(result) {
     var report = result.report && typeof result.report === "object" ? result.report : null;
-    var parts = head(result, report);
-    var contents = [];
+    var contents = head(result, report);
     if (report) [rules(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
     if (list(result.parts).length) contents.push(bundleParts(result));
     var foot = el("footer");
-    foot.appendChild(el("p", null, "Drawn from the preview's own result; every text is shown as text and nothing is loaded from the network. Only the newest preview opens on its own; opening one folds the others."));
-    shown.id = String(result.previewUrl || "");
+    foot.appendChild(el("p", null, "Drawn from the preview's own result; every text is shown as text and nothing is loaded from the network. Every preview starts as one line; opening one minimises the others."));
+    contents.push(foot);
+    var id = String(result.previewUrl || "");
+    var keep = shown.id === id && shown.open;
+    shown.id = id;
     shown.at = Date.parse(String(result.expiresAt || "")) || 0;
-    if (contents.length) parts = parts.concat(folded(contents));
-    parts.push(foot);
-    root.replaceChildren.apply(root, parts);
-    setOpen(Boolean(channel));
+    var top = line(result, report);
+    var card = folded(contents);
+    top.actions.appendChild(card.toggle);
+    root.replaceChildren(top.top, card.full);
+    setOpen(keep);
     post("shown");
-    report_size();
   }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape" || !shown.open) return;
+    setOpen(false);
+    shown.toggle.focus();
+  });
 
   if (channel) channel.addEventListener("message", function (event) { heard(event.data); });
 
@@ -388,8 +422,14 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
   }
 
   function report_size() {
-    notify("ui/notifications/size-changed", { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight });
+    var box = root.getBoundingClientRect();
+    var size = { width: document.documentElement.scrollWidth, height: Math.ceil(box.bottom + window.scrollY) };
+    if (size.width === reported.width && size.height === reported.height) return;
+    reported = size;
+    notify("ui/notifications/size-changed", size);
   }
+
+  if (typeof ResizeObserver === "function") new ResizeObserver(report_size).observe(root);
 
   window.addEventListener("message", function (event) {
     if (event.source !== window.parent) return;
