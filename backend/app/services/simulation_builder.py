@@ -12,6 +12,7 @@ from app.composer.simulation import DraftReply, SimulationBrief, draft_simulatio
 from app.core.errors import ExternalFailure, InvalidInput
 from app.models.enums import EXPLAINER_DEPTHS
 from app.research.blocks import ImagesBlock
+from app.research.blocks_kit import KitFigureBlock
 from app.research.blocks_play import SIMULATION_VALUES_MAX, SimulationBlock
 from app.research.crafts import CraftRef
 from app.research.explainer import Block
@@ -128,6 +129,13 @@ class SimulationBuilder:
         answer = self._answers.setdefault(ask.answer_id, AnswerConcepts(explainer_limit(ask.request.depth)))
         matter = await self._matter_of(ask)
         concepts = section_concepts(matter.records, ask.blocks) if matter is not None else []
+        drawn = _kit_figure(ask, concepts, matter, answer)
+        if drawn is not None:
+            figure, concept = drawn
+            pictures = await self._pictures.found(ask, [c for c in concepts if c is not concept], answer)
+            shown: list[Block] = [figure, *pictures]
+            known = matter.records.sources if matter is not None else {}
+            return Built(tuple(shown), sources_beyond(shown, known, ask.cited))
         chosen = next((concept for concept in concepts if answer.take(concept.key)), None)
         key = chosen.key if chosen is not None else _figures_key(ask, concepts, answer)
         others = [concept for concept in concepts if concept is not chosen]
@@ -145,12 +153,6 @@ class SimulationBuilder:
     async def _explained(
         self, ask: BuildAsk, concept: Concept | None, matter: CraftMatter | None
     ) -> _Explained:
-        if concept is not None and matter is not None:
-            figure = concept_kit_figure(
-                concept, matter.records, block_id=f"{ask.section.id}.{KIT_FIGURE_SUFFIX}"
-            )
-            if figure is not None:
-                return _Explained(block=figure)
         grounding = grounding_for(section_facts(ask.blocks, ask.cited), concept)
         quoted = offered_values(c for statement in grounding.statements for c in statement.citations)
         rows = offered_rows(await self._datasets(ask), limit=SIMULATION_VALUES_MAX - len(quoted))
@@ -280,6 +282,18 @@ def hidden_again(block: SimulationBlock, hidden: Sequence[KnowledgePiece]) -> bo
         return False
     claims = sorted({uuid.UUID(claim) for claim in block.cited_claim_ids()})
     return any(piece.topic_key == key and piece.claim_ids == claims for piece in hidden)
+
+
+def _kit_figure(
+    ask: BuildAsk, concepts: Sequence[Concept], matter: CraftMatter | None, answer: AnswerConcepts
+) -> tuple[KitFigureBlock, Concept] | None:
+    if matter is None:
+        return None
+    for concept in concepts:
+        figure = concept_kit_figure(concept, matter.records, block_id=f"{ask.section.id}.{KIT_FIGURE_SUFFIX}")
+        if figure is not None and answer.draw(concept.key):
+            return figure, concept
+    return None
 
 
 def _figures_key(ask: BuildAsk, concepts: Sequence[Concept], answer: AnswerConcepts) -> str | None:

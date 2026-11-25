@@ -1,10 +1,15 @@
+from dataclasses import replace
+
 from app.research.blocks_kit import KitFigureBlock
 from app.research.blocks_play import SimulationBlock
 from app.research.component_specs_kit import BathPart, ClothPart
 from app.science.kit_figures import concept_kit_figure
 from app.science.mechanisms import section_concepts
 from app.services.block_builders import BLOCK_BUILDERS, built_by_registry
+from app.services.builder_interface import BuildAsk
+from app.services.craft_matter import CraftMatter
 from app.services.curation_keys import curated_id
+from app.services.simulation_grounding import AnswerConcepts
 
 from .at_the_bar import KUT_AT_THE_BAR
 from .craft_mechanism import AJRAKH, ajrakh_matter_and_ask, recorded_draft
@@ -81,6 +86,46 @@ async def test_a_mechanism_whose_sentences_state_no_change_of_colour_is_still_as
     explainer = DraftModel([recorded_draft() | {"html": KUT_AT_THE_BAR}])
     (block,) = (await builder(DraftModel([]), matter=matter, explainer=explainer).build(ask)).blocks
     assert isinstance(block, SimulationBlock) and len(explainer.calls) == 1
+
+
+def basic_sections() -> tuple[CraftMatter, BuildAsk, BuildAsk]:
+    matter, kut = ajrakh_matter_and_ask()
+    _, vat = ajrakh_matter_and_ask(OXIDISED, INDIGO_QUESTION)
+    basic = kut.request.model_copy(update={"depth": "BASIC"})
+    return matter, replace(kut, request=basic), replace(vat, request=basic)
+
+
+def second(ask: BuildAsk) -> BuildAsk:
+    return replace(ask, section=ask.section.model_copy(update={"id": "s2"}))
+
+
+async def test_a_section_draws_its_kit_figure_after_the_answer_s_generated_explainers_are_spent() -> None:
+    matter, kut, vat = basic_sections()
+    explainer = DraftModel([recorded_draft() | {"html": KUT_AT_THE_BAR}])
+    build = builder(DraftModel([]), matter=matter, explainer=explainer)
+    (explained,) = (await build.build(kut)).blocks
+    assert isinstance(explained, SimulationBlock) and len(explainer.calls) == 1
+    (figure,) = (await build.build(second(vat))).blocks
+    assert isinstance(figure, KitFigureBlock) and figure.id == "s2.kit"
+    assert len(explainer.calls) == 1
+
+
+async def test_a_kit_figure_leaves_the_answer_s_generated_explainer_to_another_section() -> None:
+    matter, kut, vat = basic_sections()
+    explainer = DraftModel([recorded_draft() | {"html": KUT_AT_THE_BAR}])
+    build = builder(DraftModel([]), matter=matter, explainer=explainer)
+    (figure,) = (await build.build(vat)).blocks
+    assert isinstance(figure, KitFigureBlock) and explainer.calls == []
+    (explained,) = (await build.build(second(kut))).blocks
+    assert isinstance(explained, SimulationBlock) and len(explainer.calls) == 1
+
+
+def test_one_concept_is_drawn_once_and_never_also_built_or_pictured() -> None:
+    answer = AnswerConcepts(limit=1)
+    assert answer.draw("reaction:vat")
+    assert not answer.draw("reaction:vat")
+    assert not answer.take("reaction:vat") and not answer.picture("reaction:vat")
+    assert answer.take("reaction:kut") and not answer.take("reaction:other")
 
 
 def test_the_generated_explainer_s_builder_may_draw_a_kit_figure_in_its_place() -> None:
