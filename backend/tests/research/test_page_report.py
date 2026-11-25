@@ -127,7 +127,7 @@ def test_a_signature_told_twice_or_missing_fails_and_a_category_masthead_is_judg
 
 def test_the_report_counts_fields_figures_sources_and_pictures() -> None:
     report = page_report(given(page_document()), {4: "One count, and it is true"})
-    assert (report.passed, report.failed, report.judged) == (13, 5, 10)
+    assert (report.passed, report.failed, report.judged) == (14, 5, 10)
     assert report.rules[3].title == "One count, and it is true" and report.rules[0].title == "Rule 1"
     lines = {line.field: (line.sentences, line.figures, line.standing) for line in report.fields}
     assert lines["CHEMISTRY"] == (3, 1, "DENSE")
