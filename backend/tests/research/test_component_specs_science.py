@@ -1,10 +1,12 @@
 import copy
+import json
 from collections.abc import Callable
 from typing import Any
 
 import pytest
 from pydantic import ValidationError
 
+from app.data.kind_fixture_files import KIND_FIXTURES_DIR
 from app.models.component_kinds import COMPONENT_KINDS, PIECE_KINDS
 from app.research.component_specs_science import SPEC_MODELS_SCIENCE
 from app.research.component_specs_science_parts import ColourMix, SvgNode, TextBlock
@@ -24,7 +26,15 @@ SCIENCE_KINDS = {
     "material_cards",
     "experiment_lab",
     "process_replay",
+    "coded_figure",
 }
+
+
+def coded_figure() -> dict[str, Any]:
+    filed = json.loads((KIND_FIXTURES_DIR / "coded_figure.json").read_text(encoding="utf-8"))
+    return {**filed["spec"], "libraries": [], "films": []}
+
+
 VALID: dict[str, Callable[[], dict[str, Any]]] = {
     "reaction_player": fixtures.reaction_player,
     "diagram": fixtures.chain_diagram,
@@ -38,6 +48,7 @@ VALID: dict[str, Callable[[], dict[str, Any]]] = {
     "material_cards": fixtures.material_cards,
     "experiment_lab": fixtures.experiment_lab,
     "process_replay": fixtures.process_replay,
+    "coded_figure": coded_figure,
 }
 
 
@@ -48,7 +59,7 @@ def refused(kind: str, change: Callable[[dict[str, Any]], None]) -> None:
         SPEC_MODELS_SCIENCE[kind].model_validate(spec)
 
 
-def test_the_science_group_names_its_twelve_kinds_each_a_registered_piece_kind() -> None:
+def test_the_science_group_names_its_thirteen_kinds_each_a_registered_piece_kind() -> None:
     assert set(SPEC_MODELS_SCIENCE) == SCIENCE_KINDS
     assert set(PIECE_KINDS) >= SCIENCE_KINDS
     assert SCIENCE_KINDS - {"reaction_player", "molecule_3d"} <= set(COMPONENT_KINDS)

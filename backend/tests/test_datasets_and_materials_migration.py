@@ -7,6 +7,7 @@ from .migration_scripts import migration
 STEP = migration("0056_datasets_and_materials")
 QUANTITIES_STEP = migration("0072_quantities_kind")
 ANSWER_FIGURES_STEP = migration("0111_answer_figures")
+CODED_STEP = migration("0121_coded_figures")
 RETIRED = {"general_drawing", "general_chart", "general_table", "general_timeline", "general_map_layer"}
 
 
@@ -24,10 +25,15 @@ def test_it_renames_each_general_kind_to_the_one_kind_of_its_job() -> None:
     }
     assert (*QUANTITIES_STEP.BLOCK_KINDS_BEFORE, *QUANTITIES_STEP.COMPONENT_KINDS) == STEP.PIECE_KINDS
     assert QUANTITIES_STEP.BLOCK_KINDS == ANSWER_FIGURES_STEP.BLOCK_KINDS_BEFORE
-    assert (*ANSWER_FIGURES_STEP.BLOCK_KINDS, *ANSWER_FIGURES_STEP.COMPONENT_KINDS) == PIECE_KINDS
+    assert (
+        *ANSWER_FIGURES_STEP.BLOCK_KINDS,
+        *ANSWER_FIGURES_STEP.COMPONENT_KINDS,
+    ) == CODED_STEP.PIECE_KINDS_BEFORE
+    assert CODED_STEP.PIECE_KINDS == PIECE_KINDS
     assert set(STEP.PIECE_KINDS_BEFORE) - set(PIECE_KINDS) == RETIRED
     assert set(STEP.PIECE_KINDS) - set(STEP.PIECE_KINDS_BEFORE) == {"drawing"}
-    assert set(COMPONENT_KINDS) - set(STEP.COMPONENT_KINDS_BEFORE) == {"drawing"}
+    assert set(CODED_STEP.COMPONENT_KINDS_BEFORE) - set(STEP.COMPONENT_KINDS_BEFORE) == {"drawing"}
+    assert set(COMPONENT_KINDS) - set(CODED_STEP.COMPONENT_KINDS_BEFORE) == {"coded_figure"}
     assert set(GENERAL_KINDS) == {new for _, new in STEP.RENAMED_KINDS}
     assert (KnowledgePiece.__tablename__, ComponentProposal.__tablename__) == STEP.KIND_CHECKS
 

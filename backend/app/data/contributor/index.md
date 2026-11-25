@@ -88,6 +88,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 
 - `kalavigyan://components/chart.schema.json`: The chart spec schema.
 - `kalavigyan://components/choice_toggle.schema.json`: The choice_toggle spec schema.
+- `kalavigyan://components/coded_figure.schema.json`: The coded_figure spec schema.
 - `kalavigyan://components/diagram.schema.json`: The diagram spec schema.
 - `kalavigyan://components/dip_player.schema.json`: The dip_player spec schema.
 - `kalavigyan://components/drawing.schema.json`: The drawing spec schema.

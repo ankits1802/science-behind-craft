@@ -14,5 +14,5 @@ def test_it_widens_both_kind_checks_by_the_coded_figure_alone() -> None:
     before = migration("0111_answer_figures")
     assert (*before.BLOCK_KINDS, *before.COMPONENT_KINDS) == step.PIECE_KINDS_BEFORE
     assert set(step.PIECE_KINDS) - set(step.PIECE_KINDS_BEFORE) == {"coded_figure"}
-    assert sorted(step.PIECE_KINDS) == sorted(PIECE_KINDS)
+    assert step.PIECE_KINDS == PIECE_KINDS
     assert (KnowledgePiece.__tablename__, ComponentProposal.__tablename__) == step.KIND_CHECKS
