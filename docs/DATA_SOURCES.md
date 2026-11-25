@@ -324,11 +324,13 @@ which travels with it.
 
 ## Web fonts (decision 0092)
 
-The faces of the design system, self-hosted in `frontend/fonts/` through `next/font/local`
-(`app/latinFonts.ts`, `app/scriptFonts.ts`, `app/readingScriptFonts.ts`), fetched on
-2026-11-18. Every face is SIL Open Font License 1.1; each licence travels in
-`frontend/fonts/licences/`. Only the Plex Sans Latin-1 weights and the Newsreader roman core are
-preloaded; every other file loads when its `unicode-range` is used.
+The faces of the design system, self-hosted in `frontend/fonts/` (`app/latinFonts.ts`,
+`app/scriptFonts.ts`, `app/readingScriptFonts.ts`), fetched on 2026-11-18. Every face is SIL Open
+Font License 1.1; each licence travels in `frontend/fonts/licences/`. The five files the first
+screens draw (Newsreader roman and italic Latin, Plex Sans 400, 500 and 600 Latin-1) are declared
+and preloaded by the root layout (`app/FirstScreenFaces.tsx`), after a page's masthead photograph,
+with the fallback metrics `next/font` measured for them (decision 0221); every other file loads
+through `next/font/local` when its `unicode-range` is used.
 
 | Faces | Source | Processing | Licence file |
 |---|---|---|---|
