@@ -22,6 +22,20 @@
     o.observe(el);
   };
 
+  KV.bindNear = function (el, bind) {
+    var done = false;
+    function now() {
+      if (done) return;
+      done = true;
+      bind(el);
+      el.setAttribute('data-kv-bound', '');
+    }
+    el.kvBind = now;
+    el.addEventListener('pointerdown', now, { capture: true, once: true });
+    el.addEventListener('focusin', now, { capture: true, once: true });
+    KV.near(el, now);
+  };
+
   KV.scope = function (key) {
     var pre = key + '-';
     function roots() { return $$('.bx-' + key); }
@@ -257,6 +271,7 @@
     var p = a.getAttribute('data-rp-step').split(':');
     var fig = document.getElementById(p[0]);
     if (!fig) return;
+    if (fig.kvBind) fig.kvBind();
     var btn = fig.querySelectorAll('.rp-rail button')[+p[1] - 1];
     if (btn) setTimeout(function () { btn.click(); }, reduced() ? 0 : 350);
   });
@@ -897,7 +912,7 @@ KV.boot('chem', function (document) {
     setPlaying(false);
     return api;
   }
-  arr(document.querySelectorAll('.rp')).forEach(function (f) { players.push(Player(f)); });
+  arr(document.querySelectorAll('.rp')).forEach(function (f) { KV.bindNear(f, function () { players.push(Player(f)); }); });
 
   function bez(x1, y1, x2, y2) {
     function a(p1, p2) { return 1 - 3 * p2 + 3 * p1; } function b(p1, p2) { return 3 * p2 - 6 * p1; } function c(p1) { return 3 * p1; }
@@ -1020,7 +1035,7 @@ KV.boot('chem', function (document) {
       strip.forEach(function (li, k) { timers.push(setTimeout(function () { show(k); }, k * hold)); });
     });
   }
-  arr(document.querySelectorAll('figure.vat')).forEach(function (f) { if (!f.closest('[inert]')) initVat(f); });
+  arr(document.querySelectorAll('figure.vat')).forEach(function (f) { if (!f.closest('[inert]')) KV.bindNear(f, initVat); });
 
   var molData = {};
   try { molData = JSON.parse(document.getElementById('mol-data').textContent); } catch (e) {}

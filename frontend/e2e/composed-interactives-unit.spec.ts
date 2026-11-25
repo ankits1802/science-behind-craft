@@ -37,6 +37,8 @@ async function drawn(page: Page, width: number, motion: Switch): Promise<void> {
 async function kitBound(page: Page): Promise<void> {
   await page.addScriptTag({ content: KIT_JS });
   for (const scope of ["chem", "pt"]) await expect(page.locator(`#${scope}-theme-toggle[aria-pressed]`)).toBeAttached();
+  await page.locator("figure.rp").scrollIntoViewIfNeeded();
+  await expect(page.locator("figure.rp")).toHaveAttribute("data-kv-bound", "");
   await page.locator(".mol[data-cid]").scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.mol-dial [data-a="0"] circle').getAttribute("cy")).not.toBe(SSR_OXYGEN_CY);
   await expect(page.locator(".mol-dial")).toHaveAttribute("aria-valuetext", `Turned ${REST_YAW_DEGREES} degrees`);

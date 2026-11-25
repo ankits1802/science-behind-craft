@@ -112,6 +112,8 @@ async function generated(page: Page, motion: "allowed" | (typeof SWITCHES)[numbe
   const head = `<meta charset="utf-8"><style>${PRIMITIVE_CSS}</style><style>${KIT_CSS}</style><style>${PAGE_CSS}</style><style>${ARTKIT_CSS}</style>`;
   await page.setContent(`<!doctype html><html lang="en" data-theme="light"${switched}><head>${head}</head><body>${body}</body></html>`, { waitUntil: "domcontentloaded" });
   await page.addScriptTag({ content: KIT_JS });
+  await page.locator("figure.rp").scrollIntoViewIfNeeded();
+  await expect(page.locator("figure.rp")).toHaveAttribute("data-kv-bound", "");
   await expect(page.locator("figure.rp .rp-status")).toContainText("Step 2 of 2");
 }
 
@@ -204,3 +206,48 @@ for (const motion of SWITCHES) {
     expect(new Set(names)).toEqual(new Set(["none"]));
   });
 }
+
+async function farBelow(page: Page): Promise<void> {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const [reaction, dip] = [drawn(KIT[0]), drawn(KIT[1])];
+  const jump = '<button type="button" id="jump" data-rp-step="bidri-rp:2">The second step</button>';
+  await page.setContent(primitivesPage(`<style>${KIT_CSS}</style><style>${ARTKIT_CSS}</style><main style="padding-inline:16px">${jump}<div style="block-size:500vh"></div><div class="bx-chem">${reaction}${dip}</div></main>`));
+  await page.addScriptTag({ content: KIT_JS });
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
+test("a player and a dip far below the screen stay as the server drew them until they near, and answer once near", async ({ page }) => {
+  await farBelow(page);
+  const [player, dip] = [page.locator("figure.rp"), page.locator("figure.vat")];
+  await page.evaluate(() => {
+    document.querySelectorAll<HTMLButtonElement>("figure.rp .rp-rail button")[1].click();
+    document.querySelector<HTMLButtonElement>("figure.vat .vat-dip")?.click();
+  });
+  await expect(player).not.toHaveAttribute("data-kv-bound");
+  await expect(dip).not.toHaveAttribute("data-kv-bound");
+  await expect(player).toHaveAttribute("data-step", "1");
+  await expect(dip.locator(".vs").last()).toHaveAttribute("aria-current", "step");
+  await player.scrollIntoViewIfNeeded();
+  await expect(player).toHaveAttribute("data-kv-bound", "");
+  await dip.scrollIntoViewIfNeeded();
+  await expect(dip).toHaveAttribute("data-kv-bound", "");
+  await player.locator(".rp-rail button").nth(1).click();
+  await expect(player).toHaveAttribute("data-step", "2");
+  await dip.locator(".vat-dip").click();
+  await expect(dip.locator(".vs").first()).toHaveAttribute("aria-current", "step");
+});
+
+test("a press on a player not yet near, or a link to one of its steps, binds it at once so it answers", async ({ page }) => {
+  await farBelow(page);
+  const player = page.locator("figure.rp");
+  const second = player.locator(".rp-rail button").nth(1);
+  await second.dispatchEvent("pointerdown");
+  await expect(player).toHaveAttribute("data-kv-bound", "");
+  await second.dispatchEvent("click");
+  await expect(player).toHaveAttribute("data-step", "2");
+  await farBelow(page);
+  await page.locator("#jump").click();
+  await expect(player).toHaveAttribute("data-kv-bound", "");
+  await expect(player).toHaveAttribute("data-step", "2");
+});
