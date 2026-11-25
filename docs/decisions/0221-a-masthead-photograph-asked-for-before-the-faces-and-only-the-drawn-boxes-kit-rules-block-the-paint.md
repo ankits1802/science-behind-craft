@@ -13,8 +13,8 @@ faces ahead of the photograph and the kit stylesheet's split; the phone budget i
 [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md) (who preloads the
 first-screen faces). The contract is `docs/contracts/monograph-renderer.md` (The page); the faces
 are `frontend/app/latinFonts.ts` and `app/FirstScreenFaces.tsx`, the first sheet
-`frontend/lib/kitFirstSheet.ts`, `components/monograph/kitFirstScopes.ts`, `lib/kitShellScopes.ts` and
-the sheet's route.
+`frontend/lib/kitFirstSheet.ts`, `components/monograph/kitFirstScopes.ts`,
+`lib/kitShellScopes.ts` and the sheet's route.
 
 | For | Read |
 |---|---|
@@ -67,8 +67,9 @@ the sheet's route.
    counts the `@font-face` descriptor of that name, which a class is never written as (a colon
    follows it).
 3. **A page links one first sheet for the boxes it draws.** `documentScopes`
-   (`components/monograph/kitFirstScopes.ts`) and `shellScopes` (`lib/kitShellScopes.ts`) read from what the server draws (the chapters of the
-   lead, or all of them when nothing is deferred; the lead's shell nodes) the scopes of its boxes:
+   (`components/monograph/kitFirstScopes.ts`) and `shellScopes` (`lib/kitShellScopes.ts`) read
+   from what the server draws (the chapters of the lead, or all of them when nothing is deferred;
+   the lead's shell nodes) the scopes of its boxes:
    the masthead (`mb`), the contents and a sub-rail (`chem`), each passage (`pt`), each drawn slot's
    home and every box in its fragments, and the sources (`rm`). `MonographFrame` links
    `/monographs/kit/first/<scopes>.css`, named in the kit's order, served by
@@ -82,11 +83,13 @@ the sheet's route.
    subsequence of the kit and the kit comes after it, so every element is styled as by the kit
    alone once both have loaded, and every box the server drew was already styled so by the first
    sheet: the kit's arrival moves nothing.
-5. **The budget is recorded at the new numbers** of run 45604791573 on 5c14258c: Kutch Ajrakh
-   700,893 bytes of JavaScript, 173,663 of CSS, 73,696 of first-screen pictures, its largest element
-   at 2,788 ms, 183 ms blocked, 0.0293 of shift loading and none reading; the page of every kind
-   719,135, 190,219 and 73,696 bytes, 2,920 ms, 80 ms, 0.0293 and 0. The CSS grows by the first
-   sheet, deliberately (Consequences).
+5. **The budget is recorded at the new numbers** of run 45608217451 on cd9c2115, the lane's code
+   whole: Kutch Ajrakh 700,893 bytes of JavaScript, 173,663 of CSS, 73,696 of first-screen pictures,
+   its largest element at 2,772 ms, 351 ms blocked, 0.0293 of shift loading and none reading; the
+   page of every kind 719,135, 190,219 and 73,696 bytes, 2,936 ms, 146 ms, 0.0293 and 0. The bytes
+   are the cut's run's to the byte; the time blocked after the paint moved from 183 to 351 ms on
+   Kutch Ajrakh between the two runs of the same code, so the record keeps the later, higher one.
+   The CSS grows by the first sheet, deliberately (Consequences).
 
 ## Consequences
 

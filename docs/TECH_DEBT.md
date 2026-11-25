@@ -745,13 +745,13 @@ Last reviewed: 2026-11-22.
 ### Speed left after the quality lane
 
 - **What:** on the phone budget's slowed phone (360 px, the CPU slowed four times, slow 4G,
-  decision 0205) Kutch Ajrakh's masthead photograph paints at 2,788 ms and the page of every
-  kind's at 2,920 ms (run 45604791573, decision 0221), against the 2.5 s target. No long task runs
+  decision 0205) Kutch Ajrakh's masthead photograph paints at 2,772 ms and the page of every
+  kind's at 2,936 ms (run 45608217451, decision 0221), against the 2.5 s target. No long task runs
   before the paint, and the first paint (2.1 and 2.6 s) comes before the photograph ends. The
   photograph is asked for first and has a connection at once, but shares 1.47 Mbit/s with both
   Newsreader faces (270 KB), which the head asks for after it at High priority and so take the next
-  free connections ahead of the scripts, and with the first sheet and the app's sheets, until 2.77
-  and 2.86 s. Newsreader italic (142.8 KB) is preloaded for one caption line of Kutch Ajrakh's first
+  free connections ahead of the scripts, and with the first sheet and the app's sheets, until 2.74
+  and 2.90 s. Newsreader italic (142.8 KB) is preloaded for one caption line of Kutch Ajrakh's first
   screen, the landing's emphasis and the sign-in caption. The page of every kind's lead draws three
   of the kit's six box scopes, so its first sheet is 55.8 KB.
 - **Why left:** the faces' priority and Newsreader italic's preload are design-system decisions: a
