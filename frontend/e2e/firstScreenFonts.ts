@@ -76,6 +76,16 @@ export function latinUses(screen: FirstScreen): FaceUse[] {
   return [...uses.values()].sort((left, right) => left.url.localeCompare(right.url));
 }
 
+export type HeadPreload = "photograph" | "font" | "other";
+
+export function headPreloads(html: string): HeadPreload[] {
+  const head = html.slice(0, Math.max(0, html.indexOf("</head>")));
+  return [...head.matchAll(/<link\b[^>]*\brel="preload"[^>]*>/gi)].map(([link]) => {
+    if (/\bas="font"/i.test(link)) return "font";
+    return /\bas="image"/i.test(link) && /\bfetchpriority="high"/i.test(link) ? "photograph" : "other";
+  });
+}
+
 export function latinPreloads(screen: FirstScreen): string[] {
   const latin = new Set(screen.rules.filter((rule) => LATIN_FAMILIES.has(rule.family)).map((rule) => rule.url));
   return [...new Set(screen.preloaded)].filter((url) => latin.has(url)).sort();

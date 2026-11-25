@@ -3,15 +3,25 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from fontTools.ttLib import TTFont
+
 from webfonts.build import git_blob
 from webfonts.ranges import ARROWS, KEPT_FEATURES, LATIN, LATIN_EXT, NEWSREADER_FACES, codepoints, css_range
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LATIN_FONTS = REPO_ROOT / "frontend" / "app" / "latinFonts.ts"
-FACE_BLOCK = re.compile(r"const (\w+) = localFont\(\{(.*?)\n\}\);", re.DOTALL)
-RANGE_VALUE = re.compile(r'"unicode-range", value: "([^"]+)"')
-FAMILY_VALUE = re.compile(r'"font-family", value: "([^"]+)"')
-SOURCE_FILE = re.compile(r'"\.\./fonts/([^"]+\.woff2)"')
+FONTS_DIR = REPO_ROOT / "frontend" / "fonts"
+FACE_BLOCK = re.compile(r"const (\w+)(?:: PageFace)? = (?:localFont\()?\{(.*?)\n\}\)?;", re.DOTALL)
+RANGE_VALUE = re.compile(r'(?:"unicode-range", value|\n  range): "([^"]+)"')
+FAMILY_VALUE = re.compile(r'(?:"font-family", value|\n  family): "([^"]+)"')
+SOURCE_FILE = re.compile(r'"\.\./fonts/([^"]+\.woff2)"|\{ path: (\w+),')
+FONT_IMPORT = re.compile(r'import (\w+) from "\.\./fonts/([^"]+\.woff2)"')
+FALLBACK = re.compile(
+    r'fallback: \{ family: "[^"]+", local: "([^"]+)", ascent: "([\d.]+)%", descent: "([\d.]+)%", '
+    r'lineGap: "([\d.]+)%", sizeAdjust: "([\d.]+)%" \}'
+)
+AVERAGE_TEXT = "aaabcdeeeefghiijklmnnoopqrrssttuvwxyz      "
+SYSTEM_FACES = {"Times New Roman": 854.3953488372093 / 2048, "Arial": 934.5116279069767 / 2048}
 
 GOOGLE_LATIN_WITHOUT_ARROWS = (
     "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, "
@@ -32,10 +42,31 @@ PLEX_PI_FILES = [
 
 def declared_faces() -> dict[str, tuple[list[str], list[str], list[str]]]:
     text = LATIN_FONTS.read_text(encoding="utf-8")
+    imported = dict(FONT_IMPORT.findall(text))
     return {
-        name: (RANGE_VALUE.findall(body), SOURCE_FILE.findall(body), FAMILY_VALUE.findall(body))
+        name: (
+            RANGE_VALUE.findall(body),
+            [path or imported[ident] for path, ident in SOURCE_FILE.findall(body)],
+            FAMILY_VALUE.findall(body)[:1],
+        )
         for name, body in FACE_BLOCK.findall(text)
     }
+
+
+def fallback_metrics(font_file: str, local: str) -> tuple[float, ...]:
+    font = TTFont(FONTS_DIR / font_file)
+    glyphs = font.getBestCmap()
+    widths = [font["hmtx"][glyphs[ord(character)]][0] for character in AVERAGE_TEXT]
+    per_em = font["head"].unitsPerEm
+    size = sum(widths) / len(widths) / per_em / SYSTEM_FACES[local]
+    hhea = font["hhea"]
+    overrides = (
+        hhea.ascent / (per_em * size),
+        hhea.descent / (per_em * size),
+        hhea.lineGap / (per_em * size),
+        size,
+    )
+    return tuple(round(abs(value) * 100, 2) for value in overrides)
 
 
 def test_newsreader_claims_no_arrow_it_does_not_draw() -> None:
@@ -81,3 +112,18 @@ def test_the_subset_keeps_the_figures_and_shaping_the_site_uses_and_drops_the_re
 def test_a_source_is_checked_against_its_git_blob() -> None:
     assert git_blob(b"") == "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
     assert git_blob(b"hello\n") == "ce013625030ba8dba906f756967f9e9ca394464a"
+
+
+def test_the_first_screen_fallback_faces_match_their_fonts_as_next_font_measured_them() -> None:
+    faces = declared_faces()
+    text = LATIN_FONTS.read_text(encoding="utf-8")
+    measured = {name: found for name, body in FACE_BLOCK.findall(text) if (found := FALLBACK.findall(body))}
+    assert sorted(measured) == ["newsreader", "plexSans"]
+    for name, [(local, *overrides)] in measured.items():
+        assert tuple(float(value) for value in overrides) == fallback_metrics(faces[name][1][0], local), name
+
+
+def test_a_fallback_measured_against_another_system_face_or_font_differs() -> None:
+    newsreader = fallback_metrics("newsreader-latin-var.woff2", "Times New Roman")
+    assert fallback_metrics("newsreader-latin-var.woff2", "Arial") != newsreader
+    assert fallback_metrics("ibm-plex-sans-regular-latin1.woff2", "Times New Roman") != newsreader
