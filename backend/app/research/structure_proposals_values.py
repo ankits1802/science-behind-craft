@@ -21,7 +21,7 @@ from .structure_proposals import (
     StructureCheck,
 )
 
-__all__ = ["STATED_CHECK", "StatedValue", "stated_check", "stated_values"]
+__all__ = ["STATED_CHECK", "StatedValue", "edited_check", "stated_check", "stated_values"]
 
 STATED_CHECK = "STATED"
 NOTHING_NAMED = "The statement is the whole of it: the proposal names nothing else a quote must hold."
@@ -47,7 +47,15 @@ def stated_values(item: Any) -> list[StatedValue]:
 
 
 def stated_check(item: Any, quotes: Sequence[str]) -> StructureCheck:
-    values = stated_values(item)
+    return _checked(stated_values(item), quotes)
+
+
+def edited_check(before: Any, after: Any, quotes: Sequence[str]) -> StructureCheck:
+    held = set(stated_values(before))
+    return _checked([value for value in stated_values(after) if value not in held], quotes)
+
+
+def _checked(values: Sequence[StatedValue], quotes: Sequence[str]) -> StructureCheck:
     missing = [value for value in values if not _quoted(value, quotes)]
     if missing:
         reasons = [NOT_QUOTED.format(label=_opening(value.label), value=value.shown) for value in missing]

@@ -355,7 +355,7 @@ most put a decision in front of a person, who sees it with its reason and the ap
   | `FACTS` | `retract`, the queue's own action | `text` |
   | `COMPONENTS` | off every page, or off the one page `craft` or `family` names, through `component_lifecycle.take_off_pages` (`component.removed`) | `title`, `description`, `spec`, `units` (`component.edited`) |
   | `IMAGES` (published only: waiting pictures stay on the site) | its file `PRIVATE`, record kept (`picture.removed`) | `caption`, `alt_text`, `focal`, `place` (`picture.edited`) |
-  | `LAYOUTS` | the page's current version only: the next version restores the one before it, or the default arrangement (`layout.removed`) | |
+  | `LAYOUTS` | the page's current version only: the next version restores the latest earlier arrangement that is neither this one nor one a `layout.removed` audit names, or the default arrangement (`layout.removed`) | |
   | `STRUCTURE` | the entry off its owner page and its rows (a reaction's `Reaction`, a term's `TermCraft`, a conflict's marks on its facts, a craft's `CraftGiRecord`) (`structure.removed`) | per entry kind, `research/structure_edits.EDITS` (`structure.edited`) |
   | `READINGS` | `reviewStatus` `REJECTED` with the reason (`reading.removed`) | |
   | `LAYERS` | an approved layer `REJECTED` with the reason: no longer fit to ship (`layer.removed`) | |
@@ -373,8 +373,11 @@ most put a decision in front of a person, who sees it with its reason and the ap
   in a quote, at least half its words in its quotes) and each quote still in its stored passage; a
   component's spec and units by `component_proposals_spec.checked_drawing`, the delivery checks, citing
   only the facts it already rests on; a picture's fields by `PictureEdit` and its place by
-  `image_contributions_checks.checked_target`; a structure entry's by its own item model and
-  `structure_proposals_page.target_problem`. An edit is refused when it changes nothing, names a field
+  `image_contributions_checks.checked_target`; a structure entry's, a GI record's too, by its own item
+  model, `structure_proposals_page.target_problem` and the stated check its proposal passed: every
+  name, colour and number the edit brings is in a quote of the facts the entry rests on
+  (`structure_proposals_values.edited_check`, refused as `Not edited: the STATED check refused it.`
+  with the check's reasons; decision 0212). An edit is refused when it changes nothing, names a field
   its kind does not edit, or, at confirmation, a field it changes moved since it was staged. Each
   applied change writes its audit with the confirming person, the reason and the values it replaced,
   and returns the pages it touched. A staged decision on published content stays the action it was
@@ -405,6 +408,12 @@ most put a decision in front of a person, who sees it with its reason and the ap
   later) with its `StagedReviewItem` rows (position, kind, item, action, the decision, a label of at
   most 300 characters). An Admin stages at most 100 items an India day
   (`research/staged_reviews.day_allowance_problem`); a call that would pass it is refused whole.
+- **Asked for by a steward** (decision 0212). A craft steward's withdrawal of a component it did not
+  propose (`open-work.md`, Withdrawn, replaced, borrowed and held) is stored the same way by
+  `staged_reviews.stage_request`, one `COMPONENTS remove` a batch, with the steward as proposer, no
+  connection or token, and `clientName` `propose_page over MCP` or `the site's page proposal`. It is
+  not dry-run when stored, since the steward may not remove it, and is refused while the same change
+  already waits in an open batch; the Admin who confirms it runs it, as every confirmation does.
 - **`GET /api/review-queue/staged`** (Admins, `REVIEW_CONTRIBUTIONS`) answers `StagedBatchList
   {schemaVersion 1, batches[{id, status, clientName, proposedBy, createdAt, expiresAt, decidedBy,
   decidedAt, refresh, items[{id, position, label, decision, state, applied, outcome}]}]}`, the open

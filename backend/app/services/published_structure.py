@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import InvalidInput
 from app.models import (
     Claim,
+    ClaimSource,
     Craft,
     CraftCategory,
     CraftGiRecord,
@@ -33,6 +34,7 @@ from app.research.structure_proposals import (
     GLOSSARY_TERM,
     REACTION,
 )
+from app.research.structure_proposals_values import edited_check
 
 from . import audit
 from .open_work_subjects import CATEGORY
@@ -75,6 +77,7 @@ SEVERAL = (
     "anew."
 )
 PAGE_NEEDED = "Name the craft, family or category whose page's structure entries to list."
+UNSTATED = "Not edited: the {check} check refused it. {reasons}"
 GI_COLUMNS = {
     "application_number": "applicationNumber",
     "certificate_number": "certificateNumber",
@@ -198,6 +201,7 @@ async def _edit(session: AsyncSession, decision: StagedDecision, reviewer: User,
     fields = checked_edit(decision, _editable_of(entry))
     item = checked_item(entry, fields)
     if found.gi is not None:
+        await _refuse_unstated(session, entry, item)
         for name, value in fields.items():
             setattr(found.gi, GI_COLUMNS[name], value)
     elif found.page is not None:
@@ -206,6 +210,7 @@ async def _edit(session: AsyncSession, decision: StagedDecision, reviewer: User,
         )
         if problem is not None:
             raise InvalidInput(problem)
+        await _refuse_unstated(session, entry, item)
         await store_owner_page(session, owner, edited_page(found.page, entry, fields))
         await _rows_edited(session, entry, fields)
     before = {name: entry.current.get(name) for name in fields}
@@ -213,6 +218,18 @@ async def _edit(session: AsyncSession, decision: StagedDecision, reviewer: User,
         session, STRUCTURE_EDITED, (reviewer, found), {"before": before, "reason": decision.reason}
     )
     return Carried(EDITED.format(name=entry.name, slug=owner.slug), await _owners(session, owner))
+
+
+async def _refuse_unstated(session: AsyncSession, entry: FoundEntry, item: Any) -> None:
+    quotes = await session.scalars(
+        select(ClaimSource.quote)
+        .where(ClaimSource.claimId.in_(list(entry.claim_ids)), ClaimSource.quote.is_not(None))
+        .order_by(ClaimSource.createdAt, ClaimSource.id)
+    )
+    before = type(item).model_construct(**entry.fixed, **entry.current)
+    check = edited_check(before, item, [str(quote) for quote in quotes.all()])
+    if not check.passed:
+        raise InvalidInput(UNSTATED.format(check=check.check, reasons=" ".join(check.reasons)))
 
 
 async def _rows_without(session: AsyncSession, owner: StructureOwner, entry: FoundEntry) -> None:

@@ -6,13 +6,13 @@ import pytest
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AuditLog, Claim, CraftGiRecord, User
+from app.models import AuditLog, Claim, ClaimSource, CraftGiRecord, Source, StagedReviewItem, User
 from app.research.staged_reviews import ConfirmedItem, StagedConfirmation, StagedDecision
 from app.services.curated_index import IndexNativeName
 from app.services.staged_review_confirm import Confirmed, confirm_batch
 from app.services.staged_reviews import Staged, stage_decisions
 
-from ..structure.pages import HELD_A, HELD_B, HELD_C, HISTORY_CONCEPT, SLUG, key
+from ..structure.pages import GI_QUOTE, HELD_A, HELD_B, HELD_C, HISTORY_CONCEPT, NAME_QUOTE, SLUG, key
 from .structure_seed import CRAFT, NOW, seeded_session, stored_page, with_page
 from .test_staged_reviews_db import caller_of
 
@@ -21,6 +21,8 @@ pytestmark = pytest.mark.db
 WHY = "The source gives this entry otherwise."
 ABOUT, NEW_ABOUT = "When the river dried", "When the river near the dye houses ran dry"
 GI_CLAIM = key("gi-claim")
+QUOTED_SOURCE = key("quoted-source")
+UNSTATED = "Not edited: the STATED check refused it. "
 
 
 @pytest.fixture
@@ -52,6 +54,35 @@ async def confirm(session: AsyncSession, admin: User, staged: Staged) -> Confirm
 
 async def audited(session: AsyncSession, action: str) -> list[AuditLog]:
     return list(await session.scalars(select(AuditLog).where(AuditLog.action == action)))
+
+
+async def quoted(session: AsyncSession, claim_id: uuid.UUID, quote: str) -> None:
+    if await session.get(Source, QUOTED_SOURCE) is None:
+        session.add(
+            Source(id=QUOTED_SOURCE, kind="WEB_PAGE", title="Dyeing in the delta", licence="CC-BY-4.0")
+        )
+        await session.flush()
+    session.add(ClaimSource(claimId=claim_id, sourceId=QUOTED_SOURCE, quote=quote, locator="para 1"))
+    await session.flush()
+
+
+async def gi_record(session: AsyncSession) -> None:
+    session.add(
+        Claim(
+            id=GI_CLAIM,
+            subjectType="CONCEPT",
+            subjectId=HISTORY_CONCEPT,
+            predicate="states",
+            text="The craft was registered under application number 182.",
+            evidenceLevel="PROVISIONAL",
+            origin="IMPORT",
+            status="APPROVED",
+            field="POLICY",
+        )
+    )
+    await session.flush()
+    session.add(CraftGiRecord(craftId=CRAFT, applicationNumber="182", proprietors=[], claimIds=[GI_CLAIM]))
+    await quoted(session, GI_CLAIM, GI_QUOTE)
 
 
 async def marks(session: AsyncSession) -> set[tuple[bool, str | None]]:
@@ -127,22 +158,7 @@ async def test_a_gi_record_is_edited_through_its_own_rules_then_removed(
     seeded: tuple[AsyncSession, User],
 ) -> None:
     session, admin = seeded
-    session.add(
-        Claim(
-            id=GI_CLAIM,
-            subjectType="CONCEPT",
-            subjectId=HISTORY_CONCEPT,
-            predicate="states",
-            text="The craft was registered under application number 182.",
-            evidenceLevel="PROVISIONAL",
-            origin="IMPORT",
-            status="APPROVED",
-            field="POLICY",
-        )
-    )
-    await session.flush()
-    session.add(CraftGiRecord(craftId=CRAFT, applicationNumber="182", proprietors=[], claimIds=[GI_CLAIM]))
-    await session.flush()
+    await gi_record(session)
     refused = await stage(
         session, admin, decided(GI_CLAIM, "edit", edit={"fields": {"filed_on": "10 March 2009"}})
     )
@@ -161,3 +177,58 @@ async def test_a_gi_record_is_edited_through_its_own_rules_then_removed(
     assert (
         gone.detail["was"]["application_number"] == "182" and gone.detail["was"]["filed_on"] == "2009-03-10"
     )
+
+
+async def test_a_gi_record_edit_its_quotes_do_not_state_is_refused_when_staged_and_when_confirmed(
+    seeded: tuple[AsyncSession, User],
+) -> None:
+    session, admin = seeded
+    await gi_record(session)
+    unquoted = {"certificate_number": "999", "proprietors": ["Someone"]}
+    refused = await stage(session, admin, decided(GI_CLAIM, "edit", edit={"fields": unquoted}))
+    assert refused.items == [] and [each.reason for each in refused.refused] == [
+        UNSTATED
+        + "The certificate number (999) appears in none of the quotes. "
+        + "The proprietor Someone (Someone) appears in none of the quotes."
+    ]
+    staged = await stage(
+        session, admin, decided(GI_CLAIM, "edit", edit={"fields": {"filed_on": "2009-03-10"}})
+    )
+    assert staged.refused == [] and len(staged.items) == 1
+    await session.execute(
+        update(ClaimSource)
+        .where(ClaimSource.claimId == GI_CLAIM)
+        .values(quote="The craft was registered under application number 182")
+    )
+    await confirm(session, admin, staged)
+    item = await session.get(StagedReviewItem, staged.items[0].id, populate_existing=True)
+    assert item is not None and (item.state, item.outcome) == (
+        "REFUSED",
+        UNSTATED + "The year it was filed (2009) appears in none of the quotes.",
+    )
+    record = await session.get(CraftGiRecord, CRAFT, populate_existing=True)
+    assert record is not None and (record.certificateNumber, record.filedOn, record.proprietors) == (
+        None,
+        None,
+        [],
+    )
+
+
+async def test_an_entry_edit_its_quotes_state_is_confirmed_and_one_they_do_not_is_refused(
+    seeded: tuple[AsyncSession, User],
+) -> None:
+    session, admin = seeded
+    await quoted(session, HELD_A, NAME_QUOTE)
+    refused = await stage(session, admin, decided(HELD_A, "edit", edit={"fields": {"text": "Ajrakhpur"}}))
+    assert [each.reason for each in refused.refused] == [
+        UNSTATED + "The native name (Ajrakhpur) appears in none of the quotes."
+    ]
+    language = await stage(session, admin, decided(HELD_A, "edit", edit={"fields": {"language": "sd"}}))
+    assert language.refused == []
+    await confirm(session, admin, language)
+    staged = await stage(session, admin, decided(HELD_A, "edit", edit={"fields": {"text": "Ajrak"}}))
+    assert staged.refused == []
+    await confirm(session, admin, staged)
+    assert [(name.text, name.language) for name in (await stored_page(session)).native_names] == [
+        ("Ajrak", "sd")
+    ]

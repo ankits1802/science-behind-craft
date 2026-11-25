@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.roles import Capability, can
 from app.models import ComponentProposal, CraftSteward, KnowledgePiece, User
 
-__all__ = ["may_retire", "proposal_of"]
+__all__ = ["may_retire", "proposal_of", "stewards_piece"]
 
 
 def proposal_of(piece: KnowledgePiece) -> uuid.UUID | None:
@@ -23,12 +23,15 @@ async def may_retire(session: AsyncSession, user: User, piece: KnowledgePiece) -
     if can(user, Capability.REVIEW_CONTRIBUTIONS):
         return True
     proposal_id = proposal_of(piece)
-    if proposal_id is not None:
-        proposer = await session.scalar(
-            select(ComponentProposal.proposerId).where(ComponentProposal.id == proposal_id)
-        )
-        if proposer == user.id:
-            return True
+    if proposal_id is None:
+        return False
+    proposer = await session.scalar(
+        select(ComponentProposal.proposerId).where(ComponentProposal.id == proposal_id)
+    )
+    return proposer == user.id
+
+
+async def stewards_piece(session: AsyncSession, user: User, piece: KnowledgePiece) -> bool:
     if piece.craftId is None:
         return False
     steward = await session.scalar(

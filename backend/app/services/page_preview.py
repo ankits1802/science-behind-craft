@@ -106,7 +106,7 @@ async def preview_page(
     reports = [
         *await _reports(session, bundle, subject, draft),
         *await _pictures(session, user, bundle, subject, draft),
-        *await previewed_withdrawals(session, user, bundle, draft),
+        *await previewed_withdrawals(session, user, subject, bundle, draft),
     ]
     parts = await generated_parts(session, subject, draft.additions())
     document = None if parts is None else assembled_document(parts, Drawings())

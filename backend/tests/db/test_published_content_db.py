@@ -18,10 +18,11 @@ from app.models import (
     ReviewEvent,
     Source,
 )
+from app.research.page_layout import PageLayoutEntry
 from app.research.staged_reviews import ConfirmedItem, StagedConfirmation, StagedDecision
 from app.services.contributed_pictures import shown_contributions
 from app.services.open_work_subjects import craft_subject
-from app.services.page_layouts import layout_of
+from app.services.page_layouts import layout_of, store_layout
 from app.services.review_queue_errors import DecisionConflict, NotYourQueue
 from app.services.staged_review_confirm import Confirmed, confirm_batch, discard_batch
 from app.services.staged_review_views import open_batches
@@ -247,6 +248,42 @@ async def test_a_layout_removal_brings_back_the_layout_before_it_and_keeps_every
     assert layout is not None and (layout.version, [entry.ref for entry in layout.entries]) == (3, ["u0001"])
     (removed,) = await audits(session, "layout.removed")
     assert (removed.detail["version"], removed.detail["restored"]) == (2, 1)
+
+
+async def removed_version(session: AsyncSession, people: People, version: int) -> tuple[int, list[str]]:
+    layout_id = await session.scalar(
+        select(PageLayout.id).where(PageLayout.craftId == CRAFT, PageLayout.version == version)
+    )
+    assert layout_id is not None
+    staged = await stage(session, people, decided("LAYOUTS", layout_id, "remove"))
+    assert staged.refused == []
+    await confirm(session, people, staged)
+    layout = await layout_of(session, await craft_subject(session, SLUG))
+    assert layout is not None
+    return layout.version, [entry.ref for entry in layout.entries]
+
+
+async def test_removing_a_layout_that_was_itself_a_restore_never_brings_back_the_removed_one(
+    seeded: tuple[AsyncSession, People],
+) -> None:
+    session, people = seeded
+    assert await removed_version(session, people, 2) == (3, ["u0001"])
+    assert await removed_version(session, people, 3) == (4, [])
+    restored = [
+        (each.detail["version"], each.detail["restored"]) for each in await audits(session, "layout.removed")
+    ]
+    assert sorted(restored) == [(2, 1), (3, None)]
+
+
+async def test_a_removal_restores_the_latest_earlier_arrangement_no_removal_took_off(
+    seeded: tuple[AsyncSession, People],
+) -> None:
+    session, people = seeded
+    third = [PageLayoutEntry(ref="u0003", chapter="glance", order=1, role="BODY")]
+    await store_layout(session, await craft_subject(session, SLUG), third, actor=people.admin)
+    assert await removed_version(session, people, 3) == (4, ["u0001", "u0002"])
+    assert await removed_version(session, people, 4) == (5, ["u0001"])
+    assert await removed_version(session, people, 5) == (6, [])
 
 
 async def test_a_discarded_or_expired_batch_leaves_published_content_as_it_was(

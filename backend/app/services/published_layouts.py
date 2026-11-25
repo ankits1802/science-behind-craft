@@ -8,7 +8,7 @@ from sqlalchemy import ColumnElement, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
-from app.models import Craft, CraftCategory, PageLayout as LayoutRow, User
+from app.models import AuditLog, Craft, CraftCategory, PageLayout as LayoutRow, User
 from app.research.page_layout import PageLayoutEntry
 from app.research.page_revalidation import PageOwners
 from app.research.review_labels import cut_label
@@ -24,12 +24,13 @@ __all__ = ["LAYOUT_REMOVED", "PUBLISHED_LAYOUTS"]
 
 LAYOUT_REMOVED = "layout.removed"
 BACK_TO = (
-    "Removed: the page of {slug} goes back to its layout of version {version}, written as version {written}; "
-    "every version stays in the record."
+    "Removed: the page of {slug} goes back to its layout of version {version}, the latest earlier arrangement "
+    "that is neither this one nor one a removal took off, written as version {written}; every version stays "
+    "in the record."
 )
 BACK_TO_DEFAULT = (
-    "Removed: the page of {slug} goes back to its default arrangement, written as version {written}; every "
-    "version stays in the record."
+    "Removed: the page of {slug} goes back to its default arrangement, because every earlier arrangement is "
+    "this one or one a removal took off, written as version {written}; every version stays in the record."
 )
 NOT_CURRENT = (
     "Version {version} is no longer the page's layout; version {current} is. Stage its removal anew."
@@ -104,9 +105,23 @@ async def _remove(session: AsyncSession, decision: StagedDecision, reviewer: Use
 
 
 async def _earlier(session: AsyncSession, row: LayoutRow) -> LayoutRow | None:
-    return await session.scalar(
-        select(LayoutRow).where(_same_page(row), LayoutRow.version == row.version - 1)
+    found = await session.scalars(
+        select(LayoutRow)
+        .where(_same_page(row), LayoutRow.version < row.version)
+        .order_by(LayoutRow.version.desc())
     )
+    earlier = list(found.all())
+    taken_off = set(
+        await session.scalars(
+            select(AuditLog.targetId).where(
+                AuditLog.action == LAYOUT_REMOVED,
+                AuditLog.targetType == LAYOUT_TARGET,
+                AuditLog.targetId.in_([str(each.id) for each in earlier]),
+            )
+        )
+    )
+    unwanted = [row.entries, *(each.entries for each in earlier if str(each.id) in taken_off)]
+    return next((each for each in earlier if each.entries not in unwanted), None)
 
 
 async def _owners(session: AsyncSession, subject: WorkSubject) -> PageOwners:

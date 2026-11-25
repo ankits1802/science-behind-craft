@@ -30,9 +30,9 @@ from app.research.knowledge_api import ComponentSummary
 from app.research.open_work_texts import counted
 
 from .component_library import library_components
-from .component_lifecycle import check_replacement
 from .component_proposals_register import register_component, registers
 from .component_proposals_spec import NO_KNOWN, CheckedDelivery, checked_delivery
+from .component_withdrawals import replacement_waits
 from .knowledge_api import known_craft
 from .open_work_components import registered_pieces
 from .review_queue_errors import DecisionConflict
@@ -86,14 +86,15 @@ async def propose_component(
     if problem is not None:
         raise InvalidInput(problem)
     await _check_labels(session, draft)
-    await check_replacement(session, user, draft.replaces)
+    waits = await replacement_waits(session, user, draft.replaces)
     owner = None if draft.craft_slug is None else await known_craft(session, draft.craft_slug)
     await _check_subjects(session, draft)
     matches = close_matches(draft, await _candidates(session, draft))
     if matches:
         return _refused(draft, matches)
     delivery = await checked_delivery(session, draft, known=known) if draft.delivered else None
-    row = _proposal(draft, user, None if owner is None else owner.id, delivery, now=now)
+    approved = has_rank(user, PROFESSOR) and not waits
+    row = _proposal(draft, user, None if owner is None else owner.id, delivery, now=now, approved=approved)
     await _stored(session, row)
     if draft.task_key is not None:
         await complete_task(session, user.id, draft.task_key, now=now)
@@ -241,8 +242,8 @@ def _proposal(
     delivery: CheckedDelivery | None,
     *,
     now: datetime,
+    approved: bool,
 ) -> ComponentProposal:
-    approved = has_rank(user, PROFESSOR)
     return ComponentProposal(
         spec=None if delivery is None else delivery.spec,
         units=None if delivery is None else delivery.units,
