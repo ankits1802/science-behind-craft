@@ -118,11 +118,15 @@ test("a figure left at the end of a chapter stands after the paragraph it illust
   expect(chem.blocks.filter((block) => block.kind === "passage").map((block) => block.kind === "passage" && block.head)).toEqual([true, false]);
 });
 
-test("a figure an editor placed keeps its place, and the authored page is never rearranged", () => {
+test("a figure an editor placed in a chapter whose paragraphs the layout also places keeps its place, and the authored page is never rearranged", () => {
   const given = chemistry();
-  given.content.data = { "page-layout": { entries: [{ ref: MADDER, chapter: "chem", order: 9, role: "FIGURE" }] } };
+  given.content.data = { "page-layout": { entries: [{ ref: "u0002", chapter: "chem", order: 1, role: "BODY" }, { ref: MADDER, chapter: "chem", order: 9, role: "FIGURE" }] } };
   const chem = placedPlan(given, pagePlan(given)).chapters.find((chapter) => chapter.key === "chem")!;
   expect(chem.blocks.map((block) => (block.kind === "component" ? block.label : block.kind))).toEqual(["passage", VAT, "passage", MADDER]);
+  given.content.layout = [...given.content.layout.filter((entry) => entry.ref !== MADDER), ...given.content.layout.filter((entry) => entry.ref === MADDER)];
+  given.content.layout.splice(2, 0, given.content.layout.pop()!);
+  const kept = placedPlan(given, pagePlan(given)).chapters.find((chapter) => chapter.key === "chem")!;
+  expect(kept.blocks.map((block) => (block.kind === "component" ? block.label : block.kind))).toEqual(["passage", MADDER, "passage", VAT, "passage"]);
   const authored = { ...chemistry(), shell: "<main></main>" };
   const plan = pagePlan(authored);
   expect(placedPlan(authored, plan)).toBe(plan);

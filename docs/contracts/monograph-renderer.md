@@ -7,7 +7,7 @@ now (decision 0106, round 3c); curated crafts too since round 6, whose documents
 structure, so the tabbed craft screen is retired. Engineers changing the renderer, a native view or
 a page tool read it.
 
-Last reviewed: 2026-11-24.
+Last reviewed: 2026-11-26.
 
 | For | Read |
 |---|---|
@@ -39,6 +39,7 @@ flowchart LR
 | The marks, as `render_nodes` writes them | `lib/monographRender.ts` |
 | The same marks as React elements | `lib/monographRenderElements.ts` |
 | The page plan | `lib/monographRenderLayout.ts` |
+| The layout record's sizes, margin, crops and placed figures (decision 0227) | `lib/monographPlacement.ts`, `lib/monographLayoutFlow.ts`, `lib/monographRenderNear.ts`, `components/monograph/BesideItems.tsx` |
 | What the kit's script reads | `lib/monographRenderKit.ts` |
 | The server fetch and the preview metadata | `lib/monographRenderServer.ts` |
 | The generated label masthead | `lib/monographMasthead.ts`, `components/monograph/KitMasthead.tsx` and `MastheadPlateView.tsx` |
@@ -192,7 +193,16 @@ The plan (`pagePlan`) is pure and tested:
   a label named anywhere in a spec, or a `<kv-slot component="<label>"></kv-slot>` in a fragment),
   which its owner draws. A top-level component drawn from its spec sits in the frame its kind has
   on the approved page (`componentPlace`: `div.bx.bx-<scope>`, then `div.screen` and `div.wrap` as
-  the template has them, a plate in the reading column); a fragment brings its own.
+  the template has them, a plate in the reading column); a fragment brings its own. A component
+  the page's layout record sizes takes that size's frame instead (`COLUMN`, `WIDE`, `BLEED`), and
+  one at `MARGIN` stands in the margin of the run of the paragraph it follows
+  (`Passage.asides`, drawn in `aside.margin.note.keep > div.margin-plate`); a crop shows its box
+  (`page-layout.md`, How the web draws a layout).
+- **Figures beside their paragraphs** (`placedPlan`): a component left at the end of a chapter that
+  no layout places, and every component a layout places in a chapter whose paragraphs it leaves
+  alone, stands after the paragraph that shares the most of its rarest words and sources, in the
+  layout's order where two share one. `blockLabels` lists a block's components in reading order,
+  its margin's included, for figure numbering, the first sheet's scopes and the kin chapter.
 - **Sources**: the chapter keyed `sources` draws every source a unit cites, in number order
   (`div.sources.kv-sources`, rows `li.kv-src-li` with `button.src[data-g][aria-pressed]`, byline,
   grade in words, "Supports N sentences here", "Open the source"). An authored document does not
@@ -414,6 +424,7 @@ when any of them changes (`kv-prefs`). The menu's display tools change the app's
 | The rail and chapter menu, and Kutch Ajrakh's chapter names as the approved page gives them | `frontend/e2e/monograph-rail-unit.spec.ts` |
 | A craft's route draws its document or its record | `frontend/e2e/craft-monograph-unit.spec.ts` and `craft-without-monograph-unit.spec.ts` |
 | Generated documents and the answer block kind | `frontend/e2e/monograph-generated-unit.spec.ts` and `monograph-blocks-unit.spec.ts` |
+| A layout's sizes, margin entries, crops, pull quotes and placed figures, and a document without layout data drawn as before | `frontend/e2e/monograph-placed-layout-unit.spec.ts` and `monograph-homes-unit.spec.ts` |
 | A generated page's colour key in its chemistry chapter, and its masthead naming the craft once to a screen reader with or without a photograph | `frontend/e2e/colour-key-unit.spec.ts` |
 | The approved page's masthead, contents, margin notes, sub-rail and source groups on a generated page, at 360, 768 and 1440 in light and dark, and a passage's last popover docked whole at 1440 | `frontend/e2e/monograph-template-unit.spec.ts`, and `monograph-template.smoke.spec.ts` against the built site |
 | A chapter's listed facts drawn as one cited list after its prose | `frontend/e2e/cited-list-unit.spec.ts` |

@@ -1,8 +1,9 @@
 import type { MonographDocument } from "@/lib/monographDocument";
+import { pieceRefs } from "@/lib/monographNotes";
+import { arrangedLabels, layoutSizes, setInProse } from "@/lib/monographPlacement";
 import { citedSourceKeys, nodesText } from "@/lib/monographRender";
-import { componentUnits, type ChapterBlock, type ChapterPlan, type PagePlan, type Passage, type PassagePiece } from "@/lib/monographRenderLayout";
+import { componentUnits, specStrings, withAsides, type ChapterBlock, type ChapterPlan, type PagePlan, type Passage, type PassageAside, type PassagePiece } from "@/lib/monographRenderLayout";
 
-export const LAYOUT_DATA = "page-layout";
 const WORD = /[\p{L}][\p{L}-]{3,}/gu;
 const SOURCE_WEIGHT = 2;
 const SHARED_FLOOR = 0.5;
@@ -19,17 +20,11 @@ export function words(text: string): Set<string> {
   return new Set([...text.toLowerCase().matchAll(WORD)].map((found) => found[0].replace(/-+$/, "")).filter((word) => !COMMON.has(word)));
 }
 
-export function arrangedLabels(document: MonographDocument): Set<string> {
-  const layout = document.content.data[LAYOUT_DATA];
-  const entries = layout && typeof layout === "object" ? (layout as { entries?: unknown }).entries : null;
-  if (!Array.isArray(entries)) return new Set();
-  return new Set(entries.flatMap((entry) => (entry && typeof entry === "object" && typeof (entry as { ref?: unknown }).ref === "string" ? [(entry as { ref: string }).ref] : [])));
-}
-
 function figure(document: MonographDocument, label: string): Figure {
   const component = document.content.components.find((found) => found.label === label);
   const units = componentUnits(document, label).map((ref) => document.content.units[ref]).filter(Boolean);
-  const text = [component?.title ?? "", component?.description ?? "", ...units.map((unit) => nodesText(unit.nodes))].join(" ");
+  const held = Object.hasOwn(document.specs, label) ? specStrings(document.specs[label]) : [];
+  const text = [component?.title ?? "", component?.description ?? "", ...units.map((unit) => nodesText(unit.nodes)), ...held].join(" ");
   return { label, words: words(text), sources: new Set(units.flatMap((unit) => citedSourceKeys(unit.nodes))) };
 }
 
@@ -84,26 +79,37 @@ function trailing(blocks: readonly ChapterBlock[]): string[] {
   return out;
 }
 
-export function interleaved(block: Passage, anchored: ReadonlyMap<number, readonly string[]>): ChapterBlock[] {
+export type NearPlacing = { arranged: ReadonlySet<string>; loose: ReadonlySet<string>; beside: (label: string) => boolean };
+
+const NO_ASIDES: readonly PassageAside[] = [];
+
+export function interleaved(block: Passage, anchored: ReadonlyMap<number, readonly string[]>, beside: (label: string) => boolean = () => false): ChapterBlock[] {
   const out: ChapterBlock[] = [];
+  const asides = [...(block.asides ?? NO_ASIDES)];
   let pieces: PassagePiece[] = [];
   const flush = () => {
     if (!pieces.length) return;
-    out.push(out.some((found) => found.kind === "passage") ? { kind: "passage", head: false, pieces, notes: [] } : { ...block, pieces });
+    const refs = new Set(pieces.flatMap(pieceRefs));
+    const shown: Passage = out.some((found) => found.kind === "passage") ? { kind: "passage", head: false, pieces, notes: [] } : { kind: "passage", head: block.head, pieces, notes: block.notes };
+    out.push(withAsides(shown, asides.filter((aside) => refs.has(aside.after))));
     pieces = [];
   };
   block.pieces.forEach((piece, index) => {
     pieces.push(piece);
-    const labels = anchored.get(index);
-    if (!labels) return;
+    const labels = anchored.get(index) ?? [];
+    const refs = pieceRefs(piece);
+    const after = refs[refs.length - 1] ?? "";
+    asides.push(...labels.filter(beside).map((label): PassageAside => ({ after, ref: label, kind: "component" })));
+    const apart = labels.filter((label) => !beside(label));
+    if (!apart.length) return;
     flush();
-    labels.forEach((label) => out.push({ kind: "component", label }));
+    apart.forEach((label) => out.push({ kind: "component", label }));
   });
   flush();
   return out;
 }
 
-function rebuilt(blocks: readonly ChapterBlock[], chosen: ReadonlyMap<string, Paragraph>): ChapterBlock[] {
+function rebuilt(blocks: readonly ChapterBlock[], chosen: ReadonlyMap<string, Paragraph>, beside: (label: string) => boolean): ChapterBlock[] {
   const byBlock = new Map<number, Map<number, string[]>>();
   for (const [label, paragraph] of chosen) {
     const pieces = byBlock.get(paragraph.block) ?? new Map<number, string[]>();
@@ -114,21 +120,38 @@ function rebuilt(blocks: readonly ChapterBlock[], chosen: ReadonlyMap<string, Pa
     if (block.kind === "component" && chosen.has(block.label)) return [];
     if (block.kind !== "passage") return [block];
     const anchored = byBlock.get(at);
-    return anchored ? interleaved(block, anchored) : [block];
+    return anchored ? interleaved(block, anchored, beside) : [block];
   });
 }
 
-export function figuresNearText(document: MonographDocument, chapter: ChapterPlan): ChapterPlan {
-  const arranged = arrangedLabels(document);
-  const moved = trailing(chapter.blocks).filter((label) => !arranged.has(label));
+export function followed(moved: readonly string[], chosen: ReadonlyMap<string, Paragraph>, loose: ReadonlySet<string>, first: Paragraph): Map<string, Paragraph> {
+  const placed = new Map<string, Paragraph>();
+  let previous: Paragraph | null = null;
+  for (const label of moved) {
+    const pick = chosen.get(label) ?? (loose.has(label) ? (previous ?? first) : null);
+    if (!pick) continue;
+    placed.set(label, pick);
+    previous = pick;
+  }
+  return placed;
+}
+
+export function nearPlacing(document: MonographDocument): NearPlacing {
+  const sizes = layoutSizes(document);
+  return { arranged: arrangedLabels(document), loose: setInProse(document), beside: (label) => sizes.get(label) === "MARGIN" };
+}
+
+export function figuresNearText(document: MonographDocument, chapter: ChapterPlan, placing: NearPlacing = nearPlacing(document)): ChapterPlan {
+  const moved = trailing(chapter.blocks).filter((label) => placing.loose.has(label) || !placing.arranged.has(label));
   const found = paragraphs(document, chapter.blocks);
   if (!moved.length || !found.length) return chapter;
-  const chosen = anchors(moved.map((label) => figure(document, label)), found);
+  const chosen = followed(moved, anchors(moved.map((label) => figure(document, label)), found), placing.loose, found[0]);
   if (!chosen.size) return chapter;
-  return { ...chapter, blocks: rebuilt(chapter.blocks, chosen) };
+  return { ...chapter, blocks: rebuilt(chapter.blocks, chosen, placing.beside) };
 }
 
 export function placedPlan(document: MonographDocument, plan: PagePlan): PagePlan {
   if (document.shell !== null) return plan;
-  return { ...plan, chapters: plan.chapters.map((chapter) => figuresNearText(document, chapter)) };
+  const placing = nearPlacing(document);
+  return { ...plan, chapters: plan.chapters.map((chapter) => figuresNearText(document, chapter, placing)) };
 }

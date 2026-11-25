@@ -1,4 +1,5 @@
 import type { MonographDocument } from "@/lib/monographDocument";
+import { croppedDocument } from "@/lib/monographPlacement";
 import { numberedDocument } from "@/lib/monographRenderFigures";
 import { pagePlan, type PagePlan } from "@/lib/monographRenderLayout";
 import { placedPlan } from "@/lib/monographRenderNear";
@@ -19,5 +20,5 @@ export function mastheadFetchedFirst(document: MonographDocument, plan: PagePlan
 
 export function shownPage(document: MonographDocument): { document: MonographDocument; plan: PagePlan } {
   const plan = placedPlan(document, pagePlan(document));
-  return { document: mastheadFetchedFirst(numberedDocument(document, plan), plan), plan };
+  return { document: mastheadFetchedFirst(croppedDocument(numberedDocument(document, plan)), plan), plan };
 }

@@ -14,7 +14,7 @@ import { SourceList } from "@/components/monograph/SourceList";
 import { documentCitation } from "@/lib/monographCite";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { chapterNotes, chapterSections, type ChapterSection, type NoteLine } from "@/lib/monographNotes";
-import { chapterHeaded, railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
+import { blockLabels, chapterHeaded, railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
 import { KIN_KIND } from "@/lib/monographSources";
 import { pageSubject } from "@/lib/pageExport";
 
@@ -63,7 +63,7 @@ export function MonographChapter({ document, chapter, masthead, label = null, la
 
 export function kinChapterNumber(document: MonographDocument, plan: PagePlan): number | null {
   const kin = new Set(document.content.components.filter((component) => component.kind === KIN_KIND).map((component) => component.label));
-  return plan.chapters.find((chapter) => chapter.blocks.some((block) => block.kind === "component" && kin.has(block.label)))?.number ?? null;
+  return plan.chapters.find((chapter) => chapter.blocks.flatMap(blockLabels).some((label) => kin.has(label)))?.number ?? null;
 }
 
 type RunProps = { document: MonographDocument; plan: PagePlan; chapters: readonly ChapterPlan[]; masthead: boolean; rail: ReactNode };

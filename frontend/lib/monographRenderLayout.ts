@@ -1,4 +1,5 @@
 import type { MonographChapterName, MonographComponent, MonographDocument, MonographLayoutEntry, MonographUnit } from "@/lib/monographDocument";
+import { chapterFlow, layoutPlacing, type LayoutPlacing } from "@/lib/monographLayoutFlow";
 import { placedMastheadPicture } from "@/lib/monographPlacement";
 import { hasSentence, nodesText, type MonographSources } from "@/lib/monographRender";
 
@@ -8,13 +9,14 @@ export const SOURCES_CHAPTER = "sources";
 export const LABEL_MAX_CHARS = 60;
 const HEADINGS = new Set(["h2", "h3", "h4"]);
 
-export type UnitRole = "numeral" | "kicker" | "title" | "lede" | "label" | "text";
+export type UnitRole = "numeral" | "kicker" | "title" | "lede" | "label" | "pull" | "text";
 export type TermGroup = "facts" | "record" | "differ" | "entries";
 export type TermsPiece = { kind: "terms"; refs: string[]; group: TermGroup; heading: string | null };
 export type PassagePiece = { kind: "unit"; ref: string; role: UnitRole } | { kind: "list"; refs: string[] } | { kind: "paragraph"; refs: string[]; lede: boolean } | TermsPiece;
 export const PARAGRAPH_SENTENCES = 3;
 export type MarginNote = { ref: string; source: string };
-export type Passage = { kind: "passage"; head: boolean; pieces: PassagePiece[]; notes: MarginNote[] };
+export type PassageAside = { after: string; ref: string; kind: "unit" | "component" };
+export type Passage = { kind: "passage"; head: boolean; pieces: PassagePiece[]; notes: MarginNote[]; asides?: PassageAside[] };
 export type ChapterBlock = Passage | { kind: "component"; label: string } | { kind: "sources"; replaces: string[] };
 export type ChapterPlan = { key: string; index: number; number: number | null; label: string; rail: string; blocks: ChapterBlock[] };
 export type MastheadPlan = { kicker: string | null; standfirst: string[]; lede: string | null; picture: string | null };
@@ -96,7 +98,8 @@ export function pagePlan(document: MonographDocument): PagePlan {
   const masthead = first && !label ? mastheadPlan(document, opening) : NO_MASTHEAD;
   const shown = label ? [label.kicker, label.title, ...label.terms, label.picture, ...label.lede] : [masthead.kicker, ...masthead.standfirst, masthead.lede, masthead.picture];
   const taken = new Set(shown.filter((ref): ref is string => ref !== null));
-  const chapters = order.map((key, index) => chapterPlan(document, { key, index, nested }, taken));
+  const placing = layoutPlacing(document);
+  const chapters = order.map((key, index) => chapterPlan(document, { key, index, nested, placing }, taken));
   return { masthead, label, chapters: chapters.filter((chapter) => chapter.blocks.length > 0 || chapter.index === 0) };
 }
 
@@ -143,25 +146,52 @@ function mastheadPlan(document: MonographDocument, entries: readonly MonographLa
   return { kicker, standfirst, lede, picture: component?.kind === MASTHEAD_PICTURE_KIND ? component.label : null };
 }
 
-type ChapterPlace = { key: string; index: number; nested: ReadonlySet<string> };
+type ChapterPlace = { key: string; index: number; nested: ReadonlySet<string>; placing: LayoutPlacing };
+type PassagePlace = { number: number | null; head: boolean; pulls: ReadonlySet<string> };
 
-function chapterPlan(document: MonographDocument, { key, index, nested }: ChapterPlace, taken: ReadonlySet<string>): ChapterPlan {
-  const number = index === 0 ? null : index;
-  const entries = topLevelEntries(document, key, nested).filter((entry) => !taken.has(entry.ref));
+function besideRun(document: MonographDocument, run: readonly string[], entry: MonographLayoutEntry, placing: LayoutPlacing): PassageAside | null {
+  const last = run[run.length - 1];
+  if (placing.sizes.get(entry.ref) !== "MARGIN" || last === undefined || TERM_TAGS.has(document.content.units[last]?.tag ?? "")) return null;
+  return { after: last, ref: entry.ref, kind: entry.kind };
+}
+
+function flowBlocks(document: MonographDocument, entries: readonly MonographLayoutEntry[], number: number | null, placing: LayoutPlacing): ChapterBlock[] {
   const blocks: ChapterBlock[] = [];
   let run: string[] = [];
+  let asides: PassageAside[] = [];
   const flush = () => {
-    if (run.length) blocks.push(passage(document, run, { number, head: !blocks.some((b) => b.kind === "passage") }));
+    if (run.length) blocks.push(withAsides(passage(document, run, { number, head: !blocks.some((b) => b.kind === "passage"), pulls: placing.pulls }), asides));
     run = [];
+    asides = [];
   };
   for (const entry of entries) {
-    if (entry.kind === "unit") run.push(entry.ref);
+    const aside = besideRun(document, run, entry, placing);
+    if (aside) asides.push(aside);
+    else if (entry.kind === "unit") run.push(entry.ref);
     else {
       flush();
       blocks.push({ kind: "component", label: entry.ref });
     }
   }
   flush();
+  return blocks;
+}
+
+export function withAsides(block: Passage, asides: readonly PassageAside[]): Passage {
+  return asides.length ? { ...block, asides: [...asides] } : block;
+}
+
+export function blockLabels(block: ChapterBlock): string[] {
+  if (block.kind === "component") return [block.label];
+  if (block.kind !== "passage") return [];
+  return (block.asides ?? []).filter((aside) => aside.kind === "component").map((aside) => aside.ref);
+}
+
+function chapterPlan(document: MonographDocument, { key, index, nested, placing }: ChapterPlace, taken: ReadonlySet<string>): ChapterPlan {
+  const number = index === 0 ? null : index;
+  const entries = topLevelEntries(document, key, nested).filter((entry) => !taken.has(entry.ref));
+  const { flow, loose } = chapterFlow(document, entries, placing, PARAGRAPH_SENTENCES);
+  const blocks = [...flowBlocks(document, flow, number, placing), ...loose.map((entry): ChapterBlock => ({ kind: "component", label: entry.ref }))];
   const named = chapterName(document, key);
   const label = named?.title ?? chapterLabel(document, key, number);
   return { key, index, number, label, rail: named?.rail ?? label, blocks: key === SOURCES_CHAPTER ? withSourceList(document, blocks) : blocks };
@@ -190,7 +220,7 @@ function isNumeral(unit: MonographUnit, number: number | null): boolean {
   return number !== null && unit.tag === "p" && nodesText(unit.nodes).trim() === String(number);
 }
 
-function passage(document: MonographDocument, refs: readonly string[], place: { number: number | null; head: boolean }): Passage {
+function passage(document: MonographDocument, refs: readonly string[], place: PassagePlace): Passage {
   const units = document.content.units;
   const notes = refs.flatMap((ref) => {
     const source = noteSource(units[ref], document.content.sources);
@@ -199,7 +229,7 @@ function passage(document: MonographDocument, refs: readonly string[], place: { 
   const noted = new Set(notes.map((note) => note.ref));
   const main = refs.filter((ref) => !noted.has(ref));
   const head = place.head && main.some((ref) => units[ref].tag === "h2" || isNumeral(units[ref], place.number));
-  return { kind: "passage", head, pieces: pieces(units, main, head ? place.number : null), notes };
+  return { kind: "passage", head, pieces: pieces(units, main, { number: head ? place.number : null, pulls: place.pulls }), notes };
 }
 
 export function noteSource(unit: MonographUnit | undefined, sources: MonographSources): string | null {
@@ -211,7 +241,9 @@ export function noteSource(unit: MonographUnit | undefined, sources: MonographSo
   return found ? found[0] : null;
 }
 
-function pieces(units: Readonly<Record<string, MonographUnit>>, refs: readonly string[], number: number | null): PassagePiece[] {
+type PiecePlace = { number: number | null; pulls: ReadonlySet<string> };
+
+function pieces(units: Readonly<Record<string, MonographUnit>>, refs: readonly string[], { number, pulls }: PiecePlace): PassagePiece[] {
   const out: PassagePiece[] = [];
   const titleAt = refs.findIndex((ref) => units[ref].tag === "h2");
   refs.forEach((ref, at) => {
@@ -221,7 +253,7 @@ function pieces(units: Readonly<Record<string, MonographUnit>>, refs: readonly s
     else if (tag === "li") out.push({ kind: "list", refs: [ref] });
     else if ((tag === "dt" || tag === "dd") && last?.kind === "terms") last.refs.push(ref);
     else if (tag === "dt" || tag === "dd") out.push({ kind: "terms", refs: [ref], group: "entries", heading: null });
-    else placeUnit(units, out, ref, unitRole(units, refs, at, { number, titleAt }));
+    else placeUnit(units, out, ref, unitRole(units, refs, at, { number, titleAt, pulls }));
   });
   return groupedTerms(units, out);
 }
@@ -254,16 +286,17 @@ function groupedTerms(units: Readonly<Record<string, MonographUnit>>, found: rea
   return out;
 }
 
-function unitRole(units: Readonly<Record<string, MonographUnit>>, refs: readonly string[], at: number, place: { number: number | null; titleAt: number }): UnitRole {
+function unitRole(units: Readonly<Record<string, MonographUnit>>, refs: readonly string[], at: number, place: PiecePlace & { titleAt: number }): UnitRole {
   const unit = units[refs[at]];
   if (unit.tag === "h2") return "title";
+  if (place.pulls.has(refs[at])) return "pull";
   if (unit.tag !== "p") return "text";
   if (isNumeral(unit, place.number)) return "numeral";
   const sentence = hasSentence(unit.nodes);
   if (!sentence && units[refs[at + 1]]?.tag === "h2") return "kicker";
   if (!sentence && nodesText(unit.nodes).trim().length <= LABEL_MAX_CHARS) return "label";
   if (!sentence) return "text";
-  const afterTitle = place.titleAt >= 0 && at > place.titleAt && refs.slice(place.titleAt + 1, at).every((ref) => units[ref].tag === "p" && hasSentence(units[ref].nodes));
+  const afterTitle = place.titleAt >= 0 && at > place.titleAt && refs.slice(place.titleAt + 1, at).every((ref) => units[ref].tag === "p" && hasSentence(units[ref].nodes) && !place.pulls.has(ref));
   return afterTitle && place.number !== null ? "lede" : "text";
 }
 

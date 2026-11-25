@@ -18,7 +18,7 @@ export function pieceRefs(piece: PassagePiece): string[] {
 function closesRun(piece: PassagePiece, units: Units): boolean {
   if (piece.kind === "paragraph" || piece.kind === "list") return true;
   if (piece.kind !== "unit") return false;
-  return (piece.role === "text" || piece.role === "lede") && !HEADING_TAGS.has(units[piece.ref]?.tag ?? "");
+  return (piece.role === "text" || piece.role === "lede" || piece.role === "pull") && !HEADING_TAGS.has(units[piece.ref]?.tag ?? "");
 }
 
 function opensSection(piece: PassagePiece, units: Units): boolean {

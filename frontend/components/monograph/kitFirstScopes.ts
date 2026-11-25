@@ -2,7 +2,7 @@ import { slotDrawing } from "@/components/monograph/ComponentSlot";
 import { bundleScopes } from "@/lib/kitShellScopes";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { chapterSections } from "@/lib/monographNotes";
-import { chapterHeaded, railChapters, type ChapterBlock, type ChapterPlan, type PagePlan } from "@/lib/monographRenderLayout";
+import { blockLabels, chapterHeaded, railChapters, type ChapterBlock, type ChapterPlan, type PagePlan } from "@/lib/monographRenderLayout";
 import { componentHome, type KitScope } from "@/lib/monographScopes";
 
 const PASSAGE_SCOPE: KitScope = "pt";
@@ -19,9 +19,9 @@ export function slotScopes(document: MonographDocument, label: string, scoped: b
 }
 
 function blockScopes(document: MonographDocument, block: ChapterBlock): KitScope[] {
-  if (block.kind === "passage") return [PASSAGE_SCOPE];
-  if (block.kind === "component") return slotScopes(document, block.label, true);
-  return [SOURCES_SCOPE];
+  if (block.kind === "sources") return [SOURCES_SCOPE];
+  const drawn = blockLabels(block).flatMap((label) => slotScopes(document, label, true));
+  return block.kind === "passage" ? [PASSAGE_SCOPE, ...drawn] : drawn;
 }
 
 function openingScopes(document: MonographDocument, plan: PagePlan): KitScope[] {

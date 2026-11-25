@@ -15,3 +15,56 @@
 .kv-monograph .bx-pt > .screen:has(.pop.docked) {
   overflow-y: visible;
 }
+
+.kv-monograph .wrap.kv-bleed {
+  max-inline-size: none;
+  padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+}
+
+.kv-monograph .wrap.kv-bleed figcaption {
+  padding-inline: var(--space-4);
+}
+
+.kv-monograph [data-size="column"] .main .spread,
+.kv-monograph .margin-plate .spread {
+  display: block;
+  max-inline-size: none;
+  margin-inline: 0;
+}
+
+.kv-monograph :is([data-size="wide"], [data-size="bleed"]) [data-kind="answer_block"] .spread {
+  max-inline-size: none;
+}
+
+@media (min-width: 1200px) {
+  .kv-monograph :is([data-size="wide"], [data-size="bleed"]) [data-kind="answer_block"] .spread > :is(.main, .wide) {
+    grid-column: 1 / -1;
+  }
+}
+
+.kv-monograph .margin-plate + .margin-plate {
+  margin-block-start: var(--space-5);
+}
+
+.kv-monograph .margin-plate > .kv-beside-note {
+  margin: 0;
+  font: 400 var(--text-label) / var(--lh-label) var(--font-ui);
+  color: var(--ink-2);
+}
+
+.kv-monograph [data-crop][data-component] .ph {
+  position: relative;
+  direction: ltr;
+  aspect-ratio: var(--kv-crop-ratio);
+  overflow: hidden;
+}
+
+.kv-monograph [data-crop][data-component] .ph > img {
+  position: absolute;
+  inset-block: calc(var(--kv-crop-y) / var(--kv-crop-h) * -100%) auto;
+  inset-inline: calc(var(--kv-crop-x) / var(--kv-crop-w) * -100%) auto;
+  inline-size: calc(100% / var(--kv-crop-w));
+  max-inline-size: none;
+  block-size: calc(100% / var(--kv-crop-h));
+  object-fit: fill;
+}

@@ -1,5 +1,6 @@
 import { Fragment, type ReactNode } from "react";
 
+import { BesideItems, runAsides } from "@/components/monograph/BesideItems";
 import { ChapterSubrail } from "@/components/monograph/ChapterSubrail";
 import { CitedList } from "@/components/monograph/CitedList";
 import { NoteList } from "@/components/monograph/NoteList";
@@ -7,7 +8,7 @@ import { TermGroupView } from "@/components/monograph/TermGroups";
 import { unitNodes, UnitView } from "@/components/monograph/UnitView";
 import type { MonographDocument, MonographUnit } from "@/lib/monographDocument";
 import { runKey, sectionId, spreadRuns, type ChapterSection, type NoteLine } from "@/lib/monographNotes";
-import { passageSegments, type ChapterPlan, type Passage, type PassagePiece, type PassageSegment, type UnitRole } from "@/lib/monographRenderLayout";
+import { passageSegments, type ChapterPlan, type Passage, type PassageAside, type PassagePiece, type PassageSegment, type UnitRole } from "@/lib/monographRenderLayout";
 
 type Drawn = { as: string; className?: string };
 
@@ -16,8 +17,11 @@ const ROLE_DRAWING: Readonly<Record<Exclude<UnitRole, "text">, Drawn>> = {
   kicker: { as: "p", className: "kicker sec-kicker" },
   title: { as: "h2", className: "t-h2" },
   lede: { as: "p", className: "t-lede" },
-  label: { as: "p", className: "kicker" }
+  label: { as: "p", className: "kicker" },
+  pull: { as: "p" }
 };
+
+export const PULL_CLASS = "kv-pull";
 
 const TEXT_DRAWING: Readonly<Record<string, Drawn>> = {
   h3: { as: "h3", className: "font-reading text-h3 mt-8" },
@@ -59,7 +63,8 @@ function Piece({ document, chapter, piece, titled }: PieceProps) {
   }
   const unit = units[piece.ref];
   const drawn = drawing(unit, piece.role);
-  return <UnitView unit={unit} sources={sources} as={drawn.as} className={drawn.className} id={pieceId(chapter, piece, unit, titled)} />;
+  const view = <UnitView unit={unit} sources={sources} as={drawn.as} className={drawn.className} id={pieceId(chapter, piece, unit, titled)} />;
+  return piece.role === "pull" ? <blockquote className={PULL_CLASS}>{view}</blockquote> : view;
 }
 
 function firstTitle(passage: Passage): string | null {
@@ -73,7 +78,7 @@ function FixedNotes({ document, passage }: { document: MonographDocument; passag
   const { units, sources } = document.content;
   if (!passage.notes.length) return null;
   return (
-    <aside className="margin note" aria-label={MARGIN_LABEL}>
+    <aside className={passage.asides?.length ? "margin note keep" : "margin note"} aria-label={MARGIN_LABEL}>
       <ul>
         {passage.notes.map((note) => (
           <li key={note.ref} data-g={note.source}>
@@ -81,6 +86,7 @@ function FixedNotes({ document, passage }: { document: MonographDocument; passag
           </li>
         ))}
       </ul>
+      <BesideItems document={document} asides={passage.asides} />
     </aside>
   );
 }
@@ -123,7 +129,9 @@ function shownSegments(passage: Passage): PassageSegment[] {
   return [{ kind: "column", pieces: [] }, ...segments];
 }
 
-function Column({ document, chapter, passage, notes, sections, pieces, first }: PassageProps & { pieces: readonly PassagePiece[]; first: boolean }) {
+type ColumnProps = PassageProps & { pieces: readonly PassagePiece[]; first: boolean; beside: ReadonlyMap<string, PassageAside[]> };
+
+function Column({ document, chapter, passage, notes, sections, pieces, first, beside }: ColumnProps) {
   if (passage.notes.length) {
     return (
       <Spread document={document} chapter={chapter} passage={passage} pieces={pieces} head={passage.head && first} run={false}>
@@ -136,10 +144,13 @@ function Column({ document, chapter, passage, notes, sections, pieces, first }: 
     <>
       {runs.map((run, at) => {
         const head = passage.head && first && at === 0;
+        const asides = beside.get(runKey(run));
         return (
           <Fragment key={runKey(run)}>
             <Spread document={document} chapter={chapter} passage={passage} pieces={run} head={head} run>
-              <NoteList notes={notes.get(runKey(run)) ?? []} label={MARGIN_LABEL} />
+              <NoteList notes={notes.get(runKey(run)) ?? []} label={MARGIN_LABEL}>
+                {asides ? <BesideItems document={document} asides={asides} /> : null}
+              </NoteList>
             </Spread>
             {head ? <ChapterSubrail sections={sections} chapter={chapter.label} /> : null}
           </Fragment>
@@ -153,13 +164,15 @@ function Segments({ document, chapter, passage, notes, sections }: PassageProps)
   const segments = shownSegments(passage);
   const firstColumn = segments.findIndex((segment) => segment.kind === "column");
   const { units, sources } = document.content;
+  const runs = segments.flatMap((segment) => (segment.kind === "column" ? spreadRuns(segment.pieces, units) : []));
+  const beside = runAsides(runs, passage.asides ?? []);
   return (
     <>
       {segments.map((segment, at) =>
         segment.kind === "group" ? (
           <TermGroupView key={pieceKey(segment.piece, at)} units={units} sources={sources} piece={segment.piece} chapter={chapter.key} />
         ) : (
-          <Column key={`column-${at}`} document={document} chapter={chapter} passage={passage} notes={notes} sections={sections} pieces={segment.pieces} first={at === firstColumn} />
+          <Column key={`column-${at}`} document={document} chapter={chapter} passage={passage} notes={notes} sections={sections} pieces={segment.pieces} first={at === firstColumn} beside={beside} />
         )
       )}
     </>

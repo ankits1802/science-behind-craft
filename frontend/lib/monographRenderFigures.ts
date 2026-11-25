@@ -1,6 +1,6 @@
 import type { MonographDocument, MonographNode, MonographUnit } from "@/lib/monographDocument";
 import { nodesText } from "@/lib/monographRender";
-import { componentBundles, type PagePlan } from "@/lib/monographRenderLayout";
+import { blockLabels, componentBundles, type PagePlan } from "@/lib/monographRenderLayout";
 import { UNIT_REF } from "@/lib/unitIds";
 
 const FIGURE_KEY = /^[a-z]+:\d+$/;
@@ -55,9 +55,8 @@ export function pageFigures(document: MonographDocument, plan: PagePlan): PageFi
   const counts = new Map<string, number>();
   const out: PageFigure[] = [];
   for (const chapter of plan.chapters) {
-    for (const block of chapter.blocks) {
-      if (block.kind !== "component") continue;
-      for (const figure of componentFigures(document, block.label)) {
+    for (const label of chapter.blocks.flatMap(blockLabels)) {
+      for (const figure of componentFigures(document, label)) {
         if (seen.has(figure.key)) continue;
         seen.add(figure.key);
         const count = (counts.get(figure.word) ?? 0) + 1;

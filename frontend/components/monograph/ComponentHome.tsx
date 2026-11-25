@@ -1,13 +1,15 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import type { FrameCrop, SlotPlacement } from "@/lib/monographPlacement";
 import type { ComponentHome as Home, FrameStep } from "@/lib/monographScopes";
 
 const PASS_THROUGH: CSSProperties = { display: "contents" };
 export const HOME_SPACING = "my-12";
+export const BESIDE_SIZE = "MARGIN";
 
 export type FragmentHost = { id: string; html: string };
 
-type HomeProps = { home: Home; label: string; kind: string; fragment?: FragmentHost; children?: ReactNode };
+type HomeProps = { home: Home; label: string; kind: string; fragment?: FragmentHost; placing?: SlotPlacement; children?: ReactNode };
 
 type StepProps = { className?: string; style?: CSSProperties; lang?: string; dir?: string; "data-ui-lang"?: string };
 
@@ -27,9 +29,33 @@ function hosted(steps: readonly FrameStep[], fragment: FragmentHost): ReactNode 
   return nested(steps.slice(0, -1), inner);
 }
 
-export function ComponentHome({ home, label, kind, fragment, children }: HomeProps) {
+export function cropStyle(crop: FrameCrop): CSSProperties {
+  return {
+    "--kv-crop-x": String(crop.x),
+    "--kv-crop-y": String(crop.y),
+    "--kv-crop-w": String(crop.width),
+    "--kv-crop-h": String(crop.height),
+    "--kv-crop-ratio": String(Math.round(crop.ratio * 10000) / 10000)
+  } as CSSProperties;
+}
+
+function homeClass(home: Home, placing: SlotPlacement | undefined): string {
+  const spacing = placing?.size === BESIDE_SIZE ? null : HOME_SPACING;
+  return [home.scope ? `bx bx-${home.scope}` : null, spacing].filter(Boolean).join(" ");
+}
+
+export function ComponentHome({ home, label, kind, fragment, placing, children }: HomeProps) {
+  const crop = placing?.crop ?? null;
   return (
-    <div className={home.scope ? `bx bx-${home.scope} ${HOME_SPACING}` : HOME_SPACING} data-component={label} data-component-kind={kind} data-home={home.source}>
+    <div
+      className={homeClass(home, placing)}
+      data-component={label}
+      data-component-kind={kind}
+      data-home={home.source}
+      data-size={placing?.size?.toLowerCase()}
+      data-crop={crop ? "" : undefined}
+      style={crop ? cropStyle(crop) : undefined}
+    >
       {fragment ? hosted(home.frame, fragment) : nested(home.frame, children)}
     </div>
   );

@@ -197,7 +197,8 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
 - **Order**: by chapter, the hero with the masthead, then each chapter's pictures (hero and opener
   first), its text by field, then its components; then the page's layout record as above.
 - **Data**: `content.data["page-layout"]` is the layout record the page was ordered by, so a
-  renderer applies roles, sizes and crops; absent when the page has no layout.
+  renderer applies roles, sizes and crops (How the web draws a layout, below); absent when the page
+  has no layout.
 - **Version**: the sum of the subject's published section versions, so a new version of any
   section moves it. `title` is the subject's name; `pageUrl` is `/crafts/<slug>` for a craft or
   family and `/categories/<slug>` for a category on `PUBLIC_WEB_URL`.
@@ -208,6 +209,49 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
 replace the registered ones by label, and a layout that replaces the page's. `preview_page` builds
 a bundle's preview with it (`open-work.md`, Previews before submitting); without additions the
 document is the page's own.
+
+## How the web draws a layout (decision 0227)
+
+A generated document's renderer (`monograph-renderer.md`) reads every entry of
+`content.data["page-layout"]` (`lib/monographPlacement.ts`); an entry off its shape places nothing.
+Kutch Ajrakh's authored shell takes none of this.
+
+- **Size.** The entry's `size`, else its role's: `SIDEBAR` is `MARGIN`, `OPENER` `WIDE`, `PLATE`
+  `COLUMN`; `HERO` is the masthead picture; `FIGURE` and `BODY` keep the frame the kind has on the
+  approved page. The size's frame replaces the box steps of the component's home, whose other steps
+  stay as pass-through wrappers, and the home carries `data-size`:
+
+| Size | Frame | Drawn |
+|---|---|---|
+| `COLUMN` | `div.screen > div.wrap.kv-passage > div.spread > div.main` | the reading measure: 66ch below 1200px, the spread's 680px column from 1200px |
+| `WIDE` | `div.screen > div.wrap.kv-passage` | the content width, up to 1280px within the page's margins |
+| `BLEED` | `div.screen > div.wrap.kv-passage.kv-bleed` | edge to edge, the safe-area insets its only margins, a caption kept 16px off the edge |
+| `MARGIN` | none, inside `aside.margin.note.keep > div.margin-plate` of the run it follows | beside that paragraph in the spread's 240px margin from 1200px, after it in the column below |
+
+  A view that draws its own spread (an answer block) is one block inside a `COLUMN` or a margin and
+  spans the content width at `WIDE` and `BLEED`. A `MARGIN` component with no paragraph before it is
+  drawn at `COLUMN`. A text unit at `MARGIN` is `p.kv-beside-note` in the margin; a text unit takes
+  no other size.
+- **Crop.** A component whose spec holds a `picture` and whose entry has a `crop` shows exactly that
+  box: its home carries `data-crop` and `--kv-crop-x`, `--kv-crop-y`, `--kv-crop-w`, `--kv-crop-h`
+  and `--kv-crop-ratio` (the box's width over its height in pixels), so the picture's frame (`.ph`)
+  takes the box's shape and the picture is scaled and offset to fill it. The picture's `focal` box
+  becomes the crop as well, so a frame of fixed shape (the masthead's 16:7.4) centres on it.
+- **Placed in the prose.** A chapter whose layout names a text unit as `BODY` keeps the layout's
+  order exactly. In any other chapter the layout orders only its set pieces, and the page sets them
+  into the prose (`lib/monographLayoutFlow.ts`, `lib/monographRenderNear.ts`):
+  - each component it places there, but the `HERO` and the chapter's `OPENER`, stands after the
+    paragraph that tells it, the one sharing the most of its words and sources weighted by how rare
+    each is in the chapter (its title, description, units and the text its spec holds); figures that
+    share a paragraph keep the layout's order; one no paragraph tells follows the figure before it in
+    the layout's order, or the chapter's first paragraph; a `MARGIN` one goes into that paragraph's
+    margin instead of between paragraphs;
+  - a text unit it places as `PULL_QUOTE` or `SIDEBAR` stands after the chapter's opening paragraph
+    (up to three sentences after its `h2`);
+  - the `OPENER` stays first in its chapter, before the heading, at `WIDE`.
+- **Pull quote.** A unit placed as `PULL_QUOTE` is drawn as `blockquote.kv-pull > p`, wherever it
+  stands.
+- A document with no layout data, or a layout naming nothing, draws as it did before.
 
 ## The nightly static build
 
@@ -225,5 +269,6 @@ crafts[], categories[]}`): a family's page lives at `/crafts/<slug>`.
 | A layout read and proposed over MCP | `backend/tests/mcp/test_mcp_page_read.py` and `test_mcp_page_tools.py` |
 | Versions, audit, kinds, backfill and static pages on Postgres | `backend/tests/db/test_page_layouts_db.py` |
 | A seeded craft, family and category's generated documents | `backend/tests/db/test_generated_documents_db.py` |
+| How the web draws each size, the margin, a crop and figures in the prose | `frontend/e2e/monograph-placed-layout-unit.spec.ts` and `monograph-homes-unit.spec.ts` |
 
 Re-read it when an entry field or role is added, a chapter key changes, or a generated part moves chapter.

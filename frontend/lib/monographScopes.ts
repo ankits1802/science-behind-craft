@@ -2,6 +2,7 @@ import { COMPONENT_HOMES, type FrameStep, type HomeRecord } from "@/lib/componen
 import { GENERAL_KINDS } from "@/lib/componentSpecsGeneral";
 import { KIT_KIND } from "@/lib/componentSpecsKit";
 import { declaredForm, TIMELINE_MAP_KIND } from "@/lib/componentSpecsTimelineMap";
+import type { PlacedSize } from "@/lib/monographPlacement";
 
 export type { FrameStep };
 
@@ -73,6 +74,27 @@ export const FRAMES: Readonly<Record<KitFrame, FrameStep[]>> = {
   wrap: [SCREEN, PASSAGE],
   column: [SCREEN, PASSAGE, { classes: ["spread"], box: true }, { classes: ["main"], box: true }]
 };
+
+const BLEED: FrameStep = { classes: ["wrap", "kv-passage", "kv-bleed"], box: true };
+
+export const SIZE_FRAMES: Readonly<Record<PlacedSize, FrameStep[]>> = {
+  MARGIN: [],
+  COLUMN: FRAMES.column,
+  WIDE: FRAMES.wrap,
+  BLEED: [SCREEN, BLEED]
+};
+
+const SPREAD_CLASSES: ReadonlySet<string> = new Set(["screen", "wrap", "kv-passage", "spread", "main"]);
+
+function passedThrough(step: FrameStep): FrameStep[] {
+  if (step.classes.every((name) => SPREAD_CLASSES.has(name))) return [];
+  return [{ ...step, box: false }];
+}
+
+export function sizedHome(home: ComponentHome, size: PlacedSize | null): ComponentHome {
+  if (size === null) return home;
+  return { ...home, frame: [...SIZE_FRAMES[size], ...home.frame.flatMap(passedThrough)] };
+}
 
 const SCOPES: ReadonlySet<string> = new Set<KitScope>(["mb", "chem", "pt", "rm", "sa", "ask"]);
 
