@@ -8,6 +8,7 @@ from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.routes.craft_monograph import DocumentAsk, served_document
+from app.core.db import get_engine
 from app.models import ArticleSection, Craft, StoredDocumentVersion, User
 from app.research.page_layout import LayoutWrite
 from app.services import stored_documents
@@ -24,6 +25,7 @@ from app.services.stored_document_rebuilds import (
     rebuilds_here,
 )
 from app.services.stored_document_stamp import document_stamp
+from app.services.stored_document_versions import page_lock_id
 from app.services.stored_documents import (
     Rebuilt,
     StoredCopy,
@@ -294,3 +296,28 @@ async def test_only_the_release_that_last_rebuilt_documents_rebuilds_after_a_rea
     assert await rebuilds_here(session) is False
     await mark_rebuild_code(session)
     assert await rebuilds_here(session) is True
+
+
+async def page_free_elsewhere(kind: str, slug: str) -> bool:
+    async with get_engine().connect() as other:
+        taken = await other.scalar(select(func.pg_try_advisory_xact_lock(page_lock_id(kind, slug))))
+        await other.rollback()
+    return bool(taken)
+
+
+async def test_a_rebuild_holds_its_page_before_it_reads_the_version_so_a_second_waits_and_others_do_not(
+    session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    subject = await craft(session)
+    built = stored_documents.generated_document_of
+    seen: list[tuple[bool, bool, bool]] = []
+
+    async def watched(opened: AsyncSession, asked: WorkSubject) -> Any:
+        held = await page_free_elsewhere("craft", CRAFT_SLUG), await page_free_elsewhere("family", CRAFT_SLUG)
+        seen.append((*held, await page_free_elsewhere("category", CATEGORY_SLUG)))
+        return await built(opened, asked)
+
+    monkeypatch.setattr(stored_documents, "generated_document_of", watched)
+    assert await page_free_elsewhere("craft", CRAFT_SLUG) is True
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.BUILT
+    assert seen == [(False, False, True)]

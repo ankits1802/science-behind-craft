@@ -10,6 +10,7 @@ from app.models import Craft, KnowledgePiece as PieceRow, MediaAsset, MediaJob, 
 
 from . import audit
 from .page_revalidation import craft_owners, refresh_pages
+from .stored_document_versions import drop_kept_versions
 
 __all__ = [
     "MEDIA_HIDDEN_ACTION",
@@ -62,6 +63,8 @@ async def set_page_piece_hidden(
             target_id=row.id,
             detail={"craft": craft.slug, "kind": row.kind},
         )
+    if changed and hidden:
+        await drop_kept_versions(session, await craft_owners(session, [craft.id]), now=now)
     await session.commit()
     if changed:
         await refresh_pages(await craft_owners(session, [craft.id]))

@@ -1,18 +1,39 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
-from sqlalchemy import delete
+from sqlalchemy import ColumnElement, and_, delete, func, or_, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import StoredDocument, StoredDocumentVersion
+from app.research.page_revalidation import PageOwners
 
-from .open_work_subjects import WorkSubject
+from .open_work_subjects import CATEGORY, WorkSubject
 
-__all__ = ["drop_superseded", "keep_superseded", "superseded_row"]
+__all__ = [
+    "PAGE_LOCK",
+    "drop_kept_versions",
+    "drop_superseded",
+    "keep_superseded",
+    "lock_page",
+    "page_lock_id",
+    "superseded_row",
+]
 
 KEPT_COLUMNS = ("contentHash", "document", "supersededAt")
+PAGE_LOCK = "stored-document:{space}:{slug}"
+CRAFT_SPACE = "craft"
+
+
+def page_lock_id(kind: str, slug: str) -> ColumnElement[Any]:
+    space = CATEGORY if kind == CATEGORY else CRAFT_SPACE
+    return func.hashtextextended(PAGE_LOCK.format(space=space, slug=slug), 0)
+
+
+async def lock_page(session: AsyncSession, kind: str, slug: str) -> None:
+    await session.execute(select(func.pg_advisory_xact_lock(page_lock_id(kind, slug))))
 
 
 async def keep_superseded(session: AsyncSession, row: StoredDocument, *, now: datetime) -> None:
@@ -52,4 +73,32 @@ async def drop_superseded(session: AsyncSession, subject: WorkSubject) -> None:
             StoredDocumentVersion.subjectKind == subject.kind,
             StoredDocumentVersion.subjectSlug == subject.slug,
         )
+    )
+
+
+async def drop_kept_versions(session: AsyncSession, owners: PageOwners, *, now: datetime) -> None:
+    if owners.empty:
+        return
+    for kind, slug in _pages(owners):
+        await lock_page(session, kind, slug)
+    await session.execute(delete(StoredDocumentVersion).where(_owned(StoredDocumentVersion, owners)))
+    await session.execute(
+        update(StoredDocument)
+        .where(_owned(StoredDocument, owners))
+        .values(removedAt=now)
+        .execution_options(synchronize_session=False)
+    )
+
+
+def _pages(owners: PageOwners) -> list[tuple[str, str]]:
+    crafts = {(CRAFT_SPACE, slug) for slug in owners.crafts}
+    return sorted(crafts | {(CATEGORY, slug) for slug in owners.categories})
+
+
+def _owned(
+    table: type[StoredDocument] | type[StoredDocumentVersion], owners: PageOwners
+) -> ColumnElement[bool]:
+    return or_(
+        and_(table.subjectKind != CATEGORY, table.subjectSlug.in_(sorted(owners.crafts))),
+        and_(table.subjectKind == CATEGORY, table.subjectSlug.in_(sorted(owners.categories))),
     )

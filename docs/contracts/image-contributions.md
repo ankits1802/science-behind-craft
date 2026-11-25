@@ -238,7 +238,8 @@ approved picture, or an edit of its caption and alt text (3 to 300 characters), 
 a slot, or loose), and a person confirms it on the Review page (`review-queue.md`, Staged over MCP).
 A removal makes its file `PRIVATE`, so it leaves its pages and is no longer served, and keeps its
 record, credit and file (audit `picture.removed`); an edit is audited `picture.edited` with the values
-it replaced. The contributor still cannot take back an approved picture.
+it replaced. Either drops every kept version of the picture's pages, so no earlier edition still
+draws it or its old caption (decision 0213). The contributor still cannot take back an approved picture.
 
 ## From MCP
 

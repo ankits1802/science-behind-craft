@@ -22,6 +22,7 @@ from app.models import (
     CuratedCategoryClaim,
     KnowledgePiece,
     KnowledgePieceSubject,
+    KnowledgePieceUnlink,
     MediaRef,
     PageLayout,
     Source,
@@ -146,6 +147,12 @@ def _category_terms(category_id: uuid.UUID) -> Terms:
         **counted_terms("members", Craft.id, Craft.updatedAt, Craft.id.in_(members)),
         **counted_terms(
             "memberPlaces", CraftLocation.id, CraftLocation.updatedAt, CraftLocation.craftId.in_(members)
+        ),
+        **counted_terms(
+            "unlinks",
+            KnowledgePieceUnlink.id,
+            KnowledgePieceUnlink.createdAt,
+            KnowledgePieceUnlink.categoryId == category_id,
         ),
     }
 

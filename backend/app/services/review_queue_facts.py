@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.clock import INDIA_TZ
 from app.core.roles import ROLE_LABELS, role_value
 from app.models import CandidateCheck, Claim, ReviewEvent, User
+from app.research.retrieval import SHOWN_CLAIM_STATUSES
 from app.research.review_queue import (
     APPROVE,
     FACTS,
@@ -25,9 +26,11 @@ from app.research.write_back import WRITE_BACK_ORIGIN
 
 from . import audit
 from .claim_holds import is_held
+from .page_revalidation import claim_owners
 from .review_queue_errors import DecisionConflict, OwnItem, UnknownItem
 from .review_queue_refile import REFILED_FAMILY_NOTE, REFILED_NOTE, refile_fact, refile_family
 from .sources_differ import settle_sources_differ
+from .stored_document_versions import drop_kept_versions
 
 __all__ = ["FactDecision", "decide_fact"]
 
@@ -84,6 +87,8 @@ async def decide_fact(
         claim.levelReason = _reviewed_reason(reviewer, now)
     session.add(_event(claim, reviewer, decision.noted, was_status=was_status, was_level=was_level))
     await session.flush()
+    if was_status in SHOWN_CLAIM_STATUSES and claim.status not in SHOWN_CLAIM_STATUSES:
+        await drop_kept_versions(session, await claim_owners(session, [claim.id]), now=now)
     differ = await _settled_differences(session, claim)
     await _record(session, reviewer, claim, decision, was_status)
     return QueueDecision(

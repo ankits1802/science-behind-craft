@@ -29,6 +29,7 @@ class StoredDocument(Base):
     document: Mapped[str] = mapped_column(Text, nullable=False)
     builtAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     wantedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    removedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     __table_args__ = (CheckConstraint('"version" >= 1', name="version"),)
 

@@ -27,6 +27,7 @@ from .published_sources import PUBLISHED_SOURCES
 from .published_stages import PUBLISHED_STAGES
 from .published_structure import PUBLISHED_STRUCTURE
 from .review_queue_errors import NotYourQueue
+from .stored_document_versions import drop_kept_versions
 
 __all__ = [
     "PUBLISHED_KINDS",
@@ -103,7 +104,9 @@ async def carry_out(
 ) -> Carried:
     if not can(reviewer, Capability.REVIEW_CONTRIBUTIONS):
         raise NotYourQueue(NOT_AN_ADMIN)
-    return await PUBLISHED_KINDS[decision.kind].actions[decision.action](session, decision, reviewer, now)
+    carried = await PUBLISHED_KINDS[decision.kind].actions[decision.action](session, decision, reviewer, now)
+    await drop_kept_versions(session, carried.owners, now=now)
+    return carried
 
 
 async def published_lines(session: AsyncSession, query: PublishedQuery) -> list[PublishedLine]:

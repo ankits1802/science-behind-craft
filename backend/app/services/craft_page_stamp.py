@@ -29,6 +29,7 @@ from app.models import (
     ClaimSource,
     Compound,
     Concept,
+    ConditionReading,
     Craft,
     CraftGiRecord,
     CraftLocation,
@@ -49,12 +50,14 @@ from app.models import (
     FieldVoiceStream,
     ImageContribution,
     KnowledgePiece,
+    KnowledgePieceUnlink,
     Material,
     MediaAsset,
     MediaJob,
     MediaRef,
     MediaRefClaim,
     Process,
+    ProcessCondition,
     ProcessStage,
     Reaction,
     Source,
@@ -63,7 +66,7 @@ from app.models import (
     TermCraft,
     WikidataPoint,
 )
-from app.models.science import live_process
+from app.models.science import live_process, shown_reading
 from app.research.craft_page import CRAFT_PAGE_SCHEMA_VERSION
 from app.research.field_voices import ARTISAN_IMAGES_SETTING
 from app.retrieval.field_scope import FIELD_STALE_AFTER
@@ -197,6 +200,20 @@ def _science_terms(craft: Craft) -> Terms:
         **counted_terms("materials", Material.id, Material.updatedAt, Material.id.in_(materials)),
         **counted_terms("compounds", Compound.id, Compound.updatedAt, Compound.id.in_(compounds)),
         "conformersAt": scalar_term(func.max(Compound.conformerKeptAt), Compound.id.in_(compounds)),
+        **_reading_terms(stages),
+    }
+
+
+def _reading_terms(stages: Select[Any]) -> Terms:
+    reactions = select(Reaction.id).where(Reaction.stageId.in_(stages))
+    placed = or_(ProcessCondition.stageId.in_(stages), ProcessCondition.reactionId.in_(reactions))
+    conditions = select(ProcessCondition.id).where(placed)
+    read = ConditionReading.conditionId.in_(conditions)
+    return {
+        **counted_terms("conditions", ProcessCondition.id, ProcessCondition.updatedAt, placed),
+        **counted_terms("readings", ConditionReading.id, ConditionReading.updatedAt, read),
+        "readingsShown": count_term(ConditionReading.id, read & shown_reading()),
+        "readingsReviewedAt": scalar_term(func.max(ConditionReading.reviewedAt), read),
     }
 
 
@@ -245,6 +262,12 @@ def _piece_terms(craft: Craft) -> Terms:
         "piecesHiddenAt": scalar_term(func.max(KnowledgePiece.hiddenAt), own),
         "piecesSuperseded": count_term(KnowledgePiece.id, own & KnowledgePiece.supersededById.is_not(None)),
         "piecesShown": count_term(KnowledgePiece.id, own & KnowledgePiece.hiddenAt.is_(None)),
+        **counted_terms(
+            "unlinks",
+            KnowledgePieceUnlink.id,
+            KnowledgePieceUnlink.createdAt,
+            KnowledgePieceUnlink.craftId == craft.id,
+        ),
         **counted_terms("aiMedia", MediaAsset.id, MediaAsset.updatedAt, MediaAsset.jobId.in_(jobs)),
     }
 
