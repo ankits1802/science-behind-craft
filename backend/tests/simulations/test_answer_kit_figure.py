@@ -139,6 +139,18 @@ async def test_a_concept_a_reused_section_drew_is_not_drawn_again_in_the_same_an
     assert not [b for b in again if isinstance(b, KitFigureBlock) and b.diagram == figure.diagram]
 
 
+async def test_a_section_draws_no_kit_figure_of_a_change_its_own_prose_does_not_state() -> None:
+    matter, kut, vat = basic_sections()
+    (said,) = vat.blocks
+    beside = said.model_copy(update={"id": "s1.b2", "kind": "zoom_story"})
+    ask = replace(kut, blocks=(*kut.blocks, beside))
+    assert f"reaction:{INDIGO_REACTION}" in {c.key for c in section_concepts(matter.records, ask.blocks)}
+    build = builder(DraftModel([]), matter=matter, explainer=DraftModel([]))
+    assert (await build.drawing().build(ask)).blocks == ()
+    (figure,) = (await build.drawing().build(second(vat))).blocks
+    assert isinstance(figure, KitFigureBlock)
+
+
 def test_one_concept_is_drawn_once_and_never_also_built_or_pictured() -> None:
     answer = AnswerConcepts(limit=1)
     assert answer.draw("reaction:vat")

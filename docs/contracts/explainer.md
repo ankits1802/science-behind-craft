@@ -1360,7 +1360,8 @@ fails its checks is redrafted only when the time left is at least the time the f
   order, the first that composes is drawn (`AnswerConcepts.draw`), before any concept is taken for a
   generated explainer; a drawn figure takes none of the answer's explainers, and a concept drawn once
   is never built or pictured again (decision 0224). A reused section below Expert runs this step
-  alone (`KitDrawing`, decision 0225). For a concept, the
+  alone (`KitDrawing`, decision 0225). A figure is drawn only when a claim it cites is cited by one of
+  the section's prose sentences, so it never comes from another block's mention (decision 0226). For a concept, the
   stage playing its reaction (or holding its resist), the concept's fact claims then the stage's;
   the first claim that names cloth (`art_kit.parts_named_by`) and whose quote states the colour
   before and after (`reaction_colours.step_colours`), both a depicted material by the colour key's

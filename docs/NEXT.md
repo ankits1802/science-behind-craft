@@ -33,7 +33,8 @@ and released together, each batch verified on production.
     section draws its kit figure first (0224). Its four-question answer run (45666058092): rubric
     0.978, judge 0.83, $0.33, no shop pictures; the indigo answer drew no kit figure because its
     sections are reused and a reused section ran the explainer's builder only at Expert, which
-    decision 0225 changes (a reused section below Expert draws its kit figure, no model call).
+    decision 0225 changes (a reused section below Expert draws its kit figure, no model call), and
+    decision 0226 keeps to sections whose own prose states the change it draws.
 - **KalaVigyan `main` with the quality round** (2026-11-25, decisions 0191 to 0210, PROGRESS.md,
   Quality round). Verified on production alone: `4911166e` (relief), `8796f591` (preview and
   budget), `4e5a6a96` (pictures), `e60b43db` (lifecycle), `d53aead5` (colour key), `2d9b5194`

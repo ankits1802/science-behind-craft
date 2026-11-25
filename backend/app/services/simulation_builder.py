@@ -75,6 +75,7 @@ SIMULATION_BUDGET_SECONDS = 60.0
 SIMULATION_WAIT_SECONDS = 75.0
 PROBLEMS_LOGGED = 8
 FIGURES_KEY_PREFIX = "figures"
+PROSE_KIND = "prose"
 NO_CONCEPT = "NO_CONCEPT"
 NO_QUANTITY = "NO_QUANTITY"
 NO_MECHANISM = "NO_MECHANISM"
@@ -314,9 +315,12 @@ def _kit_figure(
 ) -> tuple[KitFigureBlock, Concept] | None:
     if matter is None:
         return None
+    stated = {claim for block in ask.blocks if block.kind == PROSE_KIND for claim in block.cited_claim_ids()}
     for concept in concepts:
         figure = concept_kit_figure(concept, matter.records, block_id=f"{ask.section.id}.{KIT_FIGURE_SUFFIX}")
-        if figure is not None and answer.draw(concept.key):
+        if figure is None or stated.isdisjoint(citation.claim_id for citation in figure.citations()):
+            continue
+        if answer.draw(concept.key):
             return figure, concept
     return None
 

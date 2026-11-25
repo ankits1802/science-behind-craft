@@ -1299,7 +1299,10 @@ Last updated: 2026-11-25.
   - **A reused section's kit figure** (decision 0225): the evaluation's answers reuse their stored
     sections, and a reused section ran the explainer's builder only at Expert, so the indigo answer
     drew no figure; below Expert a reused section now runs the builder's drawing alone, which
-    composes the kit figure with no model call.
+    composes the kit figure with no model call. Measured on 2ad6b820 (run 45681947685): the indigo
+    answer drew its vat figure (rubric 0.978, judge 0.82, $0.29), but the other three answers drew
+    it beside sections not about the vat, so a section now draws a figure only of a change its own
+    prose states (decision 0226).
   - **The register** rose from 45 to 46 entries by hand when the scheduled post-deploy check's
     grace raised a false alarm, and is back at 45 after decision 0217 counted the grace from when
     main reached a commit.
