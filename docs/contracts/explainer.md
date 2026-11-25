@@ -204,9 +204,12 @@ fewer sentences than the live page, never more.
   concept pictures from the generated explainer's builder), the first ranked item that illustrates a claim the section's
   shown blocks cite, was not shown earlier in the answer (media id, page or image address, the
   zoom story's pictures included) and is not from a shop, marketplace or social site
-  (`services/picture_sites.blocked_picture`: the maintained `BLOCKED_PICTURE_SITES`, a
-  `SHOP_PATH_SEGMENTS` path segment, a `/collections/<name>` store listing
-  (`SHOP_LISTING_SEGMENTS`), or a title starting "Buy" or "Shop"). A zoom level whose picture was
+  (`services/picture_sites.blocked_picture`: the maintained `BLOCKED_PICTURE_SITES` of shops,
+  marketplaces, social sites, stock agencies and auctions, a `shop`, `store` or `stock` host
+  label or a `.store` or `.shop` domain (`SALE_HOST_LABELS`), a `SHOP_PATH_SEGMENTS` path segment,
+  a `/collections/<name>` store listing (`SHOP_LISTING_SEGMENTS`), or a title that sells
+  (`SALE_TITLE`: starting "Buy", "Shop" or "Online", "Online at" or "Online" closing a part of the
+  title, "best price", "for sale", "at auction", "stock photos", "royalty-free")). A zoom level whose picture was
   already shown or is blocked is left out of the zoom. A section's shown blocks are the ones the
   stream sends: a block citing a source the answer cannot send (a reused card's compound record the
   reuse lookup does not carry, say) is left out before the ledger hears of it, so its claims never
