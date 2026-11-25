@@ -5,7 +5,8 @@ from io import BytesIO
 
 import pytest
 from PIL import Image
-from sqlalchemy import insert, select
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
