@@ -5,6 +5,7 @@ import { expect, test } from "@playwright/test";
 
 import { splitSseBuffer } from "@/lib/answerStream";
 import { explainerEventOf } from "@/lib/explainerStream";
+import { sandboxDocument } from "@/lib/sandboxFrame";
 
 import {
   KNOWN_ANSWER_QUESTIONS,
@@ -48,7 +49,7 @@ import { scanTiles } from "./production/tiles";
 import { base32Bytes, totpCode } from "./production/twoStep";
 import type { TappedChunk, TappedStream } from "./production/streamTap";
 import { summaryMarkdown } from "./production/summaryMarkdown";
-import { FRAME_DOCUMENT_START, NO_CONCEPT_NOTE, type FrameSeen } from "./production/generatedExplainer";
+import { FRAME_DOCUMENT_START, NO_CONCEPT_NOTE, framePolicyFirst, type FrameSeen } from "./production/generatedExplainer";
 import { RIVERS_NOT_LOADED_NOTE } from "./production/waterStory";
 import { PHASE_C, phaseCBlock } from "./playFixture";
 
@@ -363,6 +364,14 @@ test("the nine known-answer questions ask the mordant in three languages, the wa
   expect(FRAME_DOCUMENT_START).toContain("webrtc 'block'");
   const detailed = answerRecord({ question: INDIGO, stream: stream(indigoAnswer(), "en"), streamsOpened: 1, clickedAt: 1_000, waited: null });
   expect(answerProblems(detailed, INDIGO)).toContain("the request asked at DETAILED, not EXPERT");
+});
+
+test("a frame's policy is read first whether the frame opens still or moving, and a frame without it is caught", () => {
+  const block = phaseCBlock("simulation", "s1.b1");
+  const still = sandboxDocument(block.html, block.values);
+  expect(framePolicyFirst(still)).toBe(true);
+  expect(framePolicyFirst(sandboxDocument(block.html, block.values, { tokens: {}, reducedMotion: false }))).toBe(true);
+  expect(framePolicyFirst(still.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, ""))).toBe(false);
 });
 
 test("indigo passes when its generated explainer draws in the sandbox and its frame reaches nothing", () => {

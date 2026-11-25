@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import re
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Self
 
-from pydantic import AfterValidator, ConfigDict, Field, field_validator
+from pydantic import AfterValidator, ConfigDict, Field, field_validator, model_validator
 
 from .base import ContractModel
 from .depicted_materials import DEPICTED_MATERIALS
-from .drawing_attributes import drawing_attribute_problem
+from .drawing_attributes import drawing_attribute_problem, svg_box_problem
 from .shown_text import SHOWN_TEXT
 from .unit_ids import UNIT_REF_PATTERN
 
@@ -76,6 +76,7 @@ SVG_TAGS = (
     "tspan",
 )
 SVG_ATTRIBUTE_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9-]*$")
+SVG_TAG = "svg"
 PAINT_ATTRIBUTES = frozenset({"fill", "stroke", "stop-color"})
 PAINT_VALUE = re.compile(
     r"^(none|currentColor|#fff|#000|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$"
@@ -134,6 +135,13 @@ class SvgNode(SpecModel):
             if refused:
                 raise ValueError(f"drawing attribute {name}={value!r}: {refused}")
         return attrs
+
+    @model_validator(mode="after")
+    def _drawn_within_its_box(self) -> Self:
+        problem = svg_box_problem(self.attrs) if self.tag == SVG_TAG else None
+        if problem:
+            raise ValueError(f"A drawing {problem}")
+        return self
 
 
 class ColourMix(SpecModel):

@@ -32,6 +32,48 @@ export const FRAME_GUARD = [
   "})();"
 ].join(" ");
 
+export const FRAME_REDUCED_MOTION = "data-reduced-motion";
+export const FRAME_MOVING = "animate,animateTransform,animateMotion,set,marquee";
+export const FRAME_STILLNESS = [
+  "(function () {",
+  "const root = document.documentElement;",
+  `const flag = ${JSON.stringify(FRAME_REDUCED_MOTION)};`,
+  'if (root.getAttribute(flag) !== "true" && !matchMedia("(prefers-reduced-motion: reduce)").matches) return;',
+  'root.setAttribute(flag, "true");',
+  "const settle = function (animation) { try { animation.finish(); } catch (error) { animation.cancel(); } return animation; };",
+  "const settleAll = function () { if (document.getAnimations) for (const animation of document.getAnimations()) settle(animation); };",
+  "const animate = Element.prototype.animate;",
+  "if (animate) Element.prototype.animate = function () { return settle(animate.apply(this, arguments)); };",
+  "if (window.Animation) {",
+  'for (const name of ["play", "reverse", "updatePlaybackRate"]) Animation.prototype[name] = function () { settle(this); };',
+  'for (const name of ["startTime", "currentTime", "playbackRate", "effect", "timeline"]) {',
+  "const own = Object.getOwnPropertyDescriptor(Animation.prototype, name);",
+  "if (own && own.set) Object.defineProperty(Animation.prototype, name, { get: own.get, set: function (value) { own.set.call(this, value); settle(this); }, configurable: true });",
+  "}",
+  "}",
+  "const timing = window.AnimationEffect && AnimationEffect.prototype.updateTiming;",
+  "if (timing) AnimationEffect.prototype.updateTiming = function () { timing.apply(this, arguments); settleAll(); };",
+  "if (window.HTMLMarqueeElement) HTMLMarqueeElement.prototype.start = function () {};",
+  "window.requestAnimationFrame = function () { return 0; };",
+  "window.setInterval = function () { return 0; };",
+  "const later = window.setTimeout;",
+  "let timed = false;",
+  'window.setTimeout = function (handler, delay) { if (timed || typeof handler !== "function") return 0; const given = Array.prototype.slice.call(arguments, 2); return later(function () { timed = true; try { handler.apply(null, given); } finally { timed = false; } }, delay); };',
+  `const moving = ${JSON.stringify(FRAME_MOVING)};`,
+  "const hold = function (node) {",
+  "if (window.SVGAnimationElement && node instanceof SVGAnimationElement) node.remove();",
+  "else if (window.HTMLMarqueeElement && node instanceof HTMLMarqueeElement) node.stop();",
+  "};",
+  "new MutationObserver(function (changes) {",
+  "for (const change of changes) {",
+  'if (change.target === root && change.attributeName === flag && root.getAttribute(flag) !== "true") root.setAttribute(flag, "true");',
+  "for (const node of change.addedNodes) if (node.nodeType === 1) { hold(node); for (const inner of node.querySelectorAll(moving)) hold(inner); }",
+  "}",
+  "settleAll();",
+  "}).observe(document, { childList: true, subtree: true, attributes: true, characterData: true });",
+  "})();"
+].join(" ");
+
 export function sandboxData(values: readonly Pick<SimulationValue, "key" | "value">[]): string {
   const data: Record<string, number> = {};
   for (const value of values) {
@@ -66,16 +108,21 @@ export function frameLookStyle(look: FrameLook): string {
   return `:root{${declared.join(";")}}body{margin:0;background:var(--sunk);color:var(--ink-1);font-family:var(--font-ui)}${FRAME_MOTION_GUARD}`;
 }
 
+function frameIsStill(look: FrameLook | null): boolean {
+  return look === null || look.reducedMotion;
+}
+
 export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[], look: FrameLook | null = null): string {
   return [
-    look?.reducedMotion ? '<!doctype html><html lang="en" data-reduced-motion="true"><head>' : '<!doctype html><html lang="en"><head>',
+    frameIsStill(look) ? `<!doctype html><html lang="en" ${FRAME_REDUCED_MOTION}="true"><head>` : '<!doctype html><html lang="en"><head>',
     `<meta http-equiv="Content-Security-Policy" content="${SANDBOX_CSP}">`,
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     `<script type="application/json" id="${SANDBOX_DATA_ELEMENT_ID}">${sandboxData(values)}</script>`,
     `<script>${FRAME_GUARD}</script>`,
     `<script>${FRAME_SIZER}</script>`,
-    ...(look ? [`<style>${frameLookStyle(look)}</style>`] : []),
+    `<script>${FRAME_STILLNESS}</script>`,
+    `<style>${look ? frameLookStyle(look) : FRAME_MOTION_GUARD}</style>`,
     `</head><body>${html}</body></html>`
   ].join("");
 }

@@ -1,6 +1,6 @@
 import { stillOr, type KitScene } from "@/lib/componentSpecsKitScene";
 import { DEPICTED_MATERIALS } from "@/lib/depictedMaterials";
-import { drawingAttributeRefusal } from "@/lib/drawingAttributes";
+import { drawingAttributeRefusal, svgBoxRefusal } from "@/lib/drawingAttributes";
 import type { MonographMark, MonographNode } from "@/lib/monographDocument";
 import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import { UNIT_REF } from "@/lib/unitIds";
@@ -87,6 +87,8 @@ export const drawingShape: Shape<DrawingElement> = {
     if (unknown.length) throw new ShapeError(`${path}.${unknown[0]}`, "no such field");
     const tag = oneOf(DRAWING_TAGS).parse(value.tag, `${path}.tag`);
     const attrs = drawingAttributes(value.attrs ?? {}, `${path}.attrs`);
+    const outside = tag === "svg" ? svgBoxRefusal(attrs) : null;
+    if (outside) throw new ShapeError(`${path}.attrs`, outside);
     const children = value.children ?? [];
     if (!Array.isArray(children)) throw new ShapeError(`${path}.children`, "a list");
     return { tag, attrs, children: children.map((child, index) => (typeof child === "string" ? child : drawingShape.parse(child, `${path}.children[${index}]`))) };

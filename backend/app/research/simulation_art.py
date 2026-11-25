@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import re
 from collections.abc import Iterable, Iterator
+from html import unescape
 
 from .art_kit import parts_named_by
 from .drawing_roles import DRAWING_ROLES, INDIGO, MATERIAL_ROLES, css_declarations
 from .drawn_art import KIT_POINTER, UI_SIZES_PX, drawn_art_problems
+from .drawn_paints import CUSTOM_PREFIX
 from .sandbox_markup import SandboxProblem
 from .simulation_art_markup import PAINT_ATTRIBUTES, REST_PROPERTIES, ArtMarkup
 
@@ -66,6 +68,8 @@ NAMED_COLOURS = (
 BORDER = re.compile(r"^border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?$")
 VAR = re.compile(r"var\(\s*--([a-z0-9-]+)")
 BARE_VAR = re.compile(r"var\(\s*--[a-z0-9-]+\s*\)")
+CHANNEL_PREFIX = "c-"
+PAGE_TOKENS = DRAWING_ROLES | frozenset(token for face in FACES for token in VAR.findall(face))
 LITERAL = re.compile(
     rf"#[0-9a-f]{{3,8}}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\(|\b(?:{NAMED_COLOURS})\b",
     re.IGNORECASE,
@@ -97,6 +101,7 @@ SCRIPT_MOTION = re.compile(
     r"\.\s*animate\s*\(|\.\s*beginElement(?:At)?\s*\(|(?<![\w$.])(?:Animation|KeyframeEffect)\s*\("
 )
 UNREAD_DRAWINGS = frozenset({"canvas"})
+DATA_IMAGE = re.compile(r"data\s*:\s*image/", re.IGNORECASE)
 SCRIPT_DRAWING = re.compile(r"(?<![\w$])(?:getContext|OffscreenCanvas|createElementNS)(?![\w$])")
 NUMBER = re.compile(r"^(\d*\.?\d+)(%)?$")
 SIZES = ", ".join(str(size) for size in UI_SIZES_PX)
@@ -117,6 +122,7 @@ def simulation_art_problems(html: str) -> list[SandboxProblem]:
         *_motion_problems(markup),
         *_unread_drawing_problems(markup),
         *_pictured_problems(markup.pictured),
+        *_data_image_problems(html),
         *drawn_art_problems(DRAWING_KIND, {FIGURE_KEY: markup.drawings}, {}),
     ]
     return [SandboxProblem(ART_RULE, detail) for detail in dict.fromkeys(found)]
@@ -162,19 +168,38 @@ def _style_paint_problems(style: str) -> Iterator[str]:
 
 
 def _declared_paint_problems(name: str, value: str) -> Iterator[str]:
-    if name in COLOUR_PROPERTIES or BORDER.match(name):
+    if name.startswith(CUSTOM_PREFIX):
+        yield from _custom_property_problems(name[len(CUSTOM_PREFIX) :], value)
+    elif name in COLOUR_PROPERTIES or BORDER.match(name):
         yield from _painted(value, control=True)
 
 
-def _painted(value: str, *, control: bool) -> Iterator[str]:
-    if " ".join(value.split()).casefold() in PLAIN:
+def _custom_property_problems(token: str, value: str) -> Iterator[str]:
+    if token.removeprefix(CHANNEL_PREFIX) in PAGE_TOKENS or INDIGO.match(token):
+        yield (
+            f"declares --{token}, a token the frame takes from the page, so a paint that names it would not be "
+            "the role it says; name the design role as the page draws it and declare no token of the design"
+        )
         return
+    yield from _literal_problems(value)
+    for role in VAR.findall(value):
+        if role in MATERIAL_ROLES:
+            yield _material(role)
+
+
+def _literal_problems(value: str) -> Iterator[str]:
     for match in LITERAL.finditer(BARE_VAR.sub(" ", value)):
         yield (
             f"names the colour {match.group(0)!r}; name a design role instead: var(--ink-1) to var(--ink-3), "
             "var(--rule), var(--rule-strong), var(--ground), var(--raised), var(--sunk), a --chart-* role, "
             "and var(--indigo) only on a control"
         )
+
+
+def _painted(value: str, *, control: bool) -> Iterator[str]:
+    if " ".join(value.split()).casefold() in PLAIN:
+        return
+    yield from _literal_problems(value)
     for role in VAR.findall(value):
         if role in MATERIAL_ROLES:
             yield _material(role)
@@ -255,6 +280,14 @@ def _unread_drawing_problems(markup: ArtMarkup) -> Iterator[str]:
                 f"builds its drawing in the script ({match.group(0)}); draw the figure as static inline svg and "
                 "let the script change only its attributes and text"
             )
+
+
+def _data_image_problems(html: str) -> Iterator[str]:
+    if DATA_IMAGE.search(unescape(html)):
+        yield (
+            "shows a data: image, which the bar cannot read as a drawing and neither reduced-motion switch "
+            "holds still; draw the figure as static inline svg with a viewBox"
+        )
 
 
 def _pictured_problems(labels: Iterable[str]) -> Iterator[str]:

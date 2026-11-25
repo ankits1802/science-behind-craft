@@ -935,7 +935,10 @@ bounds (`components/answer/play/`, `lib/sandboxFrame.ts`, decision 0059). The fr
 script is the client's own guard: it removes the peer connection constructors and keeps the frame
 from opening nested windows, because Chromium ignores the policy's `webrtc 'block'` (decision 0061).
 Its document carries the values of the design tokens the fragment names and sets
-`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201).
+`data-reduced-motion` under either reduced-motion switch, turning its motion off (decision 0201);
+it is still until the page has read its look, and its stillness script holds every animation,
+frame, interval and timer chain still under either switch, whatever the fragment's script does
+(decision 0218).
 
 ## Checks
 

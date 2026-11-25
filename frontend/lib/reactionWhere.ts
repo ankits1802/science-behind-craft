@@ -1,4 +1,5 @@
 import type { SvgNode } from "@/lib/componentSpecsScienceParts";
+import { svgViewBox } from "@/lib/drawingAttributes";
 
 export const WHERE_ICON_UNITS_MOST = 32;
 export const WHERE_VIGNETTE_CLASS = "vg";
@@ -8,10 +9,7 @@ const DECORATIVE = { "aria-hidden": "true" } as const;
 type ViewSize = { width: number; height: number };
 
 function viewSize(node: SvgNode): ViewSize | null {
-  const numbers = (node.attrs?.viewBox ?? "").trim().split(/[\s,]+/).map(Number);
-  if (numbers.length !== 4 || !numbers.every(Number.isFinite)) return null;
-  const [, , width, height] = numbers;
-  return width > 0 && height > 0 ? { width, height } : null;
+  return svgViewBox(node.attrs?.viewBox);
 }
 
 function classes(node: SvgNode): string[] {

@@ -303,6 +303,14 @@ and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure
   outside address (`url()` other than `url(#id)`, `image-set()`, `cross-fade()`, `image()`,
   `src()`) or a backslash escape, in capitals or not, and `href` is `#id`; the delivery refuses
   any other with the attribute named.
+- **Inline drawings stay in their box.** A drawing's `class` names only the classes the kit's own
+  drawings carry (`ink1`, `lab`, `scene` and the like), or none, never one of the site's (`fixed`,
+  `inset-0`, `animate-spin`). An `svg` is drawn within its box: its `width` and `height` at most its
+  viewBox's (or 100%), any transform only shrinks it (`scale` of 1 or less), with no
+  `transform-origin` or `transform-box`, and nothing is shown past its edge (`overflow` is
+  `hidden`). A paint that names a variable is read through the drawing's own declarations, and a
+  variable the drawing never declares is refused unless it is one of the design's roles, since the
+  page may hold a depicted material in it.
 
 ## How this reference is kept true
 

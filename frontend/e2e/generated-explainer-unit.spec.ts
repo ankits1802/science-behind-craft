@@ -13,7 +13,7 @@ import type { HidingControls } from "@/components/answer/play/useSimulationHidin
 import type { SimulationBlock, SimulationValue } from "@/lib/explainerPlay";
 import { canHideGenerated } from "@/lib/permissions";
 import type { RegionDataset } from "@/lib/regionContract";
-import { FRAME_GUARD, FRAME_MAX_HEIGHT, FRAME_MIN_HEIGHT, FRAME_SIZER, frameHeightFrom, ownFrameHeight, sandboxData, sandboxDocument } from "@/lib/sandboxFrame";
+import { FRAME_GUARD, FRAME_MAX_HEIGHT, FRAME_MIN_HEIGHT, FRAME_MOTION_GUARD, FRAME_SIZER, FRAME_STILLNESS, frameHeightFrom, ownFrameHeight, sandboxData, sandboxDocument } from "@/lib/sandboxFrame";
 import { ShapeError } from "@/lib/shape";
 import { hiddenFrom, keptAsPiece, setSimulationHidden, simulationHiddenPath, simulationValueText, valueBases } from "@/lib/simulationView";
 import type { User, UserRole } from "@/lib/types";
@@ -83,9 +83,10 @@ test("the frame document opens with the plan's policy and hands the code its val
   expect(PHASE_C.sandbox.csp).toBe(POLICY);
   expect(sandboxData(block.values)).toBe(DATA);
   expect(sandboxDocument(block.html, block.values)).toBe(
-    `<!doctype html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="${POLICY}"><meta charset="utf-8">` +
+    `<!doctype html><html lang="en" data-reduced-motion="true"><head><meta http-equiv="Content-Security-Policy" content="${POLICY}"><meta charset="utf-8">` +
       `<meta name="viewport" content="width=device-width, initial-scale=1"><script type="application/json" id="kv-data">${DATA}</script>` +
-      `<script>${FRAME_GUARD}</script><script>${FRAME_SIZER}</script></head><body>${block.html}</body></html>`
+      `<script>${FRAME_GUARD}</script><script>${FRAME_SIZER}</script><script>${FRAME_STILLNESS}</script>` +
+      `<style>${FRAME_MOTION_GUARD}</style></head><body>${block.html}</body></html>`
   );
   expect(block.html).toContain(`document.getElementById("${PHASE_C.sandbox.dataElementId}")`);
   expect(() => sandboxData([{ key: "fall", value: 1 }, { key: "fall", value: 2 }])).toThrow(RangeError);
@@ -99,7 +100,7 @@ test("the frame grants scripts only, carries its document in srcdoc and is title
   expect(frame.sandbox).toBe("allow-scripts");
   expect(frame.sandbox).toBe(PHASE_C.sandbox.attribute);
   expect(frame.srcdoc).toBe(sandboxDocument(block.html, block.values));
-  expect(frame.srcdoc.startsWith(`<!doctype html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="${POLICY}">`)).toBe(true);
+  expect(frame.srcdoc.startsWith(`<!doctype html><html lang="en" data-reduced-motion="true"><head><meta http-equiv="Content-Security-Policy" content="${POLICY}">`)).toBe(true);
   expect(frame.title).toBe("How fast the water table falls");
   expect(frame.style).toBe("height:360px");
 });
