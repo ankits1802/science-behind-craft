@@ -160,7 +160,7 @@ family figure only when the page holds every fact its units cite.
    through `propose_facts`, structure through `propose_structure`, a held fact's new source through
    `propose_source`, components by the component guide, figures from data by the datasets skill,
    and open pictures through `give_pictures` by `page_url` (the server reads the licence and the
-   author and returns a thumbnail to check). A picture an answer finds by search must name the craft, its places or its family's world in its title; pictures you give through `give_pictures` are never refused by that rule, so give the craft's own pictures, captioned by what they show. Quote a colour change as the source states it, first
+   author and returns a thumbnail to check). A picture an answer finds by search must name the craft, its places or its family's world in its title; pictures you give through `give_pictures` are never refused by that rule, so give the craft's own pictures, captioned by what they show. A page's masthead photograph is the first thing a phone waits for: the site preloads it first (`fetchPriority: "high"`) at the width the phone draws, 960 px at 360. Choose one whose 960 px rendition is light; the phone budget holds the first screen's pictures to their recorded bytes (decision 0209). Quote a colour change as the source states it, first
    colour and then the colour it turns. Answers then draw that stage from the kit, citing your fact.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, read its pictures, fix every rule its report fails (rule 28 names each
