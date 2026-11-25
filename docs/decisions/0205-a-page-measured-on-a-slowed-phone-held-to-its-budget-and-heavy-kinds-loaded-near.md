@@ -21,6 +21,7 @@ what a release gains on a phone to the lead's Lighthouse because CI ran none. Th
 | The lead chapter drawn by the server and the rest read later | [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md), [decision 0183](0183-the-shared-template-draws-the-approved-page.md) |
 | The kind fixtures the page of every kind draws | [decision 0114](0114-kinds-and-datasets.md), [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
 | The design rule: complete at rest, the largest element never at opacity 0 | `.claude/skills/kalavigyan-design`, section 6 |
+| The path to the first screen recorded, the views' stylesheets as one sheet, the masthead's photograph first | [decision 0209](0209-a-phone-load-s-path-to-its-first-screen-recorded-and-cut.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

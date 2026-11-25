@@ -248,8 +248,9 @@ flowchart LR
 | [0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) | An answer's figure of cloth changing colour is composed from the kit with no model call, and a generated explainer's art is held to the bar or left out | · |
 | [0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) | A dip player takes its colours from the substances its stages name, the crafts' dyes and pigments are recorded from their facts, and a molecule draws twenty elements | [0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | [0203](0203-the-guide-handed-over-page-by-page-at-the-step-it-serves.md) | The guide is served in numbered pages and handed over at the step it serves, and a page's first components wait until the design pages are read | · |
-| [0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) | A page is measured on a slowed phone in CI and held to its recorded budget, naming what grew, and a heavy kind's code loads as it nears the viewport after its still state | · |
+| [0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) | A page is measured on a slowed phone in CI and held to its recorded budget, naming what grew, and a heavy kind's code loads as it nears the viewport after its still state | [0209](0209-a-phone-load-s-path-to-its-first-screen-recorded-and-cut.md) |
 | [0206](0206-every-new-kind-exported-as-its-still-and-read-in-a-page-s-languages.md) | A page exports to PDF and Word with every new kind as its complete still, one still renderer draws them all, and a component's labels are translated as passages | · |
+| [0209](0209-a-phone-load-s-path-to-its-first-screen-recorded-and-cut.md) | A phone load's path to its first screen is recorded, the views' stylesheets load as one sheet, a masthead's photograph is asked for first, and the rest of a page is drawn in a transition | · |
 
 ## How this document is kept true
 
