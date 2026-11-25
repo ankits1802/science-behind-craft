@@ -6,10 +6,11 @@ import { expect, test } from "@playwright/test";
 import { GET } from "../app/monographs/kit/first/[sheet]/route";
 import { firstSheet, firstSheetHref, firstSheetName, firstSheetScopes, KIT_SCOPES, selectorScopes } from "../lib/kitFirstSheet";
 import type { KitScope } from "../lib/monographScopes";
+import nextConfig, { FIRST_SHEET_ROUTES, SERVED_KIT_CSS } from "../next.config";
 
 import { FRONTEND } from "./moduleGraph";
 
-const KIT = readFileSync(join(FRONTEND, "public", "monographs", "kit", "monograph.css"), "utf8");
+const KIT = readFileSync(join(FRONTEND, SERVED_KIT_CSS), "utf8");
 const UNDRAWN_OUTSIDE_NOT = /\.bx-(chem|pt|rm|mb|ask|sa)(?![\w-])/g;
 
 const SAMPLE = [
@@ -106,4 +107,10 @@ test("the route serves the named first sheet as CSS and refuses any other name",
   expect(await served.text()).toBe(firstSheet(KIT, drawn("mb", "chem")));
   const refused = await GET(new Request("http://localhost/monographs/kit/first/mb-chem.css"), { params: Promise.resolve({ sheet: "mb-chem.css" }) });
   expect(refused.status).toBe(404);
+});
+
+test("the served kit the route reads is traced into the route's function, and no other route's", () => {
+  expect(nextConfig.outputFileTracingIncludes).toEqual({ [FIRST_SHEET_ROUTES]: [SERVED_KIT_CSS] });
+  expect(firstSheetHref(drawn("mb")).startsWith(FIRST_SHEET_ROUTES.slice(0, -1))).toBe(true);
+  expect(readFileSync(join(FRONTEND, "app", "monographs", "kit", "first", "[sheet]", "route.ts"), "utf8")).toContain('join(process.cwd(), "public", "monographs", "kit", "monograph.css")');
 });
