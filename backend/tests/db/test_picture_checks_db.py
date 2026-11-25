@@ -285,7 +285,7 @@ async def test_open_work_lists_one_check_task_counting_the_links_waiting_for_a_l
 ) -> None:
     before = await waiting_links(session)
     await linked(session, "Waiting")
-    await linked(session, "Curated pick", provider="curation")
+    await linked(session, "Curated_pick", provider="curation")
     filters = WorkFilters(kind=PICTURE_CHECK_TASK)
     listed = await list_open_work(session, filters, Viewer(), site=SITE, now=NOW)
     (task,) = listed.tasks
