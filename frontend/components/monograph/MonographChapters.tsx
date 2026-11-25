@@ -14,7 +14,7 @@ import { SourceList } from "@/components/monograph/SourceList";
 import { documentCitation } from "@/lib/monographCite";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { chapterNotes, chapterSections, type ChapterSection, type NoteLine } from "@/lib/monographNotes";
-import { railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
+import { chapterHeaded, railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
 import { KIN_KIND } from "@/lib/monographSources";
 import { pageSubject } from "@/lib/pageExport";
 
@@ -49,7 +49,7 @@ type ChapterProps = { document: MonographDocument; chapter: ChapterPlan; masthea
 
 export function MonographChapter({ document, chapter, masthead, label = null, labelled = false, contents = [], kinChapter = null }: ChapterProps) {
   const parts: ChapterParts = { notes: chapterNotes(document, chapter), sections: chapterSections(document, chapter), kinChapter };
-  const headed = chapter.blocks.some((block) => block.kind === "passage" && block.head && block.notes.length === 0);
+  const headed = chapterHeaded(chapter);
   return (
     <section className="kv-ch" id={chapter.key} data-ch={chapter.index} data-label={chapter.label} aria-label={chapter.label}>
       <Opening document={document} masthead={masthead} label={label} contents={contents} />

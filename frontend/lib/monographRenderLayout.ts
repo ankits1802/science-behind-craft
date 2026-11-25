@@ -100,6 +100,10 @@ export function pagePlan(document: MonographDocument): PagePlan {
   return { masthead, label, chapters: chapters.filter((chapter) => chapter.blocks.length > 0 || chapter.index === 0) };
 }
 
+export function chapterHeaded(chapter: ChapterPlan): boolean {
+  return chapter.blocks.some((block) => block.kind === "passage" && block.head && block.notes.length === 0);
+}
+
 export function railChapters(plan: PagePlan): ChapterPlan[] {
   return plan.label ? plan.chapters.filter((chapter) => chapter.number !== null) : plan.chapters;
 }

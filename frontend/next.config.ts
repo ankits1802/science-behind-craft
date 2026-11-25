@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { FIRST_SHEET_ROUTES, KIT_FILE } from "./lib/server/kitFile";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 export const ELEVENLABS_CONNECT_SOURCES = ["wss://livekit.rtc.elevenlabs.io", "https://livekit.rtc.elevenlabs.io"];
@@ -62,6 +64,9 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     proxyTimeout: 300_000
+  },
+  outputFileTracingIncludes: {
+    [FIRST_SHEET_ROUTES]: [`./${KIT_FILE}`]
   },
   turbopack: {
     root: __dirname

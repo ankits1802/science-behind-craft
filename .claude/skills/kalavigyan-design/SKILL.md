@@ -325,7 +325,11 @@ needs `font-reading` or `font-headline`.
   them). The Wikidata CC0 credit appears once under the wall and in the label's provenance line.
 - **Loading**: self-hosted through `next/font/local` with `unicode-range` and `preload: false`; a
   page loads a script's reading face only when it has prose in it; the atlas and names view use
-  build-time subsets of 24 KB or less per script, 160 KB for all. The wordmark is outlines.
+  build-time subsets of 24 KB or less per script, 160 KB for all. The wordmark is outlines. The
+  five Latin files the first screens draw are declared and preloaded by the root layout
+  (`FIRST_SCREEN_FACES` in `app/latinFonts.ts`, drawn by `app/FirstScreenFaces.tsx`), never by
+  `next/font`, whose preloads React writes into the head ahead of a masthead photograph (decision
+  0221); a face added to a first screen joins that list.
 - **Right to left** follows the content language: an Urdu answer mirrors its article (rail,
   prose, margin notes, figure order); the appbar and chapter rail keep the interface direction.
   Logical properties only (`ms`, `me`, `ps`, `pe`, `start`, `end`, `border-s`, `text-start`).
@@ -701,6 +705,13 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - **A stylesheet imported by a component** is a render-blocking request of its own on every page
   that draws it, each one a round trip on a slow phone; add it to `app/component-views.css`.
   `e2e/component-styles-unit.spec.ts` holds every component sheet to one of the layout's two.
+- **A new box drawn on a monograph page and not named to `kitFirstScopes`**: the page's first
+  sheet (`/monographs/kit/first/<scopes>.css`) holds only the kit rules of the `.bx-<scope>` boxes
+  the server draws, and the whole kit arrives after hydration, so a box the reader is not named to
+  draws unstyled until then. A component that draws a `bx-<scope>` box names it in
+  `components/monograph/kitFirstScopes.ts`; `e2e/kit-first-scopes-unit.spec.ts` fails on a drawn box
+  its page's sheet leaves out (decision 0221). Never link `MONOGRAPH_KIT_CSS` render-blocking on a
+  reader page.
 - **Writing outside the files a task owns** while other lanes run: shared changes reach their
   components through tokens and the shared primitives above.
 

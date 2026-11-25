@@ -2,6 +2,7 @@
 
 import { startTransition, useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 
+import { KitSheetLink } from "@/components/monograph/KitRestSheet";
 import { announce, SHELL_COMPLETE_EVENT } from "@/components/monograph/kitGate";
 import { hashTargetMissing, useShellTrigger } from "@/components/monograph/useShellTrigger";
 import { checkedDocumentRest, checkedShellRest, type DocumentRest, type RestPart, type ShellRest } from "@/lib/monographRenderShell";
@@ -32,8 +33,12 @@ function missingTarget(): string | null {
 }
 
 function ShownRest({ shown }: { shown: Shown }) {
-  if (shown.part === "document") return <shown.View part={shown.rest} jump={shown.jump} />;
-  return <shown.View part={shown.rest} jump={shown.jump} />;
+  return (
+    <>
+      <KitSheetLink />
+      {shown.part === "document" ? <shown.View part={shown.rest} jump={shown.jump} /> : <shown.View part={shown.rest} jump={shown.jump} />}
+    </>
+  );
 }
 
 function Unread() {
