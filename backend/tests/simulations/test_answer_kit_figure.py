@@ -120,6 +120,25 @@ async def test_a_kit_figure_leaves_the_answer_s_generated_explainer_to_another_s
     assert isinstance(explained, SimulationBlock) and len(explainer.calls) == 1
 
 
+async def test_a_reused_section_below_expert_draws_its_kit_figure_and_asks_no_model() -> None:
+    matter, kut, vat = basic_sections()
+    explainer, compose = DraftModel([]), DraftModel([])
+    drawing = builder(compose, matter=matter, explainer=explainer).drawing()
+    (figure,) = (await drawing.build(vat)).blocks
+    assert isinstance(figure, KitFigureBlock) and figure.id == "s1.kit"
+    assert (await drawing.build(second(kut))).blocks == ()
+    assert explainer.calls == [] and compose.calls == []
+
+
+async def test_a_concept_a_reused_section_drew_is_not_drawn_again_in_the_same_answer() -> None:
+    matter, _, vat = basic_sections()
+    build = builder(DraftModel([]), matter=matter, explainer=DraftModel([]))
+    (figure,) = (await build.drawing().build(vat)).blocks
+    assert isinstance(figure, KitFigureBlock)
+    again = (await build.drawing().build(second(vat))).blocks
+    assert not [b for b in again if isinstance(b, KitFigureBlock) and b.diagram == figure.diagram]
+
+
 def test_one_concept_is_drawn_once_and_never_also_built_or_pictured() -> None:
     answer = AnswerConcepts(limit=1)
     assert answer.draw("reaction:vat")

@@ -35,7 +35,7 @@ from app.science.mechanisms import Concept, section_concepts
 from app.science.records import ProcessRecords
 
 from .builder_evidence import section_facts, sources_beyond
-from .builder_interface import BuildAsk, BuilderTools, Built
+from .builder_interface import BlockBuilder, BuildAsk, BuilderTools, Built
 from .concept_pictures import ConceptPictures, PictureSearch
 from .craft_matter import CraftMatter
 from .section_images import SectionImagesAsk, section_images
@@ -61,6 +61,7 @@ __all__ = [
     "OUT_OF_TIME",
     "SIMULATION_BUDGET_SECONDS",
     "SIMULATION_WAIT_SECONDS",
+    "KitDrawing",
     "MatterOf",
     "SimulationBudget",
     "SimulationBuilder",
@@ -125,8 +126,21 @@ class SimulationBuilder:
         self._budget = budget or SimulationBudget()
         self._answers: dict[uuid.UUID, AnswerConcepts] = {}
 
+    def drawing(self) -> BlockBuilder:
+        return KitDrawing(self)
+
+    async def drawn(self, ask: BuildAsk) -> Built:
+        matter = await self._matter_of(ask)
+        if matter is None:
+            return Built()
+        drawn = _kit_figure(ask, section_concepts(matter.records, ask.blocks), matter, self._answer(ask))
+        if drawn is None:
+            return Built()
+        shown: list[Block] = [drawn[0]]
+        return Built(tuple(shown), sources_beyond(shown, matter.records.sources, ask.cited))
+
     async def build(self, ask: BuildAsk) -> Built:
-        answer = self._answers.setdefault(ask.answer_id, AnswerConcepts(explainer_limit(ask.request.depth)))
+        answer = self._answer(ask)
         matter = await self._matter_of(ask)
         concepts = section_concepts(matter.records, ask.blocks) if matter is not None else []
         drawn = _kit_figure(ask, concepts, matter, answer)
@@ -247,6 +261,9 @@ class SimulationBuilder:
         async with self._tools.sessions() as session:
             return await simulation_pieces(session, claim_ids, [facet])
 
+    def _answer(self, ask: BuildAsk) -> AnswerConcepts:
+        return self._answers.setdefault(ask.answer_id, AnswerConcepts(explainer_limit(ask.request.depth)))
+
     async def _matter_of(self, ask: BuildAsk) -> CraftMatter | None:
         craft = ask.request.craft
         if craft is None:
@@ -273,6 +290,14 @@ class SimulationBuilder:
                 craft_slug=craft.slug if craft is not None else None,
             )
         )
+
+
+class KitDrawing:
+    def __init__(self, builder: SimulationBuilder) -> None:
+        self._builder = builder
+
+    async def build(self, ask: BuildAsk) -> Built:
+        return await self._builder.drawn(ask)
 
 
 def hidden_again(block: SimulationBlock, hidden: Sequence[KnowledgePiece]) -> bool:

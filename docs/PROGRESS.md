@@ -1253,10 +1253,11 @@ Last updated: 2026-11-25.
     s, cited); a page rebuilt while its inputs move is built again without a false alarm.
 
 - **Quality round (2026-11-24 to 2026-11-25): every page built over MCP held to the Kutch Ajrakh
-  bar.** Decisions 0191 to 0210, built as parallel lanes and released on main from `401f73ae` to
-  the batch of PR #192; each release before the batch was verified on production alone
-  (`/health`, `/api/version`, Vercel READY, CloudWatch, parity, the MCP client check), and the
-  owner had the last four lanes released at once (2026-11-25, this once).
+  bar.** Decisions 0191 to 0224, built as parallel lanes and released on main from `401f73ae` to
+  `f0f965b7`; each release before PR #192 was verified on production alone (`/health`,
+  `/api/version`, Vercel READY, CloudWatch, parity, the MCP client check), and from PR #192 the
+  owner had ready lanes released in batches (2026-11-25, "Ship all at once only"), each batch
+  verified the same way.
   - **Pages over MCP:** a paginated guide and a larger tool budget (0191, 0203); open-licence
     pictures found and credited by a tool (0192); components withdrawn and versioned (0193); admins
     remove and edit published content by staging it (0194, migration 0104); the rendered preview on
@@ -1277,9 +1278,31 @@ Last updated: 2026-11-25.
   - **Parity:** a page drawn a version behind still reads its rest, and a where icon draws at its
     own size, so Sanganeri passes (0210, migration 0117). The relief bands are rebuilt by a workflow
     with retries and a mirror.
-  - **The register** rose from 45 to 46 entries by hand: the scheduled post-deploy check's grace,
-    counted from a commit's own date, raised a false alarm at the batch release, and no entry was
-    cleared in the same change; the round's other open items joined the entries they belong to.
+  - **The review batch** (`8ac83675`, decisions 0211 to 0221), from an adversarial review of the
+    round and its MCP tools: pictures from shops, stock agencies and auctions are not shown (0211);
+    a steward asks an Admin to take another's component off its pages (0212); a removal leaves
+    every kept version of its pages and clears only the pages it changes (0213, 0219, migration
+    0118); exports and shared files are built in their own slots at a caller's pace (0214, 0217);
+    every searched picture served passes the section rule and every drawing is judged by its paint
+    (0215, 0218); contributed drawings load nothing from elsewhere and a timeline map is complete
+    at rest (0216, 0220); the masthead photograph is asked for before the faces, so Kutch Ajrakh's
+    largest element on the phone budget fell from 4.61 s to 2.77 s (0221).
+  - **The picture batch** (`f0f965b7`, PR #208): contributors' AI clients look at the searched
+    pictures answers show through the MCP tool `check_pictures` and the open-work task
+    `CHECK_PICTURES`; a refusal hides a link at once, a trusted or agreeing look marks it seen, and
+    Admins settle disagreements on the Review page (0222, migration 0119). A version a removal
+    reached is read by name until the web's refresh succeeds or twenty minutes pass, and a page
+    drawn at a gone version reads the current rest, so Monograph parity passes on a release whose
+    post-deploy check retracts its test fact (0223, migration 0120). An answer's section draws its
+    kit figure before any generated explainer, and the figure takes none of the answer's
+    explainers (0224). Measured after it (run 45666058092): rubric 0.978, judge 0.83, $0.33.
+  - **A reused section's kit figure** (decision 0225): the evaluation's answers reuse their stored
+    sections, and a reused section ran the explainer's builder only at Expert, so the indigo answer
+    drew no figure; below Expert a reused section now runs the builder's drawing alone, which
+    composes the kit figure with no model call.
+  - **The register** rose from 45 to 46 entries by hand when the scheduled post-deploy check's
+    grace raised a false alarm, and is back at 45 after decision 0217 counted the grace from when
+    main reached a commit.
 
 ## Next
 

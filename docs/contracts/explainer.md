@@ -499,7 +499,7 @@ a reused group leaves out, so the rebuilt one takes its place rather than joinin
 bare claim texts, could be dropped by the answer that placed it after it had taken the answer's
 one zoom from the builder); `reused_from` the shallowest depth at which a reused section
 runs the entry (`EXPERT` for `simulation` and `expert_view`, the two longest model calls; `BASIC`
-for the rest); and `places_pieces` the one entry whose builder may return a stored piece placed with
+for the rest; below it an entry that `draws` runs its builder's drawing instead, decision 0225); and `places_pieces` the one entry whose builder may return a stored piece placed with
 its reuse mark (`simulation`, decision 0055). One answer's builders share a set of the craft-level
 kinds already taken (`BlockBuilders.for_answer`, `ONCE_PER_ANSWER_KINDS`: `region_story`,
 `seasons`, `supply_map`, `zoom_story`): the first section whose builders start builds one, a
@@ -521,7 +521,10 @@ it did not return adds nothing and is logged; the section is never failed by a b
 never holds a database connection while it waits on a model, the router or HTTP (decision 0040).
 A reused section is enriched like a researched one (decision 0090): it runs every builder of its
 field whose kind its group does not already show, and every `rebuilt_on_reuse` one, from the
-entry's `reused_from` depth (`BlockBuilders.for_reuse(shown, depth=)`, `reused_sections.ReuseBuilds`),
+entry's `reused_from` depth (`BlockBuilders.for_reuse(shown, depth=)`, `reused_sections.ReuseBuilds`;
+below it, an entry that `draws` runs its builder's `DrawingBuilder.drawing()`, so a reused section
+below Expert draws its kit figure through `simulation_builder.KitDrawing` with no model call,
+decision 0225),
 over its placed pieces and the reused claims, sending what they add after the placed blocks and
 before the pictures. Every reused section's builders start at once, before the headings are
 awaited; the placed blocks of every section are sent next, and then each section's additions in
@@ -1356,7 +1359,8 @@ fails its checks is redrafted only when the time left is at least the time the f
 - **Composed, no model** (`science/kit_figures.concept_kit_figure`): for each of the section's concepts in
   order, the first that composes is drawn (`AnswerConcepts.draw`), before any concept is taken for a
   generated explainer; a drawn figure takes none of the answer's explainers, and a concept drawn once
-  is never built or pictured again (decision 0224). For a concept, the
+  is never built or pictured again (decision 0224). A reused section below Expert runs this step
+  alone (`KitDrawing`, decision 0225). For a concept, the
   stage playing its reaction (or holding its resist), the concept's fact claims then the stage's;
   the first claim that names cloth (`art_kit.parts_named_by`) and whose quote states the colour
   before and after (`reaction_colours.step_colours`), both a depicted material by the colour key's

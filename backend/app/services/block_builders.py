@@ -18,7 +18,7 @@ from app.research.piece_reuse import REGION_STORY_FACETS, SIMULATION_FACETS
 from app.research.sections import block_id
 
 from .artisan_voice_builder import ARTISAN_VOICE_FIELDS, ArtisanVoiceBuilder
-from .builder_interface import BlockBuilder, BuildAsk, BuilderTools, Built, SourceRefs
+from .builder_interface import BlockBuilder, BuildAsk, BuilderTools, Built, DrawingBuilder, SourceRefs
 from .builder_record import (
     ADDED,
     FAILED,
@@ -222,12 +222,15 @@ class BlockBuilders:
         return tuple(pair for pair in self._builders if discipline in pair[0].disciplines)
 
     def for_reuse(self, shown: Collection[str], *, depth: str) -> BlockBuilders:
-        return self._kept(
-            pair
-            for pair in self._builders
-            if (pair[0].rebuilt_on_reuse or pair[0].kind not in shown)
-            and depth_at_least(depth, pair[0].reused_from)
-        )
+        kept: list[Pair] = []
+        for entry, builder in self._builders:
+            if not entry.rebuilt_on_reuse and entry.kind in shown:
+                continue
+            if depth_at_least(depth, entry.reused_from):
+                kept.append((entry, builder))
+            elif entry.draws and isinstance(builder, DrawingBuilder):
+                kept.append((entry, builder.drawing()))
+        return self._kept(kept)
 
     def replaced_on_reuse(self, discipline: str) -> frozenset[str]:
         return frozenset(entry.kind for entry, _ in self.for_section(discipline) if entry.replaces_stored)

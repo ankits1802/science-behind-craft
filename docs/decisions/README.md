@@ -128,7 +128,7 @@ flowchart LR
 | [0087](0087-generated-explainers-per-concept.md) | A generated explainer, or a picture, for every concept that needs one | · |
 | [0088](0088-reactions-step-by-step-and-molecules.md) | Reactions play step by step with their stage, conditions, colours and why; curated CIDs become compounds | [0095](0095-craft-page-chapters.md) |
 | [0089](0089-expert-depth-caps-and-answer-routes.md) | Expert answers research and write more, compose on Opus at high effort, and cost more; Hindi terms survive translation | [0093](0093-no-caps-for-now.md) and [0167](0167-answer-leftovers-kept-true.md) |
-| [0090](0090-reused-and-curated-sections-enriched.md) | Reused and curated sections are enriched like researched ones | [0142](0142-curated-crafts-read-only-curated-rows.md) and [0175](0175-production-checks-read-what-the-page-shows.md) |
+| [0090](0090-reused-and-curated-sections-enriched.md) | Reused and curated sections are enriched like researched ones | [0142](0142-curated-crafts-read-only-curated-rows.md), [0175](0175-production-checks-read-what-the-page-shows.md) and [0225](0225-a-reused-section-below-expert-draws-its-kit-figure.md) |
 | [0091](0091-field-voices-kalavigyan-side.md) | Field voices v2 in KalaVigyan: storage, citation, the craft page and the reading view | [0097](0097-public-reading-everywhere-but-asking.md), [0112](0112-reviewed-field-photographs.md) and [0156](0156-expert-panel-and-field-voices-kept-true.md) |
 | [0092](0092-design-system.md) | The KalaVigyan design system: Alum & Indigo | [0114](0114-kinds-and-datasets.md) and [0141](0141-design-system-and-answer-screens-without-debt.md) |
 | [0093](0093-no-caps-for-now.md) | No caps for now: every AI cap defaults to none, and every call asks for its model's documented maximum output | [0146](0146-answers-recorded-and-bounded-on-the-box.md) |
@@ -267,7 +267,8 @@ flowchart LR
 | [0221](0221-a-masthead-photograph-asked-for-before-the-faces-and-only-the-drawn-boxes-kit-rules-block-the-paint.md) | A page asks for its masthead photograph before its faces, and only the kit rules of the boxes it draws block its first paint | · |
 | [0222](0222-contributors-ai-clients-look-at-the-searched-pictures-answers-show.md) | Contributors' AI clients look at the searched pictures answers show: a refusal hides one at once, and a trusted or agreeing look marks it seen | · |
 | [0223](0223-the-version-a-removal-reached-read-by-name-until-the-web-moves-on-and-a-gone-version-s-rest-read-from-the-current-one.md) | The version a removal reached is read by name until the web has moved on, and a page drawn at a version that is gone reads the rest of the current one | · |
-| [0224](0224-a-section-draws-its-kit-figure-first-and-it-takes-none-of-the-answer-s-explainers.md) | A section draws its kit figure first, and a kit figure takes none of the answer's generated explainers | · |
+| [0224](0224-a-section-draws-its-kit-figure-first-and-it-takes-none-of-the-answer-s-explainers.md) | A section draws its kit figure first, and a kit figure takes none of the answer's generated explainers | [0225](0225-a-reused-section-below-expert-draws-its-kit-figure.md) |
+| [0225](0225-a-reused-section-below-expert-draws-its-kit-figure.md) | A reused section below Expert draws its kit figure: the explainer's builder runs its drawing alone, with no model call | · |
 
 ## How this document is kept true
 

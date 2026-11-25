@@ -13,11 +13,27 @@ recorded below or in decisions 0102 and 0103 for review.
 
 The current handoff is the quality round of 2026-11-24 to 2026-11-25: the owner judged the pages
 built over MCP below the Kutch Ajrakh bar and had every lane that closes the gap built in parallel;
-the lanes before the last four were released one at a time, the last four at once (the owner,
-2026-11-25, this once). Releases go back to one at a time, each verified on production.
+the lanes before the last four were released one at a time, then in batches (the owner,
+2026-11-25: "Ship all at once only"). Ready lanes are merged into one release branch, checked once
+and released together, each batch verified on production.
 
 ## Live now
 
+- **KalaVigyan `main` at `f0f965b7`** (2026-11-25, decisions 0211 to 0224, PROGRESS.md, Quality
+  round), verified on production: `/health` and `/api/version` on it, Vercel READY, CloudWatch
+  without errors, migration head `0120_rest_after_removal`, Monograph parity, the post-deploy check
+  and the MCP client green.
+  - **The review batch** `8ac83675` (decisions 0211 to 0221): no shop, stock or auction pictures;
+    stewards, removals and kept versions; exports in their own slots; drawings judged by their
+    paint; timeline maps complete at rest; the phone's largest element at 2.77 s.
+  - **The picture batch** `f0f965b7` (PR #208): contributors' AI clients look at the searched
+    pictures answers show over MCP (`check_pictures`, open work `CHECK_PICTURES`, decision 0222,
+    migration 0119); a removal's version is read by name until the web has moved on, at most twenty
+    minutes, and a gone version's page reads the current rest (0223, migration 0120); an answer's
+    section draws its kit figure first (0224). Its four-question answer run (45666058092): rubric
+    0.978, judge 0.83, $0.33, no shop pictures; the indigo answer drew no kit figure because its
+    sections are reused and a reused section ran the explainer's builder only at Expert, which
+    decision 0225 changes (a reused section below Expert draws its kit figure, no model call).
 - **KalaVigyan `main` with the quality round** (2026-11-25, decisions 0191 to 0210, PROGRESS.md,
   Quality round). Verified on production alone: `4911166e` (relief), `8796f591` (preview and
   budget), `4e5a6a96` (pictures), `e60b43db` (lifecycle), `d53aead5` (colour key), `2d9b5194`
@@ -88,7 +104,7 @@ the lanes before the last four were released one at a time, the last four at onc
   the photograph (their priority, and Newsreader italic's preload for one caption line, are the
   design's choice) (`docs/TECH_DEBT.md`, Speed left after the quality lane). Lighthouse at 360 on
   release dab903fd: Kutch Ajrakh 83 with an LCP of 4.68 s; 98 to 100 at 1440.
-- **The register** (`docs/TECH_DEBT.md`) holds 46 entries, most waiting on the owner or on time.
+- **The register** (`docs/TECH_DEBT.md`) holds 45 entries, most waiting on the owner or on time.
   Among the lead's: the ElevenLabs tool calls, languages and CSP hosts; the relief bands' rebuild;
   a rollback's window before its pages are rebuilt; the Listen dock's first focus; the write-back
   rows stored before decision 0188.

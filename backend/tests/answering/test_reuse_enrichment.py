@@ -39,6 +39,15 @@ class Named:
         raise AssertionError("not started")
 
 
+class Drawing(Named):
+    def __init__(self, kind: str, drawn: Named) -> None:
+        super().__init__(kind)
+        self.drawn = drawn
+
+    def drawing(self) -> Named:
+        return self.drawn
+
+
 def registry() -> BlockBuilders:
     return BlockBuilders([(entry, Named(entry.kind)) for entry in BLOCK_BUILDERS])
 
@@ -63,6 +72,23 @@ def test_below_expert_a_reused_section_asks_no_generated_explainer_and_no_expert
         chemistry = kinds_of(registry().for_reuse({"prose"}, depth=depth), "CHEMISTRY")
         assert "simulation" not in chemistry and "expert_view" not in chemistry
         assert {"reaction_player", "material_card", "what_if"} <= set(chemistry)
+
+
+def test_below_expert_a_reused_section_still_draws_what_its_explainer_s_builder_draws() -> None:
+    simulation = Drawing("simulation", Named("kit_figure"))
+    builders = BlockBuilders(
+        [(entry, simulation if entry.draws else Named(entry.kind)) for entry in BLOCK_BUILDERS]
+    )
+
+    def chemistry(shown: set[str], depth: str) -> dict[str, object]:
+        reused = builders.for_reuse(shown, depth=depth)
+        return {entry.kind: built for entry, built in reused.for_section("CHEMISTRY")}
+
+    for depth in ("BASIC", "DETAILED"):
+        below = chemistry({"prose"}, depth)
+        assert below["simulation"] is simulation.drawn and "expert_view" not in below
+        assert "simulation" not in chemistry({"prose", "simulation"}, depth)
+    assert chemistry({"prose"}, "EXPERT")["simulation"] is simulation
 
 
 def test_the_reaction_player_and_the_zoom_story_replace_their_stored_blocks_on_reuse() -> None:

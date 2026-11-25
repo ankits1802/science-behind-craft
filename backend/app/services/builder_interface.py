@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-from typing import Any, Protocol
+from typing import Any, Protocol, runtime_checkable
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
@@ -18,7 +18,15 @@ from .answer_events import CitedClaims
 from .craft_matter import MatterReads
 from .live_sources import LiveSourcesStore
 
-__all__ = ["BlockBuilder", "BuildAsk", "BuilderTools", "Built", "SeatResearch", "SourceRefs"]
+__all__ = [
+    "BlockBuilder",
+    "BuildAsk",
+    "BuilderTools",
+    "Built",
+    "DrawingBuilder",
+    "SeatResearch",
+    "SourceRefs",
+]
 
 SourceRefs = Mapping[str, Mapping[str, Any]]
 
@@ -58,3 +66,10 @@ class Built:
 
 class BlockBuilder(Protocol):
     async def build(self, ask: BuildAsk) -> Built: ...
+
+
+@runtime_checkable
+class DrawingBuilder(Protocol):
+    async def build(self, ask: BuildAsk) -> Built: ...
+
+    def drawing(self) -> BlockBuilder: ...
