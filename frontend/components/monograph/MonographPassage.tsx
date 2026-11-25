@@ -9,8 +9,6 @@ import type { MonographDocument, MonographUnit } from "@/lib/monographDocument";
 import { runKey, sectionId, spreadRuns, type ChapterSection, type NoteLine } from "@/lib/monographNotes";
 import { passageSegments, type ChapterPlan, type Passage, type PassagePiece, type PassageSegment, type UnitRole } from "@/lib/monographRenderLayout";
 
-import "./documentPage.css";
-
 type Drawn = { as: string; className?: string };
 
 const ROLE_DRAWING: Readonly<Record<Exclude<UnitRole, "text">, Drawn>> = {

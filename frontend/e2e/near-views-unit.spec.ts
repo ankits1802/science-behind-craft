@@ -161,11 +161,11 @@ test("a registry that imports a heavy view outright is named with the imports th
   expect(chains).toEqual([["e2e/heavyImportFixture.ts", "components/monograph/kinds/general/TimelineMapDeclaredView.tsx"]]);
 });
 
-test("every stylesheet a heavy view brings is on the page before its code, so its still state is styled at first paint", () => {
-  const drawnFirst = new Set([...reachedStyles(NEAR_VIEWS), ...reachedStyles("components/monograph/BundleView.tsx")]);
-  expect(drawnFirst.has("components/map/place-context/placeContext.css")).toBe(true);
-  const late = dynamicImports(NEAR_VIEWS).flatMap((view) => reachedStyles(view).filter((sheet) => !drawnFirst.has(sheet)).map((sheet) => `${view} > ${sheet}`));
-  expect(late).toEqual([]);
+test("no view brings a stylesheet of its own: the root layout holds them all, so a heavy view's still state is styled at first paint", () => {
+  const views = [...clientBoundaries(CRAFT_ROUTE), ...REST_CHUNKS, ...dynamicImports(NEAR_VIEWS), ...dynamicImports(NEAR_KIT_PLAY)];
+  const own = views.flatMap((view) => reachedStyles(view).map((sheet) => `${view} > ${sheet}`));
+  expect(own).toEqual([]);
+  expect(reachedStyles("app/layout.tsx")).toEqual(["app/component-views.css", "app/globals.css"]);
 });
 
 test("a composed kit figure draws its panels and its Play at rest, and the Play's code waits for the viewport", () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ComponentType } from "react";
+import { startTransition, useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 
 import { announce, SHELL_COMPLETE_EVENT } from "@/components/monograph/kitGate";
 import { hashTargetMissing, useShellTrigger } from "@/components/monograph/useShellTrigger";
@@ -51,7 +51,7 @@ export function DeferredShellSlot({ src, version, part = "shell" }: { src: strin
   const [failed, setFailed] = useState(false);
   const start = useCallback(() => {
     readRest(src, version, part).then(
-      (read) => setShown({ ...read, jump: missingTarget() }),
+      (read) => startTransition(() => setShown({ ...read, jump: missingTarget() })),
       () => setFailed(true)
     );
   }, [src, version, part]);

@@ -4,8 +4,6 @@ import { KitPartArt } from "@/components/artkit/KitPartArt";
 import { KitTextures } from "@/components/artkit/KitTextures";
 import { kitSheet, kitSheetLayouts, type SheetLayout, type SheetPart, type SheetTile } from "@/lib/artKitSheet";
 
-import "@/components/artkit/artkit.css";
-
 function Tile({ tile, ids }: { tile: SheetTile; ids: KitIds }) {
   return (
     <li className="kv-kit-tile" data-kit-tile={tile.part.part} data-kit-specimen={tile.key}>

@@ -722,28 +722,28 @@ Last reviewed: 2026-11-22.
 
 ### Speed left after the quality lane
 
-- **What:** on a phone (Lighthouse at 360, median of three) Kutch Ajrakh scored 78 with an LCP of
-  5.7 s on 2026-11-22 and 83 with 4.68 s on 2026-11-24 (capture run 45294669263 on release
-  dab903fd, where the generated Bagru Hand Block Print page scored 87 with 3.93 s), against the
-  2.5 s target, with about 1 MB requested before its masthead picture paints (the preloaded
-  first-screen faces, the kit stylesheet and about 400 KB of scripts); signed out, `/ask` lands on
-  the sign-in page (83 with 4.7 s, then 92 with 3.34 s). At 1440 every one of the three scores 98
-  to 100. Decision 0177 measured, from the computed
-  styles of the text each first screen at 360 shows (`e2e/first-screen-fonts.smoke.spec.ts`), which
-  faces they draw: Kutch Ajrakh's Newsreader roman and italic (its standfirst) and Plex Sans 400,
-  500 and 600; the landing's Newsreader roman and italic (the hero title's emphasis) and Plex Sans
-  500; the sign-in page's the same with Plex Sans 400. None draws Plex Sans italic, which is no
-  longer preloaded (23,096 bytes off every page's first round, 359,276 to 336,180 bytes of
-  preloaded faces); every face still preloaded is drawn on Kutch Ajrakh's first screen, so none can
-  wait without its type swapping. The kit stylesheet (526,637 bytes, 84,108 gzipped,
-  render-blocking) stays one file: its rules are grouped by kit scope (`bx-mb`, `bx-chem`, `bx-pt`,
-  `bx-rm`, `bx-sa`, `bx-ask`), not by chapter, every chapter mixes scopes, and a later rule decides
-  over an earlier one, so a split by chapter would reorder the cascade the approved page is built
-  from (decision 0100) and parity could not stay exact.
-- **Why left:** Lighthouse is not run in CI, so the effect is measured on production.
-- **Clears it:** the lead's Lighthouse at 360 on Kutch Ajrakh and the sign-in page after the
-  release that carries decision 0177 (expected: about 23 KB fewer bytes before the masthead
-  paints); the entry is deleted with that measurement, or rewritten to what it shows is left.
+- **What:** on the phone budget's slowed phone (360 px, the CPU slowed four times, slow 4G,
+  decision 0205) Kutch Ajrakh's masthead photograph paints at 4,612 ms and the page of every
+  kind's at 4,568 ms (run 45545594071, decision 0209), against the 2.5 s target. No long task runs
+  before the paint; the network holds it. (1) The photograph is asked for after the five preloaded
+  first-screen faces (336 KB), because React writes font preloads into the head before image
+  preloads and the browser serves a priority's requests in the order asked: on the smoke server's
+  six HTTP/1.1 connections it has one at about 1.75 s and then shares 1.47 Mbit/s with both
+  Newsreader faces (270 KB), the kit stylesheet and the first scripts until about 4.2 s. (2) The
+  kit stylesheet (84.6 KB, render-blocking, after the app's three) ends at 2.9 to 4.4 s. (3)
+  Newsreader italic (142.8 KB) is preloaded for one caption line of Kutch Ajrakh's first screen,
+  the landing's emphasis and the sign-in caption. After its first paint Kutch Ajrakh is blocked
+  398 ms, the framework chunk running 332 ms in long frames as it hydrates and draws the rest in a
+  transition, the kit 215 ms as it starts.
+- **Why left:** (1) needs the first-screen faces preloaded by the page instead of by `next/font`,
+  whose preloads React always writes first; (2) needs a first sheet per page, because a page's lead
+  holds any of the kit's six box scopes and the stylesheet interleaves them, so only the lead's own
+  scopes keep the cascade the approved page is built from (decision 0100); (3) is a design-system
+  decision on the faces a first screen draws. Binding the kit's players and dips as they near was
+  measured and bought nothing (decision 0209).
+- **Clears it:** each of the three, measured by the phone budget's path record (`phone-measure.json`
+  `paths`, decision 0209); the entry is deleted when both pages paint their largest element within
+  2.5 s, or rewritten to what is left.
 
 ### The geo ETL stays on Python 3.14
 

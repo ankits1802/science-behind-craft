@@ -3,8 +3,6 @@ import { THEME_VARIANTS } from "@/lib/componentSpecsGeneral";
 import type { Picture } from "@/lib/componentSpecsPlates";
 import { isLocalRaster, LOCAL_PICTURE_SIZES, localSrcSet } from "@/lib/localPicture";
 
-import "../general/themes.css";
-
 const COMMONS_UPLOAD = "https://upload.wikimedia.org/";
 const PLATE_WIDTH = 960;
 

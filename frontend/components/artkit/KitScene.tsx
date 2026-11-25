@@ -9,8 +9,6 @@ import { PANEL_BOXES, PlacedPart } from "./KitPartArt";
 import { KitTextures } from "./KitTextures";
 import { WELL } from "./surfaces";
 
-import "./artkit.css";
-
 type RenderUnit = (ref: string) => ReactNode;
 type SceneArtProps = { scene: KitScene; ids: KitIds; name: string; className?: string; seal?: boolean };
 

@@ -12,6 +12,7 @@ export const PHONE_THROTTLING = { cpuSlowdown: 4, requestLatencyMs: 562.5, downl
 const BYTES_PER_KBIT = 1024 / 8;
 const SETTLE_TIMEOUT_MS = 90_000;
 const QUIET_MS = 2_000;
+const RESOURCE_BUFFER = 1_000;
 const POLL_MS = 250;
 const READ_STEP = 0.8;
 const READ_PAUSE_MS = 800;
@@ -19,7 +20,8 @@ const READ_STEPS = 150;
 const CHUNKS = join(FRONTEND, ".next", "static", "chunks");
 const CHUNK_PATH = "/_next/static/chunks/";
 
-type Watch = Omit<Watched, "fcp" | "firstScreen">;
+type Watch = Omit<Watched, "fcp" | "firstScreen" | "fetched" | "navigation">;
+type Transfers = { sent: Sent[]; priorities: Record<string, string> };
 export type PhoneVisit = { read: boolean; prepare?: (page: Page) => Promise<void> };
 
 declare global {
@@ -28,9 +30,10 @@ declare global {
   }
 }
 
-function watchPerformance(): void {
+function watchPerformance(buffer: number): void {
   const watch: Watch = { paints: [], shifts: [], tasks: [], scripts: [] };
   window.__kvPhone = watch;
+  performance.setResourceTimingBufferSize(buffer);
   const named = (node: unknown): string => {
     if (!(node instanceof Element)) return "text";
     const classes = Array.from(node.classList).slice(0, 2).map((name) => `.${name}`).join("");
@@ -47,8 +50,8 @@ function watchPerformance(): void {
   });
   observe("longtask", (entry) => watch.tasks.push({ at: entry.startTime, duration: entry.duration }));
   observe("long-animation-frame", (entry) => {
-    const frame = entry as PerformanceEntry & { scripts?: { sourceURL?: string; invoker?: string; duration: number }[] };
-    for (const script of frame.scripts ?? []) watch.scripts.push({ url: script.sourceURL || script.invoker || "inline", duration: script.duration });
+    const frame = entry as PerformanceEntry & { scripts?: { sourceURL?: string; invoker?: string; duration: number; startTime: number }[] };
+    for (const script of frame.scripts ?? []) watch.scripts.push({ url: script.sourceURL || script.invoker || "inline", duration: script.duration, at: script.startTime });
   });
 }
 
@@ -65,15 +68,21 @@ async function throttled(page: Page): Promise<CDPSession> {
   return session;
 }
 
-function transfers(session: CDPSession): () => Sent[] {
+function transfers(session: CDPSession): () => Transfers {
   const answered = new Map<string, { url: string; type: string }>();
+  const asked = new Map<string, { url: string; priority: string }>();
   const sent: Sent[] = [];
+  session.on("Network.requestWillBeSent", (event) => asked.set(event.requestId, { url: event.request.url, priority: event.request.initialPriority }));
+  session.on("Network.resourceChangedPriority", (event) => {
+    const found = asked.get(event.requestId);
+    if (found) asked.set(event.requestId, { ...found, priority: event.newPriority });
+  });
   session.on("Network.responseReceived", (event) => answered.set(event.requestId, { url: event.response.url, type: event.type }));
   session.on("Network.loadingFinished", (event) => {
     const found = answered.get(event.requestId);
     if (found) sent.push({ ...found, bytes: event.encodedDataLength });
   });
-  return () => [...sent];
+  return () => ({ sent: [...sent], priorities: Object.fromEntries([...asked.values()].map((found) => [found.url, found.priority])) });
 }
 
 async function complete(page: Page): Promise<void> {
@@ -96,7 +105,18 @@ async function watched(page: Page): Promise<Watched> {
       const box = image.getBoundingClientRect();
       return image.currentSrc !== "" && box.width > 0 && box.height > 0 && box.bottom > 0 && box.top < window.innerHeight;
     });
-    return { ...watch, paints: [...watch.paints], shifts: [...watch.shifts], tasks: [...watch.tasks], scripts: [...watch.scripts], fcp, firstScreen: shown.map((image) => image.currentSrc) };
+    const fetched = (performance.getEntriesByType("resource") as (PerformanceResourceTiming & { renderBlockingStatus?: string })[]).map((entry) => ({
+      url: entry.name,
+      kind: entry.initiatorType,
+      start: entry.startTime,
+      firstByte: entry.responseStart,
+      end: entry.responseEnd,
+      bytes: entry.transferSize,
+      blocking: entry.renderBlockingStatus === "blocking"
+    }));
+    const arrived = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const navigation = { firstByte: arrived?.responseStart ?? 0, end: arrived?.responseEnd ?? 0 };
+    return { ...watch, paints: [...watch.paints], shifts: [...watch.shifts], tasks: [...watch.tasks], scripts: [...watch.scripts], fcp, firstScreen: shown.map((image) => image.currentSrc), fetched, navigation };
   });
 }
 
@@ -118,7 +138,7 @@ async function readThrough(page: Page): Promise<Shift[]> {
 export async function phoneLoad(browser: Browser, path: string, visit: PhoneVisit): Promise<RawLoad> {
   const context = await browser.newContext(contextOptions(SMALL_PHONE, "light"));
   try {
-    await context.addInitScript(watchPerformance);
+    await context.addInitScript(watchPerformance, RESOURCE_BUFFER);
     const page = await context.newPage();
     if (visit.prepare) await visit.prepare(page);
     const sent = transfers(await throttled(page));
@@ -127,7 +147,7 @@ export async function phoneLoad(browser: Browser, path: string, visit: PhoneVisi
     await quiet(page);
     const loaded = await watched(page);
     const reading = visit.read ? await readThrough(page) : null;
-    return { ...loaded, sent: sent(), reading };
+    return { ...loaded, ...sent(), reading };
   } finally {
     await context.close();
   }

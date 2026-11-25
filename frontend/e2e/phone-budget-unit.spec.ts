@@ -1,44 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-import { blockingScripts, blockingTime, budgetBreaches, layoutShift, medianMeasure, PHONE_PAGES, phoneLimit, phoneMeasure, phoneRecord, shortUrl, type PhoneMeasure, type PhoneNumbers, type RawLoad, type Sent, type Shift } from "./phoneBudget";
+import { blockingScripts, blockingTime, budgetBreaches, layoutShift, medianMeasure, PHONE_PAGES, phoneLimit, phoneMeasure, phoneRecord, shortUrl, type PhoneMeasure, type PhoneNumbers } from "./phoneBudget";
+import { ORIGIN, rawLoad, sent, shift } from "./phoneLoadFixture";
 
-const ORIGIN = "http://localhost:3000";
 const PAGE = "/crafts/Kutch-Ajrakh";
-
-const sent = (path: string, type: string, kib: number): Sent => ({ url: `${ORIGIN}${path}`, type, bytes: kib * 1024 });
-const shift = (at: number, value: number, input = false, nodes: string[] = [`div.at-${at}`]): Shift => ({ at, value, input, nodes });
-
-function rawLoad(extra: Sent[] = []): RawLoad {
-  return {
-    fcp: 1200,
-    paints: [
-      { at: 1300, node: "h1.kv-q", url: "" },
-      { at: 2900, node: "img", url: `${ORIGIN}/_next/image?url=%2Fhero.jpg&w=960&q=80` }
-    ],
-    shifts: [shift(3000, 0.01)],
-    tasks: [
-      { at: 1000, duration: 400 },
-      { at: 2000, duration: 120 }
-    ],
-    scripts: [
-      { url: `${ORIGIN}/monographs/kit/monograph.js`, duration: 180 },
-      { url: `${ORIGIN}/_next/static/chunks/a.js`, duration: 90 },
-      { url: `${ORIGIN}/monographs/kit/monograph.js`, duration: 60 }
-    ],
-    firstScreen: [`${ORIGIN}/_next/image?url=%2Fhero.jpg&w=960&q=80`],
-    sent: [
-      sent("/crafts/Kutch-Ajrakh", "Document", 40),
-      sent("/_next/static/chunks/a.js", "Script", 200),
-      sent("/monographs/kit/monograph.js", "Script", 44),
-      sent("/monographs/kit/monograph.css", "Stylesheet", 70),
-      sent("/_next/image?url=%2Fhero.jpg&w=960&q=80", "Image", 120),
-      sent("/_next/image?url=%2Flater.jpg&w=500&q=80", "Image", 30),
-      sent("/_next/static/media/newsreader.woff2", "Font", 25),
-      ...extra
-    ],
-    reading: [shift(9000, 0.02, false, ["figure.mol"])]
-  };
-}
 
 const RECORDED: PhoneNumbers = { scriptBytes: 244 * 1024, styleBytes: 70 * 1024, firstScreenImageBytes: 120 * 1024, lcpMs: 2900, blockingMs: 420, cls: 0.01, readingShift: 0.02 };
 
@@ -70,8 +35,8 @@ test("a load is measured by what it sent of each kind, its first screen's pictur
   expect(measured.readingShift).toBe(0.02);
   expect(measured.named.largest).toBe("img (/_next/image?url=%2Fhero.jpg&w=960&q=80)");
   expect(measured.named.blocking).toEqual([
-    { url: `${ORIGIN}/monographs/kit/monograph.js`, duration: 240 },
-    { url: `${ORIGIN}/_next/static/chunks/a.js`, duration: 90 }
+    { url: `${ORIGIN}/monographs/kit/monograph.js`, duration: 240, at: 3200 },
+    { url: `${ORIGIN}/_next/static/chunks/a.js`, duration: 90, at: 1010 }
   ]);
   expect(measured.named.movedWhileReading).toEqual(["figure.mol"]);
   expect(() => phoneMeasure({ ...rawLoad(), paints: [] })).toThrow("painted no largest element");
@@ -126,7 +91,7 @@ test("scripts are named by their address on the site, a picture with its widths"
   expect(shortUrl(`${ORIGIN}/_next/static/chunks/a.js?v=1`)).toBe("/_next/static/chunks/a.js");
   expect(shortUrl(`${ORIGIN}/_next/image?url=%2Fhero.jpg&w=960&q=80`)).toBe("/_next/image?url=%2Fhero.jpg&w=960&q=80");
   expect(shortUrl("inline")).toBe("inline");
-  expect(blockingScripts([{ url: "inline", duration: 10.4 }, { url: "inline", duration: 20.3 }])).toEqual([{ url: "inline", duration: 31 }]);
+  expect(blockingScripts([{ url: "inline", duration: 10.4, at: 900.6 }, { url: "inline", duration: 20.3, at: 400.2 }])).toEqual([{ url: "inline", duration: 31, at: 400 }]);
 });
 
 test("the recorded budget reads as its shape and budgets exactly the pages the phone spec measures", () => {

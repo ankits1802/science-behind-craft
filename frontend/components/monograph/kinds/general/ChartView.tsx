@@ -7,8 +7,6 @@ import { GeneralFigure, UnitTable, type RenderUnit } from "@/components/monograp
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { chartRange, chartSpecShape, parsedSpec, share, type ChartSeries, type ChartSpec } from "@/lib/componentSpecsGeneral";
 
-import "./general.css";
-
 type Range = { low: number; high: number };
 
 function BarRows({ series, range, emphasis, renderUnit }: { series: ChartSeries; range: Range; emphasis: number | null; renderUnit: RenderUnit }) {
