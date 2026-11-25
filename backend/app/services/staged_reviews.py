@@ -15,6 +15,7 @@ from app.core.roles import Capability, can
 from app.models import ArtisanContribution, Claim, StagedReview, StagedReviewItem, User
 from app.research.review_labels import cut_label, queue_label
 from app.research.staged_reviews import (
+    OPEN,
     SOURCES,
     SOURCES_DIFFER,
     StagedDecision,
@@ -33,7 +34,7 @@ from .staged_published import published_before, published_label
 from .staged_review_apply import dry_run, refusal_of
 from .testimony_views import Turns
 
-__all__ = ["Staged", "StagedRefusal", "stage_decisions", "staged_today"]
+__all__ = ["ASKED_ALREADY", "Staged", "StagedRefusal", "stage_decisions", "stage_request", "staged_today"]
 
 NOT_AN_ADMIN = "Staging review decisions is for Admins and Master Admins."
 TWICE = "This item is already decided earlier in the same call."
@@ -42,6 +43,7 @@ NOT_PUBLISHED = "No published {kind} item has this id; review_queue with publish
 NO_SOURCE = "No source has this id."
 NO_FACT = "No fact has this id."
 NO_TRANSCRIPTS = "Testimony is reviewed on the site, not over MCP."
+ASKED_ALREADY = "This change already waits for an Admin's confirmation on the Review page."
 
 
 @dataclass(frozen=True)
@@ -88,9 +90,24 @@ async def stage_decisions(
     if over is not None:
         raise InvalidInput(over)
     if kept:
-        staged.batch, staged.items = await _stored(session, kept, caller, now=now)
+        staged.batch, staged.items = await _stored(session, kept, _batch(caller, now=now))
         staged.today += len(kept)
     return staged
+
+
+async def stage_request(
+    session: AsyncSession, decision: StagedDecision, proposer: User, *, client_name: str, now: datetime
+) -> StagedReviewItem:
+    label = await published_label(session, decision)
+    if label is None:
+        raise InvalidInput(_missing(decision))
+    if await _waiting(session, decision, now=now):
+        raise InvalidInput(ASKED_ALREADY)
+    batch = StagedReview(
+        proposerId=proposer.id, clientName=client_name, createdAt=now, expiresAt=batch_expiry(now)
+    )
+    _, (item,) = await _stored(session, [(decision, label)], batch)
+    return item
 
 
 async def staged_today(session: AsyncSession, proposer: User, *, now: datetime) -> int:
@@ -151,10 +168,24 @@ def _missing(decision: StagedDecision) -> str:
     return NOT_WAITING.format(kind=decision.kind.lower())
 
 
-async def _stored(
-    session: AsyncSession, kept: list[tuple[StagedDecision, str]], caller: McpCaller, *, now: datetime
-) -> tuple[StagedReview, list[StagedReviewItem]]:
-    batch = StagedReview(
+async def _waiting(session: AsyncSession, decision: StagedDecision, *, now: datetime) -> bool:
+    found = await session.scalar(
+        select(StagedReviewItem.id)
+        .join(StagedReview, StagedReview.id == StagedReviewItem.batchId)
+        .where(
+            StagedReviewItem.kind == decision.kind,
+            StagedReviewItem.itemId == decision.id,
+            StagedReviewItem.action == decision.action,
+            StagedReview.status == OPEN,
+            StagedReview.expiresAt > now,
+        )
+        .limit(1)
+    )
+    return found is not None
+
+
+def _batch(caller: McpCaller, *, now: datetime) -> StagedReview:
+    return StagedReview(
         proposerId=caller.user.id,
         grantId=caller.grant_id,
         tokenId=caller.token_id,
@@ -162,6 +193,11 @@ async def _stored(
         createdAt=now,
         expiresAt=batch_expiry(now),
     )
+
+
+async def _stored(
+    session: AsyncSession, kept: list[tuple[StagedDecision, str]], batch: StagedReview
+) -> tuple[StagedReview, list[StagedReviewItem]]:
     session.add(batch)
     await session.flush()
     items = [

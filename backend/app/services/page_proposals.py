@@ -38,6 +38,7 @@ from app.research.upload_links import OPEN, SlotDeclaration, UploadSlot, UploadS
 from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
 from .component_lifecycle import withdraw_registered
 from .component_proposals import propose_component
+from .component_withdrawals import ASKED_STATUS, ask_withdrawal, withdrawable_piece
 from .fact_proposals import ProposalAdapters, propose_fact
 from .open_work_subjects import WorkSubject, subject_by_key
 from .page_layout_proposals import propose_layout
@@ -185,6 +186,12 @@ async def _layout(run: _Run, part: PageLayoutPart) -> PartReport:
 
 async def _withdrawal(run: _Run, index: int, withdrawal: PageWithdrawal) -> PartReport:
     await run.tools.spend(COMPONENT_PROPOSALS)
+    found = await withdrawable_piece(run.session, run.user, withdrawal.label, run.subject, lock=True)
+    if found.waits:
+        asked = await ask_withdrawal(
+            run.session, run.user, found.piece, reason=withdrawal.reason, origin=run.tools.origin, now=run.now
+        )
+        return PartReport(part=WITHDRAWAL, index=index, outcome=ACCEPTED, status=ASKED_STATUS, message=asked)
     retired = await withdraw_registered(
         run.session, run.user, withdrawal.label, reason=withdrawal.reason, now=run.now
     )

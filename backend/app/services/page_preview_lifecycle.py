@@ -16,11 +16,12 @@ from app.research.page_proposals import (
     PartReport,
 )
 
-from .component_lifecycle import live_piece, retirable_piece
+from .component_lifecycle import live_piece
+from .component_withdrawals import reason_problem, withdrawable_piece
 from .monograph_generated_parts import piece_subject_keys, registered_component
 from .open_work_subjects import CATEGORY, WorkSubject
 from .page_preview_parts import SUBJECT_PREFIXES, PreviewDraft
-from .page_proposals_parts import checked_part
+from .page_proposals_parts import checked_part, refuse_on
 
 __all__ = ["previewed_link", "previewed_withdrawals"]
 
@@ -34,6 +35,10 @@ LISTED_LINK = (
 SHOWN_WITHDRAWAL = (
     "Taken off the page in the preview; propose_page takes it off every page that places it and keeps it in "
     "the record."
+)
+SHOWN_ASKED = (
+    "Taken off the page in the preview; propose_page asks an Admin to take it off every page that places it, "
+    "because this account stewards its craft but did not propose it, and it stays on until an Admin confirms."
 )
 
 
@@ -55,18 +60,25 @@ async def previewed_link(
 
 
 async def previewed_withdrawals(
-    session: AsyncSession, user: User, bundle: PageBundle, draft: PreviewDraft
+    session: AsyncSession, user: User, subject: WorkSubject, bundle: PageBundle, draft: PreviewDraft
 ) -> list[PartReport]:
     reports: list[PartReport] = []
     for index, withdrawal in enumerate(bundle.withdrawals):
-        work = partial(_withdrawn, session, user, draft, index, withdrawal)
+        work = partial(_withdrawn, session, (user, subject), draft, index, withdrawal)
         reports.append(await checked_part(session, WITHDRAWAL, index, work))
     return reports
 
 
 async def _withdrawn(
-    session: AsyncSession, user: User, draft: PreviewDraft, index: int, withdrawal: PageWithdrawal
+    session: AsyncSession,
+    by: tuple[User, WorkSubject],
+    draft: PreviewDraft,
+    index: int,
+    withdrawal: PageWithdrawal,
 ) -> PartReport:
-    await retirable_piece(session, user, withdrawal.label)
+    user, subject = by
+    found = await withdrawable_piece(session, user, withdrawal.label, subject)
+    refuse_on(reason_problem(found, withdrawal.reason))
     draft.withdrawn.add(withdrawal.label)
-    return PartReport(part=WITHDRAWAL, index=index, outcome=SHOWN, message=SHOWN_WITHDRAWAL)
+    shown = SHOWN_ASKED if found.waits else SHOWN_WITHDRAWAL
+    return PartReport(part=WITHDRAWAL, index=index, outcome=SHOWN, message=shown)

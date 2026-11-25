@@ -5,6 +5,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from sqlalchemy import ColumnElement, CompoundSelect, Select, exists, func, select, union
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
     Concept,
@@ -20,7 +21,14 @@ from app.models import (
 from app.models.enums import DISTRICT_PLACE_PREFIX
 from app.models.science import live_process
 
-__all__ = ["APPLIED_CRAFT", "APPLIED_PIECE", "DISTRICT_KEY_PREFIX", "applies_to", "registered_pieces"]
+__all__ = [
+    "APPLIED_CRAFT",
+    "APPLIED_PIECE",
+    "DISTRICT_KEY_PREFIX",
+    "applies_on",
+    "applies_to",
+    "registered_pieces",
+]
 
 DISTRICT_KEY_PREFIX = f"{DISTRICT_PLACE_PREFIX}:"
 APPLIED_CRAFT = "craft"
@@ -41,6 +49,14 @@ def applies_to(craft_ids: Sequence[uuid.UUID]) -> Select[Any]:
         Unlink.pieceId == applying.c[APPLIED_PIECE], Unlink.craftId == applying.c[APPLIED_CRAFT]
     )
     return select(applying.c[APPLIED_CRAFT], applying.c[APPLIED_PIECE]).where(~exists(unlinked))
+
+
+async def applies_on(session: AsyncSession, piece_id: uuid.UUID, craft_id: uuid.UUID) -> bool:
+    applying = applies_to([craft_id]).subquery()
+    found = await session.scalar(
+        select(applying.c[APPLIED_PIECE]).where(applying.c[APPLIED_PIECE] == piece_id).limit(1)
+    )
+    return found is not None
 
 
 def _applying(crafts: list[uuid.UUID]) -> CompoundSelect[Any]:

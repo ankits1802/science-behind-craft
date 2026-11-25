@@ -28,6 +28,7 @@ reports).
 | The Admin's budget raised to 108 KB of input | [decision 0191](0191-room-for-the-page-quality-tools.md) |
 | A staged action on published content, the removal of a component from its pages first | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | The removal or edit of any published content, and published pictures over MCP | [decision 0194](0194-an-admin-removes-and-edits-published-content-over-mcp.md) |
+| A steward's withdrawal of another's component staged for an Admin to confirm | [decision 0212](0212-a-steward-asks-an-admin-a-structure-edit-states-what-it-brings-and-a-removed-layout-stays-removed.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

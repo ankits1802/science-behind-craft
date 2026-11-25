@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.research.structure_proposals import parsed_item
-from app.research.structure_proposals_values import stated_check
+from app.research.structure_proposals_values import edited_check, stated_check
 from app.services.structure_proposals_dossier import dossier_problem
 from app.services.structure_proposals_page import (
     PlacedEntry,
@@ -134,6 +134,20 @@ def test_a_name_the_quotes_never_give_refuses_the_item_and_says_which() -> None:
     ]
     gi = stated_check(bare(GI | {"certificateNumber": "C-77"}), [GI_QUOTE])
     assert gi.reasons == ["The certificate number (C-77) appears in none of the quotes."]
+
+
+def test_an_edit_must_find_in_a_quote_every_name_colour_and_number_it_brings_and_only_those() -> None:
+    record = bare(GI)
+    kept = edited_check(record, bare(GI | {"journalIssue": "41"}), ["It appeared in Journal 41."])
+    assert kept.passed is True
+    new = edited_check(record, bare(GI | {"certificateNumber": "999"}), [GI_QUOTE])
+    assert (new.passed, new.reasons) == (
+        False,
+        ["The certificate number (999) appears in none of the quotes."],
+    )
+    colour = edited_check(bare(AFTER), bare(AFTER | {"colours": ["RED", "BLUE"]}), [AFTER_QUOTE])
+    assert colour.reasons == ["The colour blue (BLUE) appears in none of the quotes."]
+    assert edited_check(bare(NAME), bare(NAME | {"script": "Deva"}), []).passed is True
 
 
 def test_a_stage_s_why_and_an_open_question_name_nothing_beyond_their_statement() -> None:

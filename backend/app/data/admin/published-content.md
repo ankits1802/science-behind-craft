@@ -22,7 +22,7 @@ who confirmed it and why in the audit log, and refreshes the pages it touched.
 | `FACTS` | `get_facts` | `retract`, as before | `text` |
 | `COMPONENTS` | `list_components` (name it by `label`) | off every page, or off the one page `craft_slug` or `family_slug` names | `title`, `description`, `spec`, `units` |
 | `IMAGES` | `published` on a craft's page | off its craft's pages and no longer served; its record, credit and file are kept | `caption`, `alt_text`, `focal`, `place` |
-| `LAYOUTS` | `published` on the page: its current layout | the page goes back to the layout before it, or to its default arrangement | |
+| `LAYOUTS` | `published` on the page: its current layout | the page goes back to the latest earlier layout that is neither this one nor one a removal took off, or to its default arrangement | |
 | `STRUCTURE` | `published` on the page: each entry with its fact's id and `entry` kind | off the page | the entry's own fields, below |
 | `READINGS` | `published` on a craft's page | off the process view and the craft's pages | |
 | `LAYERS` | `published` with no page: the approved map layers | no longer fit to ship; a layer already drawn from `tools/maplayers` leaves the maps when an engineer takes it out | |
@@ -75,7 +75,9 @@ The same checks the item passed when it was first proposed.
   (`{"stage_id": ...}`, `{"material_id": ...}`), a slot (`{"slot": "MASTHEAD"}` or `RECORD`), or `{}`
   for loose.
 - **A structure entry**, through its own proposal's rules (the page must still hold its stage or
-  material, and a name, term or question is never given twice):
+  material, and a name, term or question is never given twice), and a GI record too: every name,
+  colour and number the edit brings must be in a quote of the facts the entry rests on, or it is
+  refused as `Not edited: the STATED check refused it.` with the value no quote states:
 
 | Entry | Its fields |
 |---|---|
@@ -92,5 +94,7 @@ A stage's why (`STAGE_WHY`) is the fact it rests on, so that fact is edited inst
 
 ## What stays on the site
 
-Testimony and pictures waiting for review are decided on the site only. A picture a curated dossier
+Testimony and pictures waiting for review are decided on the site only. A batch proposed by a
+craft's steward, asking that a component it did not propose leave its pages, is confirmed or
+discarded on the Review page like any other. A picture a curated dossier
 holds changes with that dossier's import.

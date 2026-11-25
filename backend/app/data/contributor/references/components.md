@@ -205,8 +205,10 @@ stated by their units.
 
 ## Withdrawing, replacing and borrowing
 
-- **Who may.** A registered component is retired only by the account that proposed it, a steward of
-  its owning craft or an Admin; anyone else is refused.
+- **Who may.** A registered component is retired at once only by the account that proposed it or
+  an Admin. A steward of its owning craft asks: its withdrawal waits for an Admin to confirm on the
+  Review page (give a reason of 12 to 500 characters), and its replacement waits for review. Anyone
+  else is refused. A withdrawal names a component of the bundle's own page.
 - **Withdrawing.** A withdrawal takes your registered component off every page that places it:
   `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a bundle), or Withdraw on Your
   components on the site. It stays in the record, hidden, and keeps its label, so whatever comes next

@@ -28,6 +28,7 @@ The contracts are `docs/contracts/open-work.md` (Withdrawn, replaced, borrowed a
 | Every other kind's removal and the edit of published content | [decision 0194](0194-an-admin-removes-and-edits-published-content-over-mcp.md) |
 | Where a borrowed component's sources are counted | [decision 0106](0106-one-monograph-template-for-every-page.md) |
 | A held page refused while its latest preview fails its drawing checks | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
+| A steward asks instead of withdrawing or replacing at once, and a withdrawal names its bundle's page | [decision 0212](0212-a-steward-asks-an-admin-a-structure-edit-states-what-it-brings-and-a-removed-layout-stays-removed.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

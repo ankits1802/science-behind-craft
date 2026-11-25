@@ -60,7 +60,7 @@ stateDiagram-v2
 | My tasks (held, completed, outcomes) | `services/contribution_queue_tasks.py`, contract `research/my_tasks.py` |
 | Stewardship | `services/stewardship.py`, contract `research/stewardship.py`, table `CraftSteward` (`models/contributions.py`, migration `0048_contribution_queue`) |
 | A component proposal | `services/component_proposals.py`; the delivered spec `component_proposals_spec.py`, registration `component_proposals_register.py` (`component-specs-general.md`) |
-| Withdrawing, replacing and taking a component off a page | `services/component_lifecycle.py` (`take_off_pages`, `withdraw_registered`, `retire_replaced`), `component_retirers.py` (who may), `component_layout_swaps.py`; tables `KnowledgePieceUnlink` and `PageHold` (`models/component_lifecycle.py`, migration `0103_component_lifecycle`) |
+| Withdrawing, replacing and taking a component off a page | `services/component_lifecycle.py` (`take_off_pages`, `withdraw_registered`, `retire_replaced`), `component_retirers.py` (who may), `component_withdrawals.py` (at once or asked, and the bundle's page), `component_layout_swaps.py`; tables `KnowledgePieceUnlink` and `PageHold` (`models/component_lifecycle.py`, migration `0103_component_lifecycle`) |
 | Borrowed components and the facts a page holds | `services/borrowed_placements.py`, `services/page_held_facts.py`; the preview's links and withdrawals `services/page_preview_lifecycle.py` |
 | A page held for one confirmation | `research/page_holds.py`, `services/page_holds.py`, `services/trust_tiers.publishes_at_once`; routes `api/routes/page_holds.py` |
 | `propose_page` and `preview_page` | `research/page_proposals.py` (the bundle and its reports), `services/page_proposals.py` with `page_proposals_parts.py`, `services/page_preview.py` with `page_preview_parts.py`, `page_preview_additions.py` and `page_preview_links.py` |
@@ -447,17 +447,33 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 
 ## Withdrawn, replaced, borrowed and held (decision 0193)
 
-- **Who may retire a component.** Its own proposer (the `ComponentProposal` its piece's
-  `payload.proposalId` names), a live steward of its owning craft, or an Admin
-  (`component_retirers.may_retire`); anyone else is refused (`Refused`, `not_yours`).
+- **Who may retire a component.** At once, its own proposer (the `ComponentProposal` its piece's
+  `payload.proposalId` names) or an Admin (`REVIEW_CONTRIBUTIONS`, `component_retirers.may_retire`).
+  A live steward of its owning craft (`component_retirers.stewards_piece`), since anyone may adopt a
+  craft, only asks: its withdrawal of a component it did not propose, or of a curated one, is staged
+  for an Admin to confirm, and its replacement waits for review (decision 0212). Anyone else is
+  refused (`Refused`, `not_yours`). `component_withdrawals.retirement_waits` is the one rule every
+  path asks.
 - **Withdrawing** takes a registered component off every page that places it and keeps it in the
   record: the piece is hidden (`hiddenAt`, `hiddenById`), a proposer's own approved proposal moves to
   `WITHDRAWN`, and `component.removed` is audited with the label, the reason and the proposal. On the
   site it is Withdraw on Your components (`contribution-screens.md`); over MCP it is a bundle's or a
   draft's `withdrawals[{label, reason?}]` part (Pages delivered whole, below). The pages it applied to
-  are refreshed (`component_lifecycle.piece_owners`).
+  are refreshed (`component_lifecycle.piece_owners`). A withdrawal names a component of the bundle's
+  own page: one its page draws (`component_library_applies.applies_on`) for a craft or a family, one
+  whose withdrawal refreshes the category's page for a category; any other is refused, naming the
+  page.
+- **A steward's withdrawal is asked for.** For a steward it stores a one-item `StagedReview`
+  (`staged_reviews.stage_request`: `COMPONENTS remove` off every page, the steward as proposer,
+  `clientName` `propose_page over MCP` or `the site's page proposal`, expiring in 3 days) that an
+  Admin confirms on the Review page (`review-queue.md`, Staged over MCP), and the part answers
+  `ACCEPTED`, `status STAGED`, no id, the component still on its pages. It needs a reason of 12 to
+  500 characters, checked when the draft takes it and in the preview too; the same request already
+  waiting is refused. Nothing changes until the Admin confirms, and nothing changes when the batch
+  expires.
 - **Replacing** is a new proposal naming the old label in `replaces`; the proposer must be one who may
-  retire the old one, and the old one is never the new one's close match. When the new one is
+  retire the old one, and the old one is never the new one's close match. A steward's replacement is
+  stored `PENDING` for an Admin's review even from a Professor. When the new one is
   registered (an Admin's approval, or at once for a reviewer's own), the same change supersedes the
   old piece (`supersededById`) and writes each page layout naming it again with the new label in its
   place (`component_layout_swaps`, a new version each, `PAGE_LAYOUT_WRITTEN`), audited
@@ -729,7 +745,7 @@ components[], layout?, pictures[], translation?, withdrawals[], note?}`, holding
 | `layout?` | `{baseVersion, entries, note?}` | one |
 | `pictures[]` | `{stageId?, claimIds, declaration?}` | 10 |
 | `translation?` | a page's passages in one language (Pages in other languages, above; `monograph-document.md`) | one |
-| `withdrawals[]` | `{label, reason?}`, each a registered component the account may retire, once each | 10 |
+| `withdrawals[]` | `{label, reason?}`, each a registered component of the page that the account may retire or, as its craft's steward, ask to have retired, once each | 10 |
 | `note?` | a note | one |
 
 Over MCP it is `propose_page`'s and `preview_page`'s `bundle`, in snake_case, and a draft's parts make
@@ -747,7 +763,8 @@ the layout against the page's current version (stored for review, or written at 
 Admin), and a picture by starting its upload (the link and slot of `give_pictures`'s `upload:
 true`, `mcp_picture_tools.start_picture`, reported in the part's `upload`); a translation's passages
 are checked next, each reported on its own, and withdrawals last, each taking its component off every
-page (`status WITHDRAWN`, its piece's id) and counting as a component proposal. A `SUBJECT_LINK` or
+page (`status WITHDRAWN`, its piece's id) or, for a steward, asking an Admin to (`status STAGED`),
+and counting as a component proposal. A `SUBJECT_LINK` or
 a layout placing a borrowed component that cannot pass is refused (Withdrawn, replaced, borrowed and
 held, above), and a whole page from an account that publishes at once is held instead of run. Each
 part counts against its own kind's hourly limit,

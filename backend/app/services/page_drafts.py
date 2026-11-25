@@ -31,7 +31,7 @@ from app.research.page_proposals import PageBundle, PagePreviewResult, PagePropo
 from app.research.page_report import PageReport
 
 from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
-from .component_lifecycle import retirable_piece
+from .component_withdrawals import reason_problem, withdrawable_piece
 from .open_work_subjects import subject_by_key
 
 __all__ = [
@@ -258,13 +258,16 @@ async def _refuse_foreign_sources(session: AsyncSession, user_id: uuid.UUID, wan
 async def _refuse_what_cannot_pass(
     session: AsyncSession, user: User, row: PageDraft, added: DraftAddition
 ) -> None:
-    for withdrawal in added.withdrawals:
-        await retirable_piece(session, user, withdrawal.label)
     components = [*held_parts(row).components, *added.components]
     labels = [*linked_labels(added.components), *placed_labels(components, added.layout)]
-    if not labels:
+    if not labels and not added.withdrawals:
         return
     subject = await subject_by_key(session, row.subjectKind, row.subjectSlug)
+    for withdrawal in added.withdrawals:
+        found = await withdrawable_piece(session, user, withdrawal.label, subject)
+        unreasoned = reason_problem(found, withdrawal.reason)
+        if unreasoned is not None:
+            raise InvalidInput(unreasoned)
     problem = await borrowed_problem(session, subject, labels)
     if problem is not None:
         raise InvalidInput(problem)

@@ -100,7 +100,7 @@ async def test_the_proposer_takes_a_registered_component_off_every_page_kept_in_
     assert stored == "WITHDRAWN"
 
 
-async def test_only_the_proposer_a_steward_of_its_craft_or_an_admin_may_take_it_off_its_pages(
+async def test_only_the_proposer_or_an_admin_may_take_it_off_its_pages_at_once_not_a_steward(
     session: AsyncSession,
 ) -> None:
     stranger = await person(session, STRANGER)
@@ -108,7 +108,10 @@ async def test_only_the_proposer_a_steward_of_its_craft_or_an_admin_may_take_it_
         await withdraw_registered(session, stranger, OWN, reason=WHY, now=NOW)
     with pytest.raises(own_proposals.UnknownProposal):
         await own_proposals.withdraw_component(session, stranger, OWN_PROPOSAL, now=NOW)
-    for allowed in (STEWARD, ADMIN):
+    for refused in (STRANGER, STEWARD):
+        with pytest.raises(Refused, match=NOT_YOURS):
+            await retirable_piece(session, await person(session, refused), OWN)
+    for allowed in (PROPOSER, ADMIN):
         assert (await retirable_piece(session, await person(session, allowed), OWN)).label == OWN
     assert await hidden(session, OWN) == (None, None) and await removals(session) == set()
 
