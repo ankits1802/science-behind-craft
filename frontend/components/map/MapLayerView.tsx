@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 
 import { failureMessage, useRemote, type Remote } from "@/components/hooks/useRemote";
-import { ChoroplethLegend } from "@/components/map/ChoroplethLegend";
+import { ChoroplethKey, ChoroplethLegend } from "@/components/map/ChoroplethLegend";
 import { NO_DATA_TONE, type DistrictFill } from "@/components/map/DistrictLayer";
 import { MapRetry } from "@/components/map/MapRetry";
 import { paletteFill } from "@/components/map/rampFills";
@@ -13,6 +13,7 @@ import { districtSteps, layerPalette } from "@/lib/mapPalettes";
 import { fetchMapLayer } from "@/lib/mapLayers";
 import { fetchDistricts } from "@/lib/profileContract";
 import type { MapLayer } from "@/lib/regionContract";
+import type { LayerLegend } from "@/lib/regionView";
 
 export const DRAWING_DISTRICT_VALUES = "Drawing the district values";
 
@@ -44,12 +45,14 @@ export function usePaletteFill(data: MapLayer | null): DistrictFill {
   );
 }
 
-export function LayerStatus({ layer, shapes }: { layer: Remote<MapLayer>; shapes: Remote<DistrictShape[]> }) {
+type StatusProps = { layer: Remote<MapLayer>; shapes: Remote<DistrictShape[]>; held?: LayerLegend | null };
+
+export function LayerStatus({ layer, shapes, held = null }: StatusProps) {
   const failure = layer.failure ?? shapes.failure;
   if (failure) {
     const retry = layer.failure ? layer.retry : shapes.retry;
     return <MapRetry message={failureMessage(failure, "This layer could not be drawn. Try again in a moment.")} onRetry={retry} className="mt-4" />;
   }
-  if (!layer.data || !shapes.data) return <Skeleton shape="legend" label={DRAWING_DISTRICT_VALUES} className="mt-4 border-t border-rule pt-3" />;
-  return <ChoroplethLegend layer={layer.data} />;
+  if (layer.data && shapes.data) return <ChoroplethLegend layer={layer.data} />;
+  return held ? <ChoroplethKey legend={held} /> : <Skeleton shape="legend" label={DRAWING_DISTRICT_VALUES} className="mt-4 border-t border-rule pt-3" />;
 }

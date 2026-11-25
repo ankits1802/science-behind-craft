@@ -6,7 +6,7 @@ import { MineralSymbol, mineralColour } from "@/components/map/physical/Minerals
 import { RankedList, type RankedRow } from "@/components/map/RankedList";
 import { ELEVATION_BREAKS } from "@/lib/mapPalettes";
 import { formatRange } from "@/lib/measure";
-import { elevationBands, tally, type DatasetRow, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
+import { elevationBands, mineralKeyRows, tally, type DatasetRow, type MineralKeyRow, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 
 export function LayerCredits({ datasets }: { datasets: readonly DatasetRow[] }) {
   return (
@@ -106,24 +106,20 @@ export function RiversSide({ file }: { file: RiversFile }) {
   );
 }
 
-export function MineralKey({ file, sites }: { file: MineralsFile; sites: readonly MineralSite[] }) {
-  const counts = tally(sites.map((site) => String(site.classIndex)));
-  const largest = counts[0]?.count ?? 0;
+export function MineralKey({ rows }: { rows: readonly MineralKeyRow[] }) {
+  const largest = Math.max(0, ...rows.map((row) => row.count));
   return (
     <ol className="grid border-b border-rule font-ui text-ui" aria-label="Deposits in each class" data-testid="mineral-key">
-      {file.classes.map((entry, at) => {
-        const count = counts.find((row) => row.key === String(at))?.count ?? 0;
-        return (
-          <li key={entry.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2.5 gap-y-1 border-t border-rule py-[7px]">
-            <MineralSymbol classIndex={at} size={9} />
-            <span className="min-w-0 text-ink-1">{entry.label}</span>
-            <b className="text-end font-medium text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]">{count}</b>
-            <span className="relative col-start-2 col-end-4 h-1.5 bg-rule" aria-hidden>
-              <i className="absolute inset-y-0 start-0" style={{ width: `${largest ? ((count / largest) * 100).toFixed(1) : 0}%`, backgroundColor: mineralColour(at) }} />
-            </span>
-          </li>
-        );
-      })}
+      {rows.map((row, at) => (
+        <li key={row.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2.5 gap-y-1 border-t border-rule py-[7px]">
+          <MineralSymbol classIndex={at} size={9} />
+          <span className="min-w-0 text-ink-1">{row.label}</span>
+          <b className="text-end font-medium text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]">{row.count}</b>
+          <span className="relative col-start-2 col-end-4 h-1.5 bg-rule" aria-hidden>
+            <i className="absolute inset-y-0 start-0" style={{ width: `${largest ? ((row.count / largest) * 100).toFixed(1) : 0}%`, backgroundColor: mineralColour(at) }} />
+          </span>
+        </li>
+      ))}
     </ol>
   );
 }
@@ -133,7 +129,7 @@ export function MineralsSide({ file, sites }: { file: MineralsFile; sites: reado
   const statuses = tally(sites.map((site) => site.status));
   return (
     <>
-      <MineralKey file={file} sites={sites} />
+      <MineralKey rows={mineralKeyRows(file, sites)} />
       <div className="grid gap-2">
         <p className="font-ui text-label text-ink-1">Deposits in each state</p>
         <RankedList rows={states} label="Deposits in each state" series="var(--chart-series)" emphKey={states[0]?.key ?? null} all={{ label: `Show all ${states.length}` }} />

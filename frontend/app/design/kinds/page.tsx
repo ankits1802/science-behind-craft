@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MonographPage } from "@/components/monograph/MonographPage";
 import { KIND_PREVIEW_TITLE, kindPreviewDocument } from "@/lib/kindPreview";
 import { serverKindFixtures } from "@/lib/server/kindFixturesServer";
+import { withMapStills } from "@/lib/server/mapStills";
 
 export const dynamic = "force-dynamic";
 
@@ -16,5 +17,5 @@ export const metadata: Metadata = {
 export default async function KindPreviewPage() {
   const fixtures = await serverKindFixtures();
   if (fixtures === null) notFound();
-  return <MonographPage document={kindPreviewDocument(fixtures)} />;
+  return <MonographPage document={await withMapStills(kindPreviewDocument(fixtures))} />;
 }

@@ -265,14 +265,37 @@ India in the abroad inset. The map is framed to the places (`components/map/plac
 and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
 physical layers' own drawings and keys, a district layer's fills and legend) with the home
 districts in the place hatch, and the source line gives the boundary note and every layer's
-dataset credit at first paint. The key is whole at first paint where it needs no file (the relief
-key from the design's elevation classes, `lib/mapPalettes.ELEVATION_BREAKS`, which the relief file
-is cut at, and the rivers key) and holds a legend-shaped skeleton where it does (the minerals key,
-a district layer's legend), so nothing below moves when the layers land; once the page is loaded
-and idle the near view asks for the named layers' files with `link rel="prefetch"`
-(`componentSpecsTimelineMap.timelineMapFiles`), so they are cached before the view nears
-(decision 0216). It rests on its last year with every place pinned; motion is only the entries'
-colour change, which both reduced-motion switches turn off.
+dataset credit at first paint.
+
+**The still** (decision 0220). When the site's web server reads a page
+(`lib/server/mapStills.withMapStills`, run by `lib/monographRenderServer.documentRead`, the preview
+and `/design/kinds`), it cuts each declared map's still to the frame the view draws
+(`components/map/timelineMapStill.timelineMapFrame`) with `components/map/mapStillCut.ts`, from the
+layer files bundled with the server (`lib/server/mapLayerFiles.ts`, the same files the browser
+fetches): the land below the first elevation break and each relief band, the rivers by rank and
+the lakes, clipped to the frame with a two-step margin, simplified within one step of a grid of 500
+steps across the frame, rings under four square steps dropped, and written as relative paths in
+grid steps; the home districts in tenths of a map unit, unscaled, so their hatch matches the
+layer's; the minerals key's classes with their counts; and a district layer's legend (title, class
+labels, caption, summary and dataset), read from `/map/layers/{id}` on the server. It sends them in
+the spec as `still {box, grid, relief, rivers, lakes, home, minerals, district}`, keeps each
+frame's geometry in memory (200 frames), and removes any `still` a stored timeline map spec
+brings; the model refuses one from a contributor as an unknown field, and the web reads a still
+only in that shape (paths of `M`, `L`, `l`, `z`, digits, spaces, points and minus signs). The
+view draws the still at first paint in the map tokens (`components/map/MapStillLayers.tsx`:
+`--elevation-1` to `--elevation-7` under the district rule, `--map-river` and `--map-water`, the
+place hatch), beneath the pins, and each layer's own drawing takes its part's place in the same
+spot when its file lands; a still whose box is not the view's frame is not drawn. The Bidriware
+map's still is 28.2 KB, against 451.6 KB of path data for its layers drawn whole. The key is
+whole at first paint: the relief key from the design's elevation classes
+(`lib/mapPalettes.ELEVATION_BREAKS`, which the relief file is cut at), the rivers key, and the
+minerals key and a district layer's legend from the still, drawn exactly as they draw once their
+data lands, so nothing below moves; without a still (a district layer the server could not read)
+they hold a legend-shaped skeleton. Once the page is loaded and idle the near view asks for the
+named layers' files with `link rel="prefetch"` (`componentSpecsTimelineMap.timelineMapFiles`), so
+they are cached before the view nears (decision 0216). The mineral symbols and a district layer's
+fills are drawn from their files once the view loads. It rests on its last year with every place
+pinned; motion is only the entries' colour change, which both reduced-motion switches turn off.
 
 **The hand-drawn map** (`research/drawn_maps.drawn_map_problems`, in check 8 for `drawing` and
 `map_layer`): a drawing is a map, and refused with `component_specs.MAP_POINTER`, when it paints the

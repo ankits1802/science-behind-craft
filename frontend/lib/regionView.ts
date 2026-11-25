@@ -3,6 +3,7 @@ import { formatRange, formatMeasure } from "@/lib/measure";
 import {
   INHERITED_REASON,
   layerClassOf,
+  mapLayerShape,
   REGION_FACETS,
   type CraftRegion,
   type MapLayer,
@@ -14,7 +15,7 @@ import {
   type RegionValue
 } from "@/lib/regionContract";
 import { MONTH_NAMES } from "@/lib/seasonsView";
-import { ShapeError } from "@/lib/shape";
+import { parseShape, ShapeError } from "@/lib/shape";
 
 export const FACET_LABEL: Record<RegionFacetName, string> = {
   SOIL: "Soil",
@@ -222,6 +223,10 @@ export function checkedLayer(layer: MapLayer): MapLayer {
   return layer;
 }
 
+export function parsedMapLayer(body: unknown): MapLayer {
+  return checkedLayer(parseShape(mapLayerShape, body));
+}
+
 export function layerFills(layer: MapLayer): Map<number, number> {
   return new Map(Object.entries(layer.values).map(([lgd, value]) => [Number(lgd), layerClassOf(layer, value)]));
 }
@@ -253,4 +258,10 @@ export function layerOptions(list: MapLayerList): { value: string; label: string
 
 export function layerCaption(layer: MapLayer): string {
   return [statLabel(layer.layer.stat, layer.layer.unit), layer.dataset.title, layer.resolution, periodText(layer.layer.period)].join(" · ");
+}
+
+export type LayerLegend = { title: string; labels: string[]; caption: string; summary: string; dataset: RegionDataset };
+
+export function layerLegend(layer: MapLayer): LayerLegend {
+  return { title: layer.layer.title, labels: layerClassLabels(layer), caption: layerCaption(layer), summary: layerSummary(layer), dataset: layer.dataset };
 }

@@ -813,7 +813,10 @@ page kit plays a shown scene's part (decision 0200). A kind whose code is heavy 
 timeline map, the why-here ground map and the six page tools) is drawn whole on the server and its
 code reaches the browser only as its holder nears the viewport (`components/answer/nearBlock.tsx`,
 the loaders in `components/monograph/kinds/nearViews.tsx`); the views' stylesheets are one sheet of
-the root layout (`app/component-views.css`). The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at
+the root layout (`app/component-views.css`). A declared timeline map's relief, rivers and home hatch,
+with its minerals key and district legend, are cut on the server into a small still for its frame
+when a document is read (`lib/server/mapStills.ts`, decision 0220) and drawn at first paint until
+each layer's file lands. The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at
 360 against their recorded numbers (`frontend/e2e/phone-budget.json`, decision 0205) and records
 each load's path to its largest element (`frontend/e2e/phonePath.ts`, decision 0209). Practice rules are `frontend-practices`.
 

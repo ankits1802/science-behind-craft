@@ -379,9 +379,11 @@ thumb.
 - A view whose code is heavy (a map, the ground map, a page tool, a kit figure's Play) loads through
   `nearBlock`; the monograph's are listed in `kinds/nearViews.tsx`. The server draws it whole, and
   its code loads within two screens of the viewport. What its still needs no file for is drawn at
-  rest and what needs one holds its shape (a timeline map's relief and rivers key whole, a minerals
-  key or district legend as a legend skeleton), and a near view may ask for its data files with
-  `link rel="prefetch"` once the page is loaded and idle (decision 0216). A view imports no stylesheet: every view's
+  rest; what needs one the server cuts into a small still of its own where it can (a declared
+  timeline map's relief, rivers and home hatch, clipped to its frame and drawn in the map tokens,
+  and its minerals key and district legend whole), which each layer replaces in place when its file
+  lands (decision 0220), and the rest holds its shape (a legend skeleton). A near view may ask for
+  its data files with `link rel="prefetch"` once the page is loaded and idle (decision 0216). A view imports no stylesheet: every view's
   sheet is one `@import` of `app/component-views.css`, which the root layout loads after
   `globals.css`, so the still state is styled at first paint and the page waits on one request for
   all of them (decision 0209).

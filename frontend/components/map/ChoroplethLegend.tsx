@@ -6,7 +6,7 @@ import { MapPatterns, NO_READING_PATTERN, PLACE_PATTERN, SALT_PATTERN } from "@/
 import { CHOROPLETH_COLOURS } from "@/components/map/rampFills";
 import { NO_READING_LABEL } from "@/lib/mapRamps";
 import type { MapLayer } from "@/lib/regionContract";
-import { layerCaption, layerClassLabels, layerSummary, toneIndex } from "@/lib/regionView";
+import { layerLegend, toneIndex, type LayerLegend } from "@/lib/regionView";
 import { cn } from "@/lib/utils";
 
 export type LegendStep = { label: string; colour: string };
@@ -92,13 +92,16 @@ export function MapLegend({ title, steps, extras = [], note, caption, summary, c
   );
 }
 
-export function ChoroplethLegend({ layer, note }: { layer: MapLayer; note?: string }) {
-  const labels = layerClassLabels(layer);
-  const steps = labels.map((label, index) => ({ label, colour: choroplethColour(index, labels.length) }));
+export function ChoroplethKey({ legend, note }: { legend: LayerLegend; note?: string }) {
+  const steps = legend.labels.map((label, index) => ({ label, colour: choroplethColour(index, legend.labels.length) }));
   return (
     <div className="mt-4 grid gap-2">
-      <MapLegend title={layer.layer.title} steps={steps} extras={[NO_READING_EXTRA]} note={note} caption={layerCaption(layer)} summary={layerSummary(layer)} />
-      <DatasetCredit dataset={layer.dataset} />
+      <MapLegend title={legend.title} steps={steps} extras={[NO_READING_EXTRA]} note={note} caption={legend.caption} summary={legend.summary} />
+      <DatasetCredit dataset={legend.dataset} />
     </div>
   );
+}
+
+export function ChoroplethLegend({ layer, note }: { layer: MapLayer; note?: string }) {
+  return <ChoroplethKey legend={layerLegend(layer)} note={note} />;
 }
