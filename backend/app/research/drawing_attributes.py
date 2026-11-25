@@ -85,7 +85,7 @@ LOAD = (
     "loads nothing from another address: no url() but an in-drawing url(#id), no image-set(), "
     "cross-fade(), image() or src(), and no backslash escape"
 )
-REFERENCE = "refers only within its page (#id)"
+REFERENCE = "refers only to its page (#id)"
 CURSOR = "sets no cursor"
 DECLARATION = "holds style declarations of a property and its value"
 PROPERTY = (
