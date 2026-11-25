@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef, useState, type RefObject } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 
 import { useMotionAllowed } from "@/components/motion/useMotionAllowed";
 import { isPlaying, played, restingPlay, TIMELINE_STEP_MS } from "@/lib/timelinePlay";
@@ -9,7 +9,7 @@ export type TimelinePlay = {
   at: number;
   playing: boolean;
   motion: boolean;
-  watched: RefObject<HTMLDivElement | null>;
+  watch: (node: HTMLDivElement | null) => void;
   choose: (at: number) => void;
   toggle: () => void;
 };
@@ -20,16 +20,15 @@ export function useTimelinePlay(count: number, rest: number): TimelinePlay {
   const motion = useMotionAllowed();
   const [state, dispatch] = useReducer(played, rest, restingPlay);
   const [chosen, setChosen] = useState(0);
-  const watched = useRef<HTMLDivElement | null>(null);
+  const [watched, watch] = useState<HTMLDivElement | null>(null);
   const playing = isPlaying(state, motion, count);
 
   useEffect(() => {
-    const node = watched.current;
-    if (!node || typeof IntersectionObserver === "undefined") return;
+    if (!watched || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => dispatch({ type: "seen", on: entry.isIntersecting })), IN_VIEW);
-    observer.observe(node);
+    observer.observe(watched);
     return () => observer.disconnect();
-  }, []);
+  }, [watched]);
 
   useEffect(() => {
     if (!playing) return;
@@ -45,5 +44,5 @@ export function useTimelinePlay(count: number, rest: number): TimelinePlay {
 
   const toggle = useCallback(() => dispatch({ type: "toggle", motion, count }), [motion, count]);
 
-  return { at: state.at, playing, motion, watched, choose, toggle };
+  return { at: state.at, playing, motion, watch, choose, toggle };
 }

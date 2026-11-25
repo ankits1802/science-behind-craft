@@ -25,7 +25,7 @@ function Played({ events, renderUnit, textOf }: { events: TimelineEvent[]; rende
   const play = useTimelinePlay(events.length, events.length - 1);
   const points = useMemo(() => trackPoints(events, renderUnit, textOf), [events, renderUnit, textOf]);
   return (
-    <div className="grid gap-3" ref={play.watched} data-testid="general-timeline-play" data-at={play.at}>
+    <div className="grid gap-3" ref={play.watch} data-testid="general-timeline-play" data-at={play.at}>
       <TimelineTrack points={points} play={play} label={POINTS_LABEL} first={eraYear(events[0].year)} last={eraYear(events[events.length - 1].year)} />
       <ol className="grid" data-testid="general-timeline">
         {events.map((event, at) => {
