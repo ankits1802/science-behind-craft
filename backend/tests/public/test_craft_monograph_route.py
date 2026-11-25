@@ -65,6 +65,7 @@ class Calls:
     queued: list[tuple[str, str]] = field(default_factory=list)
     languages: list[tuple[tuple[str, str], str, str]] = field(default_factory=list)
     kept: dict[int, StoredCopy] = field(default_factory=dict)
+    translated: list[tuple[tuple[str, str], str, str]] = field(default_factory=list)
 
     async def superseded(self, session: Any, subject: Any, version: int) -> StoredCopy | None:
         self.made.append(f"superseded {subject.kind} {subject.slug} {version}")
@@ -78,6 +79,14 @@ class Calls:
             return ShownPage(english, wrote=False)
         variant = ServedPage(f"{english.etag}-hi-{VARIANT_DIGEST}", "hi", in_hindi(english.body))
         return ShownPage(variant, wrote=False)
+
+    async def kept_in_language(
+        self, session: Any, page: tuple[str, str], english: ServedPage, *, language: str
+    ) -> ServedPage:
+        self.translated.append((page, english.etag, language))
+        if language != "hi":
+            return english
+        return ServedPage(f"{english.etag}-hi-{VARIANT_DIGEST}", "hi", in_hindi(english.body))
 
 
 def stored_copy(document: MonographDocument, *, current: bool = True) -> StoredCopy:
@@ -105,7 +114,8 @@ def watch_calls(monkeypatch: pytest.MonkeyPatch, calls: Calls) -> None:
 
     monkeypatch.setattr(document_reads, "rebuild_wanted", rebuild_wanted)
     monkeypatch.setattr(document_reads, "page_in_language", calls.in_language)
-    monkeypatch.setattr(route, "superseded_fallback", calls.superseded)
+    monkeypatch.setattr(document_reads, "translated_page", calls.kept_in_language)
+    monkeypatch.setattr(document_reads, "superseded_fallback", calls.superseded)
 
 
 def served(

@@ -620,9 +620,10 @@ A page as a reader's PDF or Word document (decisions 0206, 0208, 0214) is `GET
 page's route takes it), answered as a five-minute signed link; every such page offers them as its
 Download menu. The file is built once per served tag, whatever the day, and kept under
 `exports/00000000-0000-0000-0000-000000000001/` in the media bucket under its name without a day
-(the download is named for its day), which the `expire-exports` lifecycle rule clears with every
-other export; nothing else keeps or deletes it, and no IAM change is needed (the media user already
-puts and reads `exports/*`). A route answering 503 `This file can't be made right now.` means
+(the download is named for its day), which the `expire-page-exports` lifecycle rule clears a day
+after it was filed and `expire-exports` a day after that from the bucket's noncurrent versions, so
+the file of a version a removal dropped is gone within two days (decision 0219); nothing else keeps
+or deletes it, and no IAM change is needed (the media user already puts and reads `exports/*`). A route answering 503 `This file can't be made right now.` means
 `S3_BUCKET` is not set on that process or the bucket refused; 503 with `Retry-After: 30` and
 `Other files are being made just now.` means both of the process's page export slots stayed busy
 for 5 s; 429 with `Retry-After` means that address or account started 10 new files in 10 minutes.

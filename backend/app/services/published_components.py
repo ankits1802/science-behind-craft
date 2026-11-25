@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import InvalidInput
 from app.models import KnowledgePiece, User
 from app.research.component_specs_general_delivery import DELIVERED_KEY, DeliveredUnit, UnitKey
+from app.research.page_revalidation import PageOwners
 from app.research.published_edits import ComponentEdit
 from app.research.staged_reviews import EDIT, REMOVE, StagedDecision
 
@@ -79,9 +80,15 @@ async def _remove(session: AsyncSession, decision: StagedDecision, reviewer: Use
         raise InvalidInput(NO_ITEM.format(kind="component", id=decision.id))
     page = await _named_page(session, decision)
     retired = await take_off_pages(session, reviewer, piece, page=page, reason=decision.reason, now=now)
+    marks = (retired.label,)
     if page is None:
-        return Carried(REMOVED_EVERYWHERE.format(label=retired.label), retired.owners)
-    return Carried(REMOVED_FROM.format(label=retired.label, page=page.name), retired.owners)
+        return Carried(REMOVED_EVERYWHERE.format(label=retired.label), retired.owners, marks)
+    message = REMOVED_FROM.format(label=retired.label, page=page.name)
+    return Carried(message, retired.owners, marks, changed=_only(page))
+
+
+def _only(page: WorkSubject) -> PageOwners:
+    return PageOwners(categories=(page.slug,)) if page.kind == CATEGORY else PageOwners(crafts=(page.slug,))
 
 
 async def _named_page(session: AsyncSession, decision: StagedDecision) -> WorkSubject | None:
@@ -117,7 +124,8 @@ async def _edit(session: AsyncSession, decision: StagedDecision, reviewer: User,
         },
     )
     await session.flush()
-    return Carried(EDITED.format(label=piece.label), await piece_owners(session, piece))
+    owners = await piece_owners(session, piece)
+    return Carried(EDITED.format(label=piece.label), owners, (str(piece.label),))
 
 
 async def _redrawn(session: AsyncSession, piece: KnowledgePiece, fields: dict[str, Any]) -> None:

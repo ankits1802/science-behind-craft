@@ -8,10 +8,11 @@ from app.api.document_reads import (
     WHOLE_DOCUMENT,
     AskedPart,
     AskedTag,
+    AskedVersion,
     PartAsk,
     ServedDocument,
     document_response,
-    generated_in_language,
+    generated_at,
     queue_rebuild,
 )
 from app.api.public_deps import cached_read, public_reader
@@ -30,6 +31,7 @@ router = APIRouter(tags=["page documents"])
 
 ADMIN_ONLY_DETAIL = "Changing a page's layout is for admins."
 NO_DOCUMENT_DETAIL = "There is no monograph for that {kind} yet."
+NO_VERSION_DETAIL = "That {kind}'s monograph has no such version."
 NO_LAYOUT_DETAIL = "That page has no layout yet."
 CATEGORY, FAMILY = "category", "family"
 
@@ -59,12 +61,17 @@ class AskedDocument:
     slug: str
     language: str
     part: PartAsk = WHOLE_DOCUMENT
+    version: int | None = None
 
 
 def asked_document(
-    slug: Slug, lang: AskedLanguage = None, part: AskedPart = None, tag: AskedTag = None
+    slug: Slug,
+    lang: AskedLanguage = None,
+    version: AskedVersion = None,
+    part: AskedPart = None,
+    tag: AskedTag = None,
 ) -> AskedDocument:
-    return AskedDocument(slug, served_language(lang), PartAsk(part, tag))
+    return AskedDocument(slug, served_language(lang), PartAsk(part, tag), version)
 
 
 @router.get("/categories/{slug}/monograph")
@@ -133,7 +140,8 @@ async def subject_document(session: AsyncSession, kind: str, asked: AskedDocumen
         read = await generated_read(session, kind, asked.slug)
     except InvalidInput as unknown:
         raise HTTPException(status.HTTP_404_NOT_FOUND, str(unknown)) from unknown
-    served = await generated_in_language(session, read, language=asked.language)
+    served = await generated_at(session, read, language=asked.language, version=asked.version)
     if served is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, NO_DOCUMENT_DETAIL.format(kind=kind))
+        missing = NO_DOCUMENT_DETAIL if asked.version is None or read.copy is None else NO_VERSION_DETAIL
+        raise HTTPException(status.HTTP_404_NOT_FOUND, missing.format(kind=kind))
     return served

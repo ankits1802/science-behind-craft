@@ -52,8 +52,8 @@ export async function documentRead(path: string, tag: string, read: PartRead): P
   return withMapStills(parseNamedDocument(joinedDocument(parts)));
 }
 
-export const serverMonographDocument = cache(async (subject: MonographPreviewSubject, slug: string): Promise<MonographDocument | null> =>
-  documentRead(monographDocumentPath(subject, slug), monographDocumentTag(subject, slug), LATEST_READ)
+export const serverMonographDocument = cache(async (subject: MonographPreviewSubject, slug: string, version: number | null = null): Promise<MonographDocument | null> =>
+  documentRead(monographDocumentPath(subject, slug), monographDocumentTag(subject, slug), { ...LATEST_READ, version })
 );
 
 export type ShellParams = { slug: string; version: string };
@@ -67,6 +67,4 @@ export async function prerenderedShells(): Promise<ShellParams[]> {
   return shellParams(await Promise.all(crafts.map(({ slug }) => serverCraftDocument(slug))));
 }
 
-export const serverCraftDocument = cache(async (slug: string, version: number | null = null): Promise<MonographDocument | null> =>
-  documentRead(monographDocumentPath("craft", slug), monographDocumentTag("craft", slug), { ...LATEST_READ, version })
-);
+export const serverCraftDocument = (slug: string, version: number | null = null): Promise<MonographDocument | null> => serverMonographDocument("craft", slug, version);

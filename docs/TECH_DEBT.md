@@ -31,6 +31,9 @@ Last reviewed: 2026-11-22.
   rollback rebuilds them with the release it goes back to right after its switch. Until that
   rebuild reaches a page (at most about 16 minutes), the older release reads the newer body with
   its own closed models and may answer that page with an error when a later release added a field.
+  A kept version (decisions 0210 and 0219) is never rebuilt, and one read in another language is
+  validated by the same models, so after a rollback a version the newer release kept may answer
+  that error in that language for as long as it is kept (at most 168 versions of the page later).
 - **Why left:** the readers of a stored body (`page_translation_serving`,
   `monograph_document.stored_document`, `page_english`) validate strictly, and a lenient read
   protects only releases that ship it; the review lane that found this owned the deploy only.
@@ -38,13 +41,6 @@ Last reviewed: 2026-11-22.
   `model_validate(..., extra="ignore")` or a reading model without `extra="forbid"`), with a test
   that a body carrying a key the reader does not know is served; after one release carrying it,
   a rollback to that release or later has no window.
-- **Also (decision 0210):** a page drawn a version behind now reads its rest from the version a
-  rebuild kept, but a category page reads no version (its route and its rest route take none), a
-  kept version is not translated (so the rest of a translated page drawn a version behind is still
-  not found), versions replaced before decision 0210 were never kept, and kept versions are not
-  capped (one per content change per page and language, dropped with the page). Clears it: the
-  category routes take `version`, the kept version is stored per language, and a cap of kept
-  versions per page.
 
 ### CloudFront to origin is plain HTTP
 

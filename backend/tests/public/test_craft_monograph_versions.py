@@ -6,7 +6,15 @@ import pytest
 from app.api.routes import craft_monograph as route
 from app.services.stored_documents import GeneratedRead
 
-from .test_craft_monograph_route import GENERATED, PATH, Calls, generated_digest, served, stored_copy
+from .test_craft_monograph_route import (
+    GENERATED,
+    PATH,
+    VARIANT_DIGEST,
+    Calls,
+    generated_digest,
+    served,
+    stored_copy,
+)
 
 REBUILT = GENERATED.model_copy(update={"version": 2, "title": "Kutch Ajrakh, rebuilt"})
 
@@ -21,7 +29,7 @@ def rebuilt_since(monkeypatch: pytest.MonkeyPatch, calls: Calls) -> None:
     calls.kept[1] = stored_copy(GENERATED, current=False)
 
 
-def test_a_generated_page_still_reads_the_version_its_rebuild_replaced_in_english_alone(
+def test_a_generated_page_still_reads_the_version_its_rebuild_replaced_in_english_and_in_its_languages(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     http, calls = served(monkeypatch, stored=False, generated=True)
@@ -36,7 +44,15 @@ def test_a_generated_page_still_reads_the_version_its_rebuild_replaced_in_englis
     assert calls.languages == []
     first = http.get(PATH, params={"version": 1, "part": 0}).json()
     assert (first["version"], first["tag"]) == (1, f"v1-{generated_digest()}")
-    assert http.get(PATH, params={"version": 1, "lang": "hi"}).headers["content-language"] == "en"
+    hindi = http.get(PATH, params={"version": 1, "lang": "hi"})
+    assert hindi.status_code == 200
+    assert hindi.headers["content-language"] == "hi"
+    assert hindi.headers["etag"] == f'"v1-{generated_digest()}-hi-{VARIANT_DIGEST}"'
+    assert hindi.json()["version"] == 1
+    page = ("craft", "Kutch-Ajrakh")
+    assert calls.translated[-1] == (page, f"v1-{generated_digest()}", "hi")
+    hindi_part = http.get(PATH, params={"version": 1, "lang": "hi", "part": 0}).json()
+    assert hindi_part["tag"] == f"v1-{generated_digest()}-hi-{VARIANT_DIGEST}"
     assert calls.languages == []
     assert http.get(PATH).json()["title"] == "Kutch Ajrakh, rebuilt"
     assert http.get(PATH, params={"version": 2}).json()["version"] == 2

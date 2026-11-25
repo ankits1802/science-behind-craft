@@ -218,7 +218,8 @@ filter or cursor.
 
 A fact shown on its pages (`IN_REVIEW` or `APPROVED`) that is rejected or retracted, and a reading
 rejected, drop the kept versions of their pages in the same transaction (decision 0213), so no
-earlier edition still states them.
+earlier edition still states them: for a fact, of each of its pages with a copy, current or kept,
+that cites its id; for a reading, of every page it names (decision 0219).
 
 Approving or raising a waiting (`DRAFT`) fact publishes it and calls
 `candidate_writes.mark_sources_differ`, so a fact the duplicate gate found to differ from a held
@@ -385,7 +386,10 @@ most put a decision in front of a person, who sees it with its reason and the ap
   its kind does not edit, or, at confirmation, a field it changes moved since it was staged. Each
   applied change writes its audit with the confirming person, the reason and the values it replaced,
   drops the kept versions of the pages it touched, so no earlier edition still shows what it removed
-  or the text it replaced (decision 0213), and returns those pages. A staged decision on published content stays the action it was
+  or the text it replaced (decision 0213), and returns those pages. A fact's edit and a component's
+  removal or edit touch only the pages with a copy that draws the fact's id or the component's
+  label, and a removal from one page only that page; every other kind touches every page it returns
+  (decision 0219). A staged decision on published content stays the action it was
   staged as: a person may change its reason (and a component removal's page) but not its values,
   nor turn it into a queue decision or another action.
 - **Reading** (`review_queue`): the queue as `GET /api/review-queue` lists it, narrowed to those
@@ -524,6 +528,7 @@ stay, and list decided items.
 | Staged over MCP: staging, confirming, expiry, the allowance and the corrections | `backend/tests/db/test_staged_reviews_db.py`, `backend/tests/mcp/test_staged_contract.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | Published content: a staged removal, its one code path and its page | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | A removal, an edit, a retraction or a rejection of what a page shows drops its pages' kept versions | `backend/tests/db/test_removed_versions_db.py` and `backend/tests/db/test_published_process_db.py` |
+| Only the pages whose copies draw a removed fact or component lose their kept versions, and two removals crossing the same pages wait in turn | `backend/tests/db/test_kept_versions_db.py` |
 | Published content: removal and edit of every kind, their gates, what depends on them, the batch's before and after | `backend/tests/research/test_published_content_rules.py`, `test_published_structure_entries.py`, `backend/tests/db/test_published_content_db.py`, `test_published_components_db.py`, `test_published_process_db.py`, `test_published_structure_db.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | The Review page | `frontend/e2e/review-queue-unit.spec.ts`, `review-layers-unit.spec.ts`, `review-layouts-unit.spec.ts`, `review-readings-unit.spec.ts`, `review-structure-unit.spec.ts`, `review-unknown-kinds-unit.spec.ts` and `revalidate-unit.spec.ts` |
 

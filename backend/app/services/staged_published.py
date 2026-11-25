@@ -105,7 +105,7 @@ async def carry_out(
     if not can(reviewer, Capability.REVIEW_CONTRIBUTIONS):
         raise NotYourQueue(NOT_AN_ADMIN)
     carried = await PUBLISHED_KINDS[decision.kind].actions[decision.action](session, decision, reviewer, now)
-    await drop_kept_versions(session, carried.owners, now=now)
+    await drop_kept_versions(session, carried.reached, now=now, marks=carried.marks)
     return carried
 
 

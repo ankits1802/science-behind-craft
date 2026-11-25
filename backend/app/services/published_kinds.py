@@ -55,6 +55,12 @@ class PublishedRef:
 class Carried:
     message: str
     owners: PageOwners
+    marks: tuple[str, ...] = ()
+    changed: PageOwners | None = None
+
+    @property
+    def reached(self) -> PageOwners:
+        return self.owners if self.changed is None else self.changed
 
 
 @dataclass(frozen=True)

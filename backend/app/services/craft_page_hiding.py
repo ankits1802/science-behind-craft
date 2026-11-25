@@ -64,7 +64,8 @@ async def set_page_piece_hidden(
             detail={"craft": craft.slug, "kind": row.kind},
         )
     if changed and hidden:
-        await drop_kept_versions(session, await craft_owners(session, [craft.id]), now=now)
+        marks = () if row.label is None else (row.label,)
+        await drop_kept_versions(session, await craft_owners(session, [craft.id]), now=now, marks=marks)
     await session.commit()
     if changed:
         await refresh_pages(await craft_owners(session, [craft.id]))

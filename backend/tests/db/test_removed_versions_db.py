@@ -308,13 +308,18 @@ async def test_a_proposer_s_withdrawal_drops_the_kept_versions_and_a_stranger_s_
 async def test_a_piece_hidden_from_its_craft_drops_that_page_s_kept_versions_and_another_craft_s_does_not(
     session: AsyncSession,
 ) -> None:
-    await with_a_kept_version(session, await page(session))
+    first = await with_a_kept_version(session, await page(session))
     admin = await person(session, ADMIN)
     bare, craft = await session.get(Craft, BARE), await session.get(Craft, CRAFT)
     assert bare is not None and craft is not None
     other = await piece_id(session, OTHER_CRAFTS_PLAYER)
     assert await set_page_piece_hidden(session, bare, other, hidden=True, user=admin, now=NOW) is True
     assert await kept_slugs(session) == [CRAFT_SLUG]
-    own = await piece_id(session, CRAFT_PLAYER)
+    assert f'"{CRAFT_PLAYER}"' not in first
+    undrawn = await piece_id(session, CRAFT_PLAYER)
+    assert await set_page_piece_hidden(session, craft, undrawn, hidden=True, user=admin, now=NOW) is True
+    assert await kept_slugs(session) == [CRAFT_SLUG]
+    assert f'"{OWN}"' in first
+    own = await piece_id(session, OWN)
     assert await set_page_piece_hidden(session, craft, own, hidden=True, user=admin, now=NOW) is True
     assert await kept_slugs(session) == []

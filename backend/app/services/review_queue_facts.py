@@ -88,7 +88,8 @@ async def decide_fact(
     session.add(_event(claim, reviewer, decision.noted, was_status=was_status, was_level=was_level))
     await session.flush()
     if was_status in SHOWN_CLAIM_STATUSES and claim.status not in SHOWN_CLAIM_STATUSES:
-        await drop_kept_versions(session, await claim_owners(session, [claim.id]), now=now)
+        owners = await claim_owners(session, [claim.id])
+        await drop_kept_versions(session, owners, now=now, marks=(str(claim.id),))
     differ = await _settled_differences(session, claim)
     await _record(session, reviewer, claim, decision, was_status)
     return QueueDecision(
