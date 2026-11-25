@@ -6,7 +6,7 @@ import pytest
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import Refused
+from app.core.errors import InvalidInput, Refused
 from app.models import AuditLog, ComponentProposal, KnowledgePiece, KnowledgePieceUnlink
 from app.research.own_proposals import ComponentProposalBody
 from app.research.page_layout import PageLayoutEntry
@@ -14,7 +14,7 @@ from app.research.page_proposals import PageBundle
 from app.research.staged_reviews import ConfirmedItem, StagedConfirmation, StagedDecision
 from app.services import own_proposals
 from app.services.component_library import library_components
-from app.services.component_lifecycle import retirable_piece, withdraw_registered
+from app.services.component_lifecycle import live_piece, retirable_piece, take_off_pages, withdraw_registered
 from app.services.component_proposals import propose_component
 from app.services.open_work_subjects import craft_subject
 from app.services.page_layouts import layout_of, store_layout
@@ -36,7 +36,7 @@ from .component_lifecycle_seed import (
     person,
     replacement,
 )
-from .page_documents_seed import CONCEPT_PLAYER, CRAFT_SLUG
+from .page_documents_seed import BARE_SLUG, CONCEPT_PLAYER, CRAFT_SLUG
 from .test_page_bundles_db import tools
 from .test_staged_reviews_db import caller_of
 from .testimony_seed import rolled_back_session
@@ -208,3 +208,28 @@ async def test_an_admin_s_staged_removal_changes_nothing_until_a_person_confirms
     on_page = await labels_on_page(session)
     assert OWN not in on_page and CONCEPT_PLAYER not in on_page
     assert await removals(session) == {(ADMIN, OWN, None), (ADMIN, CONCEPT_PLAYER, f"craft:{CRAFT_SLUG}")}
+
+
+async def test_a_stranger_is_told_who_takes_a_component_off_at_once_and_that_a_steward_may_ask(
+    session: AsyncSession,
+) -> None:
+    with pytest.raises(Refused) as refused:
+        await retirable_piece(session, await person(session, STRANGER), OWN)
+    assert refused.value.message == (
+        f"Only the proposer of {OWN} or an Admin may take it off its pages or replace it at once; "
+        "a steward of its craft may ask."
+    )
+    assert (await retirable_piece(session, await person(session, PROPOSER), OWN)).label == OWN
+
+
+async def test_a_one_page_removal_is_refused_on_a_page_that_does_not_draw_the_component(
+    session: AsyncSession,
+) -> None:
+    admin, piece = await person(session, ADMIN), await live_piece(session, OWN)
+    elsewhere = await craft_subject(session, BARE_SLUG)
+    with pytest.raises(InvalidInput, match=f"{OWN} is not on {elsewhere.name}'s page"):
+        await take_off_pages(session, admin, piece, page=elsewhere, reason=WHY, now=NOW)
+    page = await craft_subject(session, CRAFT_SLUG)
+    taken = await take_off_pages(session, admin, piece, page=page, reason=WHY, now=NOW)
+    assert CRAFT_SLUG in taken.owners.crafts
+    assert await removals(session) == {(ADMIN, OWN, f"{page.kind}:{CRAFT_SLUG}")}

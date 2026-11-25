@@ -4,11 +4,40 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { afterLoad, laterWhenIdle, whenIdle } from "../components/monograph/useShellTrigger";
+import type { DocumentLanguageCode } from "../lib/documentLanguages";
+import type { MonographDocument } from "../lib/monographDocument";
 import { documentPart, documentPartPath, DocumentPartError, joinedDocument, LATEST_READ, laterRead, type DocumentPart } from "../lib/monographDocumentParts";
+import { documentDigest, restAddress, type RestAddress } from "../lib/monographRenderShell";
+import { addressedDocument } from "../lib/monographRestRead";
+
+import { generatedDocument } from "./generatedMonographFixture";
 
 const part = (at: number, parts: number, body: Record<string, unknown>, version = 4, tag: string | null = null): DocumentPart => ({ schemaVersion: 1, version, part: at, parts, tag, body });
 const HINDI_TAG = "v4-abc-hi-0123456789abcdef";
-const SHELL_ROUTE = join(__dirname, "..", "app", "(reading)", "crafts", "[slug]", "shell", "[version]", "route.ts");
+const REST_ROUTE = (pages: string) => join(__dirname, "..", "app", "(reading)", pages, "[slug]", "shell", "[version]", "route.ts");
+const CURRENT = "current";
+
+type Reads = { asked: string[]; read: (language: DocumentLanguageCode | null, version: number | null) => Promise<MonographDocument | null> };
+
+function reads(found: Record<string, MonographDocument>): Reads {
+  const asked: string[] = [];
+  const read = async (language: DocumentLanguageCode | null, version: number | null) => {
+    const key = `${language ?? "en"} ${version ?? CURRENT}`;
+    asked.push(key);
+    return found[key] ?? null;
+  };
+  return { asked, read };
+}
+
+function at(version: number, language = "en"): MonographDocument {
+  return { ...generatedDocument(), version, language, subjectKind: "category" };
+}
+
+function address(document: MonographDocument, language: DocumentLanguageCode | null = null): RestAddress {
+  const found = restAddress(`v${document.version}-${documentDigest(document)}${language ? `-${language}` : ""}`);
+  if (found === null) throw new Error("a rest address that does not read back");
+  return found;
+}
 
 test("a part is read by its number at the version the first part named", () => {
   expect(documentPartPath("/crafts/Kutch-Ajrakh/monograph", 0, LATEST_READ)).toBe("/crafts/Kutch-Ajrakh/monograph?part=0");
@@ -91,8 +120,32 @@ test("a page still loading waits for its load event, and a loaded one goes on at
   expect(heard.at(-1)).toBe("loaded");
 });
 
-test("the rest of an authored page is read from the document the page drew when its address still names it", () => {
-  const route = readFileSync(SHELL_ROUTE, "utf8");
-  expect(route).toContain("documentDigest(current) === address.digest");
-  expect(route).toContain("serverCraftDocument(slug, address.version)");
+test("the rest of a page is read from the document the page drew when its address still names it", async () => {
+  const current = at(6);
+  const named = reads({ [`en ${CURRENT}`]: current });
+  expect(await addressedDocument(named.read, address(current))).toBe(current);
+  expect(named.asked).toEqual([`en ${CURRENT}`]);
+  const moved = { ...current, content: { ...current.content, units: {} } };
+  const changed = reads({ [`en ${CURRENT}`]: moved, "en 6": current });
+  expect(await addressedDocument(changed.read, address(current))).toBe(current);
+  expect(changed.asked).toEqual([`en ${CURRENT}`, "en 6"]);
+  for (const pages of ["crafts", "categories"]) expect(readFileSync(REST_ROUTE(pages), "utf8")).toContain("addressedDocument(serverDocumentReader(");
+});
+
+test("a category or craft page drawn a version behind reads the rest of that version, in its own language", async () => {
+  const kept = at(5);
+  const english = reads({ [`en ${CURRENT}`]: at(6), "en 5": kept });
+  expect(await addressedDocument(english.read, address(kept))).toBe(kept);
+  expect(english.asked).toEqual([`en ${CURRENT}`, "en 5"]);
+  const hindi = at(5, "hi");
+  const translated = reads({ [`hi ${CURRENT}`]: at(6, "hi"), "hi 5": hindi });
+  expect(await addressedDocument(translated.read, address(hindi, "hi"))).toBe(hindi);
+  expect(translated.asked).toEqual([`hi ${CURRENT}`, "hi 5"]);
+});
+
+test("a rest whose version is gone, or that comes back in another language, is not found", async () => {
+  const kept = at(5);
+  expect(await addressedDocument(reads({ [`en ${CURRENT}`]: at(6) }).read, address(kept))).toBeNull();
+  const untranslated = reads({ [`hi ${CURRENT}`]: at(6), "hi 5": kept });
+  expect(await addressedDocument(untranslated.read, address(at(5, "hi"), "hi"))).toBeNull();
 });

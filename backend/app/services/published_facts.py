@@ -95,7 +95,7 @@ async def _edit(session: AsyncSession, decision: StagedDecision, reviewer: User,
         detail={"before": before, "after": text, "reason": decision.reason},
     )
     await session.flush()
-    return Carried(EDITED, await claim_owners(session, [claim.id]))
+    return Carried(EDITED, await claim_owners(session, [claim.id]), marks=(str(claim.id),))
 
 
 PUBLISHED_FACTS = PublishedKind(

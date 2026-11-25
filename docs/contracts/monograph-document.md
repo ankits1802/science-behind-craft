@@ -45,7 +45,7 @@ flowchart LR
 | Storing the document when it changed | `services/monograph_load.py` |
 | The table | `models/monograph_documents.py` and migration `0041_monograph_documents`; migration `0045_document_language` keys stored documents by language (all rows English) |
 | The route | `api/routes/craft_monograph.py`; the family and category routes `api/routes/page_documents.py` |
-| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py`. A read claims a rebuild only when the stored stamp differs from the current one (or a claim is ten minutes old), and a rebuild that finds its document changed under the stamp it held reads the stamp again: when the inputs moved while it built, the copy keeps the stamp it started from and the next read builds it again; only a document that changed while its inputs stood still is reported as an input the stamp misses (decision 0190). A rebuild that changes the copy first keeps the version it replaces, its text and hash, in table `StoredDocumentVersion` (`services/stored_document_versions.py`, migration `0117_sanganeri_parity`), so a page drawn at that version still reads its rest and its edition; a page whose sections are withdrawn loses them with its copy (decision 0210). A change that takes something off a page (an Admin's confirmed removal or edit, a shown fact retracted or rejected, a reading rejected, a contributor's withdrawal, a piece hidden) drops that page's kept versions in every language in its own transaction and marks its copy `removedAt` (migration `0118_removed`), and a copy so marked is not kept when it is replaced; a rebuild that finds it unchanged clears the mark. Every rebuild, a first build and that drop take the page's transaction lock (`stored_document_versions.lock_page`) before they read its version, so one rebuild of a page runs at a time (decision 0213) |
+| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py`. A read claims a rebuild only when the stored stamp differs from the current one (or a claim is ten minutes old), and a rebuild that finds its document changed under the stamp it held reads the stamp again: when the inputs moved while it built, the copy keeps the stamp it started from and the next read builds it again; only a document that changed while its inputs stood still is reported as an input the stamp misses (decision 0190). A rebuild that changes the copy first keeps the version it replaces, its text and hash, in table `StoredDocumentVersion` (`services/stored_document_versions.py`, migration `0117_sanganeri_parity`), so a page drawn at that version still reads its rest and its edition; a page whose sections are withdrawn loses them with its copy (decision 0210), and a page keeps at most `KEPT_VERSIONS_MAX` (168, one an hour for the pages' revalidate time of 7 days) per language, the newest (decision 0219). A change that takes something off a page (an Admin's confirmed removal or edit, a shown fact retracted or rejected, a reading rejected, a contributor's withdrawal, a piece hidden) drops the kept versions in every language, in its own transaction, of each page it changes, and marks that page's copy `removedAt` (migration `0118_removed`); a copy so marked is not kept when it is replaced, and a rebuild that finds it unchanged clears the mark. The pages it changes are those of the pages it names (its refresh's, or the one page a one-page removal names) with a copy, current or kept, that draws what it removed: a fact by its id, a component by its label (`marks`); a change naming neither drops every page it names (decision 0219). Every rebuild, a first build and that drop take the page's transaction lock (`stored_document_versions.lock_page`) before they read its version, so one rebuild of a page runs at a time, and the drop first takes the removals' lock, so two removals naming the same pages in either order wait in turn (decisions 0213 and 0219) |
 | The static page, the served kit and the golden | `scripts/build_monograph.py` |
 | The split | `scripts/split_monograph.py` |
 | The web shapes | `frontend/lib/monographDocument.ts` and `frontend/lib/componentViewContract.ts` |
@@ -77,15 +77,20 @@ tag of at most 16 characters) and `version` (optional, from 1).
   written in English (decision 0107); a variant is the same page translated, never another
   article.
 - **`version`**: that stored version, or the generated document when its version is that number,
-  or a version of the generated document a rebuild replaced (`superseded_fallback`, the route's
-  adapter to `stored_documents.superseded_copy`), served as it was stored: in English alone, under
-  its own tag, its parts read the same way and a rebuild the read claims still queued; otherwise 404
-  `This craft's monograph has no such version.`. The web app's `/crafts/<slug>/v<N>` reads it, the
-  address Cite this monograph gives, and so does the rest of a page drawn at that version
-  (`/crafts/<slug>/shell/v<N>-<digest>`), which a cache can still hand a reader after the copy
-  moved on (decision 0210). A version a removal dropped is 404 like one never kept, at the edition,
-  the rest and the exports alike, once the removal's refresh has expired the page's document tag
-  (decision 0213).
+  or a version of the generated document a rebuild replaced (`document_reads.generated_at`, through
+  `superseded_fallback`, its adapter to `stored_documents.superseded_copy`), served as it was stored
+  in English, or in `lang` drawn from that English by the page's served translations as the
+  current copy is (`page_translation_serving.translated_page`, under the tag
+  `"v<N>-<hash>-<language>-<16 hex>"`, never writing the page's text index), its parts read the
+  same way and a rebuild the read claims still queued; otherwise 404 `This craft's monograph has no
+  such version.`. The family and category routes take `version` the same way, 404 `That category's
+  monograph has no such version.` (or family's). The web app's `/crafts/<slug>/v<N>` reads it, the
+  address Cite this monograph gives, and so does the rest of a page drawn at that version, in its
+  language (`/crafts/<slug>/shell/v<N>-<digest>[-<language>]` and
+  `/categories/<slug>/shell/v<N>-<digest>[-<language>]`, both through `lib/monographRestRead`),
+  which a cache can still hand a reader after the copy moved on (decisions 0210 and 0219). A
+  version a removal dropped is 404 like one never kept, at the edition, the rest and the exports
+  alike, once the removal's refresh has expired the page's document tag (decision 0213).
 - **`part`** (0 to 64) and **`tag`**: the served document, English or a variant, cut into parts of
   at most 1 MB (`research.document_parts`): `{schemaVersion 1, version, part, parts, tag, body}`,
   the content in part 0, then the shell, specs and fragments in order, under the tag
@@ -560,6 +565,8 @@ to `specs`).
 | Parts, their budget and their tag | `tests/test_document_parts.py` and `tests/layouts/test_page_document_routes.py` |
 | A generated document stored, served and rebuilt, and a variant drawn from its stored English copy | `tests/db/test_stored_documents_db.py` and `tests/db/test_translated_documents_db.py` |
 | What a removal, an edit, a retraction or a withdrawal leaves of a page's kept versions, a one-page removal and a reading's review in the stamp, one rebuild of a page at a time | `tests/db/test_removed_versions_db.py`, `tests/db/test_published_process_db.py` and `tests/db/test_stored_documents_db.py` |
+| Only the pages whose copies draw what a removal took cleared, two crossing removals waiting in turn, the cap of kept versions per page and language and the revalidate time it is chosen from | `tests/db/test_kept_versions_db.py` and `tests/contracts/test_kept_copies_contract.py` |
+| A kept version read in a page's language without writing its index, and by the family and category routes | `tests/db/test_translated_documents_db.py`, `tests/public/test_craft_monograph_versions.py` and `tests/layouts/test_page_document_routes.py` |
 | The documents of a craft, a family and a category | `tests/db/test_generated_documents_db.py` |
 | A field's facts no section cites, listed in its chapter; on a curated craft one contributed fact per field in that field's chapter, after its curated sentences, a closed source cited unquoted, a fact a figure shows never listed | `tests/db/test_unwritten_facts_db.py`, `tests/db/test_curated_listed_facts_db.py` and `tests/layouts/test_generated_structure.py` |
 | The generated layout, chapter titles, the lede, the section minimum, the picture specs | `tests/layouts/test_generated_document.py` and `tests/layouts/test_generated_chapters.py` |

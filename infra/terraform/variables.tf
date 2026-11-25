@@ -86,6 +86,24 @@ variable "export_days" {
   default     = 7
 }
 
+variable "export_noncurrent_days" {
+  description = "Days an expired or overwritten export under exports/ is kept as a noncurrent version."
+  type        = number
+  default     = 1
+}
+
+variable "page_export_owner" {
+  description = "The owner folder page exports are filed under (page_export_files.PAGE_EXPORT_OWNER)."
+  type        = string
+  default     = "00000000-0000-0000-0000-000000000001"
+}
+
+variable "page_export_days" {
+  description = "Days a page's PDF or Word file is kept, so a file of a version a removal dropped leaves the bucket."
+  type        = number
+  default     = 1
+}
+
 variable "narration_days" {
   description = "Days a Listen narration part or manifest under media/narration/ is kept; a block heard again after that is spoken once more."
   type        = number

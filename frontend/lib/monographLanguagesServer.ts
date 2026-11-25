@@ -3,7 +3,8 @@ import { cache } from "react";
 import { documentLanguagesPath, parsePageLanguages, type DocumentLanguageCode, type PageKind, type PageLanguages } from "@/lib/documentLanguages";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { monographDocumentPath, type MonographPreviewSubject } from "@/lib/monographDocumentShape";
-import { documentRead, monographDocumentTag } from "@/lib/monographRenderServer";
+import { documentRead, monographDocumentTag, serverMonographDocument } from "@/lib/monographRenderServer";
+import type { DocumentReader } from "@/lib/monographRestRead";
 import { STATIC_FETCH_TIMEOUT_MS } from "@/lib/server/readingPages";
 import { bodyOrAbsent, publicFetch } from "@/lib/server/serverFetch";
 import { STATIC_PAGE_REVALIDATE_SECONDS } from "@/lib/sitePagesContract";
@@ -25,3 +26,7 @@ export const serverDocumentInLanguage = cache(
   async (subject: MonographPreviewSubject, slug: string, language: DocumentLanguageCode, version: number | null = null): Promise<MonographDocument | null> =>
     documentRead(monographDocumentPath(subject, slug), monographDocumentTag(subject, slug), { version, language, tag: null })
 );
+
+export function serverDocumentReader(subject: MonographPreviewSubject, slug: string): DocumentReader {
+  return (language, version) => (language === null ? serverMonographDocument(subject, slug, version) : serverDocumentInLanguage(subject, slug, language, version));
+}

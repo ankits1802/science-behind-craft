@@ -13,10 +13,11 @@ from app.api.public_deps import read_headers, unchanged_read
 from app.core.db import release_connection
 from app.models import User
 from app.research.document_parts import compact_json, document_parts, part_body
+from app.services.open_work_subjects import WorkSubject
 from app.services.page_text_index import PageKey, stored_tag
-from app.services.page_translation_serving import ServedPage, page_in_language
+from app.services.page_translation_serving import ServedPage, page_in_language, translated_page
 from app.services.stored_document_rebuilds import rebuild_wanted
-from app.services.stored_documents import GeneratedRead
+from app.services.stored_documents import GeneratedRead, StoredCopy, superseded_copy
 
 __all__ = [
     "CONTENT_LANGUAGE",
@@ -27,14 +28,17 @@ __all__ = [
     "WHOLE_DOCUMENT",
     "AskedPart",
     "AskedTag",
+    "AskedVersion",
     "PartAsk",
     "ServedDocument",
     "StoredText",
     "document_response",
+    "generated_at",
     "generated_in_language",
     "generated_served",
     "in_language",
     "queue_rebuild",
+    "superseded_fallback",
 ]
 
 JSON_TYPE = "application/json"
@@ -47,6 +51,7 @@ TAG_PATTERN = r"^[A-Za-z0-9-]+$"
 
 AskedPart = Annotated[int | None, Query(ge=0, le=PARTS_MAX)]
 AskedTag = Annotated[str | None, Query(max_length=TAG_MAX_CHARS, pattern=TAG_PATTERN)]
+AskedVersion = Annotated[int | None, Query(ge=1)]
 
 
 @dataclass(frozen=True)
@@ -118,6 +123,28 @@ async def generated_in_language(
     return ServedDocument(
         shown.etag, shown.language, compact_json(shown.body), served.version, served.rebuild
     )
+
+
+async def generated_at(
+    session: AsyncSession, read: GeneratedRead, *, language: str, version: int | None
+) -> ServedDocument | None:
+    if read.copy is None:
+        return None
+    if version is None or version == read.copy.version:
+        return await generated_in_language(session, read, language=language)
+    current = generated_served(read)
+    copy = await superseded_fallback(session, read.subject, version)
+    if current is None or copy is None:
+        return None
+    english = ServedPage(etag=copy.etag, language=copy.language, body=StoredText(copy.text))
+    page = (read.subject.kind, read.subject.slug)
+    shown = await translated_page(session, page, english, language=language)
+    text = copy.text if shown is english else compact_json(shown.body)
+    return ServedDocument(shown.etag, shown.language, text, copy.version, current.rebuild)
+
+
+async def superseded_fallback(session: AsyncSession, subject: WorkSubject, version: int) -> StoredCopy | None:
+    return await superseded_copy(session, subject, version)
 
 
 def queue_rebuild(background: BackgroundTasks, served: ServedDocument) -> None:

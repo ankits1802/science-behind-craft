@@ -211,6 +211,54 @@ def test_a_translated_category_is_served_from_its_stored_english_copy_under_its_
     assert (english.headers["ETag"], english.json()["language"]) == (f'"{english_tag}"', "en")
 
 
+@pytest.mark.parametrize(
+    ("path", "kind"),
+    [
+        ("/api/categories/Textile-Craft-Category/monograph", "category"),
+        ("/api/families/Other-Textiles/monograph", "family"),
+    ],
+)
+def test_a_category_or_family_reads_the_version_its_rebuild_replaced_in_english_and_in_its_languages(
+    path: str, kind: str, held: dict[str, Any], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    earlier: MonographDocument = held["document"]
+    held["document"] = earlier.model_copy(update={"version": earlier.version + 1, "title": "Bagh, rebuilt"})
+    kept = stored(earlier, current=False)
+    asked: list[tuple[str, int]] = []
+    translated: list[tuple[Any, str]] = []
+
+    async def superseded(session: Any, subject: Any, version: int) -> StoredCopy | None:
+        asked.append((subject.kind, version))
+        return kept if version == earlier.version else None
+
+    async def in_language(session: Any, page: Any, english: ServedPage, *, language: str) -> ServedPage:
+        translated.append((page, language))
+        if language != "hi":
+            return english
+        return ServedPage(f"{english.etag}-hi-{'d' * 16}", "hi", {**english.body, "language": "hi"})
+
+    monkeypatch.setattr(document_reads, "superseded_fallback", superseded)
+    monkeypatch.setattr(document_reads, "translated_page", in_language)
+    http = client(held)
+    tag = f"v{earlier.version}-{document_hash(earlier)}"
+    english = http.get(path, params={"version": earlier.version})
+    assert english.status_code == 200 and english.headers["Content-Language"] == "en"
+    assert (english.json()["version"], english.json()["title"], english.headers["ETag"]) == (
+        earlier.version,
+        earlier.title,
+        f'"{tag}"',
+    )
+    hindi = http.get(path, params={"version": earlier.version, "lang": "hi", "part": 0})
+    assert hindi.status_code == 200 and hindi.headers["Content-Language"] == "hi"
+    assert hindi.json()["tag"] == f"{tag}-hi-{'d' * 16}"
+    assert translated[-1][1] == "hi" and asked[-1] == (kind, earlier.version)
+    assert http.get(path, params={"version": earlier.version + 1}).json()["title"] == "Bagh, rebuilt"
+    missing = http.get(path, params={"version": earlier.version + 7})
+    assert missing.status_code == 404
+    assert missing.json()["detail"] == f"That {kind}'s monograph has no such version."
+    assert http.get(path).json()["version"] == earlier.version + 1
+
+
 def test_an_unknown_subject_or_one_with_nothing_published_is_a_404(held: dict[str, Any]) -> None:
     http = client(held)
     assert http.get("/api/families/No-Such-Family/monograph").status_code == 404

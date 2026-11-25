@@ -7,13 +7,14 @@ import pytest
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.document_reads import generated_in_language
+from app.api.document_reads import generated_at, generated_in_language
 from app.models import PageTranslation, StoredDocument
 from app.research.page_translations import APPROVED_STATUS
 from app.research.translation_passages import is_translatable, passage_leaves, unit_hash
 from app.services import stored_documents
 from app.services.page_english import english_page
 from app.services.page_text_index import indexed_tag
+from app.services.stored_document_versions import keep_superseded
 from app.services.stored_documents import generated_read
 
 from .page_documents_seed import CATEGORY_SLUG, CRAFT_SLUG, seed
@@ -135,3 +136,33 @@ async def test_a_contributor_works_on_the_english_readers_are_served_so_both_ind
     assert english is not None
     assert english.tag == f"v{moved}-{first.copy.content_hash}"
     assert await indexed_tag(session, ("craft", CRAFT_SLUG)) == english.tag
+
+
+async def test_a_version_a_rebuild_replaced_is_read_in_its_language_and_the_page_s_index_stays_on_the_current(
+    session: AsyncSession,
+) -> None:
+    read = await generated_read(session, *CATEGORY_PAGE)
+    assert read.copy is not None
+    kept = read.copy
+    key, unit = first_passage(kept.body())
+    texts = await approved(session, key, unit)
+    row = await stored_documents.stored_row(session, read.subject)
+    assert row is not None
+    await keep_superseded(session, row, now=row.builtAt)
+    row.version, row.contentHash = kept.version + 1, "f" * 64
+    await session.flush()
+    moved = await generated_read(session, *CATEGORY_PAGE)
+    assert moved.copy is not None and moved.copy.version == kept.version + 1
+    await generated_in_language(session, moved, language="en")
+    indexed = await indexed_tag(session, CATEGORY_PAGE)
+    assert indexed == f"v{kept.version + 1}-{'f' * 64}"
+    hindi = await generated_at(session, moved, language="hi", version=kept.version)
+    assert hindi is not None and (hindi.language, hindi.version) == ("hi", kept.version)
+    assert hindi.etag.startswith(f"{kept.etag}-hi-")
+    shown = json.loads(hindi.text)
+    assert (shown["version"], shown["translation"]["sourceVersion"]) == (kept.version, kept.version)
+    assert [leaf.text for leaf in passage_leaves(shown["content"]["units"][key]["nodes"])] == texts
+    english = await generated_at(session, moved, language="en", version=kept.version)
+    assert english is not None and (english.text, english.etag) == (kept.text, kept.etag)
+    assert await generated_at(session, moved, language="hi", version=kept.version + 7) is None
+    assert await indexed_tag(session, CATEGORY_PAGE) == indexed

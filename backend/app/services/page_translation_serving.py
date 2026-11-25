@@ -16,7 +16,15 @@ from .monograph_document import authored_document, has_authored_content
 from .page_text_index import PageKey, indexed_tag, write_page_texts
 from .page_translation_store import served_translations
 
-__all__ = ["DIGEST_SHOWN", "ServedPage", "ShownPage", "body_specs", "page_in_language", "variant_body"]
+__all__ = [
+    "DIGEST_SHOWN",
+    "ServedPage",
+    "ShownPage",
+    "body_specs",
+    "page_in_language",
+    "translated_page",
+    "variant_body",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -45,17 +53,29 @@ async def page_in_language(
     if wrote:
         content = MonographContent.model_validate(english.body["content"])
         await write_page_texts(session, page, tag, content, body_specs(english.body))
+    shown = await translated_page(session, page, english, language=language, content=content)
+    return ShownPage(shown, wrote)
+
+
+async def translated_page(
+    session: AsyncSession,
+    page: PageKey,
+    english: ServedPage,
+    *,
+    language: str,
+    content: MonographContent | None = None,
+) -> ServedPage:
     if language == ENGLISH:
-        return ShownPage(english, wrote)
+        return english
     served = await served_translations(session, page, language)
     if served.empty:
-        return ShownPage(english, wrote)
-    content = content or MonographContent.model_validate(english.body["content"])
-    body = variant_body(english.body, content, served, language)
+        return english
+    read = content or MonographContent.model_validate(english.body["content"])
+    body = variant_body(english.body, read, served, language)
     if body is None:
-        return ShownPage(english, wrote)
+        return english
     etag = f"{english.etag}-{language}-{served.digest[:DIGEST_SHOWN]}"
-    return ShownPage(ServedPage(etag=etag, language=language, body=body), wrote)
+    return ServedPage(etag=etag, language=language, body=body)
 
 
 def variant_body(

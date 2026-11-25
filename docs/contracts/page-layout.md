@@ -103,7 +103,7 @@ layout, and a new unit or component lands at the end of its chapter until a layo
 |---|---|---|---|
 | GET | `/api/pages/{kind}/{slug}/layout` | anyone (public reading limits, ETag) | the newest `PageLayout`; 404 for an unknown page or one with no layout; 422 for another kind |
 | PUT | `/api/pages/{kind}/{slug}/layout` | Admin, Master Admin | body `{baseVersion, entries}`; 200 the stored version; 409 when `baseVersion` is not the current version; 404 for an unknown page; 422 when an entry breaks a rule |
-| GET | `/api/categories/{slug}/monograph` | anyone (public reading limits, ETag) | the generated `MonographDocument`; 404 for an unknown category or one with nothing published |
+| GET | `/api/categories/{slug}/monograph` | anyone (public reading limits, ETag) | the generated `MonographDocument`, with `lang`, `version`, `part` and `tag` as the craft route takes them (`monograph-document.md`); a `version` a rebuild replaced is read from the kept copy, in `lang` (decision 0219); 404 for an unknown category or one with nothing published, and `That category's monograph has no such version.` for a version never kept |
 | GET | `/api/families/{slug}/monograph` | anyone (public reading limits, ETag) | the same for a family |
 | GET | `/api/categories/{slug}/monograph/{fmt}`, `/api/families/{slug}/monograph/{fmt}` | anyone (public reading limits, and 10 new files in 10 minutes per caller) | the page as `pdf` or `docx`, an `ExportLink` (`monograph-document.md`, Exports; decision 0208, routes in `api/routes/page_exports.py`); 503 with `Retry-After` when no build slot frees within 5 s, 429 with `Retry-After` over the caller's builds; a stale page's rebuild queued whatever it answers (decision 0214) |
 

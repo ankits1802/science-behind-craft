@@ -85,8 +85,8 @@ test("every translated reading route defers its rest, and the rest routes read t
   const read = (...path: string[]) => readFileSync(join(ROUTES, ...path), "utf8");
   expect(read("crafts", "[slug]", "[edition]", "page.tsx")).toContain("<MonographPage document={document} deferred languages={languages} />");
   expect(read("categories", "[slug]", "[language]", "page.tsx")).toContain("masthead={false} deferred languages={languages}");
-  const craftRest = read("crafts", "[slug]", "shell", "[version]", "route.ts");
-  expect(craftRest).toContain("serverDocumentInLanguage(\"craft\", slug, language, address.version)");
-  expect(craftRest).toContain("read.language === language");
-  expect(read("categories", "[slug]", "shell", "[version]", "route.ts")).toContain("document.language === (address.language ?? ENGLISH)");
+  for (const pages of ["crafts", "categories"]) expect(read(pages, "[slug]", "shell", "[version]", "route.ts")).toContain("addressedDocument(serverDocumentReader(");
+  const lib = (name: string) => readFileSync(join(__dirname, "..", "lib", name), "utf8");
+  expect(lib("monographLanguagesServer.ts")).toContain("serverDocumentInLanguage(subject, slug, language, version)");
+  expect(lib("monographRestRead.ts")).toContain("found.language === (address.language ?? ENGLISH)");
 });

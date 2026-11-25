@@ -16,7 +16,7 @@ from app.research.page_revalidation import PageOwners
 
 from . import audit
 from .component_layout_swaps import swap_in_layouts
-from .component_library_applies import APPLIED_PIECE, applies_to, registered_pieces
+from .component_library_applies import applies_on, registered_pieces
 from .component_retirers import may_retire, proposal_of
 from .open_work_subjects import CATEGORY, WorkSubject
 from .page_revalidation import claim_owners, craft_owners, merged_owners
@@ -28,7 +28,6 @@ __all__ = [
     "REMOVED_ACTION",
     "REPLACED_ACTION",
     "Retired",
-    "check_replacement",
     "live_piece",
     "piece_owners",
     "proposal_of",
@@ -46,7 +45,10 @@ APPROVED = "APPROVED"
 WITHDRAWN = "WITHDRAWN"
 NOT_RETIRING = "not_yours"
 NOT_REGISTERED = "No registered component has the label {label}; list_components gives the labels."
-NOT_YOURS = "Only the proposer of {label}, a steward of its craft or an Admin may take it off its pages or replace it."
+NOT_YOURS = (
+    "Only the proposer of {label} or an Admin may take it off its pages or replace it at once; "
+    "a steward of its craft may ask."
+)
 NOT_ON_PAGE = "{label} is not on {page}'s page, so there is nothing to take off it."
 OFF_ALREADY = "{label} is off {page}'s page already."
 
@@ -82,7 +84,7 @@ async def withdraw_registered(
 ) -> Retired:
     piece = await live_piece(session, label, lock=True)
     retired = await take_off_pages(session, user, piece, page=None, reason=reason, now=now)
-    await drop_kept_versions(session, retired.owners, now=now)
+    await drop_kept_versions(session, retired.owners, now=now, marks=(retired.label,))
     return retired
 
 
@@ -116,11 +118,6 @@ async def take_off_pages(
     )
     await session.flush()
     return Retired(piece.id, str(piece.label), owners)
-
-
-async def check_replacement(session: AsyncSession, user: User, label: str | None) -> None:
-    if label is not None:
-        await retirable_piece(session, user, label)
 
 
 async def retire_replaced(session: AsyncSession, row: ComponentProposal, piece_id: uuid.UUID) -> int:
@@ -192,7 +189,7 @@ async def _unlinked(
     session: AsyncSession, actor: User, piece: KnowledgePiece, page: WorkSubject, reason: str | None
 ) -> PageOwners:
     category = page.kind == CATEGORY
-    if not category and not await _applies(session, piece.id, page.id):
+    if not category and not await applies_on(session, piece.id, page.id):
         raise InvalidInput(NOT_ON_PAGE.format(label=piece.label, page=page.name))
     unlink = KnowledgePieceUnlink(
         pieceId=piece.id,
@@ -207,11 +204,3 @@ async def _unlinked(
     except IntegrityError:
         raise InvalidInput(OFF_ALREADY.format(label=piece.label, page=page.name)) from None
     return PageOwners(categories=(page.slug,)) if category else await craft_owners(session, [page.id])
-
-
-async def _applies(session: AsyncSession, piece_id: uuid.UUID, craft_id: uuid.UUID) -> bool:
-    applying = applies_to([craft_id]).subquery()
-    found = await session.scalar(
-        select(applying.c[APPLIED_PIECE]).where(applying.c[APPLIED_PIECE] == piece_id)
-    )
-    return found is not None
