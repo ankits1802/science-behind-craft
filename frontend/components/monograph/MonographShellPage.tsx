@@ -1,8 +1,8 @@
 import { AuthoredShell } from "@/components/monograph/AuthoredShell";
-import { shellScopes } from "@/components/monograph/kitFirstScopes";
 import { MonographFrame, type MonographPageProps } from "@/components/monograph/MonographFrame";
 import { MonographRail } from "@/components/monograph/MonographRail";
 import { PageDownloadRow } from "@/components/monograph/PageDownloadRow";
+import { shellScopes } from "@/lib/kitShellScopes";
 import { deferredRest } from "@/lib/monographDeferred";
 import { railChapters } from "@/lib/monographRenderLayout";
 import { documentTree, leadLength } from "@/lib/monographRenderShell";

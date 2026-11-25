@@ -4,10 +4,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { AuthProvider } from "../components/AuthProvider";
 import { KitRestSheet, KitSheetLink } from "../components/monograph/KitRestSheet";
-import { markupScopes } from "../components/monograph/kitFirstScopes";
 import { MonographPage } from "../components/monograph/MonographPage";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { firstSheetScopes, KIT_SCOPES } from "../lib/kitFirstSheet";
+import { markupScopes } from "../lib/kitShellScopes";
 import { kindPreviewDocument } from "../lib/kindPreview";
 import { MONOGRAPH_KIT_CSS, type MonographDocument } from "../lib/monographDocument";
 import type { KitScope } from "../lib/monographScopes";

@@ -43,11 +43,11 @@ function scopesLeft(sheet: string, undrawn: readonly KitScope[]): string[] {
 }
 
 function inOrder(sheet: string, kit: string): boolean {
-  let from = 0;
-  for (const line of sheet.split("\n").filter((text) => text.trim())) {
-    const at = kit.indexOf(line, from);
-    if (at < 0) return false;
-    from = at + line.length;
+  let at = 0;
+  for (const char of sheet) {
+    while (at < kit.length && kit[at] !== char) at += 1;
+    if (at === kit.length) return false;
+    at += 1;
   }
   return true;
 }
@@ -79,6 +79,9 @@ test("the kit's first sheet for a masthead and the chemistry keeps their rules a
   const sheet = firstSheet(KIT, drawn("mb", "chem"));
   expect(firstSheet(sheet, drawn("mb", "chem"))).toBe(sheet);
   expect(inOrder(sheet, KIT)).toBe(true);
+  const placed = [".bx-chem .pop[hidden]", ".bx-mb .pop[hidden]", ".bx[hidden] {"];
+  expect(placed.map((rule) => sheet.indexOf(rule))).toEqual([...placed.map((rule) => sheet.indexOf(rule))].sort((left, right) => left - right));
+  expect(placed.map((rule) => KIT.indexOf(rule))).toEqual([...placed.map((rule) => KIT.indexOf(rule))].sort((left, right) => left - right));
   for (const kept of [".bx[hidden] { display: none; }", ".bx-mb .pop[hidden]{ display: none; }", ".bx-chem .pop[hidden]{ display: none; }", ".bx-rm .toast-zone, #toasts {"]) expect(sheet, kept).toContain(kept);
   for (const left of [".bx-pt .stage[hidden]{ display: none; }", ".bx-pt .pop[hidden]{ display: none; }"]) expect(sheet, left).not.toContain(left);
   expect(sheet.length).toBeLessThan(KIT.length * 0.5);
