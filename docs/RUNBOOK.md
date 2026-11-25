@@ -904,9 +904,14 @@ fixture or the category page (`docs/contracts/category-page.md`).
   times and Lighthouse's slow 4G, three loads each and a read to the end, and fails when a page
   passes the limits drawn from its recorded numbers in `frontend/e2e/phone-budget.json`, naming the
   scripts, pictures, element or nodes that grew (decision 0205). Each page's `phone-measure.json`
-  is in the run's `frontend-smoke` artifact under `phone-budget/`. To record a deliberate change,
-  copy each page's `numbers` from that artifact into the record with the run id and date, in the
-  change that says why.
+  is in the run's `frontend-smoke` artifact under `phone-budget/`; its `paths` hold each load's
+  path to the largest element (every request started before it, from the page's resource timings,
+  with the priority Chrome gave it, its start, first byte and end; the render-blocking requests;
+  the fonts; the picture's own request; what shared the network while it came; the long tasks
+  before it), and the log prints one line per load (decision 0209). A request's first byte less
+  562.5 ms is when it got a connection: on the local server's HTTP/1.1 a page has six, so a request
+  queued behind others shows there. To record a deliberate change, copy each page's `numbers` from
+  that artifact into the record with the run id and date, in the change that says why.
 
 ## Roll back
 

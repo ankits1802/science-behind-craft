@@ -241,7 +241,9 @@ element as a `kv-slot` was filled.
   page tools) is registered as its near view (`kinds/nearViews.tsx`, through `nearBlock`): the
   server draws it whole inside a `div[data-kv-near]` holder, and the browser loads its code and
   hydrates it as the holder comes within two screens of the viewport, or, where the browser draws the
-  part itself, shows a figure-shaped skeleton until then (decision 0205);
+  part itself, shows a figure-shaped skeleton until then (decision 0205). No view imports a
+  stylesheet: every view's sheet is an `@import` of `app/component-views.css`, which the root
+  layout loads after `globals.css`, so a page waits on one request for them (decision 0209);
 - **from its fragment** otherwise: the fragment's HTML as written, inside
   `div.kv-slot.contents#kv-slot-<label with / as __>` that React never re-renders. A placed
   component's `kv-slot` is filled after mount by a portal;

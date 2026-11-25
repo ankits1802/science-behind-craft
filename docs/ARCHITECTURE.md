@@ -794,9 +794,10 @@ card's seal draw a kit scene with `components/artkit/KitScene.tsx` inside their 
 page kit plays a shown scene's part (decision 0200). A kind whose code is heavy (the declared map layer and
 timeline map, the why-here ground map and the six page tools) is drawn whole on the server and its
 code reaches the browser only as its holder nears the viewport (`components/answer/nearBlock.tsx`,
-the loaders in `components/monograph/kinds/nearViews.tsx`); the smoke job measures Kutch Ajrakh and
-a page of every kind on a slowed phone at 360 against their recorded numbers
-(`frontend/e2e/phone-budget.json`, decision 0205). Practice rules are `frontend-practices`.
+the loaders in `components/monograph/kinds/nearViews.tsx`); the views' stylesheets are one sheet of
+the root layout (`app/component-views.css`). The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at
+360 against their recorded numbers (`frontend/e2e/phone-budget.json`, decision 0205) and records
+each load's path to its largest element (`frontend/e2e/phonePath.ts`, decision 0209). Practice rules are `frontend-practices`.
 
 Who sees what is decided in `lib/permissions.ts`: the six roles' ranks and labels (checked
 against `shared/roles.json`) and one route guard per admin area. The nav and the settings hub
