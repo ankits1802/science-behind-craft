@@ -42,7 +42,13 @@
   }
 }
 
-.kv-monograph .margin-plate + .margin-plate {
+@media (min-width: 1200px) {
+  .kv-monograph .bx-pt .spread.kv-run > .margin.keep {
+    margin-block-start: 0;
+  }
+}
+
+.kv-monograph .kv-run .margin-plate + .margin-plate {
   margin-block-start: var(--space-5);
 }
 

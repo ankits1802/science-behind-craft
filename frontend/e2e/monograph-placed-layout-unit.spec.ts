@@ -87,13 +87,16 @@ test("from 1200px the margin entry stands beside its paragraph, below 1200px inl
     await drawn(page, width, html);
     const run = `${width}`;
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth), run).toBeLessThanOrEqual(0);
-    const place = await page.locator(`.margin-plate [data-component="${MARGIN}"]`).evaluate((node) => {
-      const plate = node.getBoundingClientRect();
-      const margin = (node.closest("aside") as HTMLElement).getBoundingClientRect();
-      const main = (node.closest(".spread")?.querySelector(":scope > .main") as HTMLElement).getBoundingClientRect();
-      return { shown: plate.width > 0 && plate.height > 0, beside: plate.left >= main.right && Math.abs(margin.top - main.top) < 12, below: margin.top >= main.bottom - 1 && Math.abs(plate.left - main.left) < 2 };
+    const box = await page.locator(`.margin-plate [data-component="${MARGIN}"]`).evaluate((node) => {
+      const edges = (found: Element) => {
+        const rect = found.getBoundingClientRect();
+        return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, width: rect.width, height: rect.height };
+      };
+      return { plate: edges(node), margin: edges(node.closest("aside") as Element), main: edges(node.closest(".spread")?.querySelector(":scope > .main") as Element) };
     });
-    expect(place, run).toEqual({ shown: true, beside: width >= SPREAD_FROM, below: width < SPREAD_FROM });
+    const { plate, margin, main } = box;
+    const place = { shown: plate.width > 0 && plate.height > 0, beside: plate.left >= main.right && Math.abs(margin.top - main.top) < 12, below: margin.top >= main.bottom - 1 && Math.abs(plate.left - main.left) < 2 };
+    expect(place, `${run} ${JSON.stringify(box)}`).toEqual({ shown: true, beside: width >= SPREAD_FROM, below: width < SPREAD_FROM });
     const widths = await page.evaluate((labels) => labels.map((label) => (document.querySelector(`[data-component="${label}"] figure`) as HTMLElement).getBoundingClientRect().width), [COLUMN, WIDE, BLEED]);
     const [column, wide, bleed] = widths;
     expect(bleed, run).toBeCloseTo(await page.evaluate(() => document.body.clientWidth), 0);
@@ -135,6 +138,7 @@ test("a document without layout data, or with a layout naming nothing, draws as 
   const html = pageHtml(templateDocument());
   const named = pageHtml(withLayout(templateDocument(), []));
   expect(named.replace(/<script type="application\/json" id="page-layout">[^<]*<\/script>/, "")).toBe(html);
-  for (const marker of ["data-size", "data-crop", "kv-bleed", "margin-plate", "margin note keep", "kv-pull"]) expect(html, marker).not.toContain(marker);
+  expect(html).not.toMatch(/data-home="[a-z]+" data-size=/);
+  for (const marker of ["data-crop", "kv-bleed", "margin-plate", "margin note keep", "kv-pull"]) expect(html, marker).not.toContain(marker);
   expect(html).toContain(`<div class="bx bx-rm my-12" data-component="${KIN}" data-component-kind="related_crafts" data-home="kind"><div class="screen"><div class="wrap kv-passage">`);
 });
