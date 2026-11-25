@@ -110,9 +110,10 @@ keys an interface words file holds gain `export.*`). The contracts are
 - The web's `exportLinkShape` accepts `docx` (`EXPORT_FORMATS`), which only a page export answers.
 - The answer report's kit figure keeps its English "Drawn:" (`kit_diagram_lines` defaults to the
   English words); the answer's own fixed words are not export words.
-- Each page's JavaScript grows by the button and its loader only; the phone budget's run on this
-  change measured it (Frontend checks, below the recorded limits of `e2e/phone-budget.json`, which
-  was not re-recorded).
+- No page's JavaScript grew. The phone budget's run on this change (Frontend checks 45540736535)
+  measured Kutch Ajrakh at 669.9 KB and `/crafts/Phone-Fixtures` at 687.6 KB, against 681.9 KB and
+  699.5 KB on base 2d7e7286 (run 45535280808): 12.0 KB less on each, CSS unchanged at 138.9 KB.
+  `e2e/phone-budget.json` was not re-recorded.
 - A reader of each language can now add and review `export.*` entries; until then every export
   word is English. The register's entry "Interface words in other languages wait for their
   readers" is the lead's to widen to them.

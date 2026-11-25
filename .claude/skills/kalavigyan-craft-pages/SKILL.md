@@ -122,7 +122,7 @@ A category page has no stages, native names or GI record; it has pictures placed
 `Kutch-Ajrakh.json`; read it by field, never whole (it is large):
 `python -I -c "import json;d=json.load(open('backend/app/data/curation/Kutch-Ajrakh.json',encoding='utf-8'));print(json.dumps(d['pictures'][:3],ensure_ascii=False,indent=1))"`
 
-Every page exports as a PDF and a Word document. Each component is drawn there as its still at rest,
+Every page exports as a PDF and a Word document. Readers download it from the page itself, on family and category pages too, with each open-licence plate's picture in its place. Each component is drawn there as its still at rest,
 with every unit it holds and its credits. Say in a component's units what its motion shows: paper
 keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and declared
 timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes and text,

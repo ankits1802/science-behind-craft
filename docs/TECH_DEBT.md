@@ -244,7 +244,9 @@ Last reviewed: 2026-11-22.
   سے, محفوظ کریں, اس جواب کا حوالہ دیں and the rest) but no entry is reviewed yet, "Saved",
   "Saving", "Removing" and one source have no source, and the other languages, the headings, the
   follow-ups and the status lines have no entries. The not-enough-evidence message and the errors
-  are composed in English and have no entries at all. A craft's name stays as it is written in
+  are composed in English and have no entries at all. A page export's own words (`export.heading`,
+  `.note`, `.paperNote`, `.kind`, `.label`, `.phrase`, `.pictureNote`, decision 0208) have keys
+  holding the code's English and no entry in any language, so every export word is English. A craft's name stays as it is written in
   English, as the monograph writes it.
 - **Why left:** a reviewed word needs a reader of its language; approving a design is not
   reviewing its words (the board and the monograph disagree on two Urdu words).
