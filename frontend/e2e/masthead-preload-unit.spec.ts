@@ -23,7 +23,7 @@ test("a page whose masthead holds a photograph asks for it first from the docume
   const preloads = markup(phoneFixtureDocument()).match(FETCHED_FIRST) ?? [];
   expect(preloads).toHaveLength(1);
   expect(preloads[0]).toContain(PHONE_WIDTH);
-  expect(preloads[0]).toContain('imageSizes="100vw"');
+  expect(preloads[0]).toContain('imageSizes="(min-width: 1280px) 1280px, 100vw"');
 });
 
 test("a page whose masthead has no photograph asks for no picture first", () => {
