@@ -27,12 +27,13 @@ __all__ = [
 ]
 
 CRAFT_FAMILIES_FILE = DATA_DIR / "craft_families.json"
-CRAFT_FAMILIES_VERSION = 2
+CRAFT_FAMILIES_VERSION = 3
 CRAFT_PLACEHOLDER = "{craft}"
 QUESTIONS_PER_KIND = 3
 PLACEHOLDER_LEADS = frozenset({"of", "for", "in", "into", "on", "make"})
 PRONOUNS = frozenset({"it", "its", "itself", "they", "them", "their", "themselves"})
 WORDS = re.compile(r"[^\W\d_]+")
+PICTURE_WORD = re.compile(r"[a-z]+")
 FAMILY_PALETTES = ("indigo", "bronze", "sandstone", "teak", "hide", "cane", "terracotta", "paper", "lac")
 
 
@@ -51,6 +52,7 @@ class CraftFamily:
     label: str
     palette: str
     kinds: tuple[CraftKind, ...]
+    picture_words: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -78,6 +80,10 @@ class CraftFamilies:
             family=self.family(self.category_slugs.get(names[0])),
             kind=self.kind(self.sub_category_slugs.get(names)),
         )
+
+    @property
+    def picture_words(self) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(word for family in self.families for word in family.picture_words))
 
     def questions(self, place: FamilyPlace, craft_name: str) -> list[str]:
         asked = place.kind.questions if place.kind is not None else self.default_questions
@@ -112,6 +118,7 @@ def _family(row: Mapping[str, Any]) -> CraftFamily:
         label=_text(row["label"], f"family {row['slug']}'s label"),
         palette=_palette(row["palette"], row["slug"]),
         kinds=tuple(_kind(kind) for kind in row["kinds"]),
+        picture_words=_picture_words(row.get("pictureWords"), row["slug"]),
     )
 
 
@@ -124,6 +131,16 @@ def _kind(row: Mapping[str, Any]) -> CraftKind:
         questions=_questions(row["questions"], f"kind {slug}"),
         other_questions=_other_questions(row.get("otherQuestions"), f"kind {slug}'s catch-all row"),
     )
+
+
+def _picture_words(rows: Any, family: str) -> tuple[str, ...]:
+    if not isinstance(rows, list) or not rows:
+        raise ValueError(f"family {family} lists no picture words")
+    unfolded = [word for word in rows if not isinstance(word, str) or not PICTURE_WORD.fullmatch(word)]
+    if unfolded:
+        raise ValueError(f"family {family}'s picture words are lower-case letters only: {unfolded[0]!r}")
+    _unique(rows, f"picture word of family {family}")
+    return tuple(rows)
 
 
 def _palette(value: Any, family: str) -> str:

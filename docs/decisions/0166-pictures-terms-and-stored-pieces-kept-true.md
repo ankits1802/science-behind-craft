@@ -24,6 +24,7 @@ The contracts are `docs/contracts/explainer.md` (Pictures and terms as served, `
 | The vocabulary pattern it keeps | [decision 0033](0033-knowledge-pieces-and-reuse.md) |
 | The per-answer cost it must not raise | [decision 0165](0165-answers-counted-as-settled-asked-as-asked.md) |
 | Stored pictures read before the search's sources are built (amends item 3) | [decision 0175](0175-production-checks-read-what-the-page-shows.md) |
+| A stored searched picture served only while its title names the craft's world (amends the stored pictures' reuse) | [decision 0207](0207-a-searched-picture-names-its-craft-s-world-and-a-stored-one-that-does-not-is-not-served.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

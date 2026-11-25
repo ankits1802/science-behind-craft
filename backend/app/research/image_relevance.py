@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from collections import Counter
-from collections.abc import Sequence
+from collections.abc import Collection, Iterable, Sequence
 from dataclasses import dataclass
 
 from .images import ImageCandidate, shown_inline
@@ -17,9 +17,11 @@ __all__ = [
     "ChosenImage",
     "ClaimText",
     "Illustration",
+    "PictureContext",
     "choose_images",
     "illustrated_claims",
     "illustration",
+    "picture_context",
     "topic_words",
 ]
 
@@ -48,6 +50,22 @@ class ChosenImage:
     illustration: Illustration
 
 
+@dataclass(frozen=True)
+class PictureContext:
+    words: frozenset[str]
+
+    def named_in(self, title: str) -> bool:
+        return any(word.startswith(known) for word in content_words(title) for known in self.words)
+
+
+def picture_context(
+    names: Iterable[str], places: Iterable[str], family_words: Iterable[str], *, ordinary: Collection[str]
+) -> PictureContext:
+    proper = {word for text in (*names, *places) for word in content_words(text) if word not in ordinary}
+    family = {word for text in family_words for word in content_words(text)}
+    return PictureContext(frozenset(proper | family))
+
+
 def illustration(
     candidate: ImageCandidate, claims: Sequence[ClaimText], *, leave_out: str
 ) -> Illustration | None:
@@ -69,7 +87,11 @@ def illustrated_claims(described: str, claims: Sequence[ClaimText], *, leave_out
 
 
 def choose_images(
-    candidates: Sequence[ImageCandidate], claims: Sequence[ClaimText], *, leave_out: str
+    candidates: Sequence[ImageCandidate],
+    claims: Sequence[ClaimText],
+    *,
+    leave_out: str,
+    context: PictureContext,
 ) -> list[ChosenImage]:
     seen: set[str] = set()
     found: list[tuple[bool, int, int, ChosenImage]] = []
@@ -77,7 +99,8 @@ def choose_images(
         if candidate.original_key in seen:
             continue
         seen.add(candidate.original_key)
-        shown = illustration(candidate, claims, leave_out=leave_out)
+        named = context.named_in(candidate.title)
+        shown = illustration(candidate, claims, leave_out=leave_out) if named else None
         if shown is not None:
             found.append(
                 (not shown_inline(candidate), -shown.shared, position, ChosenImage(candidate, shown))

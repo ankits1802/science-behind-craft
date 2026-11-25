@@ -1829,13 +1829,26 @@ is written "sentence" below; every sentence is cited.
   thumbnail (Brave's `thumbnail` and `placeholder` are never read), never over http; it has no
   licence, so it is a link card.
 - **Choosing.** A picture illustrates the claims (cited by the section's other blocks) whose
-  content stems it shares at least two of, craft-name words left out (`image_relevance`); a
-  section shows at most 4, inline first, at most 2 link cards, each original image once; no
-  relevant picture is no `images` block. Each picture is stored once as a `MediaRef` row with its
-  `MediaRefClaim` links. A section whose claims already have stored pictures shows those, by the
-  same caps, inline first, and searches only when none is stored; a stored picture is shown while
-  its claim is visible, it is not a field photo nobody has reviewed, and it passes today's shop and
-  social rule (`section_images.stored_items`, decision 0166).
+  content stems it shares at least two of, craft-name words left out (`image_relevance`), and only
+  when its title names the craft's world: a word of the title begins with one of the context's
+  words (`PictureContext.named_in`; "printing" holds "print", "cottage" does not hold "cotton").
+  The context (`services/craft_picture_context`, read once per `images` block for the ask's
+  `craft_slug`) is the content words of the craft's name, local name and active aliases and of its
+  states of origin and practice and its locations' labels, district and state names, less ordinary
+  English words (`data/english_words`) and "All India", together with its family's picture words
+  (`pictureWords` in `data/craft_families.json`); with no craft, or one not found, it is every
+  family's picture words. A description is never read for the context: an open image service's
+  description is often its uploader's tag list. A section shows at most 4, inline first, at most 2
+  link cards, each original image once; no relevant picture is no `images` block. Each picture is
+  stored once as a `MediaRef` row with its `MediaRefClaim` links. A section whose claims already
+  have stored pictures shows those, by the same caps, inline first, and searches only when none is
+  stored; a stored picture is shown while its claim is visible, it is not a field photo nobody has
+  reviewed, it passes today's shop and social rule (`section_images.stored_items`, decision 0166),
+  and a `TEXT` link of a searched picture is served only while the picture's title names the
+  craft's world. A curator's pick (`provider` `curation`), a field photo (`designer_portal`,
+  `field_repository`) and a `VISION` link are never held to that bar; pictures given through
+  `give_pictures` and approved open pictures are not `MediaRef` rows and are not read here. Nothing
+  stored is deleted (decision 0207).
 - **Drawing.** Every picture loads with `referrerPolicy="no-referrer"`; a link card shows
   `imageUrl`, `title`, `site` and `credit` and opens `pageUrl`; an inline picture shows `alt`,
   `author`, `licence` (linked to `licenceUrl`) and `site`, and opens `pageUrl`. A picture that

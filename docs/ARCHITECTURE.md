@@ -146,8 +146,8 @@ into `geo/records`, and the routes hand them to `geo/region_view` and `geo/layer
 (decision 0053); the craft page's response models live in `research/craft_page.py`,
 `craft_page_process.py`, `craft_page_context.py`, `craft_chapters.py`, `craft_parts.py`,
 `craft_masthead.py` and `craft_origins.py` so `services/craft_page` can build them, and the
-editorial family labels and kind questions are vendored data (`data/craft_families.json`,
-decision 0081). The page (schema version 3, decisions 0095 and 0098) is read once
+editorial family labels, kind questions and family picture words are vendored data
+(`data/craft_families.json`, decisions 0081 and 0207). The page (schema version 3, decisions 0095 and 0098) is read once
 (`craft_page_records`, `chapter_records.chapter_rows`), built purely by one module per chapter
 (`services/chapter_<key>.py`) that reuses the answer builders' pure halves with fixed rules for
 the model's choices, passed through one page ledger (`chapter_ledger`), and cached per craft and
@@ -588,15 +588,18 @@ sequenceDiagram
    its craft and the claims its other blocks cite, searches Wikimedia Commons, Openverse (open
    licences only) and SearXNG images (`sources/images/registry.image_sources`, held by
    `LiveSourcesStore.images()`), with Brave's image search when SearXNG finds fewer than two cards
-   or fails (`LiveSourcesStore.web_images`), keeps the pictures whose words meet a claim's
-   (`research/image_relevance`), stores each once as a `MediaRef` with its claims
+   or fails (`LiveSourcesStore.web_images`), keeps the pictures whose words meet a claim's and
+   whose title names the craft's world, its names, places or family's picture words
+   (`research/image_relevance`, `services/craft_picture_context`, decision 0207), stores each once
+   as a `MediaRef` with its claims
    (`services/media_ref_store`) and answers an `images` block: inline under an open licence with
    its author, else a credited link card whose thumbnail the page's own site serves, a site being
    a registrable name by the vendored Public Suffix List (decision 0166). The answer
    stream calls it for every section with blocks, researched or reused, and for the stored-only
    answer, after those blocks are built (`services/section_enrichment`, decision 0039): the
    pictures already stored for the cited claims first, a search only when none is (decision
-   0166); each service has 6 s, the step 8 s, and a failure or timeout sends no `images` block
+   0166), a stored searched picture served only while its title names the craft's world (decision
+   0207); each service has 6 s, the step 8 s, and a failure or timeout sends no `images` block
    and leaves the section ready.
 2. Terms: `seed_claims` also seeds the `Term` glossary (`services/term_glossary.seed_terms`) from
    craft names, aliases and matched Wikidata labels, the seed's local names with what they mean

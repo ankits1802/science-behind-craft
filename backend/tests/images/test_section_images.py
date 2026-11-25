@@ -10,7 +10,7 @@ from app.research.images import ImageSource
 from app.services.live_sources import LiveSourcesStore
 from app.services.section_images import SectionImages, SectionImagesAsk, image_search_text
 
-from .fakes import FakeMediaStore, FakeSource, candidate, searched_by, stored_picture
+from .fakes import FakeContexts, FakeMediaStore, FakeSource, candidate, searched_by, stored_picture
 
 STICKY = ClaimText(uuid.UUID(int=11), "Printing with sticky gums takes skill.")
 WASHED = ClaimText(uuid.UUID(int=12), "The cloth is washed in the river.")
@@ -29,7 +29,9 @@ async def test_an_images_block_shows_open_pictures_inline_and_others_as_link_car
     )
     web = FakeSource("searxng", [candidate("web", 2, "Printing with sticky gums", licence=None, author=None)])
     store = FakeMediaStore({STICKY.claim_id: STICKY, WASHED.claim_id: WASHED})
-    block = await SectionImages(sources=searched_by(commons, web), store=store).block(ask(STICKY, WASHED))
+    block = await SectionImages(sources=searched_by(commons, web), store=store, context=FakeContexts()).block(
+        ask(STICKY, WASHED)
+    )
     assert isinstance(block, ImagesBlock)
     assert block.id == "s2.b3"
     assert [item.media.display for item in block.items] == ["INLINE", "LINK_CARD"]
@@ -44,7 +46,9 @@ async def test_a_failing_image_service_leaves_the_others_to_answer() -> None:
         "wikimedia_commons", [candidate("commons", 1, "Sticky gums for printing", licence="CC0", author="A")]
     )
     store = FakeMediaStore({STICKY.claim_id: STICKY})
-    block = await SectionImages(sources=searched_by(broken, commons), store=store).block(ask(STICKY))
+    block = await SectionImages(
+        sources=searched_by(broken, commons), store=store, context=FakeContexts()
+    ).block(ask(STICKY))
     assert block is not None
     assert len(block.items) == 1
 
@@ -56,7 +60,9 @@ async def test_a_slow_image_service_is_left_out_and_the_others_still_answer() ->
         "wikimedia_commons", [candidate("commons", 1, "Sticky gums for printing", licence="CC0", author="A")]
     )
     store = FakeMediaStore({STICKY.claim_id: STICKY})
-    images = SectionImages(sources=searched_by(slow, commons), store=store, search_seconds=0.01)
+    images = SectionImages(
+        sources=searched_by(slow, commons), store=store, context=FakeContexts(), search_seconds=0.01
+    )
     block = await images.block(ask(STICKY))
     assert block is not None
     assert [item.media.provider for item in block.items] == ["commons"]
@@ -74,6 +80,7 @@ async def test_no_relevant_picture_or_no_visible_claim_is_no_block() -> None:
                 unrelated,
             ),
             store=store,
+            context=FakeContexts(),
         ).block(ask(WASHED))
         is None
     )
@@ -83,6 +90,7 @@ async def test_no_relevant_picture_or_no_visible_claim_is_no_block() -> None:
                 unrelated,
             ),
             store=FakeMediaStore({}),
+            context=FakeContexts(),
         ).block(ask(STICKY))
         is None
     )
@@ -97,6 +105,7 @@ async def test_an_empty_search_with_topic_words_is_tried_again_with_the_craft_na
             empty,
         ),
         store=store,
+        context=FakeContexts(),
     ).block(ask(STICKY))
     assert empty.queries == ["Kutch Ajrakh printing sticky", "Kutch Ajrakh"]
 
@@ -129,6 +138,7 @@ async def test_a_section_whose_claims_have_stored_pictures_shows_them_and_search
             commons,
         ),
         store=store,
+        context=FakeContexts(),
     ).block(ask(STICKY, WASHED))
     assert isinstance(block, ImagesBlock)
     assert [(item.media.title, item.claim_ids, item.relevance) for item in block.items] == [
@@ -138,7 +148,10 @@ async def test_a_section_whose_claims_have_stored_pictures_shows_them_and_search
 
 
 async def test_stored_pictures_show_open_ones_first_and_at_most_two_link_cards() -> None:
-    cards = [candidate("searxng", n, f"Sticky gums {n}", licence=None, author=None) for n in (11, 12, 13)]
+    cards = [
+        candidate("searxng", n, f"Sticky gums for printing {n}", licence=None, author=None)
+        for n in (11, 12, 13)
+    ]
     gums = candidate("commons", 1, "Sticky gums for printing", licence="CC0", author="A")
     store = FakeMediaStore(
         {STICKY.claim_id: STICKY},
@@ -147,12 +160,12 @@ async def test_stored_pictures_show_open_ones_first_and_at_most_two_link_cards()
             stored_picture(gums, STICKY.claim_id, "VISION"),
         ],
     )
-    block = await SectionImages(sources=searched_by(), store=store).block(ask(STICKY))
+    block = await SectionImages(sources=searched_by(), store=store, context=FakeContexts()).block(ask(STICKY))
     assert block is not None
     assert [(item.media.title, item.media.display, item.relevance) for item in block.items] == [
         ("Sticky gums for printing", "INLINE", "VISION"),
-        ("Sticky gums 11", "LINK_CARD", "TEXT"),
-        ("Sticky gums 12", "LINK_CARD", "TEXT"),
+        ("Sticky gums for printing 11", "LINK_CARD", "TEXT"),
+        ("Sticky gums for printing 12", "LINK_CARD", "TEXT"),
     ]
 
 
@@ -166,6 +179,7 @@ async def test_a_stored_shop_picture_is_not_shown_and_the_section_searches_inste
             commons,
         ),
         store=store,
+        context=FakeContexts(),
     ).block(ask(STICKY))
     assert block is not None
     assert [item.media.title for item in block.items] == ["Sticky gums for printing"]
@@ -181,7 +195,7 @@ async def test_stored_pictures_are_shown_before_the_search_sources_are_built() -
 
     gums = candidate("commons", 1, "Sticky gums for printing", licence="CC0", author="A")
     store = FakeMediaStore({STICKY.claim_id: STICKY}, pictures=[stored_picture(gums, STICKY.claim_id)])
-    block = await SectionImages(sources=unbuilt, store=store).block(ask(STICKY))
+    block = await SectionImages(sources=unbuilt, store=store, context=FakeContexts()).block(ask(STICKY))
     assert block is not None
     assert [item.media.title for item in block.items] == ["Sticky gums for printing"]
     assert built == []

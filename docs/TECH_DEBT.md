@@ -340,10 +340,15 @@ Last reviewed: 2026-11-22.
 ### Relevance is by text only
 
 - **What:** plan 2.7 asks for one cheap vision call on the top candidates; every picture is
-  chosen by its words against the claim text (`relevance: TEXT`), so a picture whose title and
-  description happen to share two words with a claim is shown even if it depicts something else.
-  A picture stored for a claim is now reused rather than searched again (decision 0166), so a
-  vision verdict would be paid once per picture, not once per answer.
+  chosen by its words against the claim text (`relevance: TEXT`). Decision 0207 closed the worst
+  of it: a searched picture must also name the craft's world in its title (its names, places or
+  family's picture words), so the farm on Lime Avenue, the lemons and limes and the brick wall of
+  the 2026-11-25 Kutch Ajrakh run are refused, and a stored `TEXT` link that fails is no longer
+  served. What is left: a picture whose title names the craft's world and shares two words with a
+  claim is still shown without anyone seeing it, even if it shows another step, another craft of
+  the family or the wrong thing under the right name. A picture stored for a claim is reused
+  rather than searched again (decision 0166), so a vision verdict would be paid once per picture,
+  not once per answer.
 - **Why left:** a `CAPTION` call on the top two candidates of every section adds two model calls
   and their image tokens to every answer, and the owner's rule of 2026-11-23 keeps each answer's
   model calls and input tokens at or below today's while answers are measured against Opus and

@@ -33,6 +33,8 @@ __all__ = [
     "INDEX_TTL_SECONDS",
     "CraftIndexStore",
     "DatabaseCraftResolver",
+    "alias_names",
+    "craft_places",
     "descriptor_hash",
     "descriptor_text",
     "fill_descriptor_embeddings",
@@ -166,7 +168,7 @@ async def _stale_descriptors(session: AsyncSession) -> list[_Descriptor]:
             .order_by(Craft.slug)
         )
     ).all()
-    names = await _alias_names(session, [row.id for row in rows])
+    names = await alias_names(session, [row.id for row in rows])
     stale: list[_Descriptor] = []
     for row in rows:
         text = descriptor_text(row.name, [row.localName or "", *names.get(row.id, [])])
@@ -177,7 +179,7 @@ async def _stale_descriptors(session: AsyncSession) -> list[_Descriptor]:
 
 
 async def load_index(session: AsyncSession) -> CraftIndex:
-    places = await _craft_places(session)
+    places = await craft_places(session)
     crafts = [
         CraftRecord(
             id=row.id,
@@ -224,21 +226,24 @@ _CRAFT_COLUMNS = (
 )
 
 
-async def _craft_places(session: AsyncSession) -> dict[uuid.UUID, list[str]]:
-    rows = (
-        await session.execute(
-            select(CraftLocation.craftId, CraftLocation.placeLabel, AdminDistrict.name, AdminState.name)
-            .outerjoin(AdminDistrict, AdminDistrict.lgd == CraftLocation.districtLgd)
-            .outerjoin(AdminState, AdminState.lgd == CraftLocation.stateLgd)
-        )
-    ).all()
+async def craft_places(
+    session: AsyncSession, craft_ids: Sequence[uuid.UUID] | None = None
+) -> dict[uuid.UUID, list[str]]:
+    query = (
+        select(CraftLocation.craftId, CraftLocation.placeLabel, AdminDistrict.name, AdminState.name)
+        .outerjoin(AdminDistrict, AdminDistrict.lgd == CraftLocation.districtLgd)
+        .outerjoin(AdminState, AdminState.lgd == CraftLocation.stateLgd)
+    )
+    if craft_ids is not None:
+        query = query.where(CraftLocation.craftId.in_(list(craft_ids)))
+    rows = (await session.execute(query)).all()
     found: dict[uuid.UUID, list[str]] = {}
     for craft_id, *labels in rows:
         found.setdefault(craft_id, []).extend(label for label in labels if label)
     return found
 
 
-async def _alias_names(session: AsyncSession, craft_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, list[str]]:
+async def alias_names(session: AsyncSession, craft_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, list[str]]:
     if not craft_ids:
         return {}
     rows = (

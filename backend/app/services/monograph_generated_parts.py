@@ -13,8 +13,6 @@ from app.models import (
     Claim,
     Compound,
     Craft,
-    CraftCategory,
-    CraftSubCategory,
     CuratedCategoryClaim,
     KnowledgePiece,
     KnowledgePieceSubject as Subject,
@@ -26,7 +24,7 @@ from app.research.component_specs_general_delivery import DeliveredComponent
 from .component_library import library_components
 from .component_places import PlaceBinding, component_binding, subject_place_keys
 from .component_proposals_drawn import stored_delivery
-from .craft_page_family import family_place, reader_name
+from .craft_page_family import family_names, family_place, reader_name
 from .knowledge_export import EXPORT_COMPONENTS_MAX
 from .media_ref_store import stored_media_refs
 from .monograph_generated_drawings import Drawings
@@ -110,14 +108,8 @@ async def subject_record(session: AsyncSession, subject: WorkSubject) -> Subject
     craft = await session.get(Craft, subject.id)
     if craft is None:
         return SubjectRecord(name=subject.name)
-    names = (
-        await session.execute(
-            select(CraftCategory.name, CraftSubCategory.name)
-            .join(CraftCategory, CraftCategory.id == CraftSubCategory.categoryId)
-            .where(CraftSubCategory.id == craft.subCategoryId)
-        )
-    ).first()
-    place = family_place(*(names or (craft.category, None)))
+    category, kind = await family_names(session, craft) or (craft.category, None)
+    place = family_place(category, kind)
     kicker = KICKER_SEPARATOR.join(part.label for part in (place.family, place.kind) if part is not None)
     return SubjectRecord(
         name=reader_name(craft.slug, craft.name, catch_all=bool(craft.isCatchAll), kind=place.kind),

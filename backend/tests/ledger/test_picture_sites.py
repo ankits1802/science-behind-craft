@@ -4,7 +4,7 @@ from app.research.images import ImageCandidate
 from app.services.picture_sites import blocked_picture
 from app.services.section_images import SectionImages
 
-from ..images.fakes import RETRIEVED, FakeMediaStore, FakeSource, searched_by
+from ..images.fakes import RETRIEVED, FakeContexts, FakeMediaStore, FakeSource, searched_by
 from ..images.test_section_images import STICKY, ask
 
 
@@ -94,6 +94,7 @@ async def test_section_pictures_never_offer_a_shop_s_picture() -> None:
             FakeSource("searxng", [shop, museum]),
         ),
         store=store,
+        context=FakeContexts(),
     ).block(ask(STICKY))
     assert block is not None
     assert [item.media.page_url for item in block.items] == ["https://collections.vam.ac.uk/item/O1/"]
