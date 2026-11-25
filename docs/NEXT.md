@@ -11,12 +11,29 @@ recorded below or in decisions 0102 and 0103 for review.
 | How to deploy, switch on and roll back | [RUNBOOK.md](RUNBOOK.md) |
 | The owner's standing direction | [PLAN.md](PLAN.md), section 0 |
 
-The current handoff is the session of the night of 2026-11-23 to 2026-11-24: the owner asked the
-lead to work on its own recommendations, run an adversarial review of the whole codebase before
-shipping, and release each change on its own.
+The current handoff is the quality round of 2026-11-24 to 2026-11-25: the owner judged the pages
+built over MCP below the Kutch Ajrakh bar and had every lane that closes the gap built in parallel;
+the lanes before the last four were released one at a time, the last four at once (the owner,
+2026-11-25, this once). Releases go back to one at a time, each verified on production.
 
 ## Live now
 
+- **KalaVigyan `main` with the quality round** (2026-11-25, decisions 0191 to 0210, PROGRESS.md,
+  Quality round). Verified on production alone: `4911166e` (relief), `8796f591` (preview and
+  budget), `4e5a6a96` (pictures), `e60b43db` (lifecycle), `d53aead5` (colour key), `2d9b5194`
+  (maps), `fc180ebb` (interactives), `c88db1a9` (art kit), `093c19f5` (colours), `63d10f1c`
+  (render review), `d61e3ed4` (guidance), `60b779a5` (kit players), `92fcf17a` (smoke and renderer
+  installer), `3b0049eb` (answer figures, migration 0111), `fa3f1443` (exports), `2d7e7286` (phone
+  budget and admin curation, migration 0104). Then the batch of PR #192: picture relevance (0207),
+  downloads (0208), the phone's first screen (0209) and Sanganeri's parity (0210, migration 0117).
+  - **Answers** after answer figures (run 45529163130, four questions): rubric 0.975, judge 0.81,
+    $0.29; the judge's drop was three off-topic pictures stored before the round, which 0207 stops
+    serving.
+  - **The renderer** (`kv-renderer`, chrome-headless-shell on 127.0.0.1:8091) draws previews on
+    the box; its installer resolves Ubuntu's t64 package names.
+  - **Admins** remove and edit published content over MCP by staging it; nothing changes until a
+    person confirms the batch on the Review page.
+- **Before the quality round:** `main` at `401f73ae` (2026-11-24, decision 0190).
 - **KalaVigyan `main` at `401f73ae`** (2026-11-24, decision 0190). Every release of the round was
   verified on production before the next: `1e366637` (0182), `dab903fd` (0183), `db1efa4a` (0184),
   `b9178d42` (0185, migration `0101_oauth_code_token_version`, the chain's head), `b72cd8b4` (0186),
@@ -64,10 +81,13 @@ shipping, and release each change on its own.
 - **Proof on production:** the first clean production questions run, 45292939163 (38 of 38,
   2026-11-24); parity 25 of 25 after every release; CloudWatch without errors but one false
   stored-page alarm, whose cause decision 0190 fixed.
-- **Phone speed** (Lighthouse at 360, median of three, release dab903fd): Kutch Ajrakh 83 with an LCP
-  of 4.68 s, the generated Bagru page 87 with 3.93 s, sign-in 92 with 3.34 s, against the 2.5 s
-  target (`docs/TECH_DEBT.md`, Speed left after the quality lane); 98 to 100 at 1440.
-- **The register** (`docs/TECH_DEBT.md`) holds 45 entries, most waiting on the owner or on time.
+- **Phone speed:** CI's phone budget (decision 0205: 360 px, CPU 4x, slow 4G, HTTP/1.1) measures
+  Kutch Ajrakh's largest element at 4.61 s after decision 0209 (4.78 s before), blocking 398 ms;
+  the 2.5 s target waits on the fonts preloaded ahead of the masthead photograph (Newsreader italic,
+  142.8 KB, for one caption line, is the design's choice) and the kit stylesheet's split
+  (`docs/TECH_DEBT.md`, Speed left after the quality lane). Lighthouse at 360 on release dab903fd:
+  Kutch Ajrakh 83 with an LCP of 4.68 s; 98 to 100 at 1440.
+- **The register** (`docs/TECH_DEBT.md`) holds 46 entries, most waiting on the owner or on time.
   Among the lead's: the ElevenLabs tool calls, languages and CSP hosts; the relief bands' rebuild;
   a rollback's window before its pages are rebuilt; the Listen dock's first focus; the write-back
   rows stored before decision 0188.

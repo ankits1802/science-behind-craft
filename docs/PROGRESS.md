@@ -11,7 +11,7 @@ section 17. Everyone building KalaVigyan reads it; a new session starts at [NEXT
 | What was left below standard | [TECH_DEBT.md](TECH_DEBT.md) |
 | The rounds at a glance | [README.md](../README.md#status) |
 
-Last updated: 2026-11-24.
+Last updated: 2026-11-25.
 
 ## Done
 
@@ -1251,6 +1251,35 @@ Last updated: 2026-11-24.
   - **Voice and stored pages (decision 0190):** the agent's conversation header a variable
     ElevenLabs fills, a 15 s wait and no backup model, so the first agent turn was answered (10.1
     s, cited); a page rebuilt while its inputs move is built again without a false alarm.
+
+- **Quality round (2026-11-24 to 2026-11-25): every page built over MCP held to the Kutch Ajrakh
+  bar.** Decisions 0191 to 0210, built as parallel lanes and released on main from `401f73ae` to
+  the batch of PR #192; each release before the batch was verified on production alone
+  (`/health`, `/api/version`, Vercel READY, CloudWatch, parity, the MCP client check), and the
+  owner had the last four lanes released at once (2026-11-25, this once).
+  - **Pages over MCP:** a paginated guide and a larger tool budget (0191, 0203); open-licence
+    pictures found and credited by a tool (0192); components withdrawn and versioned (0193); admins
+    remove and edit published content by staging it (0194, migration 0104); the rendered preview on
+    the box's renderer (0195, migration 0108); maps drawn from resolved places (0196); the colour
+    key's swatch cards (0197); interactives composed from held facts (0198); the art kit, its
+    scenes in the players and the label card (0199, 0200); dips coloured from facts and molecules
+    of twenty elements (0202).
+  - **Answers:** an answer draws its own kit figure from a quoted colour change (0201, migration
+    0111), measured at rubric 0.975 and judge 0.81 on four questions ($0.29); a searched picture
+    must name its craft's world in its title, so farm, fruit and wallpaper photos are no longer
+    served (0207).
+  - **Exports:** every new kind exported as its still and read in a page's languages (0206); a
+    Download control on every craft, family and category page, open-licence pictures embedded and
+    the export's words keyed for review (0208).
+  - **Phone:** a page measured on a slowed phone in CI and held to its budget, heavy kinds loaded
+    near (0205); the first screen's path recorded and cut, Kutch Ajrakh's largest element 4.78 s to
+    4.61 s and its blocking 733 to 398 ms (0209).
+  - **Parity:** a page drawn a version behind still reads its rest, and a where icon draws at its
+    own size, so Sanganeri passes (0210, migration 0117). The relief bands are rebuilt by a workflow
+    with retries and a mirror.
+  - **The register** rose from 45 to 46 entries by hand: the scheduled post-deploy check's grace,
+    counted from a commit's own date, raised a false alarm at the batch release, and no entry was
+    cleared in the same change; the round's other open items joined the entries they belong to.
 
 ## Next
 

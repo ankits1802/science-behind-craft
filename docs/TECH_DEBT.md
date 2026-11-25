@@ -38,6 +38,26 @@ Last reviewed: 2026-11-22.
   `model_validate(..., extra="ignore")` or a reading model without `extra="forbid"`), with a test
   that a body carrying a key the reader does not know is served; after one release carrying it,
   a rollback to that release or later has no window.
+- **Also (decision 0210):** a page drawn a version behind now reads its rest from the version a
+  rebuild kept, but a category page reads no version (its route and its rest route take none), a
+  kept version is not translated (so the rest of a translated page drawn a version behind is still
+  not found), versions replaced before decision 0210 were never kept, and kept versions are not
+  capped (one per content change per page and language, dropped with the page). Clears it: the
+  category routes take `version`, the kept version is stored per language, and a cap of kept
+  versions per page.
+
+### The scheduled post-deploy check counts its grace from the commit's own date
+
+- **What:** the Post-deploy check's `served` job waits for a build younger than `GRACE_SECONDS`
+  (90 minutes) by the commit's committer date (`git log -1 --format=%ct`), not by when main reached
+  it. A release of commits made more than 90 minutes before their push (the batch of 2026-11-25)
+  is judged `behind` while its web build is still waiting on the backend: the scheduled run at
+  03:10:21Z on `2d7e7286` failed so, and the next run passed once Vercel served it.
+- **Why left:** found at that release; it raises one false alarm per such release and none for a
+  release pushed within 90 minutes of its last commit.
+- **Clears it:** measure the age from the newest Deploy web app or Deploy backend run for the
+  expected commit (`gh run list --commit`), with a workflow test of a commit older than the grace
+  pushed a minute ago.
 
 ### CloudFront to origin is plain HTTP
 
@@ -358,7 +378,7 @@ Last reviewed: 2026-11-22.
 - **Waits on:** the owner's choice after that measurement; then a `CAPTION` route call on the top
   two candidates per section, recorded as `VISION` on `MediaRefClaim`, dropping a picture the model
   says does not show the claim (`section_images.stored_items` already serves a stored `VISION`
-  verdict).
+  verdict). The zoom story's own level pictures do not use decision 0207's rule yet.
 
 ## Listen and the switched-off call (decision 0035)
 

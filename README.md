@@ -267,6 +267,7 @@ November 2026 ([PROGRESS.md](docs/PROGRESS.md#done)). Decision 0101's track of r
 | 7 | 20 Nov 2026 | MCP as the place knowledge is created, the landing and the map rebuilt; its fix lanes then held every answer sentence to the quotes it cites, filed write-backs by what their sources say and made every release one the live side can read |
 | Debt round | 22–23 Nov 2026 | the debt register cleared lane by lane, and kept so it can only shrink: rivers named from open datasets, film scores made once, Listen read by the Gemini voice when ElevenLabs cannot, translations read back, contributed facts on curated pages, write-backs judged cheapest first |
 | Review round | 23–24 Nov 2026 | two whole-codebase adversarial reviews and their fixes, each release proved on production: the first clean production questions run, generated pages in the approved Kutch Ajrakh form, MCP codes and robots rules hardened, deploys that never go back, and the first answered voice agent turn |
+| Quality round | 24–25 Nov 2026 | every page built over MCP held to the Kutch Ajrakh bar: open-licence pictures found and credited by a tool, the rendered preview, maps from resolved places, the colour key, interactives composed from facts, the art kit and its scenes, answers drawing kit figures, PDF and Word downloads of every page, the phone budget, admins removing and editing published content over MCP, and answers' pictures of the craft's own world |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/readme-kit/assets/divider-dark.svg">
