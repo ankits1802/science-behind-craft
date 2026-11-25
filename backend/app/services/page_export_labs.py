@@ -10,6 +10,7 @@ from .page_export_figures import FigureAsk, prefixed, scene_of
 from .page_export_model import ExportFigure, ExportText, Run, plain_text
 from .page_export_science import raw_at
 from .page_export_units import rich_runs
+from .page_export_words import DRAWN_IN
 
 __all__ = ["choice_toggle_figure", "experiment_lab_figure"]
 
@@ -24,7 +25,7 @@ def experiment_lab_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
     lines: list[ExportText | None] = [plain_text(spec.picker_label, "note")]
     for number, experiment in enumerate(spec.experiments, start=1):
         shown = titles.get(experiment.toggle.component)
-        where = f" (drawn in the figure {shown})" if shown else ""
+        where = f" ({ask.words.said(DRAWN_IN, title=shown)})" if shown else ""
         lines.append(plain_text(f"{number}. {experiment.label}{where}", "item"))
     ask.replaced(spec.number)
     return ask.figure([], lines, ask.entry.title)

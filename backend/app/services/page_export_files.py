@@ -17,9 +17,11 @@ from .naming import export_file_name
 
 if TYPE_CHECKING:
     from .page_export_model import PageExport
+    from .page_export_pictures import PagePictures
 
 __all__ = [
     "PAGE_ENTITIES",
+    "PAGE_EXPORT_EDITION",
     "PAGE_EXPORT_OWNER",
     "PAGE_EXPORT_WHAT",
     "page_export_link",
@@ -29,38 +31,36 @@ __all__ = [
 
 PAGE_EXPORT_OWNER = uuid.UUID(int=1)
 PAGE_EXPORT_WHAT = "Export"
+PAGE_EXPORT_EDITION = 2
 PAGE_ENTITIES: Mapping[str, str] = MappingProxyType(
     {"craft": "Craft-Page", "family": "Family-Page", "category": "Category-Page"}
 )
 NOT_A_FORMAT = "A page is exported as {formats}, not {fmt!r}"
 
 
-def _laid_out(document: MonographDocument) -> PageExport:
-    from .page_export_document import export_specs, page_export
-
-    return page_export(document, export_specs(document))
-
-
-def _pdf(document: MonographDocument) -> bytes:
+def _pdf(export: PageExport) -> bytes:
     from .page_export_pdf import page_pdf
 
-    return page_pdf(_laid_out(document))
+    return page_pdf(export)
 
 
-def _docx(document: MonographDocument) -> bytes:
+def _docx(export: PageExport) -> bytes:
     from .page_export_docx import page_docx
 
-    return page_docx(_laid_out(document))
+    return page_docx(export)
 
 
-RENDERERS: Mapping[str, Callable[[MonographDocument], bytes]] = MappingProxyType({"pdf": _pdf, "docx": _docx})
+RENDERERS: Mapping[str, Callable[[PageExport], bytes]] = MappingProxyType({"pdf": _pdf, "docx": _docx})
 
 
-def page_file(document: MonographDocument, fmt: str) -> bytes:
+def page_file(document: MonographDocument, fmt: str, pictures: PagePictures | None = None) -> bytes:
+    from .page_export_document import export_specs, page_export
+    from .page_export_pictures import NO_PICTURES
+
     render = RENDERERS.get(fmt)
     if render is None:
         raise InvalidInput(NOT_A_FORMAT.format(formats=" or ".join(PAGE_EXPORT_FORMATS), fmt=fmt))
-    return render(document)
+    return render(page_export(document, export_specs(document), pictures=pictures or NO_PICTURES))
 
 
 def page_file_name(document: MonographDocument, fmt: str, tools: ExportTools) -> str:
@@ -79,14 +79,19 @@ def page_file_name(document: MonographDocument, fmt: str, tools: ExportTools) ->
 async def page_export_link(
     tools: ExportTools, document: MonographDocument, *, served: str, fmt: str
 ) -> ExportLink:
+    from .page_export_words import export_words
+
     made_from = {
         "page": [document.subject_kind, document.subject_slug],
         "served": served,
         "language": document.language,
+        "edition": PAGE_EXPORT_EDITION,
+        "words": export_words(document.language).made_from(),
     }
 
     async def build() -> BuiltExport:
-        return BuiltExport(await asyncio.to_thread(page_file, document, fmt))
+        pictures, unread = await _page_pictures(tools, document)
+        return BuiltExport(await asyncio.to_thread(page_file, document, fmt, pictures), unread)
 
     export = ExportFile(
         owner_id=PAGE_EXPORT_OWNER,
@@ -95,3 +100,13 @@ async def page_export_link(
         made_from=made_from,
     )
     return await stored_export_link(tools.objects, export, build, now=tools.clock(), builds=tools.builds)
+
+
+async def _page_pictures(
+    tools: ExportTools, document: MonographDocument
+) -> tuple[PagePictures, frozenset[uuid.UUID]]:
+    from .page_export_document import export_specs
+    from .page_export_pictures import fetched_pictures, wanted_pictures
+
+    specs = await asyncio.to_thread(export_specs, document)
+    return await fetched_pictures(wanted_pictures(document, specs), tools.pictures)

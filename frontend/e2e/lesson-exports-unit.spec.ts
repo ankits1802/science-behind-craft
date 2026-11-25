@@ -13,11 +13,13 @@ const LINK: ExportLink = {
   expiresAt: "2026-11-18T10:05:00Z"
 };
 
-test("a lesson file or explainer PDF is answered as a short-lived link with its file name", () => {
+test("a lesson file, an explainer PDF or a page's Word document is answered as a short-lived link with its file name", () => {
   expect(parseShape(exportLinkShape, LINK)).toEqual(LINK);
+  const page = { ...LINK, format: "docx" as const, fileName: "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Export_v1.docx" };
+  expect(parseShape(exportLinkShape, page)).toEqual(page);
   expect(() => parseShape(exportLinkShape, { ...LINK, url: "http://example.org/a.pptx" })).toThrow(ShapeError);
   expect(() => parseShape(exportLinkShape, { ...LINK, fileName: "../a.pptx" })).toThrow(ShapeError);
-  expect(() => parseShape(exportLinkShape, { ...LINK, format: "docx" })).toThrow(ShapeError);
+  expect(() => parseShape(exportLinkShape, { ...LINK, format: "xlsx" })).toThrow(ShapeError);
 });
 
 test("each citation carries the day its source was read", () => {

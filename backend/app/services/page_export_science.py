@@ -23,12 +23,12 @@ from .export_stills import Still
 from .page_export_figures import FigureAsk, prefixed, scene_of
 from .page_export_model import ExportFigure, ExportText, Run, plain_text
 from .page_export_units import rich_runs
+from .page_export_words import AT_REST, KEY
 
 __all__ = ["dip_player_figure", "molecule_figure", "raw_at", "reaction_player_figure", "stage_player_figure"]
 
 ARROW = " → "
 PLUS = " + "
-AT_REST = " (as the page opens)"
 
 
 def raw_at(ask: FigureAsk, *path: str | int) -> Any:
@@ -60,8 +60,10 @@ def reaction_player_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
 
 def _step_lines(ask: FigureAsk, step: ReactionStep, number: int, *, rest: bool) -> list[ExportText | None]:
     text = step.text
+    named = Run(f"{number}. {step.name}")
+    resting = (Run(f" ({ask.words.said(AT_REST)})", lang=ask.words.lang(AT_REST)),) if rest else ()
     lines: list[ExportText | None] = [
-        plain_text(f"{number}. {step.name}{AT_REST if rest else ''}", "item"),
+        ExportText(runs=(named, *resting), role="item"),
         ask.unit(text.kicker, "note"),
         ask.unit(text.heading, "subheading"),
         *ask.units(text.paragraphs),
@@ -176,7 +178,7 @@ def molecule_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
         lines += list(_molecule_lines(model))
     lines += ask.units(block.unit for block in spec.side)
     key = [item.label for item in spec.key]
-    lines.append(plain_text(f"Key: {'; '.join(key)}", "note") if key else None)
+    lines.append(ask.words.labelled(KEY, "; ".join(key)) if key else None)
     return ask.figure(stills, lines, ask.title(spec.head.title))
 
 

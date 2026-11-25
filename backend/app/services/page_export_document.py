@@ -15,10 +15,12 @@ from app.research.translation_passages import NAME_UNITS
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .monograph_document import component_specs, has_authored_content
-from .page_export_figures import FigureAsk, generic_figure
+from .page_export_figures import FigureAsk, PaperPage, generic_figure
 from .page_export_kit import kit_diagram_figure, label_card_figure, swatch_cards_figure, timeline_map_figure
 from .page_export_labs import choice_toggle_figure, experiment_lab_figure
-from .page_export_model import ExportBlock, ExportChapter, ExportFigure, PageExport
+from .page_export_model import ExportBlock, ExportChapter, ExportFigure, ExportText, PageExport
+from .page_export_pictures import NO_PICTURES, PagePictures
+from .page_export_plates import picture_plate_figure, specimen_plate_figure
 from .page_export_science import (
     dip_player_figure,
     molecule_figure,
@@ -26,15 +28,17 @@ from .page_export_science import (
     stage_player_figure,
 )
 from .page_export_units import PageTexts, page_references
+from .page_export_words import READING, ExportWords, export_words
 
-__all__ = ["FIGURES", "READING_NOTE", "component_figure", "export_specs", "page_export"]
+__all__ = ["FIGURES", "component_figure", "export_specs", "page_export"]
 
 logger = logging.getLogger(__name__)
 
-READING_NOTE = "{translated} of {passages} passages read in {label}; the others are shown in English."
 FigureBuilder = Callable[[FigureAsk, object], ExportFigure | None]
 FIGURES: Mapping[str, FigureBuilder] = MappingProxyType(
     {
+        "picture_plate": picture_plate_figure,
+        "specimen_plate": specimen_plate_figure,
         "diagram": kit_diagram_figure,
         "timeline_map": timeline_map_figure,
         "swatch_cards": swatch_cards_figure,
@@ -54,27 +58,35 @@ def export_specs(document: MonographDocument) -> dict[str, dict[str, Any]]:
     return {**authored, **document.specs}
 
 
-def page_export(document: MonographDocument, specs: Mapping[str, Mapping[str, Any]]) -> PageExport:
+def page_export(
+    document: MonographDocument,
+    specs: Mapping[str, Mapping[str, Any]],
+    *,
+    pictures: PagePictures = NO_PICTURES,
+    words: ExportWords | None = None,
+) -> PageExport:
     content = document.content
-    chapters = _chapter_blocks(content, specs)
+    page = PaperPage(PageTexts(content), words or export_words(document.language), pictures)
+    chapters = _chapter_blocks(content, specs, page)
     titles = {chapter.key: chapter.title for chapter in content.chapters}
     return PageExport(
         title=document.title,
         language=document.language,
         page_url=document.page_url,
         version=document.version,
-        reading_note=_reading_note(document),
+        reading_note=_reading_note(document, page.words),
         chapters=tuple(
             ExportChapter(key, titles.get(key), tuple(blocks)) for key, blocks in chapters.items() if blocks
         ),
         references=page_references(content),
+        words=page.words,
     )
 
 
 def _chapter_blocks(
-    content: MonographContent, specs: Mapping[str, Mapping[str, Any]]
+    content: MonographContent, specs: Mapping[str, Mapping[str, Any]], page: PaperPage
 ) -> dict[str, list[ExportBlock]]:
-    texts = PageTexts(content)
+    texts = page.texts
     within = _within(content)
     entries = {entry.label: entry for entry in content.components}
     chapters: dict[str, list[ExportBlock]] = {}
@@ -82,7 +94,7 @@ def _chapter_blocks(
 
     def figure(label: str) -> ExportFigure:
         drawn.add(label)
-        return component_figure(entries[label], specs.get(label), within.get(label, ()), texts)
+        return component_figure(entries[label], specs.get(label), within.get(label, ()), page)
 
     for placed in content.layout:
         blocks = chapters.setdefault(placed.chapter, [])
@@ -99,9 +111,9 @@ def _chapter_blocks(
 
 
 def component_figure(
-    entry: ComponentEntry, spec: Mapping[str, Any] | None, within: tuple[str, ...], texts: PageTexts
+    entry: ComponentEntry, spec: Mapping[str, Any] | None, within: tuple[str, ...], page: PaperPage
 ) -> ExportFigure:
-    ask = FigureAsk(entry=entry, spec=spec, within=within, texts=texts)
+    ask = FigureAsk(entry=entry, spec=spec, within=within, page=page)
     builder = FIGURES.get(entry.kind)
     model = _model(entry, spec) if builder is not None else None
     figure = builder(ask, model) if builder is not None and model is not None else None
@@ -128,9 +140,9 @@ def _within(content: MonographContent) -> dict[str, tuple[str, ...]]:
     return {label: tuple(refs) for label, refs in held.items()}
 
 
-def _reading_note(document: MonographDocument) -> str | None:
+def _reading_note(document: MonographDocument, words: ExportWords) -> ExportText | None:
     translation = document.translation
     if translation is None or document.language not in ANSWER_LANGUAGE_SPECS:
         return None
     label = ANSWER_LANGUAGE_SPECS[document.language].label
-    return READING_NOTE.format(translated=translation.translated, passages=translation.passages, label=label)
+    return words.text(READING, translated=translation.translated, passages=translation.passages, label=label)

@@ -21,6 +21,7 @@ other languages), `docs/contracts/component-specs-science.md` (Rules) and
 |---|---|
 | The answer and lesson files, their bucket keys and signed links | [decision 0067](0067-lessons-and-exports.md), [decision 0143](0143-lessons-exports-and-follow-ups-kept-true.md) |
 | Passages, their hash, the gates and the variant | [decision 0117](0117-pages-in-other-languages.md) |
+| The Download on every page, its pictures, its fixed words and the family and category exports | [decision 0208](0208-every-page-downloaded-from-the-page-with-its-pictures-and-its-words.md) |
 | The kinds this export draws | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md), [0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md), [0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md), [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md), [0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | Every decision, by group | [README.md](README.md) |
 

@@ -15,7 +15,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 ## HTTP API
 
-**256 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 136 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**258 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 138 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -57,6 +57,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `oauth.py` | 3 |
 | `oauth_well_known.py` | 3 |
 | `open_work.py` | 3 |
+| `page_exports.py` | 3 |
 | `saved_explainers.py` | 3 |
 | `staged_reviews.py` | 3 |
 | `usage.py` | 3 |
@@ -83,7 +84,6 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `mcp_activity.py` | 1 |
 | `molecules.py` | 1 |
 | `open_data.py` | 1 |
-| `page_exports.py` | 1 |
 | `public.py` | 1 |
 | `rivers.py` | 1 |
 | `simulations.py` | 1 |
@@ -116,15 +116,15 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 821 | 6063 |
-| Backend, on Postgres | 226 | 1016 |
+| Backend, without a database | 823 | 6084 |
+| Backend, on Postgres | 227 | 1020 |
 | Tools | 27 | 211 |
 | Craft data ETL | 7 | 51 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 216 | 1526 |
+| Unit specs (`*-unit.spec.ts`) | 217 | 1532 |
 | Browser and release specs | 21 | 67 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -133,7 +133,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 205 |
+| Decision records (`docs/decisions/`) | 206 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 29 |
 | Curated craft dossiers | 32 |
@@ -143,13 +143,13 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1561 | 219,058 |
-| `backend/tests` | 1224 | 157,957 |
+| `backend/app` | 1564 | 219,606 |
+| `backend/tests` | 1228 | 158,522 |
 | `backend/migrations` | 93 | 11,787 |
 | `frontend/app` | 115 | 10,289 |
-| `frontend/components` | 669 | 45,487 |
-| `frontend/lib` | 282 | 28,176 |
-| `frontend/e2e` | 352 | 38,510 |
+| `frontend/components` | 674 | 45,592 |
+| `frontend/lib` | 283 | 28,204 |
+| `frontend/e2e` | 353 | 38,628 |
 | `etl` | 80 | 11,545 |
 | `tools` | 104 | 8,836 |
 | `infra` | 18 | 2,390 |

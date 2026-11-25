@@ -260,6 +260,24 @@ async def test_pictures_are_read_only_from_the_open_image_hosts() -> None:
     assert asked == ["https://upload.wikimedia.org/a.png", "https://api.openverse.org/v1/images/x/thumb/"]
 
 
+async def test_the_site_s_own_pictures_are_read_only_from_its_own_https_host() -> None:
+    asked: list[str] = []
+
+    def answer(request: httpx.Request) -> httpx.Response:
+        asked.append(str(request.url))
+        return httpx.Response(200, content=picture_bytes(), headers={"content-type": "image/png"})
+
+    own = "https://kalavigyan.example/monographs/kutch-ajrakh/img/cloth.jpg"
+    async with httpx.AsyncClient(transport=httpx.MockTransport(answer)) as client:
+        files = picture_files(client, site="https://kalavigyan.example")
+        assert (await files.picture(own))[1:4] == b"PNG"
+        with pytest.raises(InvalidInput):
+            await files.picture("https://elsewhere.example/monographs/kutch-ajrakh/img/cloth.jpg")
+        with pytest.raises(InvalidInput):
+            await picture_files(client, site="http://localhost:3000").picture("http://localhost:3000/a.png")
+    assert asked == [own]
+
+
 async def test_a_picture_that_cannot_be_read_is_left_out_of_the_pack_s_files() -> None:
     pack = golden_pack()
     media = [slide.image for slide in pack.slides if slide.image is not None]

@@ -310,11 +310,12 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
 - Read a library component's facts before you link it or lay it out on another page: if this page
   lacks any of them the server refuses it by those ids, and the cure is a component of the same
   kind built from this page's facts.
-- Every page exports as a PDF and a Word document. Each component is drawn there as its still at
-  rest, with every unit it holds and its credits. Say in a component's units what its motion shows:
-  paper keeps the words, the rest step and the drawing, not the play. Kit parts, kit scenes and
-  declared timeline maps draw on paper by themselves; a free drawing is drawn from its paths, shapes
-  and text, without its textures.
+- Every page exports as a PDF and a Word document. Readers download it from the page itself, on
+  family and category pages too, with each open-licence plate's picture in its place. Each component
+  is drawn there as its still at rest, with every unit it holds and its credits. Say in a
+  component's units what its motion shows: paper keeps the words, the rest step and the drawing, not
+  the play. Kit parts, kit scenes and declared timeline maps draw on paper by themselves; a free
+  drawing is drawn from its paths, shapes and text, without its textures.
 
 ## Drawing in KalaVigyan's design
 

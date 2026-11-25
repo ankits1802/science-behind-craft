@@ -8,7 +8,7 @@ from app.core.errors import ExternalFailure, InvalidInput
 from app.planner.policy import SEARCH_TIMEOUT_SECONDS
 from app.research.images import ImageCandidate, ImageQuery, ImageSource, openly_licensed
 from app.research.open_pictures import photo_credit
-from app.sources.reference.commons_urls import commons_thumbnail_url
+from app.sources.reference.commons_urls import COMMONS_WIDTHS, commons_thumbnail_url
 
 from .source_lookup_models import FoundPicture, FoundPictures, PictureWidth
 
@@ -16,7 +16,6 @@ __all__ = ["COMMONS_WIDTHS", "PICTURES_MAX", "PICTURES_PER_SOURCE", "found_pictu
 
 logger = logging.getLogger(__name__)
 
-COMMONS_WIDTHS = (330, 500, 960, 1280, 1920)
 PICTURES_PER_SOURCE = 12
 PICTURES_MAX = 24
 EVERY_SEARCH_FAILED = "Every picture search failed just now; nothing was found. Try again in a few minutes."

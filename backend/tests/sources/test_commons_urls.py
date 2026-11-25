@@ -1,6 +1,6 @@
 import pytest
 
-from app.sources.reference.commons_urls import commons_thumbnail_url
+from app.sources.reference.commons_urls import commons_fitting_width, commons_thumbnail_url, standard_width
 
 UPLOADS = "https://upload.wikimedia.org/wikipedia/commons/"
 
@@ -33,3 +33,19 @@ def test_a_commons_file_is_resized_through_its_thumbnail_path(url: str, thumbnai
 )
 def test_other_files_are_left_as_they_are(url: str) -> None:
     assert commons_thumbnail_url(url, 500) is None
+
+
+@pytest.mark.parametrize(
+    ("requested", "width"), [(1, 330), (330, 330), (331, 500), (1051, 1280), (1920, 1920), (4000, 1920)]
+)
+def test_a_requested_width_takes_the_first_standard_width_at_least_as_wide(
+    requested: int, width: int
+) -> None:
+    assert standard_width(requested) == width
+
+
+@pytest.mark.parametrize(
+    ("original", "width"), [(4000, 1280), (1280, 1280), (1279, 960), (600, 500), (330, 330), (329, None)]
+)
+def test_a_standard_width_never_passes_the_original_s_own(original: int, width: int | None) -> None:
+    assert commons_fitting_width(1051, original) == width

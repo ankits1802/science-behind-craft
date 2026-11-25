@@ -3,24 +3,22 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from functools import cache
-from types import MappingProxyType
 
 from app.research.export_text import CREDIT_SEPARATOR
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .export_pdf_still import draw_still
-from .export_pdf_text import sentence_case
 from .export_stills import ink, token_colour
 from .page_export_model import ExportFigure, ExportText, PageExport, Role
+from .page_export_words import SOURCES
 from .pdf_writer import PdfWriter, TextStyle
 
-__all__ = ["FIGURE_STILL_MM", "KIND_LABELS", "SOURCES_HEADING", "kind_label", "page_meta", "page_pdf"]
+__all__ = ["FIGURE_PICTURE_MM", "FIGURE_STILL_MM", "page_meta", "page_pdf"]
 
-SOURCES_HEADING = "Sources"
 FIGURE_STILL_MM = 80.0
+FIGURE_PICTURE_MM = 120.0
 VERSION_MARK = "v{version}"
 INDIGO = "--indigo"
-KIND_LABELS: Mapping[str, str] = MappingProxyType({"molecule_3d": "Molecule in 3D"})
 
 
 @dataclass(frozen=True)
@@ -77,23 +75,19 @@ def page_pdf(export: PageExport) -> bytes:
     writer.text(export.title, styles.title)
     writer.text(page_meta(export), styles.meta)
     if export.reading_note:
-        writer.text(export.reading_note, styles.roles["note"])
+        _text(writer, export.reading_note, styles.roles)
     for chapter in export.chapters:
         if chapter.title:
             writer.text(chapter.title, styles.chapter)
         for block in chapter.blocks:
             if isinstance(block, ExportFigure):
-                _figure(writer, block, styles)
+                _figure(writer, block, (styles, export))
             else:
                 _text(writer, block, styles.roles)
-    writer.text(SOURCES_HEADING, styles.chapter)
+    writer.text(export.words.said(SOURCES), styles.chapter)
     for reference in export.references:
         writer.item(f"[{reference.number}]", reference.text, styles.reference, link=reference.url)
     return writer.output()
-
-
-def kind_label(kind: str) -> str:
-    return KIND_LABELS.get(kind) or sentence_case(kind)
 
 
 def page_meta(export: PageExport) -> str:
@@ -110,11 +104,14 @@ def _text(writer: PdfWriter, text: ExportText, roles: Mapping[Role, TextStyle]) 
         writer.text(shown, roles[text.role])
 
 
-def _figure(writer: PdfWriter, figure: ExportFigure, styles: _Styles) -> None:
-    writer.text(kind_label(figure.kind), styles.kicker)
+def _figure(writer: PdfWriter, figure: ExportFigure, drawn: tuple[_Styles, PageExport]) -> None:
+    styles, export = drawn
+    writer.text(export.words.kind(figure.kind), styles.kicker)
     writer.text(figure.title, styles.figure)
     for still in figure.stills:
         draw_still(writer, still, max_height=FIGURE_STILL_MM)
+    for shown in figure.pictures:
+        writer.image(shown.picture, alt=shown.alt, width=writer.width, max_height=FIGURE_PICTURE_MM)
     for line in figure.lines:
         _text(writer, line, styles.figure_roles)
     if figure.note:

@@ -241,7 +241,7 @@ twice.
 - **Pictures.** A pictures search runs the Commons and Openverse image sources (12 each), keeps only
   pictures `research/images.openly_licensed` accepts that name an author, credits each as the
   sources reference asks ("Photo: author, licence, via site"), and gives a Commons file's
-  thumbnails at the widths the site draws (`source_lookup_pictures.COMMONS_WIDTHS`, the same as
+  thumbnails at the widths the site draws (`commons_urls.COMMONS_WIDTHS`, the same as
   `frontend/lib/commonsPicture.ts`), never wider than the file. They are pictures from elsewhere:
   an agent places one with `give_pictures` by its `page_url`, which reads its licence and author
   again from the source's own record and credits it the same way (decision 0192,

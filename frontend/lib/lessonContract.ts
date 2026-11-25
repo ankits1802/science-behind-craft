@@ -9,6 +9,7 @@ import type { SourceRef } from "@/lib/types";
 
 export const SLIDE_KINDS = ["TITLE", "SECTION", "QUIZ", "READING", "SOURCES"] as const;
 export const LESSON_FORMATS = ["html", "pptx", "pdf"] as const;
+export const EXPORT_FORMATS = [...LESSON_FORMATS, "docx"] as const;
 export const CITATION_FORMATS = ["bib", "ris", "txt", "json"] as const;
 export const LESSONS_PATH = "/lessons";
 export const LESSON_PATH = (lessonId: string) => `${LESSONS_PATH}/${encodeURIComponent(lessonId)}`;
@@ -19,6 +20,7 @@ export const CITATIONS_FILE_PATH = (explainerId: string, version: number, format
   `${CITATIONS_PATH(explainerId, version)}/${format}`;
 
 export type LessonFormat = (typeof LESSON_FORMATS)[number];
+export type ExportFormat = (typeof EXPORT_FORMATS)[number];
 export type CitationFormat = (typeof CITATION_FORMATS)[number];
 export type LessonRequest = { explainerId: string; version: number; title: string | null; sectionIds: string[]; quiz: boolean };
 export type Slide = {
@@ -78,7 +80,7 @@ export type CitationEntry = {
   bibtex: string;
   ris: string;
 };
-export type ExportLink = { schemaVersion: 1; format: LessonFormat; fileName: string; url: string; expiresAt: string };
+export type ExportLink = { schemaVersion: 1; format: ExportFormat; fileName: string; url: string; expiresAt: string };
 export type CitationExport = { schemaVersion: 1; explainerId: string; version: number; entries: CitationEntry[] };
 
 export const lessonRequestShape: Shape<LessonRequest> = object<LessonRequest>({
@@ -163,7 +165,7 @@ export const citationExportShape: Shape<CitationExport> = object<CitationExport>
 
 export const exportLinkShape: Shape<ExportLink> = object<ExportLink>({
   schemaVersion: oneOf([1] as const),
-  format: oneOf(LESSON_FORMATS),
+  format: oneOf(EXPORT_FORMATS),
   fileName: matching(/^[A-Za-z0-9_.-]+$/, "a file name"),
   url: HTTPS_URL,
   expiresAt: INSTANT
