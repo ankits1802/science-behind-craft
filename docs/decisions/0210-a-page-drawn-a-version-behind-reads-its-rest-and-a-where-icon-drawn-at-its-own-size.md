@@ -116,4 +116,4 @@ found), `frontend/e2e/reaction-where-unit.spec.ts` (an icon at its own size and 
 kit sizes it, Kutch Ajrakh's unchanged, the bound equal to the drawing checks', and a player's
 24-unit icon passing the checks at 360 and 1440 where the drawing as given fails them) and
 `frontend/e2e/parity/parity-ready-unit.spec.ts` (a page ready, ready once its rest arrives,
-unread, and still waiting).
+unread, and still waiting while its rest is held or its kit unbound).

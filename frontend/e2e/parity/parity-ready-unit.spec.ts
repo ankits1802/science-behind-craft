@@ -24,9 +24,12 @@ test("a page that says its rest could not be read is unread, not ready", async (
   expect(await pageReadiness(page, SHORT_MS)).toBe("unread");
 });
 
-test("a page still holding its rest, or with no kit bound, is still waiting", async ({ page }) => {
+test("a page still holding its rest is still waiting, its kit bound or not", async ({ page }) => {
   await page.setContent(`<main id="kv-main">${HOLDER}</main>${KIT}`);
   expect(await pageReadiness(page, SHORT_MS)).toBe("waiting");
+});
+
+test("a page whose rest is drawn but whose kit is not bound is still waiting", async ({ page }) => {
   await page.setContent('<main id="kv-main"><section id="chem"></section></main>');
   expect(await pageReadiness(page, SHORT_MS)).toBe("waiting");
 });
