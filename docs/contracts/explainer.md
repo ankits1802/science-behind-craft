@@ -1080,7 +1080,9 @@ joined both kinds to `BUILT_BLOCK_KINDS` (decision 0061), their renderers being 
   claim ledger would drop that level as said (`zoom_story.Captions.without_said`, `figure_texts`,
   decision 0175):
   `DISTRICT`, the first mapped district a claim names; `WORKSHOP` and `CLOTH`, a picture whose
-  title or description holds that level's words (`zoom_pictures.LEVEL_WORDS`) or names, by its
+  title (with its alt for a curator's pick or a field photo, whose alt a person wrote; never a
+  searched picture's description or alt, often its uploader's tag list) holds that level's words
+  (`zoom_pictures.LEVEL_WORDS`) or names, by its
   label, an alias or a local name in any script, a glossary term of the craft tagged with that
   level; `FIBRE`, a picture with a micrograph word that names the craft's fibre (`fibre_named` over
   the fibre materials' names, else the label of the craft's `FIBRE`-tagged term without its last
@@ -1089,9 +1091,13 @@ joined both kinds to `BUILT_BLOCK_KINDS` (decision 0061), their renderers being 
   `<fibre> fibre micrograph`), and for a fibre neither finds, the open paper figures
   (`sources/images/europe_pmc_figures`, the same texts; a figure's page is its article's DOI page,
   so its `sourceId` is the stored paper once research has stored it), only
-  candidates shown inline (open licence and author), relevance as for section pictures (two shared
+  candidates shown inline (open licence and author), not from a shop (`section_images.shown_candidates`)
+  and whose title names the craft's world (the context `zoom_ground` reads for the craft,
+  `craft_picture_context.picture_context_of`), relevance as for section pictures (two shared
   content stems with a claim) or, for a fibre, a claim naming the fibre; a chosen picture is kept as
-  a `MediaRef` row with its claim links; `MOLECULE`, the first compound `molecule_candidates`
+  a `MediaRef` row with its claim links; a kept picture is read for a level only while the served
+  rule holds it (`served_pictures.served_picture`, as for a section's stored pictures, decision
+  0215); `MOLECULE`, the first compound `molecule_candidates`
   offers whose name a claim states and whose 3D conformer the PubChem adapter keeps (at most 3
   tried; no media bucket, no molecule). A level without its matter, a licensed picture or a
   distinct caption is left out; fewer than two levels is no zoom. Cites the boundary row only with
@@ -1360,12 +1366,21 @@ fails its checks is redrafted only when the time left is at least the time the f
   compose goes to reuse and the model as before. The block id is `{section}.kit`.
 - **The bar on a generated explainer's art** (`ART`): every colour in a declaration of a colour
   property (`color`, `background`, `fill`, `stroke`, the borders, outlines and shadows), every
-  paint attribute and every quoted colour in a script is a design role; `--indigo` and its kin
-  only in CSS, for a control; no `--dye-*` or `--dip-*` material, which the kit draws; no hex,
-  `rgb()`, `hsl()` or named colour; `font-family` and `font` in `var(--font-ui)` or
-  `var(--font-reading)` at 12, 13, 14 or 16 px; no `opacity` below 1; a script with a timer reads
-  `dataset.reducedMotion`; no element with `role="img"` whose label names a kit subject; every
-  static `svg` passes `drawn_art.drawn_art_problems` as a `drawing`.
+  paint attribute, every quoted colour in a script and every paint a script writes
+  (`setAttribute` of a paint or of `style`, `.style.<property> =`, `style.setProperty`, `cssText`)
+  is a design role; `--indigo` and its kin only in CSS, for a control; no `--dye-*` or `--dip-*`
+  material, which the kit draws; no hex, `rgb()`, `hsl()` or named colour (any of CSS's 148; a script's words that merely name a colour, "Indigo" or "chocolate-black", are
+  text, not paint); `font-family` and `font` in `var(--font-ui)` or `var(--font-reading)` at 12, 13,
+  14 or 16 px; no `opacity`, `fill-opacity` or `stroke-opacity` below 1, as a declaration or an
+  attribute; a script with a timer reads the frame's own flag
+  (`.dataset.reducedMotion`, `.dataset["reducedMotion"]` or `.getAttribute("data-reduced-motion")`,
+  not a variable that happens to be named so); nothing moves by a means neither switch stops: no
+  SMIL element (`animate`, `animateTransform`, `animateMotion`, `animateColor`, `set`) or
+  `marquee`, and no Web Animations call (`.animate(`, `.beginElement(`, `Animation(`,
+  `KeyframeEffect(`); no drawing the bar cannot read: no `canvas`, and no `getContext`,
+  `OffscreenCanvas` or `createElementNS` in a script, which may change a figure's attributes and
+  text but never build it; no element with `role="img"` whose label names a kit subject; every
+  static `svg` passes `drawn_art.drawn_art_problems` as a `drawing` (decision 0215).
 - **The frame** (`lib/sandboxFrame.sandboxDocument(html, values, look?)`, `useFrameLook`): with a
   look, its document gains `<style>` with `:root` set to the page's values of the tokens the HTML
   names (and the base `--sunk`, `--ink-1`, `--font-ui`, and any token those values name), a body on
@@ -1851,7 +1866,10 @@ is written "sentence" below; every sentence is cited.
   craft's world. A curator's pick (`provider` `curation`), a field photo (`designer_portal`,
   `field_repository`) and a `VISION` link are never held to that bar; pictures given through
   `give_pictures` and approved open pictures are not `MediaRef` rows and are not read here. Nothing
-  stored is deleted (decision 0207).
+  stored is deleted (decision 0207). The rule has one home (`services/served_pictures.served_picture`,
+  with `CHOSEN_PICTURE_PROVIDERS`), read alike by a section's stored pictures, by the stored
+  pictures of a craft page without a dossier (`docs/contracts/craft-page.md`) and by the zoom
+  story's levels (decision 0215).
 - **Drawing.** Every picture loads with `referrerPolicy="no-referrer"`; a link card shows
   `imageUrl`, `title`, `site` and `credit` and opens `pageUrl`; an inline picture shows `alt`,
   `author`, `licence` (linked to `licenceUrl`) and `site`, and opens `pageUrl`. A picture that

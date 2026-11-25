@@ -4,7 +4,7 @@ from app.research.image_relevance import ClaimText
 from app.research.images import ImageCandidate
 from app.services.zoom_pictures import PicturesAsk, ZoomPictures
 
-from ..images.fakes import FakeMediaStore, FakeSource, candidate
+from ..images.fakes import FakeMediaStore, FakeSource, candidate, textile_world
 
 COTTON = ClaimText(uuid.UUID(int=41), "Ajrakh is printed on cotton cloth spun from local cotton.")
 
@@ -23,7 +23,7 @@ async def test_the_fibre_level_asks_paper_figures_when_commons_and_openverse_fin
     commons = FakeSource("wikimedia_commons", [])
     figures = FakeSource("europe_pmc_figures", [figure()])
     store = FakeMediaStore({})
-    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), "cotton", ())
+    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), "cotton", (), textile_world("Kutch Ajrakh"))
     found = await ZoomPictures(sources=(commons,), keeper=store, figures=figures).pictures(ask)
     assert figures.queries == ["cotton fibre micrograph"]
     assert found["FIBRE"].media.provider == "europe_pmc_figures"
@@ -36,7 +36,7 @@ async def test_open_paper_figures_are_not_asked_when_commons_holds_the_fibre_mic
     )
     commons = FakeSource("wikimedia_commons", [micrograph])
     figures = FakeSource("europe_pmc_figures", [figure()])
-    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), "cotton", ())
+    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), "cotton", (), textile_world("Kutch Ajrakh"))
     found = await ZoomPictures(sources=(commons,), keeper=FakeMediaStore({}), figures=figures).pictures(ask)
     assert found["FIBRE"].media.provider == "wikimedia_commons"
     assert figures.queries == []
@@ -44,7 +44,7 @@ async def test_open_paper_figures_are_not_asked_when_commons_holds_the_fibre_mic
 
 async def test_a_craft_with_no_fibre_never_asks_for_figures() -> None:
     figures = FakeSource("europe_pmc_figures", [figure()])
-    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), None, ())
+    ask = PicturesAsk("Kutch Ajrakh", (COTTON,), None, (), textile_world("Kutch Ajrakh"))
     found = await ZoomPictures(sources=(), keeper=FakeMediaStore({}), figures=figures).pictures(ask)
     assert "FIBRE" not in found
     assert figures.queries == []

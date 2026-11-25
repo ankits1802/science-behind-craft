@@ -111,8 +111,8 @@ and a count of the rest):
    SVG name colours only by design role, name no font, keep text at 12 px or more and blend no two
    roles in a gradient (The design's vocabulary, below); a swatch or dip names a depicted material;
    a spec sends no `themes`, which the server draws; and every free drawing of a `drawing`, a
-   `diagram`, a player, a toggle or a label card meets the bar for hand-drawn art (The hand-drawn
-   figure, below).
+   `diagram`, a player, a toggle or a label card meets the bar for hand-drawn art, and every other
+   kind's free drawing paints no depicted material (The hand-drawn figure, below).
 
 The close-match search of `open-work.md` runs first: a copy of a registered component is refused
 before its spec is read.
@@ -341,17 +341,30 @@ is refused, naming the kit part to use, when it
 - sets text off the type scale: drawn at 320 px wide, a text is 12, 13, 14 or 16 px, within a
   quarter of a pixel (`UI_SIZES_PX`; under 12 px the vocabulary's floor refuses it);
 - draws fewer than six shapes (`SHAPES_MIN`, outside its definitions) or has no line work in ink
-  (no stroke in `--ink-1` to `--ink-3`, a mix of one, or `currentColor`);
-- paints a depicted material by hand, textured or not (the kit's `cloth`, `bath`, `paste`,
-  `section` or `piece` part draws it, or the one its own words name); a figure points to a composed
-  diagram (`KIT_POINTER`), a scene to a kit scene in its own slot (`SCENE_POINTER`);
+  (no stroke whose paint resolves to `--ink-1` to `--ink-3` or a mix of one);
+- paints a depicted material by hand, textured or not, in a fill or a stroke (the kit's `cloth`,
+  `bath`, `paste`, `section` or `piece` part draws it, or the one its own words name); a figure
+  points to a composed diagram (`KIT_POINTER`), a scene to a kit scene in its own slot
+  (`SCENE_POINTER`);
 - in a `drawing` or `diagram`, says it shows what a kit part draws (its title, description and
   labels and, for a `drawing`, its title and alt units, naming a part's subject:
   `art_kit.parts_named_by`), pointing to a composed diagram.
 
+A paint is judged as the reader sees it (`research/drawn_paints`, decision 0215): a fill, stroke or
+`color` is inherited from the nearest group that sets it (`inherit` keeps the parent's);
+`currentColor` takes the nearest `color`, and the page's `--ink-1` when the drawing sets none; a
+local `url(#id)` and its fallback paint every stop of the gradient, every shape of the pattern and
+whatever a gradient or pattern it `href`s paints; and a `use` paints what the shape or group it
+places paints.
+
 A free scene in line work, painting no depicted material, is kept: a molecule's structure or an
-emblem drawn in ink. The other kinds' drawings, the molecule drawings of `structure_diagram` and
-`molecule_3d` among them, are not held to the bar.
+emblem drawn in ink. Every other kind's free drawing (an authored `chart`'s, a `map_layer`'s and
+the like: `drawn_art.data_drawing_problems`) draws data, and is refused, pointing to a composed
+diagram, when it paints a depicted material by the same reading; its words are not read, since a
+data figure's subjects (water, cotton, the sun, layers) are the kit's words too. The molecule
+drawings of `structure_diagram` and `molecule_3d` (`MOLECULE_KINDS`) and a swatch's motif
+(`SWATCH_KINDS`: a swatch shows its depicted material by design, its print in it) are not held to
+the bar.
 
 Kutch Ajrakh's authored figures and players are its page's own and never pass through the delivery
 check, so the bar does not re-check them.

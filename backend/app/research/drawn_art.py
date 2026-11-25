@@ -10,36 +10,37 @@ from .art_kit import KIT_PARTS, parts_named_by
 from .component_specs_general_svg import sanitised_svg, svg_view_box
 from .component_specs_kit_scene import KIT_SCENE_KINDS
 from .component_specs_science_parts import SVG_TAGS
-from .drawing_roles import MATERIAL_ROLES, css_declarations, paint_roles
+from .drawing_roles import MATERIAL_ROLES
 from .drawing_rules import DRAWN_WIDTH_MIN, TEXT_FLOOR_PX, drawn_texts, local_name
 from .drawing_spec_rules import SVG_KEY, THEMES_KEY, node_element
+from .drawn_paints import DrawnPaints, Shape, drawn_paints
 
 __all__ = [
     "KIT_FIGURE_KINDS",
     "KIT_POINTER",
     "MATERIAL_PARTS",
+    "MOLECULE_KINDS",
     "SCENE_POINTER",
     "SHAPES_MIN",
     "SIZE_TOLERANCE_PX",
+    "SWATCH_KINDS",
     "UI_SIZES_PX",
     "Drawn",
+    "data_drawing_problems",
     "drawn_art_problems",
     "free_drawings",
     "scene_problems",
 ]
 
 KIT_FIGURE_KINDS = frozenset({"drawing", "diagram"})
+MOLECULE_KINDS = frozenset({"structure_diagram", "molecule_3d"})
+SWATCH_KINDS = frozenset({"swatch_pair", "swatch_cards"})
 UI_SIZES_PX = (12, 13, 14, 16)
 SIZE_TOLERANCE_PX = 0.25
 SHAPES_MIN = 6
-SHAPE_TAGS = frozenset({"rect", "path", "circle", "ellipse", "line", "polygon", "polyline"})
-DEFINITIONS = frozenset(
-    {"defs", "pattern", "mask", "clipPath", "marker", "symbol", "linearGradient", "radialGradient", "filter"}
-)
 WORDED = frozenset({"title", "desc"})
 INK_ROLES = frozenset({"ink-1", "ink-2", "ink-3"})
-CURRENT_COLOUR = "currentcolor"
-PAINTS = ("fill", "stroke")
+STROKE = "stroke"
 ICON_KEY = re.compile(r"icon$", re.IGNORECASE)
 DRAWING_KEY = "drawing"
 SVG_TAG = "svg"
@@ -53,7 +54,6 @@ SCENE_POINTER = (
     "give the scene as a kit scene instead: one to three named parts the site draws, each labelled by a unit "
     "citing its facts (kalavigyan://components/{kind}.schema.json)"
 )
-Paints = Mapping[str, str]
 
 
 @dataclass(frozen=True)
@@ -62,20 +62,15 @@ class Drawn:
     root: ElementTree.Element
 
 
-@dataclass(frozen=True)
-class Shape:
-    element: ElementTree.Element
-    paints: Paints
-
-
 def drawn_art_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str]) -> list[str]:
-    if kind not in KIT_FIGURE_KINDS:
+    if kind in KIT_SCENE_KINDS:
         return scene_problems(kind, spec, texts)
+    if kind not in KIT_FIGURE_KINDS:
+        return data_drawing_problems(kind, spec)
     found: list[str] = []
     for drawn in free_drawings(kind, spec):
-        shapes = list(_shapes(drawn.root, {}))
         words = _words(drawn.root, spec, texts)
-        found += _held_problems(drawn, shapes, words, KIT_POINTER)
+        found += _held_problems(drawn, drawn_paints(drawn.root), words, KIT_POINTER)
         found += _named_problems(drawn, words)
     return list(dict.fromkeys(found))
 
@@ -86,15 +81,24 @@ def scene_problems(kind: str, spec: Mapping[str, Any], texts: Mapping[str, str])
     pointer = SCENE_POINTER.format(kind=kind)
     found: list[str] = []
     for drawn in free_drawings(kind, spec):
-        found += _held_problems(drawn, list(_shapes(drawn.root, {})), _words(drawn.root, {}, texts), pointer)
+        found += _held_problems(drawn, drawn_paints(drawn.root), _words(drawn.root, {}, texts), pointer)
     return list(dict.fromkeys(found))
 
 
-def _held_problems(drawn: Drawn, shapes: Sequence[Shape], words: str, pointer: str) -> list[str]:
+def data_drawing_problems(kind: str, spec: Mapping[str, Any]) -> list[str]:
+    if kind in MOLECULE_KINDS or kind in SWATCH_KINDS:
+        return []
+    found: list[str] = []
+    for drawn in free_drawings(kind, spec):
+        found += _painted_problems(drawn, drawn_paints(drawn.root), "", KIT_POINTER)
+    return list(dict.fromkeys(found))
+
+
+def _held_problems(drawn: Drawn, art: DrawnPaints, words: str, pointer: str) -> list[str]:
     return [
         *_type_problems(drawn),
-        *_structure_problems(drawn, shapes, pointer),
-        *_painted_problems(drawn, shapes, words, pointer),
+        *_structure_problems(drawn, art, pointer),
+        *_painted_problems(drawn, art, words, pointer),
     ]
 
 
@@ -129,25 +133,6 @@ def _drawing(key: str, node: Mapping[str, Any]) -> bool:
     return tag == SVG_TAG or (key == DRAWING_KEY and tag in SVG_TAGS)
 
 
-def _shapes(element: ElementTree.Element, inherited: Paints) -> Iterator[Shape]:
-    tag = local_name(element.tag)
-    if tag in DEFINITIONS:
-        return
-    paints = {**inherited, **_own_paints(element)}
-    if tag in SHAPE_TAGS:
-        yield Shape(element, paints)
-    for child in element:
-        yield from _shapes(child, paints)
-
-
-def _own_paints(element: ElementTree.Element) -> dict[str, str]:
-    found = {name: value for name, value in element.attrib.items() if name in PAINTS}
-    for name, value in css_declarations(element.get("style") or ""):
-        if name in PAINTS:
-            found[name] = value
-    return found
-
-
 def _type_problems(drawn: Drawn) -> list[str]:
     box = svg_view_box(drawn.root.get("viewBox"))
     if box is None or box[2] <= 0:
@@ -171,29 +156,27 @@ def _on_scale(drawn_px: float) -> bool:
     return any(abs(drawn_px - size) <= SIZE_TOLERANCE_PX for size in UI_SIZES_PX)
 
 
-def _structure_problems(drawn: Drawn, shapes: Sequence[Shape], pointer: str) -> list[str]:
+def _structure_problems(drawn: Drawn, art: DrawnPaints, pointer: str) -> list[str]:
     found: list[str] = []
+    shapes = art.shapes
     if len(shapes) < SHAPES_MIN:
         found.append(
             f"{drawn.where} draws {len(shapes)} shapes, fewer than the {SHAPES_MIN} a figure at the bar is "
             f"drawn with; {pointer}"
         )
-    if not any(_inked(shape.paints) for shape in shapes):
+    if not any(_inked(art, shape) for shape in shapes):
         found.append(
             f"{drawn.where} has no line work in ink: edge what it shows in --ink-1, --ink-2 or --ink-3; {pointer}"
         )
     return found
 
 
-def _inked(paints: Paints) -> bool:
-    stroke = " ".join(paints.get("stroke", "").split())
-    if stroke.casefold() == CURRENT_COLOUR:
-        return True
-    return bool(set(paint_roles(stroke)) & INK_ROLES)
+def _inked(art: DrawnPaints, shape: Shape) -> bool:
+    return bool(set(art.roles(shape.paints.get(STROKE, ""), shape.paints)) & INK_ROLES)
 
 
-def _painted_problems(drawn: Drawn, shapes: Sequence[Shape], words: str, pointer: str) -> list[str]:
-    painted = sorted({role for shape in shapes for role in _materials(shape)})
+def _painted_problems(drawn: Drawn, art: DrawnPaints, words: str, pointer: str) -> list[str]:
+    painted = sorted({role for role in art.shown_roles() if role in MATERIAL_ROLES})
     if not painted:
         return []
     materials = ", ".join(f"--{role}" for role in painted)
@@ -208,10 +191,6 @@ def _named_problems(drawn: Drawn, words: str) -> list[str]:
         f"{drawn.where} is said to show {word}, which the kit's {part} part draws; {KIT_POINTER}"
         for part, word in parts_named_by(words)
     ]
-
-
-def _materials(shape: Shape) -> list[str]:
-    return [role for role in paint_roles(shape.paints.get("fill", "")) if role in MATERIAL_ROLES]
 
 
 def _words(root: ElementTree.Element, spec: Mapping[str, Any], texts: Mapping[str, str]) -> str:

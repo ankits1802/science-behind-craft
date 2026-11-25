@@ -88,6 +88,89 @@ def test_each_rule_of_the_bar_refuses_its_own_fault(html: str, said: str) -> Non
     assert any(said in detail for detail in details(html))
 
 
+OWN_FLAG = (
+    "<script>const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;\n"
+    "if (!reducedMotion) timer = setInterval(step, 1000);</script>"
+)
+
+
+@pytest.mark.parametrize(
+    ("html", "said"),
+    [
+        (OWN_FLAG, "times its motion without reading"),
+        (
+            '<svg viewBox="0 0 10 10"><rect width="4" height="4" fill="var(--sunk)">'
+            '<animate attributeName="fill" values="var(--sunk);var(--raised)" dur="2s" repeatCount="indefinite">'
+            "</animate></rect></svg>",
+            "moves by <animate>, which neither reduced-motion switch stops",
+        ),
+        ('<svg viewBox="0 0 10 10"><set attributeName="x" to="4"></set></svg>', "moves by <set>"),
+        (
+            "<script>shown.animate([{opacity: 0}, {opacity: 1}], {iterations: Infinity});</script>",
+            "moves by the Web Animations API (.animate(), which neither reduced-motion switch stops",
+        ),
+        ("<script>new KeyframeEffect(shown, [], 1000);</script>", "moves by the Web Animations API"),
+    ],
+)
+def test_motion_neither_switch_stops_and_a_timer_that_reads_no_frame_flag_are_refused(
+    html: str, said: str
+) -> None:
+    assert any(said in detail for detail in details(html))
+
+
+@pytest.mark.parametrize(
+    "script",
+    [
+        'const still = document.documentElement.getAttribute("data-reduced-motion") === "true";',
+        'const still = document.documentElement.dataset["reducedMotion"] === "true";',
+    ],
+)
+def test_a_timer_that_reads_the_frame_s_own_flag_either_way_passes(script: str) -> None:
+    assert details(f"<script>{script}\nif (!still) timer = setInterval(step, 1000);</script>") == []
+
+
+@pytest.mark.parametrize(
+    ("html", "said"),
+    [
+        ('<canvas width="320" height="200"></canvas>', "draws on a <canvas>, which the bar cannot read"),
+        (
+            '<script>const ctx = stage.getContext("2d");</script>',
+            "builds its drawing in the script (getContext)",
+        ),
+        (
+            '<script>const cloth = document.createElementNS("http://www.w3.org/2000/svg", "rect");</script>',
+            "builds its drawing in the script (createElementNS)",
+        ),
+        ("<script>cloth.setAttribute('fill', 'saddlebrown');</script>", "names the colour 'saddlebrown'"),
+        ('<script>cloth.style.backgroundColor = "peru";</script>', "names the colour 'peru'"),
+        (
+            '<script>cloth.style.setProperty("fill", "var(--dye-indigo)");</script>',
+            "paints --dye-indigo by hand",
+        ),
+        ('<script>cloth.setAttribute("style", "stroke: tan");</script>', "names the colour 'tan'"),
+        ('<svg viewBox="0 0 10 10"><rect fill="peru"></rect></svg>', "names the colour 'peru'"),
+        ('<svg viewBox="0 0 10 10"><g opacity="0.4"></g></svg>', "rests at opacity 0.4"),
+        ('<svg viewBox="0 0 10 10"><rect fill-opacity=".5"></rect></svg>', "rests at fill-opacity .5"),
+        ("<style>.unplayed{stroke-opacity:40%}</style>", "rests at stroke-opacity 40%"),
+    ],
+)
+def test_a_figure_drawn_outside_the_static_svg_or_faded_at_rest_is_refused(html: str, said: str) -> None:
+    assert any(said in detail for detail in details(html))
+
+
+@pytest.mark.parametrize(
+    "html",
+    [
+        '<script>said.textContent = "Deep fast chocolate-black colour"; label.textContent = "Indigo";</script>',
+        '<script>bar.setAttribute("fill", "var(--chart-emph)"); chip.style.color = "var(--ink-2)";</script>',
+        '<script>const chip = document.createElement("span");</script>',
+        AT.replace('<rect x="0"', '<rect opacity="1" fill-opacity="100%" x="0"'),
+    ],
+)
+def test_words_that_name_a_colour_a_script_painting_a_role_and_a_still_figure_pass(html: str) -> None:
+    assert details(html) == []
+
+
 @pytest.mark.parametrize(
     "html",
     [

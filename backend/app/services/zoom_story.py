@@ -23,10 +23,12 @@ from app.research.blocks_journey import (
 from app.research.blocks_place import DistrictRef
 from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE, DatasetRef
 from app.research.explainer import Block
+from app.research.image_relevance import PictureContext
 from app.research.retrieval import EVERY_CHUNK_ACLS
 from app.science.records import KnownClaim
 
 from .builder_evidence import fact_sentence, known_fact
+from .craft_picture_context import picture_context_of
 from .knowledge_view import claims_for, resolve_craft, source_ref
 from .ledger_payloads import sentence_keys
 from .matter_builders import LinkedCompound
@@ -52,6 +54,7 @@ logger = logging.getLogger(__name__)
 
 ZOOM_DISTRICT_CLAIMS_MAX = 8
 COMPOSED_PROSE = "prose"
+NO_WORLD = PictureContext(frozenset())
 
 
 def figure_texts(blocks: Iterable[Block]) -> set[str]:
@@ -72,6 +75,7 @@ class ZoomGround:
     sources: Mapping[str, Mapping[str, Any]] = field(default_factory=dict)
     pictures: tuple[StoredPicture, ...] = ()
     terms: tuple[LevelTerm, ...] = ()
+    context: PictureContext = NO_WORLD
 
 
 @dataclass
@@ -122,7 +126,8 @@ async def zoom_ground(
     claims, sources = await _district_claims(session, craft, districts, mode) if boundary else ((), {})
     pictures = await stored_pictures(session, [*offered, *(claim.id for claim in claims)])
     terms = await level_terms(session, craft.id)
-    return ZoomGround(districts, boundary, claims, sources, tuple(pictures), terms)
+    context = await picture_context_of(session, craft)
+    return ZoomGround(districts, boundary, claims, sources, tuple(pictures), terms, context)
 
 
 async def level_terms(session: AsyncSession, craft_id: uuid.UUID) -> tuple[LevelTerm, ...]:

@@ -24,6 +24,7 @@ from app.services.zoom_story import ZoomGround
 
 from ..contracts.explainer_golden import golden_json
 from ..contracts.phase_c_golden import phase_c, phase_c_blocks
+from ..images.fakes import textile_world
 from ..matter.fixtures import matter
 from ..place.fixtures import no_session
 from ..place.season_supply_fixtures import claims_of
@@ -127,6 +128,7 @@ def zoom_ground_of(*, pictures: bool = True, boundary: bool = True) -> ZoomGroun
         claims=(district,),
         sources={},
         pictures=stored,
+        context=textile_world("Kutch Ajrakh"),
     )
 
 

@@ -135,6 +135,93 @@ def test_a_figure_that_paints_a_depicted_material_by_hand_is_sent_to_the_kit() -
     ]
 
 
+PAINTED_INDIGO = (
+    "the drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section or piece part draws "
+    f"textured, framed and named in a key; {KIT_POINTER}"
+)
+NO_INK = (
+    f"the drawing has no line work in ink: edge what it shows in --ink-1, --ink-2 or --ink-3; {KIT_POINTER}"
+)
+TONE = '<rect x="100" y="100" width="80" height="80" fill="{}"/>'
+
+
+def current_colour_rects(colour: str) -> str:
+    shapes = rects(6, stroke=' stroke="currentColor"').replace('fill="var(--sunk)"', 'fill="currentColor"')
+    return f'<g color="{colour}">{shapes}</g>'
+
+
+def test_a_material_painted_through_current_color_is_painted_by_hand_and_is_no_ink() -> None:
+    assert found("drawing", declared(current_colour_rects("var(--dye-indigo)"))) == [NO_INK, PAINTED_INDIGO]
+    assert found("drawing", declared(current_colour_rects("var(--ink-2)"))) == []
+
+
+def test_a_material_painted_through_a_gradient_a_pattern_or_a_used_shape_is_painted_by_hand() -> None:
+    gradient = (
+        '<defs><linearGradient id="g"><stop offset="0" stop-color="var(--dye-leuco)"/>'
+        '<stop offset="1" style="stop-color: var(--dye-indigo)"/></linearGradient></defs>'
+    )
+    assert found("drawing", declared(gradient + rects(6) + TONE.format("url(#g)"))) == [
+        "the drawing paints --dye-indigo, --dye-leuco by hand, which the kit's cloth, bath, paste, section or "
+        f"piece part draws textured, framed and named in a key; {KIT_POINTER}"
+    ]
+    pattern = (
+        '<defs><pattern id="p" width="4" height="4"><path d="M0 0 L4 4" stroke="var(--dye-indigo)"/>'
+        "</pattern></defs>"
+    )
+    assert found("drawing", declared(pattern + rects(6) + TONE.format("url(#p)"))) == [PAINTED_INDIGO]
+    kept = '<defs><rect id="r" width="8" height="8" fill="var(--dye-indigo)"/></defs><use href="#r"/>'
+    assert found("drawing", declared(kept + rects(6))) == [PAINTED_INDIGO]
+    inked = pattern.replace("var(--dye-indigo)", "var(--ink-3)")
+    assert found("drawing", declared(inked + rects(6) + TONE.format("url(#p)"))) == []
+
+
+def test_a_material_stroke_is_painted_by_hand_and_only_an_ink_stroke_is_line_work() -> None:
+    assert found("drawing", declared(rects(6, stroke=' stroke="var(--dye-indigo)"'))) == [
+        NO_INK,
+        PAINTED_INDIGO,
+    ]
+    assert found("drawing", declared(rects(6, stroke=' stroke="var(--ink-3)"'))) == []
+
+
+def chart(fill: str) -> dict[str, Any]:
+    shapes = [
+        {
+            "tag": "rect",
+            "attrs": {"x": str(8 + 40 * at), "y": "20", "width": "30", "height": "60", "fill": fill},
+        }
+        for at in range(2)
+    ]
+    return {
+        "form": "drawing",
+        "drawing": {"tag": "svg", "attrs": {"viewBox": "0 0 120 100"}, "children": shapes},
+    }
+
+
+def test_a_chart_drawn_by_hand_in_a_depicted_material_is_sent_to_a_declared_diagram() -> None:
+    assert found("chart", chart("var(--dye-indigo)")) == [
+        "the chart's drawing at drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section "
+        f"or piece part draws textured, framed and named in a key; {KIT_POINTER}"
+    ]
+    assert found("chart", chart("var(--chart-series)")) == []
+    problems = spec_problems("chart", chart("var(--dye-indigo)"), {})
+    assert any(
+        problem.startswith("the chart's drawing at drawing paints --dye-indigo by hand")
+        for problem in problems
+    )
+
+
+def test_a_map_layer_drawn_in_a_material_is_sent_to_the_kit_and_a_swatch_s_printed_motif_is_its_own() -> None:
+    layer = {"setting": "drawing", "drawing": chart("var(--dye-madder)")["drawing"]}
+    assert found("map_layer", layer) == [
+        "the map_layer's drawing at drawing paints --dye-madder by hand, which the kit's cloth, bath, paste, "
+        f"section or piece part draws textured, framed and named in a key; {KIT_POINTER}"
+    ]
+    fixture = next(fixture for fixture in kind_fixtures() if fixture["kind"] == "swatch_pair")
+    printed = copy.deepcopy(fixture["spec"])
+    printed["swatches"][0]["motif"][0]["attrs"]["fill"] = "var(--dye-kut)"
+    assert found("swatch_pair", printed) == []
+
+
 def test_a_figure_whose_own_words_name_a_kit_part_is_sent_to_that_part() -> None:
     titled = rects(6) + "<title>Cloth lifted from the vat</title>"
     assert found("drawing", declared(titled)) == [

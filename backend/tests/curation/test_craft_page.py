@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from dataclasses import replace
 from typing import Any
 
 import pytest
@@ -11,12 +12,14 @@ from app.research.craft_page import CraftPage, PageCraft
 from app.research.crafts import CraftRef
 from app.science.records import ProcessRecords
 from app.services.craft_page import craft_page
-from app.services.craft_page_records import ClaimFacts, CraftPageRecords, TermRecord
+from app.services.craft_page_records import ClaimFacts, CraftPageRecords, TermRecord, stored_page_pictures
 from app.services.curation_keys import curated_id
 from app.services.curation_preview import master_craft, preview_records
 from app.services.knowledge_view import ClaimView
+from app.services.media_ref_store import StoredPicture
 
 from ..contracts.golden import golden_json
+from ..images.fakes import candidate, stored_picture, textile_world
 from .import_support import AJRAKH, AJRAKH_GOLDEN, plan_of, raw
 
 SOURCE_ID = str(uuid.UUID(int=500))
@@ -174,6 +177,45 @@ def test_a_craft_without_a_dossier_gets_a_page_from_its_claims() -> None:
     assert [sentence.text for sentence in sections["HISTORY"].sentences] == [MOVED]
     assert [term.key for term in page.glossary] == ["dabu"]
     assert page.glossary[0].meaning is None
+
+
+AKOLA = ("Block Printing Of Akola", "Rajasthan")
+DHAMADKA = "stretch of art, dhamadka kutch"
+
+
+def akola_link(provider: str, n: int, title: str, relevance: str = "TEXT") -> StoredPicture:
+    found = candidate(provider, n, title, licence="CC BY 2.0", author="A", description="dyeing, kutch")
+    return stored_picture(found, uuid.UUID(int=4), relevance)
+
+
+def test_an_uncurated_page_serves_only_stored_pictures_of_its_craft_s_world_and_no_shop_s() -> None:
+    links = [
+        akola_link("openverse", 1, DHAMADKA),
+        akola_link("openverse", 2, "Buy Akola dabu printed cotton"),
+        akola_link("openverse", 3, "Dabu printing at Akola"),
+        akola_link("curation", 4, DHAMADKA),
+        akola_link("openverse", 5, DHAMADKA, relevance="VISION"),
+    ]
+    served = stored_page_pictures(links, textile_world(*AKOLA))
+    assert [(picture.media.provider, picture.media.title, picture.may_lead) for picture in served] == [
+        ("openverse", "Dabu printing at Akola", False),
+        ("curation", DHAMADKA, True),
+        ("openverse", DHAMADKA, True),
+    ]
+
+
+def test_a_searched_picture_linked_by_its_words_never_leads_an_uncurated_page() -> None:
+    links = [akola_link("openverse", 3, "Dabu printing at Akola"), akola_link("curation", 4, DHAMADKA)]
+    served = stored_page_pictures(links, textile_world(*AKOLA))
+    page = craft_page(replace(uncurated_records(), pictures=served))
+    assert [(picture.media.provider, picture.role) for picture in page.pictures] == [
+        ("openverse", "OVERVIEW"),
+        ("curation", "HERO"),
+    ]
+    assert page.masthead.picture is not None and page.masthead.picture.media.provider == "curation"
+    alone = craft_page(replace(uncurated_records(), pictures=served[:1]))
+    assert [picture.role for picture in alone.pictures] == ["OVERVIEW"]
+    assert alone.masthead.picture is None
 
 
 def test_duplicates_fold_under_one_entry_and_answers_are_told_apart() -> None:

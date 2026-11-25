@@ -240,8 +240,11 @@ and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure
 ## The design rules for a contributed figure
 
 - **At the bar.** Text at 12, 13, 14 or 16 px at 320 px wide; six shapes or more; line work in
-  ink; a depicted material only through the kit: a composed diagram, or a kit scene in a player's,
-  toggle's or label card's slot.
+  ink (a stroke whose colour is `--ink-1` to `--ink-3`, `currentColor` counting as the `color` it
+  takes); a depicted material only through the kit: a composed diagram, or a kit scene in a
+  player's, toggle's or label card's slot. A material reached through `currentColor`, a gradient,
+  a pattern or a `use` is painted by hand as surely as a direct fill, and a chart's, a map layer's
+  or any other data drawing paints none.
 - **Give data, not styling.** A declared kind's view sets every colour, size and position itself:
   bars and lines in the chart series colour with the one mark the title names emphasised, places as
   numbered paper discs on India's outline in the map colours, tables in tabular figures. A spec

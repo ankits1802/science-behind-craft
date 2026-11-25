@@ -177,7 +177,12 @@ def _own_claims(matter: CraftMatter, materials: Iterable[MaterialRows]) -> list[
 def _pictures_ask(craft_name: str, captions: Captions, fibre: str | None, ground: ZoomGround) -> PicturesAsk:
     claims = tuple(ClaimText(claim.id, claim.text) for claim in captions.claims.values())
     return PicturesAsk(
-        craft_name=craft_name, claims=claims, fibre=fibre, stored=ground.pictures, terms=ground.terms
+        craft_name=craft_name,
+        claims=claims,
+        fibre=fibre,
+        stored=ground.pictures,
+        context=ground.context,
+        terms=ground.terms,
     )
 
 

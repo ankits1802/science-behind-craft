@@ -12,13 +12,17 @@ from .craft_page_family import family_names, family_place
 from .craft_resolver import alias_names, craft_places
 from .knowledge_view import resolve_craft
 
-__all__ = ["any_craft_context", "craft_picture_context"]
+__all__ = ["any_craft_context", "craft_picture_context", "picture_context_of"]
 
 
 async def craft_picture_context(session: AsyncSession, craft_slug: str | None) -> PictureContext:
     craft = await resolve_craft(session, craft_slug) if craft_slug else None
     if craft is None:
         return any_craft_context()
+    return await picture_context_of(session, craft)
+
+
+async def picture_context_of(session: AsyncSession, craft: Craft) -> PictureContext:
     aliases = (await alias_names(session, [craft.id])).get(craft.id, [])
     located = (await craft_places(session, [craft.id])).get(craft.id, [])
     category, kind = await family_names(session, craft) or (craft.category, None)

@@ -3,7 +3,7 @@ import uuid
 from app.research.image_relevance import ClaimText
 from app.services.zoom_pictures import LevelTerm, PicturesAsk, ZoomPictures, fibre_tagged, picture_level
 
-from ..images.fakes import FakeMediaStore, FakeSource, candidate
+from ..images.fakes import FakeMediaStore, FakeSource, candidate, textile_world
 
 EMBROIDERY = LevelTerm(level="CLOTH", label="Kutch Embroidery", surfaces=("Kutch Embroidery", "કચ્છ ભરતકામ"))
 MULMUL = LevelTerm(level="CLOTH", label="Cotton cloth", surfaces=("Cotton cloth", "latha", "mulmul"))
@@ -33,7 +33,7 @@ async def test_a_craft_whose_fibre_only_its_glossary_tags_name_searches_that_fib
     )
     source = FakeSource("wikimedia_commons", [micrograph])
     store = FakeMediaStore({})
-    ask = PicturesAsk("Nettle Fibre", (naming,), None, (), terms=(NETTLE,))
+    ask = PicturesAsk("Nettle Fibre", (naming,), None, (), textile_world("Nettle Fibre"), terms=(NETTLE,))
     found = await ZoomPictures(sources=(source,), keeper=store).pictures(ask)
     assert "Nettle fibre micrograph" in source.queries
     assert found["FIBRE"].claim_ids == (naming.claim_id,)

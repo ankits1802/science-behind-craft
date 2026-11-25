@@ -11,7 +11,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import ExternalFailure
 from app.research.blocks import ImageItem, ImagesBlock
-from app.research.field_voices import FIELD_IMAGE_PROVIDERS
 from app.research.image_relevance import (
     CLAIMS_PER_IMAGE_MAX,
     SECTION_IMAGES_MAX,
@@ -26,14 +25,13 @@ from app.research.images import ImageCandidate, ImageQuery, ImageSource
 from app.research.media_refs import MediaRef
 
 from .craft_picture_context import craft_picture_context
-from .curation_keys import MEDIA_PROVIDER
 from .live_sources import LiveSourcesStore
 from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, SqlMediaStore, StoredPicture
 from .picture_sites import blocked_picture
+from .served_pictures import served_picture
 
 __all__ = [
     "CANDIDATES_PER_SOURCE",
-    "CHOSEN_PICTURE_PROVIDERS",
     "IMAGE_SEARCH_SECONDS",
     "ContextOf",
     "MediaStore",
@@ -53,7 +51,6 @@ logger = logging.getLogger(__name__)
 CANDIDATES_PER_SOURCE = 10
 IMAGE_SEARCH_SECONDS = 6.0
 VISION_RELEVANCE = "VISION"
-CHOSEN_PICTURE_PROVIDERS = frozenset({MEDIA_PROVIDER, *FIELD_IMAGE_PROVIDERS})
 
 SourcesOf = Callable[[], Awaitable[Sequence[ImageSource]]]
 ContextOf = Callable[[str | None], Awaitable[PictureContext]]
@@ -149,12 +146,8 @@ def shown_candidates(candidates: Iterable[ImageCandidate]) -> list[ImageCandidat
 def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> list[ImageItem]:
     linked: dict[uuid.UUID, list[StoredPicture]] = {}
     for picture in pictures:
-        media = picture.media
-        if blocked_picture(page_url=media.page_url, image_url=media.image_url, title=media.title):
-            continue
-        if not _shown_link(picture, context):
-            continue
-        linked.setdefault(media.id, []).append(picture)
+        if served_picture(picture, context):
+            linked.setdefault(picture.media.id, []).append(picture)
     ordered = sorted(linked.values(), key=lambda links: links[0].media.display != INLINE_DISPLAY)
     items: list[ImageItem] = []
     cards = 0
@@ -165,12 +158,6 @@ def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> 
         cards += card
         items.append(_stored_item(links))
     return items[:SECTION_IMAGES_MAX]
-
-
-def _shown_link(picture: StoredPicture, context: PictureContext) -> bool:
-    if picture.relevance != TEXT_RELEVANCE or picture.media.provider in CHOSEN_PICTURE_PROVIDERS:
-        return True
-    return context.named_in(picture.media.title)
 
 
 def _stored_item(links: Sequence[StoredPicture]) -> ImageItem:

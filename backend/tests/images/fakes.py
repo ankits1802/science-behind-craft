@@ -5,15 +5,24 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
 from app.core.errors import ExternalFailure
-from app.research.image_relevance import ChosenImage, ClaimText, PictureContext
+from app.data.craft_families import load_craft_families
+from app.data.english_words import load_english_words
+from app.research.image_relevance import ChosenImage, ClaimText, PictureContext, picture_context
 from app.research.images import ImageCandidate, ImageQuery, ImageSource, media_ref_of
 from app.research.media_refs import MediaRef
 from app.services.media_ref_store import StoredPicture, media_ref_id, media_url_key
 
 RETRIEVED = datetime(2026, 11, 17, 10, 20, tzinfo=UTC)
+TEXTILES = "Textiles-Based-Craft-Category"
 AJRAKH_WORLD = PictureContext(
     frozenset({"kutch", "ajrakh", "ajrak", "dhamadka", "print", "cloth", "mordant"})
 )
+
+
+def textile_world(*names: str) -> PictureContext:
+    family = load_craft_families().family(TEXTILES)
+    assert family is not None
+    return picture_context(names, (), family.picture_words, ordinary=load_english_words())
 
 
 def candidate(

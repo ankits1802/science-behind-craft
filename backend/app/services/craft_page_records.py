@@ -23,6 +23,7 @@ from app.research.citations import SourceRef
 from app.research.craft_page import PageCraft
 from app.research.craft_page_context import PageRelative
 from app.research.field_voices import FIELD_PHOTOS_SHOWN, FIELD_VOICES_SHOWN
+from app.research.image_relevance import PictureContext
 from app.research.knowledge_pieces import KnowledgePiece
 from app.research.media_refs import MediaRef
 from app.research.retrieval import OPEN_CHUNK_ACLS
@@ -35,12 +36,14 @@ from .craft_ai_media import AiMediaRecord, shared_ai_media
 from .craft_page_family import family_names, family_place, family_relatives, reader_name
 from .craft_page_market import MarketFacts, market_facts
 from .craft_page_offers import PageOffers, page_offers
+from .craft_picture_context import picture_context_of
 from .craft_process import process_records
 from .curated_index import CuratedPage, stored_curated_page
 from .field_voices_view import FieldVoicesPart, voices_part
 from .knowledge_view import ClaimView
-from .media_ref_store import field_media, stored_media_ref, stored_media_refs
+from .media_ref_store import StoredPicture, field_media, stored_media_ref, stored_media_refs
 from .piece_lookup import stored_pieces
+from .served_pictures import searched_text_link, served_picture
 from .term_glossary import glossary_entries
 
 __all__ = [
@@ -52,6 +55,7 @@ __all__ = [
     "TermRecord",
     "craft_page_records",
     "page_craft",
+    "stored_page_pictures",
 ]
 
 PAGE_MODE = "HYBRID"
@@ -78,6 +82,7 @@ class TermRecord:
 class PictureRecord:
     media: MediaRef
     claim_ids: tuple[uuid.UUID, ...]
+    may_lead: bool
 
 
 @dataclass(frozen=True)
@@ -194,22 +199,35 @@ def _fact(claim: Any, concept: Any) -> ClaimFacts:
 
 async def _stored_extras(session: AsyncSession, craft: Craft, records: CraftPageRecords) -> CraftPageRecords:
     claim_ids = [view.id for view in records.views]
-    links = (
-        await session.execute(
-            select(MediaRefRow, MediaRefClaim.claimId)
-            .join(MediaRefClaim, MediaRefClaim.mediaRefId == MediaRefRow.id)
-            .where(MediaRefClaim.claimId.in_(claim_ids), MediaRefRow.id.not_in(field_media()))
-            .order_by(MediaRefRow.id, MediaRefClaim.claimId)
-        )
-    ).all()
-    linked: dict[uuid.UUID, tuple[MediaRefRow, list[uuid.UUID]]] = {}
-    for row, claim_id in links:
-        linked.setdefault(row.id, (row, []))[1].append(claim_id)
-    pictures = tuple(
-        PictureRecord(stored_media_ref(row), tuple(claims))
-        for row, claims in list(linked.values())[:PICTURES_SHOWN_MAX]
+    links = await session.execute(
+        select(MediaRefRow, MediaRefClaim.claimId, MediaRefClaim.relevance)
+        .join(MediaRefClaim, MediaRefClaim.mediaRefId == MediaRefRow.id)
+        .where(MediaRefClaim.claimId.in_(claim_ids), MediaRefRow.id.not_in(field_media()))
+        .order_by(MediaRefRow.id, MediaRefClaim.claimId)
     )
+    stored = [
+        StoredPicture(stored_media_ref(row), claim_id, relevance)
+        for row, claim_id, relevance in links.tuples()
+    ]
+    pictures = stored_page_pictures(stored, await picture_context_of(session, craft))
     return replace(records, pictures=pictures, terms=await _terms(session, craft))
+
+
+def stored_page_pictures(
+    stored: Sequence[StoredPicture], context: PictureContext
+) -> tuple[PictureRecord, ...]:
+    linked: dict[uuid.UUID, list[StoredPicture]] = {}
+    for picture in stored:
+        if served_picture(picture, context):
+            linked.setdefault(picture.media.id, []).append(picture)
+    return tuple(
+        PictureRecord(
+            links[0].media,
+            tuple(link.claim_id for link in links),
+            may_lead=not any(searched_text_link(link) for link in links),
+        )
+        for links in list(linked.values())[:PICTURES_SHOWN_MAX]
+    )
 
 
 async def _terms(session: AsyncSession, craft: Craft) -> tuple[TermRecord, ...]:

@@ -31,7 +31,7 @@ from app.services.zoom_story import (
 )
 from app.sources.reference.pubchem import PubChemAdapter
 
-from ..images.fakes import RETRIEVED, FakeMediaStore, FakeSource, candidate
+from ..images.fakes import RETRIEVED, FakeMediaStore, FakeSource, candidate, stored_picture, textile_world
 from ..ledger.indigo_blocks import card
 from ..ledger.indigo_claims import AJRAKH_INDIGO
 from ..matter.fixtures import alizarin_record_source
@@ -102,7 +102,8 @@ def pictures_of(*found: ImageCandidate, store: FakeMediaStore | None = None) -> 
 
 def stored_workshop() -> LevelPicture:
     _, workshop, _ = zoom_claims()
-    ask = PicturesAsk("Kutch Ajrakh", (), None, (StoredPicture(workshop_media(), workshop.id, "TEXT"),))
+    stored = (StoredPicture(workshop_media(), workshop.id, "TEXT"),)
+    ask = PicturesAsk("Kutch Ajrakh", (), None, stored, textile_world("Kutch Ajrakh"))
     return stored_level_pictures(ask)["WORKSHOP"]
 
 
@@ -272,10 +273,13 @@ def test_a_fibre_micrograph_is_captioned_only_by_a_claim_naming_the_fibre() -> N
     )
     naming = ClaimText(uuid.UUID(int=21), "Ajrakh is printed on cotton cloth.")
     other = ClaimText(uuid.UUID(int=22), "The block is carved from teak.")
-    ask = PicturesAsk(craft_name="Kutch Ajrakh", claims=(other, naming), fibre="cotton", stored=())
+    world = textile_world("Kutch Ajrakh")
+    ask = PicturesAsk(
+        craft_name="Kutch Ajrakh", claims=(other, naming), fibre="cotton", stored=(), context=world
+    )
     chosen = chosen_level_images([micrograph], ask, ["FIBRE"])
     assert chosen["FIBRE"].illustration.claim_ids == (naming.claim_id,)
-    alone = PicturesAsk(craft_name="Kutch Ajrakh", claims=(other,), fibre="cotton", stored=())
+    alone = PicturesAsk(craft_name="Kutch Ajrakh", claims=(other,), fibre="cotton", stored=(), context=world)
     assert chosen_level_images([micrograph], alone, ["FIBRE"]) == {}
 
 
@@ -297,3 +301,46 @@ def test_a_level_is_not_captioned_by_a_claim_a_figure_of_its_section_already_sta
     prose = materials_ask().blocks
     assert figure_texts(prose) == set()
     assert figure_texts([*prose, figure]) == sentence_keys(AJRAKH_INDIGO.text)
+
+
+AKOLA = ("Block Printing Of Akola", "Rajasthan")
+DHAMADKA = "stretch of art, dhamadka kutch"
+TAGS = "art, dhamadka, dyeing, fabric, workshop, printers, stamp, dabu, resist, kutch"
+STAMPED = ClaimText(uuid.UUID(int=51), "Printers at Akola stamp the dabu resist on the cloth by hand.")
+
+
+def akola_ask(*stored: StoredPicture) -> PicturesAsk:
+    return PicturesAsk(AKOLA[0], (STAMPED,), None, stored, textile_world(*AKOLA))
+
+
+def akola_found(provider: str, n: int, title: str) -> ImageCandidate:
+    return candidate(provider, n, title, licence="CC BY 2.0", author="A", description=TAGS)
+
+
+def akola_picture(provider: str, n: int, title: str, relevance: str = "TEXT") -> StoredPicture:
+    return stored_picture(akola_found(provider, n, title), STAMPED.claim_id, relevance)
+
+
+def test_a_stored_searched_picture_of_another_world_or_untitled_by_its_level_is_no_level() -> None:
+    assert stored_level_pictures(akola_ask(akola_picture("openverse", 31, DHAMADKA))) == {}
+    assert stored_level_pictures(akola_ask(akola_picture("openverse", 32, "Akola printed yardage"))) == {}
+    named = akola_picture("openverse", 33, "Akola printers stamping the dabu resist")
+    assert stored_level_pictures(akola_ask(named))["WORKSHOP"].media.title == named.media.title
+
+
+def test_a_curator_s_pick_and_a_vision_verdict_keep_their_level_and_a_curated_alt_is_read() -> None:
+    seen = akola_picture("openverse", 34, "A workshop at dusk", relevance="VISION")
+    assert stored_level_pictures(akola_ask(seen))["WORKSHOP"].relevance == "VISION"
+    picked = akola_picture("curation", 35, DHAMADKA)
+    assert stored_level_pictures(akola_ask(picked))["WORKSHOP"].media.provider == "curation"
+
+
+def test_a_searched_picture_names_the_craft_s_world_and_its_level_in_its_title_and_is_no_shop_s() -> None:
+    elsewhere = akola_found("openverse", 41, DHAMADKA)
+    untitled = akola_found("openverse", 42, "Akola yardage")
+    sold = akola_found("openverse", 43, "Buy Akola printers stamp the dabu resist")
+    named = akola_found("openverse", 44, "Akola printers stamp the dabu resist")
+    refused = [elsewhere, untitled, sold]
+    assert chosen_level_images(refused, akola_ask(), ["WORKSHOP", "CLOTH"]) == {}
+    chosen = chosen_level_images([*refused, named], akola_ask(), ["WORKSHOP", "CLOTH"])
+    assert {level: image.candidate.title for level, image in chosen.items()} == {"WORKSHOP": named.title}

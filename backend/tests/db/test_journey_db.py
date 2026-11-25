@@ -108,6 +108,8 @@ async def test_the_zoom_ground_is_the_craft_s_mapped_district_its_naming_claims_
     cited = {citation.source_id for claim in ground.claims for citation in claim.citations}
     assert set(ground.sources) == cited
     assert [picture.claim_id for picture in ground.pictures] == [RESIST_PASTE]
+    assert ground.context.named_in("Ajrakh printers at work in Kachchh")
+    assert not ground.context.named_in("Lemons and Limes, Fresh Fruit Color")
 
 
 async def test_without_the_boundary_row_the_zoom_reads_no_district_claims(session: AsyncSession) -> None:

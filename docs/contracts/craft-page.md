@@ -537,6 +537,15 @@ its `STORED_CLAIMS` prose, its stored process and reactions with their molecules
 exist, and Cite this when a sentence is cited. With no stored claim at all, `glance` carries
 `start_research` (the three questions, each opening Ask) and the page has no rail and no Cite this.
 
+Its pictures are the stored ones linked to the claims it shows (`craft_page_records.stored_page_pictures`,
+at most `PICTURES_SHOWN_MAX`, field photos left to its gallery), each passing the rule a section's
+stored pictures pass (`served_pictures.served_picture`: not a shop's, and a `TEXT` link of a
+searched picture only while its title names the craft's world, read for the craft by
+`craft_picture_context.picture_context_of`; `docs/contracts/explainer.md`, Choosing). A searched
+picture linked by its words alone never takes the `HERO` role: the masthead shows a curator's
+pick or a picture a `VISION` link holds, else its typographic plate, and a
+searched picture stays a plate of its chapter (decision 0215).
+
 ## Dossier fields the page reads (curation schema 2)
 
 Curation schema version 2 (`docs/contracts/curation.md`) adds optional fields only; every schema 1

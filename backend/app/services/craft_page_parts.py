@@ -177,17 +177,19 @@ def page_glossary(records: CraftPageRecords, visible: Visible) -> list[PageTerm]
 
 def page_pictures(records: CraftPageRecords, visible: Visible) -> list[PagePicture]:
     if records.curated is not None:
-        return _with_roles(shown_pictures(records.curated, records.media, visible.levels))
+        shown = shown_pictures(records.curated, records.media, visible.levels)
+        masthead = masthead_index([picture.placed_as for picture in shown])
+        return _with_roles(shown, hero_index([(p.media, p.stage_id) for p in shown], masthead=masthead))
     found = [
         ShownPicture(item.media, item.media.title, None, visible.keep(item.claim_ids))
         for item in records.pictures
     ]
-    return _with_roles(found)
+    leading = [index for index, item in enumerate(records.pictures) if item.may_lead]
+    chosen = hero_index([(found[index].media, None) for index in leading])
+    return _with_roles(found, None if chosen is None else leading[chosen])
 
 
-def _with_roles(found: Sequence[ShownPicture]) -> list[PagePicture]:
-    masthead = masthead_index([picture.placed_as for picture in found])
-    hero = hero_index([(picture.media, picture.stage_id) for picture in found], masthead=masthead)
+def _with_roles(found: Sequence[ShownPicture], hero: int | None) -> list[PagePicture]:
     return [
         PagePicture(
             media=picture.media,

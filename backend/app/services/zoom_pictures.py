@@ -18,6 +18,7 @@ from app.research.image_relevance import (
     ChosenImage,
     ClaimText,
     Illustration,
+    PictureContext,
     illustration,
 )
 from app.research.images import ImageCandidate, ImageSource, shown_inline
@@ -26,7 +27,8 @@ from app.research.quotes import content_stems
 
 from .live_sources import LiveSourcesStore
 from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, SqlMediaStore, StoredPicture
-from .section_images import IMAGE_SEARCH_SECONDS, image_search_text, searched_images
+from .section_images import IMAGE_SEARCH_SECONDS, image_search_text, searched_images, shown_candidates
+from .served_pictures import chosen_picture, served_picture
 from .term_scales import scale_stripped
 
 __all__ = [
@@ -160,6 +162,7 @@ class PicturesAsk:
     claims: tuple[ClaimText, ...]
     fibre: str | None
     stored: tuple[StoredPicture, ...]
+    context: PictureContext
     terms: tuple[LevelTerm, ...] = ()
 
 
@@ -234,7 +237,9 @@ def fibre_named(names: Iterable[str]) -> str | None:
 def stored_level_pictures(ask: PicturesAsk) -> dict[str, LevelPicture]:
     found: dict[str, LevelPicture] = {}
     for picture in ask.stored:
-        level = picture_level(f"{picture.media.title}\n{picture.media.alt}", ask.fibre, ask.terms)
+        if not served_picture(picture, ask.context):
+            continue
+        level = picture_level(_level_words(picture.media), ask.fibre, ask.terms)
         if level is not None and level not in found:
             found[level] = LevelPicture(level, picture.media, picture.relevance, (picture.claim_id,))
     return found
@@ -244,8 +249,8 @@ def chosen_level_images(
     candidates: Sequence[ImageCandidate], ask: PicturesAsk, wanted: Sequence[str]
 ) -> dict[str, ChosenImage]:
     ranked: dict[str, list[tuple[int, int, ChosenImage]]] = {}
-    for position, candidate in enumerate(candidates):
-        level = picture_level(candidate.described, ask.fibre, ask.terms) if shown_inline(candidate) else None
+    for position, candidate in enumerate(shown_candidates(candidates)):
+        level = _searched_level(candidate, ask)
         shown = _illustrated(candidate, ask, level) if level in wanted else None
         if level is not None and shown is not None:
             ranked.setdefault(level, []).append((-shown.shared, position, ChosenImage(candidate, shown)))
@@ -263,6 +268,16 @@ def chosen_level_images(
 async def zoom_pictures(sessions: async_sessionmaker[AsyncSession], live: LiveSourcesStore) -> ZoomPictures:
     sources = tuple(source for source in await live.images() if source.name in ZOOM_IMAGE_SOURCES)
     return ZoomPictures(sources=sources, keeper=SqlMediaStore(sessions), figures=await live.figures())
+
+
+def _level_words(media: MediaRef) -> str:
+    return f"{media.title}\n{media.alt}" if chosen_picture(media) else media.title
+
+
+def _searched_level(candidate: ImageCandidate, ask: PicturesAsk) -> str | None:
+    if not shown_inline(candidate) or not ask.context.named_in(candidate.title):
+        return None
+    return picture_level(candidate.title, ask.fibre, ask.terms)
 
 
 def _illustrated(candidate: ImageCandidate, ask: PicturesAsk, level: str) -> Illustration | None:

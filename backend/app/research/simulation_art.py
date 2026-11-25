@@ -7,7 +7,7 @@ from .art_kit import parts_named_by
 from .drawing_roles import DRAWING_ROLES, INDIGO, MATERIAL_ROLES, css_declarations
 from .drawn_art import KIT_POINTER, UI_SIZES_PX, drawn_art_problems
 from .sandbox_markup import SandboxProblem
-from .simulation_art_markup import ArtMarkup
+from .simulation_art_markup import PAINT_ATTRIBUTES, REST_PROPERTIES, ArtMarkup
 
 __all__ = [
     "ART_RULE",
@@ -21,6 +21,8 @@ DRAWING_KIND = "drawing"
 FIGURE_KEY = "figure"
 FACES = frozenset({"var(--font-ui)", "var(--font-reading)", "inherit"})
 REDUCED_MOTION_FLAG = "reducedMotion"
+REDUCED_MOTION_ATTRIBUTE = "data-reduced-motion"
+STYLE_ATTRIBUTE = "style"
 PLAIN = frozenset({"none", "transparent", "currentcolor", "inherit", "initial", "unset"})
 COLOUR_PROPERTIES = frozenset(
     {
@@ -44,25 +46,64 @@ COLOUR_PROPERTIES = frozenset(
         "column-rule-color",
     }
 )
+NAMED_COLOURS = (
+    "aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown"
+    "|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan"
+    "|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid"
+    "|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet"
+    "|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro"
+    "|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki"
+    "|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow"
+    "|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray"
+    "|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine"
+    "|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise"
+    "|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab"
+    "|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru"
+    "|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown"
+    "|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan"
+    "|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"
+)
 BORDER = re.compile(r"^border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?$")
 VAR = re.compile(r"var\(\s*--([a-z0-9-]+)")
 BARE_VAR = re.compile(r"var\(\s*--[a-z0-9-]+\s*\)")
 LITERAL = re.compile(
-    r"#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\("
-    r"|\b(?:white|black|red|green|blue|yellow|orange|purple|pink|brown|gr[ae]y|maroon|navy|teal|olive|lime"
-    r"|aqua|cyan|magenta|fuchsia|silver|gold|beige|ivory|khaki|tan|crimson|coral|salmon|tomato|violet"
-    r"|indigo|turquoise|wheat|linen|snow)\b",
+    rf"#[0-9a-f]{{3,8}}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\(|\b(?:{NAMED_COLOURS})\b",
     re.IGNORECASE,
 )
 SCRIPT_LITERAL = re.compile(
     r"([\"'`])\s*(?:#[0-9a-f]{3,8}|(?:rgba?|hsla?|hwb|oklch|oklab)\([^\"'`]*\))\s*\1", re.IGNORECASE
 )
 SCRIPT_MATERIAL = re.compile(r"var\(\s*--((?:dye|dip)-[a-z0-9-]+)")
+SCRIPT_ATTRIBUTE_PAINT = re.compile(
+    r"setAttribute(?:NS)?\s*\(\s*(?:null\s*,\s*)?([\"'`])([\w-]+)\1\s*,\s*([\"'`])((?:(?!\3).)*)\3"
+)
+SCRIPT_STYLE_PAINT = re.compile(r"\.\s*style\s*\.\s*([A-Za-z]+)\s*=\s*([\"'`])((?:(?!\2).)*)\2")
+SCRIPT_PROPERTY_PAINT = re.compile(
+    r"\.\s*setProperty\s*\(\s*([\"'`])([\w-]+)\1\s*,\s*([\"'`])((?:(?!\3).)*)\3"
+)
+SCRIPT_CSS_TEXT = re.compile(r"\.\s*cssText\s*=\s*([\"'`])((?:(?!\1).)*)\1")
+CAMEL = re.compile(r"[A-Z]")
 PIXELS = re.compile(r"(\d+(?:\.\d+)?)px\b")
 FONT_SIZE = re.compile(r"(?<![\w.-])(\d+(?:\.\d+)?)(px|r?em|%|pt|vw|vh)\b")
 TIMERS = re.compile(r"(?<![\w$.])(?:setInterval|setTimeout|requestAnimationFrame)\s*\(")
+FRAME_FLAG = re.compile(
+    rf"\.\s*dataset\s*(?:\.\s*{REDUCED_MOTION_FLAG}(?![\w$])|\[\s*([\"'`]){REDUCED_MOTION_FLAG}\1\s*\])"
+    rf"|\.\s*getAttribute\s*\(\s*([\"'`]){REDUCED_MOTION_ATTRIBUTE}\2\s*\)"
+)
+MOVING_ELEMENTS = frozenset(
+    {"animate", "animatetransform", "animatemotion", "animatecolor", "set", "marquee"}
+)
+SCRIPT_MOTION = re.compile(
+    r"\.\s*animate\s*\(|\.\s*beginElement(?:At)?\s*\(|(?<![\w$.])(?:Animation|KeyframeEffect)\s*\("
+)
+UNREAD_DRAWINGS = frozenset({"canvas"})
+SCRIPT_DRAWING = re.compile(r"(?<![\w$])(?:getContext|OffscreenCanvas|createElementNS)(?![\w$])")
 NUMBER = re.compile(r"^(\d*\.?\d+)(%)?$")
 SIZES = ", ".join(str(size) for size in UI_SIZES_PX)
+STILL_STEPS = (
+    "under either reduced-motion switch nothing moves, so the figure rests finished and Play steps it from a "
+    "timer that reads document.documentElement.dataset.reducedMotion"
+)
 
 
 def simulation_art_problems(html: str) -> list[SandboxProblem]:
@@ -72,8 +113,9 @@ def simulation_art_problems(html: str) -> list[SandboxProblem]:
     found = [
         *_colour_problems(markup),
         *_type_problems(markup.styles),
-        *_rest_problems(markup.styles),
-        *_motion_problems(markup.scripts),
+        *_rest_problems(markup),
+        *_motion_problems(markup),
+        *_unread_drawing_problems(markup),
         *_pictured_problems(markup.pictured),
         *drawn_art_problems(DRAWING_KIND, {FIGURE_KEY: markup.drawings}, {}),
     ]
@@ -87,8 +129,7 @@ def _declarations(styles: Iterable[str]) -> Iterator[tuple[str, str]]:
 
 def _colour_problems(markup: ArtMarkup) -> Iterator[str]:
     for name, value in _declarations(markup.styles):
-        if name in COLOUR_PROPERTIES or BORDER.match(name):
-            yield from _painted(value, control=True)
+        yield from _declared_paint_problems(name, value)
     for value in markup.paints:
         yield from _painted(value, control=False)
     for script in markup.scripts:
@@ -96,6 +137,33 @@ def _colour_problems(markup: ArtMarkup) -> Iterator[str]:
             yield f"the script paints {match.group(0)}; name a design role, var(--ink-1) and the like, instead"
         for match in SCRIPT_MATERIAL.finditer(script):
             yield _material(match.group(1))
+        yield from _script_paint_problems(script)
+
+
+def _script_paint_problems(script: str) -> Iterator[str]:
+    for match in SCRIPT_ATTRIBUTE_PAINT.finditer(script):
+        name, value = match.group(2).casefold(), match.group(4)
+        if name in PAINT_ATTRIBUTES:
+            yield from _painted(value, control=False)
+        elif name == STYLE_ATTRIBUTE:
+            yield from _style_paint_problems(value)
+    for match in SCRIPT_STYLE_PAINT.finditer(script):
+        named = CAMEL.sub(lambda capital: f"-{capital.group(0).lower()}", match.group(1))
+        yield from _declared_paint_problems(named, match.group(3))
+    for match in SCRIPT_PROPERTY_PAINT.finditer(script):
+        yield from _declared_paint_problems(match.group(2).casefold(), match.group(4))
+    for match in SCRIPT_CSS_TEXT.finditer(script):
+        yield from _style_paint_problems(match.group(2))
+
+
+def _style_paint_problems(style: str) -> Iterator[str]:
+    for name, value in css_declarations(style):
+        yield from _declared_paint_problems(name, value)
+
+
+def _declared_paint_problems(name: str, value: str) -> Iterator[str]:
+    if name in COLOUR_PROPERTIES or BORDER.match(name):
+        yield from _painted(value, control=True)
 
 
 def _painted(value: str, *, control: bool) -> Iterator[str]:
@@ -150,26 +218,42 @@ def _font_problems(value: str) -> Iterator[str]:
         yield f"sets text in {face or compact!r}; set it in var(--font-ui) or var(--font-reading)"
 
 
-def _rest_problems(styles: Iterable[str]) -> Iterator[str]:
-    for name, value in _declarations(styles):
-        found = NUMBER.match(value.strip()) if name == "opacity" else None
+def _rest_problems(markup: ArtMarkup) -> Iterator[str]:
+    for name, value in (*_declarations(markup.styles), *markup.rests):
+        found = NUMBER.match(value.strip()) if name in REST_PROPERTIES else None
         if found is None:
             continue
         amount = float(found.group(1)) / (100 if found.group(2) else 1)
         if amount < 1:
             yield (
-                f"rests at opacity {value.strip()}: every end state is the default style, so the first paint "
+                f"rests at {name} {value.strip()}: every end state is the default style, so the first paint "
                 "shows the finished figure and nothing waits faded for Play"
             )
 
 
-def _motion_problems(scripts: Iterable[str]) -> Iterator[str]:
-    for script in scripts:
-        if TIMERS.search(script) and REDUCED_MOTION_FLAG not in script:
+def _motion_problems(markup: ArtMarkup) -> Iterator[str]:
+    for tag in dict.fromkeys(tag for tag in markup.tags if tag in MOVING_ELEMENTS):
+        yield f"moves by <{tag}>, which neither reduced-motion switch stops; {STILL_STEPS}"
+    for script in markup.scripts:
+        for match in SCRIPT_MOTION.finditer(script):
+            moved = " ".join(match.group(0).split())
+            yield f"moves by the Web Animations API ({moved}), which neither reduced-motion switch stops; {STILL_STEPS}"
+        if TIMERS.search(script) and not FRAME_FLAG.search(script):
             yield (
                 "times its motion without reading document.documentElement.dataset.reducedMotion, which the "
                 "frame sets under either reduced-motion switch; under it nothing moves and Play steps one stage "
                 "a press"
+            )
+
+
+def _unread_drawing_problems(markup: ArtMarkup) -> Iterator[str]:
+    for tag in dict.fromkeys(tag for tag in markup.tags if tag in UNREAD_DRAWINGS):
+        yield f"draws on a <{tag}>, which the bar cannot read; draw the figure as static inline svg with a viewBox"
+    for script in markup.scripts:
+        for match in SCRIPT_DRAWING.finditer(script):
+            yield (
+                f"builds its drawing in the script ({match.group(0)}); draw the figure as static inline svg and "
+                "let the script change only its attributes and text"
             )
 
 

@@ -4,13 +4,14 @@ from html.parser import HTMLParser
 from types import MappingProxyType
 from typing import Any
 
-__all__ = ["SVG_CASES", "ArtMarkup"]
+__all__ = ["PAINT_ATTRIBUTES", "REST_PROPERTIES", "SVG_CASES", "ArtMarkup"]
 
 SVG_TAG = "svg"
 STYLE_TAG = "style"
 SCRIPT_TAG = "script"
 IMAGE_ROLE = "img"
 PAINT_ATTRIBUTES = frozenset({"fill", "stroke", "color", "stop-color", "flood-color", "lighting-color"})
+REST_PROPERTIES = frozenset({"opacity", "fill-opacity", "stroke-opacity"})
 SVG_CASES = MappingProxyType(
     {
         name.casefold(): name
@@ -50,6 +51,8 @@ class ArtMarkup(HTMLParser):
         self.styles: list[str] = []
         self.scripts: list[str] = []
         self.paints: list[str] = []
+        self.rests: list[tuple[str, str]] = []
+        self.tags: list[str] = []
         self.pictured: list[str] = []
         self.drawings: list[Node] = []
         self._open: list[Node] = []
@@ -57,6 +60,7 @@ class ArtMarkup(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         given = {name: value or "" for name, value in attrs}
+        self.tags.append(tag)
         self._attributes(given)
         if tag != SVG_TAG and not self._open and given.get("role") == IMAGE_ROLE and given.get("aria-label"):
             self.pictured.append(given["aria-label"])
@@ -99,6 +103,8 @@ class ArtMarkup(HTMLParser):
                 self.styles.append(value)
             elif name in PAINT_ATTRIBUTES:
                 self.paints.append(value)
+            elif name in REST_PROPERTIES:
+                self.rests.append((name, value))
 
 
 def _cased(given: dict[str, str]) -> dict[str, str]:
