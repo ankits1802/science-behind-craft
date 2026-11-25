@@ -128,7 +128,7 @@ export function followed(moved: readonly string[], chosen: ReadonlyMap<string, P
   const placed = new Map<string, Paragraph>();
   let previous: Paragraph | null = null;
   for (const label of moved) {
-    const pick = chosen.get(label) ?? (loose.has(label) ? (previous ?? first) : null);
+    const pick: Paragraph | null = chosen.get(label) ?? (loose.has(label) ? (previous ?? first) : null);
     if (!pick) continue;
     placed.set(label, pick);
     previous = pick;
