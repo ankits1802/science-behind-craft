@@ -8,10 +8,13 @@ import { NO_DATA_TONE, type DistrictFill } from "@/components/map/DistrictLayer"
 import { MapRetry } from "@/components/map/MapRetry";
 import { paletteFill } from "@/components/map/rampFills";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { districtSteps, layerPalette } from "@/lib/mapPalettes";
 import { fetchMapLayer } from "@/lib/mapLayers";
 import { fetchDistricts } from "@/lib/profileContract";
 import type { MapLayer } from "@/lib/regionContract";
+
+export const DRAWING_DISTRICT_VALUES = "Drawing the district values";
 
 export type DistrictName = { name: string; state: string };
 export type MapLayerData = { layer: Remote<MapLayer>; shapes: Remote<DistrictShape[]>; names: Remote<Map<number, DistrictName>> };
@@ -47,12 +50,6 @@ export function LayerStatus({ layer, shapes }: { layer: Remote<MapLayer>; shapes
     const retry = layer.failure ? layer.retry : shapes.retry;
     return <MapRetry message={failureMessage(failure, "This layer could not be drawn. Try again in a moment.")} onRetry={retry} className="mt-4" />;
   }
-  if (!layer.data || !shapes.data) {
-    return (
-      <p role="status" className="mt-4 border-t border-rule pt-3 font-ui text-ui font-normal text-ink-3">
-        Drawing the district values
-      </p>
-    );
-  }
+  if (!layer.data || !shapes.data) return <Skeleton shape="legend" label={DRAWING_DISTRICT_VALUES} className="mt-4 border-t border-rule pt-3" />;
   return <ChoroplethLegend layer={layer.data} />;
 }

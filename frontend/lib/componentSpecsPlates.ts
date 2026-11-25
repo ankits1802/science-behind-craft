@@ -1,5 +1,6 @@
 import { stillOr, type KitScene } from "@/lib/componentSpecsKitScene";
 import { DEPICTED_MATERIALS } from "@/lib/depictedMaterials";
+import { drawingAttributeRefusal } from "@/lib/drawingAttributes";
 import type { MonographMark, MonographNode } from "@/lib/monographDocument";
 import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import { UNIT_REF } from "@/lib/unitIds";
@@ -23,7 +24,6 @@ const MARK_FIELDS: Readonly<Record<string, readonly string[]>> = {
   mark: []
 };
 const DRAWING_ATTRIBUTE = /^[A-Za-z][A-Za-z0-9:_-]*$/;
-const REFERENCE_ATTRIBUTES = ["href", "xlink:href"];
 
 export type DepictedMaterial = (typeof DEPICTED_MATERIALS)[number];
 export type DrawingTag = (typeof DRAWING_TAGS)[number];
@@ -73,8 +73,8 @@ function drawingAttributes(value: unknown, path: string): Record<string, string>
   for (const [name, entry] of Object.entries(value)) {
     if (!DRAWING_ATTRIBUTE.test(name) || name.toLowerCase().startsWith("on")) throw new ShapeError(`${path}.${name}`, "a drawing attribute");
     if (typeof entry !== "string") throw new ShapeError(`${path}.${name}`, "text");
-    if (REFERENCE_ATTRIBUTES.includes(name) && !entry.startsWith("#")) throw new ShapeError(`${path}.${name}`, "a reference within the page");
-    if (entry.replace(/\s/g, "").toLowerCase().includes("javascript:")) throw new ShapeError(`${path}.${name}`, "a value that runs no script");
+    const refusal = drawingAttributeRefusal(name, entry);
+    if (refusal) throw new ShapeError(`${path}.${name}`, refusal);
   }
   return value as Record<string, string>;
 }

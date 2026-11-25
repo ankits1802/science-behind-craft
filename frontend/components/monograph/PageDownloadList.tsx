@@ -6,7 +6,7 @@ import { DownloadList, type DownloadItem } from "@/components/learn/DownloadList
 import { downloadExportFile, FILE_FAILED } from "@/lib/lessonApi";
 import { PAGE_DOWNLOAD_LABEL, PAGE_DOWNLOAD_TEST_ID, pageDownloads, type PageSubject } from "@/lib/pageExport";
 
-type PageDownloadListProps = { subject: PageSubject; open: boolean; onClose: () => void; anchorRef: RefObject<HTMLButtonElement | null> };
+export type PageDownloadListProps = { subject: PageSubject; open: boolean; onClose: () => void; anchorRef: RefObject<HTMLButtonElement | null> };
 
 export function pageDownloadItems(subject: PageSubject): DownloadItem[] {
   return pageDownloads(subject).map((link) => ({ key: link.key, label: link.label, run: () => downloadExportFile(link.path) }));

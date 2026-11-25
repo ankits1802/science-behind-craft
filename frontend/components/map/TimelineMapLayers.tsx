@@ -10,11 +10,14 @@ import { MineralKey, ReliefKey, RiversKey } from "@/components/map/physical/Phys
 import { ReliefOver, ReliefUnder } from "@/components/map/physical/ReliefLayer";
 import { RiversOver, RiversUnder } from "@/components/map/physical/RiversLayer";
 import { loadShapes, shapePath, type DistrictShape } from "@/components/map/shapeGeometry";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { loadPhysical, mineralSites, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
+
+export const DRAWING_MINERALS = "Drawing the mineral deposits";
 
 export type LayerNames = { physical: readonly string[]; district: string | null; home: readonly number[] };
 export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode };
-type Physical = { relief: ReliefFile | null; rivers: RiversFile | null; minerals: MineralsFile | null; sites: readonly MineralSite[] };
+export type Physical = { relief: ReliefFile | null; rivers: RiversFile | null; minerals: MineralsFile | null; sites: readonly MineralSite[] };
 
 function usePhysical<K extends "relief" | "rivers" | "minerals">(id: K, names: LayerNames) {
   const load = useCallback(() => loadPhysical(id), [id]);
@@ -32,12 +35,16 @@ export function HomeHatch({ shapes, home }: { shapes: readonly DistrictShape[]; 
   );
 }
 
-function PhysicalKey({ layers }: { layers: Physical }) {
+function MineralsKey({ layers }: { layers: Physical }) {
+  return layers.minerals ? <MineralKey file={layers.minerals} sites={layers.sites} /> : <Skeleton shape="legend" label={DRAWING_MINERALS} className="border-t border-rule pt-3" />;
+}
+
+export function PhysicalKey({ names, layers }: { names: LayerNames; layers: Physical }) {
   return (
     <>
-      {layers.relief ? <ReliefKey file={layers.relief} /> : null}
-      {layers.rivers ? <RiversKey /> : null}
-      {layers.minerals ? <MineralKey file={layers.minerals} sites={layers.sites} /> : null}
+      {names.physical.includes("relief") ? <ReliefKey /> : null}
+      {names.physical.includes("rivers") ? <RiversKey /> : null}
+      {names.physical.includes("minerals") ? <MineralsKey layers={layers} /> : null}
     </>
   );
 }
@@ -71,7 +78,7 @@ export function useTimelineMapLayers(names: LayerNames): DrawnLayers {
   );
   const key = (
     <div className="mt-3 grid min-w-0 gap-3" data-testid="timeline-layer-key">
-      <PhysicalKey layers={layers} />
+      <PhysicalKey names={names} layers={layers} />
       {names.district ? <LayerStatus layer={district.layer} shapes={district.shapes} /> : null}
     </div>
   );

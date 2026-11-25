@@ -1,23 +1,67 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { nearBlock } from "@/components/answer/nearBlock";
+import { afterLoad, whenIdle } from "@/components/monograph/useShellTrigger";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { parsedSpec } from "@/lib/componentSpecsGeneral";
+import { timelineMapFiles, timelineMapSpecShape } from "@/lib/componentSpecsTimelineMap";
 import type { ComponentView, ComponentViewProps } from "@/lib/componentViewContract";
 
 export const NEAR_RESERVE_LABEL = "Drawing the figure";
 
 const RESERVE = <Skeleton shape="chart" label={NEAR_RESERVE_LABEL} />;
+const NO_FILES = (): readonly string[] => [];
 
-function nearView(load: () => Promise<ComponentView>): ComponentView {
+type FilesOf = (spec: unknown) => readonly string[];
+
+function usePageIdle(): boolean {
+  const [idle, setIdle] = useState(false);
+  useEffect(() => {
+    let stopIdle: () => void = () => undefined;
+    const settle = () => setIdle(true);
+    const stopLoad = afterLoad(window, document, () => {
+      if (typeof window.requestIdleCallback === "function") stopIdle = whenIdle(window, settle);
+      else settle();
+    });
+    return () => {
+      stopLoad();
+      stopIdle();
+    };
+  }, []);
+  return idle;
+}
+
+export function PrefetchedFiles({ files }: { files: readonly string[] }) {
+  return files.map((href) => <link key={href} rel="prefetch" as="fetch" crossOrigin="anonymous" href={href} />);
+}
+
+function IdleFiles({ files }: { files: readonly string[] }) {
+  const idle = usePageIdle();
+  return idle && files.length > 0 ? <PrefetchedFiles files={files} /> : null;
+}
+
+function nearView(load: () => Promise<ComponentView>, filesOf: FilesOf = NO_FILES): ComponentView {
   const Near = nearBlock<ComponentViewProps>(load, RESERVE);
   return function NearView(props: ComponentViewProps) {
-    return <Near {...props} />;
+    return (
+      <>
+        <IdleFiles files={filesOf(props.spec)} />
+        <Near {...props} />
+      </>
+    );
   };
+}
+
+export function timelineMapPrefetched(spec: unknown): readonly string[] {
+  const map = parsedSpec(timelineMapSpecShape, spec);
+  return map ? timelineMapFiles(map) : [];
 }
 
 export const NearWhyHereView = nearView(() => import("@/components/monograph/kinds/place/WhyHereView").then((loaded) => loaded.WhyHereView));
 export const NearMapLayerView = nearView(() => import("@/components/monograph/kinds/general/MapLayerView").then((loaded) => loaded.MapLayerView));
-export const NearTimelineMapView = nearView(() => import("@/components/monograph/kinds/general/TimelineMapDeclaredView").then((loaded) => loaded.TimelineMapDeclaredView));
+export const NearTimelineMapView = nearView(() => import("@/components/monograph/kinds/general/TimelineMapDeclaredView").then((loaded) => loaded.TimelineMapDeclaredView), timelineMapPrefetched);
 export const NearExplainerView = nearView(() => import("@/components/monograph/kinds/tools/ExplainerView").then((loaded) => loaded.ExplainerView));
 export const NearQuizView = nearView(() => import("@/components/monograph/kinds/tools/QuizView").then((loaded) => loaded.QuizView));
 export const NearAskNextView = nearView(() => import("@/components/monograph/kinds/tools/AskNextView").then((loaded) => loaded.AskNextView));

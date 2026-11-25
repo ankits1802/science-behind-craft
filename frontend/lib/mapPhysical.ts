@@ -94,8 +94,8 @@ export function riverWidth(rank: number): number {
   return 0.7;
 }
 
-export function elevationBands(file: ReliefFile): { min: number | null; max: number | null }[] {
-  const edges: (number | null)[] = [null, ...file.breaks, null];
+export function elevationBands(breaks: readonly number[]): { min: number | null; max: number | null }[] {
+  const edges: (number | null)[] = [null, ...breaks, null];
   return edges.slice(0, -1).map((min, at) => ({ min, max: edges[at + 1] }));
 }
 

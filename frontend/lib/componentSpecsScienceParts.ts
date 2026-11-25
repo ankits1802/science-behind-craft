@@ -1,4 +1,5 @@
 import { DEPICTED_MATERIALS } from "@/lib/depictedMaterials";
+import { drawingAttributeRefusal } from "@/lib/drawingAttributes";
 import { dictionary, integer, list, matching, nullable, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import { UNIT_REF } from "@/lib/unitIds";
 
@@ -21,7 +22,6 @@ const PAINT_ATTRIBUTES = new Set(["fill", "stroke", "stop-color"]);
 const PAINT_VALUE = /^(none|currentColor|#(?:fff|000)|url\(#[\w-]+\)|rgba\((255,255,255|0,0,0),(0|1|0?\.\d+)\))$/;
 const PAINT_TOKEN = /^var\((--[a-z0-9-]+)\)$/;
 const PAINT_MIX = /^color-mix\(in srgb, var\((--[a-z0-9-]+)\) \d{1,3}%, var\((--[a-z0-9-]+)\)\)$/;
-const FOREIGN_URL = /url\((?!#[\w-]+\))/;
 
 export type SvgTag = (typeof SVG_TAGS)[number];
 export type SvgNode = { tag: SvgTag; attrs?: Record<string, string>; children?: (SvgNode | string)[] };
@@ -81,7 +81,7 @@ export function either<A, B>(first: Shape<A>, second: Shape<B>): Shape<A | B> {
 }
 
 function refusedAttribute(name: string, value: string): boolean {
-  if (!DRAWING_ATTRIBUTE.test(name) || /javascript:/i.test(value) || FOREIGN_URL.test(value)) return true;
+  if (!DRAWING_ATTRIBUTE.test(name) || drawingAttributeRefusal(name, value)) return true;
   if (!PAINT_ATTRIBUTES.has(name)) return false;
   const tokens = PAINT_TOKEN.exec(value) ?? PAINT_MIX.exec(value);
   return tokens ? !tokens.slice(1).every(knownColourToken) : !PAINT_VALUE.test(value);

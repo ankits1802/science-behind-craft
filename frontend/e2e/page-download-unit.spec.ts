@@ -3,17 +3,19 @@ import { createElement, type ComponentProps, type ComponentType, type ReactEleme
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { AuthProvider } from "../components/AuthProvider";
+import { DownloadTrigger } from "../components/learn/DownloadTrigger";
 import { AuthoredShell } from "../components/monograph/AuthoredShell";
 import { MonographDocumentPage } from "../components/monograph/MonographDocumentPage";
 import { MonographFrame } from "../components/monograph/MonographFrame";
 import { MonographRail } from "../components/monograph/MonographRail";
 import { MonographShellPage } from "../components/monograph/MonographShellPage";
+import { PAGE_DOWNLOAD_FAILED_TEST_ID, PageDownloadFailed } from "../components/monograph/PageDownload";
 import { pageDownloadItems } from "../components/monograph/PageDownloadList";
 import { ThemeProvider } from "../components/ThemeProvider";
 import type { MonographDocument } from "../lib/monographDocument";
 import { railChapters } from "../lib/monographRenderLayout";
 import { shownPage } from "../lib/monographShownPage";
-import { PAGE_DOWNLOAD_LABEL, pageDownloads, pageSubject, type PageSubject } from "../lib/pageExport";
+import { PAGE_DOWNLOAD_BUSY, PAGE_DOWNLOAD_FAILED, PAGE_DOWNLOAD_LABEL, pageDownloads, pageSubject, type PageSubject } from "../lib/pageExport";
 
 import { generatedDocument } from "./generatedMonographFixture";
 import { eagerModules } from "./moduleGraph";
@@ -113,4 +115,29 @@ test("the page ships only Download's button; its list, popover and API client lo
   expect(eager).toContain("components/learn/DownloadTrigger.tsx");
   for (const lazy of ["components/monograph/PageDownloadList.tsx", "components/learn/DownloadList.tsx", "components/ui/AnchoredPopover.tsx", "lib/lessonApi.ts", "lib/api.ts"]) expect(eager).not.toContain(lazy);
   expect([...eagerModules("@/components/learn/DownloadMenu")]).toContain("components/learn/DownloadList.tsx");
+});
+
+function trigger(busy: boolean): string {
+  return renderToStaticMarkup(createElement(DownloadTrigger, { ref: null, label: PAGE_DOWNLOAD_LABEL, busy, busyLabel: PAGE_DOWNLOAD_BUSY, open: false, onToggle: () => undefined, testId: "page-download" }));
+}
+
+test("Download rests at the width of its busy words, and says it is busy while its list loads", () => {
+  const rest = trigger(false);
+  expect(rest).not.toContain("aria-busy");
+  expect(rest).toMatch(new RegExp(`<span data-rest="">.*>${PAGE_DOWNLOAD_LABEL}<.*</span><span data-busy="" aria-hidden="true"><span class="kv-spin" aria-hidden="true"></span>${PAGE_DOWNLOAD_BUSY}</span>`));
+  const busy = trigger(true);
+  expect(busy).toContain('aria-busy="true"');
+  expect(busy).toContain(`<span data-busy="" aria-hidden="false"><span class="kv-spin" aria-hidden="true"></span>${PAGE_DOWNLOAD_BUSY}</span>`);
+  expect(busy).toContain('aria-expanded="false"');
+});
+
+test("a list that did not load says so in words beside the button, which loads it afresh when pressed again", () => {
+  const failed = renderToStaticMarkup(createElement(PageDownloadFailed));
+  expect(failed).toContain('role="alert"');
+  expect(failed).toContain(`data-testid="${PAGE_DOWNLOAD_FAILED_TEST_ID}"`);
+  expect(failed).toContain(PAGE_DOWNLOAD_FAILED);
+  expect(failed).not.toContain("<button");
+  const html = page(generatedDocument());
+  expect(html.split(DOWNLOAD).length - 1).toBe(1);
+  expect(html).not.toContain(PAGE_DOWNLOAD_FAILED_TEST_ID);
 });

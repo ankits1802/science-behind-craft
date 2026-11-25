@@ -140,7 +140,11 @@ so a family or a category page is drawn as a craft page is.
   none, it is drawn alone in the cite block's place at the page's end (`PageDownloadRow`); on an
   authored page (Kutch Ajrakh), whose cite block lies in its approved fragments, it is drawn after
   the shell's `#kv-main`, before the footer. Only the button ships with the page; the list's code
-  loads when it is first pressed (`PageDownload`, `next/dynamic`).
+  loads when it is first pressed (`PageDownload`, a dynamic `import()` the control catches). While
+  it loads the button is busy at its own width (Opening, `aria-busy`, a second press ignored) and
+  opens the list when it lands; if it does not arrive, the page and the button stay as they were and
+  a line beside the button says the list did not load and that pressing Download tries again, which
+  loads it afresh (decision 0216).
 
 - **The page as paper** (`page_export_document.page_export`): the title, the page's address, its
   version and its language, the reading note of a variant (`<translated> of <passages> passages read
@@ -574,6 +578,7 @@ to `specs`).
 | A family and a category page exported through their routes with their parts, a craft page's picture read at the paper width, 404 and 422 | `tests/db/test_page_exports_db.py` |
 | A stale page's export queues its rebuild and a current one's none; a page export with no free slot answered 503 with a retry while an answer export still runs; a caller over the build allowance answered 429 while a filed file and another caller are served; a file made while a picture was unread used again for its hour; the wait for a slot and the admission | `tests/exports/test_page_export_routes.py`, `tests/learning/test_export_store.py` |
 | Download's two items on a craft, a family and a category page, beside Copy citation or alone, and after Kutch Ajrakh's untouched main | `frontend/e2e/page-download-unit.spec.ts` |
+| Download busy at its own width while its list loads, a list that does not arrive said in words with the page and the button kept, and the list opened on the next press | `frontend/e2e/page-download-unit.spec.ts`, `frontend/e2e/page-download.smoke.spec.ts` |
 
 Test paths are relative to `backend/`, but the web's, which is relative to the repository. Last
 reviewed: 2026-11-20, every path here checked against the code on 2026-11-22, and the exports'

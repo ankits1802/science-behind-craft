@@ -378,7 +378,10 @@ thumb.
   switches. The thread motion is retired (SYSTEM.md section 9).
 - A view whose code is heavy (a map, the ground map, a page tool, a kit figure's Play) loads through
   `nearBlock`; the monograph's are listed in `kinds/nearViews.tsx`. The server draws it whole, and
-  its code loads within two screens of the viewport. A view imports no stylesheet: every view's
+  its code loads within two screens of the viewport. What its still needs no file for is drawn at
+  rest and what needs one holds its shape (a timeline map's relief and rivers key whole, a minerals
+  key or district legend as a legend skeleton), and a near view may ask for its data files with
+  `link rel="prefetch"` once the page is loaded and idle (decision 0216). A view imports no stylesheet: every view's
   sheet is one `@import` of `app/component-views.css`, which the root layout loads after
   `globals.css`, so the still state is styled at first paint and the page waits on one request for
   all of them (decision 0209).
@@ -690,6 +693,11 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - **A second animation library or GSAP**: framer-motion and token keyframes only.
 - **A heavy view imported directly** into a registry or client component ships to every page; load
   it with `nearBlock`. `e2e/near-views-unit.spec.ts` names the chain.
+- **A part loaded on press with `next/dynamic` and nothing to catch it** throws to the root error
+  page when its chunk does not arrive, and replaces the whole page. Load it with an `import()` the
+  control catches, busy at its own width while it loads, and say in words beside the control that it
+  did not load, its next press loading it afresh (`PageDownload`, decision 0216); a figure loads
+  through `lazyBlock` or `nearBlock`, whose boundary offers Try again.
 - **A stylesheet imported by a component** is a render-blocking request of its own on every page
   that draws it, each one a round trip on a slow phone; add it to `app/component-views.css`.
   `e2e/component-styles-unit.spec.ts` holds every component sheet to one of the layout's two.
