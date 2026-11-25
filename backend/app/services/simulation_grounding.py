@@ -40,22 +40,32 @@ class AnswerConcepts:
     def __init__(self, limit: int) -> None:
         self._limit = limit
         self._built: set[str] = set()
+        self._drawn: set[str] = set()
         self._pictured: set[str] = set()
 
     def take(self, key: str) -> bool:
-        if key in self._built or key in self._pictured or len(self._built) >= self._limit:
+        if self._shown(key) or len(self._built) >= self._limit:
             return False
         self._built.add(key)
+        return True
+
+    def draw(self, key: str) -> bool:
+        if self._shown(key):
+            return False
+        self._drawn.add(key)
         return True
 
     def give_back(self, key: str) -> None:
         self._built.discard(key)
 
     def picture(self, key: str) -> bool:
-        if key in self._built or key in self._pictured:
+        if self._shown(key):
             return False
         self._pictured.add(key)
         return True
+
+    def _shown(self, key: str) -> bool:
+        return key in self._built or key in self._drawn or key in self._pictured
 
 
 def explainer_limit(depth: str | None) -> int:
