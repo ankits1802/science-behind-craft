@@ -4,7 +4,7 @@ from datetime import timedelta
 from typing import Any
 
 import pytest
-from sqlalchemy import func, select, update
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.routes.craft_monograph import DocumentAsk, served_document
@@ -187,7 +187,7 @@ async def removal_marks(session: AsyncSession) -> dict[str, Any]:
             StoredDocument.subjectSlug.in_([CRAFT_SLUG, FAMILY_SLUG, CATEGORY_SLUG])
         )
     )
-    return dict(rows.tuples().all())
+    return dict(rows.all())
 
 
 async def test_a_removal_drops_the_kept_versions_of_the_pages_it_reaches_and_waits_for_their_rebuilds(
@@ -245,7 +245,7 @@ async def test_a_rebuild_that_finds_a_reached_page_unchanged_clears_its_mark(ses
 
 async def facts_from_research(session: AsyncSession) -> None:
     for claim_id, status, text in (
-        (SHOWN_FACT, "IN_REVIEW", SHOWN_TEXT),
+        (SHOWN_FACT, "APPROVED", SHOWN_TEXT),
         (WAITING_FACT, "DRAFT", "Alum waits."),
     ):
         session.add(
@@ -258,7 +258,7 @@ async def facts_from_research(session: AsyncSession) -> None:
                 evidenceLevel="PROVISIONAL",
                 origin=WRITE_BACK_ORIGIN,
                 status=status,
-                field="GEOGRAPHY",
+                field="CHEMISTRY",
             )
         )
     await session.flush()
@@ -266,12 +266,11 @@ async def facts_from_research(session: AsyncSession) -> None:
         session.add(
             ClaimSource(claimId=claim_id, sourceId=PAPER, quote="rinse", locator="p. 7", quoteCheck="PASS")
         )
-    sentences = [{"text": SHOWN_TEXT, "claimIds": [str(SHOWN_FACT)]}]
-    await session.execute(
-        update(ArticleSection)
-        .where(ArticleSection.craftId == CRAFT, ArticleSection.field == "GEOGRAPHY")
-        .values(sentences=sentences)
+    section = await session.scalar(
+        select(ArticleSection).where(ArticleSection.craftId == CRAFT, ArticleSection.field == "GEOGRAPHY")
     )
+    assert section is not None
+    section.sentences = [{"text": SHOWN_TEXT, "claimIds": [str(SHOWN_FACT)]}]
     await session.flush()
 
 
@@ -280,7 +279,7 @@ async def test_a_retracted_fact_leaves_every_kept_version_and_a_waiting_one_reje
 ) -> None:
     await facts_from_research(session)
     subject = await page(session)
-    assert SHOWN_TEXT in await with_a_kept_version(session, subject)
+    assert str(SHOWN_FACT) in await with_a_kept_version(session, subject)
     admin = await person(session, ADMIN)
     rejection = QueueRejection(reason="It restates a fact the page already holds.")
     await reject_item(session, ItemRef("FACTS", WAITING_FACT), admin, rejection, now=NOW)
@@ -291,7 +290,7 @@ async def test_a_retracted_fact_leaves_every_kept_version_and_a_waiting_one_reje
     assert await kept_slugs(session) == []
     assert await rebuild_document(session, subject, now=LATER) == Rebuilt.CHANGED
     after = await stored_copy(session, subject)
-    assert after is not None and SHOWN_TEXT not in after.text
+    assert after is not None and str(SHOWN_FACT) not in after.text
     assert await superseded_copy(session, subject, SECTIONS_VERSION + 1) is None
 
 
