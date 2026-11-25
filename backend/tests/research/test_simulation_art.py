@@ -183,3 +183,64 @@ def test_words_that_name_a_colour_a_script_painting_a_role_and_a_still_figure_pa
 )
 def test_a_control_in_indigo_a_still_timer_and_plain_words_pass(html: str) -> None:
     assert details(html) == []
+
+
+@pytest.mark.parametrize(
+    ("html", "said"),
+    [
+        (
+            "<style>:root{--ink-1:var(--dye-indigo)}</style>",
+            "declares --ink-1, a token the frame takes from the page",
+        ),
+        (
+            "<style>:root{--c-ink-1:30 60 200}</style>",
+            "declares --c-ink-1, a token the frame takes from the page",
+        ),
+        (
+            '<script>document.documentElement.style.setProperty("--sunk", "var(--chart-emph)");</script>',
+            "declares --sunk, a token the frame takes from the page",
+        ),
+        (
+            '<svg viewBox="0 0 10 10"><g style="--rule: var(--chart-series)"></g></svg>',
+            "declares --rule, a token the frame takes from the page",
+        ),
+        ("<style>.a{--cloth:var(--dye-indigo)}</style>", "paints --dye-indigo by hand"),
+        ("<style>.a{--edge:#2f5d8a}</style>", "names the colour '#2f5d8a'"),
+    ],
+)
+def test_a_token_the_frame_takes_from_the_page_is_never_redeclared_and_an_own_property_holds_no_colour(
+    html: str, said: str
+) -> None:
+    assert any(said in detail for detail in details(html))
+
+
+@pytest.mark.parametrize(
+    "html",
+    [
+        "<style>.kv{--gap:8px;--k:1;gap:var(--gap)}</style>",
+        "<style>.kv{--line:var(--ink-2)}</style>",
+    ],
+)
+def test_a_custom_property_for_layout_or_naming_a_design_role_passes(html: str) -> None:
+    assert details(html) == []
+
+
+DATA_IMAGE = "shows a data: image, which the bar cannot read as a drawing"
+
+
+@pytest.mark.parametrize(
+    "html",
+    [
+        '<img src="data:image/png;base64,iVBORw0KGgo=" alt="Water level">',
+        '<img src="data&#58;image/svg+xml,%3Csvg%3E%3C/svg%3E" alt="Cloth">',
+        '<style>.a{background:url("data:image/svg+xml,%3Csvg%3E%3C/svg%3E")}</style>',
+        '<svg viewBox="0 0 10 10"><image href="data:image/gif;base64,R0lGODlh" width="10" height="10"></image></svg>',
+        '<script>picture.setAttribute("src", "data:image/webp;base64,UklGR");</script>',
+    ],
+)
+def test_a_data_image_is_refused_since_the_bar_cannot_read_it_and_no_switch_holds_it_still(html: str) -> None:
+    assert any(detail.startswith(DATA_IMAGE) for detail in details(html))
+
+
+def test_words_about_data_and_an_image_are_not_a_data_image() -> None:
+    assert details("<p>The data from the well and an image of it.</p>") == []

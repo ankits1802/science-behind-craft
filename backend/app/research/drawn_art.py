@@ -10,7 +10,7 @@ from .art_kit import KIT_PARTS, parts_named_by
 from .component_specs_general_svg import sanitised_svg, svg_view_box
 from .component_specs_kit_scene import KIT_SCENE_KINDS
 from .component_specs_science_parts import SVG_TAGS
-from .drawing_roles import MATERIAL_ROLES
+from .drawing_roles import DRAWING_ROLES, INDIGO, MATERIAL_ROLES, MOLECULE_ROLE
 from .drawing_rules import DRAWN_WIDTH_MIN, TEXT_FLOOR_PX, drawn_texts, local_name
 from .drawing_spec_rules import SVG_KEY, THEMES_KEY, node_element
 from .drawn_paints import DrawnPaints, Shape, drawn_paints
@@ -176,14 +176,28 @@ def _inked(art: DrawnPaints, shape: Shape) -> bool:
 
 
 def _painted_problems(drawn: Drawn, art: DrawnPaints, words: str, pointer: str) -> list[str]:
-    painted = sorted({role for role in art.shown_roles() if role in MATERIAL_ROLES})
-    if not painted:
-        return []
-    materials = ", ".join(f"--{role}" for role in painted)
-    return [
-        f"{drawn.where} paints {materials} by hand, which {_material_parts(words)} draws textured, framed and "
-        f"named in a key; {pointer}"
-    ]
+    shown = set(art.shown_roles())
+    found: list[str] = []
+    painted = sorted(shown & MATERIAL_ROLES)
+    if painted:
+        materials = ", ".join(f"--{role}" for role in painted)
+        found.append(
+            f"{drawn.where} paints {materials} by hand, which {_material_parts(words)} draws textured, framed "
+            f"and named in a key; {pointer}"
+        )
+    unresolved = sorted(role for role in shown if not _design_token(role))
+    if unresolved:
+        named = ", ".join(f"var(--{role})" for role in unresolved)
+        found.append(
+            f"{drawn.where} paints through {named}, which the drawing does not declare and the design does not "
+            "define for a drawing; a variable from the page can hold a depicted material, so paint a design role "
+            "or a variable the drawing declares from one"
+        )
+    return found
+
+
+def _design_token(role: str) -> bool:
+    return role in DRAWING_ROLES or bool(INDIGO.match(role) or MOLECULE_ROLE.match(role))
 
 
 def _named_problems(drawn: Drawn, words: str) -> list[str]:

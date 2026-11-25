@@ -183,6 +183,58 @@ def test_a_material_stroke_is_painted_by_hand_and_only_an_ink_stroke_is_line_wor
     assert found("drawing", declared(rects(6, stroke=' stroke="var(--ink-3)"'))) == []
 
 
+def test_a_design_role_a_drawing_redeclares_is_read_as_the_paint_it_holds() -> None:
+    hidden = '<g style="--ink-1: var(--dye-indigo)">' + rects(6) + "</g>"
+    assert found("drawing", declared(hidden)) == [NO_INK, PAINTED_INDIGO]
+    looped = '<g style="--ink-1: var(--ink-1)">' + rects(6) + "</g>"
+    assert found("drawing", declared(looped)) == [NO_INK]
+    inked = '<g style="--ink-1: var(--ink-2)">' + rects(6) + "</g>"
+    assert found("drawing", declared(inked)) == []
+
+
+def tinted(style: str) -> dict[str, Any]:
+    return {"tag": "ellipse", "attrs": {**SOIL, "style": style, "stroke": "var(--ink-1)"}}
+
+
+def wrapped(style: str, child: dict[str, Any]) -> dict[str, Any]:
+    return {"tag": "g", "attrs": {"style": style}, "children": [child]}
+
+
+PAINTED_THROUGH = (
+    "the stage_player's drawing at drawing paints through var(--dip-c), which the drawing does not declare and "
+    "the design does not define for a drawing; a variable from the page can hold a depicted material, so paint "
+    "a design role or a variable the drawing declares from one"
+)
+
+
+def test_a_variable_is_followed_through_the_drawing_s_own_declarations_where_it_is_declared() -> None:
+    painted = (
+        "the stage_player's drawing at drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, "
+        f"section or piece part draws textured, framed and named in a key; {AT_THE_KIT}"
+    )
+    through = wrapped(
+        "--tone: var(--dye-indigo)", wrapped("--dye-indigo: var(--sunk)", tinted("fill: var(--tone)"))
+    )
+    assert scene_found("stage_player", stage_player([*inked_rects(6), through])) == [painted]
+    fallback = tinted("fill: var(--tone, var(--dye-indigo))")
+    assert (
+        scene_found("stage_player", stage_player([*inked_rects(6), wrapped("--tone: var(--sunk)", fallback)]))
+        == []
+    )
+    kept = wrapped("--tone: var(--sunk)", tinted("fill: var(--tone)"))
+    assert scene_found("stage_player", stage_player([*inked_rects(6), kept])) == []
+
+
+def test_a_variable_the_drawing_never_declares_is_refused_where_a_page_s_material_could_hide() -> None:
+    assert scene_found("stage_player", stage_player([*inked_rects(6), tinted("fill: var(--dip-c)")])) == [
+        PAINTED_THROUGH
+    ]
+    assert (
+        scene_found("stage_player", stage_player([*inked_rects(6), tinted("fill: var(--chart-series)")]))
+        == []
+    )
+
+
 def chart(fill: str) -> dict[str, Any]:
     shapes = [
         {

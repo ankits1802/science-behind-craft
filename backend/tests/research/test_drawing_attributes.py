@@ -11,7 +11,12 @@ from app.research.component_specs_plates import SPEC_MODELS_PLATES
 from app.research.component_specs_plates_parts import DrawingElement
 from app.research.component_specs_science import SPEC_MODELS_SCIENCE
 from app.research.component_specs_science_parts import SvgNode
-from app.research.drawing_attributes import STYLE_PROPERTIES, drawing_attribute_problem
+from app.research.drawing_attributes import (
+    DRAWING_CLASSES,
+    STYLE_PROPERTIES,
+    drawing_attribute_problem,
+    svg_box_problem,
+)
 
 from . import science_spec_fixtures as fixtures
 
@@ -24,6 +29,10 @@ STORED = [
 GOLDEN_DOCUMENT = REPO / "shared" / "monograph.document.golden.json"
 BEACON = "background-image:url(https://attacker.example/p.png)"
 DRAWINGS = (DrawingElement, SvgNode)
+CLASS_NAMES = frozenset({"class", "classname"})
+SITE_UTILITIES = frozenset(
+    {"fixed", "absolute", "inset-0", "z-50", "animate-spin", "w-screen", "h-screen", "sr-only"}
+)
 
 
 def _case_id(case: dict[str, str]) -> str:
@@ -44,6 +53,14 @@ def _attributes(value: Any) -> Iterator[tuple[str, str]]:
     elif isinstance(value, list):
         for item in value:
             yield from _attributes(item)
+
+
+def _stored_files() -> list[Path]:
+    return [path for root in STORED for path in sorted(root.rglob("*.json"))] + [GOLDEN_DOCUMENT]
+
+
+def _box_id(case: dict[str, Any]) -> str:
+    return str(case["why"])
 
 
 def _label_card(seal_style: str) -> dict[str, Any]:
@@ -119,10 +136,59 @@ def test_the_general_drawing_intake_drops_an_image_set_and_an_escape_and_keeps_a
 
 
 def test_every_stored_drawing_passes_the_stricter_check() -> None:
-    files = [path for root in STORED for path in sorted(root.rglob("*.json"))] + [GOLDEN_DOCUMENT]
     checked = 0
-    for path in files:
+    for path in _stored_files():
         for name, value in _attributes(json.loads(path.read_text(encoding="utf-8"))):
             assert drawing_attribute_problem(name, value) is None, f"{path.name}: {name}={value!r}"
             checked += 1
     assert checked > 10_000
+
+
+def test_both_sides_hold_one_list_of_the_classes_the_kit_s_own_drawings_carry() -> None:
+    carried = {
+        name
+        for path in _stored_files()
+        for attribute, value in _attributes(json.loads(path.read_text(encoding="utf-8")))
+        if attribute.lower() in CLASS_NAMES
+        for name in value.split()
+    }
+    assert sorted(DRAWING_CLASSES) == CASES["drawingClasses"] == sorted(carried)
+    assert not SITE_UTILITIES & DRAWING_CLASSES
+
+
+@pytest.mark.parametrize("model", DRAWINGS)
+@pytest.mark.parametrize("case", CASES["svgBoxes"]["kept"], ids=_box_id)
+def test_an_svg_drawn_within_its_box_is_kept(
+    model: type[DrawingElement | SvgNode], case: dict[str, Any]
+) -> None:
+    assert svg_box_problem(case["attrs"]) is None
+    model.model_validate({"tag": "svg", "attrs": case["attrs"]})
+
+
+@pytest.mark.parametrize("model", DRAWINGS)
+@pytest.mark.parametrize("case", CASES["svgBoxes"]["refused"], ids=_box_id)
+def test_an_svg_drawn_past_its_box_or_grown_over_the_page_is_refused(
+    model: type[DrawingElement | SvgNode], case: dict[str, Any]
+) -> None:
+    assert svg_box_problem(case["attrs"]) is not None
+    with pytest.raises(ValidationError, match="drawn within its box"):
+        model.model_validate({"tag": "svg", "attrs": case["attrs"]})
+
+
+def test_a_label_card_seal_laid_over_the_page_by_a_site_class_or_its_size_is_refused_and_a_kit_class_kept() -> (
+    None
+):
+    card = SPEC_MODELS_PLATES["label_card"]
+    for attrs, said in (
+        ({"class": "fixed inset-0"}, "the kit's own drawings carry"),
+        ({"width": "100000", "height": "100000"}, "drawn within its box"),
+    ):
+        laid = _label_card("fill:var(--dye-mud)")
+        laid["seal"]["attrs"].update(attrs)
+        with pytest.raises(ValidationError, match=said):
+            card.model_validate(laid)
+    kept = _label_card("fill:var(--dye-mud)")
+    kept["seal"]["attrs"]["class"] = "ink1"
+    assert (
+        card.model_validate(kept).model_dump(mode="json", by_alias=True)["seal"]["attrs"]["class"] == "ink1"
+    )

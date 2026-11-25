@@ -1380,15 +1380,35 @@ fails its checks is redrafted only when the time left is at least the time the f
   `KeyframeEffect(`); no drawing the bar cannot read: no `canvas`, and no `getContext`,
   `OffscreenCanvas` or `createElementNS` in a script, which may change a figure's attributes and
   text but never build it; no element with `role="img"` whose label names a kit subject; every
-  static `svg` passes `drawn_art.drawn_art_problems` as a `drawing` (decision 0215).
+  static `svg` passes `drawn_art.drawn_art_problems` as a `drawing` (decision 0215). No
+  declaration, in a sheet, a `style` or a script, sets a custom property named for a token the
+  frame takes from the page (a design role, `--indigo` and its kin, `--font-ui`, `--font-reading`,
+  or a `--c-` channel of one), so `var(--ink-1)` is the page's ink wherever it is read; a custom
+  property of the explainer's own holds no hex, `rgb()` or named colour and no `--dye-*` or
+  `--dip-*` material; and no `data:` image appears anywhere in the fragment (an `img`, an `image`,
+  a CSS `url()` or a script's string, entities read first), since the bar cannot read one as a
+  drawing and neither switch holds an animated one still (decision 0218).
 - **The frame** (`lib/sandboxFrame.sandboxDocument(html, values, look?)`, `useFrameLook`): with a
   look, its document gains `<style>` with `:root` set to the page's values of the tokens the HTML
   names (and the base `--sunk`, `--ink-1`, `--font-ui`, and any token those values name), a body on
   `--sunk` in `--ink-1` and `--font-ui`, and `FRAME_MOTION_GUARD`, which turns animation and
   transition off under `html[data-reduced-motion="true"]` and under `prefers-reduced-motion`; the
   attribute is set when either switch is on, and the look is read again when the theme, contrast
-  or a switch changes. Without a look (the server's render) the document is as before. A value
-  holding `<`, `>`, `{`, `}`, `;` or `\` is dropped.
+  or a switch changes. Without a look (the server's render and the first client render) the
+  document is still: `data-reduced-motion="true"` and `FRAME_MOTION_GUARD` alone, so the frame
+  moves only once the page has read that neither switch is on (decision 0218). A value holding
+  `<`, `>`, `{`, `}`, `;` or `\` is dropped.
+- **The frame's stillness** (`FRAME_STILLNESS`, run in the head before the explainer's markup,
+  decision 0218): under `data-reduced-motion="true"` or the frame's own `prefers-reduced-motion`
+  it sets the attribute (and puts it back if a script takes it away), removes every SMIL animation
+  element as it is added (the drawing rests at its own attributes, its end state), stops a
+  `marquee`, settles every Web Animation as it is made, played, reversed, seeked or retimed
+  (`animate`, `Animation.play`, `reverse`, `updatePlaybackRate`, the `startTime`, `currentTime`,
+  `playbackRate`, `effect` and `timeline` setters, `updateTiming`: finished at its end, or cancelled
+  to the default style when it never ends), settles every CSS animation and transition a script or
+  a stronger rule brings after each change to the document, grants no animation frame and no
+  interval, and drops a timeout set from inside a timer's callback; a one-off timeout still runs.
+  With neither switch on it does nothing.
 
 ### Film mode (decision 0054)
 

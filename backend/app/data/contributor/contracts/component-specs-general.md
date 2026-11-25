@@ -363,7 +363,12 @@ A paint is judged as the reader sees it (`research/drawn_paints`, decision 0215)
 `currentColor` takes the nearest `color`, and the page's `--ink-1` when the drawing sets none; a
 local `url(#id)` and its fallback paint every stop of the gradient, every shape of the pattern and
 whatever a gradient or pattern it `href`s paints; and a `use` paints what the shape or group it
-places paints.
+places paints. A paint that names a variable is followed through the drawing's own declarations
+(decision 0218): a custom property a group or shape declares in its `style`, a design role's name
+included, is resolved where it is declared and inherited as CSS inherits it, a fallback is read
+too, and a property that refers to itself stands for nothing, so its paint is the parent's; a
+variable the drawing does not declare and the design does not define for a drawing (the page's
+`--dip-c` or `--hand`) is refused, since the page may hold a depicted material in it.
 
 A free scene in line work, painting no depicted material, is kept: a molecule's structure or an
 emblem drawn in ink. Every other kind's free drawing (an authored `chart`'s, a `map_layer`'s and

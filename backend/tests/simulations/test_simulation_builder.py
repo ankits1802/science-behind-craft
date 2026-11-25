@@ -102,7 +102,8 @@ async def test_every_escape_attempt_is_refused_for_its_own_rule(
     assert f"{case['rule']}: " in model.calls[1]["user"]
 
 
-DRAWN_AT_THE_BAR = frozenset({"inline data image", "data figures shown", "button moving a marker"})
+DRAWN_AT_THE_BAR = frozenset({"data figures shown", "button moving a marker"})
+SHOWN_AS_AN_IMAGE = "inline data image"
 
 
 @pytest.mark.parametrize("case", corpus()["accepted"], ids=lambda case: case["name"])
@@ -120,9 +121,10 @@ async def test_markup_the_sandbox_accepts_is_kept_at_the_first_draft_only_when_d
         assert logged_rules(caplog) == {"ART"}
 
 
-def test_the_corpus_holds_five_explainers_below_the_bar() -> None:
+def test_the_corpus_holds_six_explainers_below_the_bar_and_a_data_image_is_one() -> None:
     names = [case["name"] for case in corpus()["accepted"]]
     assert len(names) == 8 and set(names) >= DRAWN_AT_THE_BAR
+    assert SHOWN_AS_AN_IMAGE in names and SHOWN_AS_AN_IMAGE not in DRAWN_AT_THE_BAR
 
 
 @pytest.mark.parametrize(

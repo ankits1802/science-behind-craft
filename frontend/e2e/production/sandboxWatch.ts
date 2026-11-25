@@ -1,7 +1,7 @@
 import type { ConsoleMessage, Frame, Page, Route } from "@playwright/test";
 
 import { clip } from "./checks";
-import { FRAME_DOCUMENT_START, type FrameSeen } from "./generatedExplainer";
+import { framePolicyFirst, type FrameSeen } from "./generatedExplainer";
 import { requestFrame } from "./pageConsole";
 
 const SRCDOC = "about:srcdoc";
@@ -52,7 +52,7 @@ export async function readSandboxFrames(page: Page): Promise<FrameSeen[]> {
           }))
           .catch(() => ({ drawn: false, peerless: false }))
       : { drawn: false, peerless: false };
-    seen.push({ sandbox, policyFirst: srcdoc.startsWith(FRAME_DOCUMENT_START), ...inside });
+    seen.push({ sandbox, policyFirst: framePolicyFirst(srcdoc), ...inside });
   }
   return seen;
 }

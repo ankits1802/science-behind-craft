@@ -102,7 +102,7 @@ TOKEN = re.compile(r"^var\(--([a-z0-9-]+)\)$")
 MIX = re.compile(
     r"^color-mix\(in srgb, ?var\(--([a-z0-9-]+)\) \d{1,3}%, ?var\(--([a-z0-9-]+)\)( \d{1,3}%)?\)$"
 )
-DECLARATION = re.compile(r"(?P<name>[A-Za-z-]+)\s*:\s*(?P<value>[^;{}]+)")
+DECLARATION = re.compile(r"(?P<name>--[\w-]+|[A-Za-z-]+)\s*:\s*(?P<value>[^;{}]+)")
 
 
 def role_problem(token: str, *, molecules: bool = False) -> str | None:

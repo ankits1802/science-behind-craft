@@ -1,5 +1,5 @@
 import { DEPICTED_MATERIALS } from "@/lib/depictedMaterials";
-import { drawingAttributeRefusal } from "@/lib/drawingAttributes";
+import { drawingAttributeRefusal, svgBoxRefusal } from "@/lib/drawingAttributes";
 import { dictionary, integer, list, matching, nullable, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 import { UNIT_REF } from "@/lib/unitIds";
 
@@ -99,8 +99,12 @@ const drawingAttributes: Shape<Record<string, string>> = {
 
 export const svgNodeShape: Shape<SvgNode> = {
   expected: "a drawing node",
-  parse: (value, path) =>
-    object<SvgNode>({ tag: oneOf(SVG_TAGS), attrs: optional(drawingAttributes), children: optional(list(either(svgNodeShape, text))) }).parse(value, path)
+  parse(value, path) {
+    const node = object<SvgNode>({ tag: oneOf(SVG_TAGS), attrs: optional(drawingAttributes), children: optional(list(either(svgNodeShape, text))) }).parse(value, path);
+    const outside = node.tag === "svg" ? svgBoxRefusal(node.attrs ?? {}) : null;
+    if (outside) throw new ShapeError(`${path}.attrs`, outside);
+    return node;
+  }
 };
 
 export const styledShape: Shape<Styled> = object<Styled>({ text: label, style: oneOf(["i", "b", "sub", "sup"] as const) });

@@ -35,7 +35,9 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
   (`svg`, `g`, shapes, `text`, gradients, masks, patterns and the colour filters the page uses; no
   `script`, `foreignObject`, `a` or `use`). Attributes refuse `on*` handlers, `javascript:`, an `href` that is not an in-drawing `#id`
   and, as a plate's drawing does, any value that loads from another address or a `style` off the
-  drawing list (`research/drawing_attributes`, decision 0216). `fill`, `stroke` and `stop-color` are a token
+  drawing list (`research/drawing_attributes`, decision 0216), a `class` the kit's own drawings do not carry, or an
+  `svg` drawn past its box (wider or taller than its viewBox, grown or moved by a transform, its overflow shown;
+  decision 0218). `fill`, `stroke` and `stop-color` are a token
   (`var(--ink-1)`, `--dye-*`, `--dip-*`, `--mol-*`, `--chart-*`, `--map-*`, the surfaces), a mix of
   two tokens (`color-mix(in srgb, var(--a) N%, var(--b))`), an in-drawing reference, `none`,
   `currentColor`, or white or black for a mask or a highlight (`#fff`, `#000`,

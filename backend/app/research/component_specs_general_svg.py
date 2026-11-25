@@ -5,7 +5,7 @@ from collections.abc import Iterator
 from xml.etree import ElementTree
 from xml.sax.saxutils import escape
 
-from .drawing_attributes import loads_nothing
+from .drawing_attributes import loads_nothing, svg_view_box
 from .drawing_rules import drawing_problems, listed
 
 __all__ = [
@@ -50,9 +50,6 @@ KEPT_DRAWING_TAGS = frozenset(
 DECLARATIONS = re.compile(r"<!(DOCTYPE|ENTITY)", re.IGNORECASE)
 PROCESSING = re.compile(r"<\?(?!xml\s)", re.IGNORECASE)
 ATTRIBUTE_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9:_.-]*$")
-VIEW_BOX = re.compile(
-    r"^\s*(-?\d+(?:\.\d+)?)[\s,]+(-?\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)\s*$"
-)
 REFERENCES = frozenset({"href", f"{{{XLINK_NS}}}href"})
 SIZE_ATTRIBUTES = frozenset({"width", "height"})
 EVENT_PREFIX = "on"
@@ -88,14 +85,6 @@ def sanitised_svg(markup: str) -> str:
     linked = any(_namespace(key) == XLINK_NS for element in root.iter() for key in element.attrib)
     declared = f' xmlns="{SVG_NS}"' + (f' xmlns:xlink="{XLINK_NS}"' if linked else "")
     return _markup(root, declared)
-
-
-def svg_view_box(value: str | None) -> tuple[float, float, float, float] | None:
-    found = VIEW_BOX.match(value or "")
-    if found is None:
-        return None
-    x, y, width, height = (float(part) for part in found.groups())
-    return (x, y, width, height) if width > 0 and height > 0 else None
 
 
 def _clean(element: ElementTree.Element) -> None:

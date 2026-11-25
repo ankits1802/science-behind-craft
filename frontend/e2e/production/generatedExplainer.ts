@@ -17,6 +17,11 @@ export type GeneratedExplainerRecord = {
 export const NO_GENERATED_EXPLAINER: GeneratedExplainerRecord = { blocks: 0, values: 0, valuesWithoutBasis: 0, frames: null, frameRequests: [], frameRefusals: [] };
 export const NO_CONCEPT_NOTE = "No generated explainer arrived: the builder chose no concept for this answer, so its absence is recorded and not failed.";
 export const FRAME_DOCUMENT_START = `<!doctype html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="${SANDBOX_CSP}">`;
+export const FRAME_STILL_DOCUMENT_START = FRAME_DOCUMENT_START.replace('<html lang="en">', '<html lang="en" data-reduced-motion="true">');
+
+export function framePolicyFirst(srcdoc: string): boolean {
+  return [FRAME_DOCUMENT_START, FRAME_STILL_DOCUMENT_START].some((start) => srcdoc.startsWith(start));
+}
 
 export function withGeneratedExplainer(record: GeneratedExplainerRecord, block: ExplainerBlock): GeneratedExplainerRecord {
   if (block.kind !== "simulation") return record;
