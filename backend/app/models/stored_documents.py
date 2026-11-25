@@ -12,7 +12,7 @@ from .monograph_documents import (
     SUBJECT_KIND_CHARS,
 )
 
-__all__ = ["StoredDocument"]
+__all__ = ["StoredDocument", "StoredDocumentVersion"]
 
 
 class StoredDocument(Base):
@@ -29,5 +29,21 @@ class StoredDocument(Base):
     document: Mapped[str] = mapped_column(Text, nullable=False)
     builtAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     wantedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    __table_args__ = (CheckConstraint('"version" >= 1', name="version"),)
+
+
+class StoredDocumentVersion(Base):
+    __tablename__ = "StoredDocumentVersion"
+
+    subjectKind: Mapped[str] = mapped_column(String(SUBJECT_KIND_CHARS), primary_key=True)
+    subjectSlug: Mapped[str] = mapped_column(String(SLUG_CHARS), primary_key=True)
+    language: Mapped[str] = mapped_column(
+        String(LANGUAGE_CHARS), primary_key=True, server_default=DEFAULT_DOCUMENT_LANGUAGE
+    )
+    version: Mapped[int] = mapped_column(Integer, primary_key=True)
+    contentHash: Mapped[str] = mapped_column(String(DIGEST_CHARS), nullable=False)
+    document: Mapped[str] = mapped_column(Text, nullable=False)
+    supersededAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 
     __table_args__ = (CheckConstraint('"version" >= 1', name="version"),)

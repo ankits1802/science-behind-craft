@@ -105,7 +105,10 @@ chapter rail, the menu bar) clear it, on both pages alike, so both pages draw it
 fraction of a pixel, then takes its region from the screen (or from the page beyond it when it is
 taller than the screen), so a rail
 that lies over a figure at one width is not counted as the figure; `overlays.json` names what each
-capture cleared and what still lay over it.
+capture cleared and what still lay over it. Each page is compared once it is as a reader has it, its
+rest drawn and its kit bound (`e2e/parity/parityReady.ts`, at most 60 s); a page whose rest could not
+be read, or did not arrive, is named in the failures with that cause beside the components it then
+does not draw (decision 0210).
 
 ## Connection budget
 

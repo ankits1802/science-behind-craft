@@ -19,6 +19,7 @@ from .monograph_document import document_body, document_hash
 from .monograph_generated import enough_sections, generated_document_of
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key
 from .stored_document_stamp import document_stamp
+from .stored_document_versions import drop_superseded, keep_superseded, superseded_row
 
 __all__ = [
     "REBUILD_RETRY",
@@ -33,6 +34,7 @@ __all__ = [
     "rebuild_document",
     "stored_copy",
     "stored_row",
+    "superseded_copy",
     "utc_now",
 ]
 
@@ -41,6 +43,7 @@ logger = logging.getLogger(__name__)
 PUBLISHED = "PUBLISHED"
 REBUILD_RETRY = timedelta(minutes=10)
 BUILD_LOCK = "stored-document:{kind}:{slug}"
+KEY_COLUMNS = ("subjectKind", "subjectSlug", "language")
 
 
 class Rebuilt(StrEnum):
@@ -109,6 +112,21 @@ async def stored_copy(
     return None if row is None else _copy(row, stamp)
 
 
+async def superseded_copy(
+    session: AsyncSession, subject: WorkSubject, version: int, *, language: str = ENGLISH
+) -> StoredCopy | None:
+    row = await superseded_row(session, subject, version, language)
+    if row is None:
+        return None
+    return StoredCopy(
+        text=row.document,
+        version=row.version,
+        content_hash=row.contentHash,
+        language=row.language,
+        current=False,
+    )
+
+
 async def held_copy(
     session: AsyncSession, subject: WorkSubject, *, language: str = ENGLISH
 ) -> StoredCopy | None:
@@ -148,6 +166,7 @@ async def rebuild_document(session: AsyncSession, subject: WorkSubject, *, now: 
     stamp = await document_stamp(session, subject)
     document = await generated_document_of(session, subject) if await has_sections(session, subject) else None
     if document is None:
+        await drop_superseded(session, subject)
         removed = await session.execute(
             delete(StoredDocument)
             .where(StoredDocument.subjectKind == subject.kind, StoredDocument.subjectSlug == subject.slug)
@@ -201,6 +220,8 @@ async def _store(
         row.stamp, row.wantedAt, row.builtAt = stamp, None, now
         await session.flush()
         return row, Rebuilt.UNCHANGED
+    if row is not None:
+        await keep_superseded(session, row, now=now)
     version = document.version if row is None else max(row.version + 1, document.version)
     values = {
         "subjectKind": key[0],
@@ -213,21 +234,21 @@ async def _store(
         "builtAt": now,
         "wantedAt": None,
     }
-    statement = insert(StoredDocument).values(**values)
-    await session.execute(
-        statement.on_conflict_do_update(
-            index_elements=[StoredDocument.subjectKind, StoredDocument.subjectSlug, StoredDocument.language],
-            set_={
-                name: statement.excluded[name]
-                for name in values
-                if name not in ("subjectKind", "subjectSlug", "language")
-            },
-        )
-    )
+    await _upsert(session, values)
     stored = await session.get(StoredDocument, key, populate_existing=True)
     if stored is None:
         raise RuntimeError(f"the document of {key[0]}:{key[1]} was written but cannot be read back")
     return stored, Rebuilt.BUILT if row is None else Rebuilt.CHANGED
+
+
+async def _upsert(session: AsyncSession, values: dict[str, Any]) -> None:
+    statement = insert(StoredDocument).values(**values)
+    await session.execute(
+        statement.on_conflict_do_update(
+            index_elements=[StoredDocument.subjectKind, StoredDocument.subjectSlug, StoredDocument.language],
+            set_={name: statement.excluded[name] for name in values if name not in KEY_COLUMNS},
+        )
+    )
 
 
 def _copy(row: StoredDocument, stamp: str) -> StoredCopy:

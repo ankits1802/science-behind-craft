@@ -89,7 +89,12 @@ reaction per step (`scene {whereIcon?, where, art}`, desk, tall and phone) with 
 second is drawn as `figure.rp.rx-player`. A step's `art` is its drawings (desk, tall and phone, beside
 its `whereIcon`) or one kit scene, which draws where the step happens itself, so its where icon may be
 left out; the kit shows it with the step and plays its part's motion when the reader chooses the
-step or presses Play. Ajrakh: blue (per-step reactions), red, black, white.
+step or presses Play. The view gives the where drawing its size, never its container
+(`lib/reactionWhere.whereDrawing`, decision 0210): an icon, a drawing at most 32 units wide (the
+drawing checks' `iconView`), at its own units, one a pixel, with no `vg` class; any other the kit's
+92 px vignette, its `vg` class added where the spec leaves it out; either `aria-hidden`, since the
+where line says it in words. Ajrakh's vignettes carry both already and are drawn as their spec gives
+them. Ajrakh: blue (per-step reactions), red, black, white.
 
 ## dip_player
 

@@ -14,6 +14,7 @@ from app.api.document_reads import (
     ServedDocument,
     document_response,
     generated_in_language,
+    generated_served,
     in_language,
     queue_rebuild,
 )
@@ -27,11 +28,11 @@ from app.services import knowledge_view
 from app.services.answering import NOT_FOUND_DETAIL
 from app.services.monograph_document import CRAFT_SUBJECT, document_row
 from app.services.monograph_generated_why_here import ground_hash, with_why_here
-from app.services.open_work_subjects import is_family
+from app.services.open_work_subjects import WorkSubject, is_family
 from app.services.page_text_index import stored_tag
 from app.services.page_translation_serving import ServedPage
 from app.services.place_ground import subject_ground
-from app.services.stored_documents import GeneratedRead, generated_read
+from app.services.stored_documents import GeneratedRead, StoredCopy, generated_read, superseded_copy
 
 router = APIRouter(prefix="/crafts", tags=["crafts"])
 
@@ -105,9 +106,21 @@ async def served_document(session: AsyncSession, craft: Craft, asked: DocumentAs
         body = with_why_here(shown.body, ground)
         return ServedDocument(shown.etag, shown.language, compact_json(body), row.version)
     read = await generated_fallback(session, craft)
-    if read.copy is None or (asked.version is not None and read.copy.version != asked.version):
+    if read.copy is None:
         return None
+    if asked.version is not None and read.copy.version != asked.version:
+        return await superseded_served(session, read, asked.version)
     return await generated_in_language(session, read, language=asked.language)
+
+
+async def superseded_served(
+    session: AsyncSession, read: GeneratedRead, version: int
+) -> ServedDocument | None:
+    copy = await superseded_fallback(session, read.subject, version)
+    current = generated_served(read)
+    if copy is None or current is None:
+        return None
+    return ServedDocument(copy.etag, copy.language, copy.text, copy.version, current.rebuild)
 
 
 async def stored_ground(session: AsyncSession, craft: Craft) -> CraftGround | None:
@@ -116,6 +129,10 @@ async def stored_ground(session: AsyncSession, craft: Craft) -> CraftGround | No
 
 async def generated_fallback(session: AsyncSession, craft: Craft) -> GeneratedRead:
     return await generated_read(session, subject_kind(craft), craft.slug)
+
+
+async def superseded_fallback(session: AsyncSession, subject: WorkSubject, version: int) -> StoredCopy | None:
+    return await superseded_copy(session, subject, version)
 
 
 def subject_kind(craft: Craft) -> str:

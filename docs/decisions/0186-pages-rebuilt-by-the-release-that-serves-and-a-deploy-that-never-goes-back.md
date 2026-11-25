@@ -21,6 +21,7 @@ and Roll back say how to use it.
 | The field whose arrival showed the fault, `CitedSource.kind` | [decision 0183](0183-the-shared-template-draws-the-approved-page.md) |
 | How a release migrates, seeds, switches and rebuilds pages | [infra.md](../contracts/infra.md), Migrations, Seeds and Stored pages |
 | A rebuild whose inputs move while it builds, and a read that claims only a stale copy | [decision 0190](0190-a-voice-turn-bound-and-answered-and-a-page-built-while-its-inputs-move.md) |
+| The version a rebuild replaces, kept so a page drawn at it still reads its rest | [decision 0210](0210-a-page-drawn-a-version-behind-reads-its-rest-and-a-where-icon-drawn-at-its-own-size.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

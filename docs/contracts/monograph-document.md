@@ -45,7 +45,7 @@ flowchart LR
 | Storing the document when it changed | `services/monograph_load.py` |
 | The table | `models/monograph_documents.py` and migration `0041_monograph_documents`; migration `0045_document_language` keys stored documents by language (all rows English) |
 | The route | `api/routes/craft_monograph.py`; the family and category routes `api/routes/page_documents.py` |
-| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py`. A read claims a rebuild only when the stored stamp differs from the current one (or a claim is ten minutes old), and a rebuild that finds its document changed under the stamp it held reads the stamp again: when the inputs moved while it built, the copy keeps the stamp it started from and the next read builds it again; only a document that changed while its inputs stood still is reported as an input the stamp misses (decision 0190) |
+| The stored English copy of a generated document, its parts and tags | `services/stored_documents.py`, table `StoredDocument` (`models/stored_documents.py`, migration `0058_stored_documents`); `research/document_parts.py` and `api/document_reads.py`. A read claims a rebuild only when the stored stamp differs from the current one (or a claim is ten minutes old), and a rebuild that finds its document changed under the stamp it held reads the stamp again: when the inputs moved while it built, the copy keeps the stamp it started from and the next read builds it again; only a document that changed while its inputs stood still is reported as an input the stamp misses (decision 0190). A rebuild that changes the copy first keeps the version it replaces, its text and hash, in table `StoredDocumentVersion` (`services/stored_document_versions.py`, migration `0117_sanganeri_parity`), so a page drawn at that version still reads its rest and its edition; a page whose sections are withdrawn loses them with its copy (decision 0210) |
 | The static page, the served kit and the golden | `scripts/build_monograph.py` |
 | The split | `scripts/split_monograph.py` |
 | The web shapes | `frontend/lib/monographDocument.ts` and `frontend/lib/componentViewContract.ts` |
@@ -76,9 +76,14 @@ tag of at most 16 characters) and `version` (optional, from 1).
   The family and category routes (`page_documents.py`) take `lang` the same way. Articles are
   written in English (decision 0107); a variant is the same page translated, never another
   article.
-- **`version`**: that stored version, or the generated document when its version is that number;
-  otherwise 404 `This craft's monograph has no such version.`. The web app's `/crafts/<slug>/v<N>`
-  reads it, the address Cite this monograph gives.
+- **`version`**: that stored version, or the generated document when its version is that number,
+  or a version of the generated document a rebuild replaced (`superseded_fallback`, the route's
+  adapter to `stored_documents.superseded_copy`), served as it was stored: in English alone, under
+  its own tag, its parts read the same way and a rebuild the read claims still queued; otherwise 404
+  `This craft's monograph has no such version.`. The web app's `/crafts/<slug>/v<N>` reads it, the
+  address Cite this monograph gives, and so does the rest of a page drawn at that version
+  (`/crafts/<slug>/shell/v<N>-<digest>`), which a cache can still hand a reader after the copy
+  moved on (decision 0210).
 - **`part`** (0 to 64) and **`tag`**: the served document, English or a variant, cut into parts of
   at most 1 MB (`research.document_parts`): `{schemaVersion 1, version, part, parts, tag, body}`,
   the content in part 0, then the shell, specs and fragments in order, under the tag

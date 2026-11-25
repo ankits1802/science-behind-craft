@@ -136,7 +136,7 @@ from app.models.science import (
 from app.models.sharing import SharedExportFile
 from app.models.source_upkeep import SourceUpkeep
 from app.models.state_values import StateEnvValue
-from app.models.stored_documents import StoredDocument
+from app.models.stored_documents import StoredDocument, StoredDocumentVersion
 from app.models.structure_proposals import StructureProposal
 from app.models.studio import PageDraft, SuppliedSource
 from app.models.testimony import ArtisanContribution, ArtisanConversation, ArtisanConversationAudio
@@ -284,6 +284,7 @@ __all__ = [
     "StagedReviewItem",
     "StateEnvValue",
     "StoredDocument",
+    "StoredDocumentVersion",
     "StructureProposal",
     "StudentProfile",
     "SuppliedSource",

@@ -4,10 +4,11 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import pytest
-from sqlalchemy import update
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import ArticleSection, User
+from app.api.routes.craft_monograph import DocumentAsk, served_document
+from app.models import ArticleSection, Craft, StoredDocumentVersion, User
 from app.research.page_layout import LayoutWrite
 from app.services import stored_documents
 from app.services.app_settings import set_value
@@ -25,11 +26,13 @@ from app.services.stored_document_rebuilds import (
 from app.services.stored_document_stamp import document_stamp
 from app.services.stored_documents import (
     Rebuilt,
+    StoredCopy,
     claim_rebuild,
     read_generated,
     rebuild_document,
     stored_copy,
     stored_row,
+    superseded_copy,
 )
 
 from .page_documents_seed import (
@@ -145,6 +148,66 @@ async def test_the_rebuild_stores_the_changed_document_under_the_next_version_an
         SECTIONS_VERSION + 1,
         NOW + timedelta(hours=1),
     )
+
+
+async def kept_versions(session: AsyncSession) -> int:
+    counted = await session.scalar(
+        select(func.count()).where(StoredDocumentVersion.subjectSlug == CRAFT_SLUG)
+    )
+    return int(counted or 0)
+
+
+async def test_a_rebuild_keeps_the_version_it_replaces_readable_and_keeps_nothing_it_did_not_replace(
+    session: AsyncSession,
+) -> None:
+    subject = await craft(session)
+    first = await stored_copy(session, subject)
+    assert first is not None and first.version == SECTIONS_VERSION
+    assert await superseded_copy(session, subject, SECTIONS_VERSION) is None
+    await laid_out(session)
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    kept = await superseded_copy(session, subject, SECTIONS_VERSION)
+    assert kept is not None
+    assert kept == StoredCopy(first.text, SECTIONS_VERSION, first.content_hash, "en", current=False)
+    assert kept.etag == first.etag
+    assert await superseded_copy(session, subject, SECTIONS_VERSION + 1) is None
+    assert await superseded_copy(session, subject, SECTIONS_VERSION, language="hi") is None
+    assert await rebuild_document(session, subject, now=NOW + timedelta(hours=1)) == Rebuilt.UNCHANGED
+    assert await kept_versions(session) == 1
+
+
+async def test_a_page_drawn_at_the_version_a_rebuild_replaced_still_reads_it_and_an_unknown_one_reads_none(
+    session: AsyncSession,
+) -> None:
+    subject = await craft(session)
+    first = await stored_copy(session, subject)
+    assert first is not None
+    await laid_out(session)
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    row = await session.get(Craft, CRAFT)
+    assert row is not None
+    earlier = await served_document(session, row, DocumentAsk(language="en", version=SECTIONS_VERSION))
+    assert earlier is not None
+    assert (earlier.text, earlier.version, earlier.etag) == (first.text, SECTIONS_VERSION, first.etag)
+    latest = await served_document(session, row, DocumentAsk(language="en"))
+    assert latest is not None and latest.version == SECTIONS_VERSION + 1
+    assert (
+        await served_document(session, row, DocumentAsk(language="en", version=SECTIONS_VERSION + 5)) is None
+    )
+
+
+async def test_a_withdrawn_page_takes_its_superseded_versions_with_it(session: AsyncSession) -> None:
+    subject = await craft(session)
+    assert await stored_copy(session, subject) is not None
+    await laid_out(session)
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
+    assert await kept_versions(session) == 1
+    await session.execute(
+        update(ArticleSection).where(ArticleSection.craftId == CRAFT).values(status="SUPERSEDED")
+    )
+    assert await rebuild_document(session, subject, now=NOW) == Rebuilt.REMOVED
+    assert await superseded_copy(session, subject, SECTIONS_VERSION) is None
+    assert await kept_versions(session) == 0
 
 
 async def test_a_read_that_races_a_finished_rebuild_claims_no_second_one(session: AsyncSession) -> None:

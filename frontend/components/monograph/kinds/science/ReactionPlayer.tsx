@@ -3,6 +3,7 @@ import { kitIds, type KitIds } from "@/components/artkit/kitIds";
 import { isKitScene } from "@/lib/componentSpecsKitScene";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { reactionPlayerShape, type ReactionPlayerSpec, type StepScene } from "@/lib/componentSpecsSciencePlayers";
+import { whereDrawing } from "@/lib/reactionWhere";
 import { parseShape } from "@/lib/shape";
 
 import { Drawing, Drawings } from "./parts/Drawing";
@@ -39,7 +40,7 @@ function Reaction({ scene, step, shown, ids, renderUnit }: ReactionProps) {
   return (
     <div className="rx" data-i={step} hidden={!shown}>
       <div className="rx-where">
-        {scene.whereIcon ? <Drawing node={scene.whereIcon} /> : null}
+        {scene.whereIcon ? <Drawing node={whereDrawing(scene.whereIcon)} /> : null}
         <p>{renderUnit(scene.where)}</p>
       </div>
       <div className="rx-art">{isKitScene(art) ? <KitSceneArt scene={art} ids={ids} name={`r${step}`} /> : <Drawings nodes={art} />}</div>

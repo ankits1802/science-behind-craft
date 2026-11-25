@@ -64,6 +64,11 @@ class Calls:
     made: list[str] = field(default_factory=list)
     queued: list[tuple[str, str]] = field(default_factory=list)
     languages: list[tuple[tuple[str, str], str, str]] = field(default_factory=list)
+    kept: dict[int, StoredCopy] = field(default_factory=dict)
+
+    async def superseded(self, session: Any, subject: Any, version: int) -> StoredCopy | None:
+        self.made.append(f"superseded {subject.kind} {subject.slug} {version}")
+        return self.kept.get(version)
 
     async def in_language(
         self, session: Any, page: tuple[str, str], english: ServedPage, *, tag: str, language: str
@@ -94,11 +99,13 @@ async def no_session() -> AsyncIterator[object]:
     yield object()
 
 
-def watch_rebuilds(monkeypatch: pytest.MonkeyPatch, calls: Calls) -> None:
+def watch_calls(monkeypatch: pytest.MonkeyPatch, calls: Calls) -> None:
     async def rebuild_wanted(kind: str, slug: str) -> None:
         calls.queued.append((kind, slug))
 
     monkeypatch.setattr(document_reads, "rebuild_wanted", rebuild_wanted)
+    monkeypatch.setattr(document_reads, "page_in_language", calls.in_language)
+    monkeypatch.setattr(route, "superseded_fallback", calls.superseded)
 
 
 def served(
@@ -136,8 +143,7 @@ def served(
     monkeypatch.setattr(route, "document_row", document_row)
     monkeypatch.setattr(route, "generated_fallback", generated_fallback)
     monkeypatch.setattr(route, "stored_ground", stored_ground)
-    monkeypatch.setattr(document_reads, "page_in_language", calls.in_language)
-    watch_rebuilds(monkeypatch, calls)
+    watch_calls(monkeypatch, calls)
     app = create_app()
     app.dependency_overrides[get_session] = no_session
     return TestClient(app), calls

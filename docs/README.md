@@ -79,6 +79,7 @@ flowchart TD
 | [PROGRESS.md](PROGRESS.md) | What is done, what comes next and what waits on the owner? | Everyone |
 | [NEXT.md](NEXT.md) | What is live now, what did the owner decide, and how does a new session start? | The lead, a new session |
 | [TECH_DEBT.md](TECH_DEBT.md) | What was knowingly left below standard, why, and what would clear it? | Engineers, reviewers |
+| [content/sanganeri-parity-fixes.md](content/sanganeri-parity-fixes.md) | Which content changes would Sanganeri Hand Block Printing take for Monograph parity, ready to stage? | Admins, the lead |
 
 ### Operating it
 

@@ -5,6 +5,7 @@ import { authoredRoot, drawing, gatedDifferences, generatedRoot, sanityProblems,
 import { pixelDifference } from "./parityMeasure";
 import { clearedShot } from "./parityOverlays";
 import { fullSizePictures } from "./parityPictures";
+import { pageReadiness, readinessProblem } from "./parityReady";
 import { playersAtRest } from "./parityRest";
 import type { StyleDifference } from "./parityStyles";
 
@@ -12,7 +13,6 @@ export type CaseResult = { label: string; kind: string; page: string; pageKind: 
 export type Shots = (name: string, image: Buffer) => void;
 
 const SETTLE_MS = 1500;
-const KIT_TIMEOUT_MS = 30_000;
 const STEP_MS = 30;
 const SHOWN_DIFFERENCES = 40;
 const SHOT_TIMEOUT_MS = 20_000;
@@ -29,14 +29,15 @@ async function scrolled(page: Page): Promise<void> {
   }, STEP_MS);
 }
 
-export async function readPage(page: Page, path: string): Promise<void> {
+export async function readPage(page: Page, path: string): Promise<SanityProblem[]> {
   await page.goto(path, { waitUntil: "networkidle", timeout: 120_000 });
   await scrolled(page);
-  await page.waitForFunction(() => "KV" in window, undefined, { timeout: KIT_TIMEOUT_MS }).catch(() => undefined);
+  const problem = readinessProblem(await pageReadiness(page));
   await scrolled(page);
   await page.waitForTimeout(SETTLE_MS);
   await fullSizePictures(page);
   await playersAtRest(page);
+  return problem === null ? [] : [{ label: `${page.url()} page`, problem }];
 }
 
 async function revealed(root: ElementHandle<Element>): Promise<void> {
@@ -113,11 +114,10 @@ export type PassReport = { results: CaseResult[]; sanity: SanityProblem[]; chapt
 
 export async function borrowedPass(context: BrowserContext, cases: readonly BorrowedCase[], visits: readonly SubjectPage[], save: Shots): Promise<PassReport> {
   const authored = await context.newPage();
-  await readPage(authored, AUTHORED_PATH);
-  const report: PassReport = { results: [], sanity: [], chapters: [] };
+  const report: PassReport = { results: [], sanity: await readPage(authored, AUTHORED_PATH), chapters: [] };
   for (const visit of visits) {
     const page = await context.newPage();
-    await readPage(page, visit.path);
+    report.sanity.push(...(await readPage(page, visit.path)));
     if (await chapterShot(page, visit, save)) report.chapters.push(visit.path);
     report.sanity.push(...(await pageSanity(page, visit)));
     for (const found of cases.filter((item) => item.page.path === visit.path)) report.results.push(await compareCase(authored, page, found, save));
