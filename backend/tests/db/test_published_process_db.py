@@ -10,19 +10,25 @@ from app.api.mcp_tool_base import ToolContext
 from app.models import (
     AuditLog,
     ConditionReading,
+    Craft,
     ImageContribution,
     MapLayerProposal,
     ProcessStage,
     StageReview,
+    StoredDocumentVersion,
 )
 from app.research.page_proposals import PageSubject
+from app.research.review_queue import QueueApproval, QueueRejection
 from app.research.staged_reviews import ConfirmedItem, StagedConfirmation, StagedDecision
+from app.services.craft_page_stamp import page_stamp
 from app.services.craft_resolver import CraftIndexStore
 from app.services.open_work_subjects import craft_subject
 from app.services.published_kinds import PublishedQuery
+from app.services.review_queue_decisions import ItemRef, approve_item, reject_item
 from app.services.staged_published import published_lines
 from app.services.staged_review_confirm import Confirmed, confirm_batch
 from app.services.staged_reviews import Staged, stage_decisions
+from app.services.stored_document_stamp import document_stamp
 
 from .published_content_seed import (
     HELD_READING,
@@ -37,10 +43,12 @@ from .published_content_seed import (
     decided,
     published_session,
 )
-from .review_queue_seed import NOW, SLUG, People
+from .review_queue_seed import CRAFT, NOW, SLUG, People
 from .test_staged_reviews_db import caller_of
 
 pytestmark = pytest.mark.db
+
+OTHER_SLUG = "Review-Queue-Other-Craft"
 
 
 @pytest.fixture
@@ -193,3 +201,56 @@ async def test_review_queue_lists_a_page_s_published_items_and_opens_one_with_it
         "Stage: Airing, in Dyeing",
         {},
     )
+
+
+async def stamps_of_the_craft(session: AsyncSession) -> tuple[str, str]:
+    craft = await session.get(Craft, CRAFT)
+    assert craft is not None
+    return await page_stamp(session, craft, "OPEN"), await document_stamp(
+        session, await craft_subject(session, SLUG)
+    )
+
+
+async def test_a_removed_reading_moves_its_craft_s_stamps_and_staging_the_removal_alone_does_not(
+    seeded: tuple[AsyncSession, People],
+) -> None:
+    session, people = seeded
+    before = await stamps_of_the_craft(session)
+    staged = await stage(session, people, decided("READINGS", READING, "remove"))
+    assert await stamps_of_the_craft(session) == before
+    await confirm(session, people, staged)
+    after = await stamps_of_the_craft(session)
+    assert (after[0] != before[0], after[1] != before[1]) == (True, True)
+
+
+async def kept_of(session: AsyncSession) -> list[str]:
+    rows = await session.scalars(
+        select(StoredDocumentVersion.subjectSlug).where(
+            StoredDocumentVersion.subjectSlug.in_([SLUG, OTHER_SLUG])
+        )
+    )
+    return sorted(rows.all())
+
+
+async def test_a_reading_rejected_in_the_queue_drops_its_craft_s_kept_versions_and_one_approved_keeps_them(
+    seeded: tuple[AsyncSession, People],
+) -> None:
+    session, people = seeded
+    for slug in (SLUG, OTHER_SLUG):
+        session.add(
+            StoredDocumentVersion(
+                subjectKind="craft",
+                subjectSlug=slug,
+                version=1,
+                contentHash="0" * 64,
+                document="{}",
+                supersededAt=NOW,
+            )
+        )
+    await session.flush()
+    approval = QueueApproval(note="The vat notes state this heat.")
+    await approve_item(session, ItemRef("READINGS", HELD_READING), people.admin, approval, now=NOW)
+    assert await kept_of(session) == [OTHER_SLUG, SLUG]
+    rejection = QueueRejection(reason="The quote states another vat's heat.")
+    await reject_item(session, ItemRef("READINGS", READING), people.admin, rejection, now=NOW)
+    assert await kept_of(session) == [OTHER_SLUG]

@@ -21,7 +21,7 @@ from app.models import (
     Reaction,
     User,
 )
-from app.models.science import live_process
+from app.models.science import READING_REJECTED, live_process
 from app.research.crafts import CraftRef
 from app.research.open_work import QueueStanding
 from app.research.review_queue import READINGS, QueueDecision, QueueEntry, QueueKey, ReadingQueueItem
@@ -31,9 +31,11 @@ from app.science.units import Bounds
 
 from . import audit
 from .knowledge_view import craft_ref
+from .page_revalidation import craft_owners
 from .review_queue_errors import DecisionConflict, OwnItem, UnknownItem
 from .review_queue_fact_views import fact_sources
 from .review_queue_select import Rendered, rows_by_id
+from .stored_document_versions import drop_kept_versions
 
 __all__ = [
     "MESSAGES",
@@ -159,6 +161,11 @@ async def decide_reading(
         detail={"from": None, "to": status, "stated": row.stated},
     )
     await session.flush()
+    if status == READING_REJECTED:
+        crafts = [
+            craft for craft in (await session.scalars(reading_craft(row.id))).all() if craft is not None
+        ]
+        await drop_kept_versions(session, await craft_owners(session, crafts), now=now)
     return QueueDecision(kind=READINGS, id=row.id, status=status, message=MESSAGES[status])
 
 

@@ -20,6 +20,7 @@ from .component_library_applies import APPLIED_PIECE, applies_to, registered_pie
 from .component_retirers import may_retire, proposal_of
 from .open_work_subjects import CATEGORY, WorkSubject
 from .page_revalidation import claim_owners, craft_owners, merged_owners
+from .stored_document_versions import drop_kept_versions
 
 __all__ = [
     "NOT_REGISTERED",
@@ -80,7 +81,9 @@ async def withdraw_registered(
     session: AsyncSession, user: User, label: str, *, reason: str | None, now: datetime
 ) -> Retired:
     piece = await live_piece(session, label, lock=True)
-    return await take_off_pages(session, user, piece, page=None, reason=reason, now=now)
+    retired = await take_off_pages(session, user, piece, page=None, reason=reason, now=now)
+    await drop_kept_versions(session, retired.owners, now=now)
+    return retired
 
 
 async def take_off_pages(

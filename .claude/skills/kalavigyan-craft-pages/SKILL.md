@@ -171,7 +171,7 @@ family figure only when the page holds every fact its units cite.
    resists by substance; the dip then draws without a colour the team recorded. Compose the page's interactives with
    `compose_component`, never borrowed from Kutch Ajrakh; propose what `missing` names first. Preview
    the page with them and read its pictures: step every player, dip every dip, turn and zoom every
-   molecule and choose every option at 360 and 1440 px before `propose_page`. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild; Monograph parity names a page whose rest could not be read.
+   molecule and choose every option at 360 and 1440 px before `propose_page`. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild, until something is removed, edited, withdrawn or retracted from the page, which drops its earlier editions; Monograph parity names a page whose rest could not be read.
 5. **Follow every proposal** with `get_proposal` or `my_work`. A refused fact is fixed from its
    sources or dropped, never reworded past its quotes to slip a gate.
 6. **Hand the lead what only the dossier route carries**: a curated picture's focal box and stand-in,

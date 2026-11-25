@@ -488,10 +488,13 @@ the stamp moves.
   its family dossier, and for every row class the builders read its count and latest change: the
   craft's concepts, claims, citations and cited sources (the craft claim scope), its family's claims
   and citations, the relatives' crafts, curations and claims, glossary terms, processes, stages,
-  reactions, materials and compounds with kept conformers, pictures and media refs linked to its or
+  reactions, materials and compounds with kept conformers, the conditions of its stages and their
+  reactions with their readings (those still shown and their latest review; decision 0213), pictures
+  and media refs linked to its or
   its family's claims, places, GI, price and workforce rows, geo values of its mapped districts,
   dataset rows, the Wikidata points of its dossier places, its pieces (stale, superseded and hidden
-  marks) and AI assets, its approved contributed pictures and their files, its field recordings,
+  marks), the components taken off its page alone (`KnowledgePieceUnlink`, decision 0213) and AI
+  assets, its approved contributed pictures and their files, its field recordings,
   segments and images, the set of portal streams fresh
   as `field_scope.fresh_portals` reads them, the artisan-images setting, and its testimony
   (approvals and withdrawals) and conversations. The stamp is the SHA-256 of that record and the

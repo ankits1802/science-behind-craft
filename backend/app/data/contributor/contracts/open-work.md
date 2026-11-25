@@ -466,7 +466,9 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
   component off every page as a withdrawal does, or off the one page it names: a
   `KnowledgePieceUnlink` row (the piece and a craft or a category) that `applies_to` and a category
   page's pieces leave out, so every other page keeps drawing it; the same `take_off_pages` runs both
-  and audits `component.removed` with the page.
+  and audits `component.removed` with the page. The row is a term of its page's stamp (the craft's,
+  or the category's document terms), so the page's stored copy is rebuilt without the component,
+  and the removal, like a withdrawal, drops the kept versions of the pages it names (decision 0213).
 - **A borrowed component that cannot pass** is refused before it is proposed. Placing one means a
   `SUBJECT_LINK` part extending it, or a layout entry naming a library label that is not one of the
   bundle's own new components. A component is borrowed when another craft owns it or it is shared

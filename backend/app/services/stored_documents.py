@@ -19,7 +19,7 @@ from .monograph_document import document_body, document_hash
 from .monograph_generated import enough_sections, generated_document_of
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key
 from .stored_document_stamp import document_stamp
-from .stored_document_versions import drop_superseded, keep_superseded, superseded_row
+from .stored_document_versions import drop_superseded, keep_superseded, lock_page, superseded_row
 
 __all__ = [
     "REBUILD_RETRY",
@@ -42,7 +42,6 @@ logger = logging.getLogger(__name__)
 
 PUBLISHED = "PUBLISHED"
 REBUILD_RETRY = timedelta(minutes=10)
-BUILD_LOCK = "stored-document:{kind}:{slug}"
 KEY_COLUMNS = ("subjectKind", "subjectSlug", "language")
 
 
@@ -103,7 +102,7 @@ async def stored_copy(
     stamp = await document_stamp(session, subject)
     if row is not None:
         return _copy(row, stamp)
-    await session.execute(select(func.pg_advisory_xact_lock(func.hashtextextended(_lock_key(subject), 0))))
+    await lock_page(session, subject.kind, subject.slug)
     row = await stored_row(session, subject, language)
     if row is None:
         document = await generated_document_of(session, subject)
@@ -163,6 +162,7 @@ async def claim_rebuild(
 
 
 async def rebuild_document(session: AsyncSession, subject: WorkSubject, *, now: datetime) -> Rebuilt:
+    await lock_page(session, subject.kind, subject.slug)
     stamp = await document_stamp(session, subject)
     document = await generated_document_of(session, subject) if await has_sections(session, subject) else None
     if document is None:
@@ -217,10 +217,10 @@ async def _store(
     row = await session.get(StoredDocument, key, populate_existing=True)
     digest = document_hash(document)
     if row is not None and row.contentHash == digest:
-        row.stamp, row.wantedAt, row.builtAt = stamp, None, now
+        row.stamp, row.wantedAt, row.builtAt, row.removedAt = stamp, None, now, None
         await session.flush()
         return row, Rebuilt.UNCHANGED
-    if row is not None:
+    if row is not None and row.removedAt is None:
         await keep_superseded(session, row, now=now)
     version = document.version if row is None else max(row.version + 1, document.version)
     values = {
@@ -233,6 +233,7 @@ async def _store(
         "document": compact_json(document_body(document.model_copy(update={"version": version}))),
         "builtAt": now,
         "wantedAt": None,
+        "removedAt": None,
     }
     await _upsert(session, values)
     stored = await session.get(StoredDocument, key, populate_existing=True)
@@ -259,7 +260,3 @@ def _copy(row: StoredDocument, stamp: str) -> StoredCopy:
         language=row.language,
         current=row.stamp == stamp and row.wantedAt is None,
     )
-
-
-def _lock_key(subject: WorkSubject) -> str:
-    return BUILD_LOCK.format(kind=subject.kind, slug=subject.slug)
