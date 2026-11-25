@@ -614,20 +614,24 @@ started it.
 JSON file per craft (`docs/contracts/knowledge-api.md`, Bulk export); the same document is served
 at `GET /api/knowledge/crafts/{slug}/export`.
 
-A page as a reader's PDF or Word document (decisions 0206, 0208) is `GET
+A page as a reader's PDF or Word document (decisions 0206, 0208, 0214) is `GET
 /api/crafts/<slug>/monograph/pdf` or `/docx`, and for a family or a category page
 `/api/families/<slug>/monograph/<fmt>` and `/api/categories/<slug>/monograph/<fmt>` (`lang` as the
 page's route takes it), answered as a five-minute signed link; every such page offers them as its
-Download menu. The file is built once per served tag and kept under
-`exports/00000000-0000-0000-0000-000000000001/` in the media bucket, which the `expire-exports`
-lifecycle rule clears with every other export; nothing else keeps or deletes it, and no IAM change
-is needed (the media user already puts and reads `exports/*`). A route answering 503 `This file
-can't be made right now.` means `S3_BUCKET` is not set on that process. Before a file is built the
-API reads the open-licence pictures the page shows: Commons files from `upload.wikimedia.org`, and
-the pictures the site serves itself (Kutch Ajrakh's `/monographs/kutch-ajrakh/img/`) from the host
-of `PUBLIC_WEB_URL`, which must be https for them to be read; a picture not read within 30 s is
-given by its description and credit, and that file is never reused, so the next download reads the
-pictures again.
+Download menu. The file is built once per served tag, whatever the day, and kept under
+`exports/00000000-0000-0000-0000-000000000001/` in the media bucket under its name without a day
+(the download is named for its day), which the `expire-exports` lifecycle rule clears with every
+other export; nothing else keeps or deletes it, and no IAM change is needed (the media user already
+puts and reads `exports/*`). A route answering 503 `This file can't be made right now.` means
+`S3_BUCKET` is not set on that process or the bucket refused; 503 with `Retry-After: 30` and
+`Other files are being made just now.` means both of the process's page export slots stayed busy
+for 5 s; 429 with `Retry-After` means that address or account started 10 new files in 10 minutes.
+Before a file is built the API reads the open-licence pictures the page shows: Commons files from
+`upload.wikimedia.org`, and the pictures the site serves itself (Kutch Ajrakh's
+`/monographs/kutch-ajrakh/img/`) from the host of `PUBLIC_WEB_URL`, which must be https for them to
+be read; four at once, and a picture not read within 10 s is given by its description and credit,
+and that file is used again for the rest of the hour it was built in, so a download in a later hour
+reads the pictures again.
 
 ## AI spend and token limits
 

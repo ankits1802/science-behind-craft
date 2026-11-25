@@ -103,7 +103,7 @@ tag of at most 16 characters) and `version` (optional, from 1).
   (`enough_sections`; a family or category needs one). The web app then draws the craft without a
   monograph.
 
-## Exports (decisions 0206, 0208)
+## Exports (decisions 0206, 0208, 0214)
 
 `GET /api/crafts/{slug}/monograph/{fmt}`, `fmt` `pdf` or `docx`, with `lang` and `version` as
 above, and for a family or a category page `GET /api/families/{slug}/monograph/{fmt}` and
@@ -113,11 +113,23 @@ route serves (English, or the variant in `lang`), so a translated page exports i
 with every passage not yet translated in English. The answer is an `ExportLink` (`format` `pdf`
 or `docx`, a five-minute signed link, `Cache-Control: private, no-cache`), the file built once
 under `exports/00000000-0000-0000-0000-000000000001/<sha256 of the page, the served tag, the
-language, the export's edition and the language's reviewed export words>/<name>` and named
+language, the export's edition and the language's reviewed export words>/<stored name>`, the
+stored name `KalaVigyan_<Craft-Page|Family-Page|Category-Page>_<page>[_<language>]_Export_v<n>.<fmt>`
+with no day, so one file serves every reader on every day (decision 0214); the link's `fileName`
+and its `Content-Disposition` carry the day it is downloaded,
 `KalaVigyan_<Craft-Page|Family-Page|Category-Page>_<date>_<page>[_<language>]_Export_v<n>.<fmt>`
-(`naming.export_file_name`); a file built while a picture could not be read is filed apart and
-never reused (as lesson files are); 503 when no media bucket is set, 404 as the page's route, 422
-for another format. All three are built by the same services (`page_export_files.page_export_link`),
+(`naming.export_file_name`, `made_at=None` for the stored name). A file built while a picture
+could not be read is filed under the start of the clock hour it was built in and used again for
+that hour (`PAGE_UNREAD_REUSED_FOR`); the first build that reads every picture is filed as the
+complete file. A page file is built in one of `PAGE_EXPORT_BUILDS_AT_ONCE` (2) slots of its own
+per process, apart from the answer and lesson files' two; a request that finds no slot free within
+`PAGE_EXPORT_WAIT_SECONDS` (5 s) is answered 503 with `Retry-After: 30`. A request whose file is
+not yet filed counts one build against its caller (`core/rate_limit.export_build_attempt`: 10 in 10
+minutes per account when signed in, else per address), and is answered 429 with `Retry-After` over
+it; a file already filed is never counted or refused. Every route queues the rebuild its read
+claims (`queue_rebuild`), as the page's route does, whatever it answers. 503 `This file can't be
+made right now.` when no media bucket is set or the bucket fails, 404 as the page's route, 422 for
+another format. All three are built by the same services (`page_export_files.page_export_link`),
 so a family or a category page is drawn as a craft page is.
 
 - **Download on the page** (decision 0208): every craft monograph, family page and category page
@@ -167,8 +179,9 @@ so a family or a category page is drawn as a craft page is.
   px, so 1280; never wider than the file, the file itself under 330 px;
   `commons_urls.commons_fitting_width`), a picture the site serves itself (`/monographs/...`) from
   the page's own site; both through `picture_files` with its hosts (Commons, Openverse and the
-  site's `PUBLIC_WEB_URL` host, https only), all of a page's pictures within 30 s
-  (`PAGE_PICTURES_SECONDS`). A picture read is flattened to a JPEG at most 1600 px a side and drawn
+  site's `PUBLIC_WEB_URL` host, https only), at most four at once (`PICTURE_READS_AT_ONCE`), each
+  within 10 s of its own read (`PAGE_PICTURE_SECONDS`, decision 0214), so a slow picture leaves no
+  other unread. A picture read is flattened, one at a time, to a JPEG at most 1600 px a side and drawn
   under the figure's title (PDF up to 120 mm high; Word up to 150 by 110 mm as
   `word/media/figure<n>.jpeg`, its alt text as the description). One that was not read, or whose
   licence forbids a copy, is given by `Picture: <alt text>` and its credit, and the figure's note
@@ -555,10 +568,11 @@ to `specs`).
 | A component's labels offered, a native name and formulas never, a label put back where it was read, the fixture page's offers, a translated unit of each new kind drawn and an untranslated one in English, the served variant's specs | `tests/exports/test_export_languages.py` |
 | Each new kind as its figure, every unit of a component in it, Kutch Ajrakh whole | `tests/exports/test_page_export.py` |
 | The still renderer: paths, paints, drawings, kit parts, a composed diagram, a kit scene, a molecule, swatches, a map, the PDF and the PNG, an answer's kit figure | `tests/exports/test_export_stills.py` |
-| The PDF's text and drawings, the Word document's parts, Kutch Ajrakh's files, the filed link and its name | `tests/exports/test_page_files.py` |
-| A picture read at its paper width and embedded, caption first and credit after; one not read, or under a licence that forbids a copy, given by its alt text and credit with a note; Kutch Ajrakh's ten pictures read from its own site; a slow picture left unread | `tests/exports/test_page_pictures.py`, `tests/sources/test_commons_urls.py`, `tests/learning/test_export_store.py` |
+| The PDF's text and drawings, the Word document's parts, Kutch Ajrakh's files, the filed link, its stored name and its download name, one file over two days | `tests/exports/test_page_files.py` |
+| A picture read at its paper width and embedded, caption first and credit after; one not read, or under a licence that forbids a copy, given by its alt text and credit with a note; Kutch Ajrakh's ten pictures read from its own site; a slow picture left unread and the others read in their own time | `tests/exports/test_page_pictures.py`, `tests/sources/test_commons_urls.py`, `tests/learning/test_export_store.py` |
 | A reviewed export word drawn and an unreviewed one English and marked so; the words a file is made from | `tests/exports/test_export_words.py`, `tests/test_interface_words_data.py` |
 | A family and a category page exported through their routes with their parts, a craft page's picture read at the paper width, 404 and 422 | `tests/db/test_page_exports_db.py` |
+| A stale page's export queues its rebuild and a current one's none; a page export with no free slot answered 503 with a retry while an answer export still runs; a caller over the build allowance answered 429 while a filed file and another caller are served; a file made while a picture was unread used again for its hour; the wait for a slot and the admission | `tests/exports/test_page_export_routes.py`, `tests/learning/test_export_store.py` |
 | Download's two items on a craft, a family and a category page, beside Copy citation or alone, and after Kutch Ajrakh's untouched main | `frontend/e2e/page-download-unit.spec.ts` |
 
 Test paths are relative to `backend/`, but the web's, which is relative to the repository. Last

@@ -13,6 +13,7 @@ from app.core.errors import AppError
 __all__ = [
     "PICTURE_MAX_PIXELS",
     "PICTURE_MAX_SIDE",
+    "PICTURE_READS_AT_ONCE",
     "ExportPictures",
     "Picture",
     "PictureAsk",
@@ -25,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 PICTURE_MAX_SIDE = 1600
 PICTURE_MAX_PIXELS = 40_000_000
+PICTURE_READS_AT_ONCE = 4
 JPEG_QUALITY = 85
 WHITE = (255, 255, 255)
 
@@ -57,19 +59,15 @@ class PictureAsk(Protocol):
 async def export_pictures(
     medias: Iterable[PictureAsk], source: PictureSource, *, within: float | None = None
 ) -> ExportPictures:
-    deadline = None if within is None else asyncio.get_running_loop().time() + within
+    wanted: dict[uuid.UUID, PictureAsk] = {}
+    for media in medias:
+        wanted.setdefault(media.id, media)
+    reads = asyncio.Semaphore(PICTURE_READS_AT_ONCE)
+    raws = await asyncio.gather(*(_read(media, source, reads, within) for media in wanted.values()))
     found: dict[uuid.UUID, Picture] = {}
     unread: set[uuid.UUID] = set()
-    for media in medias:
-        if media.id in found or media.id in unread:
-            continue
-        try:
-            async with asyncio.timeout_at(deadline):
-                raw = await source.picture(media.image_url)
-        except (AppError, TimeoutError) as error:
-            logger.warning(
-                "picture %s is left out of the export: %s", media.id, str(error) or "its time ran out"
-            )
+    for media, raw in zip(wanted.values(), raws, strict=True):
+        if raw is None:
             unread.add(media.id)
             continue
         picture = await asyncio.to_thread(normalised, raw)
@@ -78,6 +76,20 @@ async def export_pictures(
             continue
         found[media.id] = picture
     return ExportPictures(found=found, unread=frozenset(unread))
+
+
+async def _read(
+    media: PictureAsk, source: PictureSource, reads: asyncio.Semaphore, within: float | None
+) -> bytes | None:
+    async with reads:
+        try:
+            async with asyncio.timeout(within):
+                return await source.picture(media.image_url)
+        except (AppError, TimeoutError) as error:
+            logger.warning(
+                "picture %s is left out of the export: %s", media.id, str(error) or "its time ran out"
+            )
+            return None
 
 
 def normalised(raw: bytes) -> Picture | None:

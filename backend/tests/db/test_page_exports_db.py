@@ -11,7 +11,7 @@ import pytest
 from pypdf import PdfReader
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.export_deps import export_tools
+from app.api.export_deps import page_export_tools
 from app.core.db import get_session
 from app.main import app
 from app.services.apa_references import apa_references
@@ -60,13 +60,13 @@ async def exported(session: AsyncSession, path: str, held: tuple[FakeBucket, Pic
         )
 
     app.dependency_overrides[get_session] = this_session
-    app.dependency_overrides[export_tools] = these_tools
+    app.dependency_overrides[page_export_tools] = these_tools
     try:
         transport = httpx.ASGITransport(app=app)
         async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
             return await client.get(path)
     finally:
-        for dependency in (get_session, export_tools):
+        for dependency in (get_session, page_export_tools):
             app.dependency_overrides.pop(dependency, None)
 
 

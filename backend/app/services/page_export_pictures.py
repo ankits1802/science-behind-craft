@@ -24,7 +24,7 @@ from .page_export_units import PageTexts
 __all__ = [
     "MM_PER_INCH",
     "NO_PICTURES",
-    "PAGE_PICTURES_SECONDS",
+    "PAGE_PICTURE_SECONDS",
     "PAPER_COLUMN_MM",
     "PAPER_DPI",
     "PICTURE_KINDS",
@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 PAPER_COLUMN_MM = 178.0
 MM_PER_INCH = 25.4
 PAPER_DPI = 150
-PAGE_PICTURES_SECONDS = 30.0
+PAGE_PICTURE_SECONDS = 10.0
 PICTURE_KINDS = frozenset({"picture_plate", "specimen_plate"})
 COMMONS_UPLOAD = "https://upload.wikimedia.org/wikipedia/commons/"
 
@@ -113,7 +113,7 @@ def wanted_pictures(
 async def fetched_pictures(
     wanted: list[PaperPicture], source: PictureSource
 ) -> tuple[PagePictures, frozenset[uuid.UUID]]:
-    read = await export_pictures(wanted, source, within=PAGE_PICTURES_SECONDS)
+    read = await export_pictures(wanted, source, within=PAGE_PICTURE_SECONDS)
     found = {picture.src: read.found[picture.id] for picture in wanted if picture.id in read.found}
     return PagePictures(MappingProxyType(found)), read.unread
 

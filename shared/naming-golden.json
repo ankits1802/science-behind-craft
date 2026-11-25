@@ -89,10 +89,13 @@
   ],
   "pageFiles": [
     {"madeAt": "2026-11-25T06:30:00Z", "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": null, "version": 3, "ext": "pdf", "fileName": "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Export_v3.pdf"},
-    {"madeAt": "2026-11-24T19:00:00Z", "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": "Hindi", "version": 3, "ext": "docx", "fileName": "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Hindi_Export_v3.docx"}
+    {"madeAt": "2026-11-24T19:00:00Z", "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": "Hindi", "version": 3, "ext": "docx", "fileName": "KalaVigyan_Craft-Page_2026-11-25_Kutch-Ajrakh_Hindi_Export_v3.docx"},
+    {"madeAt": null, "entity": "Craft-Page", "craft": "Kutch Ajrakh", "language": null, "version": 3, "ext": "pdf", "fileName": "KalaVigyan_Craft-Page_Kutch-Ajrakh_Export_v3.pdf"},
+    {"madeAt": null, "entity": "Family-Page", "craft": "Other Textiles", "language": "Hindi", "version": 4, "ext": "docx", "fileName": "KalaVigyan_Family-Page_Other-Textiles_Hindi_Export_v4.docx"}
   ],
   "exportKeys": [
-    {"ownerId": "00000000-0000-0000-0000-000000000007", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf", "key": "exports/00000000-0000-0000-0000-000000000007/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"}
+    {"ownerId": "00000000-0000-0000-0000-000000000007", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "fileName": "KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf", "key": "exports/00000000-0000-0000-0000-000000000007/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/KalaVigyan_Lesson_2026-11-19_Mordants_Lesson.pdf"},
+    {"ownerId": "00000000-0000-0000-0000-000000000001", "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef", "fileName": "KalaVigyan_Craft-Page_Kutch-Ajrakh_Export_v3.pdf", "key": "exports/00000000-0000-0000-0000-000000000001/0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef/KalaVigyan_Craft-Page_Kutch-Ajrakh_Export_v3.pdf"}
   ],
   "fieldVoiceFiles": [
     {"takenAt": "2026-06-24T06:10:00Z", "district": "Jaipur", "state": "Rajasthan", "craft": "Bagru Hand Block Print", "ext": "jpg", "sha256": "9f2c1a7e5b3d4c6a8e0f1b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4", "fileName": "KalaVigyan_Field-Image_2026-06-24_1140_Jaipur_Bagru-Hand-Block-Print_Photo.jpg", "key": "media/field-voices/9f2c1a7e5b3d4c6a8e0f1b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4/KalaVigyan_Field-Image_2026-06-24_1140_Jaipur_Bagru-Hand-Block-Print_Photo.jpg"},

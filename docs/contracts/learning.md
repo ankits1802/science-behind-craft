@@ -247,7 +247,8 @@ Professor and above; the client's `canBuildLessons`); a pack is its builder's al
   a file made while one of its pictures could not be read is filed under the hash of the same
   inputs and the unread pictures' ids, never reused, so the next request reads the pictures again;
   at most `EXPORT_BUILDS_AT_ONCE` (2) files are made at once in a process, and a request for a
-  file being made waits and takes it, decision 0143), and answered as `ExportLink {schemaVersion 1, format, fileName, url, expiresAt}`: a signed GET
+  file being made waits and takes it, decision 0143; a page's export builds in two slots of its
+  own, `monograph-document.md` Exports, decision 0214), and answered as `ExportLink {schemaVersion 1, format, fileName, url, expiresAt}`: a signed GET
   valid for `EXPORT_LINK_SECONDS` (300) whose `Content-Disposition` is `attachment` with that
   name (`research/export_links.py`; the client's `exportLinkShape`, whose `format` is a lesson's
   `html`, `pptx` or `pdf` or a page's `docx`, `EXPORT_FORMATS`, decision 0208).
