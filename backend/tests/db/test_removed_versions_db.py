@@ -32,7 +32,7 @@ from app.services.review_queue_decisions import ItemRef, reject_item, retract_fa
 from app.services.staged_review_confirm import confirm_batch
 from app.services.staged_reviews import stage_decisions
 from app.services.stored_document_stamp import document_stamp
-from app.services.stored_document_versions import drop_kept_versions, page_lock_id
+from app.services.stored_document_versions import REMOVED_GRACE, drop_kept_versions, page_lock_id
 from app.services.stored_documents import Rebuilt, rebuild_document, stored_copy, stored_row, superseded_copy
 
 from .component_lifecycle_seed import ADMIN, NOW, OWN, PROPOSER, STRANGER, lifecycle_seed, person
@@ -112,7 +112,24 @@ def one_page_removal(piece: uuid.UUID) -> StagedDecision:
     )
 
 
-async def test_a_confirmed_one_page_removal_leaves_no_version_that_draws_it_and_the_rebuild_lacks_it(
+async def withheld_until_its_grace(session: AsyncSession, subject: WorkSubject, version: int) -> str:
+    replaced = await session.scalar(
+        select(StoredDocumentVersion.supersededAt).where(
+            StoredDocumentVersion.subjectKind == subject.kind,
+            StoredDocumentVersion.subjectSlug == subject.slug,
+            StoredDocumentVersion.version == version,
+        )
+    )
+    assert replaced is not None
+    withheld = await superseded_copy(
+        session, subject, version, now=replaced + REMOVED_GRACE - timedelta(seconds=1)
+    )
+    assert withheld is not None and withheld.withheld is True
+    assert await superseded_copy(session, subject, version, now=replaced + REMOVED_GRACE) is None
+    return withheld.text
+
+
+async def test_a_confirmed_one_page_removal_leaves_no_kept_version_that_draws_it_withholds_the_one_it_reached_and_the_rebuild_lacks_it(
     session: AsyncSession,
 ) -> None:
     subject = await page(session)
@@ -136,7 +153,7 @@ async def test_a_confirmed_one_page_removal_leaves_no_version_that_draws_it_and_
     after = await stored_copy(session, subject)
     assert after is not None and (after.current, after.version) == (True, SECTIONS_VERSION + 2)
     assert OWN not in after.text
-    assert await superseded_copy(session, subject, SECTIONS_VERSION + 1) is None
+    assert OWN in await withheld_until_its_grace(session, subject, SECTIONS_VERSION + 1)
 
 
 async def test_a_one_page_unlink_moves_the_stamp_of_the_page_it_names_and_of_no_other(
@@ -207,15 +224,16 @@ async def test_a_removal_drops_the_kept_versions_of_the_pages_it_reaches_and_wai
     assert await removal_marks(session) == {CRAFT_SLUG: NOW, FAMILY_SLUG: NOW, CATEGORY_SLUG: NOW}
 
 
-async def test_the_copy_a_removal_reached_is_not_kept_but_the_change_after_it_is(
+async def test_the_copy_a_removal_reached_is_withheld_until_its_grace_and_the_change_after_it_is_kept(
     session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     subject = await page(session)
-    assert await stored_copy(session, subject) is not None
+    first = await stored_copy(session, subject)
+    assert first is not None
     await drop_kept_versions(session, PageOwners(crafts=(CRAFT_SLUG,)), now=NOW)
     await laid_out(session)
     assert await rebuild_document(session, subject, now=NOW) == Rebuilt.CHANGED
-    assert await superseded_copy(session, subject, SECTIONS_VERSION) is None
+    assert await withheld_until_its_grace(session, subject, SECTIONS_VERSION) == first.text
     row = await stored_row(session, subject)
     assert row is not None and row.removedAt is None
     built = stored_documents.generated_document_of
@@ -226,7 +244,8 @@ async def test_the_copy_a_removal_reached_is_not_kept_but_the_change_after_it_is
 
     monkeypatch.setattr(stored_documents, "generated_document_of", retitled)
     assert await rebuild_document(session, subject, now=LATER) == Rebuilt.CHANGED
-    assert await superseded_copy(session, subject, SECTIONS_VERSION + 1) is not None
+    kept = await superseded_copy(session, subject, SECTIONS_VERSION + 1, now=LATER + REMOVED_GRACE)
+    assert kept is not None and kept.withheld is False
 
 
 async def test_a_rebuild_that_finds_a_reached_page_unchanged_clears_its_mark(session: AsyncSession) -> None:
@@ -291,7 +310,7 @@ async def test_a_retracted_fact_leaves_every_kept_version_and_a_waiting_one_reje
     assert await rebuild_document(session, subject, now=LATER) == Rebuilt.CHANGED
     after = await stored_copy(session, subject)
     assert after is not None and str(SHOWN_FACT) not in after.text
-    assert await superseded_copy(session, subject, SECTIONS_VERSION + 1) is None
+    assert str(SHOWN_FACT) in await withheld_until_its_grace(session, subject, SECTIONS_VERSION + 1)
 
 
 async def test_a_proposer_s_withdrawal_drops_the_kept_versions_and_a_stranger_s_refusal_leaves_them(

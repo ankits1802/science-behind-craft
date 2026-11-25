@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Path, Query, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.document_reads import (
@@ -11,9 +11,12 @@ from app.api.document_reads import (
     AskedVersion,
     PartAsk,
     ServedDocument,
+    WebRead,
     document_response,
     generated_at,
+    not_found,
     queue_rebuild,
+    web_read,
 )
 from app.api.public_deps import cached_read, public_reader
 from app.core.db import get_session
@@ -77,26 +80,39 @@ def asked_document(
 @router.get("/categories/{slug}/monograph")
 async def get_category_monograph(
     request: Request,
-    background: BackgroundTasks,
     asked: AskedDocument = Depends(asked_document),
     reader: User | None = Depends(public_reader),
+    web: WebRead = Depends(web_read),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
-    served = await subject_document(session, CATEGORY, asked)
-    queue_rebuild(background, served)
-    return document_response(request, reader, served, asked.part)
+    return await subject_answer(session, CATEGORY, asked, request=request, reader=reader, web=web)
 
 
 @router.get("/families/{slug}/monograph")
 async def get_family_monograph(
     request: Request,
-    background: BackgroundTasks,
     asked: AskedDocument = Depends(asked_document),
     reader: User | None = Depends(public_reader),
+    web: WebRead = Depends(web_read),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
-    served = await subject_document(session, FAMILY, asked)
-    queue_rebuild(background, served)
+    return await subject_answer(session, FAMILY, asked, request=request, reader=reader, web=web)
+
+
+async def subject_answer(
+    session: AsyncSession,
+    kind: str,
+    asked: AskedDocument,
+    *,
+    request: Request,
+    reader: User | None,
+    web: WebRead,
+) -> Response:
+    try:
+        served = await subject_document(session, kind, asked, web=web)
+    except HTTPException as missing:
+        return not_found(str(missing.detail), web)
+    queue_rebuild(web.background, served)
     return document_response(request, reader, served, asked.part)
 
 
@@ -135,12 +151,14 @@ async def put_page_layout(
     return layout.model_dump(mode="json", by_alias=True)
 
 
-async def subject_document(session: AsyncSession, kind: str, asked: AskedDocument) -> ServedDocument:
+async def subject_document(
+    session: AsyncSession, kind: str, asked: AskedDocument, *, web: WebRead | None = None
+) -> ServedDocument:
     try:
         read = await generated_read(session, kind, asked.slug)
     except InvalidInput as unknown:
         raise HTTPException(status.HTTP_404_NOT_FOUND, str(unknown)) from unknown
-    served = await generated_at(session, read, language=asked.language, version=asked.version)
+    served = await generated_at(session, read, language=asked.language, version=asked.version, web=web)
     if served is None:
         missing = NO_DOCUMENT_DETAIL if asked.version is None or read.copy is None else NO_VERSION_DETAIL
         raise HTTPException(status.HTTP_404_NOT_FOUND, missing.format(kind=kind))

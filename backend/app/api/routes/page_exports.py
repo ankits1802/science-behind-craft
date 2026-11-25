@@ -65,7 +65,7 @@ async def get_craft_monograph_file(
     if craft is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
     served = await served_document(session, craft, read.asked)
-    if served is None:
+    if served is None or served.withheld:
         raise HTTPException(
             status.HTTP_404_NOT_FOUND, NO_VERSION_DETAIL if read.asked.version else NO_DOCUMENT_DETAIL
         )

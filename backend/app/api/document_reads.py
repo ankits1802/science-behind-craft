@@ -7,17 +7,20 @@ from functools import cached_property
 from typing import Annotated, Any
 
 from fastapi import BackgroundTasks, HTTPException, Query, Request, Response, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.public_deps import read_headers, unchanged_read
 from app.core.db import release_connection
+from app.core.rate_limit import is_web_server_read
 from app.models import User
 from app.research.document_parts import compact_json, document_parts, part_body
 from app.services.open_work_subjects import WorkSubject
+from app.services.page_revalidation import refresh_pages
 from app.services.page_text_index import PageKey, stored_tag
 from app.services.page_translation_serving import ServedPage, page_in_language, translated_page
-from app.services.stored_document_rebuilds import rebuild_wanted
-from app.services.stored_documents import GeneratedRead, StoredCopy, superseded_copy
+from app.services.stored_document_rebuilds import rebuild_wanted, subject_owners
+from app.services.stored_documents import GeneratedRead, StoredCopy, claim_refresh, superseded_copy, utc_now
 
 __all__ = [
     "CONTENT_LANGUAGE",
@@ -32,13 +35,17 @@ __all__ = [
     "PartAsk",
     "ServedDocument",
     "StoredText",
+    "WebRead",
     "document_response",
     "generated_at",
     "generated_in_language",
     "generated_served",
     "in_language",
+    "not_found",
     "queue_rebuild",
+    "refresh_drawn",
     "superseded_fallback",
+    "web_read",
 ]
 
 JSON_TYPE = "application/json"
@@ -70,6 +77,21 @@ class ServedDocument:
     text: str
     version: int
     rebuild: tuple[str, str] | None = None
+    withheld: bool = False
+
+
+@dataclass(frozen=True)
+class WebRead:
+    background: BackgroundTasks
+    by_web: bool
+
+
+def web_read(request: Request, background: BackgroundTasks) -> WebRead:
+    return WebRead(background, is_web_server_read(request))
+
+
+def not_found(detail: str, web: WebRead) -> JSONResponse:
+    return JSONResponse({"detail": detail}, status_code=status.HTTP_404_NOT_FOUND, background=web.background)
 
 
 class StoredText(Mapping[str, Any]):
@@ -126,7 +148,12 @@ async def generated_in_language(
 
 
 async def generated_at(
-    session: AsyncSession, read: GeneratedRead, *, language: str, version: int | None
+    session: AsyncSession,
+    read: GeneratedRead,
+    *,
+    language: str,
+    version: int | None,
+    web: WebRead | None = None,
 ) -> ServedDocument | None:
     if read.copy is None:
         return None
@@ -135,12 +162,22 @@ async def generated_at(
     current = generated_served(read)
     copy = await superseded_fallback(session, read.subject, version)
     if current is None or copy is None:
+        await refresh_drawn(session, read, version, web)
         return None
     english = ServedPage(etag=copy.etag, language=copy.language, body=StoredText(copy.text))
     page = (read.subject.kind, read.subject.slug)
     shown = await translated_page(session, page, english, language=language)
     text = copy.text if shown is english else compact_json(shown.body)
-    return ServedDocument(shown.etag, shown.language, text, copy.version, current.rebuild)
+    return ServedDocument(shown.etag, shown.language, text, copy.version, current.rebuild, copy.withheld)
+
+
+async def refresh_drawn(
+    session: AsyncSession, read: GeneratedRead, version: int, web: WebRead | None
+) -> None:
+    if web is None or not web.by_web or read.copy is None or version > read.copy.version:
+        return
+    if await claim_refresh(session, read.subject, now=utc_now()):
+        web.background.add_task(refresh_pages, subject_owners(read.subject.kind, read.subject.slug))
 
 
 async def superseded_fallback(session: AsyncSession, subject: WorkSubject, version: int) -> StoredCopy | None:

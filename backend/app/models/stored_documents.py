@@ -30,6 +30,7 @@ class StoredDocument(Base):
     builtAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     wantedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     removedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    refreshAskedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     __table_args__ = (CheckConstraint('"version" >= 1', name="version"),)
 
@@ -46,5 +47,6 @@ class StoredDocumentVersion(Base):
     contentHash: Mapped[str] = mapped_column(String(DIGEST_CHARS), nullable=False)
     document: Mapped[str] = mapped_column(Text, nullable=False)
     supersededAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    removedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     __table_args__ = (CheckConstraint('"version" >= 1', name="version"),)

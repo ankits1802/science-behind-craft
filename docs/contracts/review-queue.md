@@ -219,7 +219,9 @@ filter or cursor.
 A fact shown on its pages (`IN_REVIEW` or `APPROVED`) that is rejected or retracted, and a reading
 rejected, drop the kept versions of their pages in the same transaction (decision 0213), so no
 earlier edition still states them: for a fact, of each of its pages with a copy, current or kept,
-that cites its id; for a reading, of every page it names (decision 0219).
+that cites its id; for a reading, of every page it names (decision 0219). The copy current when it
+was made is withheld once its page is rebuilt, read only by a page or edition naming its version,
+until the web has refreshed the page or for at most 20 minutes (decision 0223).
 
 Approving or raising a waiting (`DRAFT`) fact publishes it and calls
 `candidate_writes.mark_sources_differ`, so a fact the duplicate gate found to differ from a held

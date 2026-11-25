@@ -7,10 +7,11 @@ import { afterLoad, laterWhenIdle, whenIdle } from "../components/monograph/useS
 import type { DocumentLanguageCode } from "../lib/documentLanguages";
 import type { MonographDocument } from "../lib/monographDocument";
 import { documentPart, documentPartPath, DocumentPartError, joinedDocument, LATEST_READ, laterRead, type DocumentPart } from "../lib/monographDocumentParts";
-import { documentDigest, restAddress, type RestAddress } from "../lib/monographRenderShell";
-import { addressedDocument } from "../lib/monographRestRead";
+import { documentDigest, documentRest, restAddress, shellRest, type RestAddress } from "../lib/monographRenderShell";
+import { addressedDocument, fetchedDocumentRest, fetchedShellRest, REST_UNREAD, type DocumentReader, type RestFetcher } from "../lib/monographRestRead";
 
 import { generatedDocument } from "./generatedMonographFixture";
+import { goldenDocument } from "./monographNative";
 
 const part = (at: number, parts: number, body: Record<string, unknown>, version = 4, tag: string | null = null): DocumentPart => ({ schemaVersion: 1, version, part: at, parts, tag, body });
 const HINDI_TAG = "v4-abc-hi-0123456789abcdef";
@@ -143,9 +144,66 @@ test("a category or craft page drawn a version behind reads the rest of that ver
   expect(translated.asked).toEqual([`hi ${CURRENT}`, "hi 5"]);
 });
 
-test("a rest whose version is gone, or that comes back in another language, is not found", async () => {
+test("a page drawn at a version that is gone reads the rest of its current version, in its own language", async () => {
+  const dropped = at(5);
+  const current = at(6);
+  const english = reads({ [`en ${CURRENT}`]: current });
+  expect(await addressedDocument(english.read, address(dropped))).toBe(current);
+  expect(english.asked).toEqual([`en ${CURRENT}`, "en 5"]);
+  const hindi = at(6, "hi");
+  const translated = reads({ [`hi ${CURRENT}`]: hindi });
+  expect(await addressedDocument(translated.read, address(at(5, "hi"), "hi"))).toBe(hindi);
+  expect(translated.asked).toEqual([`hi ${CURRENT}`, "hi 5"]);
+});
+
+test("a rest that comes back in another language, or whose only version is earlier than the page's, is not found", async () => {
   const kept = at(5);
-  expect(await addressedDocument(reads({ [`en ${CURRENT}`]: at(6) }).read, address(kept))).toBeNull();
   const untranslated = reads({ [`hi ${CURRENT}`]: at(6), "hi 5": kept });
   expect(await addressedDocument(untranslated.read, address(at(5, "hi"), "hi"))).toBeNull();
+  const english = reads({ [`hi ${CURRENT}`]: at(6) });
+  expect(await addressedDocument(english.read, address(at(5, "hi"), "hi"))).toBeNull();
+  expect(await addressedDocument(reads({ [`en ${CURRENT}`]: at(4) }).read, address(kept))).toBeNull();
+  expect(await addressedDocument(reads({}).read, address(kept))).toBeNull();
+});
+
+test("a rest whose current version cannot be read fails, and never falls back to anything else", async () => {
+  const failing: DocumentReader = async (language, version) => {
+    if (version === null) throw new Error(`The monograph could not be read in ${language ?? "en"}: failed`);
+    return null;
+  };
+  await expect(addressedDocument(failing, address(at(5)))).rejects.toThrow("could not be read");
+});
+
+function answering(status: number, body: unknown): { fetcher: RestFetcher; asked: string[] } {
+  const asked: string[] = [];
+  const fetcher: RestFetcher = async (src) => {
+    asked.push(src);
+    return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+  };
+  return { fetcher, asked };
+}
+
+test("a page draws the rest its route sends at its own version or a later one, and never an earlier one", async () => {
+  const golden = goldenDocument();
+  const later = { ...golden, version: golden.version + 1 };
+  const src = `/crafts/Kutch-Ajrakh/shell/v${golden.version}-${documentDigest(golden)}`;
+  const same = answering(200, shellRest(golden));
+  expect((await fetchedShellRest(same.fetcher, src, golden.version)).version).toBe(golden.version);
+  expect(same.asked).toEqual([src]);
+  expect((await fetchedShellRest(answering(200, shellRest(later)).fetcher, src, golden.version)).version).toBe(later.version);
+  await expect(fetchedShellRest(answering(200, shellRest(golden)).fetcher, src, later.version)).rejects.toThrow(/another shape/);
+  const generated = at(6);
+  const drawn = (await fetchedDocumentRest(answering(200, documentRest(generated)).fetcher, "/categories/Textiles/shell/v5", 5)).document;
+  expect(drawn.version).toBe(6);
+  const mixed = { ...documentRest(generated), document: { ...documentRest(generated).document, version: 7 } };
+  await expect(fetchedDocumentRest(answering(200, mixed).fetcher, "/categories/Textiles/shell/v5", 5)).rejects.toThrow(/another shape/);
+  await expect(fetchedDocumentRest(answering(200, documentRest(at(4))).fetcher, "/categories/Textiles/shell/v5", 5)).rejects.toThrow(/another shape/);
+});
+
+test("a rest route that fails, or finds no version at all, leaves the page saying its rest could not be read", async () => {
+  const golden = goldenDocument();
+  const src = `/crafts/Kutch-Ajrakh/shell/v${golden.version}-${documentDigest(golden)}`;
+  await expect(fetchedShellRest(answering(500, { detail: "failed" }).fetcher, src, golden.version)).rejects.toThrow(`${REST_UNREAD} (500)`);
+  await expect(fetchedShellRest(answering(404, null).fetcher, src, golden.version)).rejects.toThrow(`${REST_UNREAD} (404)`);
+  await expect(fetchedDocumentRest(answering(502, null).fetcher, "/categories/Textiles/shell/v5", 5)).rejects.toThrow(`${REST_UNREAD} (502)`);
 });

@@ -3,7 +3,13 @@ from datetime import timedelta
 
 from app.services.naming import EXPORTS_PREFIX
 from app.services.page_export_files import PAGE_EXPORT_OWNER
-from app.services.stored_document_versions import KEPT_VERSIONS_MAX, PAGE_REVALIDATE
+from app.services.stored_document_versions import (
+    KEPT_VERSIONS_MAX,
+    PAGE_REVALIDATE,
+    REBUILD_RETRY,
+    REFRESH_RETRY,
+    REMOVED_GRACE,
+)
 
 from .golden import REPO
 
@@ -32,6 +38,12 @@ def test_a_page_keeps_one_version_an_hour_for_as_long_as_a_cached_page_can_name_
     assert web is not None
     assert timedelta(seconds=int(web.group(1).replace("_", ""))) == PAGE_REVALIDATE
     assert KEPT_VERSIONS_MAX == 7 * 24
+
+
+def test_a_removed_version_is_withheld_two_rebuild_retries_and_a_refresh_is_asked_once_a_retry() -> None:
+    assert timedelta(minutes=10) == REBUILD_RETRY
+    assert timedelta(minutes=20) == REMOVED_GRACE
+    assert timedelta(minutes=10) == REFRESH_RETRY
 
 
 def test_a_page_export_leaves_the_bucket_within_two_days_and_other_exports_keep_their_week() -> None:

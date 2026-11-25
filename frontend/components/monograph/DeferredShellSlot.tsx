@@ -5,27 +5,22 @@ import { startTransition, useCallback, useEffect, useRef, useState, type Compone
 import { KitSheetLink } from "@/components/monograph/KitRestSheet";
 import { announce, SHELL_COMPLETE_EVENT } from "@/components/monograph/kitGate";
 import { hashTargetMissing, useShellTrigger } from "@/components/monograph/useShellTrigger";
-import { checkedDocumentRest, checkedShellRest, type DocumentRest, type RestPart, type ShellRest } from "@/lib/monographRenderShell";
-
-export const REST_UNREAD = "The rest of this monograph could not be read. Reload the page to try again.";
+import type { DocumentRest, RestPart, ShellRest } from "@/lib/monographRenderShell";
+import { fetchedDocumentRest, fetchedShellRest, REST_UNREAD, type RestFetcher } from "@/lib/monographRestRead";
 
 type RestView<T> = ComponentType<{ part: T; jump: string | null }>;
 type ReadRest = { part: "document"; View: RestView<DocumentRest>; rest: DocumentRest } | { part: "shell"; View: RestView<ShellRest>; rest: ShellRest };
 type Shown = ReadRest & { jump: string | null };
 
-async function readBody(src: string): Promise<unknown> {
-  const response = await fetch(src);
-  if (!response.ok) throw new Error(`${REST_UNREAD} (${response.status})`);
-  return response.json();
-}
+const fetchRest: RestFetcher = (src) => fetch(src);
 
 async function readRest(src: string, version: number, part: RestPart): Promise<ReadRest> {
   if (part === "document") {
-    const [loaded, body] = await Promise.all([import("@/components/monograph/DeferredDocument"), readBody(src)]);
-    return { part, View: loaded.DeferredDocument, rest: checkedDocumentRest(body, version) };
+    const [loaded, rest] = await Promise.all([import("@/components/monograph/DeferredDocument"), fetchedDocumentRest(fetchRest, src, version)]);
+    return { part, View: loaded.DeferredDocument, rest };
   }
-  const [loaded, body] = await Promise.all([import("@/components/monograph/DeferredShell"), readBody(src)]);
-  return { part, View: loaded.DeferredShell, rest: checkedShellRest(body, version) };
+  const [loaded, rest] = await Promise.all([import("@/components/monograph/DeferredShell"), fetchedShellRest(fetchRest, src, version)]);
+  return { part, View: loaded.DeferredShell, rest };
 }
 
 function missingTarget(): string | null {

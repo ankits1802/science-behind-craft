@@ -1,7 +1,7 @@
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from types import SimpleNamespace
 from typing import Any
 
@@ -185,3 +185,26 @@ async def test_a_caller_over_the_build_allowance_is_refused_but_still_gets_a_fil
     assert (await held.get(paths[0])).status_code == 200
     assert (await held.get(paths[-1], address=NEIGHBOUR)).status_code == 200
     assert len(held.built) == EXPORT_BUILDS_PER_WINDOW + 1
+
+
+async def test_a_craft_export_never_files_a_version_a_removal_reached_but_files_one_still_kept(
+    held: Held, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    earlier = stored(page("craft", CRAFT).model_copy(update={"version": 1}), current=False)
+    kept = {1: replace(earlier, withheld=True)}
+
+    async def superseded(session: Any, subject: Any, version: int) -> StoredCopy | None:
+        return kept.get(version)
+
+    monkeypatch.setattr(document_reads, "superseded_fallback", superseded)
+    path = f"/api/crafts/{CRAFT}/monograph/pdf?version=1"
+    refused = await held.get(path)
+    assert refused.status_code == 404, refused.text
+    assert refused.json()["detail"] == craft_monograph.NO_VERSION_DETAIL
+    assert held.built == [] and held.bucket.stored == {}
+    named = await held.get(f"/api/crafts/{CRAFT}/monograph?version=1")
+    assert named.status_code == 200 and named.json()["version"] == 1
+    kept[1] = earlier
+    filed = await held.get(path)
+    assert filed.status_code == 200, filed.text
+    assert held.built == [f"{CRAFT}.pdf"]

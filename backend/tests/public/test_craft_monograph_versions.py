@@ -1,9 +1,12 @@
+from dataclasses import replace
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
 
+from app.api import document_reads
 from app.api.routes import craft_monograph as route
+from app.research.page_revalidation import PageOwners
 from app.services.stored_documents import GeneratedRead
 
 from .test_craft_monograph_route import (
@@ -65,3 +68,62 @@ def test_a_generated_page_s_version_never_kept_is_not_found(monkeypatch: pytest.
     assert missing.status_code == 404
     assert missing.json()["detail"] == route.NO_VERSION_DETAIL
     assert calls.made[-1] == "superseded craft Kutch-Ajrakh 7"
+
+
+def asked_refreshes(monkeypatch: pytest.MonkeyPatch, *, by_web: bool, claims: list[bool]) -> list[Any]:
+    seen: list[Any] = []
+
+    async def claim_refresh(session: Any, subject: Any, *, now: Any) -> bool:
+        seen.append(f"claim {subject.kind} {subject.slug}")
+        return claims.pop(0)
+
+    async def refresh_pages(owners: Any) -> bool:
+        seen.append(owners)
+        return True
+
+    monkeypatch.setattr(document_reads, "is_web_server_read", lambda request: by_web)
+    monkeypatch.setattr(document_reads, "claim_refresh", claim_refresh)
+    monkeypatch.setattr(document_reads, "refresh_pages", refresh_pages)
+    return seen
+
+
+def test_the_web_reading_a_version_no_longer_served_asks_once_for_the_page_s_refresh_and_finds_none(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    http, calls = served(monkeypatch, stored=False, generated=True)
+    rebuilt_since(monkeypatch, calls)
+    calls.kept.clear()
+    seen = asked_refreshes(monkeypatch, by_web=True, claims=[True, False])
+    gone = http.get(PATH, params={"version": 1, "part": 0})
+    assert gone.status_code == 404
+    assert gone.json()["detail"] == route.NO_VERSION_DETAIL
+    assert seen == ["claim craft Kutch-Ajrakh", PageOwners(crafts=("Kutch-Ajrakh",))]
+    assert http.get(PATH, params={"version": 1}).status_code == 404
+    assert seen[2:] == ["claim craft Kutch-Ajrakh"]
+
+
+def test_a_visitor_s_read_a_version_above_the_current_or_one_still_kept_asks_no_refresh(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    http, calls = served(monkeypatch, stored=False, generated=True)
+    rebuilt_since(monkeypatch, calls)
+    seen = asked_refreshes(monkeypatch, by_web=False, claims=[])
+    calls.kept.clear()
+    assert http.get(PATH, params={"version": 1}).status_code == 404
+    web = asked_refreshes(monkeypatch, by_web=True, claims=[])
+    assert http.get(PATH, params={"version": 7}).status_code == 404
+    calls.kept[1] = stored_copy(GENERATED, current=False)
+    assert http.get(PATH, params={"version": 1}).status_code == 200
+    assert (seen, web) == ([], [])
+
+
+def test_a_version_a_removal_reached_is_served_to_a_read_naming_it_and_marked_withheld(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    http, calls = served(monkeypatch, stored=False, generated=True)
+    rebuilt_since(monkeypatch, calls)
+    calls.kept[1] = replace(stored_copy(GENERATED, current=False), withheld=True)
+    read = http.get(PATH, params={"version": 1})
+    assert read.status_code == 200
+    assert read.json()["version"] == 1
+    assert read.headers["etag"] == f'"v1-{generated_digest()}"'

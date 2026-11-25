@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any
 
 from pydantic import ValidationError
@@ -19,6 +20,7 @@ from .open_work_subjects import CATEGORY, WorkSubject, craft_subjects, subject_b
 from .page_code import page_code_fingerprint
 from .page_revalidation import refresh_pages
 from .stored_document_stamp import document_stamp
+from .stored_document_versions import drop_expired, drop_withheld
 from .stored_documents import Rebuilt, rebuild_document, stored_row, utc_now
 
 __all__ = [
@@ -71,6 +73,7 @@ async def rebuild_stale_documents(
     session: AsyncSession, *, report: DocumentsReport, limit: int, within: PageOwners | None = None
 ) -> None:
     await mark_rebuild_code(session)
+    await drop_expired(session, now=utc_now())
     await session.commit()
     subjects = [subject for subject in await generated_subjects(session) if _named_in(subject, within)]
     stale = [subject for subject in subjects if await _stale(session, subject)]
@@ -103,8 +106,16 @@ async def rebuild_wanted(kind: str, slug: str) -> None:
     except (AppError, ValidationError) as error:
         logger.error("the document of %s:%s could not be rebuilt after a read: %s", kind, slug, error)
         return
-    if rebuilt.moved:
-        await refresh_pages(subject_owners(kind, slug))
+    if not rebuilt.moved:
+        return
+    sent = utc_now()
+    if await refresh_pages(subject_owners(kind, slug)):
+        await _drop_refreshed(kind, slug, before=sent)
+
+
+async def _drop_refreshed(kind: str, slug: str, *, before: datetime) -> None:
+    async with session_scope() as session:
+        await drop_withheld(session, kind, slug, before=before)
 
 
 def subject_owners(kind: str, slug: str) -> PageOwners:
