@@ -8,8 +8,6 @@ import { componentBundles } from "@/lib/monographRenderLayout";
 import { leadLength, shellPart } from "@/lib/monographRenderShell";
 import { shellTree } from "@/lib/monographShellTree";
 
-import "./authoredShell.css";
-
 const SHELL_ID = "kv-main";
 
 export type AuthoredShellProps = { document: MonographDocument; shell: string; rest?: string | null };

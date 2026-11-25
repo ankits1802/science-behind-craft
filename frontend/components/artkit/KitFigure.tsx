@@ -7,8 +7,6 @@ import { KitPanelView } from "./KitPanelView";
 import { KitTextures } from "./KitTextures";
 import { NearKitPlay } from "./NearKitPlay";
 
-import "./artkit.css";
-
 type FigureProps = { spec: KitDiagramSpec; label: string; renderUnit: (ref: string) => ReactNode; unitText?: (ref: string) => string };
 
 export function kitFigureId(label: string): string {

@@ -16,8 +16,6 @@ import { boundaryNote } from "@/lib/placeView";
 import { BOUNDARY_DATASET_CODE } from "@/lib/regionContract";
 import { timelineEntries, timelineStops } from "@/lib/timelineView";
 
-import "./general.css";
-
 const SHOWN: TimelineMapDrawing<UnitSaid>["placeable"] = (place) => place.latitude !== null && place.longitude !== null;
 
 function plainText(node: ReactNode): string {

@@ -7,8 +7,6 @@ import { GeneralFigure } from "@/components/monograph/kinds/general/GeneralFigur
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { eraYear, parsedSpec, timelineSpecShape, type TimelineEvent } from "@/lib/componentSpecsGeneral";
 
-import "./general.css";
-
 const WIDTH = 640;
 const HEIGHT = 44;
 const AXIS = { left: 16, right: 624, y: 14 } as const;

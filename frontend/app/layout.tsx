@@ -9,6 +9,7 @@ import { LATIN_FONT_VARIABLES } from "./latinFonts";
 import { READING_SCRIPT_FONT_VARIABLES } from "./readingScriptFonts";
 import { SCRIPT_FONT_VARIABLES } from "./scriptFonts";
 import "./globals.css";
+import "./component-views.css";
 
 export const metadata: Metadata = {
   title: {

@@ -12,8 +12,6 @@ import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { figureKicker } from "@/lib/editorialText";
 import type { SignatureBlock } from "@/lib/explainerSignature";
 
-import "./answerBlock.css";
-
 const NO_NUMBERS: ReadonlyMap<string, number> = new Map();
 
 function FigureNumber({ kind, number }: { kind: "figure" | "table"; number: number }) {

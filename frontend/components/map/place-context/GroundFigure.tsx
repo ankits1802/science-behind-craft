@@ -11,8 +11,6 @@ import { TextLink } from "@/components/ui/TextLink";
 import type { CraftGround, GroundNote, GroundPin, GroundPlace } from "@/lib/placeGround";
 import { frameDek, listText, materialSentence, notesFor, placeLine, placesTitle } from "@/lib/placeGroundView";
 
-import "./placeContext.css";
-
 export const PLACES_SHOWN = 4;
 export const PLACED_LABEL = "Where the craft is practised";
 export const MAP_KICKER = "Map";

@@ -5,12 +5,13 @@ import { paintPath, pathLine } from "./phonePath";
 
 const HERO_PATH = "/_next/image?url=%2Fhero.jpg&w=960&q=80";
 
-test("the largest element's path names its picture's request, the render-blocking requests, the fonts and what shared the network with it", () => {
+test("the largest element's path names every request started before it, its picture's request, the render-blocking requests, the fonts and what shared the network with it", () => {
   const path = paintPath(rawLoad());
   expect(path.largestAt).toBe(2900);
   expect(path.firstPaint).toBe(1200);
   expect(path.navigation).toEqual({ firstByte: 562, end: 791 });
   expect(path.picture).toEqual({ url: HERO_PATH, kind: "img", priority: "High", start: 700, firstByte: 1260, end: 2800, bytes: 120 * 1024 });
+  expect(path.requests.map((request) => request.url)).toEqual(["/_next/static/media/newsreader.woff2", "/monographs/kit/monograph.css", "/_next/static/chunks/a.js", HERO_PATH, "/_next/image?url=%2Flater.jpg&w=500&q=80"]);
   expect(path.blocking).toEqual([{ url: "/monographs/kit/monograph.css", kind: "link", priority: "VeryHigh", start: 620, firstByte: 1180, end: 1500, bytes: 70 * 1024 }]);
   expect(path.fonts.map((font) => [font.url, font.priority])).toEqual([["/_next/static/media/newsreader.woff2", "unknown"]]);
   expect(path.sharing.map((request) => request.url)).toEqual(["/_next/static/chunks/a.js", "/monographs/kit/monograph.css", "/_next/static/media/newsreader.woff2"]);

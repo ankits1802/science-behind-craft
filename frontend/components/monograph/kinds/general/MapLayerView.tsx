@@ -8,8 +8,6 @@ import { GeneralFigure, type RenderUnit } from "@/components/monograph/kinds/gen
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { mapLayerSpecShape, parsedSpec, placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
 
-import "./general.css";
-
 const LABEL_SIZE = "calc(var(--text-caption) * var(--k, 1))";
 const HALO_WIDTH = "calc(3px * var(--k, 1))";
 const LABEL_GAP = 4;

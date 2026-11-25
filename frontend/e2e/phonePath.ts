@@ -7,6 +7,7 @@ export type PaintPath = {
   largest: string;
   navigation: Arrival;
   picture: PathRequest | null;
+  requests: PathRequest[];
   blocking: PathRequest[];
   fonts: PathRequest[];
   sharing: PathRequest[];
@@ -46,6 +47,7 @@ export function paintPath(raw: RawLoad): PaintPath {
     largest: largest.url ? `${largest.node} (${shortUrl(largest.url)})` : largest.node,
     navigation: { firstByte: Math.round(raw.navigation.firstByte), end: Math.round(raw.navigation.end) },
     picture: own ? timed(own, raw.priorities) : null,
+    requests: shown([...before].sort((left, right) => left.start - right.start)),
     blocking: shown(before.filter((request) => request.blocking)),
     fonts: shown(before.filter((request) => FONT.test(request.url))),
     sharing: shown(rivals).sort(heavier).slice(0, SHARING_NAMED),

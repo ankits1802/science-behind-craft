@@ -2,8 +2,6 @@ import { TextLink } from "@/components/ui/TextLink";
 import { documentLanguagePath, readLanguages, TEXT_SCRIPTS, type PageKind, type PageLanguage } from "@/lib/documentLanguages";
 import { ENGLISH, type DocumentTranslation } from "@/lib/monographDocument";
 
-import "./documentLanguage.css";
-
 export type DocumentLanguagesProps = {
   kind: PageKind;
   slug: string;

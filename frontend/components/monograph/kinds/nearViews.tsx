@@ -4,8 +4,6 @@ import { nearBlock } from "@/components/answer/nearBlock";
 import { Skeleton } from "@/components/ui/Skeleton";
 import type { ComponentView, ComponentViewProps } from "@/lib/componentViewContract";
 
-import "@/components/map/place-context/placeContext.css";
-
 export const NEAR_RESERVE_LABEL = "Drawing the figure";
 
 const RESERVE = <Skeleton shape="chart" label={NEAR_RESERVE_LABEL} />;

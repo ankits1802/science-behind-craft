@@ -7,9 +7,6 @@ import { tokenValue, useThemeKey } from "@/components/monograph/kinds/general/us
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { drawingRoles, drawingSource, drawingSpecShape, drawingViewBox, parsedSpec, resolvedDrawing, THEME_VARIANTS, type DrawingThemes, type ViewBox } from "@/lib/componentSpecsGeneral";
 
-import "./general.css";
-import "./themes.css";
-
 function DrawingImage({ source, box, variant }: { source: string; box: ViewBox; variant?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- a contributed SVG is drawn as an image so it can run no script, which next/image would not load from a data URI
