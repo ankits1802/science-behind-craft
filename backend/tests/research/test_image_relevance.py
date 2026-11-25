@@ -5,6 +5,7 @@ from app.research.image_relevance import (
     SECTION_IMAGES_MAX,
     SECTION_LINK_CARDS_MAX,
     ClaimText,
+    PictureContext,
     choose_images,
     illustration,
     topic_words,
@@ -15,6 +16,7 @@ RETRIEVED = datetime(2026, 11, 17, 10, 20, tzinfo=UTC)
 PRINTED_OVER = ClaimText(uuid.UUID(int=1), "Indigo is printed over the gum resist.")
 WASHED = ClaimText(uuid.UUID(int=2), "The cloth is washed in the river.")
 STICKY = ClaimText(uuid.UUID(int=3), "Printing with sticky gums takes skill.")
+PRINTING_WORLD = PictureContext(frozenset({"print"}))
 
 
 def picture(
@@ -59,7 +61,7 @@ def test_words_of_the_craft_name_do_not_make_an_image_relevant() -> None:
 def test_inline_pictures_come_first_and_link_cards_are_capped() -> None:
     cards = [picture(f"Sticky gums printing {n}", n=n, licence=None, author=None) for n in range(1, 5)]
     inline = picture("Indigo printing with sticky gums", n=9)
-    chosen = choose_images([*cards, inline], [STICKY], leave_out="Kutch Ajrakh")
+    chosen = choose_images([*cards, inline], [STICKY], leave_out="Kutch Ajrakh", context=PRINTING_WORLD)
     assert chosen[0].candidate is inline
     assert len(chosen) == 1 + SECTION_LINK_CARDS_MAX
     assert len(chosen) <= SECTION_IMAGES_MAX
@@ -68,7 +70,7 @@ def test_inline_pictures_come_first_and_link_cards_are_capped() -> None:
 def test_the_same_original_image_from_two_services_is_chosen_once() -> None:
     first = picture("Sticky gums printing", n=1)
     again = first.model_copy(update={"provider": "openverse", "page_url": "https://www.example.org/other"})
-    chosen = choose_images([first, again], [STICKY], leave_out="")
+    chosen = choose_images([first, again], [STICKY], leave_out="", context=PRINTING_WORLD)
     assert [image.candidate.provider for image in chosen] == ["wikimedia_commons"]
 
 

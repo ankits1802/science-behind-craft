@@ -261,9 +261,15 @@ class SimulationBuilder:
 
     async def _searched_picture(self, ask: BuildAsk, concept: Concept, block_id: str) -> ImagesBlock | None:
         images = section_images(self._tools.sessions, self._tools.live)
-        craft = ask.request.craft.name if ask.request.craft is not None else None
+        craft = ask.request.craft
         return await images.block(
-            SectionImagesAsk(block_id, craft, concept.shown_claim_ids, topic=" ".join(concept.words))
+            SectionImagesAsk(
+                block_id,
+                craft.name if craft is not None else None,
+                concept.shown_claim_ids,
+                topic=" ".join(concept.words),
+                craft_slug=craft.slug if craft is not None else None,
+            )
         )
 
 

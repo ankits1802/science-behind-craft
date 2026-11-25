@@ -110,7 +110,8 @@ async def test_a_section_with_cited_claims_streams_one_picture_after_its_prose()
     cited = {c["claimId"] for sentence in prose_block["sentences"] for c in sentence["citations"]}
     assert {claim for item in images["items"] for claim in item["claimIds"]} <= cited
     (ask,) = enrichment.asks
-    assert (ask.block_id, ask.craft_name) == ("s1.b2", "Kutch Ajrakh")
+    assert (ask.block_id, ask.craft_name, ask.craft_slug) == ("s1.b2", "Kutch Ajrakh", "Kutch-Ajrakh")
+    assert enrichment.contexts.asked == ["Kutch-Ajrakh"]
     assert ask.claim_ids == (ALUM_CLAIM_ID, WRITTEN_LAKE_ID, WRITTEN_WASH_ID)
     assert dict(found)["section_done"] == {"sectionId": "s1", "state": "READY", "searched": None}
     (finished,) = store.finished
@@ -236,7 +237,7 @@ async def test_an_answer_for_any_craft_reads_no_glossary_and_searches_pictures_b
         await streamed(detailed(), pipeline(resolution=none, replies=[REPLY], enrichment=enrichment))
     )
     assert enrichment.crafts == []
-    assert [ask.craft_name for ask in enrichment.asks] == [None]
+    assert [(ask.craft_name, ask.craft_slug) for ask in enrichment.asks] == [(None, None)]
     assert [block["kind"] for block in block_events(found)] == ["prose", "images"]
     assert spans_of(block_events(found)[0]) == [[], [], []]
 

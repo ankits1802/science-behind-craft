@@ -67,7 +67,7 @@ flowchart LR
 | [0031](0031-understanding-and-depth.md) | Understanding the question, and depth by role | [0093](0093-no-caps-for-now.md) and [0146](0146-answers-recorded-and-bounded-on-the-box.md) |
 | [0032](0032-sectioned-composition.md) | Sectioned composition: research per field, blocks per section | [0138](0138-answers-composed-from-the-asked-fields.md) |
 | [0033](0033-knowledge-pieces-and-reuse.md) | Stored knowledge pieces and reuse | [0096](0096-reader-question-pieces-join-their-craft-page.md), [0142](0142-curated-crafts-read-only-curated-rows.md), [0160](0160-place-builders-kept-true.md) |
-| [0034](0034-images-and-terms.md) | Pictures and tappable terms | [0166](0166-pictures-terms-and-stored-pieces-kept-true.md) |
+| [0034](0034-images-and-terms.md) | Pictures and tappable terms | [0166](0166-pictures-terms-and-stored-pieces-kept-true.md) and [0207](0207-a-searched-picture-names-its-craft-s-world-and-a-stored-one-that-does-not-is-not-served.md) |
 | [0035](0035-listen-and-voice-switched-off.md) | Listen, and the live voice call switched off | [0140](0140-voice-and-listen-kept-true.md), [0161](0161-listen-falls-back-a-node-counts-admins-see-hidden-facts.md) and [0176](0176-listen-plays-as-it-narrates-builds-wait-for-the-api-runs-are-kept.md) |
 | [0036](0036-asking-screen.md) | The asking screen: dictation, an optional craft, depth by role | · |
 | [0037](0037-explainer-ui.md) | The explainer view | [0140](0140-voice-and-listen-kept-true.md) |
@@ -210,7 +210,7 @@ flowchart LR
 | [0163](0163-limits-kept-by-choice-and-a-register-that-only-shrinks.md) | Nine more limits are kept by choice, the debt register may only shrink, the database tests run in shards, and each process on the box keeps to its own connection budget | · |
 | [0164](0164-every-cited-sentence-a-unit-and-chapter-names-in-the-content.md) | Every cited sentence of Kutch Ajrakh is a text unit, 73 of its components draw natively, and its content names its chapters | [0177](0177-differences-named-and-the-monograph-shell-measured.md) |
 | [0165](0165-answers-counted-as-settled-asked-as-asked.md) | An answer's spend is counted as settled, its asked fields are the ones the question asks, and an expert difference is told once | [0168](0168-a-table-under-a-said-sentence-and-python-within-budget.md) and [0174](0174-a-confirmed-downgrade-and-answers-that-fit-and-repeat-nothing.md) |
-| [0166](0166-pictures-terms-and-stored-pieces-kept-true.md) | Pictures are paired by the Public Suffix List and reused once stored, local words are terms only with a stated meaning, and stored vectors are compared within one model | [0175](0175-production-checks-read-what-the-page-shows.md) |
+| [0166](0166-pictures-terms-and-stored-pieces-kept-true.md) | Pictures are paired by the Public Suffix List and reused once stored, local words are terms only with a stated meaning, and stored vectors are compared within one model | [0175](0175-production-checks-read-what-the-page-shows.md) and [0207](0207-a-searched-picture-names-its-craft-s-world-and-a-stored-one-that-does-not-is-not-served.md) |
 | [0167](0167-answer-leftovers-kept-true.md) | A stopped answer is marked, a quote in an Indian script is read in English, a term keeps its local name, and a page curates its signs of imitation | · |
 | [0168](0168-a-table-under-a-said-sentence-and-python-within-budget.md) | A quantities table is drawn under a sentence the answer already said, and the Python files are split along what they do | [0178](0178-seed-authors-whole-and-goldens-from-recorded-data.md) |
 | [0169](0169-mcp-follow-ups-kept-true.md) | A write-back asks the cheap judge first, a reviewer decides readings, map layers and a category's structure, and a PDF is described by its first page | · |
@@ -250,6 +250,7 @@ flowchart LR
 | [0203](0203-the-guide-handed-over-page-by-page-at-the-step-it-serves.md) | The guide is served in numbered pages and handed over at the step it serves, and a page's first components wait until the design pages are read | · |
 | [0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) | A page is measured on a slowed phone in CI and held to its recorded budget, naming what grew, and a heavy kind's code loads as it nears the viewport after its still state | · |
 | [0206](0206-every-new-kind-exported-as-its-still-and-read-in-a-page-s-languages.md) | A page exports to PDF and Word with every new kind as its complete still, one still renderer draws them all, and a component's labels are translated as passages | · |
+| [0207](0207-a-searched-picture-names-its-craft-s-world-and-a-stored-one-that-does-not-is-not-served.md) | A searched picture must name its craft's world in its title, and a stored one that does not is no longer served | · |
 | [0210](0210-a-page-drawn-a-version-behind-reads-its-rest-and-a-where-icon-drawn-at-its-own-size.md) | A page drawn at the version a rebuild replaced still reads its rest, Monograph parity reads each page as a reader has it and names a rest it could not read, and a reaction player's where icon is drawn at its own size | · |
 
 ## How this document is kept true

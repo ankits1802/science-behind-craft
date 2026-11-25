@@ -5,12 +5,15 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
 from app.core.errors import ExternalFailure
-from app.research.image_relevance import ChosenImage, ClaimText
+from app.research.image_relevance import ChosenImage, ClaimText, PictureContext
 from app.research.images import ImageCandidate, ImageQuery, ImageSource, media_ref_of
 from app.research.media_refs import MediaRef
 from app.services.media_ref_store import StoredPicture, media_ref_id, media_url_key
 
 RETRIEVED = datetime(2026, 11, 17, 10, 20, tzinfo=UTC)
+AJRAKH_WORLD = PictureContext(
+    frozenset({"kutch", "ajrakh", "ajrak", "dhamadka", "print", "cloth", "mordant"})
+)
 
 
 def candidate(
@@ -21,6 +24,7 @@ def candidate(
     licence: str | None,
     author: str | None,
     credit: str | None = None,
+    description: str | None = None,
 ) -> ImageCandidate:
     return ImageCandidate(
         provider=provider,
@@ -28,6 +32,7 @@ def candidate(
         image_url=f"https://pictures.example.org/{provider}/{n}.jpg",
         original_url=f"https://pictures.example.org/original/{provider}/{n}.jpg",
         title=title,
+        description=description,
         author=author,
         site="pictures.example.org",
         credit=credit,
@@ -77,6 +82,16 @@ class FakeMediaStore:
     async def keep(self, chosen: Sequence[ChosenImage]) -> list[MediaRef]:
         self.kept.extend(chosen)
         return [media_ref_of(image.candidate, media_id=_media_id(image), source_id=None) for image in chosen]
+
+
+@dataclass
+class FakeContexts:
+    context: PictureContext = AJRAKH_WORLD
+    asked: list[str | None] = field(default_factory=list)
+
+    async def __call__(self, craft_slug: str | None) -> PictureContext:
+        self.asked.append(craft_slug)
+        return self.context
 
 
 def stored_picture(found: ImageCandidate, claim_id: uuid.UUID, relevance: str = "TEXT") -> StoredPicture:

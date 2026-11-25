@@ -10,6 +10,7 @@ from app.data.craft_families import (
     parse_craft_families,
 )
 from app.data.craft_master_loader import load_master
+from app.research.quotes import content_words
 from app.services.craft_page_family import suggested_questions
 from app.services.craft_page_records import page_craft
 from app.services.curation_preview import master_craft
@@ -136,6 +137,9 @@ def test_every_catch_all_row_is_named_and_asked_about_by_its_kind() -> None:
         (lambda body: body["families"][0]["kinds"][0].pop("otherQuestions"), "lists no questions"),
         (lambda body: body["families"][0].update(label=" Textiles"), "without outer spaces"),
         (lambda body: body["families"].append(body["families"][0]), "repeated"),
+        (lambda body: body["families"][0].pop("pictureWords"), "lists no picture words"),
+        (lambda body: body["families"][0]["pictureWords"].append("Cloth"), "lower-case letters only"),
+        (lambda body: body["families"][0]["pictureWords"].append("cloth"), "repeated: cloth"),
     ],
 )
 def test_a_malformed_file_is_refused(change: Any, message: str) -> None:
@@ -143,3 +147,20 @@ def test_a_malformed_file_is_refused(change: Any, message: str) -> None:
     change(body)
     with pytest.raises(ValueError, match=message):
         parse_craft_families(body, load_master())
+
+
+def test_every_family_names_its_world_in_content_words_none_beginning_another() -> None:
+    families = load_craft_families()
+    for family in families.families:
+        words = family.picture_words
+        assert words, family.slug
+        assert all(content_words(word) == [word] for word in words), family.slug
+        clashes = [(one, other) for one in words for other in words if one != other and other.startswith(one)]
+        assert clashes == [], family.slug
+    textiles = families.family("Textiles-Based-Craft-Category")
+    assert textiles is not None
+    assert {"cloth", "textile", "fabric", "print", "block", "weave", "dyeing"} <= set(textiles.picture_words)
+    assert {"indigo", "lime", "clay"}.isdisjoint(textiles.picture_words)
+    assert set(families.picture_words) == {
+        word for family in families.families for word in family.picture_words
+    }

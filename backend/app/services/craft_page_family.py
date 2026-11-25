@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.data.craft_families import CraftKind, FamilyPlace, load_craft_families
 from app.data.craft_names import load_craft_names
-from app.models import Craft, CuratedCraft
+from app.models import Craft, CraftCategory, CraftSubCategory, CuratedCraft
 from app.models.enums import COVERAGE_CLASSES
 from app.research.blocks import ProseBlock
 from app.research.citations import SourceRef
@@ -33,6 +33,7 @@ __all__ = [
     "ShownPicture",
     "depth_basis",
     "display_name",
+    "family_names",
     "family_place",
     "family_relatives",
     "hero_index",
@@ -79,6 +80,17 @@ class ShownPicture:
 
 def family_place(category_name: str | None, sub_category_name: str | None) -> FamilyPlace:
     return load_craft_families().place_of(category_name, sub_category_name)
+
+
+async def family_names(session: AsyncSession, craft: Craft) -> tuple[str, str] | None:
+    found = (
+        await session.execute(
+            select(CraftCategory.name, CraftSubCategory.name)
+            .join(CraftCategory, CraftCategory.id == CraftSubCategory.categoryId)
+            .where(CraftSubCategory.id == craft.subCategoryId)
+        )
+    ).first()
+    return (found[0], found[1]) if found else None
 
 
 def display_name(name: str, *, catch_all: bool, kind: CraftKind | None) -> str:

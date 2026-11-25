@@ -48,6 +48,7 @@ class EnrichmentTools:
             tools=self,
             craft_name=craft.name if craft is not None else None,
             term_names={entry.key: entry.surfaces for entry in entries},
+            craft_slug=craft.slug if craft is not None else None,
         )
 
     async def _entries(self, craft: CraftRef) -> Sequence[GlossaryEntry]:
@@ -74,6 +75,7 @@ class Enrichment:
     tools: EnrichmentTools
     craft_name: str | None
     term_names: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    craft_slug: str | None = None
 
     def marked[Marked: BlockBase](self, block: Marked) -> Marked:
         payload = block.model_dump(mode="json", by_alias=True, exclude_unset=True)
@@ -87,6 +89,7 @@ class Enrichment:
             block_id=block_id(section_id, len(blocks) + 1),
             craft_name=self.craft_name,
             claim_ids=tuple(uuid.UUID(claim_id) for claim_id in cited),
+            craft_slug=self.craft_slug,
         )
 
     async def pictures(self, ask: SectionImagesAsk) -> ImagesBlock | None:

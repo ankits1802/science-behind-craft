@@ -11,25 +11,31 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.errors import ExternalFailure
 from app.research.blocks import ImageItem, ImagesBlock
+from app.research.field_voices import FIELD_IMAGE_PROVIDERS
 from app.research.image_relevance import (
     CLAIMS_PER_IMAGE_MAX,
     SECTION_IMAGES_MAX,
     SECTION_LINK_CARDS_MAX,
     ChosenImage,
     ClaimText,
+    PictureContext,
     choose_images,
     topic_words,
 )
 from app.research.images import ImageCandidate, ImageQuery, ImageSource
 from app.research.media_refs import MediaRef
 
+from .craft_picture_context import craft_picture_context
+from .curation_keys import MEDIA_PROVIDER
 from .live_sources import LiveSourcesStore
 from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, SqlMediaStore, StoredPicture
 from .picture_sites import blocked_picture
 
 __all__ = [
     "CANDIDATES_PER_SOURCE",
+    "CHOSEN_PICTURE_PROVIDERS",
     "IMAGE_SEARCH_SECONDS",
+    "ContextOf",
     "MediaStore",
     "SectionImages",
     "SectionImagesAsk",
@@ -47,8 +53,10 @@ logger = logging.getLogger(__name__)
 CANDIDATES_PER_SOURCE = 10
 IMAGE_SEARCH_SECONDS = 6.0
 VISION_RELEVANCE = "VISION"
+CHOSEN_PICTURE_PROVIDERS = frozenset({MEDIA_PROVIDER, *FIELD_IMAGE_PROVIDERS})
 
 SourcesOf = Callable[[], Awaitable[Sequence[ImageSource]]]
+ContextOf = Callable[[str | None], Awaitable[PictureContext]]
 
 
 class MediaStore(Protocol):
@@ -65,29 +73,35 @@ class SectionImagesAsk:
     craft_name: str | None
     claim_ids: tuple[uuid.UUID, ...]
     topic: str | None = None
+    craft_slug: str | None = None
 
 
 @dataclass(frozen=True)
 class SectionImages:
     sources: SourcesOf
     store: MediaStore
+    context: ContextOf
     search_seconds: float = IMAGE_SEARCH_SECONDS
 
     async def block(self, ask: SectionImagesAsk) -> ImagesBlock | None:
         claims = await self.store.claim_texts(ask.claim_ids)
         if not claims:
             return None
-        stored = stored_items(await self.store.stored([claim.claim_id for claim in claims]))
+        context = await self.context(ask.craft_slug)
+        stored = stored_items(await self.store.stored([claim.claim_id for claim in claims]), context)
         if stored:
             return ImagesBlock(id=ask.block_id, kind="images", version=1, reuse=None, items=stored)
-        return await self._searched(ask, claims)
+        return await self._searched(ask, claims, context)
 
-    async def _searched(self, ask: SectionImagesAsk, claims: Sequence[ClaimText]) -> ImagesBlock | None:
+    async def _searched(
+        self, ask: SectionImagesAsk, claims: Sequence[ClaimText], context: PictureContext
+    ) -> ImagesBlock | None:
         named = ask.craft_name or ""
         texts = search_texts(ask, claims)
         sources = await self.sources()
         found = await asyncio.gather(*(self._candidates(source, texts) for source in sources))
-        chosen = choose_images(shown_candidates(c for batch in found for c in batch), claims, leave_out=named)
+        shown = shown_candidates(c for batch in found for c in batch)
+        chosen = choose_images(shown, claims, leave_out=named, context=context)
         if not chosen:
             return None
         kept = await self.store.keep(chosen)
@@ -132,11 +146,13 @@ def shown_candidates(candidates: Iterable[ImageCandidate]) -> list[ImageCandidat
     return kept
 
 
-def stored_items(pictures: Iterable[StoredPicture]) -> list[ImageItem]:
+def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> list[ImageItem]:
     linked: dict[uuid.UUID, list[StoredPicture]] = {}
     for picture in pictures:
         media = picture.media
         if blocked_picture(page_url=media.page_url, image_url=media.image_url, title=media.title):
+            continue
+        if not _shown_link(picture, context):
             continue
         linked.setdefault(media.id, []).append(picture)
     ordered = sorted(linked.values(), key=lambda links: links[0].media.display != INLINE_DISPLAY)
@@ -149,6 +165,12 @@ def stored_items(pictures: Iterable[StoredPicture]) -> list[ImageItem]:
         cards += card
         items.append(_stored_item(links))
     return items[:SECTION_IMAGES_MAX]
+
+
+def _shown_link(picture: StoredPicture, context: PictureContext) -> bool:
+    if picture.relevance != TEXT_RELEVANCE or picture.media.provider in CHOSEN_PICTURE_PROVIDERS:
+        return True
+    return context.named_in(picture.media.title)
 
 
 def _stored_item(links: Sequence[StoredPicture]) -> ImageItem:
@@ -175,4 +197,8 @@ def section_images(sessions: async_sessionmaker[AsyncSession], live: LiveSources
     async def sources() -> Sequence[ImageSource]:
         return await live.web_images(sessions)
 
-    return SectionImages(sources=sources, store=SqlMediaStore(sessions))
+    async def context(craft_slug: str | None) -> PictureContext:
+        async with sessions() as session:
+            return await craft_picture_context(session, craft_slug)
+
+    return SectionImages(sources=sources, store=SqlMediaStore(sessions), context=context)

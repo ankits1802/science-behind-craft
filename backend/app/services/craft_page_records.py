@@ -12,8 +12,6 @@ from app.models import (
     Claim,
     Concept,
     Craft,
-    CraftCategory,
-    CraftSubCategory,
     CuratedClaim,
     CuratedCraft,
     MediaRef as MediaRefRow,
@@ -34,7 +32,7 @@ from . import knowledge_view
 from .claim_holds import unheld_views
 from .contributed_pictures import ContributedRecord, approved_pictures
 from .craft_ai_media import AiMediaRecord, shared_ai_media
-from .craft_page_family import family_place, family_relatives, reader_name
+from .craft_page_family import family_names, family_place, family_relatives, reader_name
 from .craft_page_market import MarketFacts, market_facts
 from .craft_page_offers import PageOffers, page_offers
 from .craft_process import process_records
@@ -131,7 +129,7 @@ async def craft_page_records(
     views, sources = await knowledge_view.claims_for(session, craft, mode=PAGE_MODE, acls=acls)
     views = await unheld_views(session, views)
     records = CraftPageRecords(
-        craft=page_craft(craft, await _names(session, craft)),
+        craft=page_craft(craft, await family_names(session, craft) or (None, None)),
         curated=curated,
         views=tuple(views),
         facts=await _facts(session, views),
@@ -154,17 +152,6 @@ async def craft_page_records(
     pieces = await stored_pieces(session, list(curated.piece_ids().values()))
     media = await stored_media_refs(session, [picture.media_ref_id for picture in curated.pictures])
     return replace(records, pieces=pieces, media=media)
-
-
-async def _names(session: AsyncSession, craft: Craft) -> tuple[str | None, str | None]:
-    found = (
-        await session.execute(
-            select(CraftCategory.name, CraftSubCategory.name)
-            .join(CraftCategory, CraftCategory.id == CraftSubCategory.categoryId)
-            .where(CraftSubCategory.id == craft.subCategoryId)
-        )
-    ).first()
-    return (found[0], found[1]) if found else (None, None)
 
 
 async def _curated(session: AsyncSession, craft_id: uuid.UUID) -> CuratedPage | None:
