@@ -1,6 +1,6 @@
 import type { MapBox } from "@/components/map/basemap";
 import { HALO_WIDTH, LABEL_SIZE } from "@/components/map/MapCanvas";
-import { ringRadii, scaleBar } from "@/components/map/mapLayerFrame";
+import { ringRadii } from "@/components/map/mapDistance";
 import { RotatedLabel } from "@/components/map/physical/RotatedLabel";
 import { project, type Projected } from "@/components/map/projection";
 import { placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
@@ -12,8 +12,6 @@ export const LABEL_GAP = 5;
 export const HEAD = 9;
 export const BEND = 0.16;
 export const EDGE_SHARE = 0.68;
-export const SCALE_INSET = 14;
-export const SCALE_TICK = 5;
 
 export type PlacedPin = Projected & { r: number };
 export type ValueMark = { lgd: number; x: number; y: number; text: string };
@@ -132,22 +130,6 @@ export function ValueLabels({ values }: { values: readonly ValueMark[] }) {
           {value.text}
         </text>
       ))}
-    </g>
-  );
-}
-
-export function MapScale({ frame, scale }: { frame: MapBox; scale: number }) {
-  const bar = scaleBar(frame);
-  const x = frame.x + SCALE_INSET * scale;
-  const y = frame.y + frame.height - SCALE_INSET * scale;
-  const tick = SCALE_TICK * scale;
-  return (
-    <g className="pointer-events-none" data-testid="map-scale" data-km={bar.km}>
-      <path d={`M${x} ${y - tick}V${y}H${x + bar.length}V${y - tick}`} fill="none" stroke="var(--map-label-halo)" strokeWidth={4} vectorEffect="non-scaling-stroke" />
-      <path d={`M${x} ${y - tick}V${y}H${x + bar.length}V${y - tick}`} fill="none" stroke="var(--map-label)" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
-      <RotatedLabel x={x} y={y - tick - 6 * scale} angle={0} anchor="start">
-        {`${formatNumber(bar.km)} km`}
-      </RotatedLabel>
     </g>
   );
 }

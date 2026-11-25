@@ -7,7 +7,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import type { NeighbourFile } from "@/components/map/basemap";
-import { framedPoints, KM_PER_DEGREE_LATITUDE, mapLayerFrame, ringRadii, SCALE_SHARE, SCALE_STEPS, scaleBar } from "@/components/map/mapLayerFrame";
+import { KM_PER_DEGREE_LATITUDE, ringRadii, SCALE_SHARE, SCALE_STEPS, scaleBar } from "@/components/map/mapDistance";
+import { framedPoints, mapLayerFrame } from "@/components/map/mapLayerFrame";
 import { stillLayers, type StillFiles } from "@/components/map/mapStillCut";
 import { indiaOutlinePath, project } from "@/components/map/projection";
 import type { ShapesFile } from "@/components/map/shapeGeometry";

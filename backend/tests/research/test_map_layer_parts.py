@@ -9,6 +9,7 @@ from app.data.map_layers import held_river_names, held_shapes
 from app.research import component_specs_map_parts as parts
 from app.research.component_specs import checked_spec
 from app.research.component_specs_general_delivery import DeliveredUnit, spec_problems
+from app.services.map_layer_places import held_map_problems
 
 FACT = uuid.UUID("5e000000-0000-4000-8000-000000000003")
 CITED = [str(FACT)]
@@ -180,14 +181,19 @@ def test_a_route_ring_or_value_its_unit_does_not_state_is_refused() -> None:
 def test_a_frame_district_state_or_river_the_site_does_not_hold_is_refused_and_one_it_holds_is_not() -> None:
     assert JAIPUR in held_shapes().districts and RAJASTHAN in held_shapes().states
     assert "Chambal" in held_river_names()
-    held = {**MAP, "frame": {"state": RAJASTHAN}, "emphasis": {"rivers": ["Chambal"]}}
-    assert spec_problems("map_layer", held, delivered()) == []
-    unheld = {**MAP, "frame": {"district": 99999}, "emphasis": {"rivers": ["Dravyavati"]}}
-    problems = spec_problems("map_layer", unheld, delivered())
+    assert held_map_problems(checked_spec("map_layer", MAP)) == []
+    held = checked_spec(
+        "map_layer", {**MAP, "frame": {"state": RAJASTHAN}, "emphasis": {"rivers": ["Chambal"]}}
+    )
+    assert held_map_problems(held) == []
+    unheld = checked_spec(
+        "map_layer", {**MAP, "frame": {"district": 99999}, "emphasis": {"rivers": ["Dravyavati"]}}
+    )
+    problems = held_map_problems(unheld)
     assert "the site holds no shape for the district with LGD code 99999" in problems
     assert any(problem.startswith("the site's rivers name no river 'Dravyavati'") for problem in problems)
-    stateless = spec_problems("map_layer", {**MAP, "frame": {"state": 999}}, delivered())
-    assert "the site holds no shape for the state with LGD code 999" in stateless
+    stateless = held_map_problems(checked_spec("map_layer", {**MAP, "frame": {"state": 999}}))
+    assert stateless == ["the site holds no shape for the state with LGD code 999"]
 
 
 def test_the_contract_states_the_parts_limits() -> None:

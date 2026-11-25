@@ -7,7 +7,8 @@ import { useMotionAllowed } from "@/components/motion/useMotionAllowed";
 
 const IN_VIEW = { rootMargin: "-20% 0px -20% 0px" };
 
-export type MapSequencePlay = { at: number; playing: boolean; watch: (node: HTMLElement | null) => void; choose: (at: number) => void; toggle: () => void };
+export type SequenceControls = { at: number; playing: boolean; choose: (at: number) => void; toggle: () => void };
+export type MapSequencePlay = SequenceControls & { watch: (node: HTMLElement | null) => void };
 
 export function useMapSequence(count: number): MapSequencePlay {
   const motion = useMotionAllowed();

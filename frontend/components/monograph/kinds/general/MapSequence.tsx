@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import type { MapStepSpec } from "@/lib/componentSpecsMapLayer";
 import { cn } from "@/lib/utils";
 
-import type { MapSequencePlay } from "./useMapSequence";
+import type { SequenceControls } from "./useMapSequence";
 
 export const STEPS_LABEL = "Steps of the map";
 
-type SequenceProps = { steps: readonly MapStepSpec[]; play: MapSequencePlay; renderUnit: (ref: string) => ReactNode; nameOf: (ref: string) => string };
+type SequenceProps = { steps: readonly MapStepSpec[]; play: SequenceControls; renderUnit: (ref: string) => ReactNode; nameOf: (ref: string) => string };
 
 const STEP = "grid size-11 place-items-center rounded-full font-ui text-label font-medium transition-colors duration-state [font-variant-numeric:lining-nums_tabular-nums]";
 

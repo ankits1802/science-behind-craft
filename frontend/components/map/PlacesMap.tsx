@@ -10,11 +10,12 @@ import { RANN_PATH, viewBoxOf, type MapBox } from "@/components/map/basemap";
 import { loadBorders } from "@/components/map/borderGeometry";
 import { choroplethColour, choroplethTone, MapLegend, placeExtra, SALT_EXTRA } from "@/components/map/ChoroplethLegend";
 import { DistrictFills } from "@/components/map/DistrictLayer";
-import { IndiaLocator, LOCATOR_INSET } from "@/components/map/IndiaLocator";
+import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { IndiaMapBase } from "@/components/map/IndiaMap";
 import type { MapLayerDrawn } from "@/components/map/mapLayerFrame";
 import { StillLines, StillNeighbours, StillValued } from "@/components/map/MapStillLayers";
-import { MapRings, MapRoutes, MapScale, PlacePins, placedPins, ValueLabels, type ValueMark } from "@/components/map/PlacesMapMarks";
+import { MapScale } from "@/components/map/MapScale";
+import { MapRings, MapRoutes, PlacePins, placedPins, ValueLabels, type ValueMark } from "@/components/map/PlacesMapMarks";
 import { bordersToPath, project } from "@/components/map/projection";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
 import type { MapStill } from "@/components/map/timelineMapStill";
@@ -24,7 +25,6 @@ import { valueClasses, valueClassOf, type ShownMarks, type ValueClass } from "@/
 import { fetchMapLayers } from "@/lib/mapLayers";
 import { formatNumber } from "@/lib/measure";
 
-export const LOCATOR_LABEL = "Where in India";
 export const HOME_LABEL = "The craft's home district";
 export const KEY_TITLE = "On the map";
 
@@ -136,7 +136,7 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
           <PlacePins places={spec.places} pins={pins} marks={marks} frame={frame} scale={scale} nameOf={nameOf} />
           <MapScale frame={frame} scale={scale} />
         </svg>
-        <IndiaLocator marked={[]} frame={frame} label={LOCATOR_LABEL} className={LOCATOR_INSET} />
+        <IndiaLocator marked={[]} frame={frame} label={locatorLabel([])} className={LOCATOR_INSET} />
       </div>
       <PlacesKey spec={spec} drawn={drawn} values={values} layerKey={layers.key} renderUnit={renderUnit} />
       <PlacesSource still={still} credits={still?.credits ?? layers.credits} />

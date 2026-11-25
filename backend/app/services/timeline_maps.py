@@ -11,9 +11,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.data.map_layers import LAYERS_DIR, MINERALS_FILE, RELIEF_FILE, RIVERS_FILE
 from app.geo.datasets import region_dataset
+from app.research.component_specs_map_parts import MapParts
 from app.research.component_specs_timeline_map import DeclaredTimelineMapSpec
 from app.research.datasets import BOUNDARY_CAPTION, BOUNDARY_DATASET_CODE, DatasetRef
 
+from .map_layer_places import held_map_problems
 from .map_layer_store import listed_layers
 from .region_records import dataset_records
 from .supply_places import PlaceFinder
@@ -51,6 +53,8 @@ class SpecPlacement:
 async def placed_spec(
     session: AsyncSession, checked: Any, *, finder: PlaceFinder | None = None
 ) -> SpecPlacement:
+    if isinstance(checked, MapParts):
+        return SpecPlacement(problems=held_map_problems(checked))
     if not isinstance(checked, DeclaredTimelineMapSpec):
         return SpecPlacement()
     found = await found_places(session, checked, finder=finder)

@@ -40,14 +40,14 @@ function PlaceList({ places, valueLabel, marks, renderUnit }: { places: MapPlace
 
 function PlacedLayer({ layer, home, labelledBy, renderUnit, nameOf }: { layer: MapLayerSpec; home: number[]; labelledBy: string; renderUnit: RenderUnit; nameOf: (ref: string) => string }) {
   const steps = layer.sequence ?? [];
-  const play = useMapSequence(steps.length);
+  const { at, playing, watch, choose, toggle } = useMapSequence(steps.length);
   const drawn = useMemo(() => mapLayerDrawn(layer, home), [layer, home]);
-  const marks = useMemo(() => shownMarks(layer, layer.places.length, play.at), [layer, play.at]);
+  const marks = useMemo(() => shownMarks(layer, layer.places.length, at), [layer, at]);
   return (
-    <div ref={play.watch} className="grid gap-5 md:grid-cols-[minmax(0,1.5fr)_minmax(15rem,1fr)] md:items-start" data-testid="places-map-figure" data-step={steps.length ? play.at : undefined}>
+    <div ref={watch} className="grid gap-5 md:grid-cols-[minmax(0,1.5fr)_minmax(15rem,1fr)] md:items-start" data-testid="places-map-figure" data-step={steps.length ? at : undefined}>
       <div className="grid min-w-0 gap-3">
         <PlacesMap spec={layer} drawn={drawn} marks={marks} labelledBy={labelledBy} nameOf={nameOf} renderUnit={renderUnit} />
-        {steps.length > 1 ? <MapSequence steps={steps} play={play} renderUnit={renderUnit} nameOf={nameOf} /> : null}
+        {steps.length > 1 ? <MapSequence steps={steps} play={{ at, playing, choose, toggle }} renderUnit={renderUnit} nameOf={nameOf} /> : null}
       </div>
       <PlaceList places={layer.places} valueLabel={layer.valueLabel} marks={marks} renderUnit={renderUnit} />
     </div>

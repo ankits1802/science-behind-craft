@@ -66,8 +66,9 @@ layer credits and the boundary note). The contract is `docs/contracts/component-
    12 steps, each revealing its places, routes, rings or the district values over the steps before
    it). Every index is checked against the spec's own lists; every route, ring, value and step
    rests on a unit that states what it draws and cites a fact (`component_specs_map_delivery`),
-   and a district, state or river the site does not hold is refused by name. A spec of the old
-   shape is stored exactly as it came and draws on the new base.
+   and at placement a district, state or river the site does not hold is refused by name
+   (`services/map_layer_places`, since research may not read the site's data files). A spec of the
+   old shape is stored exactly as it came and draws on the new base.
 3. **Whole at first paint.** `lib/server/mapStills.withMapStills` now also gives every declared
    `map_layer` a still cut to the frame its view draws, from the same bundled files, with the
    neighbouring land, district lines and valued districts the places map needs and the boundary
