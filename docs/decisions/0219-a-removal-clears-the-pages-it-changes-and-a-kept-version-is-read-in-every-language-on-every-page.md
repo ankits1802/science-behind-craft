@@ -120,7 +120,9 @@ paragraph names the lifecycle rule.
   busiest pages lose their oldest versions after this release.
 - `tests/public/test_craft_monograph_versions.py` asserted that a kept version asked in Hindi was
   served in English; it now asserts the Hindi variant and that the page's index is not written,
-  as item 4 decides.
+  as item 4 decides. `tests/db/test_removed_versions_db.py` hid a craft's player that no copy of
+  the page draws (it has no spec) and expected the page cleared; it now hides one the page draws
+  for that, and asserts that the player it does not draw leaves the versions, as item 2 decides.
 
 ## How this record is kept true
 
@@ -128,7 +130,8 @@ It is not edited after acceptance except to mark it superseded: a later choice i
 names this one, and the table above links the two both ways. It records the choice as taken on
 2026-11-25; what the code does today is in [ARCHITECTURE.md](../ARCHITECTURE.md), the
 [contracts](../contracts/README.md) and the [RUNBOOK](../RUNBOOK.md). Its rules are tested by
-`backend/tests/db/test_kept_versions_db.py` (a retracted fact and a withdrawn component clearing the
+`backend/tests/db/test_removed_versions_db.py` (a hidden piece the page draws clearing it and one
+it does not draw leaving it), `backend/tests/db/test_kept_versions_db.py` (a retracted fact and a withdrawn component clearing the
 pages whose copies draw them and leaving a page that never did and a label it only begins, a
 one-page removal clearing only its page, a mark no copy holds clearing nothing and no mark every
 page, the cap keeping the newest per page and language, two removals crossing the same pages
