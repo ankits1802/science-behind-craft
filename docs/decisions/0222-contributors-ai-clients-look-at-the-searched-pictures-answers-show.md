@@ -89,8 +89,9 @@ new `PICTURE_CHECKS` kind). The contracts are `docs/contracts/open-work.md` (Pic
    earlier one, and a ruled link takes no more checks. An Admin who checked the link does not rule
    on it. The staged item kind check is widened by migration `0119_picture_checks`.
 7. **Served.** `served_picture` drops a refused link, so answers, the zoom story and uncurated craft
-   pages stop showing it beside that fact, and an answer's stored pictures put a `VISION` link
-   before a `TEXT` one. The craft page stamp counts refusals and `VISION` links, so a stored page is
+   pages stop showing it beside that fact, and an answer's stored pictures put one a person saw
+   (`VISION`) or chose (a curator's pick, a field photo) before one chosen by its words alone, the
+   order the stored pictures came in kept otherwise. The craft page stamp counts refusals and `VISION` links, so a stored page is
    rebuilt, and a verdict or ruling that hides or marks a link refreshes the pages of its fact.
 
 ## Consequences

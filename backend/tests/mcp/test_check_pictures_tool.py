@@ -104,7 +104,7 @@ def test_the_tool_sits_with_give_pictures_and_writes_with_a_contributor_s_scope(
 @pytest.mark.parametrize(
     "arguments",
     [
-        {"verdicts": [{"link_id": str(LINK), "verdict": "shows", "reason": "a printed cloth"}]},
+        {"verdicts": [{"link_id": str(LINK), "verdict": "shows", "reason": "a cloth bag"}]},
         {"verdicts": [{"link_id": str(LINK), "verdict": "maybe", "reason": "A block-printed cloth drying"}]},
         {"take": 11},
         {"take": -1},

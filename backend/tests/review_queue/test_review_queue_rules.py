@@ -321,6 +321,7 @@ def test_each_item_names_its_kind_by_the_queue_it_belongs_to() -> None:
             contract.ReadingQueueItem,
             contract.LayerQueueItem,
             contract.StageQueueItem,
+            contract.PictureCheckItem,
         )
     ]
     assert kinds == list(ALL_KINDS)

@@ -103,6 +103,7 @@ test("each kind offers only the actions the backend allows it", () => {
     READINGS: [...pair, "remove"],
     LAYERS: [...pair, "remove"],
     STAGES: [...pair, "remove"],
+    PICTURE_CHECKS: pair,
     SOURCES: ["correct", "remove"],
     SOURCES_DIFFER: ["clear"],
     IMAGES: ["remove", "edit"]

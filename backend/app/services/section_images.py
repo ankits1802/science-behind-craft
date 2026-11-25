@@ -28,7 +28,7 @@ from .craft_picture_context import craft_picture_context
 from .live_sources import LiveSourcesStore
 from .media_ref_store import INLINE_DISPLAY, TEXT_RELEVANCE, VISION_RELEVANCE, SqlMediaStore, StoredPicture
 from .picture_sites import blocked_picture
-from .served_pictures import served_picture
+from .served_pictures import searched_text_link, served_picture
 
 __all__ = [
     "CANDIDATES_PER_SOURCE",
@@ -160,8 +160,8 @@ def stored_items(pictures: Iterable[StoredPicture], context: PictureContext) -> 
 
 
 def _shown_first(links: Sequence[StoredPicture]) -> tuple[bool, bool]:
-    seen = any(link.relevance == VISION_RELEVANCE for link in links)
-    return links[0].media.display != INLINE_DISPLAY, not seen
+    worded = all(searched_text_link(link) for link in links)
+    return links[0].media.display != INLINE_DISPLAY, worded
 
 
 def _stored_item(links: Sequence[StoredPicture]) -> ImageItem:

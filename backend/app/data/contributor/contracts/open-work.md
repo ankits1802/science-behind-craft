@@ -405,8 +405,9 @@ answer and page.
   queue's `PICTURE_CHECKS` kind for an Admin (`review-queue.md`). An Admin's approve or reject is a
   `ruling` verdict that decides the link and closes it to further checks; the latest ruling holds.
 - **Served.** `served_pictures.served_picture` drops a refused link, so answers, the zoom story and
-  uncurated craft pages stop showing it beside that fact; a `VISION` link is served before a `TEXT`
-  one in an answer's pictures. The craft page stamp counts refusals and `VISION` links, so a stored
+  uncurated craft pages stop showing it beside that fact; in an answer's pictures a picture a person
+  saw (`VISION`) or chose (a curator's pick, a field photo) comes before one chosen by its words
+  alone. The craft page stamp counts refusals and `VISION` links, so a stored
   page is rebuilt, and a verdict that hides or marks a link refreshes the pages of its fact.
 - **Kept.** `PictureCheck {id, linkId, userId (set null when the account goes), verdict, reason,
   ruling, trusted, createdAt}`: every verdict, never edited or deleted; an Admin's ruling also writes
