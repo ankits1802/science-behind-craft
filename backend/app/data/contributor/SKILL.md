@@ -287,7 +287,7 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
   it again; add what it returns to the draft as it is, with your task as its `task_key`.
 - See it drawn before you propose it: put it in a draft or a bundle with the facts it rests on and
   call `preview_page`. Send it with `propose_page`, alone in a bundle when it rests only on held
-  facts. A close match in the library refuses it with the matches and two ways on. An Admin's
+  facts. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild; Monograph parity names a page whose rest could not be read. A close match in the library refuses it with the matches and two ways on. An Admin's
   approval registers it so every page it applies to draws it; a Professor's or Admin's own is
   registered at once.
 - **Maps.** Never draw a map. Deliver a declared `timeline_map`: name each place by the Wikidata
@@ -421,7 +421,7 @@ your text, and supplying a source counts against the hour's fact proposals.
   place: `slot` `MASTHEAD` for the top of the page, `stage_id` for a stage, nothing for a chapter's
   plate. It needs no declaration: the server reads its licence and author itself, takes only public
   domain, CC0, CC BY and CC BY-SA, and says why it refuses one. Open the thumbnail each accepted
-  picture returns before you place it, then lay it out in your draft by its `plate` label.
+  picture returns before you place it, then lay it out in your draft by its `plate` label. A picture an answer finds by search must name the craft, its places or its family's world in its title. Pictures you give through `give_pictures` are never refused by that rule, so give the craft's own pictures, captioned by what they show.
 - Accepted: PNG, JPEG, WebP or AVIF as they are; GIF as its first frame; HEIC, HEIF, TIFF or BMP
   made WebP; SVG cleaned.
 - Every picture is screened before review (its format and size, a repeat of a held picture,

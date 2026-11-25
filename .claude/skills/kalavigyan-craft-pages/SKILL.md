@@ -160,7 +160,7 @@ family figure only when the page holds every fact its units cite.
    through `propose_facts`, structure through `propose_structure`, a held fact's new source through
    `propose_source`, components by the component guide, figures from data by the datasets skill,
    and open pictures through `give_pictures` by `page_url` (the server reads the licence and the
-   author and returns a thumbnail to check). Quote a colour change as the source states it, first
+   author and returns a thumbnail to check). A picture an answer finds by search must name the craft, its places or its family's world in its title; pictures you give through `give_pictures` are never refused by that rule, so give the craft's own pictures, captioned by what they show. Quote a colour change as the source states it, first
    colour and then the colour it turns. Answers then draw that stage from the kit, citing your fact.
 4. **See the page before sending it.** Build the page in a draft (`edit_draft`),
    call `preview_page` with it, read its pictures, fix every rule its report fails (rule 28 names each
@@ -171,7 +171,7 @@ family figure only when the page holds every fact its units cite.
    resists by substance; the dip then draws without a colour the team recorded. Compose the page's interactives with
    `compose_component`, never borrowed from Kutch Ajrakh; propose what `missing` names first. Preview
    the page with them and read its pictures: step every player, dip every dip, turn and zoom every
-   molecule and choose every option at 360 and 1440 px before `propose_page`.
+   molecule and choose every option at 360 and 1440 px before `propose_page`. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild; Monograph parity names a page whose rest could not be read.
 5. **Follow every proposal** with `get_proposal` or `my_work`. A refused fact is fixed from its
    sources or dropped, never reworded past its quotes to slip a gate.
 6. **Hand the lead what only the dossier route carries**: a curated picture's focal box and stand-in,

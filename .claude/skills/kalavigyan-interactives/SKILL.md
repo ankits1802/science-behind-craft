@@ -76,7 +76,7 @@ Draw every state's scene from the figure kit: a kit scene `{parts, motion?}` in 
 (a reaction step's `art`, a dip phase's `drawing` and the dip's `scene`, the stage player's
 `drawing`, a toggle's stage box), one to three parts of the composed diagram's vocabulary, each
 labelled by a unit citing its facts; a step's kit scene draws where it happens, so it needs no
-where icon. Only a state the reader shows again names a `motion`; the kit plays it when shown and
+where icon. A step drawn by hand shows a where icon. One at most 32 units wide draws at its own size, one unit a pixel; a wider drawing draws as the 92 px vignette (decision 0210). Only a state the reader shows again names a `motion`; the kit plays it when shown and
 never under either reduced-motion switch. A free scene stays in line work: one painting a depicted
 material by hand is refused naming the kit part. `compose_component` builds a craft's reaction and
 dip scenes from the kit.
