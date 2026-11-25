@@ -17,6 +17,8 @@ from .art_kit import (
     PARTS_PER_PANEL_MAX,
     PASTE_FORMS,
     PIECE_SHAPES,
+    SPECIES_PER_SCENE_MAX,
+    SPECIES_ROLES,
     TOOLS,
     VESSELS,
     WATER_FORMS,
@@ -41,12 +43,14 @@ __all__ = [
     "PiecePart",
     "SectionLayer",
     "SectionPart",
+    "SpeciesPart",
     "ToolPart",
     "WaterPart",
     "kit_label_problems",
     "kit_labels",
     "motion_problem",
     "part_labels",
+    "parts_problem",
 ]
 
 KIT_DIAGRAM = "diagram"
@@ -58,11 +62,22 @@ NOT_RECORDED = (
 UNCITED = (
     "the unit {ref}, the label of {where}, cites no fact: a kit part's label rests on the facts that state it"
 )
+SPECIES = "species"
+PRODUCT = "product"
+REACTANT = "reactant"
 MOTION_NEEDS = {
     "dip": ("bath", "a bath part with a piece in it"),
     "take": ("cloth", "a cloth part"),
     "dry": ("paste", "a paste part that names what it dries to"),
+    "react": (SPECIES, "a product species part and a species it is made from"),
 }
+TOO_MANY_PARTS = (
+    "a {holder} holds at most {most} parts, or at most {species} when every part is a species of one reaction, "
+    "not {count}"
+)
+ONLY_A_REACTANT_BREAKS = (
+    "only a reactant breaks: the bond-break mark is drawn on the species a bond breaks in"
+)
 
 
 def _material(token: str) -> str:
@@ -151,8 +166,31 @@ class PiecePart(ContractModel):
     label: UnitRef
 
 
+class SpeciesPart(ContractModel):
+    part: Literal["species"]
+    role: Literal[*SPECIES_ROLES]
+    material: Material | None = Field(default=None, exclude_if=absent)
+    breaks: bool = False
+    label: UnitRef
+
+    @model_validator(mode="after")
+    def _a_reactant_breaks(self) -> Self:
+        if self.breaks and self.role != REACTANT:
+            raise ValueError(ONLY_A_REACTANT_BREAKS)
+        return self
+
+
 KitPartSpec = Annotated[
-    ClothPart | BlockPart | BathPart | PastePart | HeatPart | WaterPart | ToolPart | SectionPart | PiecePart,
+    ClothPart
+    | BlockPart
+    | BathPart
+    | PastePart
+    | HeatPart
+    | WaterPart
+    | ToolPart
+    | SectionPart
+    | PiecePart
+    | SpeciesPart,
     Field(discriminator="part"),
 ]
 
@@ -162,11 +200,11 @@ class KitPanel(ContractModel):
     text: UnitRef | None = Field(default=None, exclude_if=absent)
     via: UnitRef | None = Field(default=None, exclude_if=absent)
     motion: Literal[*KIT_MOTIONS] | None = Field(default=None, exclude_if=absent)
-    parts: list[KitPartSpec] = Field(min_length=1, max_length=PARTS_PER_PANEL_MAX)
+    parts: list[KitPartSpec] = Field(min_length=1, max_length=SPECIES_PER_SCENE_MAX)
 
     @model_validator(mode="after")
     def _motion_explains_a_part(self) -> Self:
-        problem = motion_problem(self.motion, self.parts, "panel")
+        problem = parts_problem(self.parts, "panel") or motion_problem(self.motion, self.parts, "panel")
         if problem is not None:
             raise ValueError(problem)
         return self
@@ -199,9 +237,17 @@ def motion_problem(motion: str | None, parts: Sequence[object], holder: str) -> 
     if motion is None:
         return None
     name, needs = MOTION_NEEDS[motion]
-    if any(_moves(part, name) for part in parts):
+    if any(_moves(part, name) for part in parts) and (name != SPECIES or _made_from(parts)):
         return None
     return f"the {motion} motion explains {needs}, which this {holder} does not hold"
+
+
+def parts_problem(parts: Sequence[object], holder: str) -> str | None:
+    if len(parts) <= PARTS_PER_PANEL_MAX or all(isinstance(part, SpeciesPart) for part in parts):
+        return None
+    return TOO_MANY_PARTS.format(
+        holder=holder, most=PARTS_PER_PANEL_MAX, species=SPECIES_PER_SCENE_MAX, count=len(parts)
+    )
 
 
 def part_labels(parts: Sequence[KitPartSpec], where: str) -> Iterator[tuple[str, str]]:
@@ -226,7 +272,13 @@ def _moves(part: object, name: str) -> bool:
         return isinstance(part, BathPart) and part.piece is not None
     if name == "paste":
         return isinstance(part, PastePart) and part.dried is not None
+    if name == SPECIES:
+        return isinstance(part, SpeciesPart) and part.role == PRODUCT
     return isinstance(part, ClothPart)
+
+
+def _made_from(parts: Sequence[object]) -> bool:
+    return any(isinstance(part, SpeciesPart) and part.role != PRODUCT for part in parts)
 
 
 def _count(low: int, high: int) -> str:

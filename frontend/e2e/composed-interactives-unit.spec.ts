@@ -39,8 +39,8 @@ async function kitBound(page: Page): Promise<void> {
   for (const scope of ["chem", "pt"]) await expect(page.locator(`#${scope}-theme-toggle[aria-pressed]`)).toBeAttached();
   await page.locator(".mol[data-cid]").scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.mol-dial [data-a="0"] circle').getAttribute("cy")).not.toBe(SSR_OXYGEN_CY);
-  await expect(page.locator(".mol-dial")).toHaveAttribute("aria-valuetext", `Turned ${REST_YAW_DEGREES} degrees`);
-  await expect(page.locator("figure.rp .rp-status")).toContainText("Step 2 of 2");
+  await expect(page.locator(".mol-dial")).toHaveAttribute("aria-valuetext", /^Turned \d+ degrees$/);
+  await expect(page.locator("figure.rp .rp-text")).toHaveAttribute("style", /min-height/);
 }
 
 test("every composed spec parses as the view the site draws it with", () => {
@@ -67,7 +67,7 @@ test("on a generated page each interactive is whole at rest at phone and desktop
   }
 });
 
-test("a reaction steps by rail, arrow keys and Play as on Kutch Ajrakh's page", async ({ page }) => {
+test("a reaction steps by rail, arrow keys and, with motion reduced, Play one step at a time", async ({ page }) => {
   for (const width of WIDTHS) {
     await drawn(page, width, "system");
     await kitBound(page);
@@ -83,8 +83,9 @@ test("a reaction steps by rail, arrow keys and Play as on Kutch Ajrakh's page", 
     await expect(player).toHaveAttribute("data-step", "2");
     await expect(rail.nth(1)).toBeFocused();
     await player.locator(".rp-play").click();
-    await expect(player.locator(".rp-play")).toHaveAttribute("aria-pressed", "true");
+    await expect(player.locator(".rp-play")).toHaveAttribute("aria-pressed", "false");
     await expect(player).toHaveAttribute("data-step", "1");
+    await expect(player.locator(".rp-status")).toContainText("Step 1 of 2");
   }
 });
 
@@ -93,6 +94,7 @@ test("a molecule turns and zooms by keyboard, its model read from the page's own
     await drawn(page, width, "system");
     await kitBound(page);
     const dial = page.locator(".mol-dial");
+    await expect(dial).toHaveAttribute("aria-valuetext", `Turned ${REST_YAW_DEGREES} degrees`);
     const oxygen = dial.locator('[data-a="0"] circle');
     const hydrogen = dial.locator('[data-a="1"] circle');
     const before = await hydrogen.getAttribute("cx");
@@ -132,16 +134,20 @@ test("under either reduced-motion switch each press of Dip again shows the next 
   }
 });
 
-test("with motion allowed Dip again plays every phase in order and rests on the last", async ({ page }) => {
+test("with motion allowed the dip player plays every phase in order in view, and Pause rests it on the last", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.setContent(`<!doctype html><html lang="en" data-theme="light"><head><style>${KIT_CSS}</style></head><body>${pageHtml()}</body></html>`);
   await kitBound(page);
   const dip = page.locator("figure.vat");
-  await dip.locator(".vat-dip").click();
+  await dip.evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await expect(dip.locator(".vat-dip")).toHaveText("Pause");
   await expect(dip).toHaveAttribute("data-dips", "1");
   await expect(dip.locator(".vs").last()).toHaveAttribute("aria-current", "step", { timeout: 5000 });
   await expect(dip.locator(".vat-status")).toHaveText("Dip 1 of 2. Madder bath: Red where alum was printed");
+  await dip.locator(".vat-dip").click();
+  await expect(dip.locator(".vat-dip")).toHaveText("Play");
+  await expect(dip.locator(".vs").last()).toHaveAttribute("aria-current", "step");
 });
 
 test("the what-if lab opens an experiment and shows the result of the option chosen", async ({ page }) => {

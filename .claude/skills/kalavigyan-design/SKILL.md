@@ -364,6 +364,11 @@ thumb.
   moving edges. Under either reduced-motion switch, `useVatMoment().play` steps one still phase
   per press (in the vat, lifted, in the air, rest) and announces it; autoplay shows the rest
   state.
+- **Players play on their own** (the owner, 2026-11-26, decision 0228, overriding motion on request
+  for these figures only): a reaction, dip or stage player, a 3D molecule and a dated record start
+  once in view and loop, with one visible Pause (the player's own button, `aria-pressed`) and the
+  status `aria-live="off"` while they play; a step pressed plays on from there; the player holds
+  the height of its tallest step so nothing around it moves. Under either switch none of them moves.
 - **Reduced motion has two switches**: `prefers-reduced-motion` and
   `html[data-reduced-motion="true"]`, read before anything moves. The end state is the default
   style; motion is added only under a variant that checks both; under either, `animation` and
@@ -730,7 +735,7 @@ Found by the Kutch Ajrakh critics (2026-11-19; the full list is
 - **Two photographs of the same scene** (same room, artisan, photographer): replace one or crop it
   to a clearly different subject.
 - **A progress state at rest** ("Writing section 7 of 7", "Drawing · 58%"): pages rest finished;
-  a replay is opt-in.
+  a replay is opt-in, save the players that play on their own in view (decision 0228).
 - **A toast in the document flow** draws far down the page; toasts are fixed to the viewport.
 - **A translucent sticky bar**, or two sticky bars stacked: opaque, one at a time.
 - **Dead zones**: a lone picture in a wide row, a framed box larger than its content, a lead over

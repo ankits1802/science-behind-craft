@@ -7,9 +7,10 @@ export const ART_KIT = {
   families: ["textiles", "metal", "clay", "stone", "wood", "leather", "fibre", "paper", "more"],
   layouts: { steps: [2, 6], before_after: [2, 2], section: [1, 1], sequence: [2, 6] },
   partsPerPanelMax: 3,
+  speciesPerSceneMax: 8,
   layers: [2, 6],
   earth: "earth",
-  motions: ["dip", "take", "dry"],
+  motions: ["dip", "take", "dry", "react"],
   motifs: MOTIFS,
   parts: {
     cloth: { families: ["textiles", "more"], subjects: ["cloth", "cotton", "fabric", "textile", "swatch"], choices: { form: ["swatch", "length", "folded"], "printed.motif": MOTIFS }, materials: ["material", "printed.material"], motion: "take" },
@@ -20,7 +21,8 @@ export const ART_KIT = {
     water: { families: ["textiles", "metal", "leather", "fibre", "paper"], subjects: ["water", "washing", "rinse", "rinsing"], choices: { form: ["running", "still", "sprinkled"] }, materials: [], motion: null },
     tool: { families: ["textiles", "metal", "stone", "wood", "fibre", "paper", "more"], subjects: ["hand", "hands", "chisel", "mallet", "brush"], choices: { tool: ["block", "brush", "chisel", "mallet", "knife", "stick"] }, materials: ["load"], motion: null },
     section: { families: ["textiles", "metal", "clay", "leather", "more"], subjects: ["section", "cutaway", "strata", "layers"], choices: {}, materials: ["layers.material"], motion: null },
-    piece: { families: ["metal", "clay", "stone", "wood", "fibre", "paper", "more"], subjects: ["slab", "billet", "lump"], choices: { shape: ["lump", "vessel", "slab", "billet", "sheet", "figure", "culm"], "inlay.motif": MOTIFS }, materials: ["material", "inlay.material"], motion: null }
+    piece: { families: ["metal", "clay", "stone", "wood", "fibre", "paper", "more"], subjects: ["slab", "billet", "lump"], choices: { shape: ["lump", "vessel", "slab", "billet", "sheet", "figure", "culm"], "inlay.motif": MOTIFS }, materials: ["material", "inlay.material"], motion: null },
+    species: { families: ["textiles", "metal", "clay", "stone", "wood", "leather", "fibre", "paper", "more"], subjects: ["species", "reactant", "reactants", "reagent", "reagents"], choices: { role: ["reactant", "reagent", "product"] }, materials: ["material"], motion: "react" }
   }
 } as const;
 
@@ -36,6 +38,7 @@ export type HeatSource = (typeof ART_KIT.parts.heat.choices.source)[number];
 export type WaterForm = (typeof ART_KIT.parts.water.choices.form)[number];
 export type ToolName = (typeof ART_KIT.parts.tool.choices.tool)[number];
 export type PieceShape = (typeof ART_KIT.parts.piece.choices.shape)[number];
+export type SpeciesRole = (typeof ART_KIT.parts.species.choices.role)[number];
 
 export const KIT_PART_NAMES = Object.keys(ART_KIT.parts) as KitPartName[];
 export const KIT_LAYOUTS = Object.keys(ART_KIT.layouts) as KitLayout[];

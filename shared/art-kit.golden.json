@@ -8,9 +8,10 @@
     "sequence": [2, 6]
   },
   "partsPerPanelMax": 3,
+  "speciesPerSceneMax": 8,
   "layers": [2, 6],
   "earth": "earth",
-  "motions": ["dip", "take", "dry"],
+  "motions": ["dip", "take", "dry", "react"],
   "motifs": ["star", "lattice", "dots", "lines"],
   "parts": {
     "cloth": {
@@ -75,6 +76,13 @@
       "choices": { "shape": ["lump", "vessel", "slab", "billet", "sheet", "figure", "culm"], "inlay.motif": ["star", "lattice", "dots", "lines"] },
       "materials": ["material", "inlay.material"],
       "motion": null
+    },
+    "species": {
+      "families": ["textiles", "metal", "clay", "stone", "wood", "leather", "fibre", "paper", "more"],
+      "subjects": ["species", "reactant", "reactants", "reagent", "reagents"],
+      "choices": { "role": ["reactant", "reagent", "product"] },
+      "materials": ["material"],
+      "motion": "react"
     }
   }
 }

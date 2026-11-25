@@ -1,11 +1,19 @@
 import dataclasses
 
-from app.services.compose_held import About
+from app.services.compose_held import About, HeldReaction, HeldSpecies
 from app.services.compose_reaction import reaction_player
 
 from .held import AJRAKH_FACT, BAGRU, FACTS, SLUG, cited_claims, claim, delivery_problems, held
 
 SUB = "sub"
+CROWDED = HeldReaction(
+    "R05",
+    "OTHER",
+    "S04",
+    tuple(HeldSpecies(name) for name in ("alizarin", "aluminium", "calcium", "tannin", "water")),
+    tuple(HeldSpecies(name) for name in ("red", "lake", "salt", "acid")),
+    (claim(4),),
+)
 
 
 def test_a_reaction_player_steps_through_the_craft_s_own_reactions_in_the_order_of_their_stages() -> None:
@@ -22,42 +30,52 @@ def test_a_reaction_player_steps_through_the_craft_s_own_reactions_in_the_order_
     spec = body.spec
     assert spec is not None
     assert [step["name"] for step in spec["steps"]] == ["Syahi", "Black printing", "Madder bath"]
-    assert spec["current"] == 3 and spec["key"] is None and len(spec["scenes"]) == 1
+    assert spec["current"] == 3 and spec["key"] is None and spec["scenes"] == []
     assert result.left_out == (
         "a fact of Bagru-Print's own for the reaction R03, which rests on no fact the page shows",
     )
     assert delivery_problems(result.components) == []
 
 
-def test_a_player_whose_every_step_the_kit_draws_shows_each_step_s_stage_as_a_kit_scene() -> None:
-    (component,) = reaction_player(held(reactions=BAGRU.reactions[:3]), About()).components
+def test_each_step_draws_its_species_as_kit_parts_that_react_where_its_stage_is() -> None:
+    (component,) = reaction_player(BAGRU, About()).components
     body = component.proposal
     spec = body.spec
-    assert spec["scenes"] == [] and [step["name"] for step in spec["steps"]] == [
-        "Black printing",
-        "Madder bath",
+    assert spec["scenes"] == []
+    scenes = [step["scene"] for step in spec["steps"]]
+    assert [body.units[scene["where"]].text for scene in scenes] == ["Syahi", "Black printing", "Madder bath"]
+    assert {scene["art"]["motion"] for scene in scenes} == {"react"}
+    drawn = [
+        [
+            (body.units[part["label"]].text, part["role"], part.get("material"))
+            for part in scene["art"]["parts"]
+        ]
+        for scene in scenes
     ]
-    printing, madder = (step["scene"] for step in spec["steps"])
-    assert [body.units[scene["where"]].text for scene in (printing, madder)] == [
-        "Black printing",
-        "Madder bath",
+    assert drawn == [
+        [
+            ("iron", "reagent", None),
+            ("acetic acid", "reactant", None),
+            ("iron(II) acetate", "product", None),
+            ("hydrogen", "product", None),
+        ],
+        [("syahi", "reagent", "--dye-kut"), ("tannin", "reactant", None), ("black", "product", None)],
+        [("alizarin", "reactant", "--dye-madder"), ("aluminium", "reagent", None), ("red", "product", None)],
     ]
-    (paste,) = printing["art"]["parts"]
-    assert (paste["part"], paste["form"], paste["material"], "motion" in printing["art"]) == (
-        "paste",
-        "printed",
-        "--dye-kut",
-        False,
+    madder = scenes[2]["art"]["parts"]
+    assert {tuple(body.units[part["label"]].claim_ids) for part in madder} == {(claim(4),)}
+    assert all(
+        part["part"] == "species" and "breaks" not in part
+        for scene in scenes
+        for part in scene["art"]["parts"]
     )
-    assert (body.units[paste["label"]].text, body.units[paste["label"]].claim_ids) == ("Syahi", [claim(3)])
-    (cloth,) = madder["art"]["parts"]
-    assert (cloth["part"], cloth["material"], madder["art"]["motion"]) == ("cloth", "--dye-madder", "take")
-    assert body.units[cloth["label"]].claim_ids == [claim(5)]
     assert delivery_problems([component]) == []
 
 
-def test_a_player_with_a_step_the_kit_cannot_draw_keeps_one_scene_in_line_work_painting_nothing() -> None:
-    (component,) = reaction_player(BAGRU, About()).components
+def test_a_player_with_a_reaction_too_crowded_for_a_scene_keeps_one_scene_in_line_work_painting_nothing() -> (
+    None
+):
+    (component,) = reaction_player(held(reactions=(*BAGRU.reactions, CROWDED)), About()).components
     spec = component.proposal.spec
     assert all(step["scene"] is None for step in spec["steps"])
     swatches = [
@@ -69,8 +87,8 @@ def test_a_player_with_a_step_the_kit_cannot_draw_keeps_one_scene_in_line_work_p
     ]
     assert {swatch["fill"] for swatch in swatches} == {"var(--raised)"}
     assert {swatch["stroke"] for swatch in swatches} == {"var(--ink-2)"}
-    dashed = [swatch.get("stroke-dasharray") for swatch in swatches]
-    assert dashed == ["6 4", "6 4", "6 4", "6 4", None, "6 4", "6 4", None, "6 4", "6 4"]
+    assert len(swatches) == 4 + 3 + 3 + 9
+    assert delivery_problems([component]) == []
 
 
 def test_every_unit_cites_only_the_craft_s_own_facts_and_a_fact_of_another_page_is_never_cited() -> None:
@@ -127,7 +145,9 @@ def test_a_stage_s_stated_time_is_the_step_s_condition_cited_by_its_fact() -> No
 
 
 def test_the_player_rests_on_the_reaction_it_is_about_and_the_scene_shows_that_step_alone() -> None:
-    (component,) = reaction_player(BAGRU, About(reaction="R01")).components
+    (component,) = reaction_player(
+        held(reactions=(*BAGRU.reactions, CROWDED)), About(reaction="R01")
+    ).components
     spec = component.proposal.spec
     assert spec["current"] == 2
     groups = [child for child in spec["scenes"][0]["children"] if child["tag"] == "g"]
@@ -135,7 +155,10 @@ def test_the_player_rests_on_the_reaction_it_is_about_and_the_scene_shows_that_s
         ("1", "off"),
         ("2", None),
         ("3", "off"),
+        ("4", "off"),
     ]
+    (drawn,) = reaction_player(BAGRU, About(reaction="R01")).components
+    assert drawn.proposal.spec["current"] == 2 and drawn.proposal.spec["scenes"] == []
 
 
 def test_a_craft_with_no_reactions_gets_none_and_is_told_which_structure_to_propose() -> None:

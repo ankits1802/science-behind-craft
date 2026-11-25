@@ -8,7 +8,6 @@ import { COMPONENT_VIEWS } from "../components/monograph/componentViews";
 import { DECLARED_VIEWS, VIEWS } from "../components/monograph/kinds/general";
 import { linePoints, tickLabel } from "../components/monograph/kinds/general/ChartLine";
 import { largestValue } from "../components/monograph/kinds/general/MapLayerView";
-import { axisPosition } from "../components/monograph/kinds/general/TimelineView";
 import {
   chartRange,
   chartSpecShape,
@@ -26,6 +25,7 @@ import {
   type ChartSpec
 } from "../lib/componentSpecsGeneral";
 import { TIMELINE_MAP_KIND } from "../lib/componentSpecsTimelineMap";
+import { isPlaying, nextStop, played, pointPositions, restingPlay, spreadPositions, type PlayAction } from "../lib/timelinePlay";
 import type { ComponentView } from "../lib/componentViewContract";
 import type { MonographComponent } from "../lib/monographDocument";
 
@@ -146,14 +146,50 @@ test("a table puts each unit in its cell, the first as the row's header, numbers
   expect(html).toContain("text-end [font-variant-numeric:lining-nums_tabular-nums]\">[u0006]</td>");
 });
 
-test("a timeline places its events by year and names its first and last year", () => {
-  expect(axisPosition(1868, 1868, 1947)).toBe(16);
-  expect(axisPosition(1947, 1868, 1947)).toBe(624);
+test("a timeline places its events by year as points to press, rests on the last and has Play, not a slider", () => {
+  expect(pointPositions([1868, 1947])).toEqual([0, 100]);
+  expect(pointPositions([1868, 1907.5, 1947])).toEqual([0, 50, 100]);
+  expect(pointPositions([1900, 1900])).toEqual([50, 50]);
   expect(eraYear(-300)).toBe("300 BCE");
   const html = drawn("timeline", TIMELINE);
-  expect(html).toContain(">1868</text>");
-  expect(html).toContain(">1947</text>");
+  expect(html).not.toContain('type="range"');
+  expect(html).not.toContain("<input");
+  const points = [...html.matchAll(/<button[^>]*data-testid="timeline-point"[^>]*>/g)].map((found) => found[0]);
+  expect(points).toHaveLength(2);
+  expect(points.map((point) => /aria-pressed="(\w+)"/.exec(point)?.[1])).toEqual(["false", "true"]);
+  expect(points.map((point) => /aria-label="([^"]+)"/.exec(point)?.[1])).toEqual(["1868", "1947"]);
+  expect(points.map((point) => /inset-inline-start:([\d.]+)%/.exec(point)?.[1])).toEqual(["0", "100"]);
+  expect(html).toContain('data-testid="timeline-play"');
+  expect(html).toMatch(/data-testid="timeline-play"[^>]*>.*?<span>Play<\/span>/);
+  expect(html).toContain("<span>1868</span><span>1947</span>");
   expect(html.match(/<li /g)).toHaveLength(2);
+  expect(html.match(/aria-current="step"/g)).toHaveLength(1);
+  expect(html).toContain('data-testid="timeline-year">[u0006]</p>');
+});
+
+test("crowded points are spread to stay apart and in the axis, in their order", () => {
+  expect(spreadPositions([0, 1, 2, 100])).toEqual([0, 6, 12, 100]);
+  expect(spreadPositions([0, 99, 100, 100])).toEqual([0, 88, 94, 100]);
+  expect(spreadPositions(Array.from({ length: 21 }, () => 50))).toEqual(Array.from({ length: 21 }, (_, at) => at * 5));
+  expect(spreadPositions([40])).toEqual([40]);
+});
+
+test("a timeline plays from its first event once seen, loops, jumps to a pressed point and pauses; reduced, Play steps one", () => {
+  const run = (actions: PlayAction[], rest = 2) => actions.reduce(played, restingPlay(rest));
+  expect([nextStop(0, 3), nextStop(2, 3), nextStop(0, 0)]).toEqual([1, 0, 0]);
+  expect(isPlaying(restingPlay(2), true, 3)).toBe(false);
+  const seen = run([{ type: "seen", on: true }, { type: "start" }]);
+  expect([seen.at, isPlaying(seen, true, 3), isPlaying(seen, false, 3), isPlaying(seen, true, 1)]).toEqual([0, true, false, false]);
+  expect(run([{ type: "seen", on: true }, { type: "start" }, { type: "tick", count: 3 }, { type: "tick", count: 3 }, { type: "tick", count: 3 }]).at).toBe(0);
+  const jumped = run([{ type: "seen", on: true }, { type: "start" }, { type: "choose", at: 2 }, { type: "start" }]);
+  expect([jumped.at, isPlaying(jumped, true, 3)]).toEqual([2, true]);
+  const paused = played(jumped, { type: "toggle", motion: true, count: 3 });
+  expect([paused.at, isPlaying(paused, true, 3)]).toEqual([2, false]);
+  expect(isPlaying(played(paused, { type: "toggle", motion: true, count: 3 }), true, 3)).toBe(true);
+  const away = played(seen, { type: "seen", on: false });
+  expect(isPlaying(away, true, 3)).toBe(false);
+  const still = played(restingPlay(2), { type: "toggle", motion: false, count: 3 });
+  expect([still.at, still.wanted, isPlaying(still, false, 3)]).toEqual([0, true, false]);
 });
 
 test("a map layer marks each place on India's outline with a disc sized by its value and lists them", () => {

@@ -3,12 +3,13 @@ import type { Locator, Page } from "@playwright/test";
 
 import { clip } from "../production/checks";
 
-import { endsOnItsOwn, expectedProblems, nextDips, otherStep, unchangedProblems } from "./controlPlan";
+import { expectedProblems, heldProblems, otherStep, unchangedProblems } from "./controlPlan";
 import { changedFrom, reached, type ControlWatch } from "./controlWatch";
 import { documentDrawn } from "./documentControls";
 
 const QUICK_MS = 5_000;
 const PLAY_MS = 9_000;
+const HOLD_MS = 4_500;
 const MOLECULE_MS = 30_000;
 const KIT_PLAYER = "figure.rp";
 const ANSWER_PLAYER = '[data-testid="reaction-player"]';
@@ -36,35 +37,41 @@ async function present(page: Page, kit: string, answer: string): Promise<Present
   return { kit: (await page.locator(kit).count()) > 0, answer: (await page.locator(answer).count()) > 0 };
 }
 
-async function pauseProblems(play: Locator, at: number, steps: number): Promise<string[]> {
-  const pressed = attribute(play, "aria-pressed");
-  if (endsOnItsOwn(at, steps)) return expectedProblems("the reaction player at its last step", "false", await reached(pressed, "false", QUICK_MS));
-  await play.click();
-  return expectedProblems("the reaction player's Pause", "false", await reached(pressed, "false", QUICK_MS));
+async function centred(target: Locator): Promise<void> {
+  await target.evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await target.page().mouse.move(1, 1);
+}
+
+async function pausedProblems(control: string, read: () => Promise<string>, page: Page): Promise<string[]> {
+  const before = await read();
+  await page.waitForTimeout(HOLD_MS);
+  return heldProblems(control, before, await read());
 }
 
 export async function kitReactionPlayer(page: Page): Promise<string[]> {
   const player = page.locator(KIT_PLAYER).first();
-  await player.scrollIntoViewIfNeeded();
+  await centred(player);
   const step = attribute(player, "data-step");
   const steps = Number(await player.getAttribute("data-steps"));
-  const target = otherStep(Number(await step()), steps);
-  if (target === null) return [`the reaction player has ${steps} step`];
-  const rail = player.locator(".rp-rail button");
-  await rail.nth(target - 1).click();
-  const chosen = await reached(step, String(target), QUICK_MS);
-  await rail.first().click();
-  const first = await reached(step, "1", QUICK_MS);
   const play = player.locator(".rp-play");
+  const pressed = attribute(play, "aria-pressed");
+  const playing = await reached(pressed, "true", QUICK_MS);
+  const before = await step();
+  const moved = await changedFrom(step, before, PLAY_MS);
+  const target = otherStep(Number(moved), steps);
+  if (target === null) return [`the reaction player has ${steps} step`];
+  await player.locator(".rp-rail button").nth(target - 1).click();
+  const chosen = await reached(step, String(target), QUICK_MS);
+  const still = await pressed();
   await play.click();
-  const playing = await reached(attribute(play, "aria-pressed"), "true", QUICK_MS);
-  const moved = await changedFrom(step, first, PLAY_MS);
+  const paused = await reached(pressed, "false", QUICK_MS);
   return [
+    ...expectedProblems("the reaction player in view", "true", playing),
+    ...unchangedProblems("the reaction player while playing", before, moved),
     ...expectedProblems(`the reaction player's step ${target}`, String(target), chosen),
-    ...expectedProblems("the reaction player's first step", "1", first),
-    ...expectedProblems("the reaction player's Play", "true", playing),
-    ...unchangedProblems("the reaction player while playing", first, moved),
-    ...(await pauseProblems(play, Number(moved), steps))
+    ...expectedProblems("the reaction player after a step is pressed", "true", still),
+    ...expectedProblems("the reaction player's Pause", "false", paused),
+    ...(await pausedProblems("the paused reaction player", step, page))
   ];
 }
 
@@ -96,12 +103,21 @@ export async function answerReactionPlayer(page: Page): Promise<string[]> {
 
 export async function dipPlayer(page: Page): Promise<string[]> {
   const player = page.locator(DIP_PLAYER).first();
-  await player.scrollIntoViewIfNeeded();
-  const dips = attribute(player, "data-dips");
-  const before = Number(await dips());
-  await player.locator(".vat-dip").click();
-  const after = await reached(dips, String(nextDips(before)), QUICK_MS);
-  return expectedProblems("the dip player", String(nextDips(before)), after);
+  await centred(player);
+  const button = player.locator(".vat-dip");
+  const pressed = attribute(button, "aria-pressed");
+  const playing = await reached(pressed, "true", QUICK_MS);
+  const pose = async () => `${await player.getAttribute("data-dips")} ${await player.getAttribute("data-pose")}`;
+  const before = await pose();
+  const moved = await changedFrom(pose, before, PLAY_MS);
+  await button.click();
+  const paused = await reached(pressed, "false", QUICK_MS);
+  return [
+    ...expectedProblems("the dip player in view", "true", playing),
+    ...unchangedProblems("the dip player while playing", before, moved),
+    ...expectedProblems("the dip player's Pause", "false", paused),
+    ...(await pausedProblems("the paused dip player", pose, page))
+  ];
 }
 
 async function pressPinned(page: Page, pinned: string, label: string): Promise<string[]> {
@@ -124,13 +140,20 @@ export async function whatIf(page: Page): Promise<string[]> {
 
 export async function kitMolecule(page: Page): Promise<string[]> {
   const molecule = page.locator(KIT_MOLECULE).first();
-  await molecule.scrollIntoViewIfNeeded();
+  await centred(molecule);
   const turned = attribute(molecule.locator(".mol-dial"), "aria-valuenow");
-  await page.waitForTimeout(QUICK_MS / 5);
   const before = await turned();
-  await molecule.locator(".mol-turn").click();
   const after = await changedFrom(turned, before, QUICK_MS);
-  return unchangedProblems("the 3D molecule's Turn", before, after);
+  const pause = molecule.locator(".mol-turn");
+  await pause.click();
+  const paused = await reached(attribute(pause, "aria-pressed"), "false", QUICK_MS);
+  await pause.evaluate((node) => (node as HTMLElement).blur());
+  await page.mouse.move(1, 1);
+  return [
+    ...unchangedProblems("the 3D molecule in view", before, after),
+    ...expectedProblems("the 3D molecule's Pause", "false", paused),
+    ...(await pausedProblems("the paused 3D molecule", turned, page))
+  ];
 }
 
 export async function answerMolecule(page: Page): Promise<string[]> {

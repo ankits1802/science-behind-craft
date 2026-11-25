@@ -1,64 +1,62 @@
 "use client";
 
-import { useId, useMemo, useRef } from "react";
+import { useId, useMemo } from "react";
 
-import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
-import { GeneralFigure } from "@/components/monograph/kinds/general/GeneralFigure";
+import { GeneralFigure, type RenderUnit } from "@/components/monograph/kinds/general/GeneralFigure";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { eraYear, parsedSpec, timelineSpecShape, type TimelineEvent } from "@/lib/componentSpecsGeneral";
+import { pointPositions } from "@/lib/timelinePlay";
+import { cn } from "@/lib/utils";
 
-const WIDTH = 640;
-const HEIGHT = 44;
-const AXIS = { left: 16, right: 624, y: 14 } as const;
-const MARK_RADIUS = 4.5;
-const LABEL_SIZE = "calc(var(--text-caption) * var(--k, 1))";
+import { TimelineTrack, type TrackPoint } from "./TimelineTrack";
+import { useTimelinePlay } from "./useTimelinePlay";
 
-export function axisPosition(year: number, first: number, last: number): number {
-  const span = last - first;
-  return AXIS.left + (span > 0 ? (year - first) / span : 0.5) * (AXIS.right - AXIS.left);
+const POINTS_LABEL = "Dated moments";
+
+function trackPoints(events: readonly TimelineEvent[], renderUnit: RenderUnit, textOf: (ref: string) => string): TrackPoint[] {
+  const positions = pointPositions(events.map((event) => event.year));
+  return events.map((event, at) => {
+    const title = textOf(event.title);
+    return { key: `${event.year}-${at}`, position: positions[at], name: title ? `${eraYear(event.year)}, ${title}` : eraYear(event.year), shown: renderUnit(event.when) };
+  });
 }
 
-function TimelineAxis({ events, labelledBy }: { events: TimelineEvent[]; labelledBy: string }) {
-  const ref = useRef<SVGSVGElement | null>(null);
-  const scale = useFitScale(ref, WIDTH);
-  const first = events[0].year;
-  const last = events[events.length - 1].year;
+function Played({ events, renderUnit, textOf }: { events: TimelineEvent[]; renderUnit: RenderUnit; textOf: (ref: string) => string }) {
+  const play = useTimelinePlay(events.length, events.length - 1);
+  const points = useMemo(() => trackPoints(events, renderUnit, textOf), [events, renderUnit, textOf]);
   return (
-    <svg ref={ref} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img" aria-labelledby={labelledBy} data-fit="" className="block h-auto w-full" style={fitStyle(scale)} data-testid="general-timeline-axis">
-      <line x1={AXIS.left} x2={AXIS.right} y1={AXIS.y} y2={AXIS.y} stroke="var(--chart-axis-line)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-      {events.map((event, at) => (
-        <circle key={`${event.year}-${at}`} cx={axisPosition(event.year, first, last)} cy={AXIS.y} r={MARK_RADIUS * scale} fill="var(--chart-series)" stroke="var(--ground)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-      ))}
-      <text x={AXIS.left} y={HEIGHT - 6} fill="var(--chart-axis-text)" style={{ fontSize: LABEL_SIZE }}>
-        {eraYear(first)}
-      </text>
-      <text x={AXIS.right} y={HEIGHT - 6} textAnchor="end" fill="var(--chart-axis-text)" style={{ fontSize: LABEL_SIZE }}>
-        {eraYear(last)}
-      </text>
-    </svg>
-  );
-}
-
-export function TimelineView({ spec, renderUnit }: ComponentViewProps) {
-  const timeline = useMemo(() => parsedSpec(timelineSpecShape, spec), [spec]);
-  const titleId = useId();
-  if (!timeline) return null;
-  return (
-    <GeneralFigure kind="timeline" head={timeline.head} titleId={titleId} renderUnit={renderUnit}>
-      <div className="grid gap-3">
-        <TimelineAxis events={timeline.events} labelledBy={titleId} />
-        <ol className="grid" data-testid="general-timeline">
-          {timeline.events.map((event, at) => (
-            <li key={`${event.year}-${at}`} className="grid gap-x-4 gap-y-1 border-t border-rule py-3 sm:grid-cols-[7rem_minmax(0,1fr)]">
+    <div className="grid gap-3" ref={play.watched} data-testid="general-timeline-play" data-at={play.at}>
+      <TimelineTrack points={points} play={play} label={POINTS_LABEL} first={eraYear(events[0].year)} last={eraYear(events[events.length - 1].year)} />
+      <ol className="grid" data-testid="general-timeline">
+        {events.map((event, at) => {
+          const current = at === play.at;
+          return (
+            <li
+              key={`${event.year}-${at}`}
+              aria-current={current ? "step" : undefined}
+              className={cn("grid gap-x-4 gap-y-1 border-t border-s-2 border-t-rule py-3 ps-3 transition-colors duration-state sm:grid-cols-[7rem_minmax(0,1fr)]", current ? "border-s-ink-1" : "border-s-transparent")}
+            >
               <p className="font-ui text-label font-semibold text-ink-1 [font-variant-numeric:lining-nums_tabular-nums]">{renderUnit(event.when)}</p>
               <div className="grid min-w-0 gap-1">
                 <p className="font-ui text-h4 text-ink-1">{renderUnit(event.title)}</p>
                 <p className="max-w-measure font-reading text-body-sm text-ink-1">{renderUnit(event.text)}</p>
               </div>
             </li>
-          ))}
-        </ol>
-      </div>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+export function TimelineView({ spec, renderUnit, unitText }: ComponentViewProps) {
+  const timeline = useMemo(() => parsedSpec(timelineSpecShape, spec), [spec]);
+  const titleId = useId();
+  const textOf = useMemo(() => unitText ?? (() => ""), [unitText]);
+  if (!timeline) return null;
+  return (
+    <GeneralFigure kind="timeline" head={timeline.head} titleId={titleId} renderUnit={renderUnit}>
+      <Played events={timeline.events} renderUnit={renderUnit} textOf={textOf} />
     </GeneralFigure>
   );
 }

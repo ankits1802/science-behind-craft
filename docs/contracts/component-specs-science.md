@@ -54,8 +54,19 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
   own behaviour, and no view re-renders after the kit binds it (decision 0106, consequences). The
   kit drives a delivered spec as it drives Ajrakh's, on any page that draws it (decision 0198): a
   reaction player by its rail, arrow keys and Play; a dip player whose scene is not Ajrakh's
-  animated cloth by its own phases; a lab that is not Ajrakh's by its options; a molecule by its
-  own geometry.
+  animated cloth by its own phases; a stage player that is not Ajrakh's by its ribbon, label card
+  and list; a lab that is not Ajrakh's by its options; a molecule by its own geometry.
+- **Players play on their own** (decision 0228, the owner's instruction overriding the design
+  system's motion on request). A reaction, dip or stage player starts playing when it comes into
+  the middle of the viewport (`KV.seen`), from its first step, and loops; out of view it pauses
+  and goes on from there when it comes back. Its own button is Pause while it plays and Play
+  when it does not (`aria-pressed`; a dip player's Dip again is that button); a step, stage or
+  dip pressed is shown at once and a playing player plays on from it; the status is
+  `aria-live="off"` while it plays. The kit holds a player's text, lane and scene at the height
+  of its tallest step (`KV.steady`) and a dip key and stage label card at the height they have
+  reached (`KV.ratchet`), so playing moves nothing around it. Under either reduced-motion switch
+  nothing plays: the player rests on its `current` step with every end state drawn and each
+  press of its button shows the next state at once and says it.
 - **A scene is drawn or composed from the kit.** Each scene slot of a player, the toggle's stage
   drawing and the label card's seal (`plates`) take either a free drawing or a kit scene
   (`component_specs_kit_scene.KitScene`, decision 0200): `{parts, motion?}`, one to three named parts
@@ -63,7 +74,8 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
   a unit that cites its facts. The two are told apart by `parts` (`scene_form`). The web draws a kit
   scene with `components/artkit/KitScene.tsx`: the parts inside the slot's own frame at every
   width, the kit's textures once per component and the key of framed swatches and cited labels
-  beside the frame, never a word inside the drawing. A scene's `motion` (`dip`, `take`, `dry`) is
+  beside the frame, never a word inside the drawing. A scene's `motion` (`dip`, `take`, `dry`,
+`react` for a scene of species) is
   allowed only where the reader shows the scene again (a reaction step, a dip phase, a dip player's
   scene); the stage player's drawing, the toggle's stage box and the seal rest as drawn, so a kit
   scene there names none (`KitStill`). The kit plays a shown scene's part with the design system's
@@ -92,7 +104,9 @@ reaction per step (`scene {whereIcon?, where, art}`, desk, tall and phone) with 
 second is drawn as `figure.rp.rx-player`. A step's `art` is its drawings (desk, tall and phone, beside
 its `whereIcon`) or one kit scene, which draws where the step happens itself, so its where icon may be
 left out; the kit shows it with the step and plays its part's motion when the reader chooses the
-step or presses Play. The view gives the where drawing its size, never its container
+step, presses Play or the player reaches it playing. A lane's name, formula, state and change
+label wrap inside the lane at every width from 320 px and no part of a player scrolls (decision
+0228). The view gives the where drawing its size, never its container
 (`lib/reactionWhere.whereDrawing`, decision 0210): an icon, a drawing at most 32 units wide (the
 drawing checks' `iconView`), at its own units, one a pixel, with no `vg` class; any other the kit's
 92 px vignette, its `vg` class added where the spec leaves it out; either `aria-hidden`, since the
@@ -111,12 +125,13 @@ and oiled with no equation, because the patina's compounds are unidentified. Ajr
 `shared/chemistry/indigo-vat-dip`.
 
 The kit animates Ajrakh's scene, the cloth that goes green into the vat and turns blue in the air
-(`.cl-move` and its parts). Any other dip player is played by its own phases (`initDips`): Dip again
+(`.cl-move` and its parts). Any other dip player is played by its own phases (`initDips`): each dip
 moves to the next of its `dips` (after the last, the first) and shows each phase in order, over the
-vat's 2,600 ms shared between them, its drawing in the scene, its strip item `aria-current="step"`
+vat's 2,600 ms shared between them, a dip every 3.8 s while it plays in view (`dipPlay`), its drawing in the scene, its strip item `aria-current="step"`
 and the status line saying `Dip n of N.` with its kicker and text; it rests on the last phase with
 the spec's scene back in place. Under either reduced-motion switch each press shows the next phase
-at once and says it. The scene and each phase's drawing may be a kit scene: a phase's key sits in the
+at once and says it, Dip again then being the button's label. The scene and each phase's drawing
+may be a kit scene: a phase's key sits in the
 strip under its text, the scene's key under the scene (`.vat-key`), and the kit shows each phase's
 drawing and key in the scene in turn and plays the shown part's motion.
 
@@ -130,8 +145,12 @@ and swatch from the page's `#tile-n` patterns, the label card at rest ("Stage 11
 ribbon as a toolbar. The label before each stage's after (`afterLabel`, Ajrakh's "Cloth after", a dhokra
 mould's "Model after") is the spec's, and a stage may name a recorded material as its `swatch`, drawn in
 place of the page's `#tile-n` pattern, so another craft's stages show their own colours. The
-`drawing` may be a kit scene at rest, its key under the stage box (`.lc-key`). The kit binds only
-Ajrakh's living cloth (`.lc-bsvg`) and leaves any other stage player as drawn.
+`drawing` may be a kit scene at rest, its key under the stage box (`.lc-key`). The kit plays
+Ajrakh's living cloth (`.lc-bsvg`) and any other stage player alike (`stageDriver`, decision
+0228): one that is not Ajrakh's (`genericStages`) shows each stage's label card, ribbon and list
+item, swaps in a stage's own kit scene where its list item holds one, lays the stage's swatch in
+a band that dips in at the foot of the stage box and keeps the ribbon's pressed stage in view.
+The ribbon scrolls without a scroll bar on a phone.
 Ajrakh: `kutch-ajrakh/process/cloth-after-each-stage`.
 
 ## diagram
@@ -151,7 +170,11 @@ label, formula, atom line, note and its at-rest projection as a drawing; the dia
 yaw in whole degrees. With side paragraphs the figure is `mols mol-two`. The kit redraws the model
 from the page's molecule data on drag, on the arrow keys, Home and End and on Turn, and zooms it
 from 0.6 to 2.5 times on plus and minus, a pinch of two fingers and a trackpad's pinch
-(control and wheel); the dial's text names the zoom when it is not 1. Ajrakh: two.
+(control and wheel); the dial's text names the zoom when it is not 1. Once in view the model
+turns slowly on its own (15 degrees a second, decision 0228), and holds still under the pointer,
+while anything in it has focus, while it is dragged and when its Turn button, Pause while it
+turns, is pressed; under either reduced-motion switch it rests at its angle and Turn turns it a
+quarter at once. Ajrakh: two.
 
 A delivered model carries its own data as `geometry {atoms [[element, x, y, z]], bonds [[first,
 second, order]], radius}`: PubChem's 3D conformer centred on its atoms' mean, to 4 decimals, the
@@ -258,10 +281,15 @@ the fact that names it (the stage's name for the bath, the colour after's fact f
 the material's name for the paste). A dip player draws every phase and its scene so, and a phase the
 kit cannot draw is left out and named, with the fact to propose; a phase whose colour no token shows
 is drawn by the parts that take no colour (the bath without its piece, the paste, the heat and the
-water). A reaction player draws each step's
-stage as its scene when the kit draws every step's stage; otherwise it keeps one scene for all its
-steps, drawn in line work (each species an ink outline, dashed when no colour is recorded for it), so
-nothing is painted by hand.
+water). A reaction player draws each step's own species as its scene (`compose_scene.species_scene`,
+decision 0228): every reactant and product a `species` part labelled by the reaction's facts, in its
+material's recorded colour or as an outline, with the `react` motion; oxygen (`O2` or a name saying
+oxygen) arrives where it is one of several reactants, otherwise a mordant (its material's role, or a
+name saying alum, aluminium, iron, ferrous, ferric or mordant) where it is not the only kind; a
+bond breaks only in a hydrolysis, a dehydration or a dehydroxylation (in the first reactant that is
+not water) or where one reactant gives two products or more. When a reaction has more species than
+a scene holds (eight), the player keeps one scene for all its steps, drawn in line work (each
+species an ink outline, dashed when no colour is recorded for it), so nothing is painted by hand.
 
 ## How this document is kept true
 
@@ -274,6 +302,8 @@ nothing is painted by hand.
 | One component of each kind checked by hand against the approved page, the client's kinds against the backend's, and the shape refusals | `frontend/e2e/monograph-science-views-unit.spec.ts` |
 | The colours a drawing accepts, as the interactives skill lists them | `backend/tests/mcp/test_interactives_skill.py`, against `COLOUR_TOKEN_PATTERN` |
 | A model's geometry and its drawn group, and a molecule key's atom swatches | `backend/tests/research/test_molecule_geometry_spec.py` |
+| A composed reaction step's species: the reagent that arrives, the bond that breaks, the colours its materials record, the line work kept for a crowded reaction | `backend/tests/compose/test_compose_scene.py`, `backend/tests/compose/test_compose_reaction.py` |
+| Every player playing in view from its first step, one Pause, a step pressed playing on, a molecule turning and holding still, nothing moving under either switch, and no part of a player scrolling at 320 px | `frontend/e2e/players-play-unit.spec.ts`, `frontend/e2e/composed-interactives-unit.spec.ts`, `frontend/e2e/kit-players-unit.spec.ts`, `backend/tests/research/test_kit_style_rules.py` |
 | PubChem's recorded conformer gives Ajrakh's alizarin data, and its projection Ajrakh's drawing | `backend/tests/science/test_molecule_model.py` |
 | A delivered molecule carries its own `mol-data` to a generated page | `backend/tests/layouts/test_generated_molecules.py` |
 | Each kind composed from fixture facts, refused with what to propose, citing only the craft's own facts; its scenes built from kit parts (`test_compose_kit.py`); a dip from colour names alone, a colour in words, a molecule with sulphur and a metal | `backend/tests/compose/`, `backend/tests/mcp/test_compose_tool.py` |

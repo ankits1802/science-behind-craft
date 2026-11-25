@@ -1,5 +1,5 @@
 import { ART_KIT, type KitMotion } from "@/lib/artKit";
-import { kitPartShape, movingPart, type KitPart } from "@/lib/componentSpecsKit";
+import { kitPartShape, movingPart, speciesParts, type KitPart } from "@/lib/componentSpecsKit";
 import { list, nullable, object, oneOf, optional, ShapeError, type Shape } from "@/lib/shape";
 
 export const KIT_SCENE_KINDS = ["reaction_player", "dip_player", "stage_player", "choice_toggle", "label_card"] as const;
@@ -9,10 +9,11 @@ export type KitScene = { parts: KitPart[]; motion?: KitMotion | null };
 const fields = object<KitScene>({ parts: list(kitPartShape, 1), motion: optional(nullable(oneOf(ART_KIT.motions))) });
 
 export const kitSceneShape: Shape<KitScene> = {
-  expected: "a kit scene of one to three named parts",
+  expected: "a kit scene of one to three named parts, or the species of one reaction",
   parse(value, path) {
     const scene = fields.parse(value, path);
-    if (scene.parts.length > ART_KIT.partsPerPanelMax) throw new ShapeError(`${path}.parts`, `at most ${ART_KIT.partsPerPanelMax} parts`);
+    const most = speciesParts(scene.parts) ? ART_KIT.speciesPerSceneMax : ART_KIT.partsPerPanelMax;
+    if (scene.parts.length > most) throw new ShapeError(`${path}.parts`, `at most ${most} parts`);
     return scene;
   }
 };

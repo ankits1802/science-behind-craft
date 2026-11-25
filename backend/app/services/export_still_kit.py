@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import TypeAdapter, ValidationError
 
-from app.research.component_specs_kit import DeclaredDiagramSpec, KitPartSpec
+from app.research.component_specs_kit import DeclaredDiagramSpec, KitPartSpec, SpeciesPart
 
 from .export_still_kit_more import heat_nodes, tool_nodes, water_nodes
 from .export_still_kit_parts import (
@@ -18,6 +18,7 @@ from .export_still_kit_parts import (
     piece_nodes,
     section_nodes,
 )
+from .export_still_kit_species import species_nodes, species_scene_nodes
 from .export_still_kit_surfaces import INK, Node, group, path
 from .export_still_svg import svg_still
 from .export_stills import Affine, Still, StillText, ink, merged, translated
@@ -58,6 +59,7 @@ PART_NODES: Mapping[str, Callable[[Any], list[Node]]] = MappingProxyType(
         "tool": tool_nodes,
         "section": section_nodes,
         "piece": piece_nodes,
+        "species": species_nodes,
     }
 )
 SCENE_PARTS: TypeAdapter[list[KitPartSpec]] = TypeAdapter(list[KitPartSpec])
@@ -104,6 +106,9 @@ def _cell(at: int, across: int) -> tuple[float, float]:
 
 
 def _placed_parts(parts: Sequence[KitPartSpec]) -> list[Node]:
+    species = [part for part in parts if isinstance(part, SpeciesPart)]
+    if species and len(species) == len(parts):
+        return species_scene_nodes(species)
     boxes = PANEL_BOXES[min(len(parts), len(PANEL_BOXES))]
     return [
         group(PART_NODES[part.part](part), f"translate({x:g} {y:g}) scale({size / PART_BOX:.4f})")

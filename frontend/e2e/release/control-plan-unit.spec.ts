@@ -5,9 +5,9 @@ import { abortedRequest, webkitLeavingNoise } from "../production/checks";
 
 import {
   citationMode,
-  endsOnItsOwn,
   expectedProblems,
   flippedTheme,
+  heldProblems,
   layerSwitches,
   nextDips,
   optionIndex,
@@ -68,8 +68,6 @@ test("the theme toggle, the dip player and a player's steps each move to a diffe
   expect(otherStep(1, 4)).toBe(2);
   expect(otherStep(4, 4)).toBe(1);
   expect(otherStep(1, 1)).toBeNull();
-  expect(endsOnItsOwn(2, 2)).toBe(true);
-  expect(endsOnItsOwn(2, 4)).toBe(false);
   expect(otherChoice(["Basic", "Detailed", "Expert"], "Detailed")).toBe("Basic");
   expect(otherChoice(["Plates", "Names"], "Plates")).toBe("Names");
   expect(otherChoice(["Plates"], "Plates")).toBeNull();
@@ -78,6 +76,8 @@ test("the theme toggle, the dip player and a player's steps each move to a diffe
 test("a control fails when its state is unchanged or not the state it should reach", () => {
   expect(unchangedProblems("the dip player", "2", "2")).toEqual(['the dip player left its state unchanged at "2"']);
   expect(unchangedProblems("the dip player", "2", "3")).toEqual([]);
+  expect(heldProblems("the paused reaction player", "2", "2")).toEqual([]);
+  expect(heldProblems("the paused reaction player", "2", "3")).toEqual(['the paused reaction player moved from "2" to "3" while paused']);
   expect(expectedProblems("the theme toggle", "dark", "light")).toEqual(['the theme toggle shows "light"; it should show "dark"']);
   expect(expectedProblems("the theme toggle", "dark", "dark")).toEqual([]);
 });
