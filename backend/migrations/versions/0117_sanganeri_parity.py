@@ -26,7 +26,7 @@ $do$
 
 def upgrade() -> None:
     op.create_table(
-        TABLE,
+        "StoredDocumentVersion",
         sa.Column("subjectKind", sa.String(length=20), nullable=False),
         sa.Column("subjectSlug", sa.String(length=200), nullable=False),
         sa.Column("language", sa.String(length=16), server_default="en", nullable=False),
