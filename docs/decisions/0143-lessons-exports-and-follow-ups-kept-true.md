@@ -24,6 +24,7 @@ The contracts are `docs/contracts/learning.md` and `docs/contracts/research.md`.
 | The shapes and files | [learning.md](../contracts/learning.md), Lesson packs and Exports |
 | Every scholarly adapter names the journal, and stored DOIs' journals are read again | [decision 0167](0167-answer-leftovers-kept-true.md) |
 | A follow-up held to what its whole explainer shows, so a region story is once per explainer (amends item 9) | [decision 0174](0174-a-confirmed-downgrade-and-answers-that-fit-and-repeat-nothing.md) |
+| Page exports build in two slots of their own with a short wait, apart from the two this record keeps for answer and lesson files (amends item 4) | [decision 0214](0214-a-page-export-filed-once-built-in-its-own-slots-at-a-caller-s-pace-and-its-rebuild-queued.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

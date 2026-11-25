@@ -24,6 +24,7 @@ keys an interface words file holds gain `export.*`). The contracts are
 | The picture reads, the bucket and a file made while a picture was unread | [decision 0067](0067-lessons-and-exports.md), [decision 0143](0143-lessons-exports-and-follow-ups-kept-true.md) |
 | The open licences | [decision 0192](0192-open-licence-pictures-placed-by-their-page.md) |
 | The phone budget the page's JavaScript is held to | [decision 0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) |
+| A page file made while a picture was unread used again for its hour, each picture given its own time, and a caller's builds counted (amends item 2) | [decision 0214](0214-a-page-export-filed-once-built-in-its-own-slots-at-a-caller-s-pace-and-its-rebuild-queued.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

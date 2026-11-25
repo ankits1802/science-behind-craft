@@ -1,6 +1,6 @@
 import asyncio
 import zipfile
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from functools import cache
 from io import BytesIO
 from xml.etree import ElementTree
@@ -20,6 +20,8 @@ from ..learning.lesson_fixtures import FakeBucket
 from .page_fixture import fixture_export, fixture_page, kutch_document
 
 NOW = datetime(2026, 11, 25, 6, 30, tzinfo=UTC)
+NEXT_DAY = NOW + timedelta(days=1)
+STORED_DOCX = "KalaVigyan_Craft-Page_Every-New-Kind_Export_v1.docx"
 WORD = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 DOCX_PARTS = {
     "[Content_Types].xml",
@@ -122,6 +124,32 @@ async def test_a_page_export_is_filed_once_under_its_page_and_named_by_the_namin
     assert link == again and link.format == "docx"
     assert link.file_name == "KalaVigyan_Craft-Page_2026-11-25_Every-New-Kind_Export_v1.docx"
     [key] = bucket.stored
-    assert key.startswith(f"exports/{PAGE_EXPORT_OWNER}/") and key.endswith(link.file_name)
+    assert key.startswith(f"exports/{PAGE_EXPORT_OWNER}/") and key.endswith(f"/{STORED_DOCX}")
+    assert bucket.signed[0][1].startswith(f'attachment; filename="{link.file_name}"')
     assert bucket.stored[key][1] == EXPORT_MEDIA_TYPES["docx"]
     assert bucket.stored[key][0].startswith(b"PK")
+
+
+async def test_a_page_asked_on_two_days_is_built_once_and_named_by_the_day_it_is_downloaded() -> None:
+    bucket = FakeBucket()
+    document = fixture_page()
+    first = await page_export_link(tools_at(bucket, NOW), document, served="v1-abc", fmt="docx")
+    later = await page_export_link(tools_at(bucket, NEXT_DAY), document, served="v1-abc", fmt="docx")
+    [key] = bucket.stored
+    assert key.endswith(f"/{STORED_DOCX}")
+    assert first.file_name == "KalaVigyan_Craft-Page_2026-11-25_Every-New-Kind_Export_v1.docx"
+    assert later.file_name == "KalaVigyan_Craft-Page_2026-11-26_Every-New-Kind_Export_v1.docx"
+    assert [signed[0] for signed in bucket.signed] == [key, key]
+    assert bucket.signed[1][1].startswith(f'attachment; filename="{later.file_name}"')
+    await page_export_link(tools_at(bucket, NEXT_DAY), document, served="v2-def", fmt="docx")
+    assert len(bucket.stored) == 2
+
+
+def tools_at(bucket: FakeBucket, moment: datetime) -> ExportTools:
+    return ExportTools(
+        objects=bucket,
+        pictures=_NoPictures(),
+        apa=apa_references,
+        clock=lambda: moment,
+        builds=asyncio.Semaphore(1),
+    )

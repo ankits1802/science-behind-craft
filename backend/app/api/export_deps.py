@@ -5,11 +5,16 @@ import logging
 import uuid
 from collections.abc import AsyncIterator
 
-from fastapi import HTTPException, Response, status
+from fastapi import Depends, HTTPException, Response, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.requests import HTTPConnection
 
+from app.api.public_deps import public_reader
 from app.core.db import release_connection
 from app.core.errors import ExternalFailure, NotConfigured
+from app.core.rate_limit import export_build_attempt, retry_after_value
+from app.models import User
 from app.research.citation_export import CitationExport
 from app.research.citation_formats import citation_file
 from app.research.explainer_versions import ExplainerVersionDocument
@@ -26,33 +31,93 @@ from app.services.export_files import (
     lesson_file_link,
     opened_export_tools,
 )
-from app.services.export_store import EXPORT_BUILDS_AT_ONCE
+from app.services.export_store import (
+    EXPORT_BUILDS_AT_ONCE,
+    Admission,
+    BuildRefused,
+    BuildsSpent,
+    ExportObjects,
+    WaitedSlots,
+)
 from app.services.naming import content_disposition, export_file_name
 from app.services.object_store import media_bucket
+from app.services.page_export_files import (
+    PAGE_EXPORT_BUILDS_AT_ONCE,
+    PAGE_EXPORT_RETRY_SECONDS,
+    PAGE_EXPORT_WAIT_SECONDS,
+)
 
 __all__ = [
+    "BUILDS_SPENT_DETAIL",
     "EXPORT_UNAVAILABLE_DETAIL",
+    "build_admission",
     "citation_export",
     "citation_file_response",
     "explainer_pdf",
     "export_tools",
     "lesson_file",
+    "page_export_tools",
+    "refused_export",
+    "unavailable_export",
 ]
 
 EXPORT_UNAVAILABLE_DETAIL = "This file can't be made right now. Try again later."
+BUILDS_SPENT_DETAIL = (
+    "Many new files were asked for from this address or account in the last few minutes. "
+    "Wait a little and try again."
+)
 CITATIONS_WHAT = "Citations"
 
 logger = logging.getLogger(__name__)
 
 _export_builds = asyncio.Semaphore(EXPORT_BUILDS_AT_ONCE)
+_page_export_builds = WaitedSlots(
+    PAGE_EXPORT_BUILDS_AT_ONCE, wait_seconds=PAGE_EXPORT_WAIT_SECONDS, retry_after=PAGE_EXPORT_RETRY_SECONDS
+)
 
 
 async def export_tools() -> AsyncIterator[ExportTools]:
+    async with opened_export_tools(_bucket(), _export_builds) as tools:
+        yield tools
+
+
+async def page_export_tools(
+    connection: HTTPConnection, reader: User | None = Depends(public_reader)
+) -> AsyncIterator[ExportTools]:
+    admit = build_admission(connection, reader)
+    async with opened_export_tools(_bucket(), _page_export_builds, admit=admit) as tools:
+        yield tools
+
+
+def build_admission(connection: HTTPConnection, reader: User | None) -> Admission:
+    async def admit() -> None:
+        allowed, wait_seconds = await export_build_attempt(connection, reader)
+        if not allowed:
+            raise BuildsSpent(BUILDS_SPENT_DETAIL, retry_after=wait_seconds)
+
+    return admit
+
+
+def refused_export(refused: BuildRefused) -> JSONResponse:
+    spent = isinstance(refused, BuildsSpent)
+    return JSONResponse(
+        {"detail": refused.message},
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS if spent else status.HTTP_503_SERVICE_UNAVAILABLE,
+        headers={"Retry-After": retry_after_value(refused.retry_after)},
+    )
+
+
+def unavailable_export() -> JSONResponse:
+    return JSONResponse(
+        {"detail": EXPORT_UNAVAILABLE_DETAIL}, status_code=status.HTTP_503_SERVICE_UNAVAILABLE
+    )
+
+
+def _bucket() -> ExportObjects:
     objects = media_bucket()
     if objects is None:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, EXPORT_UNAVAILABLE_DETAIL)
-    async with opened_export_tools(objects, _export_builds) as tools:
-        yield tools
+    return objects
 
 
 async def citation_export(session: AsyncSession, document: ExplainerVersionDocument) -> CitationExport:

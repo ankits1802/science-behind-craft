@@ -71,6 +71,7 @@ RESERVED_STEMS = frozenset(
 )
 _ZERO_WIDTH = frozenset({"‌", "‍"})
 NameField = str | None
+DayField = datetime | None
 
 
 @dataclass(frozen=True)
@@ -123,11 +124,11 @@ def lesson_file_name(*, made_at: datetime, craft: str | None, title: str, fmt: s
 
 
 def export_file_name(
-    *, entity: str, made_at: datetime, craft: NameField, subject: NameField, version: int, what: str, ext: str
+    *, entity: str, made_at: DayField, craft: NameField, subject: NameField, version: int, what: str, ext: str
 ) -> str:
     if version < 1:
         raise InvalidInput(f"{entity} version {version} does not fit v<n>")
-    fixed = (PORTAL, field(entity), _ist(made_at).date().isoformat())
+    fixed = (PORTAL, field(entity), "" if made_at is None else _ist(made_at).date().isoformat())
     return _named(fixed, (field(what), f"v{version}"), ext, (None, craft, _capped_subject(subject or "")))
 
 

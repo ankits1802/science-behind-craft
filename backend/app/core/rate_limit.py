@@ -28,6 +28,8 @@ CLIENT_REGISTRATIONS_PER_WINDOW = 20
 CLIENT_REGISTRATION_WINDOW_SECONDS = 3600
 CODE_ATTEMPTS_PER_WINDOW = 10
 CODE_WINDOW_SECONDS = 900
+EXPORT_BUILDS_PER_WINDOW = 10
+EXPORT_BUILD_WINDOW_SECONDS = 600
 DIGEST_CHARS = 32
 FACT_PROPOSALS = "facts"
 COMPONENT_PROPOSALS = "components"
@@ -233,6 +235,14 @@ async def public_asset_attempt(connection: HTTPConnection, *, now: datetime | No
         return await _attempt(SERVER_ASSET_READ_KEY, limit, PUBLIC_READ_WINDOW_SECONDS, now=now)
     key = f"public-asset:{client_ip(connection)}"
     return await _attempt(key, PUBLIC_ASSET_READS_PER_WINDOW, PUBLIC_READ_WINDOW_SECONDS, now=now)
+
+
+async def export_build_attempt(
+    connection: HTTPConnection, reader: Any | None, *, now: datetime | None = None
+) -> Attempt:
+    subject = client_ip(connection) if reader is None else f"account-{reader.id}"
+    key = f"export-build:{subject}"
+    return await _attempt(key, EXPORT_BUILDS_PER_WINDOW, EXPORT_BUILD_WINDOW_SECONDS, now=now)
 
 
 def retry_after_value(wait_seconds: float) -> str:

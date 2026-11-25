@@ -406,12 +406,17 @@ flowchart LR
    family or a category page by `GET /api/families/{slug}/monograph/{pdf|docx}` and
    `GET /api/categories/{slug}/monograph/{pdf|docx}` (decision 0208), in the language it is served
    in; the web offers them as one Download menu on every such page (`components/monograph/PageDownload`).
-   The route reads the served document as the page's route does, releases its connection and files
-   the file under `exports/<page owner>/<sha256>/<name>`, the hash taken over the served tag, the
-   export's edition and the language's reviewed export words, so a new version, a new translation or
-   a newly reviewed word is a new file. Only when the file is missing are the open-licence pictures
-   the page's plates show read (`page_export_pictures`, through `picture_files`, Commons at the paper
-   width and the site's own pictures from its own host, within 30 s). In one worker thread
+   The route reads the served document as the page's route does, queues the rebuild that read
+   claimed (`queue_rebuild`), releases its connection and files the file under
+   `exports/<page owner>/<sha256>/<stored name>`, the hash taken over the served tag, the export's
+   edition and the language's reviewed export words and the name without its day, so a new version,
+   a new translation or a newly reviewed word is a new file and nothing else is (decision 0214).
+   Only when the file is missing does the caller's build allowance count one
+   (`core/rate_limit.export_build_attempt`), does the build wait at most 5 s for one of the page
+   exports' own two slots (`export_store.WaitedSlots`, apart from the answer and lesson files'), and
+   are the open-licence pictures the page's plates show read (`page_export_pictures`, through
+   `picture_files`, Commons at the paper width and the site's own pictures from its own host, four at
+   once, each within 10 s); a file built while one was unread is used again for that hour. In one worker thread
    `services/page_export_document` lays the page out as chapters of passages and figures, each
    component one figure built by its kind's builder (`page_export_kit`, `page_export_science`,
    `page_export_labs`, `page_export_plates`, every other kind its words and drawings through

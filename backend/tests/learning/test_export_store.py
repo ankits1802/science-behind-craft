@@ -22,8 +22,11 @@ from app.research.export_links import EXPORT_LINK_SECONDS
 from app.services.export_pictures import PICTURE_MAX_SIDE, export_pictures, normalised
 from app.services.export_store import (
     EXPORT_BUILDS_AT_ONCE,
+    BuildsBusy,
+    BuildsSpent,
     BuiltExport,
     ExportFile,
+    WaitedSlots,
     export_digest,
     stored_export_link,
 )
@@ -117,6 +120,78 @@ async def test_a_file_made_while_a_picture_was_unread_is_never_reused() -> None:
     ]
 
 
+async def test_a_file_made_while_a_picture_was_unread_is_reused_within_its_export_s_window() -> None:
+    bucket = FakeBucket()
+    builds: list[frozenset[uuid.UUID]] = []
+    unread = [frozenset({UNREAD}), frozenset({UNREAD}), frozenset()]
+
+    async def build() -> BuiltExport:
+        builds.append(unread[len(builds)])
+        return BuiltExport(b"%PDF-1.7", builds[-1])
+
+    export = ExportFile(
+        owner_id=OWNER,
+        fmt="pdf",
+        file_name="a.pdf",
+        made_from={"pack": 1},
+        unread_reused_for=timedelta(hours=1),
+    )
+    for minute in (0, 59, 60, 120, 180):
+        moment = NOW + timedelta(minutes=minute)
+        await stored_export_link(bucket, export, build, now=moment, builds=one_at_a_time())
+    ten = _filed_at(b'{"madeFrom":{"pack":1},"unreadFrom":"2026-11-18T10:00:00+00:00"}')
+    eleven = _filed_at(b'{"madeFrom":{"pack":1},"unreadFrom":"2026-11-18T11:00:00+00:00"}')
+    complete = _filed_at(b'{"pack":1}')
+    assert len(builds) == 3
+    assert sorted(bucket.stored) == sorted([ten, eleven, complete])
+    assert [signed[0] for signed in bucket.signed] == [ten, ten, eleven, complete, complete]
+
+
+def _filed_at(made_from: bytes) -> str:
+    digest = hashlib.sha256(b'["kalavigyan-export/v1","pdf",' + made_from + b"]").hexdigest()
+    return f"exports/{OWNER}/{digest}/a.pdf"
+
+
+async def test_a_build_waits_briefly_for_a_slot_and_is_refused_as_busy_when_none_frees() -> None:
+    bucket = FakeBucket()
+    slots = WaitedSlots(1, wait_seconds=0.05, retry_after=30.0)
+
+    async def build() -> BuiltExport:
+        return BuiltExport(b"x")
+
+    export = ExportFile(owner_id=OWNER, fmt="pdf", file_name="a.pdf", made_from={"pack": 1})
+    async with slots:
+        with pytest.raises(BuildsBusy) as busy:
+            await stored_export_link(bucket, export, build, now=NOW, builds=slots)
+    assert busy.value.retry_after == 30.0 and bucket.stored == {}
+    await stored_export_link(bucket, export, build, now=NOW, builds=slots)
+    assert len(bucket.stored) == 1
+
+
+async def test_a_caller_is_admitted_only_before_a_build_and_a_refused_one_builds_nothing() -> None:
+    bucket = FakeBucket()
+    admitted: list[int] = []
+    built: list[int] = []
+
+    async def admit() -> None:
+        admitted.append(1)
+        if len(admitted) > 1:
+            raise BuildsSpent("spent", retry_after=60.0)
+
+    async def build() -> BuiltExport:
+        built.append(1)
+        return BuiltExport(b"x")
+
+    first = ExportFile(owner_id=OWNER, fmt="pdf", file_name="a.pdf", made_from={"pack": 1})
+    second = ExportFile(owner_id=OWNER, fmt="pdf", file_name="b.pdf", made_from={"pack": 2})
+    for _ in range(3):
+        await stored_export_link(bucket, first, build, now=NOW, builds=one_at_a_time(), admit=admit)
+    assert len(admitted) == 1 and len(built) == 1
+    with pytest.raises(BuildsSpent):
+        await stored_export_link(bucket, second, build, now=NOW, builds=one_at_a_time(), admit=admit)
+    assert len(admitted) == 2 and len(built) == 1 and len(bucket.stored) == 1
+
+
 async def test_no_more_builds_run_at_once_than_the_limit() -> None:
     bucket, release = FakeBucket(), asyncio.Event()
     started: list[int] = []
@@ -198,7 +273,7 @@ def test_every_golden_explainer_file_name_is_reproduced(row: dict) -> None:
 def test_every_golden_page_export_file_name_is_reproduced(row: dict) -> None:
     name = export_file_name(
         entity=row["entity"],
-        made_at=datetime.fromisoformat(row["madeAt"]),
+        made_at=None if row["madeAt"] is None else datetime.fromisoformat(row["madeAt"]),
         craft=row["craft"],
         subject=row["language"],
         version=row["version"],

@@ -30,7 +30,7 @@ from app.sources.images.picture_files import picture_files
 
 from .apa_references import apa_references
 from .export_pictures import Picture, PictureSource, export_pictures
-from .export_store import BuiltExport, ExportFile, ExportObjects, stored_export_link
+from .export_store import Admission, BuiltExport, ExportFile, ExportObjects, stored_export_link
 from .lesson_deck import lesson_deck
 from .naming import export_file_name, lesson_file_name
 
@@ -84,11 +84,12 @@ class ExportTools:
     apa: ApaReferences
     clock: Callable[[], datetime]
     builds: asyncio.Semaphore
+    admit: Admission | None = None
 
 
 @asynccontextmanager
 async def opened_export_tools(
-    objects: ExportObjects, builds: asyncio.Semaphore
+    objects: ExportObjects, builds: asyncio.Semaphore, *, admit: Admission | None = None
 ) -> AsyncIterator[ExportTools]:
     settings = get_settings()
     async with source_client(settings.research_contact_email) as client:
@@ -98,6 +99,7 @@ async def opened_export_tools(
             apa=apa_references,
             clock=lambda: datetime.now(UTC),
             builds=builds,
+            admit=admit,
         )
 
 

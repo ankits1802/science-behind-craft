@@ -6,9 +6,10 @@ import json
 import uuid
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
+from app.core.errors import AppError
 from app.research.export_links import (
     EXPORT_LINK_SCHEMA_VERSION,
     EXPORT_LINK_SECONDS,
@@ -20,17 +21,26 @@ from .naming import content_disposition, export_key
 from .object_store import PresignedGet
 
 __all__ = [
+    "BUILDS_BUSY",
     "EXPORT_BUILDS_AT_ONCE",
     "EXPORT_RENDERING",
+    "Admission",
+    "BuildRefused",
+    "BuildsBusy",
+    "BuildsSpent",
     "BuiltExport",
     "ExportFile",
     "ExportObjects",
+    "WaitedSlots",
     "export_digest",
     "stored_export_link",
 ]
 
 EXPORT_RENDERING = "kalavigyan-export/v1"
 EXPORT_BUILDS_AT_ONCE = 2
+BUILDS_BUSY = "Other files are being made just now. Try again in half a minute."
+
+Admission = Callable[[], Awaitable[None]]
 
 
 class ExportObjects(Protocol):
@@ -43,19 +53,64 @@ class ExportObjects(Protocol):
     def presigned_get(self, key: str, *, disposition: str, seconds: int, now: datetime) -> PresignedGet: ...
 
 
+class BuildRefused(AppError):
+    def __init__(self, message: str, *, retry_after: float) -> None:
+        super().__init__(message)
+        self.message = message
+        self.retry_after = retry_after
+
+
+class BuildsBusy(BuildRefused):
+    pass
+
+
+class BuildsSpent(BuildRefused):
+    pass
+
+
+class WaitedSlots(asyncio.Semaphore):
+    def __init__(self, value: int, *, wait_seconds: float, retry_after: float) -> None:
+        super().__init__(value)
+        self.wait_seconds = wait_seconds
+        self.retry_after = retry_after
+
+    async def __aenter__(self) -> None:
+        try:
+            async with asyncio.timeout(self.wait_seconds):
+                await self.acquire()
+        except TimeoutError:
+            raise BuildsBusy(BUILDS_BUSY, retry_after=self.retry_after) from None
+
+
 @dataclass(frozen=True)
 class ExportFile:
     owner_id: uuid.UUID
     fmt: str
     file_name: str
     made_from: Any
+    stored_name: str | None = None
+    unread_reused_for: timedelta | None = None
 
     def key(self) -> str:
-        return export_key(self.owner_id, export_digest(self.fmt, self.made_from), self.file_name)
+        return self._key(self.made_from)
 
-    def key_without(self, unread: frozenset[uuid.UUID]) -> str:
-        made_from = {"madeFrom": self.made_from, "unread": sorted(str(one) for one in unread)}
-        return export_key(self.owner_id, export_digest(self.fmt, made_from), self.file_name)
+    def unread_key(self, unread: frozenset[uuid.UUID], now: datetime) -> str:
+        if self.unread_reused_for is None:
+            return self._key({"madeFrom": self.made_from, "unread": sorted(str(one) for one in unread)})
+        return self._unread_window_key(self.unread_reused_for, now)
+
+    def reusable_keys(self, now: datetime) -> tuple[str, ...]:
+        if self.unread_reused_for is None:
+            return (self.key(),)
+        return self.key(), self._unread_window_key(self.unread_reused_for, now)
+
+    def _unread_window_key(self, window: timedelta, now: datetime) -> str:
+        return self._key({"madeFrom": self.made_from, "unreadFrom": _window_start(now, window).isoformat()})
+
+    def _key(self, made_from: Any) -> str:
+        return export_key(
+            self.owner_id, export_digest(self.fmt, made_from), self.stored_name or self.file_name
+        )
 
 
 @dataclass(frozen=True)
@@ -78,10 +133,13 @@ async def stored_export_link(
     *,
     now: datetime,
     builds: asyncio.Semaphore,
+    admit: Admission | None = None,
 ) -> ExportLink:
-    key = export.key()
-    if not await objects.exists(key):
-        key = await _filed(objects, export, build, builds)
+    key = await _found(objects, export, now)
+    if key is None:
+        if admit is not None:
+            await admit()
+        key = await _filed(objects, export, build, now=now, builds=builds)
     link = objects.presigned_get(
         key,
         disposition=content_disposition(export.file_name, inline=False),
@@ -97,18 +155,31 @@ async def stored_export_link(
     )
 
 
+async def _found(objects: ExportObjects, export: ExportFile, now: datetime) -> str | None:
+    for key in export.reusable_keys(now):
+        if await objects.exists(key):
+            return key
+    return None
+
+
 async def _filed(
     objects: ExportObjects,
     export: ExportFile,
     build: Callable[[], Awaitable[BuiltExport]],
+    *,
+    now: datetime,
     builds: asyncio.Semaphore,
 ) -> str:
-    key = export.key()
     async with builds:
-        if await objects.exists(key):
-            return key
+        found = await _found(objects, export, now)
+        if found is not None:
+            return found
         built = await build()
-        if built.unread:
-            key = export.key_without(built.unread)
+        key = export.unread_key(built.unread, now) if built.unread else export.key()
         await objects.put(key, built.body, content_type=EXPORT_MEDIA_TYPES[export.fmt])
     return key
+
+
+def _window_start(now: datetime, window: timedelta) -> datetime:
+    seconds = window.total_seconds()
+    return datetime.fromtimestamp(now.timestamp() // seconds * seconds, UTC)

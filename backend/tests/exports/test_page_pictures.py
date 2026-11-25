@@ -1,4 +1,5 @@
 import asyncio
+import uuid
 import zipfile
 from datetime import UTC, datetime
 from io import BytesIO
@@ -69,6 +70,15 @@ class Refusing:
 class Stalling:
     async def picture(self, url: str) -> bytes:
         await asyncio.sleep(5)
+        return picture_bytes()
+
+
+class SlowFirst:
+    def __init__(self, slow: str) -> None:
+        self.slow = slow
+
+    async def picture(self, url: str) -> bytes:
+        await asyncio.sleep(5 if url == self.slow else 0)
         return picture_bytes()
 
 
@@ -170,6 +180,14 @@ async def test_a_picture_that_takes_too_long_is_left_unread() -> None:
     wanted: list[PaperPicture] = _wanted()
     read = await export_pictures(wanted, Stalling(), within=0.05)
     assert read.found == {} and read.unread == frozenset(one.id for one in wanted)
+
+
+async def test_each_picture_has_its_own_time_so_a_slow_first_one_leaves_the_rest_read() -> None:
+    urls = [THUMB.format(width=width) for width in (1280, 960, 500, 330)]
+    wanted = [PaperPicture(uuid.uuid5(uuid.NAMESPACE_URL, url), url, url) for url in urls]
+    read = await export_pictures(wanted, SlowFirst(urls[0]), within=0.1)
+    assert read.unread == frozenset({wanted[0].id})
+    assert set(read.found) == {one.id for one in wanted[1:]}
 
 
 async def test_the_export_reads_the_shown_picture_and_files_apart_one_it_could_not_read() -> None:
