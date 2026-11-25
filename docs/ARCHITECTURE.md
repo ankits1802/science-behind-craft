@@ -813,7 +813,10 @@ page kit plays a shown scene's part (decision 0200). A kind whose code is heavy 
 timeline map, the why-here ground map and the six page tools) is drawn whole on the server and its
 code reaches the browser only as its holder nears the viewport (`components/answer/nearBlock.tsx`,
 the loaders in `components/monograph/kinds/nearViews.tsx`); the views' stylesheets are one sheet of
-the root layout (`app/component-views.css`). A declared timeline map's relief, rivers and home hatch,
+the root layout (`app/component-views.css`), and of the kit's stylesheet only the rules of the boxes
+a page draws block its first paint, the whole kit following after hydration (decision 0221). The
+first-screen Latin faces are declared and preloaded by the root layout after a masthead photograph
+(`app/FirstScreenFaces.tsx`). A declared timeline map's relief, rivers and home hatch,
 with its minerals key and district legend, are cut on the server into a small still for its frame
 when a document is read (`lib/server/mapStills.ts`, decision 0220) and drawn at first paint until
 each layer's file lands. The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at

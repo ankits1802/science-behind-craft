@@ -12,8 +12,10 @@ import { MonographShellPage } from "../components/monograph/MonographShellPage";
 import { PAGE_DOWNLOAD_FAILED_TEST_ID, PageDownloadFailed } from "../components/monograph/PageDownload";
 import { pageDownloadItems } from "../components/monograph/PageDownloadList";
 import { ThemeProvider } from "../components/ThemeProvider";
+import { shellScopes } from "../lib/kitShellScopes";
 import type { MonographDocument } from "../lib/monographDocument";
 import { railChapters } from "../lib/monographRenderLayout";
+import { documentTree } from "../lib/monographRenderShell";
 import { shownPage } from "../lib/monographShownPage";
 import { PAGE_DOWNLOAD_BUSY, PAGE_DOWNLOAD_FAILED, PAGE_DOWNLOAD_LABEL, pageDownloads, pageSubject, type PageSubject } from "../lib/pageExport";
 
@@ -102,7 +104,7 @@ test("on Kutch Ajrakh the control sits after the approved page's main, which it 
   const before = provided(
     createElement(
       Frame,
-      { document, given: golden, dataDeferred: false, languages: null },
+      { document, given: golden, dataDeferred: false, languages: null, scopes: shellScopes(document, documentTree(document)) },
       createElement(MonographRail, { chapters: railChapters(plan) }),
       createElement(AuthoredShell, { document, shell: document.shell ?? "" })
     )

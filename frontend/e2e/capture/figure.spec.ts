@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 
+import { FIRST_SHEET_PATH } from "../../lib/kitFirstSheet";
 import { mainLines, openedPage } from "../monographNativeBrowser";
 import { specFile } from "../monographMarkup";
 import { lineDiff } from "../parity/parityMeasure";
@@ -79,7 +80,7 @@ test("the ground figure is captured from the React page with the styles that dra
   await prepared(context);
   await openedPage(page, RENDERED);
   await page.locator(DRAWN).waitFor({ state: "attached", timeout: DRAWN_TIMEOUT_MS });
-  const read = await page.evaluate(readSheets, KIT_CSS);
+  const read = await page.evaluate(readSheets, { kitPath: KIT_CSS, firstPath: FIRST_SHEET_PATH });
   const matched = await page.evaluate(matchedForms, { scope: SCOPE, forms: selectorForms(read) });
   const markup = await page.evaluate(outerMarkup, SCOPE);
   if (markup === null) throw new Error(`${SCOPE} is not on ${RENDERED}`);

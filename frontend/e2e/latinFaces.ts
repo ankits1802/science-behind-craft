@@ -13,7 +13,7 @@ function weights(value: string): [number, number] {
 }
 
 function variants(block: string): FaceVariant[] {
-  const listed = [...block.matchAll(/\{ path: "[^"]+", weight: "([^"]+)", style: "(\w+)" \}/g)].map((found) => ({ style: found[2], weights: weights(found[1]) }));
+  const listed = [...block.matchAll(/\{ path: (?:"[^"]+"|\w+), weight: "([^"]+)", style: "(\w+)" \}/g)].map((found) => ({ style: found[2], weights: weights(found[1]) }));
   if (listed.length) return listed;
   const weight = /\n {2}weight: "([^"]+)"/.exec(block)?.[1] ?? "400";
   const style = /\n {2}style: "(\w+)"/.exec(block)?.[1] ?? "normal";
@@ -27,18 +27,30 @@ export function codeRanges(value: string): [number, number][] {
   });
 }
 
+const PAGE_FACE = ": PageFace = {";
+
+function fontImports(source: string): Map<string, string> {
+  return new Map([...source.matchAll(/import (\w+) from "\.\.\/fonts\/([a-z0-9-]+\.woff2)"/g)].map((found) => [found[1], found[2]]));
+}
+
+function faceFiles(block: string, imports: ReadonlyMap<string, string>): string[] {
+  if (!block.includes(PAGE_FACE)) return [...block.matchAll(/\.\.\/fonts\/([a-z0-9-]+\.woff2)/g)].map((found) => found[1]);
+  return [...block.matchAll(/\{ path: (\w+),/g)].map((found) => imports.get(found[1]) ?? found[1]);
+}
+
 export function latinFaces(source: string = readFileSync(LATIN_FONTS, "utf8")): LatinFace[] {
+  const imports = fontImports(source);
   return source
     .split(/\nconst /)
     .slice(1)
-    .filter((block) => block.includes("localFont("))
+    .filter((block) => block.includes("localFont(") || block.includes(PAGE_FACE))
     .map((block) => ({
-      name: block.slice(0, block.indexOf(" ")),
-      family: /prop: "font-family", value: "([^"]+)"/.exec(block)?.[1] ?? "",
-      files: [...block.matchAll(/\.\.\/fonts\/([a-z0-9-]+\.woff2)/g)].map((found) => found[1]),
-      preloaded: !block.includes("preload: false"),
+      name: /^\w+/.exec(block)?.[0] ?? "",
+      family: (/prop: "font-family", value: "([^"]+)"/.exec(block) ?? /\n {2}family: "([^"]+)"/.exec(block))?.[1] ?? "",
+      files: faceFiles(block, imports),
+      preloaded: block.includes(PAGE_FACE) || !block.includes("preload: false"),
       variants: variants(block),
-      ranges: codeRanges(/prop: "unicode-range", value: "([^"]+)"/.exec(block)?.[1] ?? "")
+      ranges: codeRanges((/prop: "unicode-range", value: "([^"]+)"/.exec(block) ?? /\n {2}range: "([^"]+)"/.exec(block))?.[1] ?? "")
     }));
 }
 

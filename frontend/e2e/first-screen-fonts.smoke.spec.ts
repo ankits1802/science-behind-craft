@@ -2,11 +2,13 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 import { expect, test } from "@playwright/test";
 
-import { firstScreen, latinPreloads, latinUses, type FaceUse } from "./firstScreenFonts";
+import { firstScreen, headPreloads, latinPreloads, latinUses, type FaceUse } from "./firstScreenFonts";
 import { contextOptions, SMALL_PHONE } from "./production/matrix";
 import { smokeApiAddress } from "./smokeApi";
 
 const FIRST_SCREENS = ["/crafts/Kutch-Ajrakh/monograph", "/", "/login"];
+const PHOTOGRAPH_FIRST = ["/crafts/Kutch-Ajrakh", "/crafts/Phone-Fixtures", "/"];
+const FIRST_SCREEN_FILES = 5;
 const SMOKE_PROJECT = "desktop";
 const SETTLE_MS = 1500;
 
@@ -37,4 +39,15 @@ test("the first screens at 360 preload every Latin face they draw, so their type
   const drawn = [...new Set(Object.values(measured).flatMap((found) => found.uses.map((use) => use.url)))].sort();
   const preloaded = [...new Set(Object.values(measured).flatMap((found) => found.preloaded))].sort();
   expect(preloaded.filter((url) => !drawn.includes(url)), `faces preloaded that no first screen draws (${JSON.stringify(measured)})`).toEqual([]);
+});
+
+test("a page's head asks for its masthead photograph before any face, and no response header asks for a face first", async ({ request }) => {
+  for (const path of PHOTOGRAPH_FIRST) {
+    const response = await request.get(path);
+    expect(response.ok(), path).toBe(true);
+    const order = headPreloads(await response.text());
+    expect(order.filter((kind) => kind === "font"), `${path} preloads its first-screen faces`).toHaveLength(FIRST_SCREEN_FILES);
+    expect(order[0], `${path}: ${order.join(", ")}`).toBe("photograph");
+    expect(response.headers().link ?? "", path).not.toMatch(/as="?font/i);
+  }
 });

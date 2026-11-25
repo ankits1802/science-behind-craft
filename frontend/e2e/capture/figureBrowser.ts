@@ -4,10 +4,10 @@ export type DrawnElement = { tag: string; svg: boolean; inner: boolean; box: str
 
 type Frame = { rules: CSSRule[]; at: number; sheet: number; chain: string[]; parent: string | null; layer: string };
 
-export function readSheets(kitPath: string): SheetRead {
+export function readSheets({ kitPath, firstPath }: { kitPath: string; firstPath: string }): SheetRead {
   const entries: SheetEntry[] = [];
   const layers: string[] = [];
-  const sheets = [...document.styleSheets];
+  const sheets = [...document.styleSheets].filter((sheet) => sheet.href === null || !new URL(sheet.href).pathname.startsWith(firstPath));
   const listed = (sheet: CSSStyleSheet): CSSRule[] => {
     try {
       return [...sheet.cssRules];

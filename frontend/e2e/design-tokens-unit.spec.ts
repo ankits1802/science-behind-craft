@@ -160,8 +160,13 @@ test("every self-hosted face is named in a font stack, and every script stack op
 });
 
 test("each metric-matched fallback face, named after its font's const, is named in the stack after its face", () => {
-  const adjusted = [...read("app", "latinFonts.ts").matchAll(/const (\w+) = localFont\(\{[^;]*?adjustFontFallback: "([^"]+)"/g)].map((found) => found[1]);
-  expect(adjusted).toEqual(["newsreader", "plexSans"]);
+  const adjusted = [...read("app", "latinFonts.ts").matchAll(/const (\w+): PageFace = \{[^;]*?fallback: \{ family: "([^"]+)", local: "([^"]+)"/g)];
+  expect(adjusted.map((found) => found[1])).toEqual(["newsreader", "plexSans"]);
+  expect(adjusted.map((found) => [found[2], found[3]])).toEqual([
+    ["newsreader Fallback", "Times New Roman"],
+    ["plexSans Fallback", "Arial"]
+  ]);
+  expect(read("app", "latinFonts.ts")).not.toMatch(/adjustFontFallback: "/);
   expect(TOKENS).toMatch(/--font-headline: "Newsreader", "newsreader Fallback",/);
   expect(TOKENS).toMatch(/--font-reading: "Newsreader", [^;]*"newsreader Fallback",/);
   expect(TOKENS).toMatch(/--font-ui: "IBM Plex Sans", [^;]*"plexSans Fallback",/);

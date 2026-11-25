@@ -49,6 +49,11 @@ test("the guard finds every migration alias and spares the named tokens", () => 
   expect(aliasClasses("text-ink-1 text-ink-3 border-rule bg-sunk bg-raised text-indigo-on text-ui text-h2 font-headline font-semibold font-code rounded-card rounded-full rounded-pill shadow-pop ease-out text-error bg-success-wash")).toEqual([]);
 });
 
+test("the guard reads font-display as the retired class, never as the font-face descriptor of the same name", () => {
+  expect(aliasClasses('className="font-display text-h1" hover:font-bold font-mono')).toEqual(["font-display", "font-bold", "font-mono"]);
+  expect(aliasClasses('@font-face{font-family:"Newsreader";font-display:swap}')).toEqual([]);
+});
+
 test("the guard counts the shadcn colour names as aliases, since components use the semantic names", () => {
   const shadcn = "bg-primary text-primary-foreground ring-ring border-border border-input bg-background text-foreground bg-popover text-popover-foreground bg-muted text-muted-foreground bg-destructive text-destructive-foreground ring-offset-background";
   expect(aliasClasses(shadcn)).toEqual(shadcn.split(" "));

@@ -8,6 +8,8 @@ export const MEDIA_BUCKET_ORIGIN = "https://kalavigyan-media-626159998512.s3.ap-
 
 export const WEB_PICTURE_SOURCE = "https:";
 export const APPROVED_MONOGRAPHS = "/monographs/:path*";
+export const FIRST_SHEET_ROUTES = "/monographs/kit/first/*";
+export const SERVED_KIT_CSS = "./public/monographs/kit/monograph.css";
 export const IMAGE_SOURCES = ["'self'", "data:", MEDIA_BUCKET_ORIGIN, WEB_PICTURE_SOURCE];
 export const TURNSTILE_SOURCE = "https://challenges.cloudflare.com";
 export const FRAME_SOURCES = [GOOGLE_IDENTITY_SOURCE, TURNSTILE_SOURCE];
@@ -62,6 +64,9 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     proxyTimeout: 300_000
+  },
+  outputFileTracingIncludes: {
+    [FIRST_SHEET_ROUTES]: [SERVED_KIT_CSS]
   },
   turbopack: {
     root: __dirname

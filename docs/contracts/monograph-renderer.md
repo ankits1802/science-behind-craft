@@ -92,7 +92,19 @@ reader to sign in and back, any other failure is thrown), titled "Preview: <titl
 ## The page
 
 `MonographPage` draws, in this order, with the approved page's landmarks and classes so the kit's
-stylesheet (`MONOGRAPH_KIT_CSS`, loaded once as a React 19 stylesheet) styles it:
+stylesheet (`MONOGRAPH_KIT_CSS`) styles it. Only the kit rules of the boxes the server draws block
+the first paint (decision 0221): the page links one first sheet,
+`/monographs/kit/first/<scopes>.css` (`lib/kitFirstSheet.ts`, served by
+`app/monographs/kit/first/[sheet]/route.ts`), the kit less every rule whose selectors all need a
+`.bx-<scope>` box the page does not draw (`documentScopes` in
+`components/monograph/kitFirstScopes.ts` and `shellScopes` in `lib/kitShellScopes.ts` read the scopes from the chapters or shell nodes the server
+draws: the masthead, the sub-rail and contents, each passage, each drawn slot's home and the boxes
+in its fragments, the sources); the scopes are named in the kit's order (`chem`, `pt`, `rm`, `mb`,
+`ask`, `sa`) and any other name is a 404. The whole kit follows as a React stylesheet of precedence
+`kit`, added after hydration (`KitRestSheet`) and by the drawn rest of a split page, whose transition
+waits for it, so the rest never draws before its rules. The first sheet keeps the kit's order and the
+kit comes after it, so once both have loaded every element is styled as by the kit alone, and the
+boxes the server drew are styled the same before the kit arrives:
 
 1. the chapter rail `nav.kv-rail` (the first chapter unnumbered, the rest numbered 1 to N; a
    generated document's opening chapter is left out), the phone menubar and the `#kv-menu` dialog
@@ -407,6 +419,7 @@ when any of them changes (`kv-prefs`). The menu's display tools change the app's
 | A chapter's listed facts drawn as one cited list after its prose | `frontend/e2e/cited-list-unit.spec.ts` |
 | Native views and the whole shell | `frontend/e2e/monograph-native-unit.spec.ts`, and `monograph-native.smoke.spec.ts` against the built site |
 | The page tools | `frontend/e2e/monograph-tools-unit.spec.ts` and `backend/tests/research/test_component_specs_tools.py` |
+| The first sheet: what it keeps and leaves, its names, its route, and the boxes a page draws named in it | `frontend/e2e/kit-first-sheet-unit.spec.ts` and `kit-first-scopes-unit.spec.ts` |
 | The served page against the approved board | the Monograph parity run (`.github/workflows/monograph-parity.yml`) |
 
 Re-read it when a route draws another subject, a native view replaces a fragment, or a page tool is added.
