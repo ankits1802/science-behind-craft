@@ -16,10 +16,12 @@ export type PhoneRecord = { schemaVersion: 1; recordedAt: string; run: number; p
 export type Sent = { url: string; type: string; bytes: number };
 export type Shift = { at: number; value: number; input: boolean; nodes: string[] };
 export type Task = { at: number; duration: number };
-export type FrameScript = { url: string; duration: number };
+export type FrameScript = { url: string; duration: number; at: number };
 export type Paint = { at: number; node: string; url: string };
-export type Watched = { fcp: number; paints: Paint[]; shifts: Shift[]; tasks: Task[]; scripts: FrameScript[]; firstScreen: string[] };
-export type RawLoad = Watched & { sent: Sent[]; reading: Shift[] | null };
+export type Fetched = { url: string; kind: string; start: number; firstByte: number; end: number; bytes: number; blocking: boolean };
+export type Arrival = { firstByte: number; end: number };
+export type Watched = { fcp: number; paints: Paint[]; shifts: Shift[]; tasks: Task[]; scripts: FrameScript[]; firstScreen: string[]; fetched: Fetched[]; navigation: Arrival };
+export type RawLoad = Watched & { sent: Sent[]; priorities: Record<string, string>; reading: Shift[] | null };
 
 export type Named = { scripts: Sent[]; styles: Sent[]; firstScreenImages: Sent[]; largest: string; shifted: string[]; blocking: FrameScript[]; movedWhileReading: string[] };
 export type PhoneMeasure = PhoneNumbers & { imageBytes: number; documentBytes: number; fontBytes: number; named: Named };
@@ -83,9 +85,15 @@ function onePerAddress(sent: readonly Sent[]): Sent[] {
 }
 
 export function blockingScripts(scripts: readonly FrameScript[]): FrameScript[] {
-  const byUrl = new Map<string, number>();
-  for (const script of scripts) byUrl.set(script.url, (byUrl.get(script.url) ?? 0) + script.duration);
-  return [...byUrl].map(([url, duration]) => ({ url, duration: Math.round(duration) })).sort((left, right) => right.duration - left.duration).slice(0, NAMED_COUNT);
+  const byUrl = new Map<string, { duration: number; at: number }>();
+  for (const script of scripts) {
+    const found = byUrl.get(script.url);
+    byUrl.set(script.url, { duration: (found?.duration ?? 0) + script.duration, at: Math.min(found?.at ?? script.at, script.at) });
+  }
+  return [...byUrl]
+    .map(([url, found]) => ({ url, duration: Math.round(found.duration), at: Math.round(found.at) }))
+    .sort((left, right) => right.duration - left.duration)
+    .slice(0, NAMED_COUNT);
 }
 
 export function phoneMeasure(raw: RawLoad): PhoneMeasure {

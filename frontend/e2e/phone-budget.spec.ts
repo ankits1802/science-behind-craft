@@ -4,6 +4,7 @@ import { expect, test, type Browser } from "@playwright/test";
 
 import { budgetBreaches, measuredNumbers, measureLine, medianMeasure, PHONE_PAGES, phoneMeasure, phoneRecord, recordedNumbers, type PhoneMeasure } from "./phoneBudget";
 import { phoneLoad, unloadedHeavyChunk, warmed, withScript, type PhoneVisit } from "./phoneMeasure";
+import { paintPath, pathLine, type PaintPath } from "./phonePath";
 import { smokeApiAddress } from "./smokeApi";
 
 const RUNS = 3;
@@ -18,22 +19,26 @@ function keep(name: string, value: unknown): void {
   writeFileSync(test.info().outputPath(name), JSON.stringify(value, null, 1));
 }
 
-async function measured(browser: Browser, path: string): Promise<PhoneMeasure> {
+async function measured(browser: Browser, path: string): Promise<{ measure: PhoneMeasure; paths: PaintPath[] }> {
   const runs: PhoneMeasure[] = [];
+  const paths: PaintPath[] = [];
   for (let run = 1; run <= RUNS; run += 1) {
     const visit: PhoneVisit = { read: run === RUNS };
-    runs.push(phoneMeasure(await phoneLoad(browser, path, visit)));
+    const raw = await phoneLoad(browser, path, visit);
+    runs.push(phoneMeasure(raw));
+    paths.push(paintPath(raw));
   }
-  return medianMeasure(runs);
+  return { measure: medianMeasure(runs), paths };
 }
 
 for (const path of PHONE_PAGES) {
   test(`${path} on a slowed phone at 360 stays within its recorded budget`, async ({ browser }) => {
     test.setTimeout(PAGE_TIMEOUT_MS);
     await warmed(browser, path);
-    const measure = await measured(browser, path);
-    keep("phone-measure.json", { path, numbers: measuredNumbers(measure), measure });
+    const { measure, paths } = await measured(browser, path);
+    keep("phone-measure.json", { path, numbers: measuredNumbers(measure), measure, paths });
     console.log(measureLine(path, measure));
+    for (const found of paths) console.log(`${path} ${pathLine(found)}`);
     const breaches = budgetBreaches(path, measure, recordedNumbers(phoneRecord(), path));
     expect(breaches, breaches.join("\n")).toEqual([]);
   });
