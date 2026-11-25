@@ -1,13 +1,12 @@
-import type { MapBox } from "@/components/map/basemap";
-import type { MapStill, StillRiver } from "@/components/map/timelineMapStill";
+import type { MapStill } from "@/components/map/timelineMapStill";
 import { unitRef } from "@/lib/componentSpecsPlates";
 import { isDeclared, type GeneralHead } from "@/lib/componentSpecsGeneral";
 import type { TimelinePlace } from "@/lib/explainerPlay";
 import { DISTRICT_SHAPES_ASSET } from "@/lib/mapFiles";
-import { physicalLayer, type MineralKeyRow } from "@/lib/mapPhysical";
+import { physicalLayer } from "@/lib/mapPhysical";
+import { mapStillShape } from "@/lib/mapStillShape";
 import { datasetShape, type RegionDataset } from "@/lib/regionContract";
-import type { LayerLegend } from "@/lib/regionView";
-import { boolean, count, integer, list, matching, nullable, number, object, optional, positive, text, type Shape } from "@/lib/shape";
+import { boolean, integer, list, matching, nullable, number, object, optional, text, type Shape } from "@/lib/shape";
 import type { TimelineSource } from "@/lib/timelineView";
 
 export const TIMELINE_MAP_KIND = "timeline_map";
@@ -35,19 +34,6 @@ export type UnitSaid = { id: string };
 
 const WIKIDATA = matching(/^Q[1-9]\d*$/, "a Wikidata item");
 const LAYER = matching(/^[a-z0-9]+(-[a-z0-9]+)*$/, "a layer name");
-const STILL_PATH = matching(/^[MLlz\d .-]*$/, "a still's path");
-
-export const mapStillShape: Shape<MapStill> = object<MapStill>({
-  box: object<MapBox>({ x: number, y: number, width: number, height: number }),
-  grid: positive,
-  relief: nullable(list(STILL_PATH)),
-  rivers: nullable(list(object<StillRiver>({ rank: integer, d: STILL_PATH }))),
-  lakes: nullable(STILL_PATH),
-  home: nullable(STILL_PATH),
-  minerals: nullable(list(object<MineralKeyRow>({ id: text, label: text, count }))),
-  district: nullable(object<LayerLegend>({ title: text, labels: list(text), caption: text, summary: text, dataset: datasetShape }))
-});
-
 export const timelineMapSpecShape: Shape<TimelineMapSpec> = object<TimelineMapSpec>({
   head: object<GeneralHead>({ title: unitRef, caption: nullable(unitRef) }),
   places: list(

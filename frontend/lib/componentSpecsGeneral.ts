@@ -1,4 +1,7 @@
+import type { MapStill } from "@/components/map/timelineMapStill";
+import { mapPartShapes, type MapPartsSpec } from "@/lib/componentSpecsMapLayer";
 import { unitRef } from "@/lib/componentSpecsPlates";
+import { mapStillShape } from "@/lib/mapStillShape";
 import { boolean, integer, list, matching, nullable, number, object, oneOf, optional, ShapeError, text, type Shape } from "@/lib/shape";
 
 export const GENERAL_KINDS = ["drawing", "chart", "fact_table", "timeline", "map_layer"] as const;
@@ -39,7 +42,7 @@ export type TableSpec = { head: GeneralHead; columns: TableColumn[]; rows: Table
 export type TimelineEvent = { year: number; when: string; title: string; text: string };
 export type TimelineSpec = { head: GeneralHead; events: TimelineEvent[] };
 export type MapPlace = { longitude: number; latitude: number; name: string; reading: string; value: number | null; cell?: DataCell };
-export type MapLayerSpec = { head: GeneralHead; places: MapPlace[]; valueLabel: string | null; dataset?: DatasetCite };
+export type MapLayerSpec = MapPartsSpec & { head: GeneralHead; places: MapPlace[]; valueLabel: string | null; dataset?: DatasetCite; still?: MapStill };
 export type ViewBox = { x: number; y: number; width: number; height: number };
 
 const within = (low: number, high: number, label: string): Shape<number> => ({
@@ -94,7 +97,9 @@ export const mapLayerSpecShape = object<MapLayerSpec>({
     1
   ),
   valueLabel: nullable(unitRef),
-  dataset: datasetShape
+  dataset: datasetShape,
+  ...mapPartShapes,
+  still: optional(mapStillShape)
 });
 
 export function parsedSpec<T>(target: Shape<T>, spec: unknown): T | null {

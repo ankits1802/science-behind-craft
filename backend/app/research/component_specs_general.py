@@ -11,6 +11,7 @@ from app.models.component_kinds import GENERAL_KINDS
 
 from .base import ContractModel, HttpsUrl, absent
 from .component_specs_general_svg import cleaned_svg, sanitised_svg
+from .component_specs_map_parts import MapParts, parts_problem
 from .component_specs_plates_parts import UnitRef
 from .datasets import DATASET_CODE_PATTERN
 
@@ -188,7 +189,7 @@ class MapPlace(ContractModel):
     cell: DataCell | None = Field(default=None, exclude_if=absent)
 
 
-class GeneralMapLayerSpec(ContractModel):
+class GeneralMapLayerSpec(MapParts):
     head: GeneralHead
     places: list[MapPlace] = Field(min_length=1, max_length=PLACES_MAX)
     value_label: UnitRef | None = None
@@ -203,6 +204,9 @@ class GeneralMapLayerSpec(ContractModel):
             raise ValueError("A map layer with values names what they measure in valueLabel, and only then")
         if (self.dataset is None) != all(place.cell is None for place in self.places):
             raise ValueError(NEEDS_DATASET)
+        problem = parts_problem(self, len(self.places))
+        if problem is not None:
+            raise ValueError(problem)
         return self
 
 

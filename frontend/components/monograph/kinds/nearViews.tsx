@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { nearBlock } from "@/components/answer/nearBlock";
 import { afterLoad, whenIdle } from "@/components/monograph/useShellTrigger";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { parsedSpec } from "@/lib/componentSpecsGeneral";
+import { mapLayerSpecShape, parsedSpec } from "@/lib/componentSpecsGeneral";
 import { timelineMapFiles, timelineMapSpecShape } from "@/lib/componentSpecsTimelineMap";
+import { physicalLayer } from "@/lib/mapPhysical";
 import type { ComponentView, ComponentViewProps } from "@/lib/componentViewContract";
 
 export const NEAR_RESERVE_LABEL = "Drawing the figure";
@@ -59,8 +60,12 @@ export function timelineMapPrefetched(spec: unknown): readonly string[] {
   return map ? timelineMapFiles(map) : [];
 }
 
+export function placesMapPrefetched(spec: unknown): readonly string[] {
+  return parsedSpec(mapLayerSpecShape, spec) ? [physicalLayer("relief").asset, physicalLayer("rivers").asset] : [];
+}
+
 export const NearWhyHereView = nearView(() => import("@/components/monograph/kinds/place/WhyHereView").then((loaded) => loaded.WhyHereView));
-export const NearMapLayerView = nearView(() => import("@/components/monograph/kinds/general/MapLayerView").then((loaded) => loaded.MapLayerView));
+export const NearMapLayerView = nearView(() => import("@/components/monograph/kinds/general/MapLayerView").then((loaded) => loaded.MapLayerView), placesMapPrefetched);
 export const NearTimelineMapView = nearView(() => import("@/components/monograph/kinds/general/TimelineMapDeclaredView").then((loaded) => loaded.TimelineMapDeclaredView), timelineMapPrefetched);
 export const NearExplainerView = nearView(() => import("@/components/monograph/kinds/tools/ExplainerView").then((loaded) => loaded.ExplainerView));
 export const NearQuizView = nearView(() => import("@/components/monograph/kinds/tools/QuizView").then((loaded) => loaded.QuizView));

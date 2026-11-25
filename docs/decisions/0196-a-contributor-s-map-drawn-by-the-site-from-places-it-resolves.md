@@ -24,6 +24,7 @@ fixtures, which now carry a timeline map's recorded placement). The contracts ar
 | The answers' timeline map and its place finder | [decision 0057](0057-zoom-story-and-timeline-map.md), [decision 0147](0147-time-market-and-figures-kept-true.md), [decision 0160](0160-place-builders-kept-true.md) |
 | The kind fixtures served with each drawing's themes | [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md) |
 | The site's physical and district layers | [decision 0016](0016-region-profile.md), [decision 0114](0114-kinds-and-datasets.md) |
+| A places map drawn on the same base, told what it is about (amends this record) | [decision 0232](0232-every-places-map-drawn-on-the-site-s-own-map-base-and-told-what-it-is-about.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

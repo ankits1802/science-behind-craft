@@ -6,12 +6,12 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.data.craft_master_loader import DATA_DIR
 from app.data.district_register import REGISTER_FILE, load_district_codes
+from app.data.map_layers import DISTRICT_SHAPES_FILE
 
 from .state_values import refresh_state_values
 
-SHAPES_PATH = DATA_DIR / "district-shapes.json"
+SHAPES_PATH = DISTRICT_SHAPES_FILE
 SHAPES_SHA256 = "5432b41d6d6bc55d8fcae5030178a4ceaefab5d46f5770461552216cb802bc6c"
 REGISTER_SHA256 = "2ff0acab5446b7d0710a10b372ab7f71055454a8155c5c82fb08dc997fd1cd21"
 

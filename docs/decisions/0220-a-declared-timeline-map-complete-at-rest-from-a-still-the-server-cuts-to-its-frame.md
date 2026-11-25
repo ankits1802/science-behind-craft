@@ -23,6 +23,7 @@ declared timeline map draws its layers). The contract is `docs/contracts/compone
 | The key held at rest and the layer files asked for once the page is idle | [decision 0216](0216-a-contributed-drawing-loads-nothing-a-timeline-map-s-key-holds-its-place-and-download-fails-gently.md) |
 | Heavy kinds loaded near after their still, and the phone budget | [decision 0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) |
 | The lead chapter drawn by the server and the rest read later | [decision 0209](0209-a-phone-load-s-path-to-its-first-screen-recorded-and-cut.md) |
+| A places map's still, with neighbouring land, district lines and valued districts (amends this record) | [decision 0232](0232-every-places-map-drawn-on-the-site-s-own-map-base-and-told-what-it-is-about.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

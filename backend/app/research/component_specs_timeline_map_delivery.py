@@ -4,7 +4,7 @@ from collections.abc import Collection, Mapping
 
 from .blocks import named_in_texts
 from .component_specs_timeline_map import DeclaredTimelineMapSpec, TimelineMapPlace
-from .quotes import numbers_in
+from .quotes import states_value
 from .timeline import states_movement, years_named
 
 __all__ = ["SERVER_SENT", "timeline_map_problems"]
@@ -34,7 +34,7 @@ def _cited_point(
     problems = [
         f"the coordinate {value:g} of place {at} is not stated by its unit {place.at}"
         for value in (place.longitude, place.latitude)
-        if not _states(stated, value)
+        if not states_value(stated, value)
     ]
     if place.at not in cited:
         problems.append(f"the unit {place.at} that places place {at} cites no fact")
@@ -73,13 +73,3 @@ def _undated_problems(spec: DeclaredTimelineMapSpec, texts: Mapping[str, str], n
 
 def _years(owner: str, year_from: int, year_to: int, ref: str) -> str:
     return f"the years {year_from} to {year_to} of {owner} are not stated by its unit {ref}"
-
-
-def _states(text: str, value: float) -> bool:
-    for figure in numbers_in(text):
-        try:
-            if float(figure) == value:
-                return True
-        except ValueError:
-            continue
-    return False

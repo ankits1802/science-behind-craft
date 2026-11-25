@@ -69,9 +69,10 @@ Last reviewed: 2026-11-24.
 | Drawing a registered delivery | `backend/app/services/component_proposals_drawn.py`, called by `monograph_generated_assembly._drawn` and `monograph_generated.generated_parts` |
 | Shapes | `frontend/lib/componentSpecsGeneral.ts` |
 | Views | `frontend/components/monograph/kinds/general/` (`index.ts` exports `VIEWS`, registered in `componentViews.ts`) |
+| The places map | parts `backend/app/research/component_specs_map_parts.py` (`MapParts`, the base of `GeneralMapLayerSpec`), their delivery rules `component_specs_map_delivery.py` (`map_layer_problems`), the held shapes and rivers `app/data/map_layers.py` (`held_shapes`, `held_river_names`); shape `frontend/lib/componentSpecsMapLayer.ts` (`mapPartShapes`, `shownMarks`, `valueClasses`) and `lib/mapStillShape.ts`, frame and scale `components/map/mapLayerFrame.ts`, drawing `components/map/PlacesMap.tsx` and `PlacesMapMarks.tsx`, view `components/monograph/kinds/general/MapLayerView.tsx` with `MapSequence.tsx` and `useMapSequence.ts`; the still `lib/server/mapStills.ts` (`placesMaps`, `stillOfPlaces`) and `components/map/mapStillCut.ts` |
 | The declared timeline map | spec `backend/app/research/component_specs_timeline_map.py`, its delivery rules `component_specs_timeline_map_delivery.py`, its places `backend/app/services/timeline_map_places.py` and placement `services/timeline_maps.py` (`placed_spec`); the hand-drawn map test `backend/app/research/drawn_maps.py`; shape `frontend/lib/componentSpecsTimelineMap.ts`, view `frontend/components/monograph/kinds/general/TimelineMapDeclaredView.tsx` on the answers' `components/answer/journey/TimelineMap.tsx` (`TimelineMapFrame`) with `components/map/TimelineMapLayers.tsx` and `placesFrame.ts` |
 | The figure kit | the vocabulary `backend/app/research/art_kit.py` (`KIT_PARTS`, `kit_vocabulary`, `choice_named`, both sides' golden `shared/art-kit.golden.json`), the composed diagram `component_specs_kit.py` (`DeclaredDiagramSpec`, `kit_label_problems`), the kit scene `component_specs_kit_scene.py` (`KitScene`, `KIT_SCENE_KINDS`, `kit_scene_label_problems`), the bar for hand-drawn art `drawn_art.py` (`drawn_art_problems`, `scene_problems`); the web's `frontend/lib/artKit.ts`, `componentSpecsKit.ts`, `componentSpecsKitScene.ts`, `artKitMotion.ts`, `artKitSheet.ts`, the parts `frontend/components/artkit/` (`KitScene.tsx` for a player's scenes) and the view `components/monograph/kinds/kit/KitDiagramView.tsx`; the kit sheet `/design/kit` (`app/design/kit`) |
-| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `test_art_kit.py`, `test_component_specs_kit.py`, `test_kit_scenes.py`, `test_drawn_art.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `timeline-map-declared-unit.spec.ts`, `art-kit-unit.spec.ts` |
+| Tests | `backend/tests/research/test_component_specs_general.py`, `test_component_specs_general_delivery.py`, `test_timeline_map_specs.py`, `test_drawn_maps.py`, `test_map_layer_parts.py`, `test_art_kit.py`, `test_component_specs_kit.py`, `test_kit_scenes.py`, `test_drawn_art.py`, `backend/tests/db/test_delivered_components_db.py`, `test_timeline_map_places_db.py`; `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `places-map-unit.spec.ts`, `timeline-map-declared-unit.spec.ts`, `art-kit-unit.spec.ts` |
 
 ## A delivered component
 
@@ -154,7 +155,7 @@ drawing, map, timeline, table), the caption is a cited sentence under it. Every 
 | `chart` | `head`, `form` (`bars` or `line`), `valueLabel` (what is measured, with its unit), `series` 1 to 3 `{name, points [{label, value, reading, cell?}]}`, `dataset?` (1 to 60, the same count in each), `emphasis` (the first series' point the title names) | one small multiple per series: bars as rows (label, bar at its share of the largest from zero, the cited reading), a line on a plot with three ticks and its first and last label, every value behind "All N values"; `--chart-series`, the emphasised mark `--chart-emph` |
 | `fact_table` | `head`, `columns` 1 to 8 `{label, numeric, column?}`, `rows` 1 to 100 `{cells, row?}` (one per column), `dataset?` | a table with the first cell of a row as its header, numeric columns at the end in tabular figures |
 | `timeline` | `head`, `events` 2 to 40 `{year, when, title, text}` in year order (-3000 to 2100) | a dated axis marking each event, its first and last year (BCE for negative years), then one row per event: the date as written, the title, the cited sentence |
-| `map_layer` | `head`, `places` 1 to 60 `{longitude 68 to 97.5, latitude 6.5 to 37.5, name, reading, value?, cell?}`, `dataset?`, `valueLabel` (only and always when places have values) | India's outline in the map tokens (`--map-land`, `--map-coast`, no state lines), a numbered disc per place sized by the square root of its value, and the numbered list of places with their cited readings |
+| `map_layer` | `head`, `places` 1 to 60 `{longitude 68 to 97.5, latitude 6.5 to 37.5, name, reading, value?, cell?}`, `dataset?`, `valueLabel` (only and always when places have values), and what the map is about: `frame?`, `emphasis?`, `routes?`, `rings?`, `districts?`, `sequence?` (The places map, below) | the site's map base for its frame (The places map, below), a numbered disc per place sized by the square root of its value with its name beside it, the routes, rings and district values it asks for, a sequence that plays, and the numbered list of places with their cited readings |
 
 General figures carry their kind as the kicker ("Chart", "Table") rather than a figure number:
 numbering them through the page with the answer blocks' figures is open. A page draft (decision
@@ -215,6 +216,81 @@ preview's report fails a delivered figure off the vocabulary, a drawing without 
 variants and a figure or picture without its alt text (checklist rule 27). Agents that draw
 KalaVigyan's knowledge themselves read `kalavigyan://design/tokens.css` and
 `kalavigyan://design/drawing.md`.
+
+## The places map (decision 0232)
+
+A declared `map_layer` is a map of a page's places drawn on the site's own map base, never a drawing
+of geography by the contributor: the contributor says what the map is about and the base does the
+rest, from the data the site holds. A spec of the old shape (`head`, `places`, `valueLabel`,
+`dataset?`) is stored and drawn exactly as before, on the new base, without being delivered again.
+
+**The base**, for the map's frame: the relief bands of `relief.json` with their hillshade once the
+file lands, the rivers and lakes of `rivers.json` (Natural Earth, named from the file's own labels),
+the Survey of India outline (always drawn, with and without a still), neighbouring land, state lines
+and district lines, water and the Rann's salt flats in the design's map tokens, the page's home
+districts in the place hatch (every `place:lgd:<code>` subject of the component), place names with
+halos, a scale bar of a round number of kilometres at the frame's middle latitude, the India
+locator with the frame marked, and a key (the elevation and river keys, the home hatch, the salt
+flats where the frame holds them, the district values' classes). The source line gives the boundary
+note and each layer's dataset credit.
+
+**What the map is about**, beside its places; every index counts from 0 into the spec's own lists:
+
+| Part | What it holds |
+|---|---|
+| `frame` | one of `{places: [i, ...]}` (framed to those places and their rings), `{district: <LGD code>}` or `{state: <LGD code>}` (framed to the shape the site holds); without one, the map is framed to all its places and rings |
+| `emphasis` | `{layers?, rivers?}`: `layers` names any of `relief`, `rivers`, `water` to draw stronger (the hillshade, the river lines, the lakes' edge), `rivers` names up to 6 rivers by the site's own river names (`rivers.json` labels) whose labels are always shown |
+| `routes` | `routes`, 1 to 20 `{start, end, text}`: an arrow for a move from one place to another; `text` is a unit that states the move from the start's name to the end's name and cites a fact |
+| `rings` | `rings`, 1 to 6 `{place, radiusKm, text}`: a ring of a stated radius (above 0 and up to 500 km) around a place, labelled with its kilometres; `text` states that number and cites a fact |
+| `districts` | `{valueLabel, values}`: 2 to 60 districts `{district, value, reading}`, each district by its LGD code and filled by the class of its value (up to five classes of near-equal counts, the density ramp), with the value printed at its centre; `reading` states the value and cites a fact |
+| `sequence` | `sequence`, 2 to 12 steps `{text, places, routes, rings, districts}`: states that play in order; each step shows the places, routes and rings it names (and the district values when `districts` is true) on top of the steps before it, and `text` is its cited sentence |
+
+```json
+{
+  "head": {"title": "u0001", "caption": "u0002"},
+  "places": [
+    {"longitude": 75.79, "latitude": 26.82, "name": "u0003", "reading": "u0004", "value": null},
+    {"longitude": 75.55, "latitude": 26.82, "name": "u0005", "reading": "u0006", "value": null}
+  ],
+  "valueLabel": null,
+  "frame": {"district": 102},
+  "emphasis": {"layers": ["rivers"]},
+  "routes": [{"start": 0, "end": 1, "text": "u0007"}],
+  "rings": [{"place": 0, "radiusKm": 20, "text": "u0008"}],
+  "districts": {"valueLabel": "u0009", "values": [{"district": 102, "value": 650, "reading": "u0010"}, {"district": 110, "value": 410, "reading": "u0011"}]},
+  "sequence": [
+    {"text": "u0012", "places": [0], "routes": [], "rings": [0], "districts": false},
+    {"text": "u0013", "places": [], "routes": [0], "rings": [], "districts": true}
+  ]
+}
+```
+
+Here `u0007` says "Printers moved from Sanganer to Bagru", `u0008` "within 20 km of Sanganer" and
+`u0010` "Jaipur district receives 650 mm of rain a year", each citing its fact.
+
+**The checks.** The model (`MapParts`, `parts_problem`) refuses a frame chosen two ways or none, a
+route from a place to itself, an index past the places, routes or rings, a step that shows nothing
+or shows district values a map does not give, an emphasis that names nothing or names a layer
+twice, a radius of 0 or past 500 km and a district given twice. Check 7 adds, unit by unit
+(`component_specs_map_delivery.map_layer_problems`): a route's unit states the move
+(`timeline.states_movement`), a ring's unit states its radius and a district's reading its value
+(`quotes.states_value`), and every route, ring, district value and step cites a fact; a framed or
+valued district, a framed state and an emphasised river the site does not hold are refused by name.
+
+**The still** (decision 0220, extended). The web server's pass (`lib/server/mapStills.withMapStills`)
+gives every declared `map_layer` of a page a still cut to the frame the view draws
+(`components/map/mapLayerFrame.mapLayerFrame`, or for a named frame the shape's own box, sent as
+`still.named` so the view frames to it): the relief bands, rivers and lakes, the home districts, and
+beyond the timeline map's still the neighbouring land (`neighbours`), the district lines (`lines`),
+each valued district's shape and centre (`valued`), the layers' dataset credits (`credits`) and the
+boundary note read from `/map/layers` (`boundary`). The view draws it at first paint in the map
+tokens; the hillshade and the river and range labels arrive with their files. Sanganeri's map's
+still is under 40 KB.
+
+**Motion.** A sequence rests on its last step, with every mark shown. Where neither reduced-motion
+switch is on, it plays from its first step once when it comes into view, a step every four seconds,
+and stops on its last; Play plays it again, Pause stops it, and pressing a step's number jumps to
+it. Under either switch nothing moves and Play steps forward one state at a time.
 
 ## The declared timeline map (decision 0196)
 
@@ -425,6 +501,8 @@ check, so the bar does not re-check them.
 | The hand-drawn figure refused and allowed, rule by rule, with Kutch Ajrakh's authored figures left alone | `backend/tests/research/test_drawn_art.py` |
 | Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |
 | Every part in every material, each layout at phone and desktop, light and dark, motion off under both switches, and the kit sheet | `frontend/e2e/art-kit-unit.spec.ts` |
+| The places map's parts, their checks both ways and the old shape stored unchanged | `backend/tests/research/test_map_layer_parts.py` |
+| The places map drawn on the base, the outline always present, its still, a route, ring and sequence from the spec alone, and the map at 390 and 1440 px | `frontend/e2e/places-map-unit.spec.ts` |
 | The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |

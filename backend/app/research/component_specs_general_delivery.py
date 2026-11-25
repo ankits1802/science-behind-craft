@@ -26,6 +26,7 @@ from .component_specs_general import (
 )
 from .component_specs_kit import DeclaredDiagramSpec, kit_label_problems
 from .component_specs_kit_scene import kit_scene_label_problems
+from .component_specs_map_delivery import map_layer_problems
 from .component_specs_timeline_map import TIMELINE_MAP, DeclaredTimelineMapSpec, server_parts_sent
 from .component_specs_timeline_map_delivery import SERVER_SENT, timeline_map_problems
 from .component_specs_tools import spec_unit_refs
@@ -168,16 +169,20 @@ def _value_problems(kind: str, spec: Any, units: Mapping[str, DeliveredUnit]) ->
     if kind == GENERAL_TABLE and isinstance(spec, GeneralTableSpec):
         return _table_problems(spec, units)
     cited = {ref for ref, unit in units.items() if unit.claim_ids}
+    texts = {ref: unit.text for ref, unit in units.items()}
     if isinstance(spec, DeclaredTimelineMapSpec):
-        texts = {ref: unit.text for ref, unit in units.items()}
         return timeline_map_problems(spec, texts, cited)
     if isinstance(spec, DeclaredDiagramSpec):
         return kit_label_problems(spec, cited)
-    return kit_scene_label_problems(spec, cited) + [
-        f"the value {value:g} is not stated by its unit {ref}"
-        for value, ref in _stated_values(kind, spec)
-        if ref in units and not any(_same(value, figure) for figure in numbers_in(units[ref].text))
-    ]
+    return (
+        kit_scene_label_problems(spec, cited)
+        + map_layer_problems(spec, texts, cited)
+        + [
+            f"the value {value:g} is not stated by its unit {ref}"
+            for value, ref in _stated_values(kind, spec)
+            if ref in units and not any(_same(value, figure) for figure in numbers_in(units[ref].text))
+        ]
+    )
 
 
 def _stated_values(kind: str, spec: Any) -> list[tuple[float, str]]:
