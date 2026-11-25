@@ -1,6 +1,8 @@
 import { unitRef } from "@/lib/componentSpecsPlates";
 import { isDeclared, type GeneralHead } from "@/lib/componentSpecsGeneral";
 import type { TimelinePlace } from "@/lib/explainerPlay";
+import { DISTRICT_SHAPES_ASSET } from "@/lib/mapFiles";
+import { physicalLayer } from "@/lib/mapPhysical";
 import { datasetShape, type RegionDataset } from "@/lib/regionContract";
 import { boolean, integer, list, matching, nullable, number, object, optional, text, type Shape } from "@/lib/shape";
 import type { TimelineSource } from "@/lib/timelineView";
@@ -94,4 +96,9 @@ export function physicalLayers(spec: TimelineMapSpec): (typeof PHYSICAL_LAYER_NA
 
 export function districtLayer(spec: TimelineMapSpec): string | null {
   return (spec.layers ?? []).find((name) => !(PHYSICAL_LAYER_NAMES as readonly string[]).includes(name)) ?? null;
+}
+
+export function timelineMapFiles(spec: TimelineMapSpec): string[] {
+  const shapes = homeDistricts(spec).length > 0 || districtLayer(spec) !== null ? [DISTRICT_SHAPES_ASSET] : [];
+  return [...physicalLayers(spec).map((name) => physicalLayer(name).asset), ...shapes];
 }

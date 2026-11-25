@@ -33,8 +33,9 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
   stage named in its own language (`local`) keeps its `name` as its source gives it.
 - **Drawings are typed geometry.** `SvgNode {tag, attrs, children}` holds drawing elements only
   (`svg`, `g`, shapes, `text`, gradients, masks, patterns and the colour filters the page uses; no
-  `script`, `foreignObject`, `a` or `use`). Attributes refuse `on*` handlers, `javascript:` and any
-  `url()` that is not an in-drawing `#id`. `fill`, `stroke` and `stop-color` are a token
+  `script`, `foreignObject`, `a` or `use`). Attributes refuse `on*` handlers, `javascript:`, an `href` that is not an in-drawing `#id`
+  and, as a plate's drawing does, any value that loads from another address or a `style` off the
+  drawing list (`research/drawing_attributes`, decision 0216). `fill`, `stroke` and `stop-color` are a token
   (`var(--ink-1)`, `--dye-*`, `--dip-*`, `--mol-*`, `--chart-*`, `--map-*`, the surfaces), a mix of
   two tokens (`color-mix(in srgb, var(--a) N%, var(--b))`), an in-drawing reference, `none`,
   `currentColor`, or white or black for a mask or a highlight (`#fff`, `#000`,

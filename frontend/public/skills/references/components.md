@@ -291,6 +291,13 @@ and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure
   characters of SVG with no document type or entity, one `svg` element with a viewBox of four
   numbers and a positive size; it is cleaned of everything else before it is stored, and the site
   draws it only as an image, which runs nothing and loads nothing.
+- **Inline drawings load nothing.** A drawing node (a label card's seal, a swatch's motif, a
+  player's scene, a map or chart drawing) sets in its `style` only paint, stroke, opacity,
+  transform, text, display, blend and custom properties, each with a token, a number or a
+  keyword, never `position`, `inset`, `z-index`, `cursor` or a background. No value names an
+  outside address (`url()` other than `url(#id)`, `image-set()`, `cross-fade()`, `image()`,
+  `src()`) or a backslash escape, in capitals or not, and `href` is `#id`; the delivery refuses
+  any other with the attribute named.
 
 ## How this reference is kept true
 

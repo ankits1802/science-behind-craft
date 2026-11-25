@@ -9,11 +9,14 @@ import { nearBlocksLoaded } from "../components/answer/nearBlock";
 import { viewBoxOf } from "../components/map/basemap";
 import { placesFrame } from "../components/map/placesFrame";
 import { project, VIEW_BOX } from "../components/map/projection";
-import { HomeHatch } from "../components/map/TimelineMapLayers";
+import { DRAWING_DISTRICT_VALUES, LayerStatus } from "../components/map/MapLayerView";
+import { reliefSteps } from "../components/map/physical/PhysicalSide";
+import { DRAWING_MINERALS, HomeHatch, PhysicalKey } from "../components/map/TimelineMapLayers";
 import { COMPONENT_VIEWS } from "../components/monograph/componentViews";
 import { declaredForm, foundPoints, homeDistricts, layerCredits, timelineMapSource, timelineMapSpecShape } from "../lib/componentSpecsTimelineMap";
 import type { ComponentView } from "../lib/componentViewContract";
 import { parseKindFixtures, type KindFixture } from "../lib/kindFixtures";
+import type { MineralsFile } from "../lib/mapPhysical";
 import { appDrawn } from "../lib/monographScopes";
 import { parseShape } from "../lib/shape";
 import { timelineEntries, timelineStops } from "../lib/timelineView";
@@ -29,6 +32,9 @@ const [BIDRIWARE] = parseKindFixtures({ fixtures: [FILED] });
 const KUTCH = JSON.parse(readFileSync(join(BACKEND_DATA, "monographs", "Kutch-Ajrakh", "specs", "kutch-ajrakh__history__dated-record-timeline-map.json"), "utf8")) as Record<string, unknown>;
 const NAMES = ["Bidar", "Hyderabad", "Purnia", "Murshidabad", "Lucknow"];
 const SVG_FIT = "<style>svg{display:block;width:100%;height:auto}</style>";
+const MINERALS = JSON.parse(readFileSync(join(__dirname, "..", "public", "layers", "minerals.json"), "utf8")) as MineralsFile;
+const WAITING = { data: null, failure: null, retry: () => undefined };
+const NOTHING_LOADED = { relief: null, rivers: null, minerals: null, sites: [] };
 
 function drawn(fixture: KindFixture, spec: Record<string, unknown> = fixture.spec): string {
   const view = COMPONENT_VIEWS.timeline_map as ComponentView;
@@ -118,4 +124,29 @@ test("phone first: every grid track can shrink and the map fills its column at 3
     drawnWidths.push(sizes.map);
   }
   expect(drawnWidths[1]).toBeGreaterThan(drawnWidths[0]);
+});
+
+test("at rest the still holds its relief and rivers key whole, so nothing below moves when the layers land", () => {
+  const html = drawn(BIDRIWARE);
+  const key = html.slice(html.indexOf('data-testid="timeline-layer-key"'));
+  expect(key).toContain(">Elevation<");
+  for (const step of reliefSteps()) expect(key).toContain(step.label);
+  expect(key).toContain('data-testid="rivers-key"');
+  expect(key).not.toContain("aria-busy");
+  expect(html).not.toContain(DRAWING_DISTRICT_VALUES);
+});
+
+test("a key that needs its file holds the legend's shape at rest, in place of a loading line, and draws it once the file lands", () => {
+  const names = { physical: ["minerals"], district: null, home: [] };
+  const reserved = renderToStaticMarkup(createElement(PhysicalKey, { names, layers: NOTHING_LOADED }));
+  expect(reserved).toContain('data-skeleton="legend"');
+  expect(reserved).toContain('aria-busy="true"');
+  expect(reserved).toContain(DRAWING_MINERALS);
+  const landed = renderToStaticMarkup(createElement(PhysicalKey, { names, layers: { ...NOTHING_LOADED, minerals: MINERALS } }));
+  expect(landed).toContain('data-testid="mineral-key"');
+  expect(landed).not.toContain("aria-busy");
+  const district = renderToStaticMarkup(createElement(LayerStatus, { layer: WAITING, shapes: WAITING }));
+  expect(district).toContain('data-skeleton="legend"');
+  expect(district).toContain(`<span class="sr-only">${DRAWING_DISTRICT_VALUES}</span>`);
+  expect(district).not.toMatch(/<p role="status"[^>]*>Drawing/);
 });

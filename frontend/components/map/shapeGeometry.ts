@@ -1,5 +1,6 @@
 import { decodePolyline, type Ring } from "@/components/map/indiaGeometry";
 import { project } from "@/components/map/projection";
+import { DISTRICT_SHAPES_ASSET } from "@/lib/mapFiles";
 
 export type DistrictShape = {
   lgd: number;
@@ -15,8 +16,6 @@ export type ShapesFile = {
   scale: number;
   districts: Array<{ lgd: number; stateLgd: number; rings: string[]; centroid: [number, number] }>;
 };
-
-export const SHAPES_ASSET = "/boundaries/district-shapes.json";
 
 export function decodeRing(encoded: string): Ring {
   const [record] = decodePolyline(encoded, false);
@@ -49,9 +48,9 @@ let pending: Promise<DistrictShape[]> | null = null;
 
 export function loadShapes(): Promise<DistrictShape[]> {
   if (pending) return pending;
-  pending = fetch(SHAPES_ASSET, { cache: "force-cache" })
+  pending = fetch(DISTRICT_SHAPES_ASSET, { cache: "force-cache" })
     .then((response) => {
-      if (!response.ok) throw new Error(`${SHAPES_ASSET} returned ${response.status}`);
+      if (!response.ok) throw new Error(`${DISTRICT_SHAPES_ASSET} returned ${response.status}`);
       return response.json() as Promise<ShapesFile>;
     })
     .then(decodeShapes)

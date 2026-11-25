@@ -11,7 +11,7 @@ import { SlotRoot } from "@/components/monograph/BundleView";
 import { COMPONENT_VIEWS } from "@/components/monograph/componentViews";
 import { MapLayerView } from "@/components/monograph/kinds/general/MapLayerView";
 import { TimelineMapDeclaredView } from "@/components/monograph/kinds/general/TimelineMapDeclaredView";
-import { NEAR_RESERVE_LABEL } from "@/components/monograph/kinds/nearViews";
+import { NEAR_RESERVE_LABEL, PrefetchedFiles, timelineMapPrefetched } from "@/components/monograph/kinds/nearViews";
 import { WhyHereView } from "@/components/monograph/kinds/place/WhyHereView";
 import type { ComponentView, ComponentViewProps } from "@/lib/componentViewContract";
 import type { KindFixture } from "@/lib/kindFixtures";
@@ -30,6 +30,7 @@ const CRAFT_ROUTE = ["app/layout.tsx", "app/(reading)/layout.tsx", "app/(reading
 const REST_CHUNKS = ["components/monograph/DeferredShell.tsx", "components/monograph/DeferredDocument.tsx"];
 const GENERATED_ID = /\b(id|for|aria-labelledby|aria-describedby|aria-controls|href|clip-path|mask|fill|filter)="[^"]*"/g;
 const AT_REST_HIDDEN = /^<div data-kv-near=""><[^>]*style="[^"]*opacity:\s*0[;"]/;
+const TIMELINE_FILES = ["/layers/relief.json", "/layers/rivers.json", "/boundaries/district-shapes.json"];
 
 const fixtures = filedKindFixtures();
 const fixture = (label: string) => fixtures.find((found) => found.label === label) as KindFixture;
@@ -69,6 +70,18 @@ for (const { kind, eager, props } of HEAVY_CASES) {
     expect(near).not.toContain(NEAR_RESERVE_LABEL);
   });
 }
+
+test("a declared timeline map asks for its named layer files once the page is idle, so they are cached before its view nears", () => {
+  const { props } = HEAVY_CASES[2];
+  expect(timelineMapPrefetched(props.spec)).toEqual(TIMELINE_FILES);
+  const hints = renderToStaticMarkup(createElement(PrefetchedFiles, { files: TIMELINE_FILES }));
+  for (const href of TIMELINE_FILES) expect(hints).toContain(`<link rel="prefetch" as="fetch" crossorigin="anonymous" href="${href}"/>`);
+  expect(drawn(COMPONENT_VIEWS.timeline_map as ComponentView, props)).not.toContain('rel="prefetch"');
+  const spec = props.spec as { places: Record<string, unknown>[] };
+  const bare = { ...spec, layers: [], places: spec.places.map((place) => ({ ...place, home: false })) };
+  expect(timelineMapPrefetched(bare)).toEqual([]);
+  expect(timelineMapPrefetched({ head: { title: "u1" }, events: [] })).toEqual([]);
+});
 
 test("on the client a heavy kind holds a figure-shaped reserve until it nears the viewport", () => {
   const view = COMPONENT_VIEWS[WHY_HERE_KIND] as ComponentView;

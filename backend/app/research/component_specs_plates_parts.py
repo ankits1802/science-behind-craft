@@ -10,6 +10,7 @@ from pydantic import AfterValidator, ConfigDict, Field, model_validator
 from .base import ContractModel, absent, empty
 from .craft_parts import Focal
 from .depicted_materials import DEPICTED_MATERIALS
+from .drawing_attributes import drawing_attribute_problem
 from .monograph_page import COMPONENT_LABEL_PATTERN, ITALIC_ROLES, MARK_TAGS
 from .unit_ids import UNIT_REF_PATTERN
 
@@ -41,9 +42,6 @@ PICTURE_PATTERN = (
 DRAWING_ATTRIBUTE = re.compile(r"[A-Za-z][A-Za-z0-9:_-]*")
 EVENT_PREFIX = "on"
 SHOWN_SOURCE_KEYS = frozenset({"number", "title"})
-LOCAL_REFERENCE = "#"
-REFERENCE_ATTRIBUTES = ("href", "xlink:href")
-SCRIPT_SCHEME = "javascript:"
 DRAWING_TAGS = (
     "svg",
     "g",
@@ -141,10 +139,9 @@ class DrawingElement(ContractModel):
 def _drawing_attribute(name: str, value: str) -> None:
     if not DRAWING_ATTRIBUTE.fullmatch(name) or name.lower().startswith(EVENT_PREFIX):
         raise ValueError(f"No drawing attribute {name!r}")
-    if name in REFERENCE_ATTRIBUTES and not value.startswith(LOCAL_REFERENCE):
-        raise ValueError(f"A drawing refers only to its page: {name}={value!r}")
-    if SCRIPT_SCHEME in "".join(value.split()).lower():
-        raise ValueError(f"A drawing attribute runs no script: {name}")
+    problem = drawing_attribute_problem(name, value)
+    if problem:
+        raise ValueError(f"A drawing attribute {problem}: {name}={value!r}")
 
 
 def _held_node(node: Any) -> None:

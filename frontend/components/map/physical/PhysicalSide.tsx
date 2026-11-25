@@ -4,6 +4,7 @@ import { FOREIGN_EXTRA, MapLegend, SALT_EXTRA, WATER_EXTRA, type LegendExtra } f
 import { DatasetCredit } from "@/components/DatasetCredit";
 import { MineralSymbol, mineralColour } from "@/components/map/physical/MineralsLayer";
 import { RankedList, type RankedRow } from "@/components/map/RankedList";
+import { ELEVATION_BREAKS } from "@/lib/mapPalettes";
 import { formatRange } from "@/lib/measure";
 import { elevationBands, tally, type DatasetRow, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 
@@ -19,22 +20,22 @@ export function LayerCredits({ datasets }: { datasets: readonly DatasetRow[] }) 
   );
 }
 
-export function reliefSteps(file: ReliefFile): { label: string; colour: string }[] {
-  return elevationBands(file).map((band, at) => ({ label: formatRange(band.min, band.max, "m") ?? "", colour: `var(--elevation-${at + 1})` }));
+export function reliefSteps(breaks: readonly number[] = ELEVATION_BREAKS): { label: string; colour: string }[] {
+  return elevationBands(breaks).map((band, at) => ({ label: formatRange(band.min, band.max, "m") ?? "", colour: `var(--elevation-${at + 1})` }));
 }
 
 export function peakRows(file: ReliefFile): RankedRow[] {
   return file.peaks.map((peak) => ({ key: peak.name, name: peak.name, value: peak.elevation, display: `${peak.elevation.toLocaleString("en-IN")} m` }));
 }
 
-export function ReliefKey({ file }: { file: ReliefFile }) {
-  return <MapLegend title="Elevation" steps={reliefSteps(file)} extras={[FOREIGN_EXTRA, WATER_EXTRA]} note="Band edges are the contours; the shading is lit from the north-west." />;
+export function ReliefKey() {
+  return <MapLegend title="Elevation" steps={reliefSteps()} extras={[FOREIGN_EXTRA, WATER_EXTRA]} note="Band edges are the contours; the shading is lit from the north-west." />;
 }
 
 export function ReliefSide({ file }: { file: ReliefFile }) {
   return (
     <>
-      <ReliefKey file={file} />
+      <ReliefKey />
       <div className="grid gap-2">
         <p className="font-ui text-label text-ink-1">Spot heights</p>
         <p className="font-ui text-caption text-ink-3">{`The ${file.peaks.length} named summits inside the outline, by height; the highest are marked on the map.`}</p>

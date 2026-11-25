@@ -5,6 +5,7 @@ from collections.abc import Iterator
 from xml.etree import ElementTree
 from xml.sax.saxutils import escape
 
+from .drawing_attributes import loads_nothing
 from .drawing_rules import drawing_problems, listed
 
 __all__ = [
@@ -52,8 +53,6 @@ ATTRIBUTE_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9:_.-]*$")
 VIEW_BOX = re.compile(
     r"^\s*(-?\d+(?:\.\d+)?)[\s,]+(-?\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)\s*$"
 )
-EXTERNAL_URL = re.compile(r"url\(\s*['\"]?(?!#)", re.IGNORECASE)
-SCRIPTED = re.compile(r"javascript:|expression\(|@import", re.IGNORECASE)
 REFERENCES = frozenset({"href", f"{{{XLINK_NS}}}href"})
 SIZE_ATTRIBUTES = frozenset({"width", "height"})
 EVENT_PREFIX = "on"
@@ -126,8 +125,7 @@ def _safe_attribute(name: str, value: str) -> bool:
         return False
     if name in REFERENCES:
         return value.strip().startswith("#")
-    folded = "".join(value.split())
-    return not (EXTERNAL_URL.search(folded) or SCRIPTED.search(folded))
+    return loads_nothing(value)
 
 
 def _markup(element: ElementTree.Element, declared: str = "") -> str:

@@ -3,6 +3,8 @@ import { ENGLISH, type MonographDocument } from "@/lib/monographDocument";
 export const PAGE_EXPORT_FORMATS = ["pdf", "docx"] as const;
 export const PAGE_DOWNLOAD_LABEL = "Download";
 export const PAGE_DOWNLOAD_TEST_ID = "page-download";
+export const PAGE_DOWNLOAD_BUSY = "Opening";
+export const PAGE_DOWNLOAD_FAILED = "The list of downloads did not load. Press Download to try again.";
 
 export type PageExportFormat = (typeof PAGE_EXPORT_FORMATS)[number];
 export type PageSubject = Pick<MonographDocument, "subjectKind" | "subjectSlug" | "language">;

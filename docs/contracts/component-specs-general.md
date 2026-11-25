@@ -181,7 +181,9 @@ set (`KEPT_DRAWING_TAGS`: shapes, groups, text, gradients, patterns, masks, clip
 `use`) and removes, with everything inside them, scripts, `foreignObject`, `image`, `style`, links
 and every element of another namespace; it removes every event handler (`on…`), every attribute of
 another namespace, every `href` that is not a local `#` reference, every value with an outside
-`url(…)`, `javascript:`, `expression(` or `@import`, and the root's fixed `width` and `height`. The
+`url(…)`, `image-set(`, `cross-fade(`, `image(`, `src(`, a backslash escape, `javascript:`,
+`expression(` or `@import` (`research/drawing_attributes.loads_nothing`, decision 0216), and the
+root's fixed `width` and `height`. The
 stored spec holds the cleaned markup, and the web app only ever draws it as an image, which runs no
 script and loads nothing.
 
@@ -263,8 +265,14 @@ India in the abroad inset. The map is framed to the places (`components/map/plac
 and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
 physical layers' own drawings and keys, a district layer's fills and legend) with the home
 districts in the place hatch, and the source line gives the boundary note and every layer's
-dataset credit at first paint. It rests on its last year with every place pinned; motion is only
-the entries' colour change, which both reduced-motion switches turn off.
+dataset credit at first paint. The key is whole at first paint where it needs no file (the relief
+key from the design's elevation classes, `lib/mapPalettes.ELEVATION_BREAKS`, which the relief file
+is cut at, and the rivers key) and holds a legend-shaped skeleton where it does (the minerals key,
+a district layer's legend), so nothing below moves when the layers land; once the page is loaded
+and idle the near view asks for the named layers' files with `link rel="prefetch"`
+(`componentSpecsTimelineMap.timelineMapFiles`), so they are cached before the view nears
+(decision 0216). It rests on its last year with every place pinned; motion is only the entries'
+colour change, which both reduced-motion switches turn off.
 
 **The hand-drawn map** (`research/drawn_maps.drawn_map_problems`, in check 8 for `drawing` and
 `map_layer`): a drawing is a map, and refused with `component_specs.MAP_POINTER`, when it paints the

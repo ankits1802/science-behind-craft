@@ -7,6 +7,7 @@ from pydantic import AfterValidator, ConfigDict, Field, field_validator
 
 from .base import ContractModel
 from .depicted_materials import DEPICTED_MATERIALS
+from .drawing_attributes import drawing_attribute_problem
 from .shown_text import SHOWN_TEXT
 from .unit_ids import UNIT_REF_PATTERN
 
@@ -81,7 +82,6 @@ PAINT_VALUE = re.compile(
 )
 PAINT_TOKEN = re.compile(r"^var\((--[a-z0-9-]+)\)$")
 PAINT_MIX = re.compile(r"^color-mix\(in srgb, var\((--[a-z0-9-]+)\) \d{1,3}%, var\((--[a-z0-9-]+)\)\)$")
-LOCAL_URL = re.compile(r"url\((?!#[\w-]+\))")
 DEPICTED_PREFIX = "--dye-"
 DEPICTED = frozenset(DEPICTED_MATERIALS)
 
@@ -201,8 +201,9 @@ class Differs(SpecModel):
 def _refused_attribute(name: str, value: str) -> str | None:
     if not SVG_ATTRIBUTE_NAME.fullmatch(name) or name.lower().startswith("on"):
         return "not a drawing attribute"
-    if "javascript:" in value.lower() or LOCAL_URL.search(value):
-        return "only in-drawing references are allowed"
+    problem = drawing_attribute_problem(name, value)
+    if problem:
+        return problem
     if name in PAINT_ATTRIBUTES and not _paint(value):
         return "paint is a token, a local reference, none or a mask's white or black"
     return None

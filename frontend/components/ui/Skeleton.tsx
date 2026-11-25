@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-export type SkeletonShape = "masthead" | "lede" | "plateGrid" | "chart";
+export type SkeletonShape = "masthead" | "lede" | "plateGrid" | "chart" | "legend";
 
 function Block({ className }: { className: string }) {
   return <span aria-hidden className={cn("kv-sk motion-pulse block", className)} />;
@@ -51,6 +51,17 @@ const SHAPES: Record<SkeletonShape, ReactNode> = {
       <Block className="h-3 w-16" />
       <Block className="mt-2.5 h-6 w-4/5" />
       <Block className="mt-4 aspect-[16/7] w-full" />
+    </>
+  ),
+  legend: (
+    <>
+      <Block className="h-3 w-1/3" />
+      <Block className="mt-3 h-2.5 w-full max-w-sm" />
+      <span className="mt-3 grid gap-x-4 gap-y-1.5 sm:grid-cols-2">
+        {["a", "b", "c", "d", "e", "f"].map((key) => (
+          <Block key={key} className="h-3 w-3/4" />
+        ))}
+      </span>
     </>
   )
 };

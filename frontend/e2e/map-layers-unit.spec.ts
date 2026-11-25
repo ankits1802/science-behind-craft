@@ -11,7 +11,7 @@ import { reliefSteps } from "@/components/map/physical/PhysicalSide";
 import { ReliefUnder } from "@/components/map/physical/ReliefLayer";
 import { RiversOver, RiversUnder } from "@/components/map/physical/RiversLayer";
 import { PALETTE_FILLS, paletteFill } from "@/components/map/rampFills";
-import { classIndexOf, districtSteps, LAYER_PALETTES, layerPalette, PALETTE_STEPS, paletteClasses, paletteSeries, spreadStep, type PaletteName } from "@/lib/mapPalettes";
+import { classIndexOf, districtSteps, ELEVATION_BREAKS, LAYER_PALETTES, layerPalette, PALETTE_STEPS, paletteClasses, paletteSeries, spreadStep, type PaletteName } from "@/lib/mapPalettes";
 import { mineralFinding, mineralSites, physicalLayerId, PHYSICAL_GROUP, PHYSICAL_LAYERS, riverWidth, tally, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 import type { MapLayer, MapLayerList, MapLayerSummary } from "@/lib/regionContract";
 
@@ -112,7 +112,8 @@ test("the relief layer draws six bands over the land, the shaded relief through 
   expect(markup).toContain('fill="var(--elevation-7)"');
   expect(markup).toContain(`href="${RELIEF.shade.href}"`);
   expect(markup).toContain('fill="var(--map-relief-shade)"');
-  expect(reliefSteps(RELIEF).map((step) => step.colour)).toEqual([1, 2, 3, 4, 5, 6, 7].map((step) => `var(--elevation-${step})`));
+  expect(RELIEF.breaks).toEqual([...ELEVATION_BREAKS]);
+  expect(reliefSteps(RELIEF.breaks).map((step) => step.colour)).toEqual([1, 2, 3, 4, 5, 6, 7].map((step) => `var(--elevation-${step})`));
   const names = RELIEF.ranges.map((range) => range.text);
   for (const name of ["Himalaya", "Karakoram", "Western Ghats", "Eastern Ghats", "Vindhya Range", "Satpura Range", "Aravalli Range", "Deccan Plateau"]) expect(names).toContain(name);
   expect(RELIEF.peaks[0].elevation).toBe(Math.max(...RELIEF.peaks.map((peak) => peak.elevation)));
