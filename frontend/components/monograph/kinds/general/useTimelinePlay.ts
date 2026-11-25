@@ -9,18 +9,16 @@ export type TimelinePlay = {
   at: number;
   playing: boolean;
   motion: boolean;
-  watch: (node: HTMLDivElement | null) => void;
   choose: (at: number) => void;
   toggle: () => void;
 };
 
 const IN_VIEW = { rootMargin: "-20% 0px -20% 0px" };
 
-export function useTimelinePlay(count: number, rest: number): TimelinePlay {
+export function useTimelinePlay(count: number, rest: number, watched: Element | null): TimelinePlay {
   const motion = useMotionAllowed();
   const [state, dispatch] = useReducer(played, rest, restingPlay);
   const [chosen, setChosen] = useState(0);
-  const [watched, watch] = useState<HTMLDivElement | null>(null);
   const playing = isPlaying(state, motion, count);
 
   useEffect(() => {
@@ -44,5 +42,5 @@ export function useTimelinePlay(count: number, rest: number): TimelinePlay {
 
   const toggle = useCallback(() => dispatch({ type: "toggle", motion, count }), [motion, count]);
 
-  return { at: state.at, playing, motion, watch, choose, toggle };
+  return { at: state.at, playing, motion, choose, toggle };
 }

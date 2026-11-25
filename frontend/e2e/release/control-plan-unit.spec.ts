@@ -5,6 +5,7 @@ import { abortedRequest, webkitLeavingNoise } from "../production/checks";
 
 import {
   citationMode,
+  endsOnItsOwn,
   expectedProblems,
   flippedTheme,
   heldProblems,
@@ -68,6 +69,8 @@ test("the theme toggle, the dip player and a player's steps each move to a diffe
   expect(otherStep(1, 4)).toBe(2);
   expect(otherStep(4, 4)).toBe(1);
   expect(otherStep(1, 1)).toBeNull();
+  expect(endsOnItsOwn(2, 2)).toBe(true);
+  expect(endsOnItsOwn(2, 4)).toBe(false);
   expect(otherChoice(["Basic", "Detailed", "Expert"], "Detailed")).toBe("Basic");
   expect(otherChoice(["Plates", "Names"], "Plates")).toBe("Names");
   expect(otherChoice(["Plates"], "Plates")).toBeNull();

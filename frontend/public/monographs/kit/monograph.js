@@ -42,25 +42,15 @@
     });
   };
 
-  KV.steady = function (box, items) {
+  KV.stack = function (box, items) {
     if (!box || items.length < 2) return;
-    function hold() {
-      var shown = items.filter(function (el) { return !el.hidden; })[0];
-      if (!shown) return;
-      var align = box.style.alignSelf;
-      box.style.minHeight = ''; box.style.alignSelf = 'start';
-      var base = box.offsetHeight - shown.offsetHeight;
-      var hid = items.filter(function (el) { return el.hidden; });
-      hid.forEach(function (el) { el.hidden = false; });
-      var most = Math.max.apply(null, items.map(function (el) { return el.offsetHeight; }));
-      hid.forEach(function (el) { el.hidden = true; });
-      box.style.alignSelf = align;
-      box.style.minHeight = Math.ceil(base + most) + 'px';
-    }
-    hold();
-    if (!('ResizeObserver' in window)) return;
-    var width = box.offsetWidth;
-    new ResizeObserver(function () { if (box.offsetWidth !== width) { width = box.offsetWidth; hold(); } }).observe(box);
+    box.classList.add('kv-stack');
+    items.forEach(function (el) { if (el.hidden) { el.hidden = false; el.classList.add('kv-off'); } });
+  };
+
+  KV.shown = function (el, on) {
+    if (el.parentElement && el.parentElement.classList.contains('kv-stack')) el.classList.toggle('kv-off', !on);
+    else el.hidden = !on;
   };
 
   KV.ratchet = function (el) {
@@ -286,7 +276,7 @@
       var g = b.getAttribute('data-g'), n = b.querySelector('b').textContent;
       $$('.kcite').forEach(function (c) {
         if ((' ' + c.getAttribute('data-g') + ' ').indexOf(' ' + g + ' ') < 0) return;
-        if (c.closest('.kv-sources') || c.closest('[hidden]')) return;
+        if (c.closest('.kv-sources') || c.closest('[hidden], .kv-off')) return;
         var s = c.closest('.s') || c.parentNode;
         if (lit.indexOf(s) < 0) { s.classList.add('is-src'); lit.push(s); }
       });
@@ -893,9 +883,9 @@ KV.boot('chem', function (document) {
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
         b.tabIndex = on ? 0 : -1;
       });
-      panels.forEach(function (p, i) { p.hidden = i + 1 !== s; });
-      chems.forEach(function (c, i) { c.hidden = i + 1 !== s; c.classList.remove('run'); });
-      rxs.forEach(function (r, i) { r.hidden = i + 1 !== s; r.classList.remove('run'); });
+      panels.forEach(function (p, i) { KV.shown(p, i + 1 === s); });
+      chems.forEach(function (c, i) { KV.shown(c, i + 1 === s); c.classList.remove('run'); });
+      rxs.forEach(function (r, i) { KV.shown(r, i + 1 === s); r.classList.remove('run'); });
       var moves = opts.user && !reduced();
       if (rxs.length) {
         arr(rxs[s - 1].querySelectorAll('svg[data-fit]')).forEach(fit);
@@ -950,11 +940,11 @@ KV.boot('chem', function (document) {
         if (t != null) { e.preventDefault(); go(t, { focus: true, user: true }); schedule(); }
       });
     });
+    KV.stack(fig.querySelector('.rp-text'), panels);
+    KV.stack(fig.querySelector('.rp-chems'), chems);
+    if (rxs.length) KV.stack(fig.querySelector('.rp-scene'), rxs);
     go(step, {});
     paint();
-    KV.steady(fig.querySelector('.rp-text'), panels);
-    KV.steady(fig.querySelector('.rp-chems'), chems);
-    if (rxs.length) KV.steady(fig.querySelector('.rp-scene'), rxs);
     KV.seen(fig, function (on) { seen = on; sync(); });
     KV.onMotion(sync);
   }

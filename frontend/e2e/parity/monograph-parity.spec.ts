@@ -70,6 +70,8 @@ async function bothPages(context: BrowserContext): Promise<{ approved: Page; ren
   return { approved, rendered };
 }
 
+test.use({ reducedMotion: "reduce" });
+
 test.beforeEach(async ({ context }) => {
   await passPreviewProtection(context, process.env.E2E_BASE_URL ?? "", process.env.E2E_VERCEL_BYPASS ?? "");
   await restingVat(context);
@@ -165,7 +167,7 @@ test("a citation and the first figure answer as on the approved page", async ({ 
 
 async function wideContext(browser: Browser, scheme: Scheme): Promise<BrowserContext> {
   const base = process.env.E2E_BASE_URL ?? "";
-  const context = await browser.newContext({ ...contextOptions(WIDE, scheme), baseURL: base || undefined });
+  const context = await browser.newContext({ ...contextOptions(WIDE, scheme), baseURL: base || undefined, reducedMotion: "reduce" });
   await passPreviewProtection(context, base, process.env.E2E_VERCEL_BYPASS ?? "");
   await restingVat(context);
   return context;

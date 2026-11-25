@@ -76,7 +76,8 @@ players, `molecule_3d`, Composed from a craft's own facts).
    at once and announces it, and nothing loops. A switch turned on while a player plays stops it
    (`KV.onMotion`).
 4. **A player holds its height.** The kit reserves each player's text, lane and scene box at the
-   height of its tallest step (`KV.steady`, measured once and again when its width changes), the
+   height of its tallest step (`KV.stack`: its steps share one grid cell and those not shown are
+   hidden by `visibility`, so no layout is read and the page's load does no more work), the
    status line three lines, and a dip key and a stage label card the height they have reached
    (`KV.ratchet`), so a player that plays on its own moves nothing around it.
 5. **A molecule turns slowly** (15 degrees a second) once in view, holds still under the pointer,
@@ -122,7 +123,11 @@ players, `molecule_3d`, Composed from a craft's own facts).
 - Kutch Ajrakh's four reaction players, its dip player, its living cloth and its molecule now play
   on its page too; its markup is unchanged, its players taller by their tallest step.
 - The release controls spec reads each player playing on its own, a pressed step, Pause and a held
-  state; the old "ends on its own at the last step" helper is gone, since a player loops.
+  state on a page whose kit plays in view (`KV.seen`), and the earlier kit's press-driven players by
+  their earlier checks (`e2e/release/earlierPlayers.ts`), since its post-deploy run reads
+  production before this change is deployed; that file goes once production serves this kit.
+- The parity runs (the native smoke and `monograph-parity`) compare pages at rest, so they draw
+  them with motion reduced.
 - A page whose players play in view still rests finished at first paint and in the preview, which
   draws with motion reduced; page checklist rule 10 says a player plays on its own and any other
   replay is opt-in.

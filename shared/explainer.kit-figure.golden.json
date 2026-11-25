@@ -204,6 +204,32 @@
                     "label": "u0012"
                   }
                 ]
+              },
+              {
+                "label": "u0013",
+                "motion": "react",
+                "parts": [
+                  {
+                    "part": "species",
+                    "role": "reactant",
+                    "material": "--dye-leuco",
+                    "breaks": false,
+                    "label": "u0014"
+                  },
+                  {
+                    "part": "species",
+                    "role": "reagent",
+                    "breaks": false,
+                    "label": "u0015"
+                  },
+                  {
+                    "part": "species",
+                    "role": "product",
+                    "material": "--dye-indigo",
+                    "breaks": false,
+                    "label": "u0016"
+                  }
+                ]
               }
             ]
           },
@@ -327,6 +353,58 @@
             {
               "ref": "u0012",
               "text": "Inlaid slab",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0013",
+              "text": "In the air"
+            },
+            {
+              "ref": "u0014",
+              "text": "Dye on the fibres",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0015",
+              "text": "Oxygen",
+              "citations": [
+                {
+                  "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",
+                  "claimId": "8b628467-f530-5780-a7f3-c1661ca25abc",
+                  "sourceId": "c1fa6a39-5386-5d7d-8623-393e1e61f6db",
+                  "quote": "At first bright green, the cloth rapidly becomes blue as oxygen meets the dye particles on the fibres.",
+                  "locator": "Application 1050, method of production, p. 12",
+                  "context": null,
+                  "evidence": "QUOTED",
+                  "level": "PROVISIONAL"
+                }
+              ]
+            },
+            {
+              "ref": "u0016",
+              "text": "Blue dye",
               "citations": [
                 {
                   "id": "75478c69-67d8-5bad-84ad-6273aeaa25b7",

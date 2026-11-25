@@ -6,6 +6,7 @@ import { clip } from "../production/checks";
 import { expectedProblems, heldProblems, otherStep, unchangedProblems } from "./controlPlan";
 import { changedFrom, reached, type ControlWatch } from "./controlWatch";
 import { documentDrawn } from "./documentControls";
+import { earlierDipPlayer, earlierMolecule, earlierReactionPlayer, kitPlaysInView } from "./earlierPlayers";
 
 const QUICK_MS = 5_000;
 const PLAY_MS = 9_000;
@@ -50,6 +51,7 @@ async function pausedProblems(control: string, read: () => Promise<string>, page
 
 export async function kitReactionPlayer(page: Page): Promise<string[]> {
   const player = page.locator(KIT_PLAYER).first();
+  if (!(await kitPlaysInView(page))) return earlierReactionPlayer(player);
   await centred(player);
   const step = attribute(player, "data-step");
   const steps = Number(await player.getAttribute("data-steps"));
@@ -103,6 +105,7 @@ export async function answerReactionPlayer(page: Page): Promise<string[]> {
 
 export async function dipPlayer(page: Page): Promise<string[]> {
   const player = page.locator(DIP_PLAYER).first();
+  if (!(await kitPlaysInView(page))) return earlierDipPlayer(player);
   await centred(player);
   const button = player.locator(".vat-dip");
   const pressed = attribute(button, "aria-pressed");
@@ -140,6 +143,7 @@ export async function whatIf(page: Page): Promise<string[]> {
 
 export async function kitMolecule(page: Page): Promise<string[]> {
   const molecule = page.locator(KIT_MOLECULE).first();
+  if (!(await kitPlaysInView(page))) return earlierMolecule(page, molecule);
   await centred(molecule);
   const turned = attribute(molecule.locator(".mol-dial"), "aria-valuenow");
   const before = await turned();

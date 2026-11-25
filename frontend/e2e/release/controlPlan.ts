@@ -69,6 +69,10 @@ export function otherStep(current: number, steps: number): number | null {
   return current >= steps ? 1 : current + 1;
 }
 
+export function endsOnItsOwn(step: number, steps: number): boolean {
+  return step >= steps;
+}
+
 export function heldProblems(control: string, before: string, after: string): string[] {
   return before === after ? [] : [`${control} moved from "${before}" to "${after}" while paused`];
 }

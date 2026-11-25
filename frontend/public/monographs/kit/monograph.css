@@ -1854,6 +1854,11 @@
 .bx-chem .rp-status b{ font-weight: 600; color: var(--ink-1); }
 .bx-chem .rp-text{ padding: 20px 18px 22px; min-width: 0; background: var(--raised); }
 .bx-chem .rp-step[hidden], .bx-chem .rp-chem[hidden], .bx-chem .rx[hidden]{ display: none; }
+.bx-chem .kv-stack > .kv-off{ visibility: hidden; }
+.bx-chem .rp-text.kv-stack, .bx-chem .rp-chems.kv-stack{ display: grid; grid-template-columns: minmax(0, 1fr); }
+.bx-chem .rp-text.kv-stack > .rp-step, .bx-chem .rp-chems.kv-stack > .rp-chem{ grid-area: 1 / 1; min-width: 0; }
+.bx-chem .rp-scene.kv-stack{ display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); grid-auto-rows: auto; }
+.bx-chem .rp-scene.kv-stack > .rx{ grid-area: 1 / 1; min-width: 0; }
 .bx-chem .rp-step .kicker{ display: flex; flex-wrap: wrap; gap: 4px 10px; }
 .bx-chem .rp-step h4{ margin-top: 8px; font: 500 var(--text-h3)/var(--lh-h3) var(--font-reading); letter-spacing: var(--track-h3); text-wrap: balance; }
 .bx-chem .rp-step .rp-p{ margin-top: 12px; font-size: var(--text-body-sm); line-height: var(--lh-body-sm); color: var(--ink-1); }
