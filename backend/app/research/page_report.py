@@ -13,6 +13,7 @@ from .base import ContractModel
 from .coverage_chapters import field_chapter
 from .page_counts import BarCounts, bar_counts
 from .page_render import DrawingReport
+from .page_report_drawable import Opportunity, opportunities
 from .page_report_rules import (
     DENSE_SENTENCES,
     FAIL,
@@ -43,7 +44,7 @@ __all__ = [
 ]
 
 PAGE_REPORT_SCHEMA_VERSION = 1
-CHECKLIST_RULES = 28
+CHECKLIST_RULES = 29
 DENSE, THIN, ABSENT = STANDINGS = ("DENSE", "THIN", "ABSENT")
 UNGRADED = "UNGRADED"
 CONTRIBUTED, AI_ILLUSTRATION, NAMED_IN_CREDIT = LICENCE_CLASSES = (
@@ -115,6 +116,7 @@ class PageReport(ContractModel):
     message: str
     drawing: DrawingReport | None = None
     bar: BarCounts | None = None
+    opportunities: list[Opportunity] = Field(default_factory=list)
 
 
 def page_report(given: ReportInput, titles: Mapping[int, str]) -> PageReport:
@@ -144,6 +146,7 @@ def page_report(given: ReportInput, titles: Mapping[int, str]) -> PageReport:
         pictures_by_licence=dict(Counter(picture.licence for picture in pictures)),
         message=READY.format(passed=counted[PASS], failed=counted[FAIL], judged=counted[JUDGE]),
         bar=None if given.bar is None else bar_counts(given.document.content, given.bar),
+        opportunities=opportunities(given.document.content, page.sentences, given.held),
     )
 
 

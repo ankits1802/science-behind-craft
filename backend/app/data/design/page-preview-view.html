@@ -171,15 +171,15 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
   }
 
   function counts(result, report) {
-    var line = el("p", "kv-counts");
+    var marks = el("p", "kv-counts");
     if (!report) {
-      line.appendChild(el("span", "kv-meta", count(result.components) + " components · " + count(result.sources) + " sources"));
-      return line;
+      marks.appendChild(el("span", "kv-meta", count(result.components) + " components · " + count(result.sources) + " sources"));
+      return marks;
     }
-    line.appendChild(tally("PASS", report.passed));
-    line.appendChild(tally("FAIL", report.failed));
-    line.appendChild(tally("JUDGE", report.judged));
-    return line;
+    marks.appendChild(tally("PASS", report.passed));
+    marks.appendChild(tally("FAIL", report.failed));
+    marks.appendChild(tally("JUDGE", report.judged));
+    return marks;
   }
 
   function line(result, report) {
@@ -326,18 +326,36 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     return block;
   }
 
-  function counted(name, mine, theirs) {
-    return [name].concat(COUNTED.map(function (key) { return count((mine || {})[key]) + " · " + count((theirs || {})[key]); }));
+  function tallied(held) {
+    return COUNTED.map(function (key) {
+      var n = count((held || {})[key]);
+      return n + " " + (n === 1 ? key.slice(0, -1) : key);
+    }).join(", ");
   }
 
   function beside(report) {
     var bar = report.bar && typeof report.bar === "object" ? report.bar : null;
     if (!bar) return null;
+    return el("p", "kv-meta", "For reference, never a target: this page holds " + tallied(bar.page) + "; Kutch Ajrakh, the approved page, " + tallied(bar.bar) + ".");
+  }
+
+  function drawable(report) {
+    var found = list(report.opportunities);
+    if (!found.length) return null;
     var block = el("section");
-    block.appendChild(el("h2", null, "Beside Kutch Ajrakh"));
-    block.appendChild(el("p", "kv-meta", bar.note));
-    var rows = [counted("All chapters", bar.page, bar.bar)].concat(list(bar.chapters).map(function (line) { return counted(words(line.chapter), line.page, line.bar); }));
-    block.appendChild(table("This page · Kutch Ajrakh, chapter by chapter", ["Chapter", "Pictures", "Figures", "Interactives", "Maps"], rows, [false, true, true, true, true]));
+    block.appendChild(el("h2", null, "What the facts could show"));
+    block.appendChild(el("p", "kv-meta", "Read from this craft's own facts, each yours to judge: draw the ones that serve the reader, as a figure you write or with a composer as a shortcut."));
+    var items = el("ol", "kv-list");
+    found.forEach(function (item) {
+      var entry = el("li");
+      entry.appendChild(el("p", "kv-rule-title", words(item.chapter) + ": " + String(item.what || "")));
+      var ways = el("ul", "kv-evidence");
+      list(item.ways).forEach(function (way) { ways.appendChild(el("li", null, way)); });
+      entry.appendChild(ways);
+      entry.appendChild(el("p", "kv-meta", "Stated by " + list(item.facts).join(", ")));
+      items.appendChild(entry);
+    });
+    block.appendChild(items);
     return block;
   }
 
@@ -391,7 +409,7 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
   function render(result) {
     var report = result.report && typeof result.report === "object" ? result.report : null;
     var contents = head(result, report);
-    if (report) [rules(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
+    if (report) [rules(report), drawable(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
     if (list(result.parts).length) contents.push(bundleParts(result));
     var foot = el("footer");
     foot.appendChild(el("p", null, "Drawn from the preview's own result; every text is shown as text and nothing is loaded from the network. Every preview starts as one line; opening one minimises the others."));

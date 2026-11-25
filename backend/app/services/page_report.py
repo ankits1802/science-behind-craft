@@ -22,8 +22,10 @@ from app.research.page_report import PageReport, ReportInput, page_report
 from app.research.structure_proposals import ReactionItem
 from app.research.supplied_sources import READY, cite_key
 
+from .compose_components import ComposeDeps
 from .monograph_document import monograph_content
 from .page_preview_links import UnknownPreview, preview_document, preview_token
+from .page_report_held import held_shapes
 
 __all__ = ["CHECKLIST", "bar_content", "checklist_titles", "preview_report", "supplied_grades"]
 
@@ -50,6 +52,7 @@ async def preview_report(
     *,
     lists: PageLists | None = None,
     now: datetime,
+    compose: ComposeDeps = ComposeDeps(),
 ) -> PageReport | None:
     document = await _document(session, user, previewed.preview_url, now)
     if document is None:
@@ -61,6 +64,7 @@ async def preview_report(
         reactions=tuple(item.item for item in bundle.structure if isinstance(item.item, ReactionItem)),
         supplied=await supplied_grades(session, user.id, _cited_urls(bundle)),
         bar=bar_content(),
+        held=await held_shapes(session, compose, previewed.subject.kind, previewed.subject.slug),
     )
     return page_report(given, checklist_titles())
 

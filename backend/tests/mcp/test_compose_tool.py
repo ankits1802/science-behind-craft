@@ -59,7 +59,7 @@ def test_the_tool_sits_in_the_pages_group_beside_edit_draft_and_writes_nothing()
     assert (tool.group, tool.scope, dict(tool.annotations)) == (PAGES, CONTRIBUTE_SCOPE, dict(LOOKS))
     assert not tool.commits and "outputSchema" not in tool.listed()
     kinds = tool.listed()["inputSchema"]["properties"]["kind"]["enum"]
-    assert kinds == ["reaction_player", "dip_player", "molecule_3d", "experiment_lab"]
+    assert kinds == ["reaction_player", "dip_player", "molecule_3d", "experiment_lab", None]
 
 
 async def test_a_composed_component_goes_into_a_draft_as_edit_draft_takes_it_with_no_notices() -> None:
@@ -97,3 +97,29 @@ async def test_only_a_contributor_composes_and_at_most_one_key_narrows_it() -> N
         ComposeComponent.model_validate(
             {"craft": SLUG, "kind": "dip_player", "about": {"stage": "S01", "material": "M01"}}
         )
+
+
+async def test_with_no_kind_one_call_composes_every_kind_the_facts_allow_ready_for_edit_draft() -> None:
+    reply = await composed({"craft": SLUG})
+    assert reply["composed"] and reply["kind"] is None
+    kinds = [component["proposal"]["kind"] for component in reply["components"]]
+    assert {"reaction_player", "dip_player", "molecule_3d", "experiment_lab"} <= set(kinds)
+    assert reply["message"].startswith(f"Composed {len(kinds)} components for {SLUG} from its own facts: ")
+    draft = EditDraft.model_validate(
+        {"subject": {"kind": "craft", "slug": SLUG}, "add": {"components": reply["components"]}}
+    )
+    assert draft.add is not None and len(draft.add.components) == len(kinds)
+
+
+async def test_with_no_kind_each_kind_left_uncomposed_names_its_kind_beside_what_it_needs() -> None:
+    reply = await composed({"craft": SLUG}, held=None)
+    assert not reply["composed"] and reply["components"] == []
+    assert [line.split(":", 1)[0] for line in reply["missing"]] == [
+        "reaction_player",
+        "dip_player",
+        "molecule_3d",
+        "experiment_lab",
+    ]
+    assert "propose_facts" in reply["nextStep"]
+    with pytest.raises(ValueError, match="about narrows one kind"):
+        ComposeComponent.model_validate({"craft": SLUG, "about": {"stage": "S01"}})

@@ -13,6 +13,7 @@ from .monograph_document import MonographDocument
 from .monograph_page import ComponentEntry, MonographContent
 from .page_drafts import PageLists
 from .page_report_design import DESIGN_RULE, design_evidence
+from .page_report_drawable import DRAWABLE_RULE, HeldShapes, drawable_evidence, opportunities
 from .page_report_sources import counted_apart
 from .quotes import quote_key, unsupported_figures
 from .structure_proposals import ReactionItem
@@ -88,6 +89,7 @@ class ReportInput:
     reactions: tuple[ReactionItem, ...] = ()
     supplied: Mapping[str, str] = field(default_factory=dict)
     bar: MonographContent | None = None
+    held: HeldShapes | None = None
 
 
 def node_text(nodes: Sequence[Any]) -> str:
@@ -175,6 +177,7 @@ def checked_rules(given: ReportInput) -> dict[int, Verdict]:
         25: _no_repeats,
         26: _no_holes,
         DESIGN_RULE: _designed,
+        DRAWABLE_RULE: _drawable,
     }
     found = {number: check(page, given) for number, check in checks.items()}
     found |= {number: (JUDGE, [hint]) for number, hint in JUDGE_HINTS.items()}
@@ -287,9 +290,7 @@ def _charts(page: ReadPage, given: ReportInput) -> Verdict:
         for f in charts
         if not is_declared(page.document.specs.get(f.label))
     ]
-    if loose:
-        return JUDGE, loose
-    return PASS, [f"{len(charts)} charts, each drawn by the site from zero"]
+    return (JUDGE, loose) if loose else (PASS, [f"{len(charts)} charts, each drawn by the site from zero"])
 
 
 def _ambiguous(page: ReadPage, given: ReportInput) -> Verdict:
@@ -382,6 +383,11 @@ def _designed(page: ReadPage, given: ReportInput) -> Verdict:
     found = design_evidence(figures, page.document.specs, page.held, page.text, pictures)
     passed = f"every delivered figure and {len(pictures)} pictures speak the design's vocabulary"
     return _verdict(found, passed)
+
+
+def _drawable(page: ReadPage, given: ReportInput) -> Verdict:
+    passed, evidence = drawable_evidence(opportunities(page.document.content, page.sentences, given.held))
+    return (PASS if passed else JUDGE), evidence
 
 
 def _naming(page: ReadPage, term: str) -> list[str]:

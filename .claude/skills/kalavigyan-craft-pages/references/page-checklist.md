@@ -1,6 +1,6 @@
 # The page checklist
 
-Every craft, family, category and answer page of KalaVigyan meets these 28 rules, whoever works on
+Every craft, family, category and answer page of KalaVigyan meets these 29 rules, whoever works on
 it: a contributor delivering facts, structure, components, pictures or a whole page bundle over the
 MCP server, a curator deepening a page, an engineer building a screen, or a critic scoring the
 result. Each rule is written for any craft; an example shows how one craft met a rule and is never
@@ -167,6 +167,19 @@ The rules below refer to them.
     look at them as a reader would before proposing. When the pictures cannot be made the rule is
     yours to judge on the link, never passed.
 
+## Thought through as Kutch Ajrakh was (owner, 2026-11-26)
+
+29. **What the craft's facts can show is weighed for a figure.** A page follows Kutch Ajrakh's
+    design principles and thought process, never its counts or its kinds: each mechanism shown where
+    it happens, a change drawn as it moves, a place and its dates on one map. The preview reads this
+    craft's own facts for what a reader could see that the page leaves in words: a reaction the server
+    balanced that no figure draws, stages in order with no player stepping through them, places and
+    dates with no map that moves through them, quantities in a field with no figure of that field.
+    Each opportunity names the facts that state it and the ways to draw it: a figure you write from the
+    figure kit and the design, or a composer as a shortcut where one exists (`compose_component`,
+    which with no kind gives every kind it can make at once). The rule is yours to judge and never
+    fails; `propose_page` refuses only what is wrong, never a page on this rule.
+
 ## How a page is checked
 
 - A contribution is seen before it is submitted: `preview_page` draws a bundle exactly as the site
@@ -185,11 +198,12 @@ The rules below refer to them.
 
 | Rule | Kept true by |
 |---|---|
-| The rules are numbered 1 to 28 in order, and the count is stated | `test_skill_references.py` in `backend/tests/mcp` |
+| The rules are numbered 1 to 29 in order, and the count is stated | `test_skill_references.py` in `backend/tests/mcp` |
 | The preview's report names each rule by its bold title | `services/page_report.checklist_titles`, which reads them from this file, tested in `test_page_report.py` in `backend/tests/research` |
 | The density bar of rule 24 | `test_reference_limits.py` in `backend/tests/mcp`, against `curation/limits` |
 | The curation skill carries this very file | `test_skill_references.py` again, comparing the two files' bytes |
 | The drawing checks of rule 28 | `backend/app/data/design/drawing-checks.js`, the one copy the renderer (`backend/app/renderer`) and Monograph parity (`frontend/e2e/parity/drawingChecks.ts`) both run, tested on fixture pages in `parity-drawing-unit.spec.ts` |
 | `propose_page` refusing after a failed drawing | `test_render_review_db.py` in `backend/tests/db` |
+| The opportunities of rule 29, judged and never failed | `research/page_report_drawable.py` with `services/page_report_held.py`, tested in `test_page_report_drawable.py` in `backend/tests/research` and `test_page_report_held.py` in `backend/tests/pages` |
 
 Read it again whenever a critic's finding becomes a rule, or a rule's title changes (the report quotes it).

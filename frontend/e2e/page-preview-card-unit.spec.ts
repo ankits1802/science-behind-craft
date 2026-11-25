@@ -37,7 +37,23 @@ const RESULT = {
     suppliedSources: 0,
     pictures: [],
     picturesByLicence: {},
-    message: "19 rules pass, 3 fail and 7 are yours to judge on the private link; fix each failure and preview again."
+    message: "19 rules pass, 3 fail and 7 are yours to judge on the private link; fix each failure and preview again.",
+    opportunities: [
+      {
+        shows: "REACTION",
+        chapter: "chem",
+        what: "the reaction R04, iron and acetic acid to iron(II) acetate and hydrogen, balanced and drawn nowhere",
+        facts: ["c9"],
+        ways: ["a reaction_player or equation_card you write, its scenes drawn from the figure kit", "compose_component with kind reaction_player, as a shortcut"]
+      }
+    ],
+    bar: {
+      barSlug: "Kutch-Ajrakh",
+      page: { pictures: 4, figures: 12, interactives: 3, maps: 1 },
+      bar: { pictures: 14, figures: 80, interactives: 30, maps: 6 },
+      chapters: [{ chapter: "chem", page: { pictures: 1, figures: 6, interactives: 3, maps: 0 }, bar: { pictures: 2, figures: 30, interactives: 20, maps: 0 } }],
+      note: "Guidance only."
+    }
   }
 };
 
@@ -101,6 +117,18 @@ test("expanding shows the head and the full report, and collapsing returns the c
   const closed = await lastHeight(page);
   expect(closed).toBeLessThan(open);
   expect(closed).toBe(line);
+});
+
+test("the open card lists what the craft's facts could show and sets the page beside Kutch Ajrakh in one quiet line", async ({ page }) => {
+  await page.setViewportSize(DESKTOP);
+  await shownCard(page);
+  await toggle(page).click();
+  await expect(page.getByRole("heading", { level: 2, name: "What the facts could show" })).toBeVisible();
+  await expect(page.getByText("compose_component with kind reaction_player, as a shortcut")).toBeVisible();
+  await expect(page.getByText("Stated by c9")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Beside Kutch Ajrakh" })).toHaveCount(0);
+  await expect(page.locator("caption", { hasText: "Kutch Ajrakh" })).toHaveCount(0);
+  await expect(page.getByText("For reference, never a target: this page holds 4 pictures, 12 figures, 3 interactives, 1 map; Kutch Ajrakh, the approved page, 14 pictures, 80 figures, 30 interactives, 6 maps.")).toBeVisible();
 });
 
 test("Escape minimises an open card and leaves the focus on its control", async ({ page }) => {

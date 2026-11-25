@@ -55,7 +55,7 @@ PREVIEW_DESCRIPTION = (
     "anything past the column or the phone's width, a map, chart or interactive not whole at rest, the masthead "
     "picture and the page's name in the first screen); a failure fails rule 28 with the component's label and "
     "the problem, and when the pictures cannot be made the rule says so and is yours to judge. With it comes the "
-    "page checklist report: each of the 28 rules that can be checked mechanically passed or failed with its "
+    "page checklist report: each of the 29 rules that can be checked mechanically passed or failed with its "
     "evidence, the rest listed for you to judge on the link, coverage by field, figures, sources by grade, "
     "pictures by licence and the page's pictures, figures, interactives and maps beside Kutch Ajrakh's, chapter "
     "by chapter, as guidance only; drawn by ui://kalavigyan/page-preview.html in clients that show MCP Apps. A "
