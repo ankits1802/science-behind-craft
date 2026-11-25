@@ -19,7 +19,11 @@ STRING_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`
 LINE_COMMENT = re.compile(r"(?:^|[\s;,{}()])//")
 BLOCK_COMMENT = re.compile(r"/\*")
 MARKUP_COMMENT = re.compile(r"<!--")
-VENDORED = (".claude/skills/security-audit/", "backend/app/data/exports/reveal/")
+VENDORED = (
+    ".claude/skills/security-audit/",
+    "backend/app/data/exports/reveal/",
+    "frontend/public/monographs/kit/vendor/",
+)
 HASH_NAMES = frozenset({".gitignore", ".gitattributes", ".dockerignore", "Dockerfile"})
 LANGUAGES = {
     ".py": "python",

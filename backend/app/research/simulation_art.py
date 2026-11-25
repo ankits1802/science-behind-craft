@@ -14,7 +14,9 @@ from .simulation_art_markup import PAINT_ATTRIBUTES, REST_PROPERTIES, ArtMarkup
 __all__ = [
     "ART_RULE",
     "FACES",
+    "FRAME_FLAG",
     "REDUCED_MOTION_FLAG",
+    "TIMERS",
     "simulation_art_problems",
 ]
 

@@ -19,6 +19,7 @@ COMPONENT_KINDS = (
     "chart",
     "choice_toggle",
     "citation_tool",
+    "coded_figure",
     "comic",
     "concept_atlas",
     "credits",

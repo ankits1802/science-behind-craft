@@ -51,7 +51,7 @@ const within = (low: number, high: number, label: string): Shape<number> => ({
   }
 });
 
-const headShape = object<GeneralHead>({ title: unitRef, caption: nullable(unitRef) });
+export const headShape = object<GeneralHead>({ title: unitRef, caption: nullable(unitRef) });
 const cellShape = optional(object<DataCell>({ row: integer, column: text }));
 const datasetShape = optional(object<DatasetCite>({ code: text, credit: optional(text), url: optional(text) }));
 
@@ -59,8 +59,8 @@ export function isDeclared(spec: unknown): boolean {
   return typeof spec === "object" && spec !== null && !Array.isArray(spec) && Object.hasOwn(spec, DECLARED_KEY);
 }
 
-const svgMarkup = matching(SVG_ROOT, "an svg drawing");
-const themesShape = object<DrawingThemes>({ light: svgMarkup, dark: svgMarkup, hcLight: svgMarkup, hcDark: svgMarkup });
+export const svgMarkup = matching(SVG_ROOT, "an svg drawing");
+export const themesShape = object<DrawingThemes>({ light: svgMarkup, dark: svgMarkup, hcLight: svgMarkup, hcDark: svgMarkup });
 export const drawingSpecShape = object<DrawingSpec>({ head: headShape, svg: svgMarkup, alt: unitRef, themes: optional(themesShape) });
 export const chartSpecShape = object<ChartSpec>({
   head: headShape,

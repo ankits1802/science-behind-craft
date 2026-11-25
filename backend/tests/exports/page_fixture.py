@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from functools import cache
 from typing import Any
@@ -115,7 +115,7 @@ def fixture_refs(index: int, fixture: Mapping[str, Any]) -> dict[str, str]:
     return {ref: f"u{(index + 1) * 100 + number:04d}" for number, ref in enumerate(fixture["units"], start=1)}
 
 
-def fixture_page() -> MonographDocument:
+def fixture_page(names: Sequence[str] = NEW_KINDS) -> MonographDocument:
     by_name = dict(zip(KIND_FIXTURE_ORDER, kind_fixtures(), strict=True))
     page = _Page()
     lede = TextUnit(
@@ -123,7 +123,7 @@ def fixture_page() -> MonographDocument:
     )
     page.units[LEDE] = lede
     page.layout.append(LayoutEntry(chapter="opening", kind="unit", ref=LEDE))
-    for index, name in enumerate(NEW_KINDS):
+    for index, name in enumerate(names):
         _add(page, by_name[name], fixture_refs(index, by_name[name]))
     order = list(dict.fromkeys(entry.chapter for entry in page.layout))
     content = MonographContent(

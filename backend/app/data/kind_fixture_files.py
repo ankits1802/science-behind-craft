@@ -36,6 +36,7 @@ KIND_FIXTURE_ORDER = (
     "experiment_lab",
     "choice_toggle",
     "choice_toggle_copper",
+    "coded_figure",
 )
 
 

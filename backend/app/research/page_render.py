@@ -89,6 +89,7 @@ INTERACTIVE_KINDS = frozenset(
         "choice_toggle",
         "molecule_3d",
         "model_explainer",
+        "coded_figure",
         "process_replay",
     }
 )

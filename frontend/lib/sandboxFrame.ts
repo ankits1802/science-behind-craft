@@ -54,6 +54,7 @@ export const FRAME_STILLNESS = [
   "const timing = window.AnimationEffect && AnimationEffect.prototype.updateTiming;",
   "if (timing) AnimationEffect.prototype.updateTiming = function () { timing.apply(this, arguments); settleAll(); };",
   "if (window.HTMLMarqueeElement) HTMLMarqueeElement.prototype.start = function () {};",
+  "if (window.HTMLMediaElement) HTMLMediaElement.prototype.play = function () { this.pause(); return Promise.resolve(); };",
   "window.requestAnimationFrame = function () { return 0; };",
   "window.setInterval = function () { return 0; };",
   "const later = window.setTimeout;",
@@ -63,6 +64,7 @@ export const FRAME_STILLNESS = [
   "const hold = function (node) {",
   "if (window.SVGAnimationElement && node instanceof SVGAnimationElement) node.remove();",
   "else if (window.HTMLMarqueeElement && node instanceof HTMLMarqueeElement) node.stop();",
+  "else if (window.HTMLMediaElement && node instanceof HTMLMediaElement) { node.autoplay = false; node.pause(); }",
   "};",
   "new MutationObserver(function (changes) {",
   "for (const change of changes) {",
@@ -112,16 +114,21 @@ function frameIsStill(look: FrameLook | null): boolean {
   return look === null || look.reducedMotion;
 }
 
-export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[], look: FrameLook | null = null): string {
+export type FramePieces = { csp: string; head: string };
+
+export const NO_PIECES: FramePieces = { csp: SANDBOX_CSP, head: "" };
+
+export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[], look: FrameLook | null = null, pieces: FramePieces = NO_PIECES): string {
   return [
     frameIsStill(look) ? `<!doctype html><html lang="en" ${FRAME_REDUCED_MOTION}="true"><head>` : '<!doctype html><html lang="en"><head>',
-    `<meta http-equiv="Content-Security-Policy" content="${SANDBOX_CSP}">`,
+    `<meta http-equiv="Content-Security-Policy" content="${pieces.csp}">`,
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     `<script type="application/json" id="${SANDBOX_DATA_ELEMENT_ID}">${sandboxData(values)}</script>`,
     `<script>${FRAME_GUARD}</script>`,
     `<script>${FRAME_SIZER}</script>`,
     `<script>${FRAME_STILLNESS}</script>`,
+    pieces.head,
     `<style>${look ? frameLookStyle(look) : FRAME_MOTION_GUARD}</style>`,
     `</head><body>${html}</body></html>`
   ].join("");

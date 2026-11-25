@@ -62,6 +62,10 @@ PAPER_NOTES: Mapping[str, str] = MappingProxyType(
         "experiment_lab": "On the page the reader chooses an experiment; here every choice is listed.",
         "choice_toggle": "On the page the reader switches between the choices; here every choice is shown.",
         "map_sequence": "On the page the maps step one after another; here each is listed in order.",
+        "coded_figure": (
+            "On the page the figure moves in its frame and answers the reader's presses; here it is drawn at rest "
+            "with its words beneath."
+        ),
         **dict.fromkeys(
             (
                 "process_replay",

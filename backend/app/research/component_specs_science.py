@@ -4,6 +4,7 @@ from collections.abc import Mapping
 from types import MappingProxyType
 
 from .base import ContractModel
+from .component_specs_science_coded import CodedFigureSpec
 from .component_specs_science_explainers import MaterialCardsSpec, ModelExplainerSpec, ProcessReplaySpec
 from .component_specs_science_figures import (
     DiagramSpec,
@@ -19,6 +20,7 @@ __all__ = ["SCIENCE_KINDS", "SPEC_MODELS_SCIENCE"]
 SPEC_MODELS_SCIENCE: Mapping[str, type[ContractModel]] = MappingProxyType(
     {
         "choice_toggle": ChoiceToggleSpec,
+        "coded_figure": CodedFigureSpec,
         "diagram": DiagramSpec,
         "dip_player": DipPlayerSpec,
         "equation_card": EquationCardSpec,

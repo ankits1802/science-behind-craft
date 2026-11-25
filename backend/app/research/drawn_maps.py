@@ -23,7 +23,7 @@ __all__ = [
     "drawn_map_problems",
 ]
 
-MAPPED_KINDS = frozenset({"drawing", "map_layer"})
+MAPPED_KINDS = frozenset({"drawing", "map_layer", "coded_figure"})
 BASE_MAP_ROLES = frozenset(
     {
         "map-land",

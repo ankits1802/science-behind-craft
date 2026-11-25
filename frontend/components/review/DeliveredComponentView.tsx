@@ -1,4 +1,5 @@
 import { ComponentSlot } from "@/components/monograph/ComponentSlot";
+import { CodedFigureReview } from "@/components/review/CodedFigureReview";
 import { FactSources } from "@/components/review/FactEvidence";
 import { MONOGRAPH_KIT_CSS } from "@/lib/monographDocument";
 import type { DeliveredFact, DeliveredReview, DeliveredUnitReview } from "@/lib/reviewQueueContract";
@@ -14,6 +15,7 @@ export function DeliveredComponentView({ label, delivery }: { label: string; del
           <div className="kv-monograph min-w-0 overflow-x-auto border-t border-ink-1 pt-4" lang={delivery.drawing.language}>
             <link rel="stylesheet" href={MONOGRAPH_KIT_CSS} precedence="default" />
             <ComponentSlot document={delivery.drawing} label={label} />
+            <CodedFigureReview document={delivery.drawing} label={label} />
           </div>
         ) : (
           <p className="max-w-measure font-ui text-ui text-ink-2">It is drawn once every fact it rests on is shown on the page; the facts below say which are held.</p>

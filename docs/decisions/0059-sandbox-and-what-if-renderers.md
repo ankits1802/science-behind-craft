@@ -12,6 +12,7 @@ Date: 2026-11-18. Status: accepted.
 | The contract it was built to | [0054 Phase C contract: generated explainers, the what-if lab, zoom, timelines and film mode](0054-phase-c-contract.md) |
 | The review that fixed it | [0061 Phase C review fixes](0061-phase-c-review-fixes.md) |
 | The frame's document carries the design's tokens and the reduced-motion switch (amends this record) | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
+| The frame also runs a contributor's coded figure, held to the sandbox's safety rules alone (amends this record) | [decision 0231](0231-a-contributor-s-ai-writes-a-figure-s-code-over-the-page-s-cited-data.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

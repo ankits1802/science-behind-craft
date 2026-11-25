@@ -22,6 +22,7 @@ const PLACES: Readonly<Record<string, ComponentPlace>> = {
   audio_player: { scope: "rm", frame: "wrap" },
   chart: { scope: "mb", frame: "wrap" },
   citation_tool: { scope: "rm", frame: "bare" },
+  coded_figure: { scope: "chem", frame: "wrap" },
   comic: { scope: "sa", frame: "bare" },
   concept_atlas: { scope: "mb", frame: "wrap" },
   credits: { scope: "pt", frame: "screen" },
@@ -57,7 +58,7 @@ const PLACES: Readonly<Record<string, ComponentPlace>> = {
 
 const UNKNOWN_PLACE: ComponentPlace = { scope: "mb", frame: "wrap" };
 
-export const APP_KINDS: ReadonlySet<string> = new Set(["answer_block", "drawing", "why_here"]);
+export const APP_KINDS: ReadonlySet<string> = new Set(["answer_block", "coded_figure", "drawing", "why_here"]);
 const DECLARED_KINDS: ReadonlySet<string> = new Set([...GENERAL_KINDS, TIMELINE_MAP_KIND, KIT_KIND]);
 
 export function appDrawn(kind: string, spec: Readonly<Record<string, unknown>> | null): boolean {
