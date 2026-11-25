@@ -288,7 +288,7 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
   it again; add what it returns to the draft as it is, with your task as its `task_key`.
 - See it drawn before you propose it: put it in a draft or a bundle with the facts it rests on and
   call `preview_page`. Send it with `propose_page`, alone in a bundle when it rests only on held
-  facts. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild, until something is removed, edited, withdrawn or retracted from the page, which drops its earlier editions; Monograph parity names a page whose rest could not be read. A close match in the library refuses it with the matches and two ways on. An Admin's
+  facts. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild, until something is removed, edited, withdrawn or retracted from the page, which drops its earlier editions (the one current then once the web has refreshed the page); a page drawn at a dropped version reads the rest of the current one, and Monograph parity names a page whose rest could not be read. A close match in the library refuses it with the matches and two ways on. An Admin's
   approval registers it so every page it applies to draws it; a Professor's or Admin's own is
   registered at once.
 - **Maps.** Never draw a map. Deliver a declared `timeline_map`: name each place by the Wikidata

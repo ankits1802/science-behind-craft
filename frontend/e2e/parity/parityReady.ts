@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 
-import { REST_UNREAD } from "../../components/monograph/DeferredShellSlot";
 import { DEFERRED_ATTRIBUTE } from "../../components/monograph/kitGate";
+import { REST_UNREAD } from "../../lib/monographRestRead";
 
 export type PageReadiness = "ready" | "unread" | "waiting";
 

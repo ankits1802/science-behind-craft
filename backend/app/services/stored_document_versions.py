@@ -18,9 +18,14 @@ __all__ = [
     "KEPT_VERSIONS_MAX",
     "PAGE_LOCK",
     "PAGE_REVALIDATE",
+    "REBUILD_RETRY",
+    "REFRESH_RETRY",
     "REMOVAL_LOCK",
+    "REMOVED_GRACE",
+    "drop_expired",
     "drop_kept_versions",
     "drop_superseded",
+    "drop_withheld",
     "keep_superseded",
     "lock_page",
     "page_lock_id",
@@ -28,13 +33,16 @@ __all__ = [
     "superseded_row",
 ]
 
-KEPT_COLUMNS = ("contentHash", "document", "supersededAt")
+KEPT_COLUMNS = ("contentHash", "document", "supersededAt", "removedAt")
 PAGE_LOCK = "stored-document:{space}:{slug}"
 REMOVAL_LOCK = "stored-document:removals"
 CRAFT_SPACE = "craft"
 PAGE_REVALIDATE = timedelta(seconds=604_800)
 KEPT_VERSIONS_AN_HOUR = 1
 KEPT_VERSIONS_MAX = int(PAGE_REVALIDATE / timedelta(hours=1)) * KEPT_VERSIONS_AN_HOUR
+REBUILD_RETRY = timedelta(minutes=10)
+REMOVED_GRACE = 2 * REBUILD_RETRY
+REFRESH_RETRY = REBUILD_RETRY
 
 
 def page_lock_id(kind: str, slug: str) -> ColumnElement[Any]:
@@ -59,6 +67,7 @@ async def keep_superseded(session: AsyncSession, row: StoredDocument, *, now: da
         "contentHash": row.contentHash,
         "document": row.document,
         "supersededAt": now,
+        "removedAt": row.removedAt,
     }
     statement = insert(StoredDocumentVersion).values(**values)
     await session.execute(
@@ -76,10 +85,13 @@ async def keep_superseded(session: AsyncSession, row: StoredDocument, *, now: da
 
 
 async def superseded_row(
-    session: AsyncSession, subject: WorkSubject, version: int, language: str
+    session: AsyncSession, subject: WorkSubject, version: int, language: str, *, now: datetime
 ) -> StoredDocumentVersion | None:
     key = (subject.kind, subject.slug, language, version)
-    return await session.get(StoredDocumentVersion, key, populate_existing=True)
+    row = await session.get(StoredDocumentVersion, key, populate_existing=True)
+    if row is None or row.removedAt is None or row.supersededAt > now - REMOVED_GRACE:
+        return row
+    return None
 
 
 async def drop_superseded(session: AsyncSession, subject: WorkSubject) -> None:
@@ -87,6 +99,27 @@ async def drop_superseded(session: AsyncSession, subject: WorkSubject) -> None:
         delete(StoredDocumentVersion).where(
             StoredDocumentVersion.subjectKind == subject.kind,
             StoredDocumentVersion.subjectSlug == subject.slug,
+        )
+    )
+
+
+async def drop_withheld(session: AsyncSession, kind: str, slug: str, *, before: datetime) -> None:
+    await lock_page(session, kind, slug)
+    await session.execute(
+        delete(StoredDocumentVersion).where(
+            StoredDocumentVersion.subjectKind == kind,
+            StoredDocumentVersion.subjectSlug == slug,
+            StoredDocumentVersion.removedAt.is_not(None),
+            StoredDocumentVersion.supersededAt <= before,
+        )
+    )
+
+
+async def drop_expired(session: AsyncSession, *, now: datetime) -> None:
+    await session.execute(
+        delete(StoredDocumentVersion).where(
+            StoredDocumentVersion.removedAt.is_not(None),
+            StoredDocumentVersion.supersededAt <= now - REMOVED_GRACE,
         )
     )
 

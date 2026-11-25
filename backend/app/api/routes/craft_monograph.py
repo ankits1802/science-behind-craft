@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Annotated
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.document_reads import (
@@ -13,10 +13,13 @@ from app.api.document_reads import (
     AskedVersion,
     PartAsk,
     ServedDocument,
+    WebRead,
     document_response,
     generated_at,
     in_language,
+    not_found,
     queue_rebuild,
+    web_read,
 )
 from app.api.public_deps import public_reader
 from app.core.db import get_session
@@ -74,23 +77,23 @@ def reader_ask(
 @router.get("/{slug}/monograph")
 async def get_craft_monograph(
     slug: str,
-    background: BackgroundTasks,
     read: ReaderAsk = Depends(reader_ask),
+    web: WebRead = Depends(web_read),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
     craft = await knowledge_view.resolve_craft(session, slug)
     if craft is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL)
-    served = await served_document(session, craft, read.asked)
+    served = await served_document(session, craft, read.asked, web=web)
     if served is None:
-        raise HTTPException(
-            status.HTTP_404_NOT_FOUND, NO_VERSION_DETAIL if read.asked.version else NO_DOCUMENT_DETAIL
-        )
-    queue_rebuild(background, served)
+        return not_found(NO_VERSION_DETAIL if read.asked.version else NO_DOCUMENT_DETAIL, web)
+    queue_rebuild(web.background, served)
     return document_response(read.request, read.reader, served, read.asked.part)
 
 
-async def served_document(session: AsyncSession, craft: Craft, asked: DocumentAsk) -> ServedDocument | None:
+async def served_document(
+    session: AsyncSession, craft: Craft, asked: DocumentAsk, *, web: WebRead | None = None
+) -> ServedDocument | None:
     page = (subject_kind(craft), craft.slug)
     row = await document_row(session, CRAFT_SUBJECT, craft.slug, language=ENGLISH, version=asked.version)
     if row is not None:
@@ -105,7 +108,7 @@ async def served_document(session: AsyncSession, craft: Craft, asked: DocumentAs
         body = with_why_here(shown.body, ground)
         return ServedDocument(shown.etag, shown.language, compact_json(body), row.version)
     read = await generated_fallback(session, craft)
-    return await generated_at(session, read, language=asked.language, version=asked.version)
+    return await generated_at(session, read, language=asked.language, version=asked.version, web=web)
 
 
 async def stored_ground(session: AsyncSession, craft: Craft) -> CraftGround | None:

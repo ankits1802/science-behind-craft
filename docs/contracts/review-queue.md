@@ -223,7 +223,9 @@ filter or cursor.
 A fact shown on its pages (`IN_REVIEW` or `APPROVED`) that is rejected or retracted, and a reading
 rejected, drop the kept versions of their pages in the same transaction (decision 0213), so no
 earlier edition still states them: for a fact, of each of its pages with a copy, current or kept,
-that cites its id; for a reading, of every page it names (decision 0219).
+that cites its id; for a reading, of every page it names (decision 0219). The copy current when it
+was made is withheld once its page is rebuilt, read only by a page or edition naming its version,
+until the web has refreshed the page or for at most 20 minutes (decision 0223).
 
 **Picture checks** (`review_queue_picture_checks.py`, decision 0222): approve and reject decide any
 searched picture's link, waiting or already decided by contributors' verdicts, as an Admin's

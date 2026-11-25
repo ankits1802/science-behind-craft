@@ -100,9 +100,13 @@ export function shellRest(document: MonographDocument): ShellRest {
   return { schemaVersion: SHELL_REST_SCHEMA_VERSION, version: document.version, tree: rest.tree, bundles, sources: rest.sources, data: kitDataBlocks(document.content) };
 }
 
+function drawnSince(found: unknown, drawn: number): found is number {
+  return typeof found === "number" && Number.isInteger(found) && found >= drawn;
+}
+
 export function checkedShellRest(raw: unknown, version: number): ShellRest {
   const body = raw as Partial<ShellRest> | null;
-  if (!body || body.schemaVersion !== SHELL_REST_SCHEMA_VERSION || body.version !== version || !Array.isArray(body.tree) || !Array.isArray(body.data) || typeof body.bundles !== "object" || typeof body.sources !== "object") {
+  if (!body || body.schemaVersion !== SHELL_REST_SCHEMA_VERSION || !drawnSince(body.version, version) || !Array.isArray(body.tree) || !Array.isArray(body.data) || typeof body.bundles !== "object" || typeof body.sources !== "object") {
     throw new Error(`The rest of monograph version ${version} came back in another shape`);
   }
   return body as ShellRest;
@@ -119,7 +123,7 @@ export function restBody(document: MonographDocument): ShellRest | DocumentRest 
 export function checkedDocumentRest(raw: unknown, version: number): DocumentRest {
   const body = raw as Partial<DocumentRest> | null;
   const document = body?.document as Partial<MonographDocument> | undefined;
-  if (!body || body.schemaVersion !== DOCUMENT_REST_SCHEMA_VERSION || body.version !== version || !document || document.version !== version || document.shell !== null || typeof document.content !== "object" || document.content === null) {
+  if (!body || body.schemaVersion !== DOCUMENT_REST_SCHEMA_VERSION || !drawnSince(body.version, version) || !document || document.version !== body.version || document.shell !== null || typeof document.content !== "object" || document.content === null) {
     throw new Error(`The rest of monograph version ${version} came back in another shape`);
   }
   return body as DocumentRest;

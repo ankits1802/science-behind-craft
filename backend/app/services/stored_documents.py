@@ -3,11 +3,11 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Any
 
-from sqlalchemy import and_, delete, func, or_, select, update
+from sqlalchemy import ColumnElement, and_, delete, func, or_, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -19,14 +19,21 @@ from .monograph_document import document_body, document_hash
 from .monograph_generated import enough_sections, generated_document_of
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key
 from .stored_document_stamp import document_stamp
-from .stored_document_versions import drop_superseded, keep_superseded, lock_page, superseded_row
+from .stored_document_versions import (
+    REBUILD_RETRY,
+    REFRESH_RETRY,
+    drop_superseded,
+    keep_superseded,
+    lock_page,
+    superseded_row,
+)
 
 __all__ = [
-    "REBUILD_RETRY",
     "GeneratedRead",
     "Rebuilt",
     "StoredCopy",
     "claim_rebuild",
+    "claim_refresh",
     "generated_read",
     "has_sections",
     "held_copy",
@@ -41,7 +48,6 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 PUBLISHED = "PUBLISHED"
-REBUILD_RETRY = timedelta(minutes=10)
 KEY_COLUMNS = ("subjectKind", "subjectSlug", "language")
 
 
@@ -64,6 +70,7 @@ class StoredCopy:
     content_hash: str
     language: str
     current: bool
+    withheld: bool = False
 
     @property
     def etag(self) -> str:
@@ -112,9 +119,14 @@ async def stored_copy(
 
 
 async def superseded_copy(
-    session: AsyncSession, subject: WorkSubject, version: int, *, language: str = ENGLISH
+    session: AsyncSession,
+    subject: WorkSubject,
+    version: int,
+    *,
+    language: str = ENGLISH,
+    now: datetime | None = None,
 ) -> StoredCopy | None:
-    row = await superseded_row(session, subject, version, language)
+    row = await superseded_row(session, subject, version, language, now=now or utc_now())
     if row is None:
         return None
     return StoredCopy(
@@ -123,6 +135,7 @@ async def superseded_copy(
         content_hash=row.contentHash,
         language=row.language,
         current=False,
+        withheld=row.removedAt is not None,
     )
 
 
@@ -145,15 +158,34 @@ async def claim_rebuild(
 ) -> bool:
     current = stamp if stamp is not None else await document_stamp(session, subject)
     unclaimed_and_stale = and_(StoredDocument.wantedAt.is_(None), StoredDocument.stamp != current)
+    due = or_(unclaimed_and_stale, StoredDocument.wantedAt < now - REBUILD_RETRY)
+    return await _claimed(session, subject, language, due, {"wantedAt": now})
+
+
+async def claim_refresh(
+    session: AsyncSession, subject: WorkSubject, *, now: datetime, language: str = ENGLISH
+) -> bool:
+    asked = StoredDocument.refreshAskedAt
+    due = or_(asked.is_(None), asked < now - REFRESH_RETRY)
+    return await _claimed(session, subject, language, due, {"refreshAskedAt": now})
+
+
+async def _claimed(
+    session: AsyncSession,
+    subject: WorkSubject,
+    language: str,
+    due: ColumnElement[bool],
+    values: dict[str, datetime],
+) -> bool:
     claimed = await session.execute(
         update(StoredDocument)
         .where(
             StoredDocument.subjectKind == subject.kind,
             StoredDocument.subjectSlug == subject.slug,
             StoredDocument.language == language,
-            or_(unclaimed_and_stale, StoredDocument.wantedAt < now - REBUILD_RETRY),
+            due,
         )
-        .values(wantedAt=now)
+        .values(**values)
         .returning(StoredDocument.subjectSlug)
     )
     taken = claimed.first() is not None
@@ -220,7 +252,7 @@ async def _store(
         row.stamp, row.wantedAt, row.builtAt, row.removedAt = stamp, None, now, None
         await session.flush()
         return row, Rebuilt.UNCHANGED
-    if row is not None and row.removedAt is None:
+    if row is not None:
         await keep_superseded(session, row, now=now)
     version = document.version if row is None else max(row.version + 1, document.version)
     values = {

@@ -108,7 +108,10 @@ that lies over a figure at one width is not counted as the figure; `overlays.jso
 capture cleared and what still lay over it. Each page is compared once it is as a reader has it, its
 rest drawn and its kit bound (`e2e/parity/parityReady.ts`, at most 60 s); a page whose rest could not
 be read, or did not arrive, is named in the failures with that cause beside the components it then
-does not draw (decision 0210).
+does not draw (decision 0210). A page the web still serves at a version a removal has since dropped,
+as after the post-deploy check retracts its test fact, reads the rest of the current version as a
+reader does, so the run compares it whole; a rest route that fails for the current version is still
+named (decision 0223).
 
 ## Connection budget
 
