@@ -32,7 +32,7 @@ const ALIAS_CLASS = new RegExp(
   [
     `(?<![\\w-])(?:${COLOUR_UTILITIES})-(?:${ALIAS_COLOURS})${END}`,
     `(?<![\\w-])text-(?:xs|sm|base|lg|xl|2xl|3xl|4xl)(?![\\w-])`,
-    `(?<![\\w-])font-(?:display|bold|mono)(?![\\w-])`,
+    `(?<![\\w-])font-(?:display|bold|mono)(?![\\w:-])`,
     `(?<![\\w-])rounded(?:-(?:[trblse]|[tb][lrse]|s[se]|e[se]))?(?:-(?:sm|md|lg|xl|2xl))?(?![\\w-])(?!=)`,
     `(?<![\\w-])shadow-(?:sm|soft|cta|cta-ministry|glow|glow-soft|md|lg|panel|island)(?![\\w-])`,
     `(?<![\\w-])ease-spring(?![\\w-])`
