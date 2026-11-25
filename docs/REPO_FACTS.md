@@ -117,7 +117,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 830 | 6177 |
+| Backend, without a database | 831 | 6191 |
 | Backend, on Postgres | 233 | 1063 |
 | Tools | 27 | 213 |
 | Craft data ETL | 7 | 51 |
@@ -134,7 +134,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 222 |
+| Decision records (`docs/decisions/`) | 223 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 29 |
 | Curated craft dossiers | 32 |
@@ -144,8 +144,8 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1576 | 222,459 |
-| `backend/tests` | 1242 | 162,199 |
+| `backend/app` | 1578 | 222,879 |
+| `backend/tests` | 1243 | 162,490 |
 | `backend/migrations` | 96 | 11,937 |
 | `frontend/app` | 118 | 10,301 |
 | `frontend/components` | 681 | 46,123 |

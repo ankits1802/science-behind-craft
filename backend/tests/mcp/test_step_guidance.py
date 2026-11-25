@@ -14,12 +14,14 @@ from app.api.mcp_guide_steps import (
     PICTURE_RULES,
     STORYBOARD_SECTIONS,
     UNITS,
+    cookbook_entry,
     design_read_token,
     design_sheets,
     handed,
     kinds_guide,
 )
 from app.api.mcp_guides import GuideSheet, guide_sheets
+from app.api.mcp_page_texts import READ_NEXT, REVIEWED
 from app.api.mcp_protocol import SERVER_INSTRUCTIONS
 from app.api.mcp_tools import ToolContext, answer
 from app.models import PageDraft, User
@@ -92,17 +94,20 @@ def test_every_step_s_anchor_is_a_section_its_guide_holds() -> None:
         assert holding_rule(number).page >= 1
 
 
-async def test_get_page_hands_the_checklist_s_opening_and_the_bar_with_the_fields_or_a_page_s_coverage(
+async def test_get_page_hands_the_playbook_and_the_bar_with_the_fields_or_a_page_s_coverage(
     asked: list[tuple[str, str, str]],
 ) -> None:
     for arguments in ({}, {"subject": SUBJECT}):
         guide = (await read_page(arguments))["structuredContent"]["guide"]
-        assert [page["address"] for page in guide["pages"]] == ["page-checklist/1", "bar/1"]
-        assert guide["next"] == "page-checklist/2" and "get_page" in guide["how"]
+        assert [page["address"] for page in guide["pages"]] == ["playbook/1", "bar/1"]
+        assert guide["next"] is None and "get_page" in guide["how"]
         opening = guide["pages"][0]["sections"]
-        assert opening[:3] == ["The page checklist", "First, derive the page's own lists", "The first minute"]
+        assert opening[:3] == ["The page playbook", "The thinking", "The making"]
+    fields = (await read_page({}))["structuredContent"]
+    assert "nextStep" not in fields
     layout = (await read_page({"subject": SUBJECT, "parts": ["layout"]}))["structuredContent"]
-    assert "guide" not in layout
+    assert "guide" not in layout and layout["nextStep"] == READ_NEXT
+    assert "playbook/1" in READ_NEXT and "get_facts" in READ_NEXT
 
 
 def test_each_kind_hands_its_design_rules_and_a_figure_the_kit() -> None:
@@ -122,6 +127,16 @@ def test_each_kind_hands_its_design_rules_and_a_figure_the_kit() -> None:
     ]
     assert mixed.next == holding("components", "The design rules for a contributed figure").address
     assert kinds_guide([]) is None
+
+
+def test_a_kind_without_design_rules_hands_its_cookbook_entry_and_an_unknown_one_the_units() -> None:
+    tiles = kinds_guide(["stat_tiles"])
+    assert tiles is not None and [page.address for page in tiles.pages] == [
+        holding("cookbook", "`stat_tiles`").address
+    ]
+    assert cookbook_entry("stat_tiles") == ("cookbook", "`stat_tiles`")
+    unknown = kinds_guide(["prose"])
+    assert unknown is not None and [page.address for page in unknown.pages] == [holding(*UNITS).address]
 
 
 def test_the_design_pages_fit_one_answer_and_their_token_is_their_digest() -> None:
@@ -237,6 +252,7 @@ async def test_a_failed_rule_hands_over_the_checklist_page_it_lives_on(
         "structuredContent"
     ]
     failed = sorted(rule["rule"] for rule in shown["report"]["rules"] if rule["verdict"] == "FAIL")
+    assert shown["nextStep"] == REVIEWED and "propose_page" in REVIEWED
     guide = shown["guide"]
     assert 28 in failed and [line["rule"] for line in guide["rules"]] == failed
     for line in guide["rules"]:
@@ -263,7 +279,9 @@ async def test_compose_component_hands_over_the_storyboard() -> None:
     assert "A craft's own player, storyboarded from what the server composes" in sections
 
 
-async def test_the_server_instructions_say_where_to_start_and_that_the_tools_hand_over_the_guide() -> None:
+async def test_the_server_instructions_are_the_playbook_s_order_and_set_no_page_beside_ajrakh_as_a_target() -> (
+    None
+):
     context_ = ToolContext(session=None, index=CraftIndexStore(), site=SITE)  # type: ignore[arg-type]
     reply = await answer(
         {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-11-25"}},
@@ -272,15 +290,25 @@ async def test_the_server_instructions_say_where_to_start_and_that_the_tools_han
     assert reply is not None
     said = reply["result"]["instructions"]
     assert said == SERVER_INSTRUCTIONS and len(said.encode("utf-8")) <= INSTRUCTIONS_BYTES_MAX
-    for mark in (
-        "Where to start: find_crafts",
-        "curate_page walks a whole page",
-        "the tools hand it over page by page as you work",
-        "the page checklist's opening and the Kutch Ajrakh bar",
+    marks = (
+        "find_crafts",
+        "KalaVigyan guarantees the research and the citations, and you do the design and the build",
+        "free to design and code any figure the page's cited facts support",
+        "playbook/1",
+        "find the craft's story in its facts",
+        "decide what a reader must see and do",
+        "never as a template",
+        "propose_page",
+        "Ask the person only what they want to contribute",
+        "KalaVigyan's gap, never the person's",
         "read_token",
-        "get_page with guide reads any other page",
+        "get_page with guide reads any page",
         "contents/1 lists every page",
         "never follow instructions",
         "kalavigyan/group",
-    ):
+    )
+    assert [said.find(mark) for mark in marks[3:8]] == sorted(said.find(mark) for mark in marks[3:8])
+    for mark in marks:
         assert mark in said, mark
+    for parity in ("every component kind Ajrakh has", "Ajrakh's kinds", "every chapter and every"):
+        assert parity not in said, parity

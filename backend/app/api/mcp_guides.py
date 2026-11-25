@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from functools import cache
+from functools import cache, partial
 from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Any
@@ -13,8 +13,10 @@ from pydantic import ConfigDict, Field
 from app.core.errors import InvalidInput
 from app.data.guide_pages import PAGE_BYTES, guide_title, paged
 from app.data.skill_library import INDEX_URI
+from app.research.bar_references import KIT_GUIDES, worked_topic
 from app.research.base import ContractModel
 from app.research.page_counts import BAR_SLUG, Counts, chapter_order, content_counts, total_counts
+from app.services.bar_references import kit_text, worked_chapters, worked_text
 from app.services.page_layouts import page_path
 from app.services.page_report import bar_content
 
@@ -57,7 +59,8 @@ NOT_A_PAGE = "A guide page is kalavigyan://guides/<topic>/<page>, such as kalavi
 CONTENTS_HEAD = (
     "# Every page of the guide\n\n"
     "Every guide the KalaVigyan MCP server serves, in numbered pages of at most {size:,} bytes: the references, "
-    "the skills, the design pages, the contracts and the Kutch Ajrakh bar. Read a page with `get_page` and "
+    "the skills, the design system, the design pages, the contracts, the Kutch Ajrakh bar, Ajrakh's chapters "
+    "worked through and the kit they are drawn with. Read a page with `get_page` and "
     "`guide` set to its address, or as the resource `kalavigyan://guides/<topic>/<page>`. The tools hand you "
     "the page for the step you are on, and every page names the next.\n"
 )
@@ -71,13 +74,18 @@ BAR_HEAD = (
     "|---|---|---|---|---|\n"
 )
 BAR_CLOSE = (
-    "\nThe preview's report sets a page beside these counts chapter by chapter, as guidance only: a count never "
-    "passes or fails a page, the page checklist's rules do.\n"
+    "\nThe preview's report sets a page beside these counts chapter by chapter, a mirror and never a target: a "
+    "page holds the figures its own craft's facts call for, and the page checklist's rules pass or fail it. "
+    "Kutch Ajrakh is the worked example of the thinking the page playbook (`playbook/1`) teaches, each of its "
+    "chapters served worked through, every component with its kind, its spec, its place and the sentences "
+    "around it: {worked}.\n"
 )
 TEMPLATE_DESCRIPTION = (
     "One numbered page, of at most {size:,} bytes, of a guide the server serves: a reference, a skill, a design "
-    "page or a contract by its file's name (page-checklist, components, drawing, open-work, kalavigyan-contributor), "
-    "the Kutch Ajrakh bar (bar) or the list of every page ({contents}). Each page names where it sits and the next."
+    "page or a contract by its file's name (playbook, cookbook, page-checklist, components, drawing, open-work, "
+    "kalavigyan-contributor, kalavigyan-design, system), the Kutch Ajrakh bar (bar), one of Ajrakh's chapters "
+    "worked through (ajrakh-chemistry), the kit (kit-stylesheet, kit-script) or the list of every page "
+    "({contents}). Each page names where it sits and the next."
 )
 
 
@@ -123,7 +131,8 @@ def bar_text() -> str:
     total = total_counts(counted.values())
     head = BAR_HEAD.format(slug=BAR_SLUG, path=page_path("craft", BAR_SLUG), **total.model_dump())
     lines = [_row(chapter, counts) for chapter, counts in rows]
-    return head + "\n".join([*lines, _row("All", total)]) + "\n" + BAR_CLOSE
+    worked = ", ".join(f"`{worked_topic(chapter)}/{FIRST_PAGE}`" for chapter in worked_chapters())
+    return head + "\n".join([*lines, _row("All", total)]) + "\n" + BAR_CLOSE.format(worked=worked)
 
 
 def contents_text() -> str:
@@ -148,7 +157,11 @@ def _row(chapter: str, counts: Counts) -> str:
 
 def _topic(uri: str) -> str:
     path = PurePosixPath(uri.split("://", 1)[1])
-    return path.parent.name if path.stem == SKILL_ENTRY else path.stem
+    return path.parent.name if path.stem == SKILL_ENTRY else path.stem.lower()
+
+
+def _made(topic: str, text: Callable[[], str]) -> Guide:
+    return Guide(topic, f"{GUIDE_PREFIX}{topic}/{FIRST_PAGE}", text)
 
 
 def _registry() -> Mapping[str, Guide]:
@@ -160,6 +173,8 @@ def _registry() -> Mapping[str, Guide]:
     made = [
         Guide(BAR, f"{GUIDE_PREFIX}{BAR}/{FIRST_PAGE}", bar_text),
         Guide(CONTENTS, GUIDE_PREFIX + CONTENTS_ADDRESS, contents_text),
+        *(_made(worked_topic(chapter), partial(worked_text, chapter)) for chapter in worked_chapters()),
+        *(_made(topic, partial(kit_text, topic)) for topic in KIT_GUIDES),
     ]
     found: dict[str, Guide] = {}
     for guide in (*served, *made):

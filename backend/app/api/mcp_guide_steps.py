@@ -33,22 +33,26 @@ from .mcp_guides import (
 )
 
 __all__ = [
+    "COOKBOOK",
     "DESIGN_READING",
     "KIND_RULES",
     "KIT_PARTS",
     "OPENING_PAGE",
     "PAGES_HANDED_MAX",
     "PICTURE_RULES",
+    "PLAYBOOK",
     "STORYBOARD_SECTIONS",
     "UNITS",
     "GuideUnread",
     "HandedGuide",
     "ReadToken",
     "RulePage",
+    "cookbook_entry",
     "design_read_token",
     "design_sheets",
     "failed_rules_guide",
     "handed",
+    "kind_anchor",
     "kinds_guide",
     "opening_guide",
     "page_guide",
@@ -59,12 +63,14 @@ __all__ = [
 ]
 
 PAGES_HANDED_MAX = 2
+PLAYBOOK = "playbook"
+COOKBOOK = "cookbook"
 CHECKLIST = "page-checklist"
 COMPONENTS = "components"
 KIT_CONTRACT = "component-specs-general"
 INTERACTIVES = "kalavigyan-interactives"
 STORYBOARD = "storyboard"
-OPENING_PAGE = f"{CHECKLIST}/1"
+OPENING_PAGE = f"{PLAYBOOK}/1"
 Anchor = tuple[str, str]
 DESIGN_RULES: Anchor = (COMPONENTS, "The design rules for a contributed figure")
 FIGURE_KIT: Anchor = (COMPONENTS, "The figure kit")
@@ -156,10 +162,22 @@ def kinds_guide(kinds: Iterable[str]) -> HandedGuide | None:
     listed = list(dict.fromkeys(kinds))
     if not listed:
         return None
-    sheets = [sheet_holding(*KIND_RULES.get(kind, UNITS)) for kind in listed]
+    sheets = [sheet_holding(*kind_anchor(kind)) for kind in listed]
     if any(kind in FIGURE_KINDS for kind in listed):
         sheets.append(sheet_holding(*KIT_PARTS))
     return handed(sheets)
+
+
+def cookbook_entry(kind: str) -> Anchor:
+    return (COOKBOOK, f"`{kind}`")
+
+
+def kind_anchor(kind: str) -> Anchor:
+    if kind in KIND_RULES:
+        return KIND_RULES[kind]
+    entry = cookbook_entry(kind)
+    held = any(entry[1] in sheet.sections for sheet in guide_sheets(COOKBOOK))
+    return entry if held else UNITS
 
 
 def rule_sheet(number: int) -> GuideSheet:

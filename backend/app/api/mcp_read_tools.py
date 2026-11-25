@@ -32,14 +32,17 @@ FACTS_DESCRIPTION = (
     "The cited facts of one craft, family or category page, optionally one field and ranked by words, each "
     "with its evidence level, verbatim quotes, locators, stored quantities and the figures resting on it; "
     "grouped by field with counts, and every field the page holds too few facts in named as open work with its "
-    "task key. A category's are the facts its page links and those proposed for it."
+    "task key. A category's are the facts its page links and those proposed for it. Next, building a page "
+    "(playbook/1): find the craft's story in them, decide what a reader must see to understand it, and read how "
+    "Kutch Ajrakh answered the same questions (bar/1) before opening its draft with edit_draft."
 )
 ONE_PAGE = "name the page as subject {kind, slug} or give a craft_slug, one of them"
 COMPONENTS_DESCRIPTION = (
     "The registered interactive components (players, maps, molecules, charts), each with its label, title, "
-    "description, kind, fields and the subjects it is keyed to. Search it before delivering a component: one "
-    "keyed to a concept, compound or place is shared by every craft it applies to, so place it by its label "
-    "rather than making another."
+    "description, kind, fields and the subjects it is keyed to. Search it before you fill a spec by hand: one "
+    "keyed to a concept, compound or place is "
+    "shared by every craft it applies to, so place it by its label rather than making another, but only when "
+    "its units cite facts this page holds. The component cookbook (cookbook/1) says which tool makes each kind."
 )
 
 

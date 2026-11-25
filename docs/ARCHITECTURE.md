@@ -218,7 +218,10 @@ OAuth 2.1 (`docs/contracts/mcp-oauth.md`); open work, reservations and the metho
 are `docs/contracts/open-work.md`. The method's guides are served in numbered pages
 (`data/guide_pages.py`, `api/mcp_guides.py`) and each page tool hands the agent the page for the step
 it is on, a page's first components waiting until the design pages are handed over
-(`api/mcp_guide_steps.py`, decision 0203). An agent's reaction player, dip player, 3D molecule or what-if
+(`api/mcp_guide_steps.py`, decision 0203). The first page handed is the page playbook, and beside the
+references the server serves the design system, Kutch Ajrakh worked chapter by chapter from the
+document it holds and the kit's stylesheet and script (`research/bar_references.py`,
+`services/bar_references.py`, decision 0230). An agent's reaction player, dip player, 3D molecule or what-if
 lab is composed by the server from the craft's own curated page and facts (`compose_component`,
 `services/compose_components`, decision 0198), never borrowed from another craft's page, and the
 monograph kit plays it on any page as it plays Kutch Ajrakh's. A dip player takes each stage's

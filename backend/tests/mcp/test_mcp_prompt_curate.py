@@ -78,19 +78,22 @@ async def test_it_says_what_to_do_when_each_gate_refuses() -> None:
     assert "`propose_source`" in whole and "a stale layout" in whole
 
 
-async def test_it_hands_the_checklist_s_opening_and_the_bar_not_the_whole_guide() -> None:
+async def test_it_hands_the_playbook_and_the_bar_not_the_whole_guide() -> None:
     whole = await text({"slug": "Kutch-Ajrakh"})
     prompt = PROMPTS["curate_page"]
     assert (prompt.sections, prompt.references) == ((), ())
     for name in REFERENCES:
-        assert prompt_reference(name) not in whole, name
-    opening, bar = guide_sheets("page-checklist")[0], guide_sheets("bar")[0]
+        if name != "playbook":
+            assert prompt_reference(name) not in whole, name
+    opening, bar = guide_sheets("playbook")[0], guide_sheets("bar")[0]
+    assert len(guide_sheets("playbook")) == 1
     assert demoted(opening.text) in whole and demoted(bar.text) in whole
-    assert "> The page checklist, page 1 of" in whole and "Next: page-checklist/2." in whole
-    assert guide_sheets("page-checklist")[1].text.strip() not in whole
+    assert "> The page playbook, page 1 of 1 (playbook/1)" in whole and "Its last page." in whole
+    assert guide_sheets("page-checklist")[0].text.strip() not in whole
     assert in_order(
-        whole, (CURATE_GUIDE_HEADING, "## The page checklist", "## The bar: Kutch Ajrakh", "## Never")
+        whole, (CURATE_GUIDE_HEADING, "## The page playbook", "## The bar: Kutch Ajrakh", "## Never")
     )
+    assert "`compose_component`" in whole and "never as a template" in whole
     assert "`get_page` with guide" in whole and "contents/1" in whole and "read_token" in whole
 
 
