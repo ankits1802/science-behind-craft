@@ -120,6 +120,7 @@ jobs:
       - name: Say whether production serves it
         id: verdict
         env:
+          GH_TOKEN: ${{ github.token }}
           MODE: ${{ steps.want.outputs.mode }}
           EXPECTED: ${{ steps.want.outputs.expected }}
           BUILT: ${{ steps.await.outputs.built }}
@@ -127,38 +128,7 @@ jobs:
           HAVE: ${{ steps.await.outputs.served }}
           WAITED: ${{ steps.await.outputs.waited }}
           GRACE_SECONDS: "5400"
-        run: |
-          set -euo pipefail
-          case "$MODE:$BUILT" in
-            deploy:none) verdict=no-build ;;
-            deploy:failure) verdict=refused ;;
-            deploy:success|asked:success) if [ "$REACHED" = yes ]; then verdict=served; else verdict=behind; fi ;;
-            latest:success)
-              age=$(( $(date +%s) - $(git log -1 --format=%ct "$EXPECTED") ))
-              if [ -z "$HAVE" ]; then verdict=silent
-              elif [ "$REACHED" = yes ]; then verdict=served
-              elif [ "$age" -lt "$GRACE_SECONDS" ]; then verdict=building
-              else verdict=behind
-              fi
-              ;;
-            *) echo "::error::unknown mode $MODE with build $BUILT"; exit 1 ;;
-          esac
-          echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
-          unread=""
-          [ "$MODE" = latest ] || unread=", so the pages were not read against an older build"
-          {
-            echo "### Production commit"
-            echo ""
-            echo "Production serves \`${HAVE:-no commit}\`; it should serve \`${EXPECTED:-any commit}\` or a later commit of main. Verdict: $verdict (waited ${WAITED:-0}s)."
-          } >> "$GITHUB_STEP_SUMMARY"
-          case "$verdict" in
-            served) echo "production serves $HAVE" ;;
-            no-build) echo "::notice::this deploy started no web build; production serves ${HAVE:-no commit}, so the pages are not read" ;;
-            building) echo "::notice::the newest deployable commit ${EXPECTED:0:12} is younger than $(( GRACE_SECONDS / 60 )) minutes; its build may still be running" ;;
-            behind) echo "::error::production still serves ${HAVE:-no commit}, not ${EXPECTED:0:12} or a later commit of main, after waiting ${WAITED:-0}s: its Vercel build failed or never finished$unread"; exit 1 ;;
-            silent) echo "::error::$WEB_ORIGIN/api/version reports no commit"; exit 1 ;;
-            refused) echo "::error::the deploy hook did not start the build of ${EXPECTED:0:12}$unread"; exit 1 ;;
-          esac
+        run: bash .github/scripts/post_deploy_verdict.sh
 
   pages:
     name: Key pages and the public MCP tools answer

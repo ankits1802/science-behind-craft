@@ -401,7 +401,9 @@ flowchart LR
    read with its hidden generated explainers left out (decision 0070). The answer is a five-minute
    signed link; citation files are answered directly. The files a share link's readers are given
    are recorded against its token (`SharedExportFile`) and deleted from the bucket when the share
-   stops (`services/shared_files`, decision 0155).
+   stops (`services/shared_files`, decision 0155); they build as a page's files do, at the caller's
+   pace and in two slots of their own with a 5 s wait, and one built while a picture was unread is
+   used again for its hour (`api/export_deps.shared_export_tools`, decision 0217).
 3. A page (decision 0206) is exported by `GET /api/crafts/{slug}/monograph/{pdf|docx}`, and a
    family or a category page by `GET /api/families/{slug}/monograph/{pdf|docx}` and
    `GET /api/categories/{slug}/monograph/{pdf|docx}` (decision 0208), in the language it is served
@@ -413,7 +415,7 @@ flowchart LR
    a new translation or a newly reviewed word is a new file and nothing else is (decision 0214).
    Only when the file is missing does the caller's build allowance count one
    (`core/rate_limit.export_build_attempt`), does the build wait at most 5 s for one of the page
-   exports' own two slots (`export_store.WaitedSlots`, apart from the answer and lesson files'), and
+   exports' own two slots (`export_store.WaitedSlots`, apart from the answer, lesson and shared files'), and
    are the open-licence pictures the page's plates show read (`page_export_pictures`, through
    `picture_files`, Commons at the paper width and the site's own pictures from its own host, four at
    once, each within 10 s); a file built while one was unread is used again for that hour. In one worker thread

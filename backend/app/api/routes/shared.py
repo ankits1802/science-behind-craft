@@ -1,17 +1,20 @@
 from __future__ import annotations
 
+from collections.abc import Awaitable, Callable
 from dataclasses import replace
 from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, Response, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.export_deps import (
     citation_export,
     citation_file_response,
     explainer_pdf,
-    export_tools,
     lesson_file,
+    refused_export,
+    shared_export_tools,
 )
 from app.api.public_deps import READER_VARY, cached_read, public_reader, reader_cache
 from app.core.db import get_session
@@ -19,9 +22,11 @@ from app.core.http_cache import PRIVATE_NO_CACHE
 from app.models import User
 from app.research.citation_export import CITATION_FORMATS
 from app.research.explainer_versions import ExplainerVersionDocument
+from app.research.export_links import ExportLink
 from app.research.lessons import LESSON_FORMATS, LessonPack
 from app.research.share_links import SHARE_TOKEN_PATTERN
 from app.services.export_files import ExportTools
+from app.services.export_store import BuildRefused
 from app.services.share_links import shared_answer, shared_lesson
 from app.services.shared_files import SHARED_EXPORT_OWNER, SignedKeys, record_shared_files
 
@@ -32,6 +37,7 @@ NO_SHARE_DETAIL = "Nothing is shared at that address. Its owner may have stopped
 ShareToken = Annotated[str, Path(pattern=SHARE_TOKEN_PATTERN)]
 CitationFormat = Literal[*CITATION_FORMATS]
 LessonFormat = Literal[*LESSON_FORMATS]
+SharedLink = Callable[[ExportTools], Awaitable[ExportLink]]
 
 
 @router.get("/answers/{token}")
@@ -74,18 +80,15 @@ async def get_shared_citation_file(
 @router.get("/answers/{token}/pdf")
 async def get_shared_pdf(
     token: ShareToken,
-    response: Response,
     *,
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
-    tools: ExportTools = Depends(export_tools),
-) -> dict[str, Any]:
+    tools: ExportTools = Depends(shared_export_tools),
+) -> Response:
     document = await _shared_answer(session, token)
-    signed = SignedKeys(tools.objects)
-    link = await explainer_pdf(session, replace(tools, objects=signed), SHARED_EXPORT_OWNER, document)
-    await record_shared_files(session, token, signed.keys, objects=tools.objects)
-    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
-    return link.model_dump(mode="json", by_alias=True)
+    return await _shared_file(
+        session, token, tools, lambda shown: explainer_pdf(session, shown, SHARED_EXPORT_OWNER, document)
+    )
 
 
 @router.get("/lessons/{token}")
@@ -104,18 +107,28 @@ async def get_shared_lesson(
 async def get_shared_lesson_file(
     token: ShareToken,
     fmt: LessonFormat,
-    response: Response,
     *,
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
-    tools: ExportTools = Depends(export_tools),
-) -> dict[str, Any]:
+    tools: ExportTools = Depends(shared_export_tools),
+) -> Response:
     pack = await _shared_lesson(session, token)
+    return await _shared_file(
+        session, token, tools, lambda shown: lesson_file(session, shown, SHARED_EXPORT_OWNER, pack, fmt)
+    )
+
+
+async def _shared_file(
+    session: AsyncSession, token: str, tools: ExportTools, link_of: SharedLink
+) -> Response:
     signed = SignedKeys(tools.objects)
-    link = await lesson_file(session, replace(tools, objects=signed), SHARED_EXPORT_OWNER, pack, fmt)
+    try:
+        link = await link_of(replace(tools, objects=signed))
+    except BuildRefused as refused:
+        return refused_export(refused)
     await record_shared_files(session, token, signed.keys, objects=tools.objects)
-    response.headers["Cache-Control"] = PRIVATE_NO_CACHE
-    return link.model_dump(mode="json", by_alias=True)
+    headers = {"Cache-Control": PRIVATE_NO_CACHE}
+    return JSONResponse(link.model_dump(mode="json", by_alias=True), headers=headers)
 
 
 async def _shared_answer(session: AsyncSession, token: str) -> ExplainerVersionDocument:

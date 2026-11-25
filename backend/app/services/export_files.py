@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import asyncio
 import uuid
-from collections.abc import AsyncIterator, Callable, Mapping
+from collections.abc import AsyncIterator, Awaitable, Callable, Mapping
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from types import MappingProxyType
+from typing import Any
 
 from app.core.config import get_settings
 from app.research.blocks_play import hidden_block
@@ -85,11 +86,16 @@ class ExportTools:
     clock: Callable[[], datetime]
     builds: asyncio.Semaphore
     admit: Admission | None = None
+    unread_reused_for: timedelta | None = None
 
 
 @asynccontextmanager
 async def opened_export_tools(
-    objects: ExportObjects, builds: asyncio.Semaphore, *, admit: Admission | None = None
+    objects: ExportObjects,
+    builds: asyncio.Semaphore,
+    *,
+    admit: Admission | None = None,
+    unread_reused_for: timedelta | None = None,
 ) -> AsyncIterator[ExportTools]:
     settings = get_settings()
     async with source_client(settings.research_contact_email) as client:
@@ -100,6 +106,7 @@ async def opened_export_tools(
             clock=lambda: datetime.now(UTC),
             builds=builds,
             admit=admit,
+            unread_reused_for=unread_reused_for,
         )
 
 
@@ -134,8 +141,7 @@ async def lesson_file_link(
         pictures = await export_pictures(_pictures_of(pack), tools.pictures)
         return BuiltExport(await asyncio.to_thread(written, pictures.found), pictures.unread)
 
-    export = ExportFile(owner_id=owner_id, fmt=fmt, file_name=name, made_from=made_from)
-    return await stored_export_link(tools.objects, export, build, now=tools.clock(), builds=tools.builds)
+    return await _stored_link(tools, _export_file(tools, owner_id, fmt, name, made_from), build)
 
 
 async def explainer_pdf_link(
@@ -162,8 +168,25 @@ async def explainer_pdf_link(
         pictures = await export_pictures(_explainer_pictures(document), tools.pictures)
         return BuiltExport(await asyncio.to_thread(written, pictures.found), pictures.unread)
 
-    export = ExportFile(owner_id=owner_id, fmt=PDF, file_name=name, made_from=made_from)
-    return await stored_export_link(tools.objects, export, build, now=tools.clock(), builds=tools.builds)
+    return await _stored_link(tools, _export_file(tools, owner_id, PDF, name, made_from), build)
+
+
+def _export_file(tools: ExportTools, owner_id: uuid.UUID, fmt: str, name: str, made_from: Any) -> ExportFile:
+    return ExportFile(
+        owner_id=owner_id,
+        fmt=fmt,
+        file_name=name,
+        made_from=made_from,
+        unread_reused_for=tools.unread_reused_for,
+    )
+
+
+async def _stored_link(
+    tools: ExportTools, export: ExportFile, build: Callable[[], Awaitable[BuiltExport]]
+) -> ExportLink:
+    return await stored_export_link(
+        tools.objects, export, build, now=tools.clock(), builds=tools.builds, admit=tools.admit
+    )
 
 
 def _pictures_of(pack: LessonPack) -> list[MediaRef]:

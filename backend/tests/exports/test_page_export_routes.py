@@ -18,9 +18,9 @@ from app.research.document_parts import compact_json
 from app.research.monograph_document import MonographDocument
 from app.services import export_files, knowledge_view, page_export_files
 from app.services.export_files import lesson_file_link
-from app.services.export_store import WaitedSlots
+from app.services.export_store import BUSY_RETRY_SECONDS, WaitedSlots
 from app.services.monograph_document import document_body, document_hash
-from app.services.page_export_files import PAGE_EXPORT_BUILDS_AT_ONCE, PAGE_EXPORT_RETRY_SECONDS
+from app.services.page_export_files import PAGE_EXPORT_BUILDS_AT_ONCE
 from app.services.page_translation_serving import ServedPage, ShownPage
 from app.services.stored_documents import GeneratedRead, StoredCopy
 
@@ -133,7 +133,7 @@ def held(monkeypatch: pytest.MonkeyPatch) -> Held:
     monkeypatch.setattr(page_export_files, "page_file", page_file)
     monkeypatch.setattr(export_files, "picture_files", lambda client, *, site=None: NoPictures())
     monkeypatch.setattr(export_deps, "media_bucket", lambda: state.bucket)
-    free = WaitedSlots(PAGE_EXPORT_BUILDS_AT_ONCE, wait_seconds=0.05, retry_after=PAGE_EXPORT_RETRY_SECONDS)
+    free = WaitedSlots(PAGE_EXPORT_BUILDS_AT_ONCE, wait_seconds=0.05, retry_after=BUSY_RETRY_SECONDS)
     monkeypatch.setattr(export_deps, "_page_export_builds", free)
     return state
 
@@ -162,7 +162,7 @@ async def test_an_export_of_a_stale_page_queues_its_rebuild_and_of_a_current_pag
 async def test_a_page_export_with_no_free_slot_is_refused_with_a_retry_and_an_answer_export_still_runs(
     held: Held, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    full = WaitedSlots(0, wait_seconds=0.05, retry_after=PAGE_EXPORT_RETRY_SECONDS)
+    full = WaitedSlots(0, wait_seconds=0.05, retry_after=BUSY_RETRY_SECONDS)
     monkeypatch.setattr(export_deps, "_page_export_builds", full)
     held.stale = True
     refused = await held.get(f"/api/families/{FAMILY}/monograph/pdf")

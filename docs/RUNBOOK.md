@@ -814,7 +814,9 @@ fixture or the category page (`docs/contracts/category-page.md`).
 ## Release gate (round 7)
 
 - **Post-deploy check** (`.github/workflows/post-deploy.yml`): runs after Deploy web app and Deploy
-  backend on main, hourly (is production serving the newest main commit?), in full daily at 03:17
+  backend on main, hourly (is production serving the newest main commit, or did that commit reach
+  main less than 90 minutes ago, counted from its newest run of Backend checks, Deploy backend or
+  Deploy web app?), in full daily at 03:17
   UTC, and by hand: `gh workflow run post-deploy.yml -R cxacraftecosystem-ui/KalaVigyan -f
   commit=<sha>`. It reads 20 key pages and the public MCP tools, and keeps two issues: `Production is
   not serving main` and `Production pages or MCP tools are failing`, each closed when its check

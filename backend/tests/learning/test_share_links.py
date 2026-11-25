@@ -89,6 +89,7 @@ def client(reader: User | None, *, bucket: FakeBucket | None = None) -> TestClie
 
     app.dependency_overrides[get_session] = no_session
     app.dependency_overrides[export_tools] = tools
+    app.dependency_overrides[export_deps.shared_export_tools] = tools
     if reader is not None:
         sign_in_as(app, lambda: reader)
     return TestClient(app)

@@ -32,7 +32,10 @@ from app.services.export_files import (
     opened_export_tools,
 )
 from app.services.export_store import (
+    BUILD_WAIT_SECONDS,
+    BUSY_RETRY_SECONDS,
     EXPORT_BUILDS_AT_ONCE,
+    UNREAD_REUSED_FOR,
     Admission,
     BuildRefused,
     BuildsSpent,
@@ -41,11 +44,8 @@ from app.services.export_store import (
 )
 from app.services.naming import content_disposition, export_file_name
 from app.services.object_store import media_bucket
-from app.services.page_export_files import (
-    PAGE_EXPORT_BUILDS_AT_ONCE,
-    PAGE_EXPORT_RETRY_SECONDS,
-    PAGE_EXPORT_WAIT_SECONDS,
-)
+from app.services.page_export_files import PAGE_EXPORT_BUILDS_AT_ONCE
+from app.services.shared_files import SHARED_EXPORT_BUILDS_AT_ONCE
 
 __all__ = [
     "BUILDS_SPENT_DETAIL",
@@ -58,6 +58,7 @@ __all__ = [
     "lesson_file",
     "page_export_tools",
     "refused_export",
+    "shared_export_tools",
     "unavailable_export",
 ]
 
@@ -72,7 +73,10 @@ logger = logging.getLogger(__name__)
 
 _export_builds = asyncio.Semaphore(EXPORT_BUILDS_AT_ONCE)
 _page_export_builds = WaitedSlots(
-    PAGE_EXPORT_BUILDS_AT_ONCE, wait_seconds=PAGE_EXPORT_WAIT_SECONDS, retry_after=PAGE_EXPORT_RETRY_SECONDS
+    PAGE_EXPORT_BUILDS_AT_ONCE, wait_seconds=BUILD_WAIT_SECONDS, retry_after=BUSY_RETRY_SECONDS
+)
+_shared_export_builds = WaitedSlots(
+    SHARED_EXPORT_BUILDS_AT_ONCE, wait_seconds=BUILD_WAIT_SECONDS, retry_after=BUSY_RETRY_SECONDS
 )
 
 
@@ -86,6 +90,16 @@ async def page_export_tools(
 ) -> AsyncIterator[ExportTools]:
     admit = build_admission(connection, reader)
     async with opened_export_tools(_bucket(), _page_export_builds, admit=admit) as tools:
+        yield tools
+
+
+async def shared_export_tools(
+    connection: HTTPConnection, reader: User | None = Depends(public_reader)
+) -> AsyncIterator[ExportTools]:
+    admit = build_admission(connection, reader)
+    async with opened_export_tools(
+        _bucket(), _shared_export_builds, admit=admit, unread_reused_for=UNREAD_REUSED_FOR
+    ) as tools:
         yield tools
 
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import uuid
 from collections.abc import Callable, Mapping
-from datetime import datetime, timedelta
+from datetime import datetime
 from types import MappingProxyType
 from typing import TYPE_CHECKING
 
@@ -13,7 +13,7 @@ from app.research.monograph_document import ENGLISH, MonographDocument
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .export_files import ExportTools
-from .export_store import BuiltExport, ExportFile, stored_export_link
+from .export_store import UNREAD_REUSED_FOR, BuiltExport, ExportFile, stored_export_link
 from .naming import export_file_name
 
 if TYPE_CHECKING:
@@ -25,10 +25,7 @@ __all__ = [
     "PAGE_EXPORT_BUILDS_AT_ONCE",
     "PAGE_EXPORT_EDITION",
     "PAGE_EXPORT_OWNER",
-    "PAGE_EXPORT_RETRY_SECONDS",
-    "PAGE_EXPORT_WAIT_SECONDS",
     "PAGE_EXPORT_WHAT",
-    "PAGE_UNREAD_REUSED_FOR",
     "page_export_link",
     "page_file",
     "page_file_name",
@@ -37,10 +34,7 @@ __all__ = [
 PAGE_EXPORT_OWNER = uuid.UUID(int=1)
 PAGE_EXPORT_WHAT = "Export"
 PAGE_EXPORT_EDITION = 2
-PAGE_UNREAD_REUSED_FOR = timedelta(hours=1)
 PAGE_EXPORT_BUILDS_AT_ONCE = 2
-PAGE_EXPORT_WAIT_SECONDS = 5.0
-PAGE_EXPORT_RETRY_SECONDS = 30.0
 PAGE_ENTITIES: Mapping[str, str] = MappingProxyType(
     {"craft": "Craft-Page", "family": "Family-Page", "category": "Category-Page"}
 )
@@ -109,7 +103,7 @@ async def page_export_link(
         file_name=page_file_name(document, fmt, now),
         made_from=made_from,
         stored_name=page_file_name(document, fmt),
-        unread_reused_for=PAGE_UNREAD_REUSED_FOR,
+        unread_reused_for=UNREAD_REUSED_FOR,
     )
     return await stored_export_link(
         tools.objects, export, build, now=now, builds=tools.builds, admit=tools.admit

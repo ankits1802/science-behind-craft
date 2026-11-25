@@ -122,12 +122,14 @@ and its `Content-Disposition` carry the day it is downloaded,
 `KalaVigyan_<Craft-Page|Family-Page|Category-Page>_<date>_<page>[_<language>]_Export_v<n>.<fmt>`
 (`naming.export_file_name`, `made_at=None` for the stored name). A file built while a picture
 could not be read is filed under the start of the clock hour it was built in and used again for
-that hour (`PAGE_UNREAD_REUSED_FOR`); the first build that reads every picture is filed as the
+that hour (`export_store.UNREAD_REUSED_FOR`); the first build that reads every picture is filed as the
 complete file. A page file is built in one of `PAGE_EXPORT_BUILDS_AT_ONCE` (2) slots of its own
-per process, apart from the answer and lesson files' two; a request that finds no slot free within
-`PAGE_EXPORT_WAIT_SECONDS` (5 s) is answered 503 with `Retry-After: 30`. A request whose file is
+per process, apart from the answer and lesson files' two and the shared files' two; a request that
+finds no slot free within `export_store.BUILD_WAIT_SECONDS` (5 s) is answered 503 with
+`Retry-After: 30` (`BUSY_RETRY_SECONDS`). A request whose file is
 not yet filed counts one build against its caller (`core/rate_limit.export_build_attempt`: 10 in 10
-minutes per account when signed in, else per address), and is answered 429 with `Retry-After` over
+minutes per account when signed in, else per address, a shared answer or lesson file counted with
+them), and is answered 429 with `Retry-After` over
 it; a file already filed is never counted or refused. Every route queues the rebuild its read
 claims (`queue_rebuild`), as the page's route does, whatever it answers. 503 `This file can't be
 made right now.` when no media bucket is set or the bucket fails, 404 as the page's route, 422 for

@@ -9,6 +9,7 @@ on:
       - "tools/**"
       - ".github/workflows/backend-checks.yml"
       - ".github/workflows/deploy-backend.yml"
+      - ".github/workflows/post-deploy.yml"
       - ".github/actions/**"
       - ".github/scripts/**"
       - "docs/PLAN.md"

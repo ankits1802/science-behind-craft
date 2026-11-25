@@ -19,6 +19,7 @@ from .naming import EXPORTS_PREFIX
 from .object_store import PresignedGet
 
 __all__ = [
+    "SHARED_EXPORT_BUILDS_AT_ONCE",
     "SHARED_EXPORT_OWNER",
     "SHARED_FILES_PER_SWEEP",
     "DroppedFiles",
@@ -29,6 +30,7 @@ __all__ = [
 ]
 
 SHARED_EXPORT_OWNER = uuid.UUID(int=0)
+SHARED_EXPORT_BUILDS_AT_ONCE = 2
 SHARED_PREFIX = f"{EXPORTS_PREFIX}/{SHARED_EXPORT_OWNER}/"
 SHARED_FILES_PER_SWEEP = 200
 

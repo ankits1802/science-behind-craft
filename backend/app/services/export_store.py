@@ -22,8 +22,11 @@ from .object_store import PresignedGet
 
 __all__ = [
     "BUILDS_BUSY",
+    "BUILD_WAIT_SECONDS",
+    "BUSY_RETRY_SECONDS",
     "EXPORT_BUILDS_AT_ONCE",
     "EXPORT_RENDERING",
+    "UNREAD_REUSED_FOR",
     "Admission",
     "BuildRefused",
     "BuildsBusy",
@@ -38,7 +41,10 @@ __all__ = [
 
 EXPORT_RENDERING = "kalavigyan-export/v1"
 EXPORT_BUILDS_AT_ONCE = 2
+BUILD_WAIT_SECONDS = 5.0
+BUSY_RETRY_SECONDS = 30.0
 BUILDS_BUSY = "Other files are being made just now. Try again in half a minute."
+UNREAD_REUSED_FOR = timedelta(hours=1)
 
 Admission = Callable[[], Awaitable[None]]
 

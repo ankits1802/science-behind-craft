@@ -46,19 +46,6 @@ Last reviewed: 2026-11-22.
   category routes take `version`, the kept version is stored per language, and a cap of kept
   versions per page.
 
-### The scheduled post-deploy check counts its grace from the commit's own date
-
-- **What:** the Post-deploy check's `served` job waits for a build younger than `GRACE_SECONDS`
-  (90 minutes) by the commit's committer date (`git log -1 --format=%ct`), not by when main reached
-  it. A release of commits made more than 90 minutes before their push (the batch of 2026-11-25)
-  is judged `behind` while its web build is still waiting on the backend: the scheduled run at
-  03:10:21Z on `2d7e7286` failed so, and the next run passed once Vercel served it.
-- **Why left:** found at that release; it raises one false alarm per such release and none for a
-  release pushed within 90 minutes of its last commit.
-- **Clears it:** measure the age from the newest Deploy web app or Deploy backend run for the
-  expected commit (`gh run list --commit`), with a workflow test of a commit older than the grace
-  pushed a minute ago.
-
 ### CloudFront to origin is plain HTTP
 
 - **What:** CloudFront reaches nginx on the EC2 box over HTTP on port 80 (`docs/RUNBOOK.md`,

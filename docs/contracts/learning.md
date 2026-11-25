@@ -248,7 +248,8 @@ Professor and above; the client's `canBuildLessons`); a pack is its builder's al
   inputs and the unread pictures' ids, never reused, so the next request reads the pictures again;
   at most `EXPORT_BUILDS_AT_ONCE` (2) files are made at once in a process, and a request for a
   file being made waits and takes it, decision 0143; a page's export builds in two slots of its
-  own, `monograph-document.md` Exports, decision 0214), and answered as `ExportLink {schemaVersion 1, format, fileName, url, expiresAt}`: a signed GET
+  own, `monograph-document.md` Exports, decision 0214, and a shared file in two of its own, Share
+  links below, decision 0217), and answered as `ExportLink {schemaVersion 1, format, fileName, url, expiresAt}`: a signed GET
   valid for `EXPORT_LINK_SECONDS` (300) whose `Content-Disposition` is `attachment` with that
   name (`research/export_links.py`; the client's `exportLinkShape`, whose `format` is a lesson's
   `html`, `pptx` or `pdf` or a page's `docx`, `EXPORT_FORMATS`, decision 0208).
@@ -389,9 +390,9 @@ one.
 | GET, DELETE | `/api/lessons/{id}/share` | the builder, with or without `BUILD_LESSONS` | as above for the lesson |
 | GET | `/api/shared/answers/{token}` | public reading | `ExplainerVersionDocument` of the shared version, as public |
 | GET | `/api/shared/answers/{token}/citations`, `.../citations/{format}` | public reading | the version's `CitationExport` and files, as the asker's exports |
-| GET | `/api/shared/answers/{token}/pdf` | public reading | `ExportLink` of the version's report |
+| GET | `/api/shared/answers/{token}/pdf` | public reading | `ExportLink` of the version's report; 503 with `Retry-After: 30` when no slot is free, 429 with `Retry-After` over the caller's builds |
 | GET | `/api/shared/lessons/{token}` | public reading | `LessonPack`, as public |
-| GET | `/api/shared/lessons/{token}/files/{format}` | public reading | `ExportLink` of the pack's `html`, `pptx` or `pdf` |
+| GET | `/api/shared/lessons/{token}/files/{format}` | public reading | `ExportLink` of the pack's `html`, `pptx` or `pdf`; 503 and 429 as above |
 
 Owner routes answer `private, no-cache`. Public reads count against the anonymous per-address
 limit and set `Vary: Authorization` and an `ETag` (the body's SHA-256) with 304 revalidation;
@@ -399,6 +400,19 @@ limit and set `Vary: Authorization` and an `ETag` (the body's SHA-256) with 304 
 file links always `private, no-cache`. An unknown or unshared token is 404 `{"detail": "Nothing is
 shared at that address. Its owner may have stopped sharing it."}`, a malformed one 422. A shared
 cache may keep a stopped share for up to the 300 seconds of its `max-age`.
+
+**A shared file is built at a caller's pace** (decision 0217). A shared answer's report and a
+shared lesson's files are filed under the neutral owner `SHARED_EXPORT_OWNER`, so every reader of a
+share is given one file. When the file is not yet filed, the request counts one build against its
+caller (`core/rate_limit.export_build_attempt`, the same ten in ten minutes per account or address
+as a page's files, counted together with them) and is answered 429 `{detail}` with `Retry-After`
+over it, then waits at most `BUILD_WAIT_SECONDS` (5 s) for one of `SHARED_EXPORT_BUILDS_AT_ONCE`
+(2) slots of their own per process (`api/export_deps.shared_export_tools`), apart from the owners'
+answer and lesson files and from the pages' files, and is otherwise answered 503 with
+`Retry-After: 30`. A file already filed is given whatever the slots and the allowance hold. A file
+built while a picture could not be read is used again for the clock hour it was built in
+(`UNREAD_REUSED_FOR`), as a page's is, so a class reading one share behind one address is given
+one file; the owner's own files keep decision 0143's rule and are never reused.
 
 **While its owner may publish.** A token opens only while its owner's account is not deleted and
 has no `REJECTED` or `SUSPENDED` access row (`services/access_roster.account_in_good_standing`).
