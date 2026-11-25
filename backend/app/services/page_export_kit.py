@@ -14,7 +14,20 @@ from .export_still_kit import diagram_still
 from .export_still_map import MapAsk, MapPin, timeline_still
 from .export_stills import Still
 from .page_export_figures import FigureAsk, dataset_credit, prefixed, scene_of
-from .page_export_model import ExportFigure, ExportText, plain_text
+from .page_export_model import ExportFigure, ExportText, Run, plain_text
+from .page_export_words import (
+    BECOMES,
+    DRAWN,
+    ENGLISH_EXPORT_WORDS,
+    GIVEN_BY,
+    HOME,
+    KIT_MOTION_NOTE,
+    OR,
+    ROUTE,
+    SWATCHES,
+    ExportWords,
+    paper_note,
+)
 
 __all__ = [
     "KIT_MOTION_NOTE",
@@ -25,8 +38,6 @@ __all__ = [
     "timeline_map_figure",
 ]
 
-KIT_MOTION_NOTE = "On the page a panel's change plays when pressed; here each panel is drawn at rest."
-DRAWN_PREFIX = "Drawn: "
 VIA_PREFIX = "→ "
 DYE_TOKEN = "--dye-{name}"
 TextOf = Callable[[str | None], ExportText | None]
@@ -37,15 +48,19 @@ def kit_diagram_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
         return None
     lines = [
         ask.unit(spec.head.caption, "note"),
-        *kit_diagram_lines(spec, ask.unit),
+        *kit_diagram_lines(spec, ask.unit, ask.words),
         ask.unit(spec.alt, "note"),
     ]
     figure = ask.figure([diagram_still(spec)], lines, ask.title(spec.head.title))
-    moving = any(panel.motion is not None for panel in spec.panels)
-    return replace(figure, note=KIT_MOTION_NOTE) if moving else figure
+    if not any(panel.motion is not None for panel in spec.panels):
+        return figure
+    moving = paper_note(KIT_MOTION_NOTE)
+    return replace(figure, note=ask.words.said(moving), note_lang=ask.words.lang(moving))
 
 
-def kit_diagram_lines(spec: DeclaredDiagramSpec, text_of: TextOf) -> Iterator[ExportText | None]:
+def kit_diagram_lines(
+    spec: DeclaredDiagramSpec, text_of: TextOf, words: ExportWords = ENGLISH_EXPORT_WORDS
+) -> Iterator[ExportText | None]:
     numbered = spec.layout != "section"
     for number, panel in enumerate(spec.panels, start=1):
         label = text_of(panel.label)
@@ -55,13 +70,13 @@ def kit_diagram_lines(spec: DeclaredDiagramSpec, text_of: TextOf) -> Iterator[Ex
         if via is not None:
             yield prefixed(VIA_PREFIX, via, "note")
         yield text_of(panel.text)
-        yield _parts_line(panel.parts, text_of)
+        yield _parts_line(panel.parts, text_of, words)
 
 
-def _parts_line(parts: list[KitPartSpec], text_of: TextOf) -> ExportText | None:
+def _parts_line(parts: list[KitPartSpec], text_of: TextOf, words: ExportWords) -> ExportText | None:
     names = [text.plain.strip() for text in (text_of(ref) for ref in _part_refs(parts)) if text is not None]
     shown = [name for name in dict.fromkeys(names) if name]
-    return plain_text(DRAWN_PREFIX + "; ".join(shown), "note") if shown else None
+    return words.labelled(DRAWN, "; ".join(shown)) if shown else None
 
 
 def _part_refs(parts: list[KitPartSpec]) -> Iterator[str]:
@@ -97,7 +112,7 @@ def _map_ask(spec: DeclaredTimelineMapSpec) -> MapAsk:
 
 def _place_lines(ask: FigureAsk, spec: DeclaredTimelineMapSpec) -> Iterator[ExportText | None]:
     for index, place in enumerate(spec.places):
-        home = " (this craft's place)" if place.home else ""
+        home = Run(f" ({ask.words.said(HOME)})", lang=ask.words.lang(HOME)) if place.home else None
         yield prefixed(f"{index + 1}. ", _suffixed(ask.unit(place.name), home))
         for point in spec.points:
             if point.place == index:
@@ -113,13 +128,13 @@ def _route_lines(ask: FigureAsk, spec: DeclaredTimelineMapSpec) -> Iterator[Expo
     for route in spec.routes:
         start, end = ask.plain(spec.places[route.start].name), ask.plain(spec.places[route.end].name)
         years = years_text(route.year_from, route.year_to)
-        yield prefixed(f"{start} to {end}, {years}: ", ask.unit(route.text))
+        yield prefixed(f"{ask.words.said(ROUTE, start=start, end=end, years=years)}: ", ask.unit(route.text))
 
 
-def _suffixed(text: ExportText | None, suffix: str) -> ExportText | None:
-    if text is None or not suffix:
+def _suffixed(text: ExportText | None, suffix: Run | None) -> ExportText | None:
+    if text is None or suffix is None:
         return text
-    return ExportText(runs=(*text.runs, *plain_text(suffix).runs), role=text.role, lang=text.lang)
+    return ExportText(runs=(*text.runs, suffix), role=text.role, lang=text.lang)
 
 
 def swatch_cards_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
@@ -140,16 +155,21 @@ def _card_tokens(card: ColourCard) -> list[str | None]:
 
 
 def _card_lines(ask: FigureAsk, card: ColourCard, number: int) -> list[ExportText | None]:
-    swatches = [swatch for swatch in (card.before, card.after) if swatch is not None]
-    named = " becomes " if card.join == "becomes" else " or "
-    captions = named.join(ask.plain(swatch.caption) for swatch in swatches)
+    captions = _swatch_captions(ask, card)
     return [
         prefixed(f"{number}. ", ask.unit(card.name)),
-        prefixed("Given by: ", ask.unit(card.agent), "body"),
+        prefixed(ask.words.label(GIVEN_BY), ask.unit(card.agent), "body"),
         ask.unit(card.text),
         ask.unit(card.why),
-        plain_text(f"Swatches: {captions}", "note") if captions else None,
+        ask.words.labelled(SWATCHES, captions) if captions else None,
     ]
+
+
+def _swatch_captions(ask: FigureAsk, card: ColourCard) -> str:
+    shown = [ask.plain(swatch.caption) for swatch in (card.before, card.after) if swatch is not None]
+    if len(shown) < 2:
+        return "".join(shown)
+    return ask.words.said(BECOMES if card.join == "becomes" else OR, before=shown[0], after=shown[1])
 
 
 def label_card_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:

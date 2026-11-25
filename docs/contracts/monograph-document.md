@@ -52,7 +52,7 @@ flowchart LR
 | A curated craft's structure | `services/document_components.py` (the structure read from the craft page), `document_components_parts.py` (its records as text units), `document_components_store.py` (the page it reads), `monograph_generated_structure.py` (placing it), `research/component_specs_blocks.py` (the `answer_block` kind) |
 | The sections | `services/monograph_generated_sections.py` (the one writer), `services/curation_sections.py` and `scripts/publish_curated_sections.py` |
 | Pages in other languages | the code table of that section, below |
-| The page as a PDF and a Word document | `api/routes/page_exports.py`, `services/page_export_*.py`, `services/docx_writer.py`, the still renderer `services/export_still*.py` (Exports, below) |
+| The page as a PDF and a Word document | `api/routes/page_exports.py`, `services/page_export_*.py` (its pictures in `page_export_pictures.py` and `page_export_plates.py`, its fixed words in `page_export_words.py`), `services/docx_writer.py`, the still renderer `services/export_still*.py`; the web's Download in `components/monograph/PageDownload*.tsx` and `lib/pageExport.ts` (Exports, below) |
 
 ## GET /api/crafts/{slug}/monograph
 
@@ -98,16 +98,32 @@ tag of at most 16 characters) and `version` (optional, from 1).
   (`enough_sections`; a family or category needs one). The web app then draws the craft without a
   monograph.
 
-## Exports (decision 0206)
+## Exports (decisions 0206, 0208)
 
 `GET /api/crafts/{slug}/monograph/{fmt}`, `fmt` `pdf` or `docx`, with `lang` and `version` as
-above. Public; the document is the one the monograph route serves (English, or the variant in
-`lang`), so a translated page exports in its language with every passage not yet translated in
-English. The answer is an `ExportLink` (`format` `pdf` or `docx`, a five-minute signed link,
-`Cache-Control: private, no-cache`), the file built once under
-`exports/00000000-0000-0000-0000-000000000001/<sha256 of the page, the served tag and the
-language>/<name>` and named `KalaVigyan_Craft-Page_<date>_<page>[_<language>]_Export_v<n>.<fmt>`
-(`naming.export_file_name`); 503 when no media bucket is set, 404 as the monograph route.
+above, and for a family or a category page `GET /api/families/{slug}/monograph/{fmt}` and
+`GET /api/categories/{slug}/monograph/{fmt}` with `lang` (decision 0208), each beside the route
+that serves that page's document. Public (`public_reader`); the document is the one the page's
+route serves (English, or the variant in `lang`), so a translated page exports in its language
+with every passage not yet translated in English. The answer is an `ExportLink` (`format` `pdf`
+or `docx`, a five-minute signed link, `Cache-Control: private, no-cache`), the file built once
+under `exports/00000000-0000-0000-0000-000000000001/<sha256 of the page, the served tag, the
+language, the export's edition and the language's reviewed export words>/<name>` and named
+`KalaVigyan_<Craft-Page|Family-Page|Category-Page>_<date>_<page>[_<language>]_Export_v<n>.<fmt>`
+(`naming.export_file_name`); a file built while a picture could not be read is filed apart and
+never reused (as lesson files are); 503 when no media bucket is set, 404 as the page's route, 422
+for another format. All three are built by the same services (`page_export_files.page_export_link`),
+so a family or a category page is drawn as a craft page is.
+
+- **Download on the page** (decision 0208): every craft monograph, family page and category page
+  offers one Download menu with two items, PDF and Word document (`lib/pageExport.pageDownloads`,
+  the path of the page's kind, slug and language), through the shared menu
+  (`components/learn/DownloadList`, the list `DownloadMenu` also draws). On a craft page with a cite
+  block it sits in the block's row beside Copy citation; on a family or a category page, which have
+  none, it is drawn alone in the cite block's place at the page's end (`PageDownloadRow`); on an
+  authored page (Kutch Ajrakh), whose cite block lies in its approved fragments, it is drawn after
+  the shell's `#kv-main`, before the footer. Only the button ships with the page; the list's code
+  loads when it is first pressed (`PageDownload`, `next/dynamic`).
 
 - **The page as paper** (`page_export_document.page_export`): the title, the page's address, its
   version and its language, the reading note of a variant (`<translated> of <passages> passages read
@@ -132,11 +148,33 @@ language>/<name>` and named `KalaVigyan_Craft-Page_<date>_<page>[_<language>]_Ex
   | `dip_player`, `stage_player` | the scene and a strip of the dips' or stages' colours; every phase or stage in order, a stage's name with its English when it is named in its own language |
   | `molecule_3d` | each model from its conformer turned to its rest (atoms in the kit's atom tokens, bonds in ink), else its 2D drawing; its name, formula and PubChem record, its atoms, note and key |
   | `label_card`, `experiment_lab`, `choice_toggle` | the seal or the stage drawings; the facts, the experiments and the figures that draw them, each choice with its result |
+  | `picture_plate`, `specimen_plate` | the picture itself when it was read (Pictures on paper, below); its captions (a specimen's kicker, name and sentence) first and its credit after, as a credit |
   | every other kind | its SVG drawings (at most four), the pictures it names by their alt text, and its units |
 
   A scene slot that holds a kit scene (`{"parts": [...]}`, the kit-players lane, decision 0200) is
   drawn from its parts; an answer's kit figure (decision 0201) takes `export_pdf_kit.kit_figure_pdf`,
   the same renderer. A spec that does not parse is drawn from its words alone and logged.
+- **Pictures on paper** (`page_export_pictures`, decision 0208): each picture a `picture_plate` or
+  `specimen_plate` shows is read once, before the file is drawn, when its credit names an open
+  licence (`research/licences.open_licence` on the credit's words: CC0, CC BY, CC BY-SA, public
+  domain; NC, ND, all rights reserved and a credit naming no licence are never copied). A Commons
+  file is read at the standard Commons width that fits the paper column (178 mm at 150 dpi, 1051
+  px, so 1280; never wider than the file, the file itself under 330 px;
+  `commons_urls.commons_fitting_width`), a picture the site serves itself (`/monographs/...`) from
+  the page's own site; both through `picture_files` with its hosts (Commons, Openverse and the
+  site's `PUBLIC_WEB_URL` host, https only), all of a page's pictures within 30 s
+  (`PAGE_PICTURES_SECONDS`). A picture read is flattened to a JPEG at most 1600 px a side and drawn
+  under the figure's title (PDF up to 120 mm high; Word up to 150 by 110 mm as
+  `word/media/figure<n>.jpeg`, its alt text as the description). One that was not read, or whose
+  licence forbids a copy, is given by `Picture: <alt text>` and its credit, and the figure's note
+  says which (`PICTURE_UNREAD`, `PICTURE_CLOSED`).
+- **Fixed words** (`page_export_words`, decision 0208): the words the export writes itself (the
+  Sources heading, the reading note, the paper notes, the kind labels, the labels Drawn, Given by,
+  Swatches, Key and Picture, the phrases of a home place, a resting step, a lab's figure, a swatch's
+  change and a route, the picture notes) are interface words of decision 0157 keyed `export.heading`,
+  `export.note`, `export.paperNote`, `export.kind`, `export.label`, `export.phrase` and
+  `export.pictureNote` with the English the code holds (`EXPORT_WORDS`). A language whose entry is
+  reviewed draws its text; every other word is English and, in Word, marked `w:lang="en"`.
 - **The still renderer** draws at rest, light theme, from the design tokens: a component's own
   drawing (paths with every command, shapes, text, transforms, gradients by their first stop;
   textures, masks and filters left out), the kit's parts with the web kit's own path data
@@ -148,7 +186,8 @@ language>/<name>` and named `KalaVigyan_Craft-Page_<date>_<page>[_<language>]_Ex
   the Word document written as WordprocessingML with the standard library (`docx_writer`):
   `[Content_Types].xml`, `_rels/.rels`, `docProps/core.xml`, `word/styles.xml` (named styles in the
   design's ink and indigo), `word/document.xml` (runs in bold, italic, sub- or superscript, each
-  with its passage's `w:lang`, right to left for Urdu) and one `word/media/figure<n>.png` per still.
+  with its passage's `w:lang`, right to left for Urdu) and one `word/media/figure<n>.png` per still
+  and `word/media/figure<n>.jpeg` per picture.
 
 ## The document
 
@@ -512,7 +551,12 @@ to `specs`).
 | Each new kind as its figure, every unit of a component in it, Kutch Ajrakh whole | `tests/exports/test_page_export.py` |
 | The still renderer: paths, paints, drawings, kit parts, a composed diagram, a kit scene, a molecule, swatches, a map, the PDF and the PNG, an answer's kit figure | `tests/exports/test_export_stills.py` |
 | The PDF's text and drawings, the Word document's parts, Kutch Ajrakh's files, the filed link and its name | `tests/exports/test_page_files.py` |
+| A picture read at its paper width and embedded, caption first and credit after; one not read, or under a licence that forbids a copy, given by its alt text and credit with a note; Kutch Ajrakh's ten pictures read from its own site; a slow picture left unread | `tests/exports/test_page_pictures.py`, `tests/sources/test_commons_urls.py`, `tests/learning/test_export_store.py` |
+| A reviewed export word drawn and an unreviewed one English and marked so; the words a file is made from | `tests/exports/test_export_words.py`, `tests/test_interface_words_data.py` |
+| A family and a category page exported through their routes with their parts, a craft page's picture read at the paper width, 404 and 422 | `tests/db/test_page_exports_db.py` |
+| Download's two items on a craft, a family and a category page, beside Copy citation or alone, and after Kutch Ajrakh's untouched main | `frontend/e2e/page-download-unit.spec.ts` |
 
 Test paths are relative to `backend/`, but the web's, which is relative to the repository. Last
-reviewed: 2026-11-20, and every path here checked against the code on 2026-11-22. Re-read it when a document field, the route's answers, a slot, the
+reviewed: 2026-11-20, every path here checked against the code on 2026-11-22, and the exports'
+rows on 2026-11-25. Re-read it when a document field, the route's answers, a slot, the
 kit format, a translation gate or the golden changes.

@@ -1469,7 +1469,11 @@ no reading keeps its English.
   refused when an entry repeats its key and English, its text holds other placeholders, its key is
   not dotted or its review lacks a reader or a `YYYY-MM-DD` day. `reviewed_words(language)` is
   what readers are shown (reviewed entries whose English is the code's); `written_words` every
-  entry, for voice alone.
+  entry, for voice alone. A page export's own words are keyed `export.*` (decision 0208,
+  `services/page_export_words.EXPORT_WORDS`, `monograph-document.md`, Exports): a reviewed entry is
+  drawn in that language's files and every other export word in English; no file holds an
+  `export.*` entry yet, because no source gives them, so a reader of the language adds one with its
+  source, as for the essay's words.
 
 ## Not built yet
 

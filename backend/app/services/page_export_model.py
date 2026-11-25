@@ -1,14 +1,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
+from .export_pictures import Picture
 from .export_stills import Still
+
+if TYPE_CHECKING:
+    from .page_export_words import ExportWords
 
 __all__ = [
     "ExportBlock",
     "ExportChapter",
     "ExportFigure",
+    "ExportPicture",
     "ExportReference",
     "ExportText",
     "PageExport",
@@ -29,6 +34,7 @@ SUPERSCRIPT = str.maketrans("0123456789+-=()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺�
 class Run:
     text: str
     style: RunStyle = ""
+    lang: str | None = None
 
 
 @dataclass(frozen=True)
@@ -43,6 +49,12 @@ class ExportText:
 
 
 @dataclass(frozen=True)
+class ExportPicture:
+    picture: Picture
+    alt: str
+
+
+@dataclass(frozen=True)
 class ExportFigure:
     label: str
     kind: str
@@ -51,6 +63,8 @@ class ExportFigure:
     lines: tuple[ExportText, ...]
     note: str | None = None
     credits: tuple[str, ...] = ()
+    pictures: tuple[ExportPicture, ...] = ()
+    note_lang: str | None = None
 
 
 ExportBlock = ExportText | ExportFigure
@@ -76,9 +90,10 @@ class PageExport:
     language: str
     page_url: str
     version: int
-    reading_note: str | None
+    reading_note: ExportText | None
     chapters: tuple[ExportChapter, ...]
     references: tuple[ExportReference, ...]
+    words: ExportWords
 
     def figures(self) -> list[ExportFigure]:
         return [

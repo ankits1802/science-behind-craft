@@ -148,6 +148,13 @@ class PdfWriter:
         self._pdf.multi_cell(width, CREDIT_SIZE * LINE_RATIO, credit, align=self._align, new_y=YPos.NEXT)
         return float(self._pdf.get_y())
 
+    def image(self, picture: Picture, *, alt: str, width: float, max_height: float) -> None:
+        scale = min(width / picture.width, max_height / picture.height)
+        shown_w, shown_h = picture.width * scale, picture.height * scale
+        top = self.room(shown_h + PICTURE_GAP_MM)
+        self._pdf.image(BytesIO(picture.data), x=self.left, y=top, w=shown_w, h=shown_h, alt_text=alt)
+        self.go_to(top + shown_h + PICTURE_GAP_MM)
+
     def room(self, height: float) -> float:
         if self._pdf.get_y() + height > self.bottom:
             self.new_page()

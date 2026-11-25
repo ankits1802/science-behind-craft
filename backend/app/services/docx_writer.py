@@ -22,9 +22,11 @@ from .docx_parts import (
     styles_xml,
 )
 
-__all__ = ["EMU_PER_MM", "DocRun", "DocxWriter"]
+__all__ = ["EMU_PER_MM", "JPEG", "PNG", "DocRun", "DocxWriter"]
 
 EMU_PER_MM = 36000
+PNG, JPEG = "png", "jpeg"
+PICTURE_EXTENSIONS = (PNG, JPEG)
 FIXED_TIME = (2026, 1, 1, 0, 0, 0)
 INVALID_XML = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 VERTICAL = MappingProxyType({"sub": "subscript", "sup": "superscript"})
@@ -55,16 +57,27 @@ class DocxWriter:
             shown = f'<w:hyperlink r:id="{self._relation(LINK_RELATION, link, external=True)}">{shown}</w:hyperlink>'
         self.body.append(f"<w:p>{self._paragraph_properties(style)}{shown}</w:p>")
 
-    def picture(self, png: bytes, size: tuple[int, int], *, description: str, width_mm: float) -> None:
+    def picture(
+        self, data: bytes, size: tuple[int, int], *, description: str, width_mm: float, extension: str = PNG
+    ) -> None:
+        if extension not in PICTURE_EXTENSIONS:
+            raise ValueError(
+                f"a Word document holds pictures as {' or '.join(PICTURE_EXTENSIONS)}, not {extension}"
+            )
         number = len(self.media) + 1
-        name = f"media/figure{number}.png"
-        self.media.append((name, png))
+        name = f"media/figure{number}.{extension}"
+        self.media.append((name, data))
         relation = self._relation(IMAGE_RELATION, name, external=False)
         pixels_wide, pixels_high = size
         cx = round(width_mm * EMU_PER_MM)
         cy = round(cx * pixels_high / max(pixels_wide, 1))
         drawing = PICTURE_TEMPLATE.format(
-            cx=cx, cy=cy, number=number, relation=relation, description=quoteattr(_clean(description))
+            cx=cx,
+            cy=cy,
+            number=number,
+            name=name.removeprefix("media/"),
+            relation=relation,
+            description=quoteattr(_clean(description)),
         )
         self.body.append(f"<w:p>{self._paragraph_properties('Figure')}<w:r>{drawing}</w:r></w:p>")
 

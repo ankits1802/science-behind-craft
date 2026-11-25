@@ -8,6 +8,7 @@ from app.research.sections import FALLBACK_HEADINGS
 from app.research.translation import written_in
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 from app.services.answer_events import STORED_FOLLOW_UP_QUESTIONS
+from app.services.page_export_words import EXPORT_WORDS, EXPORT_WORDS_PREFIX
 from app.services.status_lines import COUNTED_LINES, PLAIN_LINES, PLANNING, PLANNING_ON
 from app.services.stored_explainer import HEADING_DISCIPLINES
 from app.voice import phrases
@@ -86,3 +87,11 @@ def test_every_stream_and_voice_word_translates_an_english_text_the_backend_show
                 assert entry.english in stream[entry.key], (language, entry.key, entry.english)
             if entry.key.startswith("voice."):
                 assert entry.english in spoken, (language, entry.key, entry.english)
+
+
+def test_every_export_word_translates_an_english_the_page_export_draws() -> None:
+    drawn = {(word.key, word.english) for word in EXPORT_WORDS}
+    for language, entries in load_interface_words().items():
+        for entry in entries:
+            if entry.key.startswith(EXPORT_WORDS_PREFIX):
+                assert (entry.key, entry.english) in drawn, (language, entry.key, entry.english)

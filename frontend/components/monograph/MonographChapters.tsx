@@ -8,12 +8,15 @@ import { MonographContents } from "@/components/monograph/MonographContents";
 import { MonographMasthead } from "@/components/monograph/MonographMasthead";
 import { MonographPassage } from "@/components/monograph/MonographPassage";
 import { MonographSources } from "@/components/monograph/MonographSources";
+import { PageDownload } from "@/components/monograph/PageDownload";
+import { PageDownloadRow } from "@/components/monograph/PageDownloadRow";
 import { SourceList } from "@/components/monograph/SourceList";
 import { documentCitation } from "@/lib/monographCite";
 import type { MonographDocument } from "@/lib/monographDocument";
 import { chapterNotes, chapterSections, type ChapterSection, type NoteLine } from "@/lib/monographNotes";
 import { railChapters, type ChapterBlock, type ChapterPlan, type LabelMasthead, type MastheadPlan, type PagePlan } from "@/lib/monographRenderLayout";
 import { KIN_KIND } from "@/lib/monographSources";
+import { pageSubject } from "@/lib/pageExport";
 
 export { shownPage } from "@/lib/monographShownPage";
 
@@ -86,10 +89,12 @@ export function ChapterRun({ document, plan, chapters, masthead, rail }: RunProp
 
 export function PageCitation({ document, plan }: { document: MonographDocument; plan: PagePlan }) {
   const cite = plan.label !== null ? documentCitation(document) : null;
-  if (!cite) return null;
+  if (!cite) return <PageDownloadRow document={document} />;
   return (
     <div className="kv-page kv-citethis-place" id={PAGE_CITATION_ID} data-app="">
-      <CiteThis cite={cite} />
+      <CiteThis cite={cite}>
+        <PageDownload subject={pageSubject(document)} />
+      </CiteThis>
     </div>
   );
 }

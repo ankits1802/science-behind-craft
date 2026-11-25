@@ -35,18 +35,18 @@ export async function deleteLesson(lessonId: string): Promise<void> {
   await apiFetch<unknown>(LESSON_PATH(lessonId), { method: "DELETE" });
 }
 
-async function downloadLinked(path: string): Promise<string> {
+export async function downloadExportFile(path: string): Promise<string> {
   const link = parseShape(exportLinkShape, await apiFetch<unknown>(path));
   await downloadFile(link.url, link.fileName);
   return link.fileName;
 }
 
 export function downloadLessonFile(lessonId: string, format: LessonFormat): Promise<string> {
-  return downloadLinked(LESSON_FILE_PATH(lessonId, format));
+  return downloadExportFile(LESSON_FILE_PATH(lessonId, format));
 }
 
 export function downloadExplainerPdf(explainerId: string, version: number): Promise<string> {
-  return downloadLinked(EXPLAINER_PDF_PATH(explainerId, version));
+  return downloadExportFile(EXPLAINER_PDF_PATH(explainerId, version));
 }
 
 export function downloadCitations(explainerId: string, version: number, format: CitationFormat): Promise<string> {

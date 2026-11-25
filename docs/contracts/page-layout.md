@@ -105,8 +105,9 @@ layout, and a new unit or component lands at the end of its chapter until a layo
 | PUT | `/api/pages/{kind}/{slug}/layout` | Admin, Master Admin | body `{baseVersion, entries}`; 200 the stored version; 409 when `baseVersion` is not the current version; 404 for an unknown page; 422 when an entry breaks a rule |
 | GET | `/api/categories/{slug}/monograph` | anyone (public reading limits, ETag) | the generated `MonographDocument`; 404 for an unknown category or one with nothing published |
 | GET | `/api/families/{slug}/monograph` | anyone (public reading limits, ETag) | the same for a family |
+| GET | `/api/categories/{slug}/monograph/{fmt}`, `/api/families/{slug}/monograph/{fmt}` | anyone (public reading limits) | the page as `pdf` or `docx`, an `ExportLink` (`monograph-document.md`, Exports; decision 0208, routes in `api/routes/page_exports.py`) |
 
-`kind` is `craft`, `family` or `category`. The routes are `api/routes/page_documents.py`.
+`kind` is `craft`, `family` or `category`. The routes are `api/routes/page_documents.py`, and the two exports `api/routes/page_exports.py`.
 
 MCP read tool `get_page {subject {kind, slug}, parts ["layout"]}` (`api/mcp_page_read.py`, any connection):
 its `PageRead` carries `layout` (PageLayout or null) and `pageUrl` (`knowledge-api.md`); an

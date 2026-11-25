@@ -17,6 +17,7 @@ Date: 2026-11-23. Status: accepted (the lead's round 7 brief, languages lane). I
 | The voice phrases it amends | [decision 0025](0025-multilingual-voice.md), item 5 |
 | The stance markers the checks share | [decision 0120](0120-grounded-sentences.md) |
 | The board and the monograph its first words come from | [decision 0092](0092-design-system.md), [decision 0145](0145-monograph-pages-and-speed-without-debt.md) |
+| A page export's own words as `export.*` entries | [decision 0208](0208-every-page-downloaded-from-the-page-with-its-pictures-and-its-words.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

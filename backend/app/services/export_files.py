@@ -90,10 +90,11 @@ class ExportTools:
 async def opened_export_tools(
     objects: ExportObjects, builds: asyncio.Semaphore
 ) -> AsyncIterator[ExportTools]:
-    async with source_client(get_settings().research_contact_email) as client:
+    settings = get_settings()
+    async with source_client(settings.research_contact_email) as client:
         yield ExportTools(
             objects=objects,
-            pictures=picture_files(client),
+            pictures=picture_files(client, site=settings.public_web_url),
             apa=apa_references,
             clock=lambda: datetime.now(UTC),
             builds=builds,

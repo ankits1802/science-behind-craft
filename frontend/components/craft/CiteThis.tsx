@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 
 import { CraftReleaseDoi } from "@/components/openData/CraftReleaseDoi";
 import { ActionGroup } from "@/components/ui/ActionGroup";
@@ -12,7 +12,7 @@ export const CITE_HEADINGS = { monograph: "Cite this monograph", answer: "Cite t
 const COPIED = "Citation copied.";
 const NOT_COPIED = "The citation could not be copied. Select the text and copy it.";
 
-export function CiteThis({ cite }: { cite: Citable }) {
+export function CiteThis({ cite, children }: { cite: Citable; children?: ReactNode }) {
   const [style, setStyle] = useState<CiteStyle>("text");
   const [accessed, setAccessed] = useState<Date | null>(null);
   const [status, setStatus] = useState("");
@@ -48,6 +48,7 @@ export function CiteThis({ cite }: { cite: Citable }) {
         <Button variant="quiet" size="sm" onClick={copy}>
           Copy citation
         </Button>
+        {children}
       </ActionGroup>
       <p className="kv-citethis-status" role="status">
         {status}

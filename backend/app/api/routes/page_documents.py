@@ -75,7 +75,7 @@ async def get_category_monograph(
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
-    served = await _document(session, CATEGORY, asked)
+    served = await subject_document(session, CATEGORY, asked)
     queue_rebuild(background, served)
     return document_response(request, reader, served, asked.part)
 
@@ -88,7 +88,7 @@ async def get_family_monograph(
     reader: User | None = Depends(public_reader),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
-    served = await _document(session, FAMILY, asked)
+    served = await subject_document(session, FAMILY, asked)
     queue_rebuild(background, served)
     return document_response(request, reader, served, asked.part)
 
@@ -128,7 +128,7 @@ async def put_page_layout(
     return layout.model_dump(mode="json", by_alias=True)
 
 
-async def _document(session: AsyncSession, kind: str, asked: AskedDocument) -> ServedDocument:
+async def subject_document(session: AsyncSession, kind: str, asked: AskedDocument) -> ServedDocument:
     try:
         read = await generated_read(session, kind, asked.slug)
     except InvalidInput as unknown:

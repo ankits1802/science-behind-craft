@@ -9,13 +9,13 @@ from io import BytesIO
 from typing import Protocol
 
 from app.core.errors import AppError
-from app.research.media_refs import MediaRef
 
 __all__ = [
     "PICTURE_MAX_PIXELS",
     "PICTURE_MAX_SIDE",
     "ExportPictures",
     "Picture",
+    "PictureAsk",
     "PictureSource",
     "export_pictures",
     "normalised",
@@ -46,16 +46,30 @@ class PictureSource(Protocol):
     async def picture(self, url: str) -> bytes: ...
 
 
-async def export_pictures(medias: Iterable[MediaRef], source: PictureSource) -> ExportPictures:
+class PictureAsk(Protocol):
+    @property
+    def id(self) -> uuid.UUID: ...
+
+    @property
+    def image_url(self) -> str: ...
+
+
+async def export_pictures(
+    medias: Iterable[PictureAsk], source: PictureSource, *, within: float | None = None
+) -> ExportPictures:
+    deadline = None if within is None else asyncio.get_running_loop().time() + within
     found: dict[uuid.UUID, Picture] = {}
     unread: set[uuid.UUID] = set()
     for media in medias:
         if media.id in found or media.id in unread:
             continue
         try:
-            raw = await source.picture(media.image_url)
-        except AppError as error:
-            logger.warning("picture %s is left out of the export: %s", media.id, error)
+            async with asyncio.timeout_at(deadline):
+                raw = await source.picture(media.image_url)
+        except (AppError, TimeoutError) as error:
+            logger.warning(
+                "picture %s is left out of the export: %s", media.id, str(error) or "its time ran out"
+            )
             unread.add(media.id)
             continue
         picture = await asyncio.to_thread(normalised, raw)

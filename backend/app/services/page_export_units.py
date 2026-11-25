@@ -97,8 +97,8 @@ def _reference_text(source: CitedSource) -> str:
 def _merged(runs: Iterator[Run]) -> tuple[Run, ...]:
     out: list[Run] = []
     for run in runs:
-        if out and out[-1].style == run.style:
-            out[-1] = Run(out[-1].text + run.text, run.style)
+        if out and (out[-1].style, out[-1].lang) == (run.style, run.lang):
+            out[-1] = Run(out[-1].text + run.text, run.style, run.lang)
         elif run.text:
             out.append(run)
     return tuple(out)
