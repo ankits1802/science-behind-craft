@@ -15,6 +15,7 @@ import { IndiaMapBase } from "@/components/map/IndiaMap";
 import { showsDistrictLines, type MapLayerDrawn } from "@/components/map/mapLayerFrame";
 import { StillLines, StillNeighbours, StillValued } from "@/components/map/MapStillLayers";
 import { MapScale } from "@/components/map/MapScale";
+import { PlaceHatchOrStill } from "@/components/map/PlaceHatch";
 import { MapRings, MapRoutes, PlacePins, placedPins, ValueLabels, type ValueMark } from "@/components/map/PlacesMapMarks";
 import { bordersToPath, project } from "@/components/map/projection";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
@@ -111,7 +112,8 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
   const box = useRef<HTMLDivElement | null>(null);
   const { frame, still } = drawn;
   const scale = useFitScale(box, frame.width);
-  const layers = useTimelineMapLayers(drawn.names, still);
+  const layerNames = useMemo(() => ({ ...drawn.names, home: [] }), [drawn.names]);
+  const layers = useTimelineMapLayers(layerNames, still);
   const values = useDistrictValues(spec, still);
   const pins = useMemo(() => placedPins(spec.places, scale), [spec.places, scale]);
   const underlay = (
@@ -121,7 +123,7 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
       {marks.districts ? values.fills : null}
       <DistrictLinesOrStill still={still} frame={frame} />
       {layers.parts.rivers}
-      {layers.parts.home}
+      <PlaceHatchOrStill still={still?.home ?? null} home={drawn.names.home} frame={frame} scale={scale} />
     </>
   );
   return (

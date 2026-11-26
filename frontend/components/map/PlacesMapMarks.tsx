@@ -12,6 +12,7 @@ export const LABEL_GAP = 5;
 export const HEAD = 9;
 export const BEND = 0.16;
 export const EDGE_SHARE = 0.68;
+export const RING_LABEL_AT = Math.SQRT1_2;
 
 export type PlacedPin = Projected & { r: number };
 export type ValueMark = { lgd: number; x: number; y: number; text: string };
@@ -76,7 +77,7 @@ export function MapRings({ rings, places, marks, scale }: { rings: readonly MapR
           <g key={`${ring.place}-${ring.radiusKm}`} data-testid="map-ring" data-km={ring.radiusKm}>
             <ellipse cx={centre.x} cy={centre.y} rx={rx} ry={ry} fill="none" stroke="var(--map-selection-halo)" strokeWidth={4} vectorEffect="non-scaling-stroke" />
             <ellipse cx={centre.x} cy={centre.y} rx={rx} ry={ry} fill="none" stroke="var(--map-selection)" strokeWidth={1.4} strokeDasharray="5 4" vectorEffect="non-scaling-stroke" />
-            <RotatedLabel x={centre.x} y={centre.y - ry - 4 * scale} angle={0} weight="medium">
+            <RotatedLabel x={centre.x + rx * RING_LABEL_AT} y={centre.y + ry * RING_LABEL_AT} dx={4 * scale} angle={0} anchor="start" weight="medium">
               {`${formatNumber(ring.radiusKm)} km`}
             </RotatedLabel>
           </g>

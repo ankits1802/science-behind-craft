@@ -59,8 +59,10 @@ layer credits and the boundary note). The contract is `docs/contracts/component-
    each layer's dataset credit. Every cited sentence stays on the page: the places' readings, each
    route's and ring's sentence and the district readings by rank beside the map, every step's
    sentence under it. The frame is cut
-   to the places at a tighter zoom than the timeline map's (`MAP_LAYER_ZOOM`, at least 8 per cent
-   of India's width, about 2.4 degrees), so a craft's town and its neighbours fill the map.
+   to the places at a tighter zoom than the timeline map's (`MAP_LAYER_ZOOM`, at least 3.5 per cent
+   of India's width, about one degree), so a craft's town and its neighbours fill the map, and the
+   home district's hatch is drawn at a fixed spacing on the screen (`PlaceHatch.tsx`) rather than in
+   map units, which at that zoom would paint bars across the map.
 2. **The agent says what the map is about.** `MapParts` (`backend/app/research/component_specs_map_parts.py`)
    is the base of `GeneralMapLayerSpec` and adds six optional parts: `frame` (places, a district or
    a state), `emphasis` (layers and named rivers), `routes` (arrows between two places), `rings` (a

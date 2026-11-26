@@ -110,7 +110,7 @@ function drawn(spec: Record<string, unknown>): string {
 test("a places map of the old shape draws on the site's base: relief, rivers, district lines, the home hatch, a scale and the India locator", () => {
   const spec = stilled(SANGANERI);
   const html = shownText(drawn(spec));
-  for (const part of ["still-relief", "still-rivers", "still-district-lines", "still-home", "map-land", "map-salt", "map-scale", "india-locator", "india-locator-frame"]) expect(html, part).toContain(`data-testid="${part}"`);
+  for (const part of ["still-relief", "still-rivers", "still-district-lines", "places-home", "map-land", "map-salt", "map-scale", "india-locator", "india-locator-frame"]) expect(html, part).toContain(`data-testid="${part}"`);
   expect(html.match(/data-testid="map-place"/g)).toHaveLength(4);
   for (const name of ["Sanganer", "Jaipur", "Bagru", "Amber"]) expect(html).toContain(`>${name}</text>`);
   const frame = mapLayerFrame(parseShape(mapLayerSpecShape, spec));

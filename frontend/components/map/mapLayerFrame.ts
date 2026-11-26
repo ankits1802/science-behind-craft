@@ -6,8 +6,8 @@ import { sameBox, type LayerNames, type MapStill } from "@/components/map/timeli
 import type { MapLayerSpec } from "@/lib/componentSpecsGeneral";
 import { namedFrameKey } from "@/lib/componentSpecsMapLayer";
 
-export const MAP_LAYER_ZOOM: FrameZoom = { minShare: 0.08, paddingShare: 0.3 };
-export const NAMED_ZOOM: FrameZoom = { minShare: 0.08, paddingShare: 0.06 };
+export const MAP_LAYER_ZOOM: FrameZoom = { minShare: 0.035, paddingShare: 0.25 };
+export const NAMED_ZOOM: FrameZoom = { minShare: 0.035, paddingShare: 0.06 };
 export const BASE_LAYERS: readonly string[] = ["relief", "rivers"];
 export const DISTRICT_LINES_SHARE = 0.35;
 

@@ -231,8 +231,10 @@ and, in a frame of at most 35 per cent of India's width (`DISTRICT_LINES_SHARE`)
 districts in the place hatch (every `place:lgd:<code>` subject of the component), place names with
 halos, a scale bar of a round number of kilometres at the frame's middle latitude, the India
 locator with the frame marked, and a key (the elevation and river keys, the home hatch, the salt
-flats where the frame holds them, the district values' classes). The source line gives the boundary
-note and each layer's dataset credit.
+flats where the frame holds them, the district values' classes). The frame is cut to the places at
+least 3.5 per cent of India's width across (`MAP_LAYER_ZOOM`), and the home hatch is drawn every 9
+px on the screen whatever the zoom (`components/map/PlaceHatch.tsx`). The source line gives the
+boundary note and each layer's dataset credit.
 
 **What the map is about**, beside its places; every index counts from 0 into the spec's own lists:
 
