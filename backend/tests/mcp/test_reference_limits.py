@@ -34,7 +34,12 @@ from app.research.component_specs_general_svg import DRAWING_MAX_CHARS
 from app.research.knowledge_writes import PROPOSAL_FIELDS_MAX, PROPOSAL_QUOTES_MAX, PROPOSAL_SOURCES_MAX
 from app.research.licences import open_licence
 from app.research.page_holds import HOLD_DAYS
-from app.research.page_proposals import FACTS_MAX, WITHDRAWALS_MAX
+from app.research.page_proposals import (
+    FACTS_MAX,
+    FACTS_PER_CALL_MAX,
+    WITHDRAWALS_MAX,
+    WITHDRAWALS_PER_CALL_MAX,
+)
 
 REPOSITORY = Path(__file__).resolve().parents[3]
 CRAFT_PAGES = REPOSITORY / ".claude" / "skills" / "kalavigyan-craft-pages"
@@ -165,8 +170,9 @@ def test_the_component_guide_states_the_delivery_limits() -> None:
 
 def test_the_component_guide_states_how_many_withdrawals_a_bundle_holds_and_how_long_a_page_waits() -> None:
     components = flat(reference_text("components"))
-    assert (WITHDRAWALS_MAX, HOLD_DAYS) == (10, 3)
-    assert f"`withdrawals` (up to {WITHDRAWALS_MAX} a bundle)" in components
+    assert (WITHDRAWALS_PER_CALL_MAX, WITHDRAWALS_MAX, HOLD_DAYS) == (10, 100, 3)
+    said = f"`withdrawals` (up to {WITHDRAWALS_PER_CALL_MAX} a call and {WITHDRAWALS_MAX} a draft)"
+    assert said in components
     assert f"opens it within {HOLD_DAYS} days and presses Confirm once" in components
 
 
@@ -185,7 +191,7 @@ def test_the_dataset_guide_states_the_map_s_frame_and_the_layers_tolerances() ->
     for layer, constants in TOLERANCES.items():
         for relative, name in constants:
             assert f"{constant(relative, name):g} " in rows[layer], (layer, name)
-    assert f"A bundle holds at most {FACTS_MAX} facts" in datasets
+    assert f"A draft holds at most {FACTS_MAX} facts, an add {FACTS_PER_CALL_MAX}" in datasets
 
 
 def test_the_gaps_script_and_the_curation_bar_count_by_the_server_s_limits() -> None:

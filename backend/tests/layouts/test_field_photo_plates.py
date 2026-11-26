@@ -22,8 +22,8 @@ from app.services.open_work_subjects import WorkSubject
 
 from .generated_parts import generated
 
-IMAGE = uuid.UUID("5e1d0000-0000-4000-8000-0000000000f1")
-OTHER = uuid.UUID("5e1d0000-0000-4000-8000-0000000000f2")
+IMAGE = uuid.UUID("5e1d0000-0001-4000-8000-0000000000f1")
+OTHER = uuid.UUID("5e1d0000-0002-4000-8000-0000000000f2")
 BAGH = WorkSubject(uuid.UUID(int=7), "craft", "Bagh-Print", "Bagh Print", gi=True)
 TEXTILES = WorkSubject(uuid.UUID(int=8), "category", "Textiles", "Textiles", gi=False)
 CREDIT = "Photo: Ramesh Khatri, via Field Repository"

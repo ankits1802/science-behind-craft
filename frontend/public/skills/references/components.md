@@ -214,7 +214,7 @@ stated by their units.
   Review page (give a reason of 12 to 500 characters), and its replacement waits for review. Anyone
   else is refused. A withdrawal names a component of the bundle's own page.
 - **Withdrawing.** A withdrawal takes your registered component off every page that places it:
-  `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a bundle), or Withdraw on Your
+  `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a call and 100 a draft), or Withdraw on Your
   components on the site. It stays in the record, hidden, and keeps its label, so whatever comes next
   takes a label of its own.
 - **Replacing.** Propose the better one with `replaces` naming the old label. It is never refused as

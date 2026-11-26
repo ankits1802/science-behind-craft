@@ -31,6 +31,7 @@ CONTRIBUTOR_TOOLS = (
     "reserve_tasks",
     "steward_craft",
     "get_proposal",
+    "report_site_gap",
     "propose_facts",
     "propose_structure",
     "propose_source",
@@ -41,6 +42,7 @@ CONTRIBUTOR_TOOLS = (
     "compose_component",
     "give_pictures",
     "check_pictures",
+    "list_field_photos",
 )
 ADMIN_TOOLS = ("review_queue", "stage_reviews", "refresh_pages", "admin_reports")
 RETIRED_TOOLS = (

@@ -111,10 +111,8 @@ def test_the_reading_chapter_is_drawn_by_default_with_ask_next_and_the_page_s_la
     chapters = list(dict.fromkeys(entry.chapter for entry in built.content.layout))
     assert chapters.index("reading") < chapters.index("sources")
     assert built.content.units["chapter-reading"].nodes == ["Reading tools"]
-    assert {entry.label: entry.kind for entry in built.content.components} >= {
-        ASK: "ask_next",
-        LANGUAGES: "language_switch",
-    }
+    kinds = {entry.label: entry.kind for entry in built.content.components}
+    assert (kinds[ASK], kinds[LANGUAGES]) == ("ask_next", "language_switch")
 
 
 def test_a_page_without_questions_or_translations_draws_no_reading_tool(tmp_path: Path) -> None:
