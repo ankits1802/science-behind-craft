@@ -64,8 +64,8 @@ def test_a_name_the_register_no_longer_gives_is_taken_off_the_row() -> None:
         1, "Amanisha River", [JAIPUR], also=["Saraswati"], agrees=[{"name": "Saraswati", "source": "x"}]
     )
     named, names = registered_waters({"e074n26": _tile(stale)}, DATASET, register_of([]))
-    assert named["e074n26"]["rivers"][0] == _row(1, "Amanisha River", [JAIPUR])
-    assert names["rivers"] == ["Amanisha River"]
+    assert named["e074n26"]["rivers"][0] == _row(1, "Amanisha River", [JAIPUR], also=["Amanisha"])
+    assert names["rivers"] == ["Amanisha", "Amanisha River"]
 
 
 def test_the_files_are_rewritten_only_where_a_name_changed(tmp_path: Path) -> None:
