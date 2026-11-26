@@ -24,6 +24,7 @@ from app.research.image_contributions import (
 )
 from app.research.image_intake import IMAGE_BYTES_MAX
 from app.services import image_contributions as images
+from app.services.malware_scan import ScannerDown
 from app.services.object_store import ObjectStore, media_bucket
 
 router = APIRouter(prefix="/contributions/images", tags=["contributions"])
@@ -122,6 +123,9 @@ async def _answer(session: AsyncSession, change: Awaitable[ImageContribution]) -
     except images.ContributionRefused as refused:
         await session.rollback()
         raise HTTPException(status.HTTP_409_CONFLICT, refused.detail) from refused
+    except ScannerDown as down:
+        await session.rollback()
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, str(down)) from down
     except InvalidInput as invalid:
         await session.rollback()
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(invalid)) from invalid

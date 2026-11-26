@@ -33,6 +33,7 @@ from app.research.image_screens import (
 )
 
 from .image_contributions_errors import ContributionRefused
+from .malware_scan import scanned_upload
 
 __all__ = [
     "DECODES_AT_ONCE",
@@ -81,6 +82,7 @@ class Screened:
 async def screened(
     session: AsyncSession, data: bytes, *, origin: str, user: User, tools: ScreenTools
 ) -> Screened:
+    await scanned_upload(data)
     image, pixels = await _decoded(data)
     if image.ai_marked and origin != AI_GENERATED:
         raise InvalidInput(AI_MARKED)

@@ -26,6 +26,7 @@ from app.research.fetcher import Fetcher, FetchRefused, FetchRequest
 from app.research.map_layer_geojson import LayerRefused, ParsedLayer, parsed_layer
 
 from .dataset_registry import CONTRIBUTED, dataset_registry
+from .malware_scan import scanned_upload
 from .oauth_tokens import new_secret, stored_secret
 
 __all__ = [
@@ -119,6 +120,7 @@ async def fill_dataset_slot(
     if found != row.sha256:
         raise InvalidInput(WRONG_FILE.format(found=found, declared=row.sha256))
     proposal = DatasetProposal.model_validate(row.record)
+    await scanned_upload(data)
     parsed = _parsed(data, proposal)
     if await session.scalar(select(EnvDataset.id).where(EnvDataset.code == proposal.code)) is not None:
         raise InvalidInput(TAKEN.format(code=proposal.code))
@@ -148,7 +150,9 @@ def _with_file(
 
 def _parsed(data: bytes, proposal: DatasetProposal) -> ParsedTable | ParsedLayer:
     try:
-        return parsed_table(data) if proposal.layer is None else parsed_layer(data, proposal.layer)
+        if proposal.layer is None:
+            return parsed_table(data, sheet=proposal.sheet)
+        return parsed_layer(data, proposal.layer)
     except (TableRefused, LayerRefused) as refused:
         what = "table" if proposal.layer is None else "layer"
         raise InvalidInput(f"The {what} was not stored: {refused}") from None

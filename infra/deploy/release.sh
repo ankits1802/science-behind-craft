@@ -149,6 +149,7 @@ install_units
 /usr/local/sbin/kv-render-env
 bash "$HERE/ship_logs.sh" || say "::warning::the box's logs are not shipped to CloudWatch Logs this release; read the error above"
 bash "$HERE/install_renderer.sh" || say "::warning::the page renderer's browser is not installed this release; previews say their pictures could not be made until it is (read the error above)"
+bash "$HERE/install_scanner.sh" || say "::warning::the upload scanner is not running this release; every upload is refused until it is (read the error above)"
 if [ -f "$REL/.complete" ] && [ "$(readlink -f "$APP/current" 2>/dev/null || true)" = "$(readlink -f "$REL")" ]; then
   say "$SHA is already live; starting it on the other colour so it reads the current environment"
   name_release

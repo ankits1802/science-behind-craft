@@ -25,6 +25,7 @@ from app.research.supplied_sources import (
     supplied_text,
 )
 
+from .malware_scan import scanned_upload
 from .oauth_tokens import new_secret, stored_secret
 from .supplied_sources_identity import IdentityLookup
 from .supplied_sources_pdf import FILE_TYPES, file_text
@@ -103,6 +104,7 @@ async def fill_supplied_slot(
     if row is None or row.upload is None:
         raise UnknownSlot(token)
     await _require_live(session, row, now)
+    await scanned_upload(data)
     text = (await file_text(data, row.upload))[:SUPPLIED_TEXT_MAX_CHARS]
     if not text.strip():
         raise InvalidInput(EMPTY)

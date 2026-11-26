@@ -15,7 +15,7 @@ from .mcp_files import FileInput, file_problem, given_files, upload_required
 from .mcp_input import Answer, Question, answers_to, input_required
 from .mcp_protocol import INVALID_PARAMS, RequestError, tool_error, tool_result
 from .mcp_state import ASKED, UPLOADED, SealedCall, arguments_digest, opened_state, sealed_state
-from .mcp_tasks import task_reply
+from .mcp_tasks import TaskCall, task_reply
 from .mcp_tool_base import Sessions, Tool, ToolContext, scope_refusal, shown_images
 
 __all__ = ["ASKED_FOR", "UPLOAD_GRACE", "call_tool", "problems", "run_tool"]
@@ -50,9 +50,9 @@ async def call_tool(tool: Tool, params: Mapping[str, Any], context: ToolContext)
             state = _seal(tool, params, context, purpose=ASKED, expires=now + ASKED_FOR, keys=keys)
             return input_required(questions, state)
         context = replace(context, answers=answers)
-    sessions = _task_sessions(tool, context, now)
+    sessions = await _task_sessions(tool, context, now)
     if sessions is not None:
-        return await _task(tool, arguments, context, sessions, now)
+        return await _task(tool, arguments, replace(context, sessions=sessions), params=params, now=now)
     return await run_tool(tool, arguments, context)
 
 
@@ -165,22 +165,26 @@ def _seal(
     return sealed_state(call)
 
 
-def _task_sessions(tool: Tool, context: ToolContext, now: datetime) -> Sessions | None:
+async def _task_sessions(tool: Tool, context: ToolContext, now: datetime) -> Sessions | None:
     meta, tasks, principal = context.meta, context.tasks, context.principal
     if not tool.runs_long or meta is None or not meta.runs_tasks() or tasks is None or principal is None:
         return None
-    return context.sessions if tasks.has_room(principal, now) else None
+    return context.sessions if await tasks.has_room(principal, now) else None
 
 
 async def _task(
-    tool: Tool, arguments: Any, context: ToolContext, sessions: Sessions, now: datetime
+    tool: Tool, arguments: Any, context: ToolContext, *, params: Mapping[str, Any], now: datetime
 ) -> dict[str, Any]:
-    tasks, principal = context.tasks, context.principal
-    if tasks is None or principal is None:
+    tasks, principal, sessions = context.tasks, context.principal, context.sessions
+    if tasks is None or principal is None or sessions is None:
         return await run_tool(tool, arguments, context)
+    call = TaskCall(
+        tool=tool.name,
+        arguments=arguments_digest(params.get("arguments") or {}),
+        said=RUNNING.format(title=tool.title),
+    )
     work = _in_background(tool, arguments, context, sessions)
-    record = tasks.start(principal, work, said=RUNNING.format(title=tool.title), now=now)
-    return task_reply(record, TASK)
+    return task_reply(await tasks.start(principal, work, call=call, now=now), TASK)
 
 
 async def _in_background(

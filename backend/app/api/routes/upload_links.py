@@ -22,6 +22,7 @@ from app.research.image_contributions import ImageContributionView
 from app.research.image_intake import IMAGE_BYTES_MAX
 from app.research.upload_links import RenewedLink, SlotDeclaration, UploadLinkView, upload_page_url
 from app.services import image_contributions as images, upload_links as links
+from app.services.malware_scan import ScannerDown
 from app.services.object_store import ObjectStore, media_bucket
 
 router = APIRouter(prefix="/upload-links", tags=["contributions"])
@@ -103,6 +104,9 @@ async def _refusals[Done](session: AsyncSession, step: Awaitable[Done]) -> Done:
     except images.UnknownImage as missing:
         await session.rollback()
         raise HTTPException(status.HTTP_404_NOT_FOUND, NOT_FOUND_DETAIL) from missing
+    except ScannerDown as down:
+        await session.rollback()
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, str(down)) from down
     except InvalidInput as invalid:
         await session.rollback()
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, str(invalid)) from invalid

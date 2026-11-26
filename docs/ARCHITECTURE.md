@@ -50,6 +50,7 @@ flowchart LR
 | API | `uvicorn app.main:app` | blue/green on 8000/8001 |
 | Database | Postgres 17 on Supabase | session pooler `:5432`, each process on the box within its own connection budget (`core/connection_budget`, decision 0163); vector, postgis, pg_trgm, unaccent, citext |
 | Workers on the box | `kv-worker`, `kv-fetcher`, `kv-contributions` and `kv-renderer` | the media queue (decision 0018), the daily voice upkeep (decision 0140), the daily sweep of score clips no manifest names and a heartbeat the media routes read (decision 0154), the fetcher sandbox (decision 0007), the contribution queue's gates (round 7) and the page renderer, a headless browser that draws `preview_page`'s private link at 390 and 1440 px and reaches only the site (decision 0195), as `docs/RUNBOOK.md` lists them under On the box |
+| Upload scanner | ClamAV's `clamav-daemon` and `clamav-freshclam` on the box | every uploaded file is scanned before anything reads it, and a scanner that is down refuses uploads only (decision 0241, `docs/RUNBOOK.md` Upload scanner) |
 | Logs | the CloudWatch agent on the box | each service's journal lines and nginx's access and error logs, shipped to the CloudWatch Logs groups `/kalavigyan/<service>` and kept 30 days (decision 0150, `docs/RUNBOOK.md` Logs) |
 
 Media goes to the private S3 bucket through presigned URLs. Ids, names and the deploy sequence

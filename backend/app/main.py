@@ -22,7 +22,7 @@ from app.api.routes.oauth_well_known import router as oauth_well_known_router
 from app.api.routes.password_change import CONFIRM_PROVIDER_HEADER
 from app.api.voice_deps import voice_stored_search
 from app.core.config import Settings, get_settings
-from app.core.db import dispose_engine, ping
+from app.core.db import dispose_engine, ping, session_scope
 from app.core.deps import PASSWORD_CHANGE_REQUIRED_HEADER, TWO_FACTOR_SETUP_REQUIRED_HEADER
 from app.core.logging import (
     REQUEST_ID_HEADER,
@@ -37,6 +37,7 @@ from app.services.craft_catalogue import new_catalogue_cache
 from app.services.craft_page_cache import PageCache
 from app.services.craft_resolver import CraftIndexStore
 from app.services.live_sources import LiveSourcesStore
+from app.services.mcp_task_store import SqlTaskStore
 from app.services.public_summary import SummaryCache
 from app.services.river_topology import TopologyCache
 from app.voice.runtime import VoiceRuntime
@@ -83,6 +84,7 @@ class SecurityHeadersMiddleware:
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
+    await app.state.mcp_tasks.close()
     await app.state.shielded_work.drain()
     await app.state.live_sources.aclose()
     await app.state.voice_runtime.aclose()
@@ -115,7 +117,7 @@ def _attach_state(app: FastAPI) -> None:
     app.state.craft_index = CraftIndexStore()
     app.state.live_sources = LiveSourcesStore()
     app.state.shielded_work = ShieldedWork()
-    app.state.mcp_tasks = McpTasks()
+    app.state.mcp_tasks = McpTasks(SqlTaskStore(session_scope))
     app.state.voice_runtime = VoiceRuntime(search=voice_stored_search)
     app.state.river_topologies = TopologyCache()
     app.state.public_summary = SummaryCache()

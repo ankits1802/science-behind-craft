@@ -12,6 +12,7 @@ from app.core.db import get_session
 from app.core.errors import InvalidInput
 from app.research.dataset_proposals import TABLE_BYTES_MAX, DatasetReply
 from app.services import dataset_proposals as proposals
+from app.services.malware_scan import ScannerDown
 
 router = APIRouter(prefix="/dataset-uploads", tags=["contributions"])
 
@@ -39,6 +40,9 @@ async def fill_dataset_upload(
     except proposals.SlotGone as gone:
         await session.rollback()
         raise HTTPException(status.HTTP_410_GONE, gone.detail) from gone
+    except ScannerDown as down:
+        await session.rollback()
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, str(down)) from down
     except InvalidInput as invalid:
         await session.rollback()
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, str(invalid)) from invalid

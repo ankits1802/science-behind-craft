@@ -90,10 +90,12 @@ them all), the design system
   a form only what is theirs: which craft and what they want to give when you open a draft without
   naming its page, whether to send a page when you propose it, and a source's words when you supply
   one without them. Keep working while a task runs, and never ask the person how to build anything.
+  A task outlives a deploy; one the server failed while it ran says so, and you call the tool again.
 - A client that sends files out of band takes the file itself, never its bytes in the chat:
   `supply_source`'s `file` (the PDF or text), `give_pictures`'s `files` (one photograph for each
-  picture with `upload` true, in order) and `propose_dataset`'s `file` (the CSV or GeoJSON). The
-  client uploads it to the same slot `upload` opens, and every check of that slot applies.
+  picture with `upload` true, in order) and `propose_dataset`'s `file` (the CSV, `.xlsx` workbook or
+  GeoJSON). The client uploads it to the same slot `upload` opens, every file is scanned for malware
+  and every check of that slot applies.
 - Contributions show no contributor name. Who proposed what is kept privately, for moderation and
   audit only. A published contribution stays published and only what waits for review can be
   withdrawn, save one thing: a registered component of yours can leave its pages or give way to a

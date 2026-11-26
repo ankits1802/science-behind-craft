@@ -123,7 +123,7 @@ async def _dispatch(method: str, params: dict[str, Any], context: ToolContext) -
     if method == "tools/call":
         return await _call(params, context)
     if context.meta is not None and method in MODERN_METHODS:
-        return modern_method(method, params, context)
+        return await modern_method(method, params, context)
     return _catalogue(method, params, context)
 
 

@@ -6,7 +6,7 @@ from its pages until a quote is found again, a link that keeps failing gets its 
 becomes work, live open sources are archived before their links rot, orphaned research concepts are
 swept, MCP client registrations that never signed anyone in are
 removed, each finished day's MCP calls are counted for good and calls older than 180 days are
-deleted, the monograph sections and components and the craft
+deleted, expired MCP tasks are deleted, the monograph sections and components and the craft
 page snapshots and stored documents whose facts moved are rebuilt, and only the pages whose content
 moved are refreshed on the CDN; a night that changed nothing sends nothing. Answers stay live. Every step is bounded per night by a named
 constant, so a night's work and its load on other sites are known in advance.
@@ -62,6 +62,7 @@ The workflow runs `python -m app.scripts.nightly_upkeep` as the `kalavigyan` use
 | 3b. Delete old allowance buckets | `services/upkeep_allowances.py`, `core/allowances.delete_old_buckets` | the allowance and rate-limit buckets (decision 0139) whose window started more than `KEPT_HOURS` = 24 hours before the current hour | the `AllowanceBucket` rows deleted |
 | 3c. Add the cost settled after an answer finished | `services/upkeep_costs.settle_late_costs` | the answers of the last `LATE_COST_WINDOW` = 7 days with a `requestId`, against that request's `UsageEvent` rows from `REQUEST_SPAN` = 1 hour before (decision 0146) | `Answer.costUsd` set to its request's summed `UsageEvent.costUsd` where they differ |
 | 3d. Count and prune MCP calls | `services/mcp_activity_upkeep.py` | `DAYS_COUNTED_PER_NIGHT` = 31 finished India days, oldest first; `CALLS_PRUNED_PER_NIGHT` = 20,000 calls, oldest first, each older than `CALLS_KEPT_DAYS` = 180 days and on a counted day | `McpToolCallDay` (one row per day, client, tool and outcome, kept for good); the `McpToolCall` rows deleted (`mcp-oauth.md`, Guards) |
+| 3e. Delete expired MCP tasks | `services/mcp_task_store.forget_expired_tasks` | every `McpTask` whose `expiresAt` (90 minutes after it was created) has passed (decision 0241) | the `McpTask` rows deleted |
 | 4. Reload monographs | `services/upkeep_pages.py` through `services/monograph_load.py` | `MONOGRAPHS_PER_NIGHT` = 20, a window that rotates by night | `ArticleSection`, `KnowledgePiece` (only what changed) |
 | 5. Rebuild stale craft pages | `services/upkeep_pages.py` through `services/craft_page_snapshots.py` | `PAGES_PER_NIGHT` = 60, oldest snapshot first | `CraftPageSnapshot` |
 | 5a. Refresh the field work | `services/open_work_refresh.py` | every subject, once | `TaskReservation.ending` `COMPLETED` for a live reservation of a `MISSING_FIELD` or `THIN_FIELD` task no longer open (`open-work.md`) |
@@ -304,6 +305,7 @@ and how many are unexplained (spec `frontend/e2e/hidden-facts-unit.spec.ts`).
  allowances {bucketsDeleted},
  lateCosts {answersUpdated},
  mcpActivity {daysCounted, callsCounted, callsPruned},
+ mcpTasks {expiredDeleted},
  answerGaps {questions, dropped, embedded, embeddingError, joined, opened, answered, lapsed, open, reservationsClosed},
  sharedTerms {terms, crafts},
  hiddenFacts {countedAt, crafts, byReason {HELD, RESTRICTED_FACT, HIDDEN_CONCEPT, NO_SHOWN_SOURCE},
@@ -316,7 +318,7 @@ read rule shows was left out of a reader's view (`hiddenFacts.unexplained`) or a
 could not be refreshed; an unreachable source or a failed archive is expected and only counted. An
 unset `WEB_REVALIDATE_SECRET` is reported (`reason`) and is not a failure. `--dry-run` prints `{ok, dryRun, sourcesDue,
 sourcesAtRisk, claimsHeld, sourcesRotten, monographs, pagesStale, clientsAbandoned, orphans[], mcpDaysToCount,
-mcpCallsToPrune}` and writes
+mcpCallsToPrune, mcpTasksExpired}` and writes
 nothing.
 
 ## What the owner sets

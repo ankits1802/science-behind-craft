@@ -55,8 +55,8 @@ Each reference is also on the site under `/skills/references/`.
 3. For a few values, read the rows the figure needs, no more, with `read_source` (`around` each
    row's words), pass each row's quote through its `quotes`, and write each value as a fact of the
    craft for the bundle: the row quoted with its locator, the dataset's page as the source and the
-   task as `task_key`. For a table, call `propose_dataset` with its record and the CSV file's
-   SHA-256, PUT the file to the upload slot it returns, and cite cells instead of facts (the
+   task as `task_key`. For a table, call `propose_dataset` with its record and the SHA-256 of its
+   CSV or `.xlsx` file, PUT the file to the upload slot it returns, and cite cells instead of facts (the
    dataset guide, Contributed datasets). A place's coordinates come from its Wikidata item in
    `lookup`.
 4. Choose the kind by the component guide and write its declared spec and units: every value

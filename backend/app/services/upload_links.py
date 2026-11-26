@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from pydantic import ValidationError
 from sqlalchemy import ColumnElement, func, select
@@ -112,6 +112,7 @@ async def start_upload(
     declaration: SlotDeclaration | None,
     *,
     now: datetime,
+    lifetime: timedelta = UPLOAD_LINK_LIFETIME,
 ) -> IssuedLink:
     if not can(user, Capability.PROPOSE_KNOWLEDGE):
         raise InvalidInput(NEEDS_PROPOSER)
@@ -135,7 +136,7 @@ async def start_upload(
         linkHash=_digest(link, LINK_PREFIX),
         slotHash=None if slot_token is None else _digest(slot_token, SLOT_PREFIX),
         declaration=None if declaration is None else declaration.model_dump(mode="json", by_alias=True),
-        expiresAt=now + UPLOAD_LINK_LIFETIME,
+        expiresAt=now + lifetime,
         createdAt=now,
     )
     session.add(row)

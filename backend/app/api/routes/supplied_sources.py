@@ -16,6 +16,7 @@ from app.core.roles import Capability
 from app.models import User
 from app.research.supplied_sources import SuppliedSourceReply, SuppliedSourceView
 from app.services import supplied_sources as supplied
+from app.services.malware_scan import ScannerDown
 from app.services.supplied_sources_pdf import FILE_BYTES_MAX
 from app.services.supplied_sources_views import supplied_reply, supplied_view
 
@@ -43,6 +44,9 @@ async def fill_supplied_slot(
     except supplied.SuppliedGone as gone:
         await session.rollback()
         raise HTTPException(status.HTTP_410_GONE, gone.detail) from gone
+    except ScannerDown as down:
+        await session.rollback()
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, str(down)) from down
     except InvalidInput as invalid:
         await session.rollback()
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, str(invalid)) from invalid

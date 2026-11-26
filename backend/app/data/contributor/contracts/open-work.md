@@ -647,9 +647,15 @@ things more; a client on the 2025-11-25 handshake reaches everything above exact
   ttlMs 5400000, pollIntervalMs 2000}`. `tasks/get {taskId}` gives it again with `result` (the tool's
   own result, a refusal included as `isError`) once `completed`, or `error -32603` once `failed`;
   `tasks/update` is acknowledged (no task asks anything once it runs); `tasks/cancel` cancels it.
-  Only the account that started a task reads it; an account holds at most 32 and the process 2,000,
-  past which the call is answered whole. Tasks are held by the API process, so a restart forgets
-  them and `tasks/get` answers `-32602`. A client without the extension gets the answer itself.
+  Only the account that started a task reads it; an account holds at most 32 unexpired tasks and the
+  server 2,000, past which the call is answered whole. A task is kept in the database (`McpTask`,
+  `services/mcp_task_store.py`, decision 0241), so any process reads it and a deploy does not lose
+  it: a task that finished before a restart is read as it ended, and one still running when its
+  process stopped is `failed` with `error -32603` and the message "The server restarted or stopped
+  while this task ran, so it never finished; call the tool again." (at once when the process stops
+  in order, or once its heartbeat, written every 30 seconds, has been silent for 2 minutes).
+  `tasks/get` answers `-32602` for a task that is not the account's or has expired, and the nightly
+  upkeep deletes expired ones. A client without the extension gets the answer itself.
 - **Questions to the person** (form elicitation, `api/mcp_questions.py`). Through an
   `input_required` result and a signed `requestState` (`api/mcp_state.py`), and only to a client that
   declares form elicitation, three tools ask what is the person's to decide, and nothing else:
@@ -665,14 +671,18 @@ things more; a client on the 2025-11-25 handshake reaches everything above exact
   while `MCP_FILE_UPLOADS_ENABLED` is true. To a client that declares `upload`, `tools/list` adds
   `supply_source.file` (a PDF or text file, 20 MB), `give_pictures.files` (one photograph for each
   picture that sets `upload true`, in order, 10 MB each, with the call's `declaration` and
-  `confirmation`) and `propose_dataset.file` (the CSV or GeoJSON whose `sha256` the record gives,
-  5 MB); other clients see today's arguments. The first call checks everything the bytes are not
-  needed for, makes the same single-use slot as `upload` does and answers `upload_required` with the
-  slot's url on the API origin (`PUT`, `Content-Type: application/octet-stream`, `credentials
-  omit`, the slot's expiry) and a `requestState`; the bytes pass the slot's own checks (size, type,
-  the PDF's text, the picture's screens and declaration, the table and its SHA-256); the retry with
-  the same arguments and that `requestState` answers the tool's result once the record is filled, or
-  a refusal saying the file has not arrived. A file from a client that did not declare `upload` is
+  `confirmation`) and `propose_dataset.file` (the CSV, `.xlsx` workbook or GeoJSON whose `sha256` the
+  record gives, 5 MB); other clients see today's arguments. The first call checks everything the
+  bytes are not needed for, makes the same single-use slot as `upload` does and answers
+  `upload_required` with the slot's url on the API origin (`PUT`, `Content-Type:
+  application/octet-stream`, `credentials omit`) and its expiry, 75 minutes for each slot of a call
+  that sends several photographs and 30 minutes for a single file (decision 0241), and a
+  `requestState` that ends 30 minutes after the last slot. The bytes are scanned for malware before
+  anything reads them, then pass the slot's own checks (size, type, the PDF's text, the picture's
+  screens and declaration, the table and its SHA-256); a found signature is refused by name and a
+  scanner that does not answer refuses the upload, leaving the slot open. The retry with the same
+  arguments and that `requestState` answers the tool's result once the record is filled, or a
+  refusal saying the file has not arrived. A file from a client that did not declare `upload` is
   `-32021`; bytes inside the call, an empty file, a repeated id, a type or size the tool does not
   take are refusals naming the reason.
 

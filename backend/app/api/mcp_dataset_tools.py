@@ -35,25 +35,30 @@ __all__ = ["DATASET_TOOLS", "PROPOSE_DATASET", "ProposeDataset"]
 DESCRIPTION = (
     "Propose an open dataset whose rows a component draws: its record (code, title, publisher, edition, version, "
     "period, native_resolution, crs, licence with licence_url, attribution, redistributable, citation with doi, "
-    "landing_url, url of the file, and the file's sha256). The gates check the licence is open and redistributable, "
-    "the code is new and the landing page is reachable, then return a single-use upload slot: PUT the CSV file "
-    "(UTF-8, a header row, at most 20000 rows) to upload_url within 30 minutes and its SHA-256 is checked before "
-    "the table is stored. A chart, fact_table or map_layer then names the dataset's code as dataset and each "
-    "value's row and column as its cell, and the gates check every value against its stored row. A new map "
-    "layer adds layer and PUTs WGS 84 GeoJSON, held for a reviewer (datasets guide, Map layers over MCP)."
+    "landing_url, url of the file, the file's sha256, and sheet when a workbook's table is not its first sheet). The "
+    "gates check the licence is open and redistributable, the code is new and the landing page is reachable, then "
+    "return a single-use upload slot: PUT the table (UTF-8 CSV, or an .xlsx workbook with its values saved and no "
+    "macros; a header row, at most 20000 rows) to upload_url within 30 minutes; it is scanned for malware and its "
+    "SHA-256 checked before the table is stored. A chart, fact_table or map_layer then names the dataset's code "
+    "as dataset and each value's row and column as its cell, and the gates check every value against its stored "
+    "row. A new map layer adds layer and PUTs WGS 84 GeoJSON, held for a reviewer (datasets guide, Map layers over "
+    "MCP)."
 )
 UPLOADS_OFF = "Dataset uploads are not open on this server right now."
 CHECKS_UNAVAILABLE = (
     "The checks could not run just now and nothing was stored; call propose_dataset again later."
 )
-UPLOAD_STEP = "PUT the CSV file to upload_url (curl -T file.csv <upload_url>) before the slot expires."
+UPLOAD_STEP = (
+    "PUT the CSV or .xlsx file to upload_url (curl -T file.csv <upload_url>) before the slot expires."
+)
 LAYER_UPLOAD_STEP = (
     "PUT the GeoJSON file to upload_url (curl -T layer.geojson <upload_url>) before the slot expires."
 )
 REFUSED = "The dataset was not taken: {problems}."
 FILE_DESCRIPTION = (
-    "The dataset's file itself, sent without passing through the chat: its CSV table (a spreadsheet saved as "
-    "UTF-8 CSV), or a new map layer's GeoJSON, at most 5 MB, the very file whose sha256 the record gives"
+    "The dataset's file itself, sent without passing through the chat: its table as UTF-8 CSV or an .xlsx "
+    "workbook (the sheet the record names, or the first), or a new map layer's GeoJSON, at most 5 MB, the very "
+    "file whose sha256 the record gives"
 )
 OTHER_FILE = "The file's SHA-256 is not the sha256 the record declares; send the dataset's own file."
 NOT_ARRIVED = "The dataset's file has not arrived or did not pass its checks, so nothing was stored."
@@ -150,7 +155,7 @@ PROPOSE_DATASET = Tool(
     group=PROPOSING,
     files=FileArgument(
         name="file",
-        accept=(*TABLE_TYPES, *LAYER_TYPES, ".csv", ".geojson"),
+        accept=(*TABLE_TYPES, *LAYER_TYPES, ".csv", ".xlsx", ".geojson"),
         max_size=TABLE_BYTES_MAX,
         stage=_staged,
         description=FILE_DESCRIPTION,
