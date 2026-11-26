@@ -6,8 +6,17 @@ from pathlib import Path
 from typing import Any
 
 from app.data.district_register import load_district_codes
+from app.data.river_aliases import load_river_aliases
 
-from maplayers.waters_register import RegisterRiver, accepted_names, dossier_rivers, register_of
+from maplayers.waters_names import registered_waters
+from maplayers.waters_register import (
+    RegisterRiver,
+    accepted_names,
+    alias_rivers,
+    dossier_rivers,
+    register_of,
+    site_register,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LAYERS = REPO_ROOT / "frontend" / "public" / "layers"
@@ -95,6 +104,29 @@ def test_the_suran_below_the_dam_at_tapar_is_held_in_kachchh() -> None:
     assert near[0]["namedBy"] == "reservoir"
 
 
-def test_the_dravyavati_is_held_in_jaipur_under_the_name_the_dataset_gives_it() -> None:
+def test_the_dravyavati_is_held_in_jaipur_under_the_dataset_s_name_and_its_cited_alias() -> None:
     rows = [row for row in _tiles()["e074n26"]["rivers"] if JAIPUR in row["districts"]]
-    assert "Amanisha River" in {row["name"] for row in rows}
+    amanisha = [row for row in rows if row["name"] == "Amanisha River"]
+    assert amanisha
+    assert {"Dravyavati", "Dravyavati River"} <= set(amanisha[0]["also"])
+    assert {"name": "Dravyavati River", "source": "RIVER_ALIASES:dravyavati"} in amanisha[0]["agrees"]
+    assert {"Dravyavati", "Amanisha River"} <= set(_json(NAMES)["rivers"])
+
+
+def test_an_alias_agrees_by_any_of_its_names_in_its_own_district_only() -> None:
+    register = register_of(alias_rivers(load_river_aliases()))
+    agreed = register.agreeing("Amanisha River", [JAIPUR])
+    assert [river.source for river in agreed] == ["RIVER_ALIASES:dravyavati"]
+    assert "Dravyavati" in accepted_names("Amanisha River", agreed)
+    assert register.agreeing("Amanisha River", [KACHCHH]) == []
+    assert register.agreeing("Dravayawati", [JAIPUR]) == agreed
+
+
+def test_the_committed_tiles_carry_the_site_register_as_it_stands() -> None:
+    register = site_register(REPO_ROOT, load_district_codes(), load_river_aliases())
+    tiles = _tiles()
+    dataset = _json(NAMES)["datasets"][0]
+    named, names = registered_waters(tiles, dataset, register)
+    stale = [key for key, tile in named.items() if tile != tiles[key]]
+    assert stale == [], "run tools/maplayers_register.py to read the river register into the tiles"
+    assert names == _json(NAMES)

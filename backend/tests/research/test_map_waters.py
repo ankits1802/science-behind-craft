@@ -14,12 +14,13 @@ SURAN = "Suran"
 DHAMADKA = "Dhamadka"
 TAPPAR = "Tappar Reservoir"
 AMANISHA = "Amanisha River"
+DRAVYAVATI = "Dravyavati"
 
 
 def test_a_small_river_is_held_by_the_dataset_s_name_and_the_register_s_where_they_agree() -> None:
     rivers = held_river_names()
-    assert {SURAN, DHAMADKA, AMANISHA, "Chambal"} <= rivers
-    assert "Dravyavati" not in rivers
+    assert {SURAN, DHAMADKA, AMANISHA, DRAVYAVATI, "Chambal"} <= rivers
+    assert "Amanishah Nallah of Nowhere" not in rivers
     assert "Brahmaputra Creek of Nowhere" not in rivers
 
 
@@ -29,9 +30,9 @@ def test_a_dam_is_held_by_the_name_openstreetmap_gives_it_or_its_reservoir() -> 
 
 
 def test_a_named_small_river_or_dam_is_allowed_and_an_unknown_one_is_refused_by_name() -> None:
-    assert held_water_problems([SURAN, AMANISHA], [TAPPAR]) == []
-    assert held_water_problems(["Dravyavati"], ["Tapar Dam"]) == [
-        RIVER_UNHELD.format(name="Dravyavati"),
+    assert held_water_problems([SURAN, AMANISHA, DRAVYAVATI], [TAPPAR]) == []
+    assert held_water_problems(["Saraswati of Sanganer"], ["Tapar Dam"]) == [
+        RIVER_UNHELD.format(name="Saraswati of Sanganer"),
         DAM_UNHELD.format(name="Tapar Dam"),
     ]
 

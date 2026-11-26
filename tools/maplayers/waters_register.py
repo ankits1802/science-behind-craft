@@ -8,19 +8,28 @@ from pathlib import Path
 from typing import Any
 
 from app.data.district_register import DistrictCodes
+from app.data.river_aliases import RiverAlias
 from app.data.river_names import name_forms
 
 __all__ = [
+    "CHECK_SUFFIX",
+    "DOSSIERS",
+    "RIVER_NAMES",
     "RIVER_PLACE",
     "Register",
     "RegisterRiver",
     "accepted_names",
+    "alias_rivers",
     "dossier_rivers",
     "named_rivers",
     "register_of",
+    "site_register",
 ]
 
 RIVER_PLACE = "RIVER"
+RIVER_NAMES = Path("backend/app/data/rivers")
+DOSSIERS = (Path("backend/app/data/curation"), Path("backend/app/data/curation/categories"))
+CHECK_SUFFIX = ".check.json"
 
 
 @dataclass(frozen=True)
@@ -28,6 +37,11 @@ class RegisterRiver:
     name: str
     districts: frozenset[int]
     source: str
+    also: tuple[str, ...] = ()
+
+    @property
+    def names(self) -> tuple[str, ...]:
+        return (self.name, *self.also)
 
 
 @dataclass(frozen=True)
@@ -50,9 +64,25 @@ def _forms(name: str) -> set[str]:
 def register_of(rivers: Iterable[RegisterRiver]) -> Register:
     by_form: dict[str, list[RegisterRiver]] = defaultdict(list)
     for river in rivers:
-        for form in _forms(river.name):
+        for form in sorted({form for name in river.names for form in _forms(name)}):
             by_form[form].append(river)
     return Register({form: tuple(found) for form, found in by_form.items()})
+
+
+def site_register(root: Path, codes: DistrictCodes, aliases: Iterable[RiverAlias]) -> Register:
+    dossiers = [
+        path
+        for folder in DOSSIERS
+        for path in sorted((root / folder).glob("*.json"))
+        if not path.name.endswith(CHECK_SUFFIX)
+    ]
+    return register_of(
+        [
+            *named_rivers(sorted((root / RIVER_NAMES).glob("river_names.*.json"))),
+            *dossier_rivers(dossiers, codes),
+            *alias_rivers(aliases),
+        ]
+    )
 
 
 def named_rivers(files: Iterable[Path]) -> list[RegisterRiver]:
@@ -83,8 +113,14 @@ def _dossier_river(place: Mapping[str, Any], codes: DistrictCodes, slug: str) ->
     return RegisterRiver(str(place["name"]), frozenset({lgd}), slug) if lgd is not None else None
 
 
+def alias_rivers(aliases: Iterable[RiverAlias]) -> list[RegisterRiver]:
+    return [
+        RegisterRiver(alias.names[0], alias.district_lgds, alias.ref, alias.names[1:]) for alias in aliases
+    ]
+
+
 def accepted_names(name: str, agreed: Iterable[RegisterRiver]) -> list[str]:
     names = [name, *name_forms(name)]
     for river in agreed:
-        names += [river.name, *name_forms(river.name)]
+        names += [form for held in river.names for form in (held, *name_forms(held))]
     return sorted(set(names))

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 from typing import Any
+
+from maplayers.layer_files import layer_text
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 INDIA = Path("frontend/components/map/indiaGeometry.ts")
@@ -13,12 +14,7 @@ REGISTER = Path("etl/geo/data/lgd_register.json")
 OUTPUT = Path("frontend/public/layers")
 SHADE_FILE = "relief-shade.webp"
 WATERS_FILE = "waters.json"
-WATERS_TILES = Path("frontend/public/layers/waters")
-WATERS_NAMES = Path("backend/app/data/layers/waters-names.json")
 WATERS_MODULE = Path("frontend/lib/server/watersTiles.ts")
-RIVER_NAMES = Path("backend/app/data/rivers")
-DOSSIERS = (Path("backend/app/data/curation"), Path("backend/app/data/curation/categories"))
-CHECK_SUFFIX = ".check.json"
 DESCRIPTION = (
     "Build the map's physical layers: rivers and lakes from Natural Earth 1:10m, relief bands and shaded "
     "relief from ETOPO1, mineral deposits from the USGS Mineral Resources Data System, and named small "
@@ -33,7 +29,7 @@ DOWNLOADS_HELP = (
 
 
 def _write(path: Path, body: dict[str, Any]) -> None:
-    text = json.dumps(body, ensure_ascii=False, separators=(",", ":")) + "\n"
+    text = layer_text(body)
     path.write_text(text, encoding="utf-8", newline="\n")
     print(f"{path.as_posix()} written, {len(text.encode('utf-8'))} bytes")
 
@@ -71,27 +67,18 @@ def main(argv: list[str] | None = None) -> int:
 def _waters(downloads: Any, root: Path) -> None:
     sys.path.append(str(root / "backend"))
     from app.data.district_register import load_district_codes
+    from app.data.river_aliases import load_river_aliases
 
     from maplayers.sources import OSM_WATERS, WATERS_EXPORT
     from maplayers.states import district_polygons
     from maplayers.waters import read_features
     from maplayers.waters_body import district_finder, tiles_module, waters_build
-    from maplayers.waters_register import dossier_rivers, named_rivers, register_of
+    from maplayers.waters_names import WATERS_NAMES, WATERS_TILES
+    from maplayers.waters_register import site_register
 
     read_on = downloads.read_on.isoformat()
     dataset = downloads.source(OSM_WATERS) | {"edition": read_on, "period": read_on}
-    dossiers = [
-        path
-        for folder in DOSSIERS
-        for path in sorted((root / folder).glob("*.json"))
-        if not path.name.endswith(CHECK_SUFFIX)
-    ]
-    register = register_of(
-        [
-            *named_rivers(sorted((root / RIVER_NAMES).glob("river_names.*.json"))),
-            *dossier_rivers(dossiers, load_district_codes()),
-        ]
-    )
+    register = site_register(root, load_district_codes(), load_river_aliases())
     districts = district_finder(district_polygons(root / DISTRICTS))
     built = waters_build(read_features(downloads.folder / WATERS_EXPORT), register, districts, dataset)
     tiles = root / WATERS_TILES
