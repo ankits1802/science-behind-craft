@@ -10,6 +10,7 @@ from sqlalchemy import ColumnElement, and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
+from app.core.roles import Capability, can
 from app.models import ImageContribution, MediaAsset, User
 from app.research.craft_contributed import CONTRIBUTED_MIMES
 from app.research.page_proposals import ACCEPTED, PICTURE, PartReport
@@ -26,6 +27,7 @@ __all__ = [
     "own_picture_file",
     "pass_picture_file",
     "preview_picture_url",
+    "shown_picture_file",
 ]
 
 GIVEN_STATUSES = ("PENDING", "APPROVED")
@@ -73,15 +75,16 @@ async def given_picture_report(
 async def own_picture_file(
     session: AsyncSession, user: User, contribution_id: uuid.UUID
 ) -> OwnPicture | None:
-    found = (
-        await session.execute(
-            select(MediaAsset.s3Key, MediaAsset.mime)
-            .select_from(ImageContribution)
-            .join(MediaAsset, MediaAsset.id == ImageContribution.assetId)
-            .where(ImageContribution.id == contribution_id, _own(user))
-        )
-    ).first()
-    return None if found is None else OwnPicture(key=found.s3Key, mime=found.mime)
+    return await _picture_file(session, contribution_id, _own(user))
+
+
+async def shown_picture_file(
+    session: AsyncSession, user: User, contribution_id: uuid.UUID
+) -> OwnPicture | None:
+    found = await own_picture_file(session, user, contribution_id)
+    if found is not None or not can(user, Capability.REVIEW_CONTRIBUTIONS):
+        return found
+    return await _picture_file(session, contribution_id, _given())
 
 
 async def pass_picture_file(
@@ -94,7 +97,7 @@ async def pass_picture_file(
     if preview_picture_url(contribution_id) not in json.dumps(row.document):
         return None
     owner = await session.get(User, row.userId)
-    return None if owner is None else await own_picture_file(session, owner, contribution_id)
+    return None if owner is None else await shown_picture_file(session, owner, contribution_id)
 
 
 async def _given(
@@ -113,9 +116,26 @@ async def _given(
     return [(row, asset) for row, asset in rows.all()]
 
 
+async def _picture_file(
+    session: AsyncSession, contribution_id: uuid.UUID, condition: ColumnElement[bool]
+) -> OwnPicture | None:
+    found = (
+        await session.execute(
+            select(MediaAsset.s3Key, MediaAsset.mime)
+            .select_from(ImageContribution)
+            .join(MediaAsset, MediaAsset.id == ImageContribution.assetId)
+            .where(ImageContribution.id == contribution_id, condition)
+        )
+    ).first()
+    return None if found is None else OwnPicture(key=found.s3Key, mime=found.mime)
+
+
 def _own(user: User) -> ColumnElement[bool]:
+    return and_(ImageContribution.contributorId == user.id, _given())
+
+
+def _given() -> ColumnElement[bool]:
     return and_(
-        ImageContribution.contributorId == user.id,
         ImageContribution.status.in_(GIVEN_STATUSES),
         ImageContribution.sha256.is_not(None),
         MediaAsset.mime.in_(CONTRIBUTED_MIMES),

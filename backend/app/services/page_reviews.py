@@ -14,6 +14,7 @@ from app.research.page_report import PageReport
 from app.research.page_report_drawing import drawing_report, with_drawing
 
 from .page_preview_links import issued_pass, preview_document, preview_token
+from .page_proposal_pictures import keep_drawn_pictures
 from .page_renders import PageRenderer, record_drawing
 
 __all__ = ["DrawnPreview", "drawn_preview"]
@@ -47,4 +48,5 @@ async def drawn_preview(
     drawing = drawing_report(outcome)
     await record_drawing(session, user, previewed.preview_url, drawing, now=now)
     images = kept_images(outcome.images) if isinstance(outcome, RenderResult) else []
+    await keep_drawn_pictures(session, user, previewed.preview_url, images, now=now)
     return DrawnPreview(report=with_drawing(report, drawing), images=images)

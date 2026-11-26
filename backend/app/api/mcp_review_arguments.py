@@ -9,6 +9,7 @@ from app.models.admin_work import STAGED_ACTION_VALUES, STAGED_KIND_VALUES
 from app.models.enums import SOURCE_KINDS
 from app.models.knowledge_pieces import LABEL_COLUMN_CHARS, LABEL_PATTERN
 from app.research.crafts import SLUG_MAX_CHARS
+from app.research.page_proposal_review import PAGE_SCOPE, SCOPES
 from app.research.page_proposals import PageSubject
 from app.research.published_edits import EDIT_FIELDS_MAX
 from app.research.review_queue import CURSOR_MAX_CHARS, REASON_MAX_CHARS
@@ -26,6 +27,7 @@ from .mcp_tool_base import Arguments
 
 __all__ = [
     "OpenItem",
+    "PageScopeArguments",
     "PublishedArguments",
     "ReviewQueueArguments",
     "SourceFixArguments",
@@ -65,6 +67,9 @@ class ReviewQueueArguments(Arguments):
     published: PublishedArguments | None = Field(
         default=None, description="Published content instead of the queue, as the guide resource says"
     )
+    page: uuid.UUID | None = Field(
+        default=None, description="A page proposal's id: its page as it stands and as it will be"
+    )
 
 
 class SourceFixArguments(Arguments):
@@ -73,6 +78,14 @@ class SourceFixArguments(Arguments):
     year: int | None = None
     container_title: str | None = Field(default=None, min_length=1, max_length=300, description="The journal")
     kind: Literal[*SOURCE_KINDS] | None = None
+
+
+class PageScopeArguments(Arguments):
+    scope: Literal[*SCOPES] = Field(default=PAGE_SCOPE, description="PAGE, one CHAPTER or one COMPONENT")
+    chapter: str | None = Field(default=None, min_length=1, max_length=40, description="A CHAPTER's key")
+    label: str | None = Field(
+        default=None, max_length=LABEL_COLUMN_CHARS, pattern=LABEL_PATTERN, description="A COMPONENT's label"
+    )
 
 
 class StagedChoice(Arguments):
@@ -96,6 +109,7 @@ class StagedChoice(Arguments):
     edit: dict[str, Any] | None = Field(
         default=None, min_length=1, max_length=EDIT_FIELDS_MAX, description="An edit's fields and new values"
     )
+    page: PageScopeArguments | None = Field(default=None, description="What a PAGES decision decides")
 
 
 class StageArguments(Arguments):

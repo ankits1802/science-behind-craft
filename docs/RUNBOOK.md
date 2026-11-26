@@ -525,9 +525,11 @@ An Admin or Master Admin with two-step verification on can review from their AI 
    sign-in), then add or reconnect the server in the AI client and tick Review on the consent page.
    A review token lives 15 minutes and the client renews it; `review` itself ends 8 hours after the
    consent, and the connection goes on without it.
-2. The client lists four more tools: `review_queue` (the queue and one item whole, or with
+2. The client lists four more tools: `review_queue` (the queue and one item whole, the page
+   proposals and, with `page`, one page as it stood and as it will be with its pictures, or with
    `published` a page's published items and one with its editable fields), `stage_reviews` (up to
-   20 decisions, source corrections, removals or edits a call, at most 100 a day), `refresh_pages`
+   20 decisions, a page proposal's whole, by chapter or by component, source corrections, removals or
+   edits a call, at most 100 a day), `refresh_pages`
    and `admin_reports`. A contributor's connection never sees them. Point the AI to the resource
    `kalavigyan://admin/published-content.md` before it removes or edits published content.
 3. Nothing the AI stages is published. Open Review in admin settings: each open batch says "Proposed

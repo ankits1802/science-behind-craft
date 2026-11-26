@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import uuid
+from dataclasses import dataclass
 from datetime import datetime
 from functools import partial
 
@@ -11,6 +12,7 @@ from app.core.errors import InvalidInput
 from app.models import User
 from app.research.component_proposals import SUBJECT_LINK
 from app.research.knowledge_writes import FactProposal
+from app.research.monograph_document import MonographDocument
 from app.research.page_layout import PageLayout
 from app.research.page_proposals import (
     COMPONENT,
@@ -58,7 +60,7 @@ from .structure_proposals import curated_subject
 from .structure_proposals_dossier import dossier_problem
 from .structure_proposals_page import target_problem
 
-__all__ = ["preview_page"]
+__all__ = ["PreviewedPage", "preview_page", "previewed_document"]
 
 AUTHORED = (
     "{slug}'s page is authored and drawn from its stored document, so a bundle cannot be previewed on it: "
@@ -94,24 +96,20 @@ READY = (
 )
 
 
+@dataclass(frozen=True)
+class PreviewedPage:
+    subject: WorkSubject
+    document: MonographDocument
+    reports: list[PartReport]
+
+
 async def preview_page(
     session: AsyncSession, user: User, bundle: PageBundle, *, site: str, now: datetime
 ) -> PagePreviewResult:
     if only_translation(bundle):
         return await preview_translation(session, user, bundle, site=site, now=now)
-    subject = await subject_by_key(session, bundle.subject.kind, bundle.subject.slug)
-    if has_authored_content(subject.slug):
-        raise InvalidInput(AUTHORED.format(slug=subject.slug))
-    draft = PreviewDraft(digest=hashlib.sha256(bundle.model_dump_json().encode("utf-8")).hexdigest())
-    reports = [
-        *await _reports(session, bundle, subject, draft),
-        *await _pictures(session, user, bundle, subject, draft),
-        *await previewed_withdrawals(session, user, subject, bundle, draft),
-    ]
-    parts = await generated_parts(session, subject, draft.additions())
-    document = None if parts is None else assembled_document(parts, Drawings())
-    if document is None:
-        raise InvalidInput(THIN)
+    previewed = await previewed_document(session, user, bundle)
+    subject, document, reports = previewed.subject, previewed.document, list(previewed.reports)
     if bundle.translation is not None:
         document, translated = await previewed_translation(session, subject, document, bundle.translation)
         reports += translated
@@ -127,6 +125,23 @@ async def preview_page(
         parts=reports,
         message=READY,
     )
+
+
+async def previewed_document(session: AsyncSession, user: User, bundle: PageBundle) -> PreviewedPage:
+    subject = await subject_by_key(session, bundle.subject.kind, bundle.subject.slug)
+    if has_authored_content(subject.slug):
+        raise InvalidInput(AUTHORED.format(slug=subject.slug))
+    draft = PreviewDraft(digest=hashlib.sha256(bundle.model_dump_json().encode("utf-8")).hexdigest())
+    reports = [
+        *await _reports(session, bundle, subject, draft),
+        *await _pictures(session, user, bundle, subject, draft),
+        *await previewed_withdrawals(session, user, subject, bundle, draft),
+    ]
+    parts = await generated_parts(session, subject, draft.additions())
+    document = None if parts is None else assembled_document(parts, Drawings())
+    if document is None:
+        raise InvalidInput(THIN)
+    return PreviewedPage(subject, document, reports)
 
 
 async def _reports(

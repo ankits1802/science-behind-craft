@@ -52,7 +52,8 @@ export const PUBLISHED_ACTIONS: Record<StagedKind, readonly StagedAction[]> = {
   PICTURE_CHECKS: [],
   SOURCES: REMOVED,
   SOURCES_DIFFER: [],
-  IMAGES: REMOVED_AND_EDITED
+  IMAGES: REMOVED_AND_EDITED,
+  PAGES: []
 };
 
 export const STAGED_KIND_ACTIONS: Record<StagedKind, readonly StagedAction[]> = {
@@ -66,7 +67,8 @@ export const STAGED_KIND_ACTIONS: Record<StagedKind, readonly StagedAction[]> = 
   PICTURE_CHECKS: QUEUE_PAIR,
   SOURCES: ["correct", ...PUBLISHED_ACTIONS.SOURCES],
   SOURCES_DIFFER: ["clear"],
-  IMAGES: PUBLISHED_ACTIONS.IMAGES
+  IMAGES: PUBLISHED_ACTIONS.IMAGES,
+  PAGES: QUEUE_PAIR
 };
 
 export const STAGED_KIND_LABELS: Record<StagedKind, string> = {
@@ -80,7 +82,8 @@ export const STAGED_KIND_LABELS: Record<StagedKind, string> = {
   PICTURE_CHECKS: KIND_NOUNS.PICTURE_CHECKS,
   SOURCES: "Source correction",
   SOURCES_DIFFER: "Sources differ mark",
-  IMAGES: KIND_NOUNS.IMAGES
+  IMAGES: KIND_NOUNS.IMAGES,
+  PAGES: "Page proposal"
 };
 
 export const STAGED_ACTION_LABELS: Record<StagedAction, string> = {

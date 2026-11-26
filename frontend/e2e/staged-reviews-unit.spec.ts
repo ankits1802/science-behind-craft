@@ -106,7 +106,8 @@ test("each kind offers only the actions the backend allows it", () => {
     PICTURE_CHECKS: pair,
     SOURCES: ["correct", "remove"],
     SOURCES_DIFFER: ["clear"],
-    IMAGES: ["remove", "edit"]
+    IMAGES: ["remove", "edit"],
+    PAGES: pair
   });
   expect(Object.keys(STAGED_KIND_ACTIONS).sort()).toEqual([...STAGED_KINDS].sort());
 });

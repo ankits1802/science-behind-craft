@@ -29,6 +29,7 @@ reports).
 | A staged action on published content, the removal of a component from its pages first | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | The removal or edit of any published content, and published pictures over MCP | [decision 0194](0194-an-admin-removes-and-edits-published-content-over-mcp.md) |
 | A steward's withdrawal of another's component staged for an Admin to confirm | [decision 0212](0212-a-steward-asks-an-admin-a-structure-edit-states-what-it-brings-and-a-removed-layout-stays-removed.md) |
+| A page proposal's decision, whole, by chapter or by component, staged for a person to confirm | [decision 0236](0236-a-reviewer-sees-a-page-as-it-stood-and-as-it-will-be-and-decides-it-whole-by-chapter-or-by-component.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

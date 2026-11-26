@@ -26,7 +26,7 @@ from app.services.object_store import media_bucket
 from app.services.own_proposals import require_terms
 from app.services.page_preview import preview_page
 from app.services.page_preview_links import UnknownPreview, pass_document, preview_document
-from app.services.page_preview_pictures import OwnPicture, own_picture_file, pass_picture_file
+from app.services.page_preview_pictures import OwnPicture, pass_picture_file, shown_picture_file
 
 router = APIRouter(prefix="/knowledge/pages", tags=["knowledge"])
 proposer = require(Capability.PROPOSE_KNOWLEDGE)
@@ -75,7 +75,7 @@ async def read_own_picture(
     user: User = Depends(proposer),
     session: AsyncSession = Depends(get_session),
 ) -> Response:
-    found = await own_picture_file(session, user, contribution_id)
+    found = await shown_picture_file(session, user, contribution_id)
     return await _picture(session, found, theme)
 
 

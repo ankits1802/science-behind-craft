@@ -11,6 +11,7 @@ from app.models import User
 from app.research.page_proposals import ACCEPTED, STRUCTURE, PageBundle, PageProposalResult, PartReport
 from app.services.candidate_sources import proposal_fetcher
 from app.services.craft_resolver import CraftIndexStore
+from app.services.page_proposal_records import NO_SNAPSHOT, page_snapshot, record_page_proposal
 from app.services.page_proposals import PageTools, propose_page
 from app.services.written_vectors import embed_structure_claims
 
@@ -26,6 +27,8 @@ __all__ = ["page_proposed"]
 async def page_proposed(
     session: AsyncSession, bundle: PageBundle, user: User, *, origin: str, site: str
 ) -> PageProposalResult:
+    whole = bundle_parts(bundle) > 1
+    snapshot = await page_snapshot(session, user, bundle) if whole else NO_SNAPSHOT
     context = ToolContext(
         session=session, index=CraftIndexStore(), site=site, user=user, scopes=frozenset({CONTRIBUTE_SCOPE})
     )
@@ -34,11 +37,14 @@ async def page_proposed(
             gates=gate_adapters(user, fetcher),
             fetcher=fetcher,
             start_picture=partial(start_picture, context),
-            spend=partial(_spend, user, whole=bundle_parts(bundle) > 1),
+            spend=partial(_spend, user, whole=whole),
             origin=origin,
             site=site,
         )
         result = await propose_page(session, user, bundle, tools=tools, now=datetime.now(UTC))
+    if whole:
+        work = (bundle, result, snapshot)
+        await record_page_proposal(session, user, work, origin=origin, now=datetime.now(UTC))
     await embed_structure_claims(session, tools.gates.embed, _written_structures(result.parts))
     return result
 
