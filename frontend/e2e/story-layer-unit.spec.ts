@@ -157,7 +157,7 @@ test("the India locator marks the story's districts and its frame on the whole o
   const stage = renderToStaticMarkup(
     createElement(RiverStage, {
       geometry: drawn,
-      flow: { progress: motionValue(1), moving: false, passed: ALL_PASSED, replay: null },
+      flow: { progress: motionValue(1), moving: false, passed: ALL_PASSED },
       fillOf: (shape: DistrictShape) => storyTone(drawn, shape.lgd, ALL_PASSED),
       focus: { district: null, stretch: false, reached: [], onStep: () => undefined },
       summary: "Kachchh.",
