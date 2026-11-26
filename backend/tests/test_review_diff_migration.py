@@ -12,7 +12,8 @@ def test_the_review_diff_migration_follows_the_coded_figures() -> None:
 
 def test_it_creates_the_two_tables_and_widens_the_staged_kinds_by_page_proposals_alone() -> None:
     step = migration("0122_review_diff")
-    assert step.TABLES == (PageProposal.__tablename__, DrawnPicture.__tablename__)
+    tables = (PageProposal.__tablename__, DrawnPicture.__tablename__)
+    assert tables == step.TABLES
     assert step.KINDS_BEFORE == migration("0119_picture_checks").KINDS
     assert step.KINDS == STAGED_KIND_VALUES
     assert set(step.KINDS) - set(step.KINDS_BEFORE) == {"PAGES"}
