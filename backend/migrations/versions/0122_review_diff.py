@@ -75,7 +75,7 @@ def _kind_check(kinds: Sequence[str]) -> None:
 
 def _proposals() -> None:
     op.create_table(
-        PROPOSALS,
+        "PageProposal",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("userId", sa.UUID(), nullable=False),
         sa.Column("subjectKind", sa.String(length=SUBJECT_KIND_CHARS), nullable=False),
@@ -106,7 +106,7 @@ def _proposals() -> None:
 
 def _pictures() -> None:
     op.create_table(
-        PICTURES,
+        "DrawnPicture",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("previewId", sa.UUID(), nullable=True),
         sa.Column("proposalId", sa.UUID(), nullable=True),
