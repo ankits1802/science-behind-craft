@@ -136,6 +136,26 @@ export function proposalFromSearch(params: URLSearchParams): string | null {
   return UUID_PATTERN.test(named) ? named : null;
 }
 
+export const LINK_OWN = "The page proposal this link names is your own, so another Admin reviews it; it is not shown here.";
+export const LINK_MISSING = "No page proposal has the id this link names. Check the link and open it again.";
+export const LINK_NOT_ADMIN = "Page proposals are reviewed by Admins and Master Admins, so the one this link names is not shown here.";
+export const LINK_FAILED = "Couldn't open the page proposal this link names. Reload the page to try again.";
+
+export function linkToRead(focused: string | null, listed: readonly PageProposalView[] | null): string | null {
+  if (focused === null || listed === null) return null;
+  return listed.some((view) => view.id === focused) ? null : focused;
+}
+
+export function withLinked(list: readonly PageProposalView[], linked: PageProposalView): PageProposalView[] {
+  return list.some((view) => view.id === linked.id) ? [...list] : [linked, ...list];
+}
+
+export function linkRefusal(status: number | null): string {
+  if (status === 403) return LINK_OWN;
+  if (status === 404 || status === 422) return LINK_MISSING;
+  return LINK_FAILED;
+}
+
 export function proposalAnchor(id: string): string {
   return `page-proposal-${id}`;
 }

@@ -4,10 +4,30 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { ChapterChangeList } from "@/components/review/ChapterChangeList";
 import { PageProposalCard, type PageCardHandlers } from "@/components/review/PageProposalCard";
+import { PageProposals } from "@/components/review/PageProposals";
 import { PageShots } from "@/components/review/PageShots";
 import type { ProposalDocuments } from "@/components/review/useProposalDocuments";
 import { pageProposalListShape, pageProposalShape, type PageProposalView } from "@/lib/pageProposalContract";
-import { chapterCounts, chapterScope, componentScope, decides, decisionBody, partsIn, proposalAnchor, proposalFromSearch, sidesToDraw, waitingLine, withProposal, WHOLE_PAGE } from "@/lib/pageProposalView";
+import {
+  chapterCounts,
+  chapterScope,
+  componentScope,
+  decides,
+  decisionBody,
+  LINK_FAILED,
+  LINK_MISSING,
+  LINK_OWN,
+  linkRefusal,
+  linkToRead,
+  partsIn,
+  proposalAnchor,
+  proposalFromSearch,
+  sidesToDraw,
+  waitingLine,
+  withLinked,
+  withProposal,
+  WHOLE_PAGE
+} from "@/lib/pageProposalView";
 import { parseShape } from "@/lib/shape";
 import { parseStagedBatch } from "@/lib/stagedReviewContract";
 
@@ -170,4 +190,36 @@ test("the proposal a review link names opens on arrival as it stands and as it w
   expect(other).toContain("Show the page as it stands and as it will be");
   expect(other).not.toContain("Opening the page proposal");
   expect(other).not.toContain("data-focused");
+});
+
+const OTHER = "00000000-0000-4000-8000-000000000399";
+const NO_PAGES = { opened: {}, error: null, notice: null, onOpen: async () => null, onDecide: async () => null, onDraw: async () => null };
+
+test("a link to a proposal the list does not hold is read by its id once the list is in, and one the list holds is not read again", () => {
+  expect(linkToRead(ID, null)).toBeNull();
+  expect(linkToRead(ID, [])).toBe(ID);
+  expect(linkToRead(ID, [view({ id: OTHER })])).toBe(ID);
+  expect(linkToRead(ID, [view()])).toBeNull();
+  expect(linkToRead(null, [])).toBeNull();
+  const listed = [view({ id: OTHER })];
+  expect(withLinked(listed, view()).map((found) => found.id)).toEqual([ID, OTHER]);
+  expect(withLinked([view()], view()).map((found) => found.id)).toEqual([ID]);
+});
+
+test("the proposal a link reads beyond the list is drawn open among the others", () => {
+  const html = renderToStaticMarkup(createElement(PageProposals, { ...NO_PAGES, proposals: withLinked([view({ id: OTHER })], view()), focused: ID }));
+  expect(html.match(/data-testid="page-proposal-card"/g)).toHaveLength(2);
+  expect(html).toContain(`id="${proposalAnchor(ID)}" class="grid scroll-mt-24 gap-5" data-testid="page-proposal-card" data-focused="true"`);
+  expect(html).not.toContain('data-testid="page-proposal-link"');
+});
+
+test("a link the person may not follow says plainly why, even when nothing else waits", () => {
+  expect(linkRefusal(403)).toBe(LINK_OWN);
+  expect(linkRefusal(404)).toBe(LINK_MISSING);
+  expect(linkRefusal(500)).toBe(LINK_FAILED);
+  expect(linkRefusal(null)).toBe(LINK_FAILED);
+  const refused = renderToStaticMarkup(createElement(PageProposals, { ...NO_PAGES, proposals: [], focused: ID, linkNote: LINK_OWN }));
+  expect(refused).toContain(`data-testid="page-proposal-link">${LINK_OWN.replace(/'/g, "&#x27;")}</p>`);
+  expect(refused).not.toContain('data-testid="page-proposal-card"');
+  expect(renderToStaticMarkup(createElement(PageProposals, { ...NO_PAGES, proposals: [], focused: ID }))).toBe("");
 });

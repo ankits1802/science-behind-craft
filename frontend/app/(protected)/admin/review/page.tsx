@@ -42,7 +42,7 @@ function ReviewScreen() {
   const focused = useMemo(() => proposalFromSearch(new URLSearchParams(search)), [search]);
   const queue = useReviewQueue(filters);
   const staged = useStagedReviews(queue.handlers.decidedElsewhere);
-  const pages = usePageProposals(queue.handlers.decidedElsewhere);
+  const pages = usePageProposals(queue.handlers.decidedElsewhere, focused);
   const change = (next: ReviewFilters) => {
     const query = filtersSearch(next);
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
@@ -59,6 +59,7 @@ function ReviewScreen() {
           focused={focused}
           error={pages.error}
           notice={pages.notice}
+          linkNote={pages.linkNote}
           onOpen={pages.handlers.open}
           onDecide={pages.handlers.decide}
           onDraw={pages.handlers.draw}
