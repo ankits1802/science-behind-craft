@@ -21,6 +21,7 @@ pictures' reply).
 | The studio and the `curate_page` prompt this changes | [decision 0110](0110-contributor-supplied-sources.md) |
 | The design rules and the figure kit the first components wait for | [decision 0131](0131-drawings-in-the-design.md), [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | The preview's report, whose failed rules hand over their pages, and the bar | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
+| The design pages and their token handed with the opening of a draft and with a read of either page, not only by a refusal | [decision 0233](0233-room-for-a-whole-page-its-reading-tools-and-the-site-s-own-gaps.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

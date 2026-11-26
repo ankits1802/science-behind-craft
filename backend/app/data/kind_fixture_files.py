@@ -37,6 +37,7 @@ KIND_FIXTURE_ORDER = (
     "choice_toggle",
     "choice_toggle_copper",
     "coded_figure",
+    "reading_level",
 )
 
 

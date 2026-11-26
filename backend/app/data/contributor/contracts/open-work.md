@@ -458,7 +458,7 @@ A proposal that names a task ends the proposer's reservation:
 | `extends?` with `extension` | `SUBJECT_LINK` keeps the extended label; `VARIANT` takes a new one |
 | `replaces?` | a registered component it takes the place of (Withdrawn, replaced, borrowed and held, below); a label of its own, never with `SUBJECT_LINK` |
 | `task_key?` | the task it completes (the checks, below) |
-| `spec` | the delivery: the kind's spec data, any of the 23 contributable kinds, authored or declared (a `timeline_map` declared only) |
+| `spec` | the delivery: the kind's spec data, any of the 24 contributable kinds, authored or declared (a `timeline_map` declared only) |
 | `units` | the delivery's units, `{u0001: {text, claimIds}}` |
 
 The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`, which carries none
@@ -838,9 +838,11 @@ page (`status WITHDRAWN`, its piece's id) or, for a steward, asking an Admin to 
 and counting as a component proposal. A `SUBJECT_LINK` or
 a layout placing a borrowed component that cannot pass is refused (Withdrawn, replaced, borrowed and
 held, above), and a whole page from an account that publishes at once is held instead of run. Each
-part counts against its own kind's hourly limit,
-and a draft or a bundle of more than one part also against the page bundles; a bundle of one part
-counts against that part's kind alone, as its retired tool did. A part is also refused when it names
+part of a bundle of more than one part counts against its kind's hour sized for one whole page
+(`api/proposal_limits.PAGE_PART_LIMITS`: 200 facts, 100 structure items, 200 components and
+withdrawals, each kind's bucket shared with single proposals; decision 0233), and the bundle also
+against the page bundles; a bundle of one part counts against that part's kind alone, as its
+retired tool did. A part is also refused when it names
 another page (a fact's or structure item's subject), when a category's bundle carries structure or
 pictures, when a component is keyed to another craft (`craft_slug` or a `CRAFT` subject), or when it
 cites a bundle fact that was refused. A page whose account's latest live preview of it failed its
@@ -986,9 +988,11 @@ A draft is a page bundle built over many calls (`research/page_drafts.py`, `serv
   With `draft_id` instead it works on that draft.
 - `add {facts?, structure?, components?, layout?, pictures?, supplied_sources?, withdrawals?, note?}`
   and `lists` append parts (a layout, lists or note replaces the draft's, and a withdrawal of a label
-  the draft holds replaces it) and refuse a draft past the bundle's limits (20 facts, 20 structure
-  items, 10 components, 10 pictures, 10 withdrawals), 40 supplied sources, 600,000 bytes of JSON
-  (`DRAFT_BYTES_MAX`), a `fact:N` beyond its facts, a supplied source of another account, a
+  the draft holds replaces it) and refuse an add past one call's bound (20 facts, 20 structure items,
+  10 components, 10 pictures, 10 withdrawals, `*_PER_CALL_MAX`, the bound of a bundle sent whole in
+  one call too), a draft past the room of a whole page (200 facts, 100 structure items, 100
+  components, 40 pictures, 100 withdrawals; decision 0233), 40 supplied sources, 4,000,000 bytes of
+  JSON (`DRAFT_BYTES_MAX`), a `fact:N` beyond its facts, a supplied source of another account, a
   component without its spec (but a `SUBJECT_LINK`), a withdrawal of a component the account may not
   retire, or a placed borrowed component that cannot pass. `lists {mechanisms (up to 12),
   ambiguous_terms (up to 12), signature (fact:N or a fact id)}`.

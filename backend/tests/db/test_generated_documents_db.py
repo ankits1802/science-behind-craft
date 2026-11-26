@@ -31,6 +31,7 @@ from .testimony_seed import rolled_back_session
 
 pytestmark = pytest.mark.db
 
+CLOSING_CHAPTERS = [["Reading tools"], ["Sources"]]
 MASTHEAD = [
     "masthead-kicker",
     "masthead-title",
@@ -84,7 +85,7 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
     titles = [
         document.content.units[e.ref].nodes for e in document.content.layout if e.ref.startswith("chapter-")
     ]
-    assert titles == [["How it is made"], ["The chemistry"], ["Why Madhya Pradesh"], ["Sources"]]
+    assert titles == [["How it is made"], ["The chemistry"], ["Why Madhya Pradesh"], *CLOSING_CHAPTERS]
     units = document.content.units
     assert (units["label-place"].nodes, units["label-gi"].nodes) == (
         ["Madhya Pradesh"],
@@ -93,6 +94,20 @@ async def test_a_seeded_craft_reads_its_published_section_sources_masthead_and_p
     assert document.specs[PICTURE]["setting"] == "figure"
     assert document.specs[PICTURE]["picture"]["focal"] == {"x": 0.1, "y": 0.1, "width": 0.8, "height": 0.6}
     assert document.page_url.endswith(f"/crafts/{CRAFT_SLUG}")
+
+
+async def test_a_seeded_craft_s_reading_chapter_asks_next_from_its_suggested_questions(
+    session: AsyncSession,
+) -> None:
+    document = await generated_document(session, "craft", CRAFT_SLUG)
+    assert document is not None
+    (asked,) = [c for c in document.content.components if c.kind == "ask_next"]
+    assert (asked.label, asked.chapter) == (f"{CRAFT_SLUG.lower()}/reading/ask-next", "reading")
+    spec = document.specs[asked.label]
+    assert (
+        spec["craft"] == CRAFT_SLUG and spec["questions"] and all(q.endswith("?") for q in spec["questions"])
+    )
+    assert not [c for c in document.content.components if c.kind == "language_switch"]
 
 
 async def test_the_craft_brings_its_own_and_its_concepts_shared_components_and_draws_the_one_with_a_spec(

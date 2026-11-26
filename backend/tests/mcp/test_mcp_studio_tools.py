@@ -165,7 +165,7 @@ async def test_the_first_edit_opens_the_page_s_draft_and_one_with_nothing_to_cha
     content = (await call("edit_draft", {"subject": SUBJECT}, context(session=session)))["structuredContent"]
     assert session.commits == 1 and seen == [PageSubject(kind="craft", slug="Kutch-Ajrakh")]
     assert content["draftId"] == str(DRAFT_ID) and content["state"] == "OPEN"
-    assert content["counts"]["facts"] == 0 and content["limits"]["facts"] == 20
+    assert content["counts"]["facts"] == 0 and content["limits"]["facts"] == 200
     assert content["message"].startswith("The draft for craft Kutch-Ajrakh is open")
     assert "edit_draft's add" in content["nextStep"] and content["draft"] is not None
 

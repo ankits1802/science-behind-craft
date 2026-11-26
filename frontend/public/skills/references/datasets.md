@@ -119,8 +119,8 @@ export tables, a registry's records, prices over the years):
   places with readings a `map_layer`, places with the years, moves or facts that caption them a
   `timeline_map`. Each value is stated by its reading unit, which cites its fact.
 - Put the facts and the component in one page bundle, see it with `preview_page`, then send it with
-  `propose_page`: the facts are proposed with the component, never twice. A bundle holds at most
-  20 facts; a figure of more values rests on a contributed dataset instead.
+  `propose_page`: the facts are proposed with the component, never twice. A draft holds at most
+  200 facts, an add 20; a figure of more values rests on a contributed dataset instead.
 
 ## Maps of places
 

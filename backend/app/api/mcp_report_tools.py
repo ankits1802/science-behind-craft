@@ -31,10 +31,10 @@ NOT_ADMIN = "admin_reports is for Admins and Master Admins; this account cannot 
 UNFIT_FILTERS = "the {report} report takes no {filters}"
 DESCRIPTION = (
     "Read-only reports for Admins. coverage: each craft's field standings. hidden_facts: the nightly count of "
-    "facts readers cannot see, by craft and reason. filing: where each live-research fact is filed against "
-    "where today's rule would file it. sources: sources whose title is not a work's title or whose author is "
-    "a file's producer. mcp_activity: MCP calls by tool and client, and the newest failures. spend: settled AI "
-    "spend by India day and task. evaluations: the evaluation floors and any stored result."
+    "facts readers cannot see, by craft and reason. filing: each live-research fact's filing beside today's "
+    "rule. sources: titles that are not a work's, authors that are a file's producer. mcp_activity: MCP calls "
+    "by tool and client, and the newest failures. spend: settled AI spend by India day and task. evaluations: "
+    "the evaluation floors and any stored result. site_gaps: what agents found the site could not do."
 )
 
 
@@ -49,7 +49,8 @@ class AdminReportArguments(Arguments):
     since: date | None = Field(default=None, description="Facts written on or after this day (filing)")
     answer_id: uuid.UUID | None = Field(default=None, description="Facts one answer wrote back (filing)")
     days: Literal[*PERIOD_DAYS] | None = Field(
-        default=None, description=f"Days to read (mcp_activity, spend); {DEFAULT_PERIOD_DAYS} when left out"
+        default=None,
+        description=f"Days to read (mcp_activity, spend, site_gaps); {DEFAULT_PERIOD_DAYS} when left out",
     )
     cursor: str | None = Field(
         default=None, pattern=CURSOR_PATTERN, description="next_cursor of the last page"

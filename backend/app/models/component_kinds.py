@@ -7,6 +7,7 @@ __all__ = [
     "DECLARED_ONLY_KINDS",
     "DOCUMENT_KINDS",
     "GENERAL_KINDS",
+    "LINK_TOOL_KINDS",
     "PAGE_TOOL_KINDS",
     "PIECE_KINDS",
 ]
@@ -65,10 +66,10 @@ PAGE_TOOL_KINDS = (
     "language_switch",
     "process_replay",
     "quiz",
-    "reading_level",
     "related_crafts",
     "source_list",
 )
+LINK_TOOL_KINDS = ("ask_next", "language_switch")
 AUTHORED_ART_KINDS = ("ai_illustration", "ai_video", "comic", "picture_plate", "specimen_plate")
 AUTHORED_SCRIPT_KINDS = ("model_explainer",)
 DECLARED_ONLY_KINDS = ("timeline_map",)

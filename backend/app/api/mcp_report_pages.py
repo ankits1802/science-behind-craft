@@ -17,6 +17,7 @@ __all__ = [
     "EVALUATIONS",
     "FILING",
     "FILTERS",
+    "GAPS",
     "HIDDEN_FACTS",
     "LIMIT_DEFAULT",
     "LIMIT_MAX",
@@ -36,7 +37,7 @@ __all__ = [
     "paged",
 ]
 
-COVERAGE, HIDDEN_FACTS, FILING, SOURCES, MCP_ACTIVITY, SPEND, EVALUATIONS = REPORTS = (
+COVERAGE, HIDDEN_FACTS, FILING, SOURCES, MCP_ACTIVITY, SPEND, EVALUATIONS, GAPS = REPORTS = (
     "coverage",
     "hidden_facts",
     "filing",
@@ -44,6 +45,7 @@ COVERAGE, HIDDEN_FACTS, FILING, SOURCES, MCP_ACTIVITY, SPEND, EVALUATIONS = REPO
     "mcp_activity",
     "spend",
     "evaluations",
+    "site_gaps",
 )
 CRAFT, SINCE, ANSWER_ID, DAYS = FILTERS = ("craft_slug", "since", "answer_id", "days")
 REPORT_FILTERS: Mapping[str, frozenset[str]] = MappingProxyType(
@@ -55,6 +57,7 @@ REPORT_FILTERS: Mapping[str, frozenset[str]] = MappingProxyType(
         MCP_ACTIVITY: frozenset({DAYS}),
         SPEND: frozenset({DAYS}),
         EVALUATIONS: frozenset(),
+        GAPS: frozenset({DAYS}),
     }
 )
 LIMIT_DEFAULT = 25

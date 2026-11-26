@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import get_settings
 from app.models import Source
 from app.research.monograph_document import MonographDocument
+from app.research.page_layout import PageLayout
 
 from . import knowledge_view
 from .claim_holds import unheld_by_id
@@ -17,6 +18,7 @@ from .component_proposals_drawn import with_delivered_claims
 from .coverage import coverage_of
 from .craft_page_unwritten import unwritten_facts, with_listed_fields
 from .document_components_store import subject_structure
+from .field_photo_plates import field_plates
 from .knowledge_view import ClaimView
 from .monograph_generated_assembly import GeneratedParts, assembled_document
 from .monograph_generated_drawings import Drawings
@@ -29,6 +31,8 @@ from .monograph_generated_parts import (
     subject_record,
     subject_sections,
 )
+from .monograph_generated_pictures import PlateSource
+from .monograph_generated_reading import subject_reading
 from .monograph_generated_structure import shown_claim_ids, structure_claim_ids, with_page_claims
 from .monograph_generated_units import stored_source
 from .open_work_subjects import WorkSubject, subject_by_key
@@ -81,6 +85,7 @@ async def generated_parts(
     sources = {str(key): stored_source(knowledge_view.source_ref(row)) for key, row in rows.items()}
     record = await subject_record(session, subject)
     kin = await subject_kin(session, subject, record.kicker)
+    layout = additions.layout if additions.layout is not None else await layout_of(session, subject)
     return GeneratedParts(
         subject_kind=subject.kind,
         subject_slug=subject.slug,
@@ -90,8 +95,8 @@ async def generated_parts(
         visible={**kin.visible, **visible},
         sources={**kin.sources, **sources, **additions.sources},
         components=components,
-        pictures=additions.pictures(await subject_pictures(session, subject)),
-        layout=additions.layout if additions.layout is not None else await layout_of(session, subject),
+        pictures=additions.pictures(await _plates(session, subject, layout)),
+        layout=layout,
         coverage=await coverage_of(session, subject),
         values=await stated_values(session, list(visible)),
         structure=structure,
@@ -99,7 +104,14 @@ async def generated_parts(
         ground=await subject_ground(session, subject.id) if subject.kind == CRAFT else None,
         unwritten=unwritten.by_field,
         kin=kin,
+        reading=await subject_reading(session, subject, record.name),
     )
+
+
+async def _plates(
+    session: AsyncSession, subject: WorkSubject, layout: PageLayout | None
+) -> list[PlateSource]:
+    return [*await subject_pictures(session, subject), *await field_plates(session, subject, layout)]
 
 
 async def _written_views(

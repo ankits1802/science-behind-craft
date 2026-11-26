@@ -16,6 +16,7 @@ from app.services.coverage import COVERAGE_CLAIMS_MIN, craft_coverage, subject_c
 from app.services.eval_run_store import EvalRunRecord, latest_eval_runs
 from app.services.mcp_activity import ActivityAsk, read_activity
 from app.services.open_work_subjects import curated_craft_subjects
+from app.services.site_gaps import recent_gaps
 from app.services.source_titles import junk_titled, producer_authored
 from app.services.upkeep_hidden import last_hidden_facts
 
@@ -23,6 +24,7 @@ from .mcp_report_pages import (
     COVERAGE,
     EVALUATIONS,
     FILING,
+    GAPS,
     HIDDEN_FACTS,
     MCP_ACTIVITY,
     SOURCES,
@@ -41,6 +43,7 @@ __all__ = [
     "evaluations_report",
     "filing_report",
     "floor_rows",
+    "gaps_report",
     "hidden_facts_report",
     "sources_report",
     "spend_report",
@@ -68,6 +71,10 @@ SOURCES_SAID = (
 ACTIVITY_SAID = (
     "MCP calls from {first} to {last} (India days): {calls}, of which {failed} failed; rows by tool, by "
     "client, then the newest failures, with no account named."
+)
+GAPS_SAID = (
+    "What contributors' AI reported the site could not do in the last {days} days, newest first: {gaps}, "
+    "each with the page, the gap's kind, what was wanted and tried, the evidence and the client, no account named."
 )
 SPEND_SAID = (
     "Settled AI spend of {cost} USD from {first} to {last} (India days), by day and task, newest day first; "
@@ -151,6 +158,12 @@ async def activity_report(context: ToolContext, ask: ReportAsk) -> ReportPage:
     return page_rows(rows, ask, said)
 
 
+async def gaps_report(context: ToolContext, ask: ReportAsk) -> ReportPage:
+    gaps = await recent_gaps(context.session, days=ask.days, now=ask.now)
+    rows = [gap.model_dump(mode="json", by_alias=True) for gap in gaps]
+    return page_rows(rows, ask, GAPS_SAID.format(gaps=len(rows), days=ask.days))
+
+
 async def spend_report(context: ToolContext, ask: ReportAsk) -> ReportPage:
     spend = await spend_by_day_and_task(
         context.session, days=ask.days, now=ask.now, offset=ask.offset, limit=ask.limit
@@ -228,5 +241,6 @@ READERS: Mapping[str, Reader] = MappingProxyType(
         MCP_ACTIVITY: activity_report,
         SPEND: spend_report,
         EVALUATIONS: evaluations_report,
+        GAPS: gaps_report,
     }
 )

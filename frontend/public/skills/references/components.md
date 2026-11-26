@@ -60,16 +60,20 @@ The 24 kinds a contributor delivers, by group:
 - **Science** (11): `reaction_player`, `dip_player`, `stage_player`, `diagram`, `molecule_3d`,
   `structure_diagram`, `equation_card`, `material_cards`, `experiment_lab`, `choice_toggle`,
   `coded_figure`.
+- **Reading** (1): `reading_level`, the student version, a title unit and one cited lede for a
+  younger reader. It stands in the page's reading chapter unless the layout places it.
 
 Each has been drawn for a craft other than Kutch Ajrakh (Bidriware, Blue Pottery of Jaipur,
 Bastar Dhokra, cane and bamboo) from that craft's stored facts, and none needs Kutch Ajrakh's
 words: a dip player names its own phases, a material is any the design system records, and a
 dip player shows an equation only where a source states one. The site builds the rest itself:
 
-- **Built by the site for every page** (14): `ask_next`, `audio_player`, `citation_tool`,
+- **Built by the site for every page** (13): `ask_next`, `audio_player`, `citation_tool`,
   `concept_atlas`, `credits`, `explainer`, `film`, `generator`, `language_switch`,
-  `process_replay`, `quiz`, `reading_level`, `related_crafts`, `source_list`. They are the page's
-  apparatus, computed from its data; a proposal of one is refused.
+  `process_replay`, `quiz`, `related_crafts`, `source_list`. They are the page's apparatus,
+  computed from its data; a proposal of one is refused. Every generated craft page draws Ask next
+  from its suggested questions, and every page with a translated passage the switch of its
+  languages, in its reading chapter.
 - **The authored page's own** (6): `picture_plate`, `specimen_plate`, `ai_illustration`, `ai_video`,
   `comic`, `model_explainer`. Pictures are given with `give_pictures` and placed by the site; a
   model runs the authored page's own script, so deliver a `drawing` or a `diagram` instead. A
@@ -216,7 +220,7 @@ stated by their units.
   Review page (give a reason of 12 to 500 characters), and its replacement waits for review. Anyone
   else is refused. A withdrawal names a component of the bundle's own page.
 - **Withdrawing.** A withdrawal takes your registered component off every page that places it:
-  `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a bundle), or Withdraw on Your
+  `{label, reason}` in a draft's or bundle's `withdrawals` (up to 10 a call and 100 a draft), or Withdraw on Your
   components on the site. It stays in the record, hidden, and keeps its label, so whatever comes next
   takes a label of its own.
 - **Replacing.** Propose the better one with `replaces` naming the old label. It is never refused as

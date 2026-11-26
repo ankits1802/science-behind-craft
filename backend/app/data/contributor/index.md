@@ -31,6 +31,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `my_work`: This account's work.
 - `reserve_tasks`: Reserve or give back tasks.
 - `steward_craft`: Adopt or drop a craft.
+- `report_site_gap`: Report what the site could not do.
 - `get_proposal`: Get a proposal's progress.
 - `propose_facts`: Propose facts.
 - `propose_structure`: Propose page structure.
@@ -42,6 +43,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `compose_component`: Compose a craft's own interactive.
 - `give_pictures`: Give pictures of a craft.
 - `check_pictures`: Check searched pictures.
+- `list_field_photos`: List a craft's field photographs.
 - `review_queue`: Read the review queue (Admins).
 - `stage_reviews`: Stage review decisions for a person to confirm (Admins).
 - `refresh_pages`: Refresh the pages that changed (Admins).
@@ -105,6 +107,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `kalavigyan://components/material_cards.schema.json`: The material_cards spec schema.
 - `kalavigyan://components/molecule_3d.schema.json`: The molecule_3d spec schema.
 - `kalavigyan://components/reaction_player.schema.json`: The reaction_player spec schema.
+- `kalavigyan://components/reading_level.schema.json`: The reading_level spec schema.
 - `kalavigyan://components/source_disagreements.schema.json`: The source_disagreements spec schema.
 - `kalavigyan://components/stage_player.schema.json`: The stage_player spec schema.
 - `kalavigyan://components/stat_tiles.schema.json`: The stat_tiles spec schema.

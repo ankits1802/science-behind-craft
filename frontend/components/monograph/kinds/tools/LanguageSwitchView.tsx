@@ -4,9 +4,10 @@ import { useMemo, useState } from "react";
 
 import { Plate } from "@/components/editorial/Plate";
 import { PlacedComponent } from "@/components/monograph/BundleView";
+import { LanguageLinks } from "@/components/monograph/kinds/tools/LanguageLinks";
 import { LegacyScope } from "@/components/monograph/LegacyScope";
 import { useMonographSlot } from "@/components/monograph/MonographSlotContext";
-import { languageSwitchSpecShape, parseToolSpec, type LanguagePanel, type PanelProvenance } from "@/lib/componentSpecsTools";
+import { languageSwitchSpecShape, linkedSwitch, parseToolSpec, type LanguagePanel, type LanguageSwitchSpec, type PanelProvenance } from "@/lib/componentSpecsTools";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { nodeElements } from "@/lib/monographRenderElements";
 
@@ -88,6 +89,11 @@ function Panel({ panel, shown, renderUnit }: { panel: LanguagePanel; shown: bool
 
 export function LanguageSwitchView({ spec, renderUnit }: ComponentViewProps) {
   const languages = useMemo(() => parseToolSpec(languageSwitchSpecShape, spec), [spec]);
+  if (linkedSwitch(languages)) return <LanguageLinks spec={languages} />;
+  return <LanguagePanels languages={languages} renderUnit={renderUnit} />;
+}
+
+function LanguagePanels({ languages, renderUnit }: { languages: LanguageSwitchSpec; renderUnit: ComponentViewProps["renderUnit"] }) {
   const [lang, setLang] = useState(languages.options[0].lang);
   const status = languages.options.find((option) => option.lang === lang)?.status;
   return (
@@ -108,7 +114,7 @@ export function LanguageSwitchView({ spec, renderUnit }: ComponentViewProps) {
         </div>
         <div className="lang-panels">
           <div className="lang-panel" data-ui-lang={languages.options[0].lang} lang={languages.options[0].lang} hidden={lang !== languages.options[0].lang}>
-            <p className="kv-lang-en">{renderUnit(languages.english)}</p>
+            <p className="kv-lang-en">{languages.english ? renderUnit(languages.english) : null}</p>
           </div>
           {languages.panels.map((panel) => (
             <Panel key={panel.lang} panel={panel} shown={panel.lang === lang} renderUnit={renderUnit} />

@@ -39,6 +39,7 @@ STRUCTURE_PROPOSALS = "structure"
 PAGE_PROPOSALS = "pages"
 PAGE_PREVIEWS = "previews"
 PICTURE_CHECKS = "picture checks"
+SITE_GAPS = "site gaps"
 FACT_PROPOSALS_PER_WINDOW = 30
 COMPONENT_PROPOSALS_PER_WINDOW = 10
 LAYOUT_PROPOSALS_PER_WINDOW = 10
@@ -47,6 +48,7 @@ STRUCTURE_PROPOSALS_PER_WINDOW = 20
 PAGE_PROPOSALS_PER_WINDOW = 10
 PAGE_PREVIEWS_PER_WINDOW = 30
 PICTURE_CHECKS_PER_WINDOW = 60
+SITE_GAPS_PER_WINDOW = 20
 PROPOSAL_LIMITS: Mapping[str, int] = MappingProxyType(
     {
         FACT_PROPOSALS: FACT_PROPOSALS_PER_WINDOW,
@@ -57,6 +59,7 @@ PROPOSAL_LIMITS: Mapping[str, int] = MappingProxyType(
         PAGE_PROPOSALS: PAGE_PROPOSALS_PER_WINDOW,
         PAGE_PREVIEWS: PAGE_PREVIEWS_PER_WINDOW,
         PICTURE_CHECKS: PICTURE_CHECKS_PER_WINDOW,
+        SITE_GAPS: SITE_GAPS_PER_WINDOW,
     }
 )
 SOURCE_SEARCHES = "source searches"
@@ -208,8 +211,10 @@ async def client_registration_attempt(connection: HTTPConnection, *, now: dateti
     )
 
 
-async def proposal_attempt(kind: str, user: Any, *, now: datetime | None = None) -> Taken:
-    return await proposal_slots(kind, user, 1, now=now)
+async def proposal_attempt(
+    kind: str, user: Any, *, limit: int | None = None, now: datetime | None = None
+) -> Taken:
+    return await proposal_slots(kind, user, 1, limit=limit, now=now)
 
 
 async def proposal_slots(

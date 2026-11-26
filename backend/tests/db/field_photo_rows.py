@@ -37,6 +37,7 @@ __all__ = [
     "held_photo",
     "person",
     "photo_ids",
+    "portal_photo",
     "same_session",
     "screened",
     "switched",
@@ -77,9 +78,19 @@ def same_session(session: AsyncSession) -> Callable[[], Any]:
 async def held_photo(
     session: AsyncSession, store: KeptStore, *, change: Callable[[dict[str, Any]], None] | None = None
 ) -> FieldImage:
+    return await portal_photo(session, store, linked=True, change=change)
+
+
+async def portal_photo(
+    session: AsyncSession,
+    store: KeptStore,
+    *,
+    linked: bool,
+    change: Callable[[dict[str, Any]], None] | None = None,
+) -> FieldImage:
     answers = caught_up(FR)
     page = answers[(f"{STATE}/images", "all", None)]
-    page["changes"][0]["artisanLinked"] = True
+    page["changes"][0]["artisanLinked"] = linked
     if change is not None:
         change(page["changes"][0])
     resigned(page["changes"][0])
@@ -93,7 +104,7 @@ async def held_photo(
         .where(FieldImage.portalMediaId == "fr-img-1")
         .execution_options(populate_existing=True)
     )
-    assert image is not None and image.artisanLinked is True
+    assert image is not None and image.artisanLinked is linked
     return image
 
 

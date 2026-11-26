@@ -12,18 +12,19 @@ from app.research.knowledge_writes import FactProposal
 from app.research.monograph_document import SUBJECT_KINDS
 from app.research.page_drafts import DRAFT_PARTS, SUPPLIED_PER_DRAFT_MAX, DraftAddition, PageLists
 from app.research.page_proposals import (
-    COMPONENTS_MAX,
-    FACTS_MAX,
+    COMPONENTS_PER_CALL_MAX,
+    FACTS_PER_CALL_MAX,
     NOTE_MAX_CHARS,
-    PICTURES_MAX,
-    STRUCTURE_MAX,
-    WITHDRAWALS_MAX,
+    PICTURES_PER_CALL_MAX,
+    STRUCTURE_PER_CALL_MAX,
+    WITHDRAWALS_PER_CALL_MAX,
     PageBundle,
     PageComponent,
     PageLayoutPart,
     PagePicture,
     PageSubject,
     PageWithdrawal,
+    one_call_problem,
 )
 from app.research.structure_proposals import StructureProposal
 
@@ -68,6 +69,10 @@ def undelivered(components: Sequence[PageComponent]) -> str | None:
     return None
 
 
+def _bundle_problem(bundle: PageBundle) -> str | None:
+    return one_call_problem(bundle.counts()) or undelivered(bundle.components)
+
+
 def bundle_parts(bundle: PageBundle) -> int:
     held = (bundle.facts, bundle.structure, bundle.components, bundle.pictures, bundle.withdrawals)
     translated = 0 if bundle.translation is None else len(bundle.translation.passages)
@@ -77,23 +82,23 @@ def bundle_parts(bundle: PageBundle) -> int:
 class DraftAdd(Arguments):
     facts: list[FactProposal] = Field(
         default_factory=list,
-        max_length=FACTS_MAX,
+        max_length=FACTS_PER_CALL_MAX,
         description="Facts, each {subject {kind, slug}, field, statement, sources, task_key}",
     )
     structure: list[StructureProposal] = Field(
         default_factory=list,
-        max_length=STRUCTURE_MAX,
+        max_length=STRUCTURE_PER_CALL_MAX,
         description="Structure items as propose_structure takes them",
     )
     components: list[PageComponent] = Field(
         default_factory=list,
-        max_length=COMPONENTS_MAX,
+        max_length=COMPONENTS_PER_CALL_MAX,
         description="Finished components and figures, each {proposal, cites}; cites names facts as fact:0 and on",
     )
     layout: PageLayoutPart | None = Field(default=None, description="The page's layout; replaces the draft's")
     pictures: list[PagePicture] = Field(
         default_factory=list,
-        max_length=PICTURES_MAX,
+        max_length=PICTURES_PER_CALL_MAX,
         description="{contribution_id} for one given with give_pictures, or a new {claim_ids, declaration}",
     )
     supplied_sources: list[uuid.UUID] = Field(
@@ -101,7 +106,7 @@ class DraftAdd(Arguments):
     )
     withdrawals: list[PageWithdrawal] = Field(
         default_factory=list,
-        max_length=WITHDRAWALS_MAX,
+        max_length=WITHDRAWALS_PER_CALL_MAX,
         description="{label, reason} of your registered components",
     )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
@@ -184,12 +189,12 @@ def bundle_schema() -> dict[str, Any]:
         "required": ["kind", "slug"],
     }
     parts = {
-        "facts": _parts(FACTS_MAX),
-        "structure": _parts(STRUCTURE_MAX),
-        "components": _parts(COMPONENTS_MAX),
+        "facts": _parts(FACTS_PER_CALL_MAX),
+        "structure": _parts(STRUCTURE_PER_CALL_MAX),
+        "components": _parts(COMPONENTS_PER_CALL_MAX),
         "layout": {"type": "object"},
-        "pictures": _parts(PICTURES_MAX),
-        "withdrawals": _parts(WITHDRAWALS_MAX),
+        "pictures": _parts(PICTURES_PER_CALL_MAX),
+        "withdrawals": _parts(WITHDRAWALS_PER_CALL_MAX),
         "translation": {"type": "object"},
         "note": {"type": "string", "maxLength": NOTE_MAX_CHARS},
     }
@@ -210,7 +215,7 @@ class PageWork(StudioArguments):
     def _one_work(self) -> Self:
         if (self.bundle is None) == (self.draft_id is None):
             raise ValueError(ONE_WORK)
-        problem = None if self.bundle is None else undelivered(self.bundle.components)
+        problem = None if self.bundle is None else _bundle_problem(self.bundle)
         if problem is not None:
             raise ValueError(problem)
         return self

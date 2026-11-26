@@ -10,6 +10,8 @@ const UNIT_REF_SHAPE = matching(UNIT_REF, "a unit ref");
 const LABEL = matching(/^[a-z0-9]+(-[a-z0-9]+)*(\/[a-z0-9]+(-[a-z0-9]+)*){2,}$/, "a component label");
 const LANG = matching(/^[a-z]{2,3}$/, "a language code");
 const DIRECTION = oneOf(["ltr", "rtl"] as const);
+const PAGE_LINK = matching(/^\/(crafts|categories)\/[A-Za-z0-9-]+(\/[a-z]{2,3})?$/, "a page of this site in a language");
+export const LINKED_OR_SHOWN = "every option linked to the page in its language with no English unit or panels, or the English unit and its panels";
 const NODES = list(monographNodeShape, 1);
 
 export type QuoteCard = { source: string; byline: string; quote?: string; quoteUnit?: string; locator: string; keyed: boolean };
@@ -38,8 +40,8 @@ export type LanguagePanel = {
   notes: string[];
   plate?: MarginPlate;
 };
-export type LanguageOption = { lang: string; name: string; direction: "ltr" | "rtl"; status: string };
-export type LanguageSwitchSpec = { label: string; options: LanguageOption[]; english: string; panels: LanguagePanel[] };
+export type LanguageOption = { lang: string; name: string; direction: "ltr" | "rtl"; status: string; href?: string };
+export type LanguageSwitchSpec = { label: string; options: LanguageOption[]; english?: string; panels: LanguagePanel[] };
 export type ReadingLevelSpec = { level: string; summary: string; detail: string; title: string; lede: string };
 export type GeneratorSection = { number: number; title?: string; titleUnit?: string; kind: string; text?: MonographNode[]; textUnit?: string; media: string[]; split: boolean };
 export type GeneratorSpec = {
@@ -133,15 +135,24 @@ export const languageSwitchSpecShape: Shape<LanguageSwitchSpec> = {
   parse(value, path) {
     const parsed = object<LanguageSwitchSpec>({
       label: text,
-      options: list(object<LanguageOption>({ lang: LANG, name: text, direction: DIRECTION, status: text }), 2),
-      english: UNIT_REF_SHAPE,
+      options: list(object<LanguageOption>({ lang: LANG, name: text, direction: DIRECTION, status: text, href: optional(PAGE_LINK) }), 2),
+      english: optional(UNIT_REF_SHAPE),
       panels: list(panelShape)
     }).parse(value, path);
+    if (linkedSwitch(parsed)) {
+      if (parsed.english !== undefined || parsed.panels.length > 0) throw new ShapeError(path, LINKED_OR_SHOWN);
+      return parsed;
+    }
+    if (parsed.english === undefined || parsed.options.some((option) => option.href !== undefined)) throw new ShapeError(path, LINKED_OR_SHOWN);
     const others = parsed.options.slice(1).map((option) => option.lang).join();
     if (parsed.panels.map((panel) => panel.lang).join() !== others) throw new ShapeError(`${path}.panels`, "one panel for each language after the first");
     return parsed;
   }
 };
+
+export function linkedSwitch(spec: LanguageSwitchSpec): boolean {
+  return spec.options.every((option) => option.href !== undefined);
+}
 
 export const readingLevelSpecShape: Shape<ReadingLevelSpec> = object<ReadingLevelSpec>({ level: matching(/^[a-z]+$/, "a level"), summary: text, detail: text, title: UNIT_REF_SHAPE, lede: UNIT_REF_SHAPE });
 

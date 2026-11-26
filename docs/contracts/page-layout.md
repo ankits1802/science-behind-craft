@@ -51,7 +51,8 @@ Rules, checked on every record and every write:
 - only a component takes a crop or a caption override.
 
 **How a document is ordered** (`arranged_layout(default, layout)`): chapters come in decision 0095's
-order (`research/chapter_keys.CHAPTER_KEYS`), then any other chapter a layout names. In each chapter
+order (`research/chapter_keys.CHAPTER_KEYS`, with `reading` and `media` before `sources` since
+decision 0233), then any other chapter a layout names. In each chapter
 the entries the layout names come first, by `order`; then everything it does not name, in the
 document's default order. An entry moves its unit or component to its `chapter`. Units that sit
 within a component (`within`) travel with it; the layout orders top-level entries only. A layout
@@ -96,6 +97,16 @@ layout, and a new unit or component lands at the end of its chapter until a layo
   focal box becomes the crop. A picture's ref is its component label
   `<craft or category slug, lower case>/pictures/<dossier key, lower case>` (`picture_label`), for
   example `bagh-print/pictures/i02`.
+
+**Field photographs** (decision 0233). A craft's field photograph from the portals is placed by a
+layout entry naming its label `<craft slug, lower case>/pictures/field-<first 12 hex of its id>`
+(`services/field_photo_plates.field_key`), with any role, size, crop or caption. Only a photograph
+the craft's page already publishes (`field_photo_scope.shown_field_photos`) and that names no
+artisan (`FieldImage.artisanLinked` false, whatever `field_voices.artisan_images` says) is offered
+(`cleared_photos`, the `list_field_photos` tool) and drawn (`field_plates`); a label of any other is
+ignored as an entry naming nothing. Its plate's picture is `/api/field-voices/images/<id>`, its
+caption the layout's, the portal's or its alt text, and its credit "Photo: <credited people>, via
+<portal>" (`photo_credit`).
 
 ## Routes and the MCP tool
 
@@ -194,6 +205,16 @@ What it holds (`MonographDocument`, `docs/decisions/0106`):
   colours named as the intro, then each card's captions, name and agent as plain units and its
   sentence and why as cited `span` units. Fewer than two colours, or a `swatch_cards` component
   the page already registers, and the page draws no key.
+- **Reading tools** (decision 0233): in the `reading` chapter, for a craft, an `ask_next` component
+  labelled `<slug>/reading/ask-next` with the page's suggested questions (`craft_page_family.
+  suggested_questions`, at most 12), and for any page with a served translated passage
+  (`page_text_index.covered_counts`) a `language_switch` labelled `<slug>/reading/page-languages`
+  in its linked form: English and each translated language, each option `{lang, name (its own
+  script), direction, status (its English name), href}` linking to the page in it
+  (`monograph_generated_reading.py`). A component of a reading kind (`ask_next`, `audio_player`,
+  `citation_tool`, `explainer`, `language_switch`, `quiz`, `reading_level`) stands in `reading` and
+  one of a media kind (`ai_video`, `film`, `generator`) in `media`, whatever its field
+  (`chapter_keys.kind_chapter`).
 - **Order**: by chapter, the hero with the masthead, then each chapter's pictures (hero and opener
   first), its text by field, then its components; then the page's layout record as above.
 - **Data**: `content.data["page-layout"]` is the layout record the page was ordered by, so a
@@ -269,6 +290,7 @@ crafts[], categories[]}`): a family's page lives at `/crafts/<slug>`.
 | A layout read and proposed over MCP | `backend/tests/mcp/test_mcp_page_read.py` and `test_mcp_page_tools.py` |
 | Versions, audit, kinds, backfill and static pages on Postgres | `backend/tests/db/test_page_layouts_db.py` |
 | A seeded craft, family and category's generated documents | `backend/tests/db/test_generated_documents_db.py` |
+| The reading chapter's tools, and a field photograph offered and placed, never a held, hidden or identity one | `backend/tests/layouts/test_generated_reading.py`, `test_field_photo_plates.py` and `backend/tests/db/test_field_photo_plates_db.py` |
 | How the web draws each size, the margin, a crop and figures in the prose | `frontend/e2e/monograph-placed-layout-unit.spec.ts` and `monograph-homes-unit.spec.ts` |
 
 Re-read it when an entry field or role is added, a chapter key changes, or a generated part moves chapter.

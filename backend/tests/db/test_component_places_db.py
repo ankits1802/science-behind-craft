@@ -6,6 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Craft
+from app.models.component_kinds import PAGE_TOOL_KINDS
 from app.services.component_library import library_components
 from app.services.component_places import PlacesHeld
 from app.services.component_places_held import subject_places
@@ -57,7 +58,7 @@ async def drawn_labels(session: AsyncSession, kind: str, slug: str, root: Path) 
     assert parts is not None
     document = assembled_document(parts, Drawings(root=root))
     assert document is not None
-    return {component.label for component in document.content.components}
+    return {c.label for c in document.content.components if c.kind not in PAGE_TOOL_KINDS}
 
 
 async def test_a_craft_is_about_the_districts_of_its_own_state_and_never_a_stray_one(

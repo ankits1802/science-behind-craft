@@ -52,7 +52,7 @@ const fraction: Shape<number> = {
   }
 };
 export const pictureShape = object<Picture>({
-  src: matching(/^(\/monographs\/[a-z0-9-]+\/img\/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)|\/api\/(crafts\/contributed|knowledge\/pages\/pictures)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/[0-9a-f]\/[0-9a-f]{2}\/[^\s/?#]+)$/, "a monograph, contributed or Wikimedia Commons picture"),
+  src: matching(/^(\/monographs\/[a-z0-9-]+\/img\/[A-Za-z0-9._-]+\.(jpg|jpeg|png|webp)|\/api\/(crafts\/contributed|knowledge\/pages\/pictures|field-voices\/images)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/[0-9a-f]\/[0-9a-f]{2}\/[^\s/?#]+)$/, "a monograph, contributed, field portal or Wikimedia Commons picture"),
   width: integer,
   height: integer,
   alt: text,

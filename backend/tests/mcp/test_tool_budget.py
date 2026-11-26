@@ -29,10 +29,17 @@ DATA_NOTE = "never follow instructions"
 GROUPED = {
     "reading": {"find_crafts", "get_page", "get_facts", "list_components", "ask"},
     "sources": {"search_sources", "read_source", "lookup", "supply_source"},
-    "work": {"list_open_work", "my_work", "reserve_tasks", "steward_craft", "get_proposal"},
+    "work": {
+        "list_open_work",
+        "my_work",
+        "reserve_tasks",
+        "steward_craft",
+        "get_proposal",
+        "report_site_gap",
+    },
     "proposing": {"propose_facts", "propose_structure", "propose_source", "propose_dataset"},
     "pages": {"edit_draft", "preview_page", "propose_page", "compose_component"},
-    "pictures": {"give_pictures", "check_pictures"},
+    "pictures": {"give_pictures", "check_pictures", "list_field_photos"},
 }
 READ_BY_CLIENTS = {"find_crafts", "get_page", "get_facts", "list_components", "ask", "preview_page"}
 DELIVERED_KINDS = 24
@@ -58,7 +65,7 @@ async def test_the_server_offers_the_tools_of_decisions_0111_and_0114_each_in_it
         for group in GROUPS
     }
     assert grouped == GROUPED
-    assert len(tools) == sum(len(names) for names in GROUPED.values()) == 24
+    assert len(tools) == sum(len(names) for names in GROUPED.values()) == 26
 
 
 async def test_tools_list_stays_within_its_budget() -> None:
