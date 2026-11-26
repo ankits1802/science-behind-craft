@@ -7,10 +7,13 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { TimelinePins } from "@/components/answer/journey/TimelinePins";
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
-import type { NeighbourFile } from "@/components/map/basemap";
+import { viewBoxOf, type MapBox, type NeighbourFile } from "@/components/map/basemap";
+import { WHOLE_MAP } from "@/components/map/layout";
 import { KM_PER_DEGREE_LATITUDE, ringRadii, SCALE_SHARE, SCALE_STEPS, scaleBar } from "@/components/map/mapDistance";
 import { framedPoints, mapLayerFrame } from "@/components/map/mapLayerFrame";
 import { placesFrame } from "@/components/map/placesFrame";
+import { rangeLabels, riverLabels } from "@/components/map/placesMapLabels";
+import { PlacesOverlay } from "@/components/map/PlacesOverlay";
 import { stillLayers, type StillFiles } from "@/components/map/mapStillCut";
 import { indiaOutlinePath, project } from "@/components/map/projection";
 import type { ShapesFile } from "@/components/map/shapeGeometry";
@@ -41,6 +44,8 @@ const FILES: StillFiles = {
   neighbours: read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json")
 };
 const LAYERS = stillLayers(FILES);
+const RELIEF = read<ReliefFile>(FRONTEND, "public", "layers", "relief.json");
+const RIVERS = read<RiversFile>(FRONTEND, "public", "layers", "rivers.json");
 const BOUNDARY = parsedMapLayer(read<unknown>(REPO, "shared", "region.layer.golden.json")).boundary;
 const STILL_OF = stillOfPlaces(LAYERS, BOUNDARY);
 const JAIPUR = 102;
@@ -85,6 +90,7 @@ const PARTS = {
 };
 const SHIM = [
   "figure{margin:0}.absolute{position:absolute}.relative{position:relative}.block{display:block}.h-auto{height:auto}.w-full{width:100%}",
+  ".inset-0{inset:0}.h-full{height:100%}.overflow-hidden{overflow:hidden}",
   ".end-2{inset-inline-end:.5rem}.top-2{top:.5rem}.w-\\[22\\%\\]{width:22%}.min-w-16{min-width:4rem}.max-w-28{max-width:7rem}.p-1{padding:.25rem}",
   ".bg-raised{background:var(--raised)}.border{border:1px solid var(--rule)}.rounded-plate{border-radius:2px}.pointer-events-none{pointer-events:none}",
   ".font-ui{font-family:var(--font-ui)}.font-reading{font-family:var(--font-reading)}.italic{font-style:italic}.font-medium{font-weight:500}.font-semibold{font-weight:600}",
@@ -168,12 +174,13 @@ test("a route, a ring and a sequence are drawn only from the spec's own places, 
   }
 });
 
-test("district values fill their districts by class, print each value at its centre and list each cited reading by rank", () => {
+test("district values fill their districts by class, print each value whose centre is in the frame and list each cited reading by rank", () => {
   const values = [{ district: 110, value: 410, reading: "u0017" }, { district: JAIPUR, value: 650, reading: "u0016" }];
   const html = shownText(drawn(stilled({ ...SANGANERI, districts: { valueLabel: "u0015", values } })));
   expect(html).toContain('data-testid="still-valued"');
   expect([...html.matchAll(/data-testid="still-valued"[\s\S]*?<\/g>/g)][0]?.[0].match(/data-lgd="(\d+)"/g)).toEqual(['data-lgd="110"', `data-lgd="${JAIPUR}"`]);
-  for (const value of ["410", "650"]) expect(html).toContain(`>${value}</text>`);
+  expect(html).toContain(">650</text>");
+  expect(html).not.toContain(">410</text>");
   const listed = html.split('data-testid="map-district-list"')[1] ?? "";
   expect(listed.indexOf(TEXTS.u0016)).toBeLessThan(listed.indexOf(TEXTS.u0017));
   expect(listed).toContain(TEXTS.u0015);
@@ -254,4 +261,81 @@ test("at 390 and 1440 the map fills its column and stays inside it, and the rend
       await page.locator('[data-testid="places-map"]').screenshot({ path: testInfo.outputPath(`places-map-${viewport}-${name}.png`) });
     }
   }
+});
+
+const CAPTION_PX = 12;
+const PARITY_LABEL_MOST = 48;
+const HYDRATED = [
+  "<script>",
+  "for (const svg of document.querySelectorAll('svg[data-fit]')) {",
+  "const width = svg.getBoundingClientRect().width;",
+  "if (width > 0 && svg.parentElement) svg.parentElement.style.setProperty('--k', String(svg.viewBox.baseVal.width / width));",
+  "}",
+  "</script>"
+].join(" ");
+
+function overlaid(spec: Record<string, unknown>, frame: MapBox): string {
+  const map = parseShape(mapLayerSpecShape, spec);
+  const overlay = createElement(PlacesOverlay, { spec: map, frame, marks: shownMarks(map, map.places.length, 0), values: [], files: { relief: RELIEF, rivers: RIVERS }, waters: null, named: [], nameOf: (ref: string) => TEXTS[ref] ?? "" });
+  const base = `<svg viewBox="${viewBoxOf(frame)}" class="block h-auto w-full" data-fit="" data-testid="general-map"></svg>`;
+  return `<div class="relative overflow-hidden" data-testid="places-map">${base}${renderToStaticMarkup(overlay)}</div>`;
+}
+
+function measured() {
+  const probe = document.createElement("span");
+  probe.style.fontSize = "var(--text-caption)";
+  document.body.append(probe);
+  const caption = parseFloat(getComputedStyle(probe).fontSize);
+  probe.remove();
+  const map = document.querySelector('[data-testid="general-map"]');
+  const labels = [...document.querySelectorAll<SVGTextElement>('[data-testid="places-map"] text')].map((text) => {
+    const ctm = text.getScreenCTM();
+    const scale = ctm ? Math.hypot(ctm.a, ctm.b) : 0;
+    return { text: text.textContent ?? "", size: parseFloat(getComputedStyle(text).fontSize) * scale, height: text.getBBox().height * scale, box: text.getBoundingClientRect().height };
+  });
+  return { caption, k: map?.parentElement ? getComputedStyle(map.parentElement).getPropertyValue("--k").trim() : "", inMap: map?.querySelectorAll("text").length ?? -1, labels };
+}
+
+test("every text of a places map draws at the caption size at 390, 1440 and 1920, with JavaScript off and on", async ({ browser }) => {
+  const values = [{ district: 110, value: 410, reading: "u0017" }, { district: JAIPUR, value: 650, reading: "u0016" }];
+  const sanganeri = parseShape(mapLayerSpecShape, SANGANERI);
+  const maps = {
+    sanganeri: drawn(stilled(SANGANERI)),
+    parts: drawn(stilled({ ...PARTS, districts: { valueLabel: "u0015", values } })),
+    "sanganeri with its layers": overlaid(SANGANERI, mapLayerFrame(sanganeri)),
+    "India with its layers": overlaid(SANGANERI, WHOLE_MAP)
+  };
+  for (const javaScriptEnabled of [false, true]) {
+    const context = await browser.newContext({ javaScriptEnabled });
+    const page = await context.newPage();
+    for (const [viewport, column] of [[390, 358], [1440, 718], [1920, 1000]] as const) {
+      await page.setViewportSize({ width: viewport, height: 1200 });
+      for (const [name, html] of Object.entries(maps)) {
+        await page.setContent(primitivesPage(`<style>${SHIM}</style><main style="width:${column}px;margin:0 16px">${html}</main>${HYDRATED}`));
+        const found = await page.evaluate(measured);
+        const where = `${name} at ${viewport} with JavaScript ${javaScriptEnabled ? "on" : "off"}`;
+        expect(found.caption, where).toBe(CAPTION_PX);
+        expect(found.k === "", where).toBe(!javaScriptEnabled);
+        expect(found.inMap, where).toBe(0);
+        expect(found.labels.length, where).toBeGreaterThan(0);
+        for (const label of found.labels) {
+          expect(label.size, `${where}: ${label.text}`).toBeCloseTo(CAPTION_PX, 0);
+          expect(label.height, `${where}: ${label.text}`).toBeLessThanOrEqual(CAPTION_PX * 1.6);
+          if (!name.startsWith("India")) expect(label.box, `${where}: ${label.text}`).toBeLessThanOrEqual(PARITY_LABEL_MOST);
+        }
+      }
+    }
+    await context.close();
+  }
+});
+
+test("a places map draws no layer label outside its frame, so a whole-India label never sits clipped in a town's map", () => {
+  const frame = mapLayerFrame(parseShape(mapLayerSpecShape, SANGANERI));
+  expect(riverLabels(RIVERS, frame, [])).toEqual([]);
+  expect(rangeLabels(RELIEF, frame)).toEqual([]);
+  expect(riverLabels(RIVERS, WHOLE_MAP, []).map((label) => label.text)).toContain("Brahmaputra");
+  expect(rangeLabels(RELIEF, WHOLE_MAP).map((label) => label.text)).toContain("Western Ghats");
+  const html = overlaid(SANGANERI, frame);
+  for (const text of ["Western Ghats", "Eastern Ghats", "Brahmaputra", "Aravalli Range", "Indo-Gangetic Plain"]) expect(html).not.toContain(`>${text}</text>`);
+  for (const name of ["Sanganer", "Jaipur", "Bagru", "Amber"]) expect(html).toContain(`>${name}</text>`);
 });

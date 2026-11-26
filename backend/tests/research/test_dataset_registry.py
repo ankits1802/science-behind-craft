@@ -31,7 +31,7 @@ RECORD_FIELDS = (
 
 def test_every_dataset_has_one_record_of_one_shape() -> None:
     entries = registry_entries(registry_rows())
-    assert len({entry.code for entry in entries}) == len(entries) == 16
+    assert len({entry.code for entry in entries}) == len(entries) == 17
     assert {entry.build for entry in entries} == set(DATASET_BUILDS) - {"contributed"}
     assert all(entry.landing_url and entry.crs and entry.version for entry in entries)
 
@@ -55,7 +55,7 @@ def test_the_mineral_deposits_are_one_record_shared_by_both_builds() -> None:
     assert minerals["source"]["code"] == "USGS_MRDS"
 
 
-@pytest.mark.parametrize("name", ["rivers.json", "relief.json", "minerals.json"])
+@pytest.mark.parametrize("name", ["rivers.json", "relief.json", "minerals.json", "waters.json"])
 def test_each_physical_layer_carries_its_dataset_s_whole_record(name: str) -> None:
     body = json.loads((LAYERS / name).read_text(encoding="utf-8"))
     rows = body.get("datasets") or [body["source"]]

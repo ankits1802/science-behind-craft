@@ -1,27 +1,30 @@
 import type { MapBox } from "@/components/map/basemap";
-import { HALO_WIDTH, LABEL_SIZE } from "@/components/map/MapCanvas";
 import { ringRadii } from "@/components/map/mapDistance";
-import { RotatedLabel } from "@/components/map/physical/RotatedLabel";
+import { LABEL_FONT, LabelText, MapAt } from "@/components/map/MapLabelLayer";
+import { inFrame, mapLabel } from "@/components/map/placesMapLabels";
 import { project, type Projected } from "@/components/map/projection";
 import { largestValue, placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
 import type { MapRingSpec, MapRouteSpec, ShownMarks } from "@/lib/componentSpecsMapLayer";
-import { formatNumber } from "@/lib/measure";
 
 export const PIN_MIN = 10;
 export const LABEL_GAP = 5;
+export const CURRENT_GAP = 4;
 export const HEAD = 9;
 export const BEND = 0.16;
 export const EDGE_SHARE = 0.68;
-export const RING_LABEL_AT = Math.SQRT1_2;
 
 export type PlacedPin = Projected & { r: number };
 export type ValueMark = { lgd: number; x: number; y: number; text: string };
 
-const TEXT_STYLE = { fontSize: LABEL_SIZE, strokeWidth: HALO_WIDTH };
+const ORIGIN: Projected = { x: 0, y: 0 };
+
+export function pinRadius(place: MapPlace, largest: number): number {
+  return Math.max(PIN_MIN, placeRadius(place.value, largest));
+}
 
 export function placedPins(places: readonly MapPlace[], scale: number): PlacedPin[] {
   const largest = largestValue(places);
-  return places.map((place) => ({ ...project(place.longitude, place.latitude), r: Math.max(PIN_MIN, placeRadius(place.value, largest)) * scale }));
+  return places.map((place) => ({ ...project(place.longitude, place.latitude), r: pinRadius(place, largest) * scale }));
 }
 
 const unit = (from: Projected, to: Projected): Projected => {
@@ -65,7 +68,7 @@ export function MapRoutes({ routes, pins, marks, scale }: { routes: readonly Map
   );
 }
 
-export function MapRings({ rings, places, marks, scale }: { rings: readonly MapRingSpec[]; places: readonly MapPlace[]; marks: ShownMarks; scale: number }) {
+export function MapRings({ rings, places, marks }: { rings: readonly MapRingSpec[]; places: readonly MapPlace[]; marks: ShownMarks }) {
   return (
     <g className="pointer-events-none" data-testid="map-rings">
       {rings.map((ring, at) => {
@@ -77,9 +80,6 @@ export function MapRings({ rings, places, marks, scale }: { rings: readonly MapR
           <g key={`${ring.place}-${ring.radiusKm}`} data-testid="map-ring" data-km={ring.radiusKm}>
             <ellipse cx={centre.x} cy={centre.y} rx={rx} ry={ry} fill="none" stroke="var(--map-selection-halo)" strokeWidth={4} vectorEffect="non-scaling-stroke" />
             <ellipse cx={centre.x} cy={centre.y} rx={rx} ry={ry} fill="none" stroke="var(--map-selection)" strokeWidth={1.4} strokeDasharray="5 4" vectorEffect="non-scaling-stroke" />
-            <RotatedLabel x={centre.x + rx * RING_LABEL_AT} y={centre.y + ry * RING_LABEL_AT} dx={4 * scale} angle={0} anchor="start" weight="medium">
-              {`${formatNumber(ring.radiusKm)} km`}
-            </RotatedLabel>
           </g>
         );
       })}
@@ -87,50 +87,38 @@ export function MapRings({ rings, places, marks, scale }: { rings: readonly MapR
   );
 }
 
-type PinProps = { places: readonly MapPlace[]; pins: readonly PlacedPin[]; marks: ShownMarks; frame: MapBox; scale: number; nameOf: (ref: string) => string };
-
-function PinLabel({ pin, name, frame, scale }: { pin: PlacedPin; name: string; frame: MapBox; scale: number }) {
+function PinName({ name, radius, late }: { name: string; radius: number; late: boolean }) {
   if (!name) return null;
-  const late = pin.x > frame.x + frame.width * EDGE_SHARE;
-  const gap = pin.r + LABEL_GAP * scale;
-  return (
-    <RotatedLabel x={pin.x} y={pin.y} angle={0} dx={late ? -gap : gap} anchor={late ? "end" : "start"} weight="medium">
-      {name}
-    </RotatedLabel>
-  );
+  const gap = radius + LABEL_GAP;
+  return <LabelText label={mapLabel("name", ORIGIN, name, { anchor: late ? "end" : "start", dx: late ? -gap : gap, weight: "medium" })} />;
 }
 
-export function PlacePins({ places, pins, marks, frame, scale, nameOf }: PinProps) {
+type PinProps = { places: readonly MapPlace[]; marks: ShownMarks; frame: MapBox; nameOf: (ref: string) => string };
+
+export function PlacePins({ places, marks, frame, nameOf }: PinProps) {
+  const largest = largestValue(places);
   return (
     <g data-testid="map-places">
       {places.map((place, at) => {
-        const pin = pins[at];
-        if (!marks.places.has(at) || !pin) return null;
+        const centre = project(place.longitude, place.latitude);
+        if (!marks.places.has(at) || !inFrame(frame, centre)) return null;
         const current = marks.current.has(at);
+        const radius = pinRadius(place, largest);
+        const late = centre.x > frame.x + frame.width * EDGE_SHARE;
         return (
-          <g key={place.reading} data-testid="map-place" data-current={current ? "" : undefined}>
-            {current ? <circle cx={pin.x} cy={pin.y} r={pin.r + 4 * scale} fill="none" stroke="var(--map-selection-halo)" strokeWidth={5} vectorEffect="non-scaling-stroke" /> : null}
-            {current ? <circle cx={pin.x} cy={pin.y} r={pin.r + 4 * scale} fill="none" stroke="var(--map-selection)" strokeWidth={2} vectorEffect="non-scaling-stroke" /> : null}
-            <circle cx={pin.x} cy={pin.y} r={pin.r} fill={place.value === null ? "var(--map-marker)" : "var(--chart-series)"} stroke="var(--map-marker-ring)" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
-            <text x={pin.x} y={pin.y} textAnchor="middle" dominantBaseline="central" className="pointer-events-none font-ui font-semibold [font-variant-numeric:lining-nums_tabular-nums]" fill={place.value === null ? "var(--map-label)" : "var(--map-marker)"} style={{ fontSize: LABEL_SIZE }}>
-              {at + 1}
-            </text>
-            <PinLabel pin={pin} name={nameOf(place.name)} frame={frame} scale={scale} />
-          </g>
+          <MapAt key={place.reading} frame={frame} at={centre}>
+            <g data-testid="map-place" data-current={current ? "" : undefined}>
+              {current ? <circle r={radius + CURRENT_GAP} fill="none" stroke="var(--map-selection-halo)" strokeWidth={5} /> : null}
+              {current ? <circle r={radius + CURRENT_GAP} fill="none" stroke="var(--map-selection)" strokeWidth={2} /> : null}
+              <circle r={radius} fill={place.value === null ? "var(--map-marker)" : "var(--chart-series)"} stroke="var(--map-marker-ring)" strokeWidth={1.5} />
+              <text textAnchor="middle" dominantBaseline="central" className="font-ui font-semibold [font-variant-numeric:lining-nums_tabular-nums]" fill={place.value === null ? "var(--map-label)" : "var(--map-marker)"} style={{ fontSize: LABEL_FONT }} data-map-label="">
+                {at + 1}
+              </text>
+              <PinName name={nameOf(place.name)} radius={radius} late={late} />
+            </g>
+          </MapAt>
         );
       })}
-    </g>
-  );
-}
-
-export function ValueLabels({ values }: { values: readonly ValueMark[] }) {
-  return (
-    <g className="pointer-events-none" data-testid="map-district-values">
-      {values.map((value) => (
-        <text key={value.lgd} x={value.x} y={value.y} textAnchor="middle" dominantBaseline="central" fill="var(--map-label)" stroke="var(--map-label-halo)" strokeLinejoin="round" paintOrder="stroke" className="font-ui font-semibold [font-variant-numeric:lining-nums_tabular-nums]" style={TEXT_STYLE}>
-          {value.text}
-        </text>
-      ))}
     </g>
   );
 }

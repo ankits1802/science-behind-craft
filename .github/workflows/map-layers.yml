@@ -22,13 +22,15 @@ env:
   NATURAL_EARTH_MIRROR: https://naturalearth.s3.amazonaws.com/10m_physical
   AGENT: "KalaVigyan map layers build (GitHub Actions)"
   ETOPO_URL: "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
+  ETOPO_MIRROR: "https://upwell.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
   MRDS_URL: https://mrdata.usgs.gov/mrds/mrds-csv.zip
+  OSM_URL: https://download.geofabrik.de/asia/india-latest.osm.pbf
 
 jobs:
   build:
-    name: Rebuild the rivers, relief and mineral layers from their downloads and test the relief bands
+    name: Rebuild the rivers, relief, mineral and small waters layers from their downloads and test them
     runs-on: ubuntu-26.04
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
@@ -38,6 +40,13 @@ jobs:
         run: >-
           python -m pip install --disable-pip-version-check -e etl/geo
           pytest pydantic pydantic-settings "sqlalchemy>=2.1.9" pgvector geoalchemy2
+      - name: Install osmium
+        run: sudo apt-get update && sudo apt-get install -y osmium-tool
+      - name: Keep the ETOPO1 grid between runs, as NOAA's ERDDAP servers at times refuse the runner
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: downloads/etopo1_india.asc
+          key: etopo1-ice-india-v1
       - name: Download Natural Earth, ETOPO1 and the USGS mineral sites
         shell: bash
         run: |
@@ -49,9 +58,13 @@ jobs:
             unzip -q -o "downloads/$name.zip" -d "downloads/$name"
             test -f "downloads/$name/$name.shp" || { echo "::error::$name.zip holds no $name.shp"; exit 1; }
           done
-          fetch downloads/etopo1_india.asc "$ETOPO_URL"
+          test -s downloads/etopo1_india.asc || fetch downloads/etopo1_india.asc "$ETOPO_URL" || fetch downloads/etopo1_india.asc "$ETOPO_MIRROR"
           head -c 200 downloads/etopo1_india.asc | grep -qi "ncols" || { echo "::error::the ETOPO1 download is not an ESRI ASCII grid"; exit 1; }
           fetch downloads/mrds-csv.zip "$MRDS_URL"
+          fetch downloads/india-latest.osm.pbf "$OSM_URL"
+          osmium tags-filter downloads/india-latest.osm.pbf w/waterway=river,stream,dam n/waterway=dam a/water=reservoir a/landuse=reservoir -o downloads/india-waters.osm.pbf --overwrite
+          osmium export downloads/india-waters.osm.pbf -o downloads/india-waters.geojsonseq -f geojsonseq --add-unique-id=type_id --overwrite
+          test -s downloads/india-waters.geojsonseq || { echo "::error::the OpenStreetMap export holds no waters"; exit 1; }
           ls -la downloads
       - name: Rebuild the layers and mirror the measured ones into the API
         working-directory: tools
@@ -65,23 +78,36 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          python -m pytest -q -rs tests/test_maplayers_relief.py tests/test_maplayers.py | tee ../map-layers-tests.txt
+          python -m pytest -q -rs tests/test_maplayers_relief.py tests/test_maplayers.py tests/test_maplayers_waters.py tests/test_maplayers_waters_files.py | tee ../map-layers-tests.txt
           if grep -q "SKIPPED" ../map-layers-tests.txt; then echo "::error::a map layer test was skipped, so the relief bands were not checked"; exit 1; fi
       - name: Say what changed
+        if: always()
         shell: bash
         run: |
           {
             echo "## Rebuilt map layers"
             echo
             git diff --stat -- frontend/public/layers backend/app/data/layers
+            echo
+            echo "## Small waters"
+            echo
+            du -sh frontend/public/layers/waters || true
+            ls frontend/public/layers/waters | wc -l || true
+            ls -S -l frontend/public/layers/waters | head -6 || true
+            grep -l -e '"Suran"' -e 'Amanisha' frontend/public/layers/waters/*.json || true
+            grep -o '"name":"[^"]*","kind":"[^"]*","districts":\[449[^]]*\][^}]*' frontend/public/layers/waters/e068n22.json frontend/public/layers/waters/e070n22.json | head -20 || true
+            grep -o '"name":"[^"]*","kind":"[^"]*","districts":\[102[^]]*\][^}]*' frontend/public/layers/waters/e074n26.json | head -20 || true
+            grep -o '"ref":"[^"]*","name":"[^"]*","namedBy":"[^"]*","longitude":70\.1[^}]*' frontend/public/layers/waters/e070n22.json | head -5 || true
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Keep the rebuilt layers
+        if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: map-layers-${{ github.run_id }}
           path: |
             frontend/public/layers
             backend/app/data/layers
+            frontend/lib/server/watersTiles.ts
             map-layers.txt
             map-layers-tests.txt
           retention-days: 30

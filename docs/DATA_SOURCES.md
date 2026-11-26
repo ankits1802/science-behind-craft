@@ -52,6 +52,7 @@ Owner direction: open datasets only, nothing that needs registration or a login;
 | `GLIM_1_0_05DEG` | Global Lithological Map Database v1.0 (gridded to 0.5 degree) | Universitat Hamburg, via PANGAEA | 1.0 | 2012 | 0.5 degree | EPSG:4326 |
 | `WIKIDATA_RIVER_NAMES` | Wikidata river items: English names, mouths and sources | Wikidata, Wikimedia Foundation | set per run: the date the names were read | the same | item coordinates (river mouth and river source) | EPSG:4326 |
 | `OSM_RIVER_NAMES` | OpenStreetMap river names (waterway=river, India extract) | OpenStreetMap contributors, India extract by Geofabrik | set per run: the date the names were read | the same | way geometry, matched to HydroRIVERS reaches within 1 km | EPSG:4326 |
+| `OSM_WATERWAYS` | OpenStreetMap rivers, streams and dams (waterway=river, stream and dam, with reservoirs; India extract) | OpenStreetMap contributors, India extract by Geofabrik | set per build: the date the extract was read | the same | way geometry, simplified to 0.002 degree; a dam as a point on its own way | EPSG:4326 |
 
 ## Licence, attribution and redistribution
 
@@ -73,6 +74,7 @@ Owner direction: open datasets only, nothing that needs registration or a login;
 | `GLIM_1_0_05DEG` | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Yes | Hartmann and Moosdorf (2012), GLiM | https://doi.pangaea.de/10.1594/PANGAEA.788537?format=textfile |
 | `WIKIDATA_RIVER_NAMES` | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | Yes | River names from Wikidata | https://query.wikidata.org/sparql |
 | `OSM_RIVER_NAMES` | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/): the names it gives are a derived database under the ODbL, kept in their own file and row | Yes, under the ODbL, apart from the CC-licensed data | © OpenStreetMap contributors | https://download.geofabrik.de/asia/india-latest.osm.pbf |
+| `OSM_WATERWAYS` | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/): the small waters layer (`frontend/public/layers/waters.json` and its tiles) is a derived database under the ODbL, kept in its own files and row | Yes, under the ODbL, apart from the CC-licensed data | © OpenStreetMap contributors | https://download.geofabrik.de/asia/india-latest.osm.pbf |
 | `ETOPO1_ICE` | [Public domain (U.S. Government work)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem:316) | Yes | NOAA National Centers for Environmental Information, ETOPO1 | https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.html |
 | `NATURAL_EARTH_10M_PHYSICAL` | [Public domain](https://www.naturalearthdata.com/about/terms-of-use/) | Yes | Made with Natural Earth. | https://naciscdn.org/naturalearth/10m/physical/ |
 
@@ -92,6 +94,7 @@ Owner direction: open datasets only, nothing that needs registration or a login;
 - `GLIM_1_0_05DEG`: Hartmann, J., Moosdorf, N. (2012). Global Lithological Map Database v1.0 (gridded to 0.5 degree spatial resolution). PANGAEA. https://doi.org/10.1594/PANGAEA.788537
 - `WIKIDATA_RIVER_NAMES`: Wikidata contributors. Wikidata, the free knowledge base. Wikimedia Foundation. https://www.wikidata.org/ (each name cites its item, `refs` in the names file).
 - `OSM_RIVER_NAMES`: OpenStreetMap contributors. OpenStreetMap, available under the Open Database License. https://www.openstreetmap.org/copyright (each name cites its ways, `refs` in the names file).
+- `OSM_WATERWAYS`: OpenStreetMap contributors. OpenStreetMap, available under the Open Database License. https://www.openstreetmap.org/copyright (each named dam cites its way, `ref` in its tile).
 - `ETOPO1_ICE`: Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. https://doi.org/10.7289/V5C8276M
 - `NATURAL_EARTH_10M_PHYSICAL`: Natural Earth. Free vector and raster map data at naturalearthdata.com.
 
@@ -525,6 +528,49 @@ artifact into `backend/app/data/rivers/` (`river_names.wikidata.json`,
   that has four letters or more and is not an ordinary English word (decision 0144); an
   OpenStreetMap name's one-word form ("Devi" of "Devi Nadi") is too often a person's or a god's
   name to be checked alone.
+
+### Small rivers and dams: OpenStreetMap, in tiles of two degrees (decision 0239)
+
+Natural Earth's 1:10m rivers leave out a town's small river: the Suran below the dam at Tapar
+(Kutch Ajrakh) and the Dravyavati at Sanganer are not in them, and the HydroRIVERS basins the site
+holds keep only reaches with 100 km2 upstream and are served only to signed-in readers. The base of
+a zoomed map therefore also draws OpenStreetMap's waters.
+
+- **Chosen over HydroRIVERS and the dam registers.** HydroSHEDS data may be shown only inside a
+  derived product and never as a download, and a static layer file is a download. One open dataset,
+  OpenStreetMap (ODbL), names the rivers, streams, dams and reservoirs together, and its India extract
+  is already read for river names (decision 0153); Kutch Ajrakh's shell drew the Suran and the dam at
+  Tapar from it. GOODD (CC BY 4.0) places dams but names none; GRanD and India's National Register of
+  Large Dams were not read this round.
+- **What is read.** `tools/maplayers_build.py` with the Map layers workflow: the Geofabrik India
+  extract filtered by osmium (`w/waterway=river,stream,dam n/waterway=dam a/water=reservoir
+  a/landuse=reservoir`) and exported as GeoJSON sequences. A way of `waterway=river` or `stream` is
+  named by its `name:en`, else by its `name` in Latin script (`geo_etl.osm_rivers.shown_name`);
+  ways of one name that meet end to end are one river, its id the least way id. An unnamed river way
+  is kept as a plain line, never named. A dam is named by its own name, else by the one named
+  reservoir its way touches or comes within 0.0005 degree (about 55 m) of, and drawn at the middle of
+  its longest line; a dam that names no reservoir, or two, is left out. Each river carries the
+  districts it crosses.
+- **The site's register.** A river agrees with the site's river register when one of its name forms
+  (`app.data.river_names.name_forms`, the bracketed and bare forms) is one of a register river's and
+  they share a district: the register is the river names datasets (`WIKIDATA_RIVER_NAMES`,
+  `OSM_RIVER_NAMES`) and the curated dossiers' river places with their district. A river that agrees
+  answers to the register's names too (`also`), with each agreement recorded (`agrees`): the
+  Dhamadka stream in Kachchh answers to "Suran" by Kutch Ajrakh's "Dhamadka River (Suran)".
+- **Files.** Each line simplified at 0.002 degree (`WATERS_TOLERANCE`), coordinates to 0.001 degree,
+  dams to 0.0001 degree, cut into tiles of two degrees (`frontend/public/layers/waters/<e068n22>.json`)
+  with an index (`waters.json`: the dataset's record with the day read and the extract's SHA-256,
+  each tile's bounds and counts), a names file for the API (`backend/app/data/layers/waters-names.json`)
+  and the server's import of every tile (`frontend/lib/server/watersTiles.ts`), all regenerated by the
+  build. The build of 2026-11-26 (Map layers run 45779401594) wrote 108 tiles of 3.5 MB in all, the
+  largest 428 KB (76 to 78 degrees east, 10 to 12 north), 20,328 named river rows, 1,635 named dams,
+  19,063 river names and 1,005 dam names.
+- **Where they are drawn.** Only the web server reads the tiles: it cuts a zoomed places map's still
+  (a frame of at most 35 per cent of India's width) and a coded map's still from the tiles of its
+  frame, so a reader's phone loads no tile. Each still that draws them carries OpenStreetMap's credit.
+- **Licence.** The waters files are a derived database under the ODbL, credited "© OpenStreetMap
+  contributors", kept in their own files and row and never merged into the CC BY tables (as the
+  river names are).
 
 ### Groundwater
 

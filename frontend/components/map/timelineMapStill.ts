@@ -1,12 +1,13 @@
 import { viewBoxOf, type MapBox } from "@/components/map/basemap";
 import { INDIA_BOUNDS } from "@/components/map/indiaBounds";
 import { placesFrame, type FramedPoint } from "@/components/map/placesFrame";
+import type { StillWaters } from "@/components/map/waterLayer";
 import { districtLayer, foundPoints, homeDistricts, physicalLayers, type TimelineMapSpec } from "@/lib/componentSpecsTimelineMap";
 import type { MineralKeyRow } from "@/lib/mapPhysical";
 import type { BoundaryNote, RegionDataset } from "@/lib/regionContract";
 import type { LayerLegend } from "@/lib/regionView";
 
-export type LayerEmphasis = { layers: readonly string[]; rivers: readonly string[] };
+export type LayerEmphasis = { layers: readonly string[]; rivers: readonly string[]; dams?: readonly string[] };
 export type LayerNames = { physical: readonly string[]; district: string | null; home: readonly number[]; base?: boolean; valued?: readonly number[]; emphasis?: LayerEmphasis };
 export type StillRiver = { rank: number; d: string };
 export type StillDistrict = { lgd: number; d: string; x: number; y: number };
@@ -25,6 +26,7 @@ export type MapStill = {
   named?: string | null;
   credits?: RegionDataset[] | null;
   boundary?: BoundaryNote | null;
+  waters?: StillWaters | null;
 };
 export type TimelineMapDrawn = { frame: MapBox; names: LayerNames; still: MapStill | null };
 
@@ -51,6 +53,7 @@ export function timelineMapDrawn(map: TimelineMapSpec): TimelineMapDrawn {
 }
 
 export function stillKey(frame: MapBox, names: LayerNames): string {
-  const base = names.base ? ["base", (names.valued ?? []).join(",")] : [];
+  const asked = names.emphasis ? [...names.emphasis.rivers, "|", ...(names.emphasis.dams ?? [])].join(",") : "";
+  const base = names.base ? ["base", (names.valued ?? []).join(","), asked] : [];
   return [viewBoxOf(frame), names.physical.join(","), names.home.join(","), ...base].join("|");
 }

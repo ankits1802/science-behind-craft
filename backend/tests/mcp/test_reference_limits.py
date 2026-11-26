@@ -86,6 +86,9 @@ TOLERANCES = {
     "a river basin's reaches, each with its ends kept so junctions stay joined": (
         ("etl/geo/geo_etl/topology.py", "SIMPLIFY_DEGREES"),
     ),
+    "small rivers, streams and dams from OpenStreetMap, in tiles of two degrees": (
+        ("tools/maplayers/waters.py", "WATERS_TOLERANCE"),
+    ),
 }
 
 

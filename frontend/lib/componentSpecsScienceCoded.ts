@@ -1,6 +1,8 @@
+import type { CodedBase, CodedDam, CodedRiverPath, CodedStillBase } from "@/components/map/codedStillCut";
 import { headShape, svgMarkup, themesShape, type DrawingThemes, type GeneralHead } from "@/lib/componentSpecsGeneral";
 import { unitRef } from "@/lib/componentSpecsScienceParts";
-import { integer, list, matching, number, object, oneOf, optional, type Shape } from "@/lib/shape";
+import { mapBoxShape, STILL_PATH, watersShape } from "@/lib/mapStillShape";
+import { integer, list, matching, nullable, number, object, oneOf, optional, positive, text, type Shape } from "@/lib/shape";
 
 export const CODED_FIGURE_KIND = "coded_figure";
 export const CODED_LIBRARIES = ["d3", "three"] as const;
@@ -11,7 +13,7 @@ export type MapLayer = (typeof MAP_LAYERS)[number];
 export type CodedValue = { key: string; value: number; reading: string };
 export type CodedText = { key: string; unit: string };
 export type CodedFilm = { key: string; src: string };
-export type CodedMap = { layers: MapLayer[]; districts: number[] };
+export type CodedMap = { layers: MapLayer[]; districts: number[]; rivers?: string[]; dams?: string[] };
 export type CodedFigureSpec = {
   head: GeneralHead;
   alt: string;
@@ -23,9 +25,25 @@ export type CodedFigureSpec = {
   films?: CodedFilm[];
   still?: string;
   themes?: DrawingThemes;
+  base?: CodedBase;
 };
 
 const codeKey = matching(/^[a-z][a-z0-9_]{0,39}$/, "a key of the code's own");
+const codedStillBaseShape = object<CodedStillBase>({
+  box: mapBoxShape,
+  grid: positive,
+  land: nullable(STILL_PATH),
+  relief: nullable(list(STILL_PATH)),
+  rivers: nullable(STILL_PATH),
+  districts: nullable(STILL_PATH),
+  homes: nullable(STILL_PATH),
+  waters: nullable(watersShape)
+});
+export const codedBaseShape = object<CodedBase>({
+  still: codedStillBaseShape,
+  rivers: list(object<CodedRiverPath>({ name: text, d: STILL_PATH })),
+  dams: list(object<CodedDam>({ name: text, x: number, y: number }))
+});
 const filmSource = matching(/^\/monographs\/[A-Za-z0-9][A-Za-z0-9._/-]*\.(mp4|webm)$/, "a film the site serves");
 
 export const codedFigureShape: Shape<CodedFigureSpec> = object<CodedFigureSpec>({
@@ -35,11 +53,18 @@ export const codedFigureShape: Shape<CodedFigureSpec> = object<CodedFigureSpec>(
   values: list(object<CodedValue>({ key: codeKey, value: number, reading: unitRef })),
   texts: list(object<CodedText>({ key: codeKey, unit: unitRef })),
   libraries: optional(list(oneOf(CODED_LIBRARIES))),
-  map: optional(object<CodedMap>({ layers: list(oneOf(MAP_LAYERS)), districts: list(integer) })),
+  map: optional(object<CodedMap>({ layers: list(oneOf(MAP_LAYERS)), districts: list(integer), rivers: optional(list(text)), dams: optional(list(text)) })),
   films: optional(list(object<CodedFilm>({ key: codeKey, src: filmSource }))),
   still: optional(svgMarkup),
-  themes: optional(themesShape)
+  themes: optional(themesShape),
+  base: optional(codedBaseShape)
 });
+
+const DATA_MAP = /^<svg\s[^>]*\bdata-map(?=[\s=/>])/;
+
+export function drawsOnBase(still: string | undefined): boolean {
+  return still !== undefined && DATA_MAP.test(still.trimStart());
+}
 
 export function codedWords(figure: CodedFigureSpec, said: (ref: string) => string): Record<string, string> {
   const words: Record<string, string> = {};

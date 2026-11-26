@@ -1,3 +1,4 @@
+import type { CodedDam, CodedRiverPath } from "@/components/map/codedStillCut";
 import { codedValues, type CodedFigureSpec, type CodedLibrary } from "@/lib/componentSpecsScienceCoded";
 import { SANDBOX_ATTRIBUTE } from "@/lib/explainerPlay";
 import { sandboxDocument, type FrameLook, type FramePieces } from "@/lib/sandboxFrame";
@@ -5,6 +6,7 @@ import { sandboxDocument, type FrameLook, type FramePieces } from "@/lib/sandbox
 export const WORDS_ELEMENT_ID = "kv-words";
 export const FILMS_ELEMENT_ID = "kv-films";
 export const MAP_ELEMENT_ID = "kv-map";
+export const DAM_SHARE = 0.012;
 export const CODED_SANDBOX = SANDBOX_ATTRIBUTE;
 export const LIBRARY_PATHS: Readonly<Record<CodedLibrary, string>> = {
   d3: "/monographs/kit/vendor/d3-7.9.2.min.js",
@@ -25,6 +27,7 @@ export type MapBase = {
   states: string | null;
   districts: string | null;
   homes: MapHome[];
+  named?: { rivers: CodedRiverPath[]; dams: CodedDam[] };
 };
 
 const RELIEF_STEPS = [1, 2, 3, 4, 5, 6, 7];
@@ -43,6 +46,8 @@ export const FRAME_KIT_SHEET = [
   ".kv-map-river{fill:none;stroke:var(--map-river);stroke-width:1;vector-effect:non-scaling-stroke}",
   ".kv-map-salt{fill:var(--map-salt);stroke:none}",
   ".kv-map-home{fill:none;stroke:var(--terracotta);stroke-width:1.5;vector-effect:non-scaling-stroke}",
+  ".kv-map-river-named{fill:none;stroke:var(--map-river);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}",
+  ".kv-map-dam{fill:var(--map-label);stroke:var(--map-label-halo);stroke-width:1;vector-effect:non-scaling-stroke}",
   ...RELIEF_STEPS.map((step) => `.kv-map-relief-${step}{fill:var(--elevation-${step});stroke:none}`)
 ].join("");
 
@@ -71,13 +76,16 @@ export const FRAME_MAP = [
   `const source = document.getElementById(${JSON.stringify(MAP_ELEMENT_ID)});`,
   "if (!source) return;",
   "const base = JSON.parse(source.textContent);",
+  "const named = base.named || { rivers: [], dams: [] };",
   'const NS = "http://www.w3.org/2000/svg";',
   "const across = Math.cos(((base.bounds.south + base.bounds.north) / 2) * Math.PI / 180);",
   "const unit = (base.width - base.padding * 2) / ((base.bounds.east - base.bounds.west) * across);",
   "const project = function (longitude, latitude) { return { x: base.padding + (longitude - base.bounds.west) * across * unit, y: base.padding + (base.bounds.north - latitude) * unit }; };",
   "const box = function (west, south, east, north, margin) { const a = project(west, north); const b = project(east, south); const m = margin || 0; return [a.x - m, a.y - m, b.x - a.x + 2 * m, b.y - a.y + 2 * m].map(function (n) { return Math.round(n * 10) / 10; }).join(\" \"); };",
   'const shape = function (d, name) { const path = document.createElementNS(NS, "path"); path.setAttribute("d", d); path.setAttribute("class", name); return path; };',
-  "const drawn = function () {",
+  `const dam = function (found, width) { const size = width * ${DAM_SHARE}; const mark = document.createElementNS(NS, "rect"); mark.setAttribute("x", found.x - size); mark.setAttribute("y", found.y - size / 3); mark.setAttribute("width", size * 2); mark.setAttribute("height", (size * 2) / 3); mark.setAttribute("class", "kv-map-dam"); return mark; };`,
+  "const drawn = function (svg) {",
+  "const view = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width ? svg.viewBox.baseVal.width : base.width;",
   'const group = document.createElementNS(NS, "g"); group.setAttribute("class", "kv-map-base"); group.setAttribute("aria-hidden", "true");',
   'group.appendChild(shape(base.outline, "kv-map-land"));',
   'for (const band of base.relief) group.appendChild(shape(band.d, "kv-map-relief-" + band.step));',
@@ -85,14 +93,17 @@ export const FRAME_MAP = [
   'if (base.districts) group.appendChild(shape(base.districts, "kv-map-district"));',
   'if (base.states) group.appendChild(shape(base.states, "kv-map-state"));',
   'for (const home of base.homes) group.appendChild(shape(home.d, "kv-map-home"));',
+  'for (const river of named.rivers) group.appendChild(shape(river.d, "kv-map-river-named"));',
+  "for (const found of named.dams) group.appendChild(dam(found, view));",
   'group.appendChild(shape(base.rann, "kv-map-salt"));',
   'group.appendChild(shape(base.outline, "kv-map-outline"));',
   "return group;",
   "};",
   'const kept = function (svg) { const first = svg.firstElementChild; return first !== null && first.getAttribute("class") === "kv-map-base" && first.lastElementChild !== null && first.lastElementChild.getAttribute("d") === base.outline; };',
-  'const lay = function (svg) { if (kept(svg)) return; for (const old of svg.querySelectorAll(":scope > .kv-map-base")) old.remove(); svg.insertBefore(drawn(), svg.firstChild); };',
+  'const lay = function (svg) { if (kept(svg)) return; for (const old of svg.querySelectorAll(":scope > .kv-map-base")) old.remove(); svg.insertBefore(drawn(svg), svg.firstChild); };',
   'const all = function () { for (const svg of document.querySelectorAll("svg[data-map]")) lay(svg); };',
-  "window.kvMap = Object.freeze({ viewBox: base.viewBox, project: project, box: box, places: Object.freeze(base.homes.map(function (home) { return Object.freeze({ lgd: home.lgd, x: home.x, y: home.y }); })) });",
+  "const frozen = function (rows) { return Object.freeze(rows.map(function (row) { return Object.freeze(Object.assign({}, row)); })); };",
+  "window.kvMap = Object.freeze({ viewBox: base.viewBox, project: project, box: box, places: frozen(base.homes.map(function (home) { return { lgd: home.lgd, x: home.x, y: home.y }; })), rivers: frozen(named.rivers), dams: frozen(named.dams) });",
   "new MutationObserver(all).observe(document, { childList: true, subtree: true });",
   "})();"
 ].join(" ");

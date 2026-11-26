@@ -12,6 +12,24 @@ DISTRICTS = Path("frontend/public/boundaries/district-shapes.json")
 REGISTER = Path("etl/geo/data/lgd_register.json")
 OUTPUT = Path("frontend/public/layers")
 SHADE_FILE = "relief-shade.webp"
+WATERS_FILE = "waters.json"
+WATERS_TILES = Path("frontend/public/layers/waters")
+WATERS_NAMES = Path("backend/app/data/layers/waters-names.json")
+WATERS_MODULE = Path("frontend/lib/server/watersTiles.ts")
+RIVER_NAMES = Path("backend/app/data/rivers")
+DOSSIERS = (Path("backend/app/data/curation"), Path("backend/app/data/curation/categories"))
+CHECK_SUFFIX = ".check.json"
+DESCRIPTION = (
+    "Build the map's physical layers: rivers and lakes from Natural Earth 1:10m, relief bands and shaded "
+    "relief from ETOPO1, mineral deposits from the USGS Mineral Resources Data System, and named small "
+    "rivers and dams from OpenStreetMap in tiles of two degrees, each fitted to the Survey of India outline "
+    "and mirrored into the API, which measures each craft place's ground from them. Needs numpy, rasterio, "
+    "shapely and pyogrio (the etl/geo environment)."
+)
+DOWNLOADS_HELP = (
+    "folder holding each Natural Earth zip and its unzipped folder, etopo1_india.asc, mrds-csv.zip, "
+    "india-latest.osm.pbf and its osmium export india-waters.geojsonseq (see maplayers/sources.py for each URL)"
+)
 
 
 def _write(path: Path, body: dict[str, Any]) -> None:
@@ -21,20 +39,8 @@ def _write(path: Path, body: dict[str, Any]) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description=(
-            "Build the map's physical layers: rivers and lakes from Natural Earth 1:10m, relief bands and shaded "
-            "relief from ETOPO1, and mineral deposits from the USGS Mineral Resources Data System, each fitted to "
-            "the Survey of India outline and mirrored into the API, which measures each craft place's ground from "
-            "them. Needs numpy, rasterio, shapely and pyogrio (the etl/geo environment)."
-        )
-    )
-    parser.add_argument(
-        "downloads",
-        type=Path,
-        help="folder holding each Natural Earth zip and its unzipped folder, etopo1_india.asc and mrds-csv.zip "
-        "(see maplayers/sources.py for each URL)",
-    )
+    parser = argparse.ArgumentParser(description=DESCRIPTION)
+    parser.add_argument("downloads", type=Path, help=DOWNLOADS_HELP)
     parser.add_argument(
         "--root", type=Path, default=REPO_ROOT, help="repository root to read from and write into"
     )
@@ -58,7 +64,47 @@ def main(argv: list[str] | None = None) -> int:
     place = Place(BOUNDS, lambda x, y: outline.contains(_point(x, y)), locate)
     sites = read_sites(downloads.folder / MRDS.file, place)
     _write(folder / "minerals.json", minerals_body(sites, downloads.source(MRDS)))
+    _waters(downloads, options.root)
     return _mirrored(folder, options.root)
+
+
+def _waters(downloads: Any, root: Path) -> None:
+    sys.path.append(str(root / "backend"))
+    from app.data.district_register import load_district_codes
+
+    from maplayers.sources import OSM_WATERS, WATERS_EXPORT
+    from maplayers.states import district_polygons
+    from maplayers.waters import read_features
+    from maplayers.waters_body import district_finder, tiles_module, waters_build
+    from maplayers.waters_register import dossier_rivers, named_rivers, register_of
+
+    read_on = downloads.read_on.isoformat()
+    dataset = downloads.source(OSM_WATERS) | {"edition": read_on, "period": read_on}
+    dossiers = [
+        path
+        for folder in DOSSIERS
+        for path in sorted((root / folder).glob("*.json"))
+        if not path.name.endswith(CHECK_SUFFIX)
+    ]
+    register = register_of(
+        [
+            *named_rivers(sorted((root / RIVER_NAMES).glob("river_names.*.json"))),
+            *dossier_rivers(dossiers, load_district_codes()),
+        ]
+    )
+    districts = district_finder(district_polygons(root / DISTRICTS))
+    built = waters_build(read_features(downloads.folder / WATERS_EXPORT), register, districts, dataset)
+    tiles = root / WATERS_TILES
+    tiles.mkdir(parents=True, exist_ok=True)
+    for stale in tiles.glob("*.json"):
+        stale.unlink()
+    for key, body in built.tiles.items():
+        _write(tiles / f"{key}.json", body)
+    _write(root / OUTPUT / WATERS_FILE, built.index)
+    _write(root / WATERS_NAMES, built.names)
+    module = root / WATERS_MODULE
+    module.write_text(tiles_module(built.tiles), encoding="utf-8", newline="\n")
+    print(f"{module.as_posix()} written, {len(built.tiles)} tiles")
 
 
 def _shade(bounds: tuple[float, float, float, float]) -> dict[str, Any]:

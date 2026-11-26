@@ -20,7 +20,7 @@ export const DRAWING_MINERALS = "Drawing the mineral deposits";
 export const NO_EMPHASIS: LayerEmphasis = { layers: [], rivers: [] };
 
 export type LayerParts = { relief: ReactNode; fills: ReactNode; rivers: ReactNode; home: ReactNode };
-export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode; parts: LayerParts; credits: RegionDataset[] };
+export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode; parts: LayerParts; credits: RegionDataset[]; files: Physical };
 export type Physical = { relief: ReliefFile | null; rivers: RiversFile | null; minerals: MineralsFile | null; sites: readonly MineralSite[] };
 
 function usePhysical<K extends "relief" | "rivers" | "minerals">(id: K, names: LayerNames) {
@@ -112,5 +112,5 @@ export function useTimelineMapLayers(names: LayerNames, still: MapStill | null =
     </div>
   );
   const credits = layerCredits([...(relief?.datasets ?? []), ...(rivers?.datasets ?? [])]);
-  return { underlay, overlay: (scale) => <PhysicalOver layers={layers} scale={scale} rivers={emphasis.rivers} />, key, parts, credits };
+  return { underlay, overlay: (scale) => <PhysicalOver layers={layers} scale={scale} rivers={emphasis.rivers} />, key, parts, credits, files: layers };
 }

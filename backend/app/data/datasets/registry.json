@@ -304,6 +304,25 @@
       "landingUrl": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/",
       "url": "https://naciscdn.org/naturalearth/10m/physical/",
       "build": "maplayers"
+    },
+    {
+      "code": "OSM_WATERWAYS",
+      "title": "OpenStreetMap rivers, streams and dams (waterway=river, stream and dam, with reservoirs; India extract)",
+      "publisher": "OpenStreetMap contributors, India extract by Geofabrik",
+      "edition": "set per build: the date the extract was read",
+      "version": "live",
+      "period": "set per build: the date the extract was read",
+      "nativeResolution": "way geometry, simplified to 0.002 degree; a dam as a point on its own way",
+      "crs": "EPSG:4326",
+      "licence": "ODbL 1.0",
+      "licenceUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "© OpenStreetMap contributors",
+      "redistributable": true,
+      "citation": "OpenStreetMap contributors. OpenStreetMap, available under the Open Database License. https://www.openstreetmap.org/copyright",
+      "doi": null,
+      "landingUrl": "https://www.openstreetmap.org/copyright",
+      "url": "https://download.geofabrik.de/asia/india-latest.osm.pbf",
+      "build": "maplayers"
     }
   ]
 }

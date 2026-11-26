@@ -24,7 +24,7 @@ export const PEAK_TIERS: Readonly<Record<string, PeakPlacement>> = {
   "Mount Nun": { tier: 3, side: "start" }
 };
 
-const PEAK_SIZE = 5.2;
+export const PEAK_SIZE = 5.2;
 export const SHADE = "var(--map-hillshade-opacity)";
 export const STRONG_SHADE = "min(1, calc(var(--map-hillshade-opacity) * 1.6))";
 

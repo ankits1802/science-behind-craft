@@ -131,7 +131,7 @@ def test_a_map_asks_for_its_frame_routes_ring_district_values_and_sequence_besid
             {"sequence": [{"text": "u0014", "places": [0]}, {"text": "u0015"}]},
             "shows a place, a route, a ring",
         ),
-        ({"emphasis": {}}, "names a layer or a river"),
+        ({"emphasis": {}}, "names a layer, a river or a dam"),
         ({"emphasis": {"layers": ["sea"]}}, "relief"),
         (
             {

@@ -13,7 +13,10 @@ __all__ = [
     "MINERALS_FILE",
     "RELIEF_FILE",
     "RIVERS_FILE",
+    "WATERS_NAMES_FILE",
+    "WATERS_SCHEMA_VERSION",
     "HeldShapes",
+    "held_dam_names",
     "held_river_names",
     "held_shapes",
 ]
@@ -22,6 +25,8 @@ LAYERS_DIR = DATA_DIR / "layers"
 RELIEF_FILE = "relief.json"
 RIVERS_FILE = "rivers.json"
 MINERALS_FILE = "minerals.json"
+WATERS_NAMES_FILE = "waters-names.json"
+WATERS_SCHEMA_VERSION = 1
 LAYER_FILES = (RELIEF_FILE, RIVERS_FILE, MINERALS_FILE)
 DISTRICT_SHAPES_FILE = DATA_DIR / "district-shapes.json"
 
@@ -43,6 +48,20 @@ def held_shapes() -> HeldShapes:
 
 
 @cache
+def _waters_names() -> dict[str, list[str]]:
+    body = json.loads((LAYERS_DIR / WATERS_NAMES_FILE).read_text(encoding="utf-8"))
+    if body.get("schemaVersion") != WATERS_SCHEMA_VERSION:
+        raise ValueError(f"{WATERS_NAMES_FILE} is schema version {WATERS_SCHEMA_VERSION}")
+    return {"rivers": [str(name) for name in body["rivers"]], "dams": [str(name) for name in body["dams"]]}
+
+
+@cache
 def held_river_names() -> frozenset[str]:
     body = json.loads((LAYERS_DIR / RIVERS_FILE).read_text(encoding="utf-8"))
-    return frozenset(str(label["text"]) for label in body["labels"])
+    labels = frozenset(str(label["text"]) for label in body["labels"])
+    return labels | frozenset(_waters_names()["rivers"])
+
+
+@cache
+def held_dam_names() -> frozenset[str]:
+    return frozenset(_waters_names()["dams"])
