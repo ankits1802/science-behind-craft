@@ -11,17 +11,37 @@ __all__ = [
     "PREVIEW",
     "PREVIEW_DESCRIPTION",
     "PROPOSE_DESCRIPTION",
+    "READ_NEXT",
+    "REVIEWED",
     "SUBMITTED",
 ]
 
 CREATED = "The draft for {kind} {slug} is open: build the page in it over as many calls as you need."
 HELD = "The draft holds {facts} facts, {structure} structure items, {components} components and {pictures} pictures."
 ADD = (
-    "Add facts, structure, components, a layout, pictures and supplied sources with edit_draft's add, then "
-    "preview_page with the draft_id."
+    "Add facts, structure, components, a layout, pictures and supplied sources with edit_draft's add, each "
+    "figure designed for the page's story (the page playbook, playbook/1), then preview_page with the draft_id."
 )
-PREVIEW = "Call preview_page with the draft_id to see the page and its checklist report; fix each failure and preview again."
-SUBMITTED = "Follow each part with get_proposal or my_work; the draft stays readable until it expires."
+PREVIEW = (
+    "Call preview_page with the draft_id to see the page and its checklist report; fix each failure, add the "
+    "figure a chapter's story still needs and preview again."
+)
+SUBMITTED = (
+    "Follow each part with get_proposal or my_work; the draft stays readable until it expires. Then open the "
+    "next draft for the same page with edit_draft and go on until the page tells its story whole "
+    "(playbook/1, step 10)."
+)
+REVIEWED = (
+    "Fix each failed rule from the checklist page guide hands you; look at every picture as a reader and ask "
+    "of each chapter whether its story has the figure it needs beside the words, designing what is missing "
+    "(playbook/1, step 9; cookbook/1); preview again. When no rule fails and every field is dense with its "
+    "figures, propose_page with the same draft_id or bundle."
+)
+READ_NEXT = (
+    "Next, building this page (playbook/1): get_facts for its facts and find its story, decide what a reader "
+    "must see by the design principles, read how Kutch Ajrakh answered the same questions (bar/1 lists its "
+    "worked chapters), then open its draft with edit_draft, subject and lists."
+)
 FOLLOW = "Follow each part with get_proposal or my_work."
 CONFIRM = (
     "Give the person the confirm_url: nothing is proposed or shown until they, signed in to this account, press "
@@ -42,7 +62,9 @@ EDIT_DESCRIPTION = (
     "(20 facts, 20 structure items, 10 components, 10 pictures, 40 supplied sources); nothing is proposed "
     "until propose_page. An add of components hands back guide, each kind's design rules; the page's first "
     "components are answered instead with the design pages, nothing changed, and go in once the call is sent "
-    "again with the read_token those pages carry."
+    "again with the read_token those pages carry. Its place in the page playbook (playbook/1): open it at "
+    "step 4 and add the figures you designed for the page's story, then its pictures and layout; next_step "
+    "names what follows."
 )
 PREVIEW_DESCRIPTION = (
     "Assemble the page a draft (draft_id) or a bundle would make, the stored page with its facts, structure, "
@@ -61,7 +83,7 @@ PREVIEW_DESCRIPTION = (
     "by chapter, as guidance only; drawn by ui://kalavigyan/page-preview.html in clients that show MCP Apps. A "
     "translation draws the page in its language, authored pages too. guide hands over the checklist page of "
     "each failed rule. A bundle with components waits, like a draft's first, for the read_token that comes "
-    "with the design pages."
+    "with the design pages. next_step says what to fix and add before propose_page (playbook/1, step 9)."
 )
 PROPOSE_DESCRIPTION = (
     "Propose a draft once (draft_id), or a bundle, which may hold one part alone: a finished component or a "
@@ -80,5 +102,6 @@ PROPOSE_DESCRIPTION = (
     "on the reply's confirm_url. Each part counts against its own hour's allowance (a withdrawal as a component), "
     "and a draft or a bundle of several parts also against the page bundles. Preview it first with preview_page: "
     "while the latest preview of the page fails its drawing checks (rule 28), propose_page refuses it, naming "
-    "them, until a preview no longer does."
+    "them, until a preview no longer does. A draft holds 10 components, so a full page is proposed in "
+    "rounds, and next_step says when to open the next draft (playbook/1, step 10)."
 )

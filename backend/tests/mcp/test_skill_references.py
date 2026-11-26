@@ -12,6 +12,7 @@ from app.data.contributor_kit import CONTRIBUTOR_SKILL_PATH
 from app.data.skill_library import (
     CONTRACTS,
     CONTRACTS_DIR,
+    DESIGN_SKILL,
     INDEX_URI,
     REFERENCES,
     REFERENCES_DIR,
@@ -36,7 +37,11 @@ SKILLS = {
     "contributor": CONTRIBUTOR_SKILL_PATH,
     "curation": CURATION_SKILL,
     "datasets": DATASETS_SOURCE,
-    **{file.uri: CLAUDE_SKILLS / file.skill / file.name for file in SKILL_FILES.values()},
+    **{
+        file.uri: CLAUDE_SKILLS / file.skill / file.name
+        for file in SKILL_FILES.values()
+        if file.skill != DESIGN_SKILL
+    },
 }
 SITE = "https://kalavigyan.example"
 CONTEXT = ToolContext(session=None, index=CraftIndexStore(), site=SITE)  # type: ignore[arg-type]
@@ -118,7 +123,11 @@ def test_the_datasets_skill_is_one_text_in_the_repository_the_server_and_the_sit
 
 def test_every_skill_served_beside_the_contributor_s_is_one_registry_s_file() -> None:
     served = {f"kalavigyan://skills/{file.skill}/{file.name}" for file in SKILL_FILES.values()}
-    assert {file.skill for file in SKILL_FILES.values()} == {"kalavigyan-datasets", "kalavigyan-interactives"}
+    assert {file.skill for file in SKILL_FILES.values()} == {
+        "kalavigyan-datasets",
+        "kalavigyan-interactives",
+        "kalavigyan-design",
+    }
     assert DATASETS_URI in served
     skills = {uri for uri in RESOURCES if uri.startswith("kalavigyan://skills/kalavigyan-")}
     assert skills == {*served, "kalavigyan://skills/kalavigyan-contributor/SKILL.md"}

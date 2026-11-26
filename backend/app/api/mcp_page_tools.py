@@ -37,6 +37,7 @@ from .mcp_page_texts import (
     PREVIEW,
     PREVIEW_DESCRIPTION,
     PROPOSE_DESCRIPTION,
+    REVIEWED,
     SUBMITTED,
 )
 from .mcp_protocol import ToolImage
@@ -58,6 +59,7 @@ class DraftReply(DraftView):
 class PreviewReply(PagePreviewResult):
     draft_id: uuid.UUID | None = None
     report: PageReport | None = None
+    next_step: str = REVIEWED
     notices: list[str] = Field(default_factory=list)
     guide: HandedGuide | None = Field(default=None, exclude_if=absent)
     _images: list[ToolImage] = PrivateAttr(default_factory=list)

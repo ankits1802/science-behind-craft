@@ -19,6 +19,7 @@ from app.services.page_layouts import layout_of, subject_path
 
 from .mcp_guide_steps import HandedGuide, opening_guide, page_guide
 from .mcp_guides import ADDRESS_PATTERN, CONTENTS_ADDRESS
+from .mcp_page_texts import READ_NEXT
 from .mcp_tool_base import Arguments, Tool, ToolContext
 
 __all__ = ["GET_PAGE", "PAGE_PARTS", "GetPage", "PageRead"]
@@ -33,8 +34,9 @@ DESCRIPTION = (
     "has none; a layout never holds a fact. Each part's open field work comes with its task key. A craft's or "
     "family's page also gives its keys: the craft and its districts, as a component proposal names its "
     "subjects. With no subject it lists the sixteen fields, each with what it covers and its chapter. With "
-    "the fields or a page's coverage comes guide: the page checklist's opening and the Kutch Ajrakh bar, "
-    f"naming the next page; guide reads any page of the guide by its address ({CONTENTS_ADDRESS} lists them)."
+    "the fields or a page's coverage comes guide: the page playbook (playbook/1), how a page is designed and "
+    "built, and the Kutch Ajrakh bar, its worked example, naming the next page; a page's next_step is the "
+    f"playbook's next step. guide reads any page of the guide by its address ({CONTENTS_ADDRESS} lists them)."
 )
 GUIDE_DESCRIPTION = (
     f"A page of the guide to read, by the address a result names, such as page-checklist/2; {CONTENTS_ADDRESS} "
@@ -76,6 +78,7 @@ class PageRead(ContractModel):
     keys: list[ComponentSubject] = Field(default_factory=list, exclude_if=empty)
     open_work: list[OpenTask] = Field(default_factory=list)
     page_url: str | None = Field(default=None, exclude_if=absent)
+    next_step: str | None = Field(default=None, exclude_if=absent)
     guide: HandedGuide | None = Field(default=None, exclude_if=absent)
     attribution: str = ATTRIBUTION
 
@@ -92,6 +95,7 @@ async def _get_page(context: ToolContext, arguments: GetPage) -> PageRead:
         "parts": parts,
         "page_url": f"{context.site}{subject_path(subject)}",
         "keys": await page_keys(context.session, subject),
+        "next_step": READ_NEXT,
     }
     work: list[OpenTask] = []
     if COVERAGE in parts:

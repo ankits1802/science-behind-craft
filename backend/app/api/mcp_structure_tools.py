@@ -26,7 +26,8 @@ PROPOSE_DESCRIPTION = (
     "question or a conflict. Stage and material keys are the page's own (get_facts, get_page). Every name, "
     "colour and number must be in a quote; the gates re-find every quote and grade each source. It waits for "
     "review; approval writes it into the page and its dossier. A passing proposal completes the field task "
-    "you claimed as task_key. Names are snake_case."
+    "you claimed as task_key. Names are snake_case. compose_component reads these items: a stage's after "
+    "and why, a reaction with its formulas and an alternative are what its players and labs are composed from."
 )
 NEEDS_PROPOSER = (
     "propose_structure needs an account of Researcher or above; this account cannot propose structure."

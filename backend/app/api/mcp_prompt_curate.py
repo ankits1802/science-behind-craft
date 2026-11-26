@@ -31,10 +31,12 @@ SOURCES_LANE_TOOLS = ("search_sources", "read_source", "lookup")
 CURATE_GUIDE_HEADING = "## The guide, page by page"
 CURATE_GUIDE = (
     f"{CURATE_GUIDE_HEADING}\n\n"
-    "This prompt carries the page checklist's opening and the Kutch Ajrakh bar, not the whole guide: each tool "
-    "hands you the page for the step you are on, and `get_page` with guide reads any other page by its address "
-    f"({CONTENTS_ADDRESS} lists every page). `get_page` gives the checklist's opening and the bar again with a "
-    "page's coverage; `edit_draft` each component kind's design rules as you add it, and the design pages "
+    "This prompt carries the page playbook and the Kutch Ajrakh bar, not the whole guide: the playbook names "
+    "the pages to read before each step, each tool hands you the page for the step you are on, and `get_page` "
+    f"with guide reads any other page by its address ({CONTENTS_ADDRESS} lists every page, Ajrakh's worked "
+    "chapters, the design system and the kit among them). `get_page` gives the playbook and the bar again "
+    "with a page's coverage; `edit_draft` each component kind's design rules or cookbook entry as you add "
+    "it, and the design pages "
     "before a page's first components, which wait for the read_token that comes with those pages; "
     "`preview_page` the checklist page of every rule its report fails; `give_pictures` the picture rules; "
     "`compose_component` the storyboard."
@@ -79,10 +81,14 @@ STRUCTURE_STEP = (
     "terms, the GI record, conflicts and open questions."
 )
 COMPONENTS_STEP = (
-    "Call `list_components` first and place an existing component by its label. Build what is missing "
-    "finished, by the component guide: its spec and units, a declared chart, fact_table, timeline "
-    "or map_layer from a dataset, every value stated by a cited fact or a stored row. Call `edit_draft` with each in add as "
-    "{proposal, cites}, and with the layout on the version `get_page` gave. The page's first components are "
+    "Design the figures the page's story needs by the design principles, reading how Kutch Ajrakh's page "
+    "answered the same questions (`bar/1` lists its worked chapters) for the thinking, never as a template. "
+    "Build each as a coded figure you write, a kind the site draws, or what `compose_component` returns where "
+    "it fits; call `list_components` and place an existing component by its label only when its units cite "
+    "this page's facts. Fill a declared kind by the component cookbook (`cookbook/1`): a chart, "
+    "fact_table, timeline_map or map_layer from a dataset, every value stated by a cited fact or a stored row. "
+    "Call `edit_draft` with each in add as {proposal, cites}, and with the layout on the version `get_page` "
+    "gave, each component in its chapter with its role, size and crop. The page's first components are "
     "answered with the design pages and wait for the read_token they carry; each later add hands you its "
     "kind's design rules."
 )
@@ -102,7 +108,8 @@ PREVIEW_STEP = (
 PROPOSE_STEP = (
     "Call `propose_page` with the draft_id once. Its report gives each part's outcome and id: follow facts "
     "and structure with `get_proposal` or `my_work`, send the person each new picture's upload link, and "
-    "read the draft whole with `edit_draft` and its draft_id for the outcome later."
+    "read the draft whole with `edit_draft` and its draft_id for the outcome later. A draft holds 10 "
+    "components: open the next draft for the same page and go on until the page tells its story whole."
 )
 
 

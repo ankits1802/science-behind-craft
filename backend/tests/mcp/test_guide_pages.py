@@ -7,6 +7,8 @@ from app.api.mcp_resources import RESOURCES
 from app.api.mcp_tools import ToolContext, answer
 from app.data.guide_pages import PAGE_BYTES, PagedText, guide_title, paged
 from app.data.skill_library import INDEX_URI
+from app.research.bar_references import KIT_GUIDES
+from app.services.bar_references import worked_topics
 from app.services.craft_resolver import CraftIndexStore
 
 CONTEXT = ToolContext(session=None, index=CraftIndexStore(), site="https://kalavigyan.example")  # type: ignore[arg-type]
@@ -16,6 +18,10 @@ SERVED = {
     "kalavigyan-interactives",
     "flagships",
     "storyboard",
+    "kalavigyan-design",
+    "system",
+    "playbook",
+    "cookbook",
     "page-checklist",
     "sources",
     "quotes",
@@ -31,6 +37,8 @@ SERVED = {
     "drawing",
     "bar",
     "contents",
+    *KIT_GUIDES,
+    *worked_topics(),
 }
 SMALL = "# T\n\nIntro.\n\n## A\n\naaaa\n\n## B\n\nbbbbbbbb\n\nbbbbbbbb\n\n## C\n\nc\n"
 CHECKLIST_BYTES_FLOOR = 12001
@@ -73,7 +81,7 @@ def test_a_heading_inside_a_fence_starts_no_section_and_the_title_follows_frontm
 def test_every_markdown_resource_but_the_index_is_a_guide_beside_the_bar_and_the_contents() -> None:
     assert set(GUIDES) >= SERVED
     markdown = {uri for uri, resource in RESOURCES.items() if resource.mime_type == "text/markdown"}
-    made = {f"{GUIDE_PREFIX}bar/1", f"{GUIDE_PREFIX}contents/1"}
+    made = {f"{GUIDE_PREFIX}{topic}/1" for topic in ("bar", "contents", *KIT_GUIDES, *worked_topics())}
     assert {guide.whole for guide in GUIDES.values()} == (markdown - {INDEX_URI}) | made
 
 
@@ -159,4 +167,7 @@ def test_the_bar_page_counts_kutch_ajrakh_chapter_by_chapter() -> None:
         "| All | 9 | 71 | 14 | 8 |",
     ):
         assert row in text, row
-    assert "never passes or fails a page" in text and len(guide_sheets("bar")) == 1
+    assert "a mirror and never a target" in text and "playbook/1" in text and len(guide_sheets("bar")) == 1
+    for topic in worked_topics():
+        assert f"`{topic}/1`" in text, topic
+    assert worked_topics()[:4] == ("ajrakh-answer", "ajrakh-cloth", "ajrakh-made", "ajrakh-chemistry")

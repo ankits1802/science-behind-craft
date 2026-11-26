@@ -24,6 +24,8 @@ One source per rule, served to every contributor over MCP and read here from the
 
 | Reference | In the repository | Over MCP |
 |---|---|---|
+| The page playbook: the order a page is built in to the Kutch Ajrakh bar, what to read before each step | `backend/app/data/contributor/references/playbook.md` | `kalavigyan://skills/references/playbook.md` |
+| The component cookbook: every kind, the tool that makes it, its Ajrakh example and its place | `backend/app/data/contributor/references/cookbook.md` | `kalavigyan://skills/references/cookbook.md` |
 | The page checklist: the three lists a page derives first and its 28 rules | `backend/app/data/contributor/references/page-checklist.md` | `kalavigyan://skills/references/page-checklist.md` |
 | What counts as a source: grades, recording, licences | `backend/app/data/contributor/references/sources.md` | `kalavigyan://skills/references/sources.md` |
 | Quotes and locators, and one fact per sentence | `backend/app/data/contributor/references/quotes.md` | `kalavigyan://skills/references/quotes.md` |
@@ -41,7 +43,10 @@ and `kalavigyan://index.md`, one line for each tool, prompt and resource.
 
 Over MCP each reference is also paged (`get_page`'s `guide`, `contents/1`), and the page tools hand
 an agent the page for its step; a page's first components wait for the design pages' `read_token`.
-Brief an agent to read every page a result hands it.
+The server also serves Kutch Ajrakh worked chapter by chapter (`ajrakh-<chapter>/1`, every
+component's spec, place and the sentences around it), the design skill and SYSTEM.md
+(`kalavigyan-design/1`, `system/1`) and the kit's stylesheet and script (`kit-stylesheet/1`,
+`kit-script/1`). Brief an agent with the page alone: the playbook it is handed first says the rest.
 
 ## Connect
 

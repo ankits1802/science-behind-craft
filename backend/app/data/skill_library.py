@@ -12,6 +12,7 @@ from .contributor_kit import CONTRIBUTOR_SKILL_PATH
 __all__ = [
     "CONTRACTS",
     "CONTRACTS_DIR",
+    "DESIGN_SKILL",
     "INDEX_PATH",
     "INDEX_URI",
     "REFERENCES",
@@ -42,6 +43,7 @@ SKILL_SITE_PREFIX = "/skills/"
 SKILL_ENTRY = "SKILL.md"
 DATASETS_SKILL = "kalavigyan-datasets"
 INTERACTIVES_SKILL = "kalavigyan-interactives"
+DESIGN_SKILL = "kalavigyan-design"
 HEADING = re.compile(r"^(#+) ", re.MULTILINE)
 
 
@@ -72,6 +74,20 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
     {
         reference.name: reference
         for reference in (
+            Reference(
+                "playbook",
+                "The page playbook",
+                "The order an agent follows to build a page to the Kutch Ajrakh bar without being told how: what "
+                "to read before each step, what to compose, code and fill, what to ask the person, when a page is "
+                "done and what to do when the site falls short",
+            ),
+            Reference(
+                "cookbook",
+                "The component cookbook",
+                "Every component kind a page can carry: what it shows, when a page needs it, where Kutch Ajrakh "
+                "uses it, which tool makes it, the facts it needs, how to place it and how to check it in the "
+                "preview",
+            ),
             Reference(
                 "page-checklist",
                 "The page checklist",
@@ -226,6 +242,21 @@ SKILL_FILES: Mapping[str, SkillFile] = MappingProxyType(
                 "references/storyboard.md",
                 "The storyboard of a flagship",
                 "The form a flagship is storyboarded in before any drawing, and a filled one",
+            ),
+            SkillFile(
+                DESIGN_SKILL,
+                SKILL_ENTRY,
+                "The KalaVigyan design system skill",
+                "The design system every KalaVigyan screen, figure and page is built in (Alum & Indigo): its "
+                "principles, non-negotiables, tokens by role, type and scripts, motion, components, page "
+                "templates, copy, accessibility and traps, the same text the site's own developers read",
+            ),
+            SkillFile(
+                DESIGN_SKILL,
+                "references/SYSTEM.md",
+                "The KalaVigyan design system in full",
+                "The whole design system: every token in the four themes, ramps, maps, type tables, scripts, "
+                "every component's states, page templates and the decisions behind them",
             ),
         )
     }

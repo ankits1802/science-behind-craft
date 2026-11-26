@@ -31,7 +31,9 @@ ENTRY_KEY = r"^[A-Z]\d{2,4}$"
 SLUG = r"^[A-Za-z0-9-]+$"
 ONE_ABOUT = "name at most one of stage, reaction, material and compound"
 DESCRIPTION = (
-    "Compose a craft's own interactive from the facts and structure its page holds, as the server builds "
+    "A helper of the page playbook's step 6 (playbook/1): it can save the work of a figure you designed, and its "
+    "result is yours to take, change or set aside for a coded figure. Compose a craft's own interactive from "
+    "the facts and structure its page holds, as the server builds "
     "it: reaction_player from its stored reactions in the order of their stages, dip_player from its stages in "
     "a bath with their colour after, drawn as the depicted colour of the dye, mordant or resist named, molecule_3d "
     "from a compound its materials name with PubChem's 3D conformer (atoms, bonds, turned and zoomed by "
@@ -40,14 +42,18 @@ DESCRIPTION = (
     "about narrows it to one stage, reaction or material key (get_facts gives them) or a compound's CID. The "
     "result is finished components ({proposal, cites}) to place with edit_draft's add, with your task_key set "
     "on the proposal; preview_page, then propose_page. When the facts are not enough it composes nothing and "
-    "missing lists exactly which facts or structure to propose first. guide hands over the storyboard's pages."
+    "missing lists exactly which facts or structure to propose first; left_out names what it could not "
+    "draw, each a stage, reaction, material or compound to compose again with about once its facts are held, "
+    "or a figure to code. guide hands over the storyboard's pages."
 )
 COMPOSED = "Composed {count} component{s} for {slug} from its own facts."
 REFUSED = "Nothing was composed for {slug}: propose what missing lists first, then compose again."
 PLACE = (
     "Add the components to the page's draft with edit_draft (add.components, as they are), set task_key on "
-    "the proposal if you claimed one, call preview_page and read every picture of the report before "
-    "propose_page; if propose_page names a close match, propose it again as a VARIANT that extends it."
+    "the proposal if you claimed one, or set them aside where your own design says it better. Build the "
+    "page's other figures (coded figures and the kinds of the cookbook, cookbook/1), lay the page out, call "
+    "preview_page and read every picture of the report before propose_page; if propose_page names a close "
+    "match, propose it again as a VARIANT that extends it."
 )
 PROPOSE = (
     "Propose each item of missing with propose_facts or propose_structure, then call compose_component again."

@@ -13,6 +13,7 @@ component contracts; where it is silent, they decide.
 | Proposals, the close-match search, drafts and bundles | `kalavigyan://contracts/open-work.md` |
 | Each kind's JSON schema | `kalavigyan://components/<kind>.schema.json` |
 | A figure built from a dataset | `datasets.md` |
+| Which tool makes each kind, its Kutch Ajrakh example and its place on the page | `cookbook.md` |
 
 ## Find before you make
 
@@ -36,7 +37,8 @@ Choose by what the reader must see:
 |---|---|
 | quantities compared across places, materials or years | `chart`, as `bars` for categories or a `line` for a series over time |
 | several things side by side, by their attributes, or a few headline numbers | `fact_table`, or `stat_tiles` for a few figures |
-| dated events in order | `timeline` |
+| the craft's dated record, its places and when | `timeline_map`, as Kutch Ajrakh's history chapter holds it |
+| a short ladder of dates about one thing | `timeline` |
 | where a craft is practised, began, spread or moved, and when | `timeline_map` (A map of places, below) |
 | a value at each place, from a dataset | `map_layer` |
 | a mechanism, a section, a tool or an object | a composed `diagram` (The figure kit), or `drawing` for what no kit part draws |

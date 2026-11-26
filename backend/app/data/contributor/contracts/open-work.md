@@ -572,7 +572,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `get_proposal` | work | contribute | read-only | `ProposalTicket` (`knowledge-writes.md`) |
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` and, when the call adds components, `guide` (`HandedGuide`, Guide pages below) |
-| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
+| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `nextStep` (the playbook's step 9: fix each failed rule, design the figure a chapter's story still needs, preview again, then propose; decision 0230), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
 | `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices, guide}` (`guide`: the storyboard's pages), each component in the snake_case `edit_draft`'s add takes (decision 0198) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
@@ -631,7 +631,7 @@ and reading sources and Never:
 | `deliver_page` (round 7) | `subject_kind`, `slug` | the method's three, Structure and sources, Components, Pages and Pictures | the four and components |
 | `give_picture` (round 7), the prompt of `MISSING_PICTURE` tasks | `craft_slug` | Pictures, Finding and reading sources and Never | none |
 | `deliver_dataset` (round 7) | `craft_slug`, `kind?` (one of the declared kinds but `drawing`) | the method's three, Components and Pages | the four, components and datasets |
-| `curate_page` (decision 0110) | `subject_kind?`, `slug?` | Never only (decision 0203) | none whole: the page checklist's opening and the Kutch Ajrakh bar as guide pages (`Prompt.guide`) |
+| `curate_page` (decision 0110) | `subject_kind?`, `slug?` | Never only (decision 0203) | none whole but the one-page playbook: the page playbook and the Kutch Ajrakh bar as guide pages (`Prompt.guide`, decision 0230) |
 
 - Each of the first six returns one user message: the task, the steps naming the tools in order
   (`list_open_work`, `reserve_tasks`, `get_facts` and `get_page`, `list_components` first for a
@@ -656,8 +656,8 @@ and reading sources and Never:
   draft once, follow with `get_proposal`, `my_work` and `edit_draft` by its id, and what to do when
   each gate refuses. Since decision 0203 it carries no skill section but Never and no reference
   whole: under "The guide, page by page" it says which tool hands which page and carries the page
-  checklist's opening (`page-checklist/1`) and the Kutch Ajrakh bar (`bar/1`), each headed by where
-  it sits.
+  playbook (`playbook/1`, decision 0230) and the Kutch Ajrakh bar (`bar/1`), each headed by where
+  it sits; its components step designs the page's own figures, Ajrakh read for the thinking.
 
 ### Resources
 
@@ -669,7 +669,8 @@ and reading sources and Never:
 | The contributor skill | `kalavigyan://skills/kalavigyan-contributor/SKILL.md` | `text/markdown` |
 | The datasets skill | `kalavigyan://skills/kalavigyan-datasets/SKILL.md` | `text/markdown` |
 | The interactives skill and its two references (`skill_library.SKILL_FILES`) | `kalavigyan://skills/kalavigyan-interactives/SKILL.md`, `.../references/flagships.md` and `.../references/storyboard.md` | `text/markdown` |
-| The six references | `kalavigyan://skills/references/<name>.md` (`page-checklist`, `sources`, `quotes`, `fields`, `components`, `datasets`) | `text/markdown` |
+| The eight references | `kalavigyan://skills/references/<name>.md` (`playbook`, `cookbook`, `page-checklist`, `sources`, `quotes`, `fields`, `components`, `datasets`) | `text/markdown` |
+| The design skill and the whole design system (decision 0230), each the same text as `.claude/skills/kalavigyan-design` | `kalavigyan://skills/kalavigyan-design/SKILL.md` and `.../references/SYSTEM.md` | `text/markdown` |
 | The five contracts a contributor's client follows (round 7), each the same text as `docs/contracts/<name>.md` | `kalavigyan://contracts/<name>.md` (`knowledge-writes`, `open-work`, `component-specs-general`, `image-contributions`, `mcp-ask-and-upload`) | `text/markdown` |
 | The design tokens | `kalavigyan://design/tokens.json` | `application/json` |
 | The answer kit and view | `kalavigyan://design/answer-kit.md` and `ui://kalavigyan/answer.html` | `text/markdown`; `text/html;profile=mcp-app` |
@@ -695,11 +696,19 @@ A client such as Claude.ai shows its model the instructions, the tool descriptio
 results, never a resource the model did not choose to open, so the guide travels in the results:
 
 - **The guides.** Every `text/markdown` resource but the index (the contributor skill, the datasets
-  and interactives skills and their references, the six references, the five contracts, the answer
-  kit and the drawing guide) is a guide named by its file (`page-checklist`, `components`,
-  `storyboard`, `drawing`, `open-work`, `kalavigyan-contributor`), beside two made by the server:
-  `bar`, Kutch Ajrakh's pictures, figures, interactives and maps chapter by chapter with its link,
-  and `contents`, every page of every other guide with the sections it holds (`api/mcp_guides.py`).
+  and interactives skills and their references, the design skill and SYSTEM.md, the eight
+  references, the five contracts, the answer kit and the drawing guide) is a guide named by its file
+  in lower case (`playbook`, `cookbook`, `page-checklist`, `components`, `storyboard`, `drawing`,
+  `open-work`, `kalavigyan-contributor`, `kalavigyan-design`, `system`), beside those made by the
+  server: `bar`, Kutch Ajrakh's pictures, figures, interactives and maps chapter by chapter with its
+  link and the worked chapters' addresses; `contents`, every page of every other guide with the
+  sections it holds (`api/mcp_guides.py`); one worked guide for each of Ajrakh's chapters,
+  `ajrakh-<chapter>` (decision 0230, `research/bar_references.py`), read from its live document:
+  the chapter in order (each text unit by id and tag, each component by label and kind), then each
+  component's kind, field, anchor, title, description, place (its entry, the sentence before and
+  after), units and spec, texts past 160 characters, lists past 3 items and drawings below 2 levels
+  cut where `…` stands; and `kit-stylesheet` and `kit-script`, the kit's `monograph.css` and
+  `monograph.js` as the server holds them, each in one fence.
 - **The pages.** A guide is cut into numbered pages of at most 6,000 bytes (`data/guide_pages.paged`):
   a page holds whole `## ` sections while they fit, a section longer than a page is cut at its
   blank lines, a paragraph longer than a page at its lines, and a line at a character, never a
@@ -714,11 +723,13 @@ results, never a resource the model did not choose to open, so the guide travels
 - **The page at the step.** A result carries `guide` (`HandedGuide {pages (one or two), next, rules?,
   readToken?, how}`), the pages for what the agent is doing, at most two, and `next`, the first page
   it holds back or the page after one it gave: `get_page` with no subject or with a page's coverage,
-  and the `curate_page` prompt, the checklist's opening and the bar; `edit_draft` adding components,
+  and the `curate_page` prompt, the playbook (`playbook/1`) and the bar (decision 0230); `edit_draft`
+  adding components,
   each kind's design rules (`KIND_RULES`: a declared kind "The declared kinds", `timeline_map` "A map
   of places", the swatches "Depicted materials", `drawing` "The design rules for a contributed
   figure", `diagram` "The figure kit", a player the interactives skill's "What a state may show",
-  any other kind "Units and citations"), and for `drawing` and `diagram` also the contract's "The
+  any other kind its cookbook entry, the section `` `<kind>` `` of `cookbook`, and "Units and citations"
+  for a kind the cookbook lacks), and for `drawing` and `diagram` also the contract's "The
   figure kit (decision 0199)"; `preview_page`, the checklist page of every rule the report fails,
   with `rules[{rule, page}]`; `give_pictures`, the pages of rules 2, 3, 7 and 14 with their `rules`;
   `compose_component`, the storyboard.
@@ -999,7 +1010,8 @@ tokens resource equal to the design skill's `tokens.json`. After editing the ski
 served place; the tokens are regenerated into both places by `tools/design_tokens.py`.
 
 **One source per rule (round 7).** The rules every contributor follows, over MCP or in the
-repository, are six references in `data/contributor/references/`: the page checklist (its 27
+repository, are eight references in `data/contributor/references/` (the page playbook and the
+component cookbook since decision 0230): the page checklist (its 27
 rules), what counts as a source (grades and licences), quotes and locators (with one fact per
 sentence), the fields, authoring a component, and datasets. The contributor skill, the curation
 skill (`.claude/skills/kalavigyan-craft-pages`) and the datasets skill
