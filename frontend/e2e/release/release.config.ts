@@ -36,6 +36,7 @@ export default defineConfig({
     browserProject("post-deploy", /(post-deploy|controls)\.spec\.ts$/, DESKTOP, "light"),
     browserProject("mcp-client", /mcp-client\.spec\.ts$/, DESKTOP, "light"),
     browserProject("mcp-contribution", /mcp-contribution\.spec\.ts$/, DESKTOP, "light"),
+    browserProject("agent-acceptance", /agent-acceptance\.spec\.ts$/, DESKTOP, "light"),
     ...AUDIT_WIDTHS.flatMap((width) => SCHEMES.map((scheme) => browserProject(`axe-${width.key}-${scheme}`, /axe\.spec\.ts$/, width, scheme))),
     { name: "lighthouse", testMatch: [/lighthouse\.spec\.ts$/], use: RUN_USE }
   ]

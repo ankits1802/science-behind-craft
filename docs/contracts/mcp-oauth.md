@@ -386,5 +386,6 @@ SHA-256; they are never logged, and `redact_secrets` masks their shape in any lo
 | Who may give `review`, its short tokens and its eight hours; Connected apps listing only live connections with the scopes they hold | `backend/tests/mcp/test_oauth_rules.py` and `backend/tests/db/test_review_scope_db.py` |
 | The admin tools hidden from a token without `review`, and both lists' budgets | `backend/tests/mcp/test_review_tools.py` and `backend/tests/mcp/test_tool_budget.py` |
 | A real client signing in | `.github/workflows/mcp-client.yml` |
+| A contributor's AI signing in with `read contribute`, refreshing before the hour and building a page over the Claude API's MCP connector, then revoked (by hand, decision 0234) | `.github/workflows/agent-acceptance.yml`; `tools/tests/test_acceptance_connection.py` and `frontend/e2e/release/mcp-sign-in-unit.spec.ts` |
 
 Re-read it when the MCP authorization specification gains a revision, a scope is added, or a token lifetime changes.
