@@ -1,5 +1,6 @@
 import { mapLayerFrame, mapLayerNames } from "@/components/map/mapLayerFrame";
-import { cutStill, heldStill, namedBox, stillLayers, type StillGeometry, type StillLayers } from "@/components/map/mapStillCut";
+import type { MapBox } from "@/components/map/basemap";
+import { cutStill, heldStill, namedBox, NO_WATERS, stillLayers, type HeldWaters, type StillGeometry, type StillLayers } from "@/components/map/mapStillCut";
 import { stillKey, timelineMapFrame, timelineMapNames, type MapStill } from "@/components/map/timelineMapStill";
 import { isDeclared, mapLayerSpecShape, parsedSpec, type MapLayerSpec } from "@/lib/componentSpecsGeneral";
 import { homeDistrictsOf, MAP_LAYER_KIND, namedFrameKey } from "@/lib/componentSpecsMapLayer";
@@ -8,6 +9,8 @@ import type { MonographDocument } from "@/lib/monographDocument";
 import { MAP_LAYER_PATH, MAP_LAYERS_PATH, mapLayerListShape, type BoundaryNote } from "@/lib/regionContract";
 import { layerLegend, parsedMapLayer, type LayerLegend } from "@/lib/regionView";
 import { publicFetch } from "@/lib/server/serverFetch";
+import { codedBasedDocument, codedMaps } from "@/lib/server/codedMapStills";
+import { heldWaters } from "@/lib/server/waterStills";
 import { parseShape } from "@/lib/shape";
 
 export const STILLS_KEPT = 200;
@@ -88,12 +91,16 @@ export function stillOfMaps(layers: StillLayers, legends: ReadonlyMap<string, La
   };
 }
 
-export function stillOfPlaces(layers: StillLayers, boundary: BoundaryNote | null, kept: Kept = new Map()): PlacesStillOf {
+export function placesFrameOf(layers: StillLayers, map: MapLayerSpec): MapBox {
+  return namedBox(layers, map.frame) ?? mapLayerFrame(map);
+}
+
+export function stillOfPlaces(layers: StillLayers, boundary: BoundaryNote | null, kept: Kept = new Map(), waters: HeldWaters = NO_WATERS): PlacesStillOf {
   return ({ map, home }) => {
     const named = namedBox(layers, map.frame);
     const frame = named ?? mapLayerFrame(map);
     const names = mapLayerNames(map, home);
-    const geometry = keptGeometry(kept, stillKey(frame, names), () => cutStill(layers, frame, names));
+    const geometry = keptGeometry(kept, stillKey(frame, names), () => cutStill(layers, frame, names, waters));
     const still = heldStill(geometry, null);
     if (!still) return null;
     const key = named ? namedFrameKey(map.frame) : null;
@@ -130,8 +137,11 @@ function heldLayers(): Promise<StillLayers> {
 export async function withMapStills(document: MonographDocument): Promise<MonographDocument> {
   const maps = declaredMaps(document);
   const places = placesMaps(document);
-  if (!maps.length && !places.length) return stilledDocument(document, maps, NO_STILL);
+  const coded = codedMaps(document);
+  if (!maps.length && !places.length && !coded.length) return codedBasedDocument(stilledDocument(document, maps, NO_STILL), [], null, NO_WATERS);
   const [layers, legends, boundary] = await Promise.all([heldLayers(), districtLegends(maps), listedBoundary(places)]);
+  const waters = await heldWaters([...places.map(({ map }) => placesFrameOf(layers, map)), ...coded.map((figure) => figure.box)]);
   const timeline = stilledDocument(document, maps, stillOfMaps(layers, legends, KEPT));
-  return placesStilledDocument(timeline, places, stillOfPlaces(layers, boundary, KEPT));
+  const placed = placesStilledDocument(timeline, places, stillOfPlaces(layers, boundary, KEPT, waters));
+  return codedBasedDocument(placed, coded, layers, waters);
 }

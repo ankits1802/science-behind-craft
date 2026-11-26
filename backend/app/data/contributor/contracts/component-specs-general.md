@@ -229,21 +229,27 @@ rest, from the data the site holds. A spec of the old shape (`head`, `places`, `
 **The base**, for the map's frame: the relief bands of `relief.json` with their hillshade once the
 file lands, the rivers and lakes of `rivers.json` (Natural Earth, named from the file's own labels),
 the Survey of India outline (always drawn, with and without a still), neighbouring land, state lines
-and, in a frame of at most 35 per cent of India's width (`DISTRICT_LINES_SHARE`), district lines, water and the Rann's salt flats in the design's map tokens, the page's home
+and, in a frame of at most 35 per cent of India's width (`DISTRICT_LINES_SHARE`), district lines and
+the small waters of OpenStreetMap (`waters.json` and its two-degree tiles, decision 0239: named
+rivers and streams, unnamed rivers as plain lines), water and the Rann's salt flats in the design's map tokens, the page's home
 districts in the place hatch (every `place:lgd:<code>` subject of the component), place names with
 halos, a scale bar of a round number of kilometres at the frame's middle latitude, the India
 locator with the frame marked, and a key (the elevation and river keys, the home hatch, the salt
 flats where the frame holds them, the district values' classes). The frame is cut to the places at
 least 3.5 per cent of India's width across (`MAP_LAYER_ZOOM`), and the home hatch is drawn every 9
-px on the screen whatever the zoom (`components/map/PlaceHatch.tsx`). The source line gives the
-boundary note and each layer's dataset credit.
+px on the screen whatever the zoom (`components/map/PlaceHatch.tsx`). Every text and pin of the map
+(place names and numbers, ring and value labels, the scale's figure, river, range and peak labels,
+dams) is drawn in a layer of screen pixels over the map at the caption token, placed by its share of
+the frame, so it is the caption size before and after hydration and with no script; a label whose
+point lies outside the frame is not drawn (`components/map/MapLabelLayer.tsx`, decision 0239). The
+source line gives the boundary note and each layer's dataset credit.
 
 **What the map is about**, beside its places; every index counts from 0 into the spec's own lists:
 
 | Part | What it holds |
 |---|---|
 | `frame` | one of `{places: [i, ...]}` (framed to those places and their rings), `{district: <LGD code>}` or `{state: <LGD code>}` (framed to the shape the site holds); without one, the map is framed to all its places and rings |
-| `emphasis` | `{layers?, rivers?}`: `layers` names any of `relief`, `rivers`, `water` to draw stronger (the hillshade, the river lines, the lakes' edge), `rivers` names up to 6 rivers by the site's own river names (`rivers.json` labels) whose labels are always shown |
+| `emphasis` | `{layers?, rivers?, dams?}`: `layers` names any of `relief`, `rivers`, `water` to draw stronger (the hillshade, the river lines, the lakes' edge); `rivers` names up to 6 rivers whose labels are always shown, each as Natural Earth names it (`rivers.json` labels), as OpenStreetMap names it (`waters`), or by a name of the site's river register that agrees with an OpenStreetMap river by name and district (a river place of a curated dossier or a river names dataset: the Suran by Kutch Ajrakh's "Dhamadka River (Suran)"), drawn stronger and named in the frame; `dams` names up to 6 dams by OpenStreetMap's name for the dam or for the one reservoir it holds back, each marked where its record puts it and named |
 | `routes` | `routes`, 1 to 20 `{start, end, text}`: an arrow for a move from one place to another; `text` is a unit that states the move from the start's name to the end's name and cites a fact |
 | `rings` | `rings`, 1 to 6 `{place, radiusKm, text}`: a ring of a stated radius (above 0 and up to 500 km) around a place, labelled with its kilometres; `text` states that number and cites a fact |
 | `districts` | `{valueLabel, values}`: 2 to 60 districts `{district, value, reading}`, each district by its LGD code and filled by the class of its value (up to five classes of near-equal counts, the density ramp), with the value printed at its centre; `reading` states the value and cites a fact |
@@ -280,7 +286,8 @@ twice, a radius of 0 or past 500 km and a district given twice. Check 7 adds, un
 (`timeline.states_movement`), a ring's unit states its radius and a district's reading its value
 (`quotes.states_value`), and every route, ring, district value and step cites a fact. At placement
 (`services/map_layer_places.held_map_problems`, run by `placed_spec` after the cells), a framed or
-valued district, a framed state and an emphasised river the site does not hold are refused by name.
+valued district, a framed state and an emphasised river or dam the site does not hold are refused by
+name (`held_water_problems`, from `app/data/layers/waters-names.json` and the `rivers.json` labels).
 
 **The still** (decision 0220, extended). The web server's pass (`lib/server/mapStills.withMapStills`)
 gives every declared `map_layer` of a page a still cut to the frame the view draws
@@ -288,9 +295,11 @@ gives every declared `map_layer` of a page a still cut to the frame the view dra
 `still.named` so the view frames to it): the relief bands, rivers and lakes, the home districts, and
 beyond the timeline map's still the neighbouring land (`neighbours`), the district lines (`lines`),
 each valued district's shape and centre (`valued`), the layers' dataset credits (`credits`) and the
-boundary note read from `/map/layers` (`boundary`). The view draws it at first paint in the map
-tokens; the hillshade and the river and range labels arrive with their files. Sanganeri's map's
-still is under 40 KB.
+boundary note read from `/map/layers` (`boundary`), and in a zoomed frame its small waters
+(`waters`: their lines, each emphasised river with the point its label sits at, each named dam's
+point) with OpenStreetMap's credit. The view draws it at first paint in the map tokens; the
+hillshade and the river and range labels arrive with their files. A map drawn without the pass
+loads the waters tiles of its frame itself. Sanganeri's map's still is under 40 KB.
 
 **Every sentence on the page.** Beside the map, the numbered places with their readings, each
 route's and ring's sentence under its label ("Move", "Within 20 km") and the district readings by

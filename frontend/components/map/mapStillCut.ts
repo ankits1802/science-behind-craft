@@ -6,6 +6,7 @@ import { project, type Projected } from "@/components/map/projection";
 import { decodeRing } from "@/components/map/shapeGeometry";
 import { cutLines, cutRings, gridPoints, relativePath, simplified, type StillCut } from "@/components/map/stillGeometry";
 import type { LayerNames, MapStill, StillDistrict, StillRiver } from "@/components/map/timelineMapStill";
+import { cutWaters, drawsWaters, NO_ASK, showsWaters, type HeldTile } from "@/components/map/waterLayer";
 import { layerCredits, mineralKeyRows, mineralSites, type MineralKeyRow, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 import type { MapFrameSpec } from "@/lib/componentSpecsMapLayer";
 import type { RegionDataset } from "@/lib/regionContract";
@@ -38,6 +39,9 @@ export type StillLayers = {
   credits: RegionDataset[];
 };
 export type StillGeometry = Omit<MapStill, "district">;
+export type HeldWaters = { tiles: readonly HeldTile[]; credits: RegionDataset[] };
+
+export const NO_WATERS: HeldWaters = { tiles: [], credits: [] };
 
 const projected = (ring: Ring): Projected[] => ring.map(([longitude, latitude]) => project(longitude, latitude));
 
@@ -80,17 +84,21 @@ function valuedDistricts(layers: StillLayers, valued: readonly number[], cut: St
   return drawn.length ? drawn : null;
 }
 
-function baseParts(layers: StillLayers, names: LayerNames, cut: StillCut): Partial<StillGeometry> {
+function baseParts(layers: StillLayers, names: LayerNames, cut: StillCut, held: HeldWaters): Partial<StillGeometry> {
   const districts = showsDistrictLines(cut.box) ? [...layers.homes.values()].flat() : [];
+  const ask = names.emphasis ? { rivers: names.emphasis.rivers, dams: names.emphasis.dams ?? [] } : NO_ASK;
+  const waters = showsWaters(cut.box) ? cutWaters(held.tiles, cut, ask) : null;
+  const drawn = drawsWaters(waters);
   return {
     lines: cutLines(districts, cut) || null,
     neighbours: cutRings(layers.neighbours, cut) || null,
     valued: valuedDistricts(layers, names.valued ?? [], cut),
-    credits: layers.credits
+    credits: drawn ? [...layers.credits, ...held.credits] : layers.credits,
+    waters: drawn ? waters : null
   };
 }
 
-export function cutStill(layers: StillLayers, frame: MapBox, names: LayerNames): StillGeometry {
+export function cutStill(layers: StillLayers, frame: MapBox, names: LayerNames, held: HeldWaters = NO_WATERS): StillGeometry {
   const cut = stillCut(frame);
   const named = (id: string) => names.physical.includes(id);
   return {
@@ -101,7 +109,7 @@ export function cutStill(layers: StillLayers, frame: MapBox, names: LayerNames):
     lakes: named("rivers") ? cutRings(layers.lakes, cut) || null : null,
     home: names.home.length ? homePath(layers, names.home, cut) : null,
     minerals: named("minerals") ? layers.minerals : null,
-    ...(names.base ? baseParts(layers, names, cut) : {})
+    ...(names.base ? baseParts(layers, names, cut, held) : {})
   };
 }
 

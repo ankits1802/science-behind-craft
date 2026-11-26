@@ -6,7 +6,7 @@ from typing import Annotated, Literal, Self
 from pydantic import AfterValidator, Field, model_validator
 from pydantic.json_schema import SkipJsonSchema
 
-from .base import absent
+from .base import absent, empty
 from .coded_figure_code import CODE_MAX_BYTES, CodeAsk, code_problems, shown_number_problems
 from .coded_figure_still import still_texts
 from .component_specs_general import DrawingThemes, GeneralHead
@@ -21,6 +21,7 @@ __all__ = [
     "FILM_PATTERN",
     "MAP_DISTRICTS_MAX",
     "MAP_LAYERS",
+    "MAP_WATERS_MAX",
     "PROBLEMS_SHOWN",
     "TEXTS_MAX",
     "VALUES_MAX",
@@ -39,6 +40,7 @@ VALUES_MAX = 120
 TEXTS_MAX = 120
 FILMS_MAX = 4
 MAP_DISTRICTS_MAX = 30
+MAP_WATERS_MAX = 6
 PROBLEMS_SHOWN = 8
 
 CodeKey = Annotated[str, Field(pattern=CODE_KEY_PATTERN)]
@@ -64,6 +66,8 @@ class CodedFilm(SpecModel):
 class CodedMap(SpecModel):
     layers: list[Literal[*MAP_LAYERS]] = Field(default_factory=list, max_length=len(MAP_LAYERS))
     districts: list[int] = Field(default_factory=list, max_length=MAP_DISTRICTS_MAX)
+    rivers: list[str] = Field(default_factory=list, max_length=MAP_WATERS_MAX, exclude_if=empty)
+    dams: list[str] = Field(default_factory=list, max_length=MAP_WATERS_MAX, exclude_if=empty)
 
 
 class CodedFigureSpec(SpecModel):

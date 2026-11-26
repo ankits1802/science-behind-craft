@@ -689,6 +689,11 @@ theme themselves). The full table with counts is SYSTEM.md section 6.
 - **A transliteration we made**: never; English alone until a source states the name.
 - **SVG labels shrinking with the drawing**: figure SVGs carry `data-fit` and size labels with
   `--k`; a label that would crowd is dropped, never shrunk.
+- **A map label sized by `--k` before hydration**: `--k` is measured on the client, so a label in
+  map units draws at the wrong size in the server's markup and without a script. A places map draws
+  every label, pin and scale figure in a layer of screen pixels over the map at the caption token
+  (`components/map/MapLabelLayer.tsx`), and draws no label whose point lies outside its frame, where
+  it would sit clipped but measured (decision 0239).
 - **Shadows on buttons or sections, blur, gradients, glass**: three shadows exist, blur does not
   compile, the rest is retired.
 - **A box around prose**: sections are hairlines and space; raised is for what floats or presses.

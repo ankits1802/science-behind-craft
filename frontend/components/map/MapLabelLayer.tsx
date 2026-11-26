@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 export const LABEL_FONT = "var(--text-caption)";
 export const LABEL_HALO = 3;
 export const SCALE_TEXT_GAP = 6;
+export const DAM_WIDTH = 12;
+export const DAM_HEIGHT = 4;
 
 const ORIGIN: Projected = { x: 0, y: 0 };
 
@@ -57,6 +59,19 @@ export function PeakMarks({ frame, peaks, size }: { frame: MapBox; peaks: readon
         <MapAt key={peak.key} frame={frame} at={peak.at} className={TIER_HIDDEN[peak.tier]} testId="relief-peak">
           <path d={`M0 ${-size}L${size} ${size * 0.7}L${-size} ${size * 0.7}Z`} fill="var(--ink-1)" stroke="var(--map-label-halo)" strokeWidth={1} />
           <LabelText label={peak.label} />
+        </MapAt>
+      ))}
+    </g>
+  );
+}
+
+export function DamMarks({ frame, dams }: { frame: MapBox; dams: readonly MapLabel[] }) {
+  return (
+    <g data-testid="map-dams">
+      {dams.map((dam) => (
+        <MapAt key={dam.key} frame={frame} at={dam.at} testId="map-dam">
+          <rect x={-DAM_WIDTH / 2} y={-DAM_HEIGHT / 2} width={DAM_WIDTH} height={DAM_HEIGHT} fill="var(--map-label)" stroke="var(--map-label-halo)" strokeWidth={1.5} data-name={dam.text} />
+          <LabelText label={dam} />
         </MapAt>
       ))}
     </g>

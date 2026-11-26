@@ -275,7 +275,7 @@ const HYDRATED = [
 
 function overlaid(spec: Record<string, unknown>, frame: MapBox): string {
   const map = parseShape(mapLayerSpecShape, spec);
-  const overlay = createElement(PlacesOverlay, { spec: map, frame, marks: shownMarks(map, map.places.length, 0), values: [], files: { relief: RELIEF, rivers: RIVERS }, named: [], nameOf: (ref: string) => TEXTS[ref] ?? "" });
+  const overlay = createElement(PlacesOverlay, { spec: map, frame, marks: shownMarks(map, map.places.length, 0), values: [], files: { relief: RELIEF, rivers: RIVERS }, waters: null, named: [], nameOf: (ref: string) => TEXTS[ref] ?? "" });
   const base = `<svg viewBox="${viewBoxOf(frame)}" class="block h-auto w-full" data-fit="" data-testid="general-map"></svg>`;
   return `<div class="relative overflow-hidden" data-testid="places-map">${base}${renderToStaticMarkup(overlay)}</div>`;
 }

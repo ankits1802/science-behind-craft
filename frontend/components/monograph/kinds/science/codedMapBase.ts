@@ -4,6 +4,7 @@ import { INDIA_BOUNDS } from "@/components/map/indiaBounds";
 import { bordersToPath, indiaOutlinePath, project, VIEW_BOX } from "@/components/map/projection";
 import { loadShapes, shapePath, type DistrictShape } from "@/components/map/shapeGeometry";
 import type { MapBase, MapHome } from "@/lib/codedFigureFrame";
+import type { CodedBase } from "@/components/map/codedStillCut";
 import type { CodedMap, MapLayer } from "@/lib/componentSpecsScienceCoded";
 import { loadPhysical, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 
@@ -41,7 +42,7 @@ function homes(shapes: readonly DistrictShape[] | null, wanted: readonly number[
     });
 }
 
-export async function codedMapBase(map: CodedMap): Promise<MapBase> {
+export async function codedMapBase(map: CodedMap, served?: CodedBase): Promise<MapBase> {
   const wants = (layer: MapLayer) => map.layers.includes(layer);
   const [states, districts, relief, rivers, shapes] = await Promise.all([
     wants("states") ? loadBorders("state") : null,
@@ -56,6 +57,7 @@ export async function codedMapBase(map: CodedMap): Promise<MapBase> {
     rivers: riverPaths(rivers),
     states: states ? bordersToPath(states) : null,
     districts: districts ? bordersToPath(districts) : null,
-    homes: homes(shapes, map.districts)
+    homes: homes(shapes, map.districts),
+    named: { rivers: served?.rivers ?? [], dams: served?.dams ?? [] }
   };
 }

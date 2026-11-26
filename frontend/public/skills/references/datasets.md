@@ -87,6 +87,7 @@ Simplify a line or a shape no further than its layer needs, and never a point:
 | country outlines, simplified together so neighbours still meet | 0.012 degree |
 | relief bands | 0.018 degree |
 | a river basin's reaches, each with its ends kept so junctions stay joined | 0.005 degree (about 550 m) |
+| small rivers, streams and dams from OpenStreetMap, in tiles of two degrees | 0.002 degree (about 220 m) |
 | district shapes, on a 0.001-degree grid | 0.01 degree |
 
 Coordinates are stored to 0.001 degree (about 110 m), and a point site to at most 0.0001 degree.
@@ -145,6 +146,10 @@ to your places.
    the site holds (the ids of `/api/map/layers`, such as `annual-precipitation`). A layer the site
    does not hold is refused; a new one is proposed as Map layers over MCP, below, and drawn only
    once an engineer ships it.
+   A places map may also name a small river or a dam: a river as OpenStreetMap names it, or by the
+   name the site's river register gives a river it matches to OpenStreetMap's by name and district,
+   and a dam by OpenStreetMap's name for it or for the one reservoir it holds back. The site holds
+   them in its own layer (OpenStreetMap, ODbL) and refuses a name it does not hold.
 4. Send no coordinates the server finds, no datasets and no credits: the server writes the places'
    points, the boundary record and every layer's dataset record into the stored spec, and the page
    prints the boundary note and each credit under the map.

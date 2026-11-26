@@ -2,6 +2,7 @@ import type { MapBox } from "@/components/map/basemap";
 import { ringRadii } from "@/components/map/mapDistance";
 import { PEAK_TIERS } from "@/components/map/physical/ReliefLayer";
 import { project, type Projected } from "@/components/map/projection";
+import type { StillWaters } from "@/components/map/waterLayer";
 import type { MapPlace } from "@/lib/componentSpecsGeneral";
 import type { MapRingSpec, ShownMarks } from "@/lib/componentSpecsMapLayer";
 import type { ReliefFile, RiversFile } from "@/lib/mapPhysical";
@@ -10,6 +11,7 @@ import { formatNumber } from "@/lib/measure";
 export const RING_LABEL_AT = Math.SQRT1_2;
 export const RING_LABEL_GAP = 4;
 export const PEAK_GAP = 3;
+export const DAM_GAP = 9;
 
 export type LabelAnchor = "start" | "middle" | "end";
 export type LabelWeight = "normal" | "medium" | "semibold";
@@ -88,5 +90,19 @@ export function valueLabels(values: readonly { lgd: number; x: number; y: number
   return values.flatMap((value) => {
     const at = { x: value.x, y: value.y };
     return inFrame(frame, at) ? [mapLabel(`value-${value.lgd}`, at, value.text, { weight: "semibold", numeric: true })] : [];
+  });
+}
+
+export function waterLabels(waters: StillWaters | null, frame: MapBox): MapLabel[] {
+  return (waters?.strong ?? []).flatMap((river) => {
+    const at = { x: river.x, y: river.y };
+    return inFrame(frame, at) ? [mapLabel(`water-${river.name}`, at, river.name, { lift: true, italic: true, tone: "var(--map-water-label)", weight: "medium" })] : [];
+  });
+}
+
+export function damLabels(waters: StillWaters | null, frame: MapBox): MapLabel[] {
+  return (waters?.dams ?? []).flatMap((dam) => {
+    const at = { x: dam.x, y: dam.y };
+    return inFrame(frame, at) ? [mapLabel(`dam-${dam.name}-${dam.x}-${dam.y}`, at, dam.name, { anchor: "start", dx: DAM_GAP, weight: "medium" })] : [];
   });
 }

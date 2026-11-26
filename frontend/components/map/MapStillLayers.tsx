@@ -1,17 +1,26 @@
 import { DISTRICT_EDGE, PLACE_TONE } from "@/components/map/DistrictLayer";
+import type { MapBox } from "@/components/map/basemap";
 import type { MapStill, StillDistrict, StillRiver } from "@/components/map/timelineMapStill";
+import type { StillWaters } from "@/components/map/waterLayer";
 import { riverWidth } from "@/lib/mapPhysical";
 
 export const STRONG_RIVER = 1.8;
 export const STRONG_LAKE = 1.4;
 export const LAKE_EDGE = 0.6;
+export const WATER_WIDTH = 0.8;
+export const STRONG_WATER = 2.2;
+export const WATER_HALO = 5;
 
 export type Strength = { rivers: boolean; water: boolean };
 
 export const PLAIN: Strength = { rivers: false, water: false };
 
+export function gridTransform(box: MapBox, grid: number): string {
+  return `translate(${box.x} ${box.y}) scale(${(box.width / grid).toFixed(5)})`;
+}
+
 function gridPlacement(still: MapStill): string {
-  return `translate(${still.box.x} ${still.box.y}) scale(${(still.box.width / still.grid).toFixed(5)})`;
+  return gridTransform(still.box, still.grid);
 }
 
 export function shownRiverWidth(rank: number, strong: boolean): number {
@@ -81,6 +90,20 @@ export function StillValued({ still, valued, toneOf }: { still: MapStill; valued
         const tone = toneOf(district.lgd);
         return tone ? <path key={district.lgd} d={district.d} fillRule="evenodd" className={`${tone} ${DISTRICT_EDGE}`} strokeWidth={0.5} vectorEffect="non-scaling-stroke" data-lgd={district.lgd} /> : null;
       })}
+    </g>
+  );
+}
+
+export function StillWatersLines({ box, grid, waters }: { box: MapBox; grid: number; waters: StillWaters }) {
+  return (
+    <g className="pointer-events-none" transform={gridTransform(box, grid)} fill="none" strokeLinecap="round" strokeLinejoin="round" data-testid="still-waters">
+      {waters.d ? <path d={waters.d} stroke="var(--map-river)" strokeWidth={WATER_WIDTH} vectorEffect="non-scaling-stroke" /> : null}
+      {waters.strong.map((river) => (
+        <g key={river.name} data-testid="still-water-strong" data-name={river.name}>
+          <path d={river.d} stroke="var(--map-label-halo)" strokeWidth={WATER_HALO} vectorEffect="non-scaling-stroke" />
+          <path d={river.d} stroke="var(--map-river)" strokeWidth={STRONG_WATER} vectorEffect="non-scaling-stroke" />
+        </g>
+      ))}
     </g>
   );
 }

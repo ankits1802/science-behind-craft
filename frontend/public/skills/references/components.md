@@ -113,7 +113,13 @@ written in camelCase (`valueLabel`) or snake_case (`value_label`); the stored sp
   about, all optional: `frame?`, `emphasis?`, `routes?`, `rings?`, `districts?` and `sequence?`
   (shapes in the cookbook's `map_layer` and the general contract). The site draws the base
   beneath it: relief, rivers, the Survey of India outline with state and district lines, the home
-  district hatched, a scale bar and the India locator (decision 0232).
+  district hatched, a scale bar and the India locator (decision 0232), and in a town's frame the
+  small rivers and streams of OpenStreetMap. `emphasis` may name a small river as OpenStreetMap
+  names it or by the name the site's river register gives it where the two agree by name and
+  district (the Suran, as Kutch Ajrakh's dossier names the Dhamadka stream), and a dam by
+  OpenStreetMap's name for it or for its reservoir; one the site does not hold is refused by name
+  (decision 0239). A `coded_figure`'s `map` names them the same way and reads them from
+  `kvMap.rivers` and `kvMap.dams`.
 
 A `chart`, `fact_table` or `map_layer` drawn from a stored dataset names it as `dataset {code}` and
 each value's place in its table as `cell {row, column}` (a table's rows by `row`, its columns by

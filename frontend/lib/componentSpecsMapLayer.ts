@@ -9,7 +9,7 @@ export const PLACE_SUBJECT = /^place:lgd:(\d+)$/;
 
 export type EmphasisLayer = (typeof EMPHASIS_LAYERS)[number];
 export type MapFrameSpec = { places?: number[]; district?: number; state?: number };
-export type MapEmphasisSpec = { layers: EmphasisLayer[]; rivers: string[] };
+export type MapEmphasisSpec = { layers: EmphasisLayer[]; rivers: string[]; dams?: string[] };
 export type MapRouteSpec = { start: number; end: number; text: string };
 export type MapRingSpec = { place: number; radiusKm: number; text: string };
 export type DistrictValueSpec = { district: number; value: number; reading: string };
@@ -31,7 +31,7 @@ const radius = ruled(number, "a radius above 0", (value) => value > 0);
 
 export const mapPartShapes = {
   frame: optional(object<MapFrameSpec>({ places: optional(list(index, 1)), district: optional(integer), state: optional(integer) })),
-  emphasis: optional(object<MapEmphasisSpec>({ layers: list(oneOf(EMPHASIS_LAYERS)), rivers: list(text) })),
+  emphasis: optional(object<MapEmphasisSpec>({ layers: list(oneOf(EMPHASIS_LAYERS)), rivers: list(text), dams: optional(list(text)) })),
   routes: optional(list(object<MapRouteSpec>({ start: index, end: index, text: unitRef }), 1)),
   rings: optional(list(object<MapRingSpec>({ place: index, radiusKm: radius, text: unitRef }), 1)),
   districts: optional(object<MapDistrictsSpec>({ valueLabel: unitRef, values: list(object<DistrictValueSpec>({ district: integer, value: number, reading: unitRef }), 2) })),

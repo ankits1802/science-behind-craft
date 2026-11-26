@@ -19,14 +19,14 @@ function useMapBase(figure: CodedFigureSpec, wanted: boolean): Base {
   useEffect(() => {
     if (!map || !wanted) return;
     let current = true;
-    codedMapBase(map).then(
+    codedMapBase(map, figure.base).then(
       (base) => current && setLoaded({ ready: true, base }),
       () => current && setLoaded({ ready: false, base: null })
     );
     return () => {
       current = false;
     };
-  }, [map, wanted]);
+  }, [map, wanted, figure.base]);
   return loaded;
 }
 

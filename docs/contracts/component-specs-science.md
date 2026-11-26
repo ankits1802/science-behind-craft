@@ -276,16 +276,27 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   this figure").
 - **`libraries`**: `d3` (7.9.2, the global `d3`) and `three` (0.187.0, the global `THREE`), served
   from `/monographs/kit/vendor/` and loaded before the code.
-- **`map {layers, districts}`**: `layers` any of `states`, `districts`, `rivers` and `relief`,
-  `districts` up to 30 LGD codes. The frame draws the site's base as the first group of every
+- **`map {layers, districts, rivers?, dams?}`**: `layers` any of `states`, `districts`, `rivers` and
+  `relief`, `districts` up to 30 LGD codes, and up to 6 rivers and 6 dams named as a places map's
+  `emphasis` names them (component-specs-general.md, The places map; decision 0239), each refused by
+  name at placement when the site does not hold it. The frame draws the site's base as the first group of every
   `svg[data-map]`, and again if the code removes it: the land, the relief bands, the rivers, the
   district and state lines, the named districts outlined in place colour, the Rann and the Survey of
   India outline, in the India frame of `components/map/projection.ts` (`kvMap.viewBox`).
   `kvMap.project(longitude, latitude)` gives a point's `{x, y}` in that frame,
   `kvMap.box(west, south, east, north, margin?)` a `viewBox` for a part of it, and `kvMap.places`
-  each named district's centre `{lgd, x, y}`. The base's classes (`kv-map-land`, `kv-map-outline`,
-  `kv-map-state`, `kv-map-district`, `kv-map-river`, `kv-map-relief-1` to `-7`, `kv-map-home`,
-  `kv-map-salt`) are drawn in the map tokens by the frame's sheet.
+  each named district's centre `{lgd, x, y}`. `kvMap.rivers` gives each named river `{name, d}` and
+  `kvMap.dams` each named dam `{name, x, y}`, in the same frame, as the server's pass found them in the
+  OpenStreetMap tiles of the still's frame (a frame wider than 35 per cent of India's width holds
+  none); the base draws the rivers stronger and marks the dams. The base's classes (`kv-map-land`,
+  `kv-map-outline`, `kv-map-state`, `kv-map-district`, `kv-map-river`, `kv-map-river-named`,
+  `kv-map-dam`, `kv-map-relief-1` to `-7`, `kv-map-home`, `kv-map-salt`) are drawn in the map tokens
+  by the frame's sheet. A figure whose still is its `svg[data-map]` is drawn on the same base at first
+  paint and on paper: the web server's pass (`lib/server/codedMapStills`) cuts the land, the Survey of
+  India outline, the relief, rivers, district lines and named districts it asks for, the small waters
+  and the named rivers and dams to the still's `viewBox` (served as `base`, which a delivered spec
+  may not carry) and the page draws them under the still's four theme variants; state lines are left
+  to the frame.
 - **`films`**, up to 4 `{key, src}`: a film the site serves under `/monographs/` (`.mp4`, `.webm`),
   shown by `<video data-film="<key>">`, whose address the frame sets.
 - **`still`**: an SVG of the figure at rest. Without it the server cuts the still from the code's

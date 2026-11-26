@@ -5,10 +5,11 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
-from .base import ContractModel, absent
+from .base import ContractModel, absent, empty
 from .component_specs_plates_parts import UnitRef
 
 __all__ = [
+    "DAMS_EMPHASISED_MAX",
     "DISTRICT_VALUES_MAX",
     "DISTRICT_VALUES_MIN",
     "EMPHASIS_LAYERS",
@@ -37,6 +38,7 @@ DISTRICT_VALUES_MIN = 2
 STEPS_MIN = 2
 STEPS_MAX = 12
 RIVERS_EMPHASISED_MAX = 6
+DAMS_EMPHASISED_MAX = 6
 INDEX_MAX = 60
 EMPHASIS_LAYERS = ("relief", "rivers", "water")
 
@@ -59,13 +61,15 @@ class MapFrame(ContractModel):
 class MapEmphasis(ContractModel):
     layers: list[Literal[*EMPHASIS_LAYERS]] = Field(default_factory=list, max_length=len(EMPHASIS_LAYERS))
     rivers: list[str] = Field(default_factory=list, max_length=RIVERS_EMPHASISED_MAX)
+    dams: list[str] = Field(default_factory=list, max_length=DAMS_EMPHASISED_MAX, exclude_if=empty)
 
     @model_validator(mode="after")
     def _something(self) -> Self:
-        if not self.layers and not self.rivers:
-            raise ValueError("An emphasis names a layer or a river")
-        if len(set(self.layers)) != len(self.layers) or len(set(self.rivers)) != len(self.rivers):
-            raise ValueError("An emphasis names each layer and river once")
+        if not self.layers and not self.rivers and not self.dams:
+            raise ValueError("An emphasis names a layer, a river or a dam")
+        named = (self.layers, self.rivers, self.dams)
+        if any(len(set(listed)) != len(listed) for listed in named):
+            raise ValueError("An emphasis names each layer, river and dam once")
         return self
 
 
