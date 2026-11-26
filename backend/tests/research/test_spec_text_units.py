@@ -27,7 +27,7 @@ TEXT_PLACES: dict[str, Path] = {
     "bidriware/chemistry/patina-steps": ("steps", 0, "name"),
     "bastar-dhokra/process/student-version": ("summary",),
     "bastar-dhokra/process/lost-wax-stages": ("stages", 0, "name"),
-    "bidriware/chemistry/patina-salts": ("molecules", 0, "drawing", "children", 4, "children", 0),
+    "bidriware/chemistry/patina-salts": ("molecules", 0, "name"),
     "bastar-dhokra/process/core-before-and-after-sem": ("swatches", 0, "label"),
     "bidriware/people/copper-for-the-black": ("testimony", "evidence"),
 }

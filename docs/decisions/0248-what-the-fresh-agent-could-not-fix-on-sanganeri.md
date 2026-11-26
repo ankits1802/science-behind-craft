@@ -81,7 +81,9 @@ lacked. Each claim was checked against the code and the run's files before it wa
 3. **Borrowed figures held to the page's facts.** `subject_components` draws a borrowed (library or
    other craft's) component only when `held_claims` holds every fact its units cite, the test the
    draft already applied, so the published page and the preview follow one rule. A `why_here` with
-   no note sentence is not drawn (rule 15: a card with no sentence is not drawn).
+   no note sentence is not drawn (rule 15: a card with no sentence is not drawn). Rules 9 and 15 read
+   a figure's units from its spec as well as from the layout, and its citations by their cite marks
+   (`research/page_report_read.py`), so a borrowed figure drawn on facts the page holds cites them.
 4. **Toggles checked in their lab.** The render plan does not count as placed a component another
    component's spec names (`nested_labels`): the lab's own check covers it.
 5. **Prose kept and written from the draft.** `told_sentences` drops a sentence a figure shows only
@@ -106,7 +108,7 @@ lacked. Each claim was checked against the code and the run's files before it wa
 - The server's read costs at most $0.50 for each new set of pictures, now also when the drawing fails.
 - Tests: `backend/tests/research/test_spec_text_units.py` (every kind fixture, a unit in each kind's
   words both ways), `backend/tests/layouts/test_generated_text_units.py` (the page and the paper),
-  `test_generated_why_here.py`, `test_generated_structure.py`, `test_page_render.py`,
+  `test_generated_why_here.py`, `test_generated_structure.py`, `test_page_render.py`, `test_page_report.py`,
   `test_borrowed_and_held_pages_db.py`, `test_design_read.py`, `test_page_design_read.py`,
   `test_mcp_preview_critique.py`, `tools/tests/test_acceptance_loop.py`, and the web specs
   `parity-drawing-unit`, `monograph-homes-unit`, `monograph-kinds-general-unit` and `kin-crafts-unit`.
@@ -115,8 +117,6 @@ lacked. Each claim was checked against the code and the run's files before it wa
 
 - No tool writes or reorders a field's prose from facts the page already holds but lists; a reviewed
   section proposal needs a review path of its own.
-- A borrowed spec figure whose facts the page does hold still fails rules 9 and 15 on a generated
-  page, because its units are not laid out within it.
 - The hero names the craft in the H1 and on its decorative plate, as rule 3 asks; left as it is.
 - Two tool descriptions still say the team places open pictures (`search_sources`) or name only a
   contribution for `edit_draft`'s pictures; their sentences go to the directory-listing lane.
