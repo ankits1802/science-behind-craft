@@ -128,5 +128,5 @@ refused caps, with a fake API client), `tools/tests/test_acceptance_evidence.py`
 last successful preview, the pictures, the summary and the second opinion's inputs),
 `tools/tests/test_acceptance_connection.py` (the token file, refresh, masking and revocation),
 `tools/tests/test_acceptance_workflow.py` (the workflow parsed: dispatch only, its inputs, what each
-step is given, the revocation and the artifact) and `frontend/e2e/release/mcp-sign-in-unit.spec.ts`
+step is given, the revocation and the artifact) and `frontend/e2e/mcp-sign-in-unit.spec.ts`
 (the token file against the shared golden).

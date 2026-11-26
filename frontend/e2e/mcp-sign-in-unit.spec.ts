@@ -3,9 +3,9 @@ import { join } from "node:path";
 
 import { expect, test } from "@playwright/test";
 
-import { tokenFile, type SignedIn } from "./mcpSignIn";
+import { tokenFile, type SignedIn } from "./release/mcpSignIn";
 
-const GOLDEN = JSON.parse(readFileSync(join(__dirname, "..", "..", "..", "shared", "agent-acceptance.token.golden.json"), "utf8")) as unknown;
+const GOLDEN = JSON.parse(readFileSync(join(__dirname, "..", "..", "shared", "agent-acceptance.token.golden.json"), "utf8")) as unknown;
 const SIGNED: SignedIn = {
   api: "https://api.example",
   server: "https://api.example/api/mcp",
