@@ -517,6 +517,16 @@ origins; the issuer is the API origin and the consent page is `<PUBLIC_WEB_URL>/
    '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'` lists the read, proposal and open-work tools.
 3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
 
+Protocol 2026-07-28 (decision 0235) needs nothing switched on: the same route lists the five skills,
+runs long calls as tasks and asks the person through forms for clients that declare them. Tasks live
+in the API process, so a deploy forgets those still running and their clients are told the task is
+unknown. File uploads (`io.modelcontextprotocol/files`) are on while `MCP_FILE_UPLOADS_ENABLED` is
+true, the default; to switch them off put `MCP_FILE_UPLOADS_ENABLED=false` at
+`/kalavigyan/env/MCP_FILE_UPLOADS_ENABLED` and re-render, and clients fall back to the upload slots.
+Claude sends files only to hosts Anthropic approved for a listed connector: email
+`mcp-review@anthropic.com` (subject `Connector file hosts: KalaVigyan`) naming the API host, which
+receives every upload, before relying on uploads from Claude.
+
 ### Reviewing over MCP (decision 0170)
 
 An Admin or Master Admin with two-step verification on can review from their AI client.

@@ -197,6 +197,22 @@ the account is deleted, checked as an access token is (`token_matches_user` agai
 version and the moment of issue), or when the account loses the capability. A slot that cannot be
 opened refuses that picture only, with its reason.
 
+### Photographs sent as files (protocol 2026-07-28, decision 0235)
+
+A client that speaks protocol 2026-07-28 and declares the files extension's `upload`
+(`io.modelcontextprotocol/files`, while `MCP_FILE_UPLOADS_ENABLED` is true) sees a top-level `files`
+argument: the photographs themselves, each `{id, name, mimeType, size, digest?}` marked
+`x-mcp-file` (the accepted types above, at most 10 MB each), one for each picture that sets
+`upload: true`, in the same order. They need the call's `declaration` and `confirmation`, as pictures
+given in the call do. The first call opens each picture's slot as above and answers
+`upload_required`, each target the slot's `uploadUrl` (`PUT`, `Content-Type:
+application/octet-stream`, `credentials: omit`, the slot's expiry), so the bytes pass the slot's own
+screens and declaration; the client's retry with the same arguments and the `requestState` answers
+the `PicturesReply` with each photograph's `position`, `contributionId` and `status`, counted in
+`given`, or a refusal naming the picture whose photograph has not arrived. A count of files that is
+not the count of `upload: true` pictures, a missing declaration, or a file that is not a picture is
+refused before any slot opens. Other clients keep `uploadUrl` and `link` as above.
+
 ### The reply
 
 `PicturesReply`: `{schemaVersion: 1, craft, declarationId, given, refused, pictures[{position,
@@ -263,6 +279,7 @@ new link; a link of another account says so and points to the picture page witho
 | `give_pictures` by page: its arguments, the merged reply and the thumbnails as image content | `backend/tests/mcp/test_give_open_pictures.py`, and `image-contributions.md`'s open-licence rows |
 | Fetching a picture's link | `backend/tests/fetcher/test_pictures.py` and `test_picture_client.py` |
 | Links, slots, their states and the HTTP routes | `backend/tests/mcp/test_upload_links.py`, `test_upload_link_routes.py` and `backend/tests/db/test_upload_links_db.py` |
+| Photographs sent as files on protocol 2026-07-28 | `backend/tests/mcp/test_mcp_file_uploads.py` |
 | The routes' classes | `backend/tests/public/test_route_inventory.py` |
 | The landing page | `frontend/e2e/upload-links-unit.spec.ts` |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/mcp-ask-and-upload.md` byte for byte equal to this file |

@@ -167,7 +167,7 @@ class EditDraft(StudioArguments):
 
     @model_validator(mode="after")
     def _one_page(self) -> Self:
-        if (self.subject is None) == (self.draft_id is None):
+        if self.subject is not None and self.draft_id is not None:
             raise ValueError(ONE_PAGE)
         return self
 

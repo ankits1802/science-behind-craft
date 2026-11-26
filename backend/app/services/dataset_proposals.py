@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -61,6 +62,7 @@ class SlotGone(Exception):
 class IssuedSlot:
     token: str
     expires_at: datetime
+    upload_id: uuid.UUID | None = None
 
 
 @dataclass(frozen=True)
@@ -92,18 +94,17 @@ async def issue_dataset_slot(
     if digest is None:
         raise InvalidInput("The upload slot could not be issued")
     expires_at = now + DATASET_UPLOAD_LIFETIME
-    session.add(
-        DatasetUpload(
-            userId=user.id,
-            userTokenVersion=int(user.tokenVersion or 0),
-            slotHash=digest,
-            record=proposal.model_dump(mode="json", by_alias=True),
-            sha256=proposal.sha256,
-            expiresAt=expires_at,
-        )
+    row = DatasetUpload(
+        userId=user.id,
+        userTokenVersion=int(user.tokenVersion or 0),
+        slotHash=digest,
+        record=proposal.model_dump(mode="json", by_alias=True),
+        sha256=proposal.sha256,
+        expiresAt=expires_at,
     )
+    session.add(row)
     await session.flush()
-    return IssuedSlot(token=token, expires_at=expires_at)
+    return IssuedSlot(token=token, expires_at=expires_at, upload_id=row.id)
 
 
 async def fill_dataset_slot(

@@ -1,6 +1,6 @@
 ---
 name: kalavigyan-contributor
-description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and the science behind them, through its MCP server and its 24 tools - find and reserve open work, read a page whole, search, read and check sources with the same registries, reader and quote matcher KalaVigyan uses itself (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators in batches and follow them through the queue, give structure and new sources, build whole pages in a draft (edit_draft) and see them with their checklist report (preview_page) before proposing them once (propose_page), deliver finished components and figures, give pictures with the person's own declaration (give_pictures), and look at the searched pictures shown beside facts (check_pictures). KalaVigyan guarantees the research and the citations and the agent designs and builds the page, coding any figure the cited facts support, by the page playbook, with Kutch Ajrakh served chapter by chapter as the worked example of the thinking, beside the design system and the kit. The rules live in nine references served beside it (the page playbook, the component cookbook, the page checklist, the designer's critique, sources, quotes and locators, the fields, components, datasets). Load it before proposing anything to KalaVigyan, and before researching or writing about a craft for it.
+description: How to research and contribute to KalaVigyan, the cited reference on the crafts of India and their science, through its MCP server - find and reserve open work, read a page whole, search, read and check sources (search_sources, read_source, lookup, supply_source), propose facts with verbatim quotes and locators and follow them through the queue, give structure and sources, build whole pages in a draft (edit_draft), preview them with their checklist report (preview_page) and propose them once (propose_page), deliver finished components and figures, and give pictures with the person's own declaration (give_pictures). KalaVigyan holds the research and citations, and the agent designs and builds the page by the page playbook with Kutch Ajrakh as the worked example. Its rules are nine references served beside it. Load it whenever someone asks to build or deepen a KalaVigyan page, propose facts, or deliver a figure, component, picture or source, and before researching or writing about a craft for KalaVigyan.
 ---
 
 # Contributing to KalaVigyan
@@ -83,6 +83,17 @@ them all), the design system
   their asks; it is for reading, never a source for a fact.
 - Every tool names its group in its `_meta` as `kalavigyan/group`: reading, sources, work,
   proposing, pages or pictures.
+- A client on protocol 2026-07-28 lists this skill and four more as skills (the design system, the
+  interactives, the datasets and Kutch Ajrakh worked through), runs a long call (`preview_page`,
+  `propose_page`, `edit_draft`, `compose_component`, `read_source`, `search_sources`,
+  `give_pictures`, `ask`) as a task whose result you pick up when it is done, and asks the person in
+  a form only what is theirs: which craft and what they want to give when you open a draft without
+  naming its page, whether to send a page when you propose it, and a source's words when you supply
+  one without them. Keep working while a task runs, and never ask the person how to build anything.
+- A client that sends files out of band takes the file itself, never its bytes in the chat:
+  `supply_source`'s `file` (the PDF or text), `give_pictures`'s `files` (one photograph for each
+  picture with `upload` true, in order) and `propose_dataset`'s `file` (the CSV or GeoJSON). The
+  client uploads it to the same slot `upload` opens, and every check of that slot applies.
 - Contributions show no contributor name. Who proposed what is kept privately, for moderation and
   audit only. A published contribution stays published and only what waits for review can be
   withdrawn, save one thing: a registered component of yours can leave its pages or give way to a

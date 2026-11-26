@@ -76,7 +76,8 @@ listed only to a token holding the `review` scope (decision 0170); each tool nam
   revocation endpoints answer any origin without credentials (`api/mcp_cors.OpenCorsMiddleware`,
   outside the site's own CORS): a preflight (`OPTIONS` with `Access-Control-Request-Method`) is 204
   with `Access-Control-Allow-Origin: *`, methods `GET, POST, OPTIONS`, headers `Authorization,
-  Content-Type, Accept, MCP-Protocol-Version, Mcp-Session-Id, Last-Event-ID` and a 600-second max age;
+  Content-Type, Accept, MCP-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Session-Id, Last-Event-ID`
+  and a 600-second max age (the site's proxy passes `mcp-method` and `mcp-name` on too);
   every answer carries `Access-Control-Allow-Origin: *`, never `Access-Control-Allow-Credentials`, and
   exposes `WWW-Authenticate`, `Retry-After`, `MCP-Protocol-Version` and `Mcp-Session-Id`. A bearer
   token, never a cookie, is the only credential the MCP route reads. The site's own routes keep the
@@ -84,15 +85,48 @@ listed only to a token holding the `review` scope (decision 0170); each tool nam
 - An `Origin` header must be an origin (a scheme and a host, no path, no user name), else 403: `null`
   and malformed values are refused. Clients that send no `Origin` (desktop and server agents) are
   served.
-- `MCP-Protocol-Version`, when sent, must be one the server speaks (`2025-11-25`, `2025-06-18`,
-  `2025-03-26`), else 400. `initialize` agrees the client's version when it is one of these and
-  offers `2025-11-25` otherwise.
+- `MCP-Protocol-Version`, when sent, must be one the server speaks (`2026-07-28`, `2025-11-25`,
+  `2025-06-18`, `2025-03-26`), else 400 with `-32022` and `data {supported, requested}`.
+  `initialize` agrees the client's version when it is one of the three handshake versions and offers
+  `2025-11-25` otherwise, never `2026-07-28`, which has no handshake (below).
 - JSON-RPC 2.0, one message per request (no batches). Methods: `initialize`, `ping`,
-  `tools/list`, `tools/call`, `prompts/*` and `resources/*` (`docs/contracts/open-work.md`); a notification (no `id`) is accepted with 202 and no body. Any other
-  method is `-32601`, an unknown tool `-32602`, a body that is not JSON `-32700` with status 400.
+  `tools/list`, `tools/call`, `prompts/*` and `resources/*` (`docs/contracts/open-work.md`), and on
+  protocol 2026-07-28 `server/discover`, `skills/*` and `tasks/*`; a notification (no `id`) is
+  accepted with 202 and no body. Any other method is `-32601`, an unknown tool `-32602`, a body that
+  is not JSON `-32700` with status 400.
 - Code: `api/routes/mcp.py` (the route), `api/mcp_protocol.py` (framing), `api/mcp_stream.py` (the
   event stream), `api/mcp_cors.py` (browsers), `api/mcp_tools.py` (the tool catalogue),
   `services/knowledge_api.py` (the reads), `research/knowledge_api.py` (the result models).
+
+## The 2026-07-28 protocol and its extensions (decision 0235)
+
+The server speaks both eras on the one endpoint. A request whose `params._meta` carries
+`io.modelcontextprotocol/protocolVersion: "2026-07-28"` is served under that revision, statelessly,
+with no handshake; `initialize` keeps the 2025-11-25 handshake above, untouched, for every client
+that opens with it (the MCP client check among them).
+
+- **The request.** `_meta` carries the version and `io.modelcontextprotocol/clientCapabilities`
+  (else `-32602`, 400); another version is `-32022` with `data {supported, requested}` (400). The
+  headers mirror the body: `MCP-Protocol-Version` equal to the `_meta` version, `Mcp-Method` to the
+  method, and `Mcp-Name` to `params.name` (`tools/call`, `prompts/get`), `params.uri`
+  (`resources/read`) or `params.taskId` (`tasks/*`), a `=?base64?…?=` value decoded first; a
+  missing or differing one is `-32020` (400), and a request under the `2026-07-28` header without the
+  body field is `-32602` (400). An unknown method is `-32601` with 404, a missing capability
+  `-32021` (400), and a missing resource `-32602` where the handshake versions answer `-32002`
+  (`api/mcp_headers.py`, `api/mcp_meta.py`). These are refused before an event stream opens.
+- **The result.** Every result names its `resultType` (`complete`, or `input_required`, `task` or
+  `upload_required` below) and carries `_meta["io.modelcontextprotocol/serverInfo"]`; the results of
+  `server/discover`, `tools/list`, `prompts/list`, `resources/list`, `resources/templates/list`,
+  `resources/read`, `skills/list` and `skills/get` carry `ttlMs 300000` and `cacheScope` (`private`
+  for `tools/list`, which depends on the connection's scopes and declared extensions, else
+  `public`) (`api/mcp_modern.py`).
+- **`server/discover`** gives `supportedVersions` (the four above), `capabilities {tools, prompts,
+  resources, extensions}` and the `instructions`. The extensions are
+  `io.modelcontextprotocol/skills {}`, `io.modelcontextprotocol/tasks {}` and, while
+  `MCP_FILE_UPLOADS_ENABLED` is true (the default), `io.modelcontextprotocol/files {upload {}}`.
+- **What they do** (skills, tasks, the questions asked of the person, files): `open-work.md`,
+  Protocol 2026-07-28, and for photographs `mcp-ask-and-upload.md`. A request of the handshake
+  versions reaches none of them, and nothing a handshake client sees has changed.
 
 ## Read tools
 
@@ -378,6 +412,7 @@ not break (decision 0101, item 15). `serverInfo.version` is `1.0.0`.
 | The admin reports | `backend/tests/mcp/test_admin_reports.py` and `backend/tests/db/test_admin_reports_db.py` |
 | Site gaps filed, refused and read | `backend/tests/mcp/test_site_gaps.py` |
 | The protocol, framing and the event stream | `backend/tests/mcp/test_mcp_protocol.py`, `test_mcp_route.py` and `test_mcp_stream.py` |
+| Protocol 2026-07-28: its requests, headers, errors, results and discovery | `backend/tests/mcp/test_mcp_modern.py` |
 | Browser clients | `backend/tests/mcp/test_mcp_cors.py` |
 | The read tools | `backend/tests/mcp/test_mcp_page_read.py`, `test_mcp_fact_tools.py`, `backend/tests/contribution_scale/test_craft_finding.py` and `backend/tests/db/test_craft_finder_db.py` |
 | The source tools and their allowances | `backend/tests/mcp/test_mcp_source_tools.py`, `test_lookup_tools.py`, `test_lookup_reading.py` and `test_lookup_references.py` |

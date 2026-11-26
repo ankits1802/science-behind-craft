@@ -59,7 +59,11 @@ class SupplySourceArguments(StudioArguments):
         description="Or the whole document as plain text (200 characters and up)",
     )
     upload: Literal[*UPLOAD_KINDS] | None = Field(
-        default=None, description="Or pdf or text: a private upload slot is returned for the file"
+        default=None,
+        description=(
+            "Or pdf or text: a private upload slot is returned for the file; or none of these, and a client "
+            "that can ask the person collects the words in a form"
+        ),
     )
     draft_id: uuid.UUID | None = Field(
         default=None, description="A draft from edit_draft to attach the source to at once"
@@ -67,11 +71,15 @@ class SupplySourceArguments(StudioArguments):
 
     @model_validator(mode="after")
     def _one_way_in(self) -> Self:
-        self.supplied()
+        if self.gives_words():
+            self.supplied()
         return self
 
-    def supplied(self) -> SupplySource:
+    def gives_words(self) -> bool:
+        return bool(self.passages) or self.text is not None or self.upload is not None
+
+    def supplied(self, **words: Any) -> SupplySource:
         try:
-            return SupplySource.model_validate(self.model_dump(exclude={"draft_id"}))
+            return SupplySource.model_validate({**self.model_dump(exclude={"draft_id"}), **words})
         except ValidationError as refused:
             raise ValueError(problems(refused)) from None

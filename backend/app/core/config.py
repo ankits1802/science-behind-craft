@@ -167,6 +167,7 @@ class Settings(BaseSettings):
     field_voices_enabled: bool = Field(default=False, alias="FIELD_VOICES_ENABLED")
     field_voices_image_hosts: str | None = Field(default=None, alias="FIELD_VOICES_IMAGE_HOSTS")
     mcp_server_enabled: bool = Field(default=False, alias="MCP_SERVER_ENABLED")
+    mcp_file_uploads_enabled: bool = Field(default=True, alias="MCP_FILE_UPLOADS_ENABLED")
     vercel_deploy_hook_url: str | None = Field(default=None, alias="VERCEL_DEPLOY_HOOK_URL")
 
     sign_in_attempts_per_ip: int = Field(default=20, ge=1, alias="SIGN_IN_ATTEMPTS_PER_IP")
