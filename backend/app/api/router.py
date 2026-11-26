@@ -42,6 +42,7 @@ from app.api.routes import (
     page_documents,
     page_exports,
     page_holds,
+    page_proposal_reviews,
     page_proposals,
     page_translations,
     password_change,
@@ -120,6 +121,7 @@ api_router.include_router(place_ground.router)
 api_router.include_router(profile.router)
 api_router.include_router(public.router)
 api_router.include_router(staged_reviews.router)
+api_router.include_router(page_proposal_reviews.router)
 api_router.include_router(review_queue.router)
 api_router.include_router(rivers.router)
 api_router.include_router(saved_explainers.router)

@@ -26,12 +26,13 @@ from app.research.staged_reviews import (
 )
 
 from .oauth_bearer import McpCaller
+from .page_proposal_reviews import page_label
 from .review_queue import QueueAdapters, open_review_item
 from .review_queue_decisions import ItemRef
-from .review_queue_errors import NotYourQueue
+from .review_queue_errors import NotYourQueue, refusal_of
 from .source_corrections import source_label
 from .staged_published import published_before, published_label
-from .staged_review_apply import dry_run, refusal_of
+from .staged_review_apply import dry_run
 from .testimony_views import Turns
 
 __all__ = ["ASKED_ALREADY", "Staged", "StagedRefusal", "stage_decisions", "stage_request", "staged_today"]
@@ -77,14 +78,14 @@ async def stage_decisions(
         raise NotYourQueue(NOT_AN_ADMIN)
     staged = Staged(today=await staged_today(session, proposer, now=now))
     kept: list[tuple[StagedDecision, str]] = []
-    seen: set[tuple[str, uuid.UUID]] = set()
+    seen: set[tuple[object, ...]] = set()
     for index, decision in enumerate(asked):
         checked = await _checked(session, decision, proposer, seen=seen, now=now)
         if checked.problem is not None or checked.label is None:
             reason = checked.problem or NOT_WAITING
             staged.refused.append(StagedRefusal(index, decision.kind, decision.id, reason))
             continue
-        seen.add((decision.kind, decision.id))
+        seen.add(_target(decision))
         kept.append((checked.decision, checked.label))
     over = day_allowance_problem(staged.today, len(kept))
     if over is not None:
@@ -125,10 +126,10 @@ async def _checked(
     decision: StagedDecision,
     proposer: User,
     *,
-    seen: set[tuple[str, uuid.UUID]],
+    seen: set[tuple[object, ...]],
     now: datetime,
 ) -> _Checked:
-    if (decision.kind, decision.id) in seen:
+    if _target(decision) in seen:
         return _Checked(decision, problem=TWICE)
     try:
         filled = await published_before(session, decision)
@@ -151,11 +152,19 @@ async def _label(
     if decision.kind == SOURCES_DIFFER:
         text = await session.scalar(select(Claim.text).where(Claim.id == decision.id))
         return None if text is None else cut_label(f"Sources differ: {text}")
+    if decision.page is not None:
+        return await page_label(session, decision.id, decision.page)
     adapters = QueueAdapters(objects=None, turns_of=_no_transcripts)
     item = await open_review_item(
         session, proposer, ItemRef(decision.kind, decision.id), adapters=adapters, now=now
     )
     return None if item is None else queue_label(item)
+
+
+def _target(decision: StagedDecision) -> tuple[object, ...]:
+    if decision.page is None:
+        return (decision.kind, decision.id)
+    return (decision.kind, decision.id, decision.page.scope, decision.page.chapter, decision.page.label)
 
 
 def _missing(decision: StagedDecision) -> str:

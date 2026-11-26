@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src '__KV_SCRIPT_HASH__'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>KalaVigyan page proposal</title>
+<style>
+__KV_THEME__
+*{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink-1)}
+body{margin:0;background:var(--ground);color:var(--ink-1);font-family:var(--font-ui);font-size:var(--text-ui);line-height:1.5;font-variant-numeric:lining-nums tabular-nums}
+main{max-width:72rem;margin:0 auto;padding:12px 16px}
+.kv-kicker{margin:0 0 8px;font-size:var(--text-caption);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)}
+.kv-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.kv-name{flex:1 1 14rem;min-width:0;margin:0;font-family:var(--font-headline);font-size:var(--text-h3);font-weight:480;line-height:1.2;overflow-wrap:anywhere}
+main[data-open="true"] .kv-name{flex-basis:100%;font-size:var(--text-h2);line-height:1.08}
+.kv-line-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1 1 100%}
+h2{margin:0 0 8px;font-family:var(--font-headline);font-size:var(--text-h3);font-weight:480;line-height:1.2}
+p{margin:0 0 12px}
+.kv-meta{font-size:var(--text-label);color:var(--ink-3)}
+section{padding-top:16px;margin-top:20px;border-top:1px solid var(--ink-1)}
+a{color:var(--indigo);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--indigo-hover);text-decoration-thickness:2px}
+a:focus-visible,.kv-toggle:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+.kv-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1px solid var(--rule-strong);color:var(--ink-1);background:var(--raised)}
+.kv-button:hover{background:var(--sunk);color:var(--ink-1)}
+.kv-toggle{margin:0;min-height:44px;padding:0 20px;border-radius:999px;font:inherit;font-weight:600;color:var(--ink-1);background:var(--raised);border:1px solid var(--rule-strong);cursor:pointer}
+.kv-toggle:hover{background:var(--sunk)}
+.kv-full{padding:16px 0 12px}
+.kv-full[hidden]{display:none}
+.kv-changes{list-style:none;margin:0;padding:0}
+.kv-change{display:grid;gap:4px;padding-block:8px;padding-inline:12px 0;border-bottom:1px solid var(--rule);border-inline-start:2px solid var(--ink-1)}
+.kv-change[data-change="REMOVED"]{border-inline-start-style:dashed}
+.kv-mark{justify-self:start;padding:0 8px;border-radius:4px;background:var(--sunk);font-size:var(--text-label);font-weight:600;color:var(--ink-1)}
+.kv-before{margin:0;color:var(--ink-3);text-decoration:line-through;font-family:var(--font-reading)}
+.kv-after{margin:0;color:var(--ink-1);font-family:var(--font-reading)}
+.kv-table-wrap{overflow-x:auto;margin:0 -16px;padding:0 16px}
+table{width:100%;border-collapse:collapse;font-size:0.875rem}
+caption{text-align:start;font-size:var(--text-label);color:var(--ink-3);padding:0 0 8px}
+th,td{padding:6px 8px;text-align:start;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;color:var(--ink-3);font-size:var(--text-caption)}
+footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--rule);font-size:var(--text-caption);color:var(--ink-3)}
+@media (min-width:640px){.kv-line-actions{display:flex;flex:0 0 auto}main{padding:12px 24px}.kv-table-wrap{margin:0;padding:0}}
+</style>
+</head>
+<body>
+<main id="kv-review" aria-live="polite"><p class="kv-meta" role="status">Waiting for the review queue</p></main>
+<script>
+(function () {
+  "use strict";
+  var root = document.getElementById("kv-review");
+  var MARKS = { ADDED: "Added", CHANGED: "Changed", REMOVED: "Removed" };
+  var KINDS = { SENTENCE: "Sentence", COMPONENT: "Component", PICTURE: "Picture" };
+  var STATES = { WAITING: "Waiting", APPROVED: "Approved", REJECTED: "Rejected", CLOSED: "Closed" };
+  var SIDES = { BEFORE: "As it stands", AFTER: "As it will be" };
+  var CHANNEL = "kalavigyan-page-review";
+  var SHOW = "Show the changes";
+  var HIDE = "Minimise the changes";
+  var nextId = 1;
+  var initId = null;
+  var reported = { width: 0, height: 0 };
+  var shown = { id: null, at: 0, full: null, toggle: null, open: false };
+  var channel = null;
+  try { channel = typeof BroadcastChannel === "function" ? new BroadcastChannel(CHANNEL) : null; } catch (refused) { channel = null; }
+
+  function send(message) { window.parent.postMessage(message, "*"); }
+  function request(method, params) { var id = nextId; nextId += 1; send({ jsonrpc: "2.0", id: id, method: method, params: params }); return id; }
+  function notify(method, params) { send({ jsonrpc: "2.0", method: method, params: params || {} }); }
+  function list(value) { return Array.isArray(value) ? value : []; }
+  function count(value) { return Number.isInteger(value) ? value : 0; }
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined && text !== null) node.textContent = String(text);
+    return node;
+  }
+
+  function safeUrl(value) {
+    try {
+      var url = new URL(String(value));
+      return url.protocol === "https:" ? url : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function outLink(text, href, className) {
+    var url = safeUrl(href);
+    if (!url) return el("span", className, text);
+    var anchor = el("a", className, text);
+    anchor.href = url.href;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    anchor.addEventListener("click", function (event) {
+      event.preventDefault();
+      request("ui/open-link", { url: url.href });
+    });
+    return anchor;
+  }
+
+  function reviewUrl(pageUrl) {
+    var url = safeUrl(pageUrl);
+    return url ? url.origin + "/admin/review" : null;
+  }
+
+  function counted(numbers) {
+    var said = [];
+    if (count(numbers && numbers.added)) said.push(count(numbers.added) + " added");
+    if (count(numbers && numbers.changed)) said.push(count(numbers.changed) + " changed");
+    if (count(numbers && numbers.removed)) said.push(count(numbers.removed) + " removed");
+    return said.join(", ");
+  }
+
+  function chapterLine(chapter) {
+    var parts = [];
+    [["sentences", chapter.sentences], ["components", chapter.components], ["pictures", chapter.pictures]].forEach(function (pair) {
+      var said = counted(pair[1]);
+      if (said) parts.push(pair[0] + " " + said);
+    });
+    return parts.join(" · ");
+  }
+
+  function change(item) {
+    var row = el("li", "kv-change");
+    row.setAttribute("data-change", String(item.change || ""));
+    var moved = item.movedFrom ? " · moved from " + item.movedFrom : "";
+    row.appendChild(el("span", "kv-mark", (MARKS[item.change] || "Changed") + " · " + (KINDS[item.kind] || "Part") + moved));
+    if (item.before) row.appendChild(el("p", "kv-before", item.before));
+    if (item.after) row.appendChild(el("p", "kv-after", item.after));
+    if (item.kind !== "SENTENCE") row.appendChild(el("p", "kv-meta", item.ref));
+    return row;
+  }
+
+  function chapter(item) {
+    var block = el("section");
+    block.appendChild(el("h2", null, item.title || item.key));
+    block.appendChild(el("p", "kv-meta", chapterLine(item)));
+    var changes = el("ul", "kv-changes");
+    list(item.changes).forEach(function (one) { changes.appendChild(change(one)); });
+    if (changes.childNodes.length) block.appendChild(changes);
+    return block;
+  }
+
+  function table(caption, heads, rows) {
+    var wrap = el("div", "kv-table-wrap");
+    var grid = el("table");
+    grid.appendChild(el("caption", null, caption));
+    var top = el("tr");
+    heads.forEach(function (name) { top.appendChild(el("th", null, name)); });
+    var thead = el("thead");
+    thead.appendChild(top);
+    grid.appendChild(thead);
+    var body = el("tbody");
+    rows.forEach(function (cells) {
+      var row = el("tr");
+      cells.forEach(function (cell) { row.appendChild(el("td", null, cell)); });
+      body.appendChild(row);
+    });
+    grid.appendChild(body);
+    wrap.appendChild(grid);
+    return wrap;
+  }
+
+  function pictures(page) {
+    var rows = list(page.pictures).map(function (picture) {
+      return [SIDES[picture.side] || picture.side, String(picture.caption || picture.name), count(picture.width) + " by " + count(picture.height) + " px"];
+    });
+    var block = el("section");
+    block.appendChild(el("h2", null, "Drawn at 390 and 1440 px"));
+    if (!rows.length) {
+      block.appendChild(el("p", null, "No pictures are kept for this proposal yet. Draw it on the Review page to see both versions."));
+      return block;
+    }
+    block.appendChild(el("p", "kv-meta", "The pictures come back beside this result, the page as it stands before the page as it will be."));
+    block.appendChild(table("The renderer's pictures of each version", ["Version", "Picture", "Size"], rows));
+    return block;
+  }
+
+  function parts(page) {
+    var rows = list(page.parts).map(function (part) {
+      return [String(part.kind || ""), String(part.title || ""), String(part.chapter || "the whole page"), STATES[part.state] || String(part.state || "")];
+    });
+    var block = el("section");
+    block.appendChild(el("h2", null, "Each part and its state"));
+    block.appendChild(table("Every part a decision reaches, each still checked by its own queue's rules", ["Kind", "Part", "Chapter", "State"], rows));
+    return block;
+  }
+
+  function decisions(page) {
+    var made = list(page.decisions);
+    if (!made.length) return null;
+    var block = el("section");
+    block.appendChild(el("h2", null, "Decisions so far"));
+    var rows = made.map(function (decision) {
+      var where = decision.chapter || decision.label || "the whole page";
+      var applied = list(decision.outcomes).filter(function (outcome) { return outcome.outcome === "APPLIED"; }).length;
+      return [String(decision.action || ""), where, String(decision.note || ""), applied + " of " + list(decision.outcomes).length + " applied"];
+    });
+    block.appendChild(table("What reviewers decided, and the note the contributor sees", ["Action", "Scope", "Note", "Applied"], rows));
+    return block;
+  }
+
+  function post(kind) {
+    if (!channel || !shown.id) return;
+    try { channel.postMessage({ kind: kind, id: shown.id, at: shown.at }); } catch (refused) { channel = null; }
+  }
+
+  function setOpen(open) {
+    if (!shown.full) return;
+    shown.open = open;
+    shown.full.hidden = !open;
+    root.setAttribute("data-open", open ? "true" : "false");
+    shown.toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    shown.toggle.textContent = open ? HIDE : SHOW;
+    report_size();
+  }
+
+  function heard(message) {
+    if (!message || !shown.id || message.id === shown.id) return;
+    if (message.kind === "opened" || (message.kind === "shown" && message.at > shown.at)) setOpen(false);
+  }
+
+  function folded(contents) {
+    var full = el("div", "kv-full");
+    full.id = "kv-full";
+    contents.forEach(function (part) { if (part) full.appendChild(part); });
+    var toggle = el("button", "kv-toggle", SHOW);
+    toggle.type = "button";
+    toggle.setAttribute("aria-controls", "kv-full");
+    toggle.addEventListener("click", function () {
+      var open = !shown.open;
+      setOpen(open);
+      if (open) post("opened");
+    });
+    shown.full = full;
+    shown.toggle = toggle;
+    return { toggle: toggle, full: full };
+  }
+
+  function waitingLine(page) {
+    var chapters = list(page.chapters).length;
+    return count(page.waiting) + " parts waiting · " + chapters + (chapters === 1 ? " chapter changed" : " chapters changed");
+  }
+
+  function renderPage(page) {
+    var top = el("header", "kv-line");
+    top.appendChild(el("h1", "kv-name", page.subjectName || (page.subject && page.subject.slug) || "Page proposal"));
+    top.appendChild(el("p", "kv-meta", waitingLine(page)));
+    var actions = el("div", "kv-line-actions");
+    actions.appendChild(outLink("Decide on the Review page", reviewUrl(page.pageUrl), "kv-button"));
+    top.appendChild(actions);
+    var contents = [el("p", "kv-kicker", "KalaVigyan · Page proposal under review")];
+    var standing = el("p");
+    standing.appendChild(outLink("Open the page as it stands", page.pageUrl));
+    contents.push(standing);
+    contents.push(el("p", "kv-meta", "An AI may stage a decision with stage_reviews; a person confirms every one before anything changes."));
+    contents.push(pictures(page));
+    list(page.chapters).forEach(function (item) { contents.push(chapter(item)); });
+    contents.push(parts(page));
+    contents.push(decisions(page));
+    var foot = el("footer");
+    foot.appendChild(el("p", null, "Drawn from the review queue's own result; every text is shown as text and nothing is loaded from the network. It starts as one line; opening one minimises the others."));
+    contents.push(foot);
+    var id = String(page.id || "");
+    var keep = shown.id === id && shown.open;
+    shown.id = id;
+    shown.at = Date.parse(String(page.createdAt || "")) || 0;
+    var card = folded(contents);
+    actions.appendChild(card.toggle);
+    root.replaceChildren(top, card.full);
+    setOpen(keep);
+    post("shown");
+  }
+
+  function renderList(result) {
+    var pages = list(result.pages);
+    var top = el("header", "kv-line");
+    top.appendChild(el("h1", "kv-name", pages.length + (pages.length === 1 ? " page proposal waits" : " page proposals wait")));
+    top.appendChild(el("p", "kv-meta", String(result.message || "")));
+    var contents = [el("p", "kv-kicker", "KalaVigyan · Review queue")];
+    var rows = pages.map(function (page) { return [String(page.subjectName || ""), waitingLine(page), String(page.id || "")]; });
+    if (rows.length) contents.push(table("Open one with review_queue and page set to its id", ["Page", "Waiting", "Id"], rows));
+    shown.id = "list";
+    var card = folded(contents);
+    top.appendChild(card.toggle);
+    root.replaceChildren(top, card.full);
+    setOpen(false);
+  }
+
+  function render(result) {
+    if (result.page && typeof result.page === "object") renderPage(result.page);
+    else renderList(result);
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape" || !shown.open) return;
+    setOpen(false);
+    shown.toggle.focus();
+  });
+
+  if (channel) channel.addEventListener("message", function (event) { heard(event.data); });
+
+  function theme(context) {
+    var chosen = context && context.theme;
+    if (chosen === "dark" || chosen === "light") document.documentElement.setAttribute("data-theme", chosen);
+  }
+
+  function report_size() {
+    var box = root.getBoundingClientRect();
+    var size = { width: document.documentElement.scrollWidth, height: Math.ceil(box.bottom + window.scrollY) };
+    if (size.width === reported.width && size.height === reported.height) return;
+    reported = size;
+    notify("ui/notifications/size-changed", size);
+  }
+
+  if (typeof ResizeObserver === "function") new ResizeObserver(report_size).observe(root);
+
+  window.addEventListener("message", function (event) {
+    if (event.source !== window.parent) return;
+    var message = event.data;
+    if (!message || message.jsonrpc !== "2.0") return;
+    if (message.method === "ui/notifications/tool-result") {
+      var content = message.params && message.params.structuredContent;
+      if (content && typeof content === "object") render(content);
+      return;
+    }
+    if (message.method === "ui/notifications/host-context-changed") {
+      theme(message.params);
+      return;
+    }
+    if (message.id === initId && message.result) {
+      theme(message.result.hostContext);
+      notify("ui/notifications/initialized", {});
+    }
+  });
+
+  initId = request("ui/initialize", {
+    protocolVersion: "2026-01-26",
+    appInfo: { name: "kalavigyan-page-review", version: "1.0.0" },
+    appCapabilities: {}
+  });
+})();
+</script>
+</body>
+</html>

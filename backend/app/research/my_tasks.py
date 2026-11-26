@@ -10,6 +10,7 @@ from app.models.open_work import RESERVATION_ENDINGS
 from .base import ContractModel
 from .contribution_queue import ProposalTicket
 from .open_work import OPEN_WORK_SCHEMA_VERSION, TASK_KEY_MAX_CHARS, OpenTask, TaskHold
+from .page_proposal_review import PageReviewNote
 from .trust_tiers import TrustTier
 
 __all__ = [
@@ -69,3 +70,4 @@ class MyTasks(ContractModel):
     claimed: list[HeldTask]
     completed: list[EndedTask]
     outcomes: list[ProposalTicket]
+    reviews: list[PageReviewNote] = Field(default_factory=list)

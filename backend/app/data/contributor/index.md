@@ -88,6 +88,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `kalavigyan://design/answer-kit.md`: How a KalaVigyan answer is drawn.
 - `ui://kalavigyan/answer.html`: A KalaVigyan answer.
 - `ui://kalavigyan/page-preview.html`: A KalaVigyan page preview.
+- `ui://kalavigyan/page-review.html`: A KalaVigyan page proposal under review.
 - `kalavigyan://design/tokens.css`: The KalaVigyan design tokens as CSS.
 - `kalavigyan://design/drawing.md`: Drawing for KalaVigyan.
 

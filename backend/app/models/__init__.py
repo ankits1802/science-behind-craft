@@ -118,6 +118,7 @@ from app.models.open_work import ComponentProposal, TaskReservation
 from app.models.paces import SourceLease, SourcePace
 from app.models.page_layouts import PageLayout
 from app.models.page_previews import PagePreview
+from app.models.page_proposals import DrawnPicture, PageProposal
 from app.models.page_translations import PageTextUnit, PageTranslation, TranslationReader
 from app.models.place_lookups import PlaceLookup
 from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
@@ -202,6 +203,7 @@ __all__ = [
     "DesignReadCache",
     "DistrictEnvValue",
     "DistrictGeology",
+    "DrawnPicture",
     "EnrichmentJob",
     "EnrichmentProposal",
     "EnvDataset",
@@ -250,6 +252,7 @@ __all__ = [
     "PageHold",
     "PageLayout",
     "PagePreview",
+    "PageProposal",
     "PageRefreshJob",
     "PageTextUnit",
     "PageTranslation",

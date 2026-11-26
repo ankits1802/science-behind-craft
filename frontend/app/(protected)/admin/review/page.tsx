@@ -7,6 +7,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/PageHeader";
 import { QueueFilterBar } from "@/components/review/QueueFilterBar";
 import { QueueItemView } from "@/components/review/QueueItemView";
+import { PageProposals } from "@/components/review/PageProposals";
 import { StagedBatches } from "@/components/review/StagedBatches";
 import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import { canAccessRoute } from "@/lib/permissions";
 import type { QueueKind, ReviewFilters } from "@/lib/reviewQueueContract";
 import { EVERY_KIND, filtersFromSearch, filtersSearch, isFiltered, kindTabs, NO_FILTERS } from "@/lib/reviewQueueView";
 
+import { usePageProposals } from "./usePageProposals";
 import { useReviewQueue, type ReviewQueueState } from "./useReviewQueue";
 import { useStagedReviews } from "./useStagedReviews";
 
@@ -38,6 +40,7 @@ function ReviewScreen() {
   const filters = useMemo(() => filtersFromSearch(new URLSearchParams(search)), [search]);
   const queue = useReviewQueue(filters);
   const staged = useStagedReviews(queue.handlers.decidedElsewhere);
+  const pages = usePageProposals(queue.handlers.decidedElsewhere);
   const change = (next: ReviewFilters) => {
     const query = filtersSearch(next);
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
@@ -48,6 +51,15 @@ function ReviewScreen() {
       <PageHeader title="Review" kicker="Admin" description={DESCRIPTION} />
       <div className="grid gap-6">
         <StagedBatches batches={staged.batches} error={staged.error} onConfirm={staged.confirm} onDiscard={staged.discard} />
+        <PageProposals
+          proposals={pages.proposals}
+          opened={pages.opened}
+          error={pages.error}
+          notice={pages.notice}
+          onOpen={pages.handlers.open}
+          onDecide={pages.handlers.decide}
+          onDraw={pages.handlers.draw}
+        />
         <QueueFilterBar filters={filters} onChange={change} />
         {queue.page ? (
           <Tabs

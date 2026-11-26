@@ -44,6 +44,7 @@ def test_every_kind_an_admin_reviews_takes_removal_or_edit_beside_its_queue_acti
         "SOURCES": ("correct", "remove"),
         "SOURCES_DIFFER": ("clear",),
         "IMAGES": ("remove", "edit"),
+        "PAGES": ("approve", "reject"),
     }
 
 

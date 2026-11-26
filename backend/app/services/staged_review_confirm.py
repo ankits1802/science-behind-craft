@@ -29,8 +29,8 @@ from app.research.staged_reviews import (
 
 from . import audit
 from .page_revalidation import merged_owners
-from .review_queue_errors import DecisionConflict, NotYourQueue, UnknownItem
-from .staged_review_apply import apply_decision, refusal_of
+from .review_queue_errors import DecisionConflict, NotYourQueue, UnknownItem, refusal_of
+from .staged_review_apply import apply_decision
 
 __all__ = ["STAGED_APPLIED", "STAGED_DISCARDED", "Confirmed", "confirm_batch", "discard_batch"]
 
@@ -138,6 +138,7 @@ async def _confirm_item(
     confirmed.owners = merged_owners(confirmed.owners, applied.owners)
     if applied.decided is not None:
         confirmed.decided.append(applied.decided)
+    confirmed.decided.extend(applied.page_decided)
     await _audited(session, confirmed.batch, final, run.confirmer, changed=changed)
 
 

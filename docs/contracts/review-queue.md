@@ -17,6 +17,7 @@ route per action. Reviewers and the engineers who add a kind or a decision read 
 | Map layer proposals | the datasets reference (`backend/app/data/contributor/references/datasets.md`), Map layers over MCP |
 | Decisions an Admin's AI stages over MCP for a person to confirm | [decision 0170](../decisions/0170-review-over-mcp-staged-and-pages-refreshed-now.md) and Staged over MCP below |
 | Removing and editing published content over MCP | [decision 0194](../decisions/0194-an-admin-removes-and-edits-published-content-over-mcp.md) and Published content below |
+| A page proposed whole, as it stood and as it will be, decided whole, by chapter or by component | [decision 0236](../decisions/0236-a-reviewer-sees-a-page-as-it-stood-and-as-it-will-be-and-decides-it-whole-by-chapter-or-by-component.md) and Page proposals below |
 
 A reviewer's own contribution is approved at once by its own write path (`knowledge-writes.md`,
 `image-contributions.md`, `open-work.md`) and never enters the queue; the queue also leaves out
@@ -351,6 +352,51 @@ the secret on the API nothing is sent; a refusal or an unreachable web app is lo
 the change stays, the pages refreshing on their daily schedule. The secret lives in Parameter Store
 and the Vercel env (`docs/RUNBOOK.md`, Secrets).
 
+## Page proposals
+
+A page proposed whole (`propose_page` with more than one part, over MCP or the site) is kept as one
+`PageProposal` (migration `0122_review_diff`; `api/page_proposal_deps.page_proposed`,
+`services/page_proposal_records.py`): the proposer, the subject and origin, the page as it stands
+(`monograph_generated.generated_document_of`) and as it will be (the preview's own assembly,
+`page_preview.previewed_document`), each accepted part `{part, kind, id, chapter, label, title}`
+(`research/page_proposal_parts.py`: a fact's chapter is its field's, a component's the chapter the drawn
+page places it in, a given picture's its plate's, the layout's none), the changes chapter by chapter
+(`research/page_changes.py`: each cited sentence by its unit, component by its label and what it draws,
+picture plate by its picture, caption and credit, marked `ADDED`, `CHANGED` with both texts and
+`movedFrom`, or `REMOVED`; a chapter's counts and at most 60 lines, components and pictures first) and
+the decisions made (decision 0236). A page the preview cannot draw keeps no documents. Its parts still
+wait in their own kinds as well.
+
+**Pictures** (`services/page_proposal_pictures.py`). The preview keeps the renderer's pictures
+(`DrawnPicture`, JPEG in Postgres, one preview's set per account and page, deleted with the preview);
+proposing moves those of the account's latest live preview to the proposal when that preview drew
+exactly the document proposed. Draw it draws one side on the renderer as the reviewer's own short-lived
+preview (`services/page_proposal_drawings.py`); a preview owned by an account that reviews contributions
+may show a waiting picture another account gave (`page_preview_pictures.shown_picture_file`).
+
+Routes (`api/routes/page_proposal_reviews.py`), for Admins and Master Admins (`REVIEW_CONTRIBUTIONS`;
+403 otherwise and for one's own proposal, 404 for an unknown one):
+
+| Route | Answer |
+|---|---|
+| `GET /api/review-queue/pages` | `PageProposalList {schemaVersion 1, proposals}`: open proposals of the last 60 days with a part waiting, newest first, at most 20, each chapter with its counts and no lines |
+| `GET /api/review-queue/pages/{id}` | `PageProposalView {schemaVersion, id, subject {kind, slug}, subjectName, pageUrl, origin, proposer, createdAt, waiting, parts, chapters, pictures, drawable, decisions, whole}`: each part `{part, kind, id, chapter, label, title, state}` (state `WAITING`, `APPROVED`, `REJECTED` or `CLOSED`), each chapter `{key, title, sentences, components, pictures, changes}` (each count `{added, changed, removed}`, each change `{kind, change, ref, before, after, componentKind?, movedFrom?}`), each picture `{side, name, caption, width, height, url}` (side `BEFORE` or `AFTER`), and `drawable`, the sides it keeps a document of |
+| `GET /api/review-queue/pages/{id}/documents/{side}` | the `MonographDocument` of that side, `private, no-store` |
+| `GET /api/review-queue/pages/{id}/pictures/{side}/{name}` | the JPEG, `private, max-age=3600` |
+| `POST /api/review-queue/pages/{id}/draw` `{side}` | `PageDrawing {side, drawn, message, pictures, problems}`; a renderer that cannot draw leaves the kept pictures and says why |
+| `POST /api/review-queue/pages/{id}/decide` `{action, scope, chapter?, label?, note?}` | `PageDecisionReply {schemaVersion, decision, message, open}`: the decision `{action, scope, chapter?, label?, note, decidedAt, outcomes}`, each outcome `{part, kind, id, title, outcome, message}` (`APPLIED`, `REFUSED` or `SKIPPED`), and whether anything still waits |
+
+A decision (`services/page_proposal_decisions.py`) takes `approve` or `reject` and a scope: `PAGE`,
+`CHAPTER` with its chapter's key or `COMPONENT` with its label. It decides every part in the scope that
+still waits, facts first and the layout last, each through `review_queue_decisions.approve_item` or
+`reject_item` in its own savepoint, so each kind's own checks and refusals stand: a part they refuse
+stays waiting with the reason, a part decided elsewhere is skipped. A rejection names its reason (3 to
+500 characters), an approval's note is optional. The decision is kept on the proposal with each outcome,
+audited `review.page_approved` or `review.page_rejected`, and the proposal closes once nothing waits.
+After the commit the pages its parts changed are refreshed and written facts embedded, as a single
+decision's are. The contributor reads every decision on their page proposals, with its note and each
+part's outcome, in `my_work`'s `reviews` (`open-work.md`).
+
 ## Staged over MCP
 
 An Admin's or Master Admin's AI client, signed in with the `review` scope (`mcp-oauth.md`, Scopes
@@ -367,7 +413,13 @@ most put a decision in front of a person, who sees it with its reason and the ap
   third party's model. Two corrections are staged the same way: `SOURCES` (`correct` a source's
   `title`, `authors`, `year`, `containerTitle` or `kind`; a title must be a work's title and an
   author never a file's producer, `research/source_titles`, `research/front_page.producer_token`)
-  and `SOURCES_DIFFER` (`clear` a fact's sources-differ mark).
+  and `SOURCES_DIFFER` (`clear` a fact's sources-differ mark). A page proposal is staged as `PAGES`
+  (decision 0236; migration `0122_review_diff` widens the kind check): `approve` or `reject` with
+  `page {scope PAGE | CHAPTER | COMPONENT, chapter?, label?}`, which only a `PAGES` decision carries
+  and a person cannot change; several chapters or components of one page may be staged in one call.
+  It is checked and confirmed as the Page proposals decision above, with the confirming person as
+  reviewer. An MCP client's own confirmation form (elicitation) is not offered yet: a person confirms
+  on the Review page.
 - **Published content** (decisions 0193 and 0194). Beside the queue's actions every kind takes
   actions on what is already published, listed once in `research/staged_reviews.PUBLISHED_ACTIONS`
   and carried out by that kind's entry in `services/staged_published.PUBLISHED_KINDS`, one module
@@ -414,7 +466,14 @@ most put a decision in front of a person, who sees it with its reason and the ap
 - **Reading** (`review_queue`): the queue as `GET /api/review-queue` lists it, narrowed to those
   kinds and filtered by `kinds`, `craft_slug` and `origin`, each item summarised by its kind, id, origin,
   craft and label; `open {kind, id}` gives one item whole, as its card has it (quotes, sources, gate
-  checks, filing verdict, held reason and suggested craft). A source is re-read with its quotes by
+  checks, filing verdict, held reason and suggested craft). Beside the items, `pages` lists the open page proposals, each
+  with its subject, how many parts wait, its pictures' count and each changed chapter's counts; `page`
+  (a proposal's id) returns one whole as `page`, the same view the Review page opens, with its stored
+  pictures beside the result (the first screens, then the changed chapters, the page as it stands before
+  the page as it will be, within 1 MB; `api/mcp_page_review.py`). The tool draws with the MCP App
+  `ui://kalavigyan/page-review.html` (`data/design/page-review-view.html`): one line that opens to each
+  chapter's marked changes, each part's state and the decisions made, minimises back and minimises the
+  others, all as text, loading nothing. A source is re-read with its quotes by
   `read_source`, the contributors' tool. `published {kind, subject?, id?, entry?, cursor?}` reads
   published content instead (`api/mcp_published_read.py`): with `subject` a page's items of that kind,
   25 at a time with `next_cursor` (pictures, readings and placed stages of a craft, a page's current
@@ -527,6 +586,17 @@ The page parses its kinds and items with `shape.knownOnly`: the production build
 does not know (or a structure item of a kind it does not know) and renders the rest, since a release
 ships the API before the web; the unit specs refuse it (decision 0167).
 
+For Admins, the page proposals stand above the queue, below the staged batches
+(`components/review/PageProposals.tsx`, `PageProposalCard.tsx`; `app/(protected)/admin/review/usePageProposals.ts`;
+`lib/pageProposalContract.ts`, `lib/pageProposalView.ts`): each card names the page, the proposer, how
+many parts wait and each changed chapter's counts, with a decision for the whole page; Show the page as
+it stands and as it will be opens the first screens at 390 and 1440 px side by side (`PageShots.tsx`,
+`DrawnPair.tsx`, pictures loaded lazily at their drawn size, Draw it for a side without them), then each
+chapter (`ChapterChangeList.tsx`) with its pictures, its lines marked Added, Changed or Removed in words
+(`PageChangeLines.tsx`), its changed components drawn from the two documents on request
+(`ChangedComponents.tsx`: `ComponentSlot` and a coded figure's live run) and a decision for the chapter
+and each component (`ScopeDecision.tsx`), and each part with its state.
+
 Facts, readings, component, layout, structure and map layer proposals and stages decide through `QueueDecisionBar.tsx`: an `ActionGroup` of Approve, Approve as
 reviewed (facts), then Reject (waiting) or Retract (live) last as the destructive action, with a
 Reason field required for either. The client contract is `frontend/lib/reviewQueueContract.ts`;
@@ -550,6 +620,7 @@ stay, and list decided items.
 | A removal, an edit, a retraction or a rejection of what a page shows drops its pages' kept versions | `backend/tests/db/test_removed_versions_db.py` and `backend/tests/db/test_published_process_db.py` |
 | Only the pages whose copies draw a removed fact or component lose their kept versions, and two removals crossing the same pages wait in turn | `backend/tests/db/test_kept_versions_db.py` |
 | Published content: removal and edit of every kind, their gates, what depends on them, the batch's before and after | `backend/tests/research/test_published_content_rules.py`, `test_published_structure_entries.py`, `backend/tests/db/test_published_content_db.py`, `test_published_components_db.py`, `test_published_process_db.py`, `test_published_structure_db.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
+| Page proposals: the record, the changes, the pictures, Draw it, a scope's decision, the note in `my_work`, over MCP and staged | `backend/tests/review_queue/test_page_changes.py`, `test_page_proposal_parts.py`, `backend/tests/db/test_page_proposal_reviews_db.py`, `backend/tests/mcp/test_page_review_view.py` and `frontend/e2e/review-pages-unit.spec.ts` |
 | The Review page | `frontend/e2e/review-queue-unit.spec.ts`, `review-layers-unit.spec.ts`, `review-layouts-unit.spec.ts`, `review-readings-unit.spec.ts`, `review-structure-unit.spec.ts`, `review-unknown-kinds-unit.spec.ts` and `revalidate-unit.spec.ts` |
 
 Re-read it when a kind joins the queue, a decision is added, or a capability moves between roles.

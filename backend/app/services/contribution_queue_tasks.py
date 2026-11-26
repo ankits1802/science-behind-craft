@@ -25,6 +25,7 @@ from .contribution_queue_tickets import recent_tickets
 from .open_work import RESERVATION_MINUTES, subject_standings
 from .open_work_pictures import picture_tasks
 from .open_work_subjects import WorkSubject, subject_by_key
+from .page_proposal_reviews import page_review_notes
 
 __all__ = ["COMPLETED", "my_tasks"]
 
@@ -47,6 +48,7 @@ async def my_tasks(session: AsyncSession, user: User, *, site: str, now: datetim
         ],
         completed=await _completed(session, user.id, now=now),
         outcomes=outcomes.proposals,
+        reviews=await page_review_notes(session, user.id, now=now),
     )
 
 

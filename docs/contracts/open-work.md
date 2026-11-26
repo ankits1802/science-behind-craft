@@ -565,7 +565,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | Tool | Group | Scope | Hints | Returns |
 |---|---|---|---|---|
 | `list_open_work` | work | read | read-only | `OpenWork` |
-| `my_work` | work | contribute | read-only (records what a steward has seen) | `MyWork {schemaVersion 1, tier, holding, holdingMax, reservationMinutes, claimed[{taskKey, reservedUntil, task (OpenTask, or null once closed)}], completed[{taskKey, ending COMPLETED, endedAt}] (the last 30 days, at most 50), outcomes[ProposalTicket] (the latest 20), crafts[StewardPackage], craftsMax, message}` |
+| `my_work` | work | contribute | read-only (records what a steward has seen) | `MyWork {schemaVersion 1, tier, holding, holdingMax, reservationMinutes, claimed[{taskKey, reservedUntil, task (OpenTask, or null once closed)}], completed[{taskKey, ending COMPLETED, endedAt}] (the last 30 days, at most 50), outcomes[ProposalTicket] (the latest 20), reviews[{proposalId, subject, action, scope, chapter?, label?, note, decidedAt, outcomes}] (the latest 10 decisions on its page proposals of the last 30 days, each with the reviewer's note and each part's outcome, `review-queue.md`, Page proposals; decision 0236), crafts[StewardPackage], craftsMax, message}` |
 | `reserve_tasks` | work | contribute | writes | `ReservedTasks` (Reservations, above) |
 | `check_pictures` | pictures | contribute | writes, open-world (the pictures it fetches) | `ChecksReply {schemaVersion 1, recorded[{linkId, state SEEN \| WAITING \| HIDDEN \| IN_REVIEW, refused}], pictures[{position, linkId, factId, fact, craft, title, caption, credit, pageUrl, served, reservedUntil}], skipped, holding, holdingMax, message}` with each picture as image content (Picture checks, above) |
 | `steward_craft` | work | contribute | writes | `StewardReply {schemaVersion 1, craftSlug, adopted, message, package: StewardPackage or null}` |
@@ -735,6 +735,7 @@ and reading sources and Never:
 | The design tokens | `kalavigyan://design/tokens.json` | `application/json` |
 | The answer kit and view | `kalavigyan://design/answer-kit.md` and `ui://kalavigyan/answer.html` | `text/markdown`; `text/html;profile=mcp-app` |
 | The page preview view | `ui://kalavigyan/page-preview.html` | `text/html;profile=mcp-app` |
+| The page review view, for `review_queue` (Admins; `review-queue.md`, Page proposals) | `ui://kalavigyan/page-review.html` | `text/html;profile=mcp-app` |
 | Each kind's spec schema (decision 0111) | `kalavigyan://components/{kind}.schema.json` | `application/schema+json` |
 | A page of a guide (decision 0203), from the template only | `kalavigyan://guides/{topic}/{page}` | `text/markdown` |
 

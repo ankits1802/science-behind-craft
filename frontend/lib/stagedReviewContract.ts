@@ -1,10 +1,11 @@
 import { apiFetch } from "@/lib/api";
 import { INSTANT, UUID } from "@/lib/answerShapes";
+import { pageScopeShape, type PageScope } from "@/lib/pageProposalContract";
 import { REASON_MAX } from "@/lib/reviewQueueContract";
 import { anything, count, dictionary, integer, knownOnly, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
 
 export const STAGED_PATH = "/review-queue/staged";
-export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS", "SOURCES", "SOURCES_DIFFER", "IMAGES"] as const;
+export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS", "SOURCES", "SOURCES_DIFFER", "IMAGES", "PAGES"] as const;
 export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear", "remove", "edit"] as const;
 export const SOURCE_KINDS = [
   "PAPER",
@@ -57,7 +58,7 @@ export type StagedChoice = {
 export type StagedEdit = { fields: Record<string, unknown>; before?: Record<string, unknown> };
 export type FieldChange = { field: string; before: string | null; after: string | null };
 
-export type StagedDecision = StagedChoice & { kind: StagedKind; id: string; entry?: string; edit?: StagedEdit };
+export type StagedDecision = StagedChoice & { kind: StagedKind; id: string; entry?: string; edit?: StagedEdit; page?: PageScope };
 export type ConfirmedItem = StagedChoice & { id: string };
 export type StagedConfirmation = { items: ConfirmedItem[] };
 
@@ -113,7 +114,8 @@ const decisionShape: Shape<StagedDecision> = object<StagedDecision>({
   family: nullable(text),
   source: nullable(sourceFixShape),
   entry: optional(text),
-  edit: optional(editShape)
+  edit: optional(editShape),
+  page: optional(pageScopeShape)
 });
 
 const itemShape: Shape<StagedItemView> = object<StagedItemView>({

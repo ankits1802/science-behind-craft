@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import AppError
 from app.core.roles import Capability, can
 from app.models import User
+from app.research.page_proposal_review import PageDecisionBody, PageScope
 from app.research.page_revalidation import PageOwners
 from app.research.review_queue import (
     APPROVE,
@@ -23,14 +24,15 @@ from app.research.review_queue import (
 from app.research.staged_reviews import SOURCES, SOURCES_DIFFER, StagedDecision, acts_on_published
 
 from . import review_queue_decisions as decisions
+from .page_proposal_decisions import decide_page
 from .page_revalidation import merged_owners
-from .review_queue_errors import NotYourQueue
+from .review_queue_errors import NotYourQueue, refusal_of
 from .review_queue_refile import filed_owners
 from .review_queue_refresh import decision_owners
 from .source_corrections import clear_sources_differ, correct_source
 from .staged_published import carry_out
 
-__all__ = ["Applied", "apply_decision", "dry_run", "refusal_of"]
+__all__ = ["Applied", "apply_decision", "dry_run"]
 
 CORRECTED = "Corrected: the source's record now says this, and every page citing it follows."
 CLEARED = "Cleared: the fact is no longer marked as one whose sources differ."
@@ -42,6 +44,7 @@ class Applied:
     message: str
     owners: PageOwners
     decided: QueueDecision | None = None
+    page_decided: tuple[QueueDecision, ...] = ()
 
 
 async def apply_decision(
@@ -52,6 +55,8 @@ async def apply_decision(
         return Applied(carried.message, carried.owners)
     if decision.kind in (SOURCES, SOURCES_DIFFER):
         return await _corrected(session, decision, reviewer)
+    if decision.page is not None:
+        return await _page_decided(session, decision, decision.page, reviewer, now=now)
     ref = decisions.ItemRef(decision.kind, decision.id)
     moved_from = await filed_owners(session, decision.kind, decision.id, decision.craft or decision.family)
     decided = await _decided(session, ref, decision, reviewer, now=now)
@@ -72,12 +77,6 @@ async def dry_run(
     return None
 
 
-def refusal_of(refused: AppError | ValidationError) -> str:
-    if isinstance(refused, ValidationError):
-        return "; ".join(str(problem["msg"]) for problem in refused.errors())
-    return str(refused) or type(refused).__name__
-
-
 async def _decided(
     session: AsyncSession, ref: decisions.ItemRef, decision: StagedDecision, reviewer: User, *, now: datetime
 ) -> QueueDecision:
@@ -93,6 +92,16 @@ async def _decided(
         )
     retraction = FactRetraction(reason=decision.reason)
     return await decisions.retract_fact(session, ref.item_id, reviewer, retraction, now=now)
+
+
+async def _page_decided(
+    session: AsyncSession, decision: StagedDecision, scope: PageScope, reviewer: User, *, now: datetime
+) -> Applied:
+    body = PageDecisionBody.model_validate(
+        {**scope.model_dump(), "action": decision.action, "note": decision.reason}
+    )
+    decided = await decide_page(session, reviewer, decision.id, body, now=now)
+    return Applied(decided.message, decided.owners, page_decided=tuple(decided.decided))
 
 
 async def _corrected(session: AsyncSession, decision: StagedDecision, reviewer: User) -> Applied:

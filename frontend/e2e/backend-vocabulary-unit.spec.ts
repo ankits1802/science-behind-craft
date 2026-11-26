@@ -36,6 +36,7 @@ import { UNIT_REF } from "@/lib/unitIds";
 import { AGGREGATIONS, ENV_STATS, PLACE_BASES, PLACE_SCOPES, REGION_FACETS } from "@/lib/regionContract";
 import { MATERIAL_KINDS, MATERIAL_ROLES, REACTION_KINDS, STAGE_TYPES } from "@/lib/scienceContract";
 import { REFRESH_ORIGINS, REFRESH_PHASES, REFRESH_SCOPES, REFRESH_STATUSES } from "@/lib/sitePagesContract";
+import { CHANGE_KINDS, CHANGE_MARKS, DRAWN_SIDES, PART_OUTCOMES, PART_STATES, SCOPES } from "@/lib/pageProposalContract";
 import { ITEM_STATES, SOURCE_KINDS, STAGED_ACTIONS, STAGED_KINDS } from "@/lib/stagedReviewContract";
 import { CLIENT_TOOL_NAMES, RELAY_AUDIO_TYPES, VOICE_MODES } from "@/lib/voiceContract";
 import { INTERVIEW_TOPICS } from "@/lib/conversationContract";
@@ -138,7 +139,13 @@ const PAIRS: [string, string, readonly string[]][] = [
   ["models/admin_work.py", "REFRESH_SCOPES", REFRESH_SCOPES],
   ["models/admin_work.py", "REFRESH_ORIGINS", REFRESH_ORIGINS],
   ["models/admin_work.py", "REFRESH_STATUSES", REFRESH_STATUSES],
-  ["models/admin_work.py", "REFRESH_PHASES", REFRESH_PHASES]
+  ["models/admin_work.py", "REFRESH_PHASES", REFRESH_PHASES],
+  ["models/page_proposals.py", "DRAWN_SIDES", DRAWN_SIDES],
+  ["research/page_proposal_review.py", "SCOPES", SCOPES],
+  ["research/page_proposal_review.py", "PART_STATES", PART_STATES],
+  ["research/page_proposal_review.py", "PART_OUTCOMES", PART_OUTCOMES],
+  ["research/page_changes.py", "CHANGE_MARKS", CHANGE_MARKS],
+  ["research/page_changes.py", "CHANGE_KINDS", CHANGE_KINDS]
 ];
 
 for (const [file, name, client] of PAIRS) {

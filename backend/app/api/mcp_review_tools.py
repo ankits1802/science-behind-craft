@@ -4,15 +4,17 @@ import uuid
 from datetime import UTC, datetime
 from typing import Any
 
-from pydantic import Field, ValidationError
+from pydantic import Field, PrivateAttr, ValidationError
 
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import REVIEW_SCOPE
 from app.core.roles import Capability, can
 from app.data.admin_guide import ADMIN_GUIDE_URI
+from app.data.page_review_view import PAGE_REVIEW_VIEW_URI
 from app.models import ArtisanContribution, User
 from app.research.base import ContractModel
 from app.research.crafts import CraftRef
+from app.research.page_proposal_review import PageProposalLine, PageProposalView
 from app.research.page_refresh import CHANGED, MCP_ORIGIN, PageRefreshState
 from app.research.review_labels import queue_label
 from app.research.review_queue import ReviewFilters
@@ -26,6 +28,8 @@ from app.services.staged_published import published_id
 from app.services.staged_reviews import stage_decisions
 from app.services.testimony_views import Turns
 
+from .mcp_page_review import opened_page, page_lines
+from .mcp_protocol import ToolImage
 from .mcp_published_read import PublishedRead, read_published
 from .mcp_review_arguments import ReviewQueueArguments, StageArguments, StagedChoice
 from .mcp_tool_base import ADMIN_GROUP, READ_ONLY, WRITES, Arguments, Tool, ToolContext
@@ -43,7 +47,9 @@ QUEUE_DESCRIPTION = (
     "rejecting it reverses its verdicts. "
     "With published instead, list a page's published items of one kind or open one with the fields an edit "
     f"changes, as {ADMIN_GUIDE_URI} shows. Re-read a source and check a quote with read_source. Testimony and "
-    "waiting pictures are reviewed on the site."
+    "waiting pictures are reviewed on the site. A page proposed whole is listed in pages; open it with page "
+    "to read it as it stands and as it will be, chapter by chapter with each sentence, component and picture "
+    "marked added, changed or removed, and its renderer's pictures."
 )
 STAGE_DESCRIPTION = (
     "Admins: stage up to 20 decisions for a person to confirm. Nothing is published, changed or shown to "
@@ -51,7 +57,8 @@ STAGE_DESCRIPTION = (
     "proposes. Each decision names the item's kind and id, an action the Review page allows (approve or "
     "reject; raise or retract a fact; approve a fact with craft or family to re-file it; correct a source's "
     "title, authors, year, journal or kind; clear a fact's sources-differ mark; remove or edit published "
-    f"content, kept in the record, as {ADMIN_GUIDE_URI} shows) and a reason of at least 12 characters. Each "
+    f"content, kept in the record, as {ADMIN_GUIDE_URI} shows; approve or reject a page proposal, kind PAGES, "
+    "as a whole page, one chapter or one component with page) and a reason of at least 12 characters. Each "
     "is checked by the rules the Review page and the original gates apply; refused ones say why. "
     f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days."
 )
@@ -94,7 +101,17 @@ class QueueReply(ContractModel):
     next_cursor: str | None = None
     item: dict[str, Any] | None = None
     published: PublishedRead | None = None
+    pages: list[PageProposalLine] = Field(default_factory=list)
+    page: PageProposalView | None = None
     message: str
+    _images: list[ToolImage] = PrivateAttr(default_factory=list)
+
+    def showing(self, images: list[ToolImage]) -> QueueReply:
+        self._images = list(images)
+        return self
+
+    def tool_images(self) -> list[ToolImage]:
+        return list(self._images)
 
 
 class StagedLine(ContractModel):
@@ -171,15 +188,19 @@ async def _review_queue(context: ToolContext, arguments: ReviewQueueArguments) -
         if found is None:
             raise InvalidInput(f"No {ref.kind.lower()} item you review has the id {ref.item_id}.")
         opened = found.model_dump(mode="json", by_alias=True)
-    return QueueReply(
+    shown, images = (None, []) if arguments.page is None else await opened_page(context, user, arguments.page)
+    reply = QueueReply(
         kinds=list(page.kinds),
         counts=page.counts,
         total=page.total,
         items=[_summary(item) for item in page.items],
         next_cursor=page.next_cursor,
         item=opened,
+        pages=await page_lines(context, user, now=now),
+        page=shown,
         message=QUEUE_MESSAGE.format(total=page.total, url=f"{context.site}{REVIEW_PAGE}"),
     )
+    return reply.showing(images)
 
 
 def _summary(item: Any) -> QueueSummary:
@@ -289,6 +310,7 @@ REVIEW_TOOLS: tuple[Tool, ...] = (
         REVIEW_SCOPE,
         READ_ONLY,
         group=ADMIN_GROUP,
+        view=PAGE_REVIEW_VIEW_URI,
     ),
     Tool(
         "stage_reviews",

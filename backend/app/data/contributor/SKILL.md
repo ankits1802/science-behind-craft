@@ -123,7 +123,9 @@ them all), the design system
    parts in `edit_draft`, seen with `preview_page` and proposed once with `propose_page`, which also
    takes a single component or layout. A craft's reaction player, dip player, 3D molecule or what-if
    lab comes from `compose_component`, built from that craft's own facts.
-7. `get_proposal` with each proposal id, or `my_work`, for the outcome.
+7. `get_proposal` with each proposal id, or `my_work`, for the outcome. A page proposed whole is
+   reviewed as one: a reviewer approves or rejects it whole, by chapter or by component, and each
+   decision's note and each part's outcome come back in `my_work`'s `reviews`; act on the note.
 
 ## Proposals and their progress
 

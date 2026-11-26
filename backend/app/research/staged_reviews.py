@@ -15,6 +15,7 @@ from app.models.admin_work import (
     STAGED_ACTION_VALUES,
     STAGED_CORRECTION_KINDS,
     STAGED_KIND_VALUES,
+    STAGED_PAGE_KINDS,
     STAGED_PUBLISHED_KINDS,
     STAGED_QUEUE_KINDS,
 )
@@ -23,6 +24,7 @@ from app.models.knowledge import CONTAINER_TITLE_CHARS
 
 from .base import ContractModel, absent, empty
 from .crafts import SLUG_MAX_CHARS
+from .page_proposal_review import PageScope
 from .published_edits import FieldChange, StagedEdit
 from .review_queue import (
     APPROVE,
@@ -35,6 +37,7 @@ from .review_queue import (
     ONE_HOME,
     READINGS,
     REASON_MAX_CHARS,
+    REJECT,
     STAGES,
     STRUCTURE,
 )
@@ -54,6 +57,7 @@ __all__ = [
     "EXPIRED",
     "MCP_QUEUE_KINDS",
     "OPEN",
+    "PAGE_KINDS",
     "PUBLISHED_ACTIONS",
     "PUBLISHED_ACTION_VALUES",
     "PUBLISHED_KIND_VALUES",
@@ -98,6 +102,7 @@ STAGED, APPLIED, REFUSED, SKIPPED = ITEM_STATES
 MCP_QUEUE_KINDS: tuple[str, ...] = STAGED_QUEUE_KINDS
 SOURCES, SOURCES_DIFFER = STAGED_CORRECTION_KINDS
 PUBLISHED_ONLY_KINDS: tuple[str, ...] = STAGED_PUBLISHED_KINDS
+PAGE_KINDS: tuple[str, ...] = STAGED_PAGE_KINDS
 CORRECT, CLEAR, REMOVE, EDIT = STAGED_ACTION_VALUES[4:]
 REMOVED_AND_EDITED = (REMOVE, EDIT)
 PUBLISHED_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType(
@@ -121,6 +126,7 @@ STAGED_KIND_ACTIONS: Mapping[str, tuple[str, ...]] = MappingProxyType(
         SOURCES: (CORRECT, *PUBLISHED_ACTIONS[SOURCES]),
         SOURCES_DIFFER: (CLEAR,),
         **{kind: PUBLISHED_ACTIONS[kind] for kind in PUBLISHED_ONLY_KINDS},
+        **dict.fromkeys(PAGE_KINDS, (APPROVE, REJECT)),
     }
 )
 NOT_FOR_KIND = "A {kind} item is {actions}, not {action}."
@@ -145,6 +151,10 @@ EDIT_NEEDED = "An edit names the fields it changes as edit, and only an edit nam
 ENTRY_ONLY = "Only a removal or an edit of a structure entry names the entry's kind."
 SOURCE_ONLY = "Only a source correction carries a source's corrected fields."
 SOURCE_NEEDED = "A source correction names at least one corrected field."
+PAGE_ONLY = (
+    "A page proposal's decision names its scope as page (the whole page, a chapter or one component), and "
+    "only a page proposal's decision names one."
+)
 OVER_DAY = (
     "Staging {asked} more would pass the {most} items an Admin may stage in a day; {left} are left until "
     "midnight India time."
@@ -186,6 +196,7 @@ class StagedDecision(_Choice):
     id: uuid.UUID
     entry: StructureKind | None = Field(default=None, exclude_if=absent)
     edit: StagedEdit | None = Field(default=None, exclude_if=absent)
+    page: PageScope | None = Field(default=None, exclude_if=absent)
 
     @model_validator(mode="after")
     def _fits_its_kind(self) -> Self:
@@ -206,7 +217,7 @@ class StagedDecision(_Choice):
         if acts_on_published(self.action) and choice.action != self.action:
             raise InvalidInput(STAYS_AN_EDIT)
         fields = choice.model_dump(exclude={"id"})
-        target = {"kind": self.kind, "id": self.id, "entry": self.entry, "edit": self.edit}
+        target = {"kind": self.kind, "id": self.id, "entry": self.entry, "edit": self.edit, "page": self.page}
         return StagedDecision.model_validate({**fields, **target})
 
 
@@ -294,6 +305,8 @@ def _page_problem(decision: StagedDecision) -> str | None:
 
 
 def _parts_problem(decision: StagedDecision) -> str | None:
+    if (decision.page is not None) != (decision.kind in PAGE_KINDS):
+        return PAGE_ONLY
     if (decision.edit is not None) != (decision.action == EDIT):
         return EDIT_NEEDED
     if decision.entry is not None and not (decision.kind == STRUCTURE and acts_on_published(decision.action)):

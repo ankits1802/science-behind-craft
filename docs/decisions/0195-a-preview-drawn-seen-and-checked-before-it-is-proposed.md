@@ -20,6 +20,7 @@ in `docs/RUNBOOK.md`, Page renderer.
 | The hold that now also refuses a failed drawing | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | The sandbox the renderer's unit copies | [decision 0007](0007-web-search-and-fetcher.md), [decision 0173](0173-a-release-that-keeps-serving-and-its-way-back.md) |
 | The room the tool list keeps | [decision 0191](0191-room-for-the-page-quality-tools.md) |
+| The preview's pictures kept and shown to the page's reviewer beside the page as it stood | [decision 0236](0236-a-reviewer-sees-a-page-as-it-stood-and-as-it-will-be-and-decides-it-whole-by-chapter-or-by-component.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context
