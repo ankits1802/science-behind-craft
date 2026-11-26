@@ -6,6 +6,7 @@ import secrets
 from collections.abc import Coroutine, Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
+from functools import partial
 from typing import Any
 
 from .mcp_protocol import INTERNAL_ERROR, INVALID_PARAMS, RequestError
@@ -70,6 +71,7 @@ class McpTasks:
         )
         self._held[record.task_id] = record
         record.runner = asyncio.create_task(self._run(record, work), name=f"mcp task {said}")
+        record.runner.add_done_callback(partial(self._settled, record, work))
         return record
 
     def get(self, principal: str, task_id: Any, now: datetime) -> TaskRecord:
@@ -98,6 +100,11 @@ class McpTasks:
             )
             return
         self._end(record, COMPLETED, said=record.status_message, result=outcome)
+
+    def _settled(self, record: TaskRecord, work: TaskWork, runner: asyncio.Task[None]) -> None:
+        if runner.cancelled() and record.status == WORKING:
+            work.close()
+            self._end(record, CANCELLED, said=STOPPED)
 
     def _end(
         self,

@@ -76,7 +76,9 @@ async def settled(context: ToolContext, task_id: str) -> None:
     assert context.tasks is not None and context.principal is not None
     runner = context.tasks.get(context.principal, task_id, datetime.now(UTC)).runner
     assert runner is not None
-    await asyncio.wait_for(asyncio.shield(runner), timeout=5)
+    await asyncio.wait({runner}, timeout=5)
+    await asyncio.sleep(0)
+    assert runner.done()
 
 
 async def polled(context: ToolContext, task_id: str) -> dict[str, Any]:
