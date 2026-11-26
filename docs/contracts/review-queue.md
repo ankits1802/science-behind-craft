@@ -399,6 +399,15 @@ After the commit the pages its parts changed are refreshed and written facts emb
 decision's are. The contributor reads every decision on their page proposals, with its note and each
 part's outcome, in `my_work`'s `reviews` (`open-work.md`).
 
+**A link to one proposal** (decision 0246). `/admin/review?proposal=<id>` opens that proposal's card
+and scrolls to it (decision 0243). When the list does not hold it (beyond its twenty, closed, or past
+its 60 days), the Review page reads it by its id (`GET /api/review-queue/pages/{id}`, once the list is
+in; `lib/pageProposalView.linkToRead`, `withLinked`) and draws it first, open. When the person may not
+review it the page says so in one plain sentence above the list (`linkRefusal`): their own proposal
+(403) is reviewed by another Admin, an id no proposal has (404) is a link to check, any other failure
+asks for a reload, and to a signed-in account below Admin the page says that page proposals are
+reviewed by Admins and Master Admins. Nothing is shown that the routes would refuse.
+
 ## Staged over MCP
 
 An Admin's or Master Admin's AI client, signed in with the `review` scope (`mcp-oauth.md`, Scopes
@@ -649,6 +658,7 @@ stay, and list decided items.
 | Published content: removal and edit of every kind, their gates, what depends on them, the batch's before and after | `backend/tests/research/test_published_content_rules.py`, `test_published_structure_entries.py`, `backend/tests/db/test_published_content_db.py`, `test_published_components_db.py`, `test_published_process_db.py`, `test_published_structure_db.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | Page proposals: the record, the changes, the pictures, Draw it, a scope's decision, the note in `my_work`, over MCP and staged | `backend/tests/review_queue/test_page_changes.py`, `test_page_proposal_parts.py`, `backend/tests/db/test_page_proposal_reviews_db.py`, `backend/tests/mcp/test_page_review_view.py` and `frontend/e2e/review-pages-unit.spec.ts` |
 | Confirmed in the person's client: the form and its words, all, some or none, declined, old clients, the review scope, an answer only from the client it was asked of, the review link | `backend/tests/mcp/test_staged_review_elicit.py`, `backend/tests/review_queue/test_staged_review_words.py`, `test_page_touches.py`, `backend/tests/db/test_staged_review_elicit_db.py` and `frontend/e2e/review-pages-unit.spec.ts` |
+| A review link opening a proposal the list does not hold, drawn first and open, and a link the person may not follow saying why | `frontend/e2e/review-pages-unit.spec.ts` |
 | The Review page | `frontend/e2e/review-queue-unit.spec.ts`, `review-layers-unit.spec.ts`, `review-layouts-unit.spec.ts`, `review-readings-unit.spec.ts`, `review-structure-unit.spec.ts`, `review-unknown-kinds-unit.spec.ts` and `revalidate-unit.spec.ts` |
 
 Re-read it when a kind joins the queue, a decision is added, or a capability moves between roles.

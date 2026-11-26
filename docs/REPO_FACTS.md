@@ -120,15 +120,15 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 881 | 6527 |
-| Backend, on Postgres | 241 | 1098 |
-| Tools | 36 | 294 |
+| Backend, without a database | 882 | 6538 |
+| Backend, on Postgres | 241 | 1100 |
+| Tools | 37 | 306 |
 | Craft data ETL | 7 | 51 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 238 | 1691 |
+| Unit specs (`*-unit.spec.ts`) | 240 | 1706 |
 | Browser and release specs | 23 | 71 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -137,7 +137,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 240 |
+| Decision records (`docs/decisions/`) | 241 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 30 |
 | Curated craft dossiers | 32 |
@@ -147,15 +147,15 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1648 | 232,894 |
-| `backend/tests` | 1307 | 170,792 |
+| `backend/app` | 1650 | 233,251 |
+| `backend/tests` | 1308 | 171,051 |
 | `backend/migrations` | 101 | 12,376 |
-| `frontend/app` | 119 | 10,436 |
-| `frontend/components` | 722 | 48,813 |
-| `frontend/lib` | 309 | 30,317 |
-| `frontend/e2e` | 380 | 42,517 |
+| `frontend/app` | 119 | 10,464 |
+| `frontend/components` | 724 | 48,935 |
+| `frontend/lib` | 310 | 30,471 |
+| `frontend/e2e` | 382 | 42,860 |
 | `etl` | 80 | 11,545 |
-| `tools` | 137 | 13,118 |
+| `tools` | 140 | 13,625 |
 | `infra` | 19 | 2,524 |
 
 Code files are `.py`, `.ts`, `.tsx`, `.mjs`, `.css`, `.sh`, `.tf` and `.sql`; lines are newlines.

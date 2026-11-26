@@ -445,7 +445,16 @@ the ETOPO1 cells it stands on, within that simplification. Only the shaded relie
 way on 2026-11-24 by the Map layers workflow (`.github/workflows/map-layers.yml`, run 45364276690),
 which downloads what `tools/maplayers_build.py` names, rebuilds and mirrors the layers, runs the
 relief tests with numpy and rasterio installed, and offers the rebuilt files as an artifact to
-commit; it runs on a change under `tools/maplayers` and on request.
+commit; it runs on a change under `tools/maplayers` and on request. Its downloads go through
+`tools/maplayers_fetch.py` (`tools/maplayers/fetch.py`, decision 0246): each file is tried at its own
+address and then at each mirror (Natural Earth's CDN, then its S3 bucket; NOAA's coastwatch ERDDAP,
+then upwell; Geofabrik, then openstreetmap.fr's India extract), each address up to four times with
+waits of 10, 20 and 40 seconds (a server's `Retry-After` kept to two minutes, a missing file not asked
+for again), each answer checked for its format before it is kept, and the address each file came from
+is recorded in `fetched.json` and in the layer's dataset record. The run fails, naming every address
+and why, only when every address of a file fails. The ETOPO1 grid, which never changes, is kept in
+the Actions cache, saved on `main` by a run on every change there and twice a week, so every pull
+request restores it instead of asking NOAA.
 
 ### River lines (decision 0043)
 
@@ -585,6 +594,10 @@ a zoomed map therefore also draws OpenStreetMap's waters.
 - **Where they are drawn.** Only the web server reads the tiles: it cuts a zoomed places map's still
   (a frame of at most 35 per cent of India's width) and a coded map's still from the tiles of its
   frame, so a reader's phone loads no tile. Each still that draws them carries OpenStreetMap's credit.
+  The API holds a byte copy of the index and the tiles (`backend/app/data/layers/waters.json` and
+  `waters/`, 3.6 MB, mirrored by `tools/maplayers_mirror.py`, the map layers build and
+  `tools/maplayers_register.py`, held equal by `tools/tests/test_maplayers_mirror.py`), from which the
+  page export prints the same small waters, named rivers and dams on paper (decision 0246).
 - **Licence.** The waters files are a derived database under the ODbL, credited "© OpenStreetMap
   contributors", kept in their own files and row and never merged into the CC BY tables (as the
   river names are).
@@ -601,7 +614,9 @@ the API already measures from; and the district shapes (`DR_DISTRICT_SHAPES`) fo
 zoomed frame and the home districts. Each still credits the datasets it draws and prints the boundary
 note. The state lines file moved from `state-borders.txt` to JSON (`{schemaVersion, lines}`, the same
 encoded lines) so the web server and the API can both read it; `district-borders.json` followed.
-OpenStreetMap's small waters are not drawn on paper.
+Since decision 0246 a paper map framed to at most 35 per cent of India's width also draws
+OpenStreetMap's small waters (`app/geo/map_waters.py`, from the API's copy of the tiles), the rivers
+and dams the map names strong and named, and credits `OSM_WATERWAYS`.
 
 ### Groundwater
 
