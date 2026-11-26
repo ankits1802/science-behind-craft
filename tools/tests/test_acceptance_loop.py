@@ -15,11 +15,13 @@ from acceptance_support import (
     call,
     message,
     result,
+    run_call,
     text,
     usage,
 )
 
-from acceptance.costs import Budget, UnknownPrice, prices_for, turn_cost
+from acceptance.costs import CAP_CEILING_USD, CAP_DEFAULT_USD, Budget, UnknownPrice, prices_for, turn_cost
+from acceptance.handed import HandedCall
 from acceptance.loop import (
     API_FAILED,
     CAP_REACHED,
@@ -32,8 +34,17 @@ from acceptance.loop import (
     off_list_calls,
     run_loop,
 )
-from acceptance.request import ALLOWED_TOOLS, send_turn, system_prompt, toolset, user_turn
-from acceptance.run import main
+from acceptance.request import (
+    ALLOWED_TOOLS,
+    CONNECTOR_TOOLS,
+    HARNESS_TOOLS,
+    RunSettings,
+    send_turn,
+    system_prompt,
+    toolset,
+    user_turn,
+)
+from acceptance.run import command_line, main
 
 OPENING = "Deepen this craft's page to the KalaVigyan bar.\n\nThe craft: Sanganeri Hand Block Printing."
 SIXTY_CENTS = usage(100_000, 10_000)
@@ -142,7 +153,9 @@ def test_every_request_offers_only_the_allowed_tools_through_one_toolset() -> No
     offered = sent["tools"][0]
     assert (offered["type"], offered["mcp_server_name"]) == ("mcp_toolset", "kalavigyan")
     assert offered["default_config"] == {"enabled": False}
-    assert set(offered["configs"]) == ALLOWED
+    assert set(offered["configs"]) == ALLOWED - {"preview_page"} == CONNECTOR_TOOLS
+    assert ALLOWED_TOOLS == ALLOWED
+    assert sorted(HARNESS_TOOLS) == ["preview_page"]
     assert all(config == {"enabled": True} for config in offered["configs"].values())
     assert not NEVER_OFFERED & set(offered["configs"])
 
@@ -198,7 +211,7 @@ def test_each_turn_is_reported_with_the_budget_as_it_stands() -> None:
             message("end_turn", [text("done")], SIXTY_CENTS),
         ]
     )
-    drive(client, "12", report=lambda turn, budget: seen.append((turn.number, budget.spent)))
+    drive(client, "12", report=lambda outcome, budget: seen.append((outcome.turns[-1].number, budget.spent)))
     assert seen == [(1, Decimal("0.6")), (2, Decimal("1.2"))]
 
 
@@ -223,8 +236,8 @@ def test_the_user_turn_is_the_request_with_the_craft_named() -> None:
         user_turn("Deepen it.", "--")
 
 
-@pytest.mark.parametrize("cap", ["60", "1", "0", "-3", "twelve", "NaN", "Infinity"])
-def test_a_cap_outside_one_to_fifty_dollars_is_refused_before_anything_runs(cap: str, tmp_path) -> None:
+@pytest.mark.parametrize("cap", ["60", "45", "40.01", "1", "0", "-3", "twelve", "NaN", "Infinity"])
+def test_a_cap_outside_one_to_forty_dollars_is_refused_before_anything_runs(cap: str, tmp_path) -> None:
     asked = ["run", "--craft", "Kutch-Ajrakh", "--request", "Deepen it.", "--model", "claude-opus-5-5"]
     with pytest.raises(SystemExit) as refused:
         main(
@@ -240,3 +253,58 @@ def test_a_cap_outside_one_to_fifty_dollars_is_refused_before_anything_runs(cap:
         )
     assert refused.value.code == 2
     assert not (tmp_path / "out").exists()
+
+
+def test_a_dispatch_may_set_the_cap_up_to_forty_dollars_and_twenty_five_is_the_default() -> None:
+    asked = ["run", "--craft", "Kutch-Ajrakh", "--request", "Deepen it.", "--model", "claude-opus-5-5"]
+    files = ["--token-file", "token.json", "--out", "out"]
+    assert command_line().parse_args([*asked, *files]).cap == CAP_DEFAULT_USD == Decimal(25)
+    assert command_line().parse_args([*asked, "--cap", "40", *files]).cap == CAP_CEILING_USD == Decimal(40)
+    assert command_line().parse_args([*asked, "--cap", "1.5", *files]).cap == Decimal("1.5")
+
+
+def preview_handed(turn: int, block: dict) -> HandedCall:
+    return HandedCall(turn, str(block["id"]), str(block["name"]), dict(block["input"]), ("drawn",), False)
+
+
+def test_the_run_answers_its_own_tool_calls_and_the_model_goes_on() -> None:
+    asked = message("tool_use", [text("previewing"), run_call("t1", "preview_page", {"draft_id": "d1"})])
+    client = FakeClient([asked, message("end_turn", [text("done")])])
+    seen: list[tuple[int, str]] = []
+
+    def harness(turn: int, block: dict) -> HandedCall:
+        seen.append((turn, block["name"]))
+        return preview_handed(turn, block)
+
+    outcome, _ = drive(client, "12", harness=harness)
+    assert (outcome.stopped, len(client.requests), seen) == (MODEL_STOPPED, 2, [(1, "preview_page")])
+    answered = client.requests[1]["messages"][2]
+    assert answered == {
+        "role": "user",
+        "content": [
+            {
+                "type": "tool_result",
+                "tool_use_id": "t1",
+                "content": [{"type": "text", "text": "drawn"}],
+                "is_error": False,
+            }
+        ],
+    }
+    assert [call.call_id for call in outcome.handed] == ["t1"]
+
+
+def test_a_run_tool_outside_the_list_stops_the_run_and_none_is_answered_without_a_harness() -> None:
+    stray = message("tool_use", [run_call("t1", "propose_page")])
+    outcome, _ = drive(FakeClient([stray]), "12", harness=preview_handed)
+    assert (outcome.stopped, outcome.detail, outcome.handed) == (OFF_LIST, "propose_page", [])
+    asked = message("tool_use", [run_call("t2", "preview_page")])
+    alone, _ = drive(FakeClient([asked]), "12")
+    assert (alone.stopped, alone.handed) == (MODEL_STOPPED, [])
+
+
+def test_the_run_s_own_tools_are_offered_beside_the_toolset() -> None:
+    tool = {"name": "preview_page", "description": "Draw it.", "input_schema": {"type": "object"}}
+    settings = RunSettings(SETTINGS.model, SERVER_URL, SETTINGS.system, (tool,))
+    client = FakeClient([message("end_turn", [text("done")])])
+    send_turn(client, settings, lambda: TOKEN, [{"role": "user", "content": OPENING}])
+    assert client.requests[0]["tools"] == [toolset(), tool]

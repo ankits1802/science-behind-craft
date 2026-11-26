@@ -6,16 +6,16 @@ Every count that changes with the code, generated from the working tree by `tool
 
 | What | Count |
 | --- | ---: |
-| Tables (`__tablename__` in `backend/app/models/`) | 160 |
-| Migrations (`backend/migrations/versions/`) | 97 |
+| Tables (`__tablename__` in `backend/app/models/`) | 163 |
+| Migrations (`backend/migrations/versions/`) | 99 |
 
 Newest migration: `0123_mcp_tasks`.
 
-Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `AllowanceBucket`, `Answer`, `AnswerCitation`, `AnswerGap`, `AnswerSentence`, `AnswerTrace`, `AnswerVerdict`, `AppSetting`, `ArticleSection`, `ArtisanContribution`, `ArtisanConversation`, `ArtisanConversationAudio`, `ArtisanCraft`, `ArtisanProfile`, `AuditLog`, `AuthNonce`, `CandidateCheck`, `Chunk`, `Claim`, `ClaimSource`, `ClaimTranslation`, `ComponentProposal`, `Compound`, `Concept`, `ConceptEdge`, `ConditionReading`, `ConsentRecord`, `Conversation`, `Craft`, `CraftAlias`, `CraftCategory`, `CraftCode`, `CraftGiRecord`, `CraftGroupName`, `CraftLocation`, `CraftPageSnapshot`, `CraftPrice`, `CraftSpelling`, `CraftSteward`, `CraftSubCategory`, `CraftWorkforce`, `CuratedCategory`, `CuratedCategoryClaim`, `CuratedClaim`, `CuratedCraft`, `CxaCraftMap`, `DataRequest`, `DatasetTable`, `DatasetUpload`, `DistrictEnvValue`, `DistrictGeology`, `EnrichmentJob`, `EnrichmentProposal`, `EnvDataset`, `EvalCase`, `EvalResult`, `EvalRun`, `FieldImage`, `FieldImageCraft`, `FieldPhotoReview`, `FieldPhotoScreen`, `FieldRecording`, `FieldRecordingCraft`, `FieldSegment`, `FieldVoiceStream`, `ImageContribution`, `ImageFingerprint`, `ImageScreen`, `Invite`, `Job`, `KnowledgePiece`, `KnowledgePieceSubject`, `KnowledgePieceUnlink`, `LayoutProposal`, `LessonPack`, `ManagedSecret`, `MapLayerProposal`, `Material`, `McpTask`, `McpTermsAcceptance`, `McpToolCall`, `McpToolCallDay`, `MediaAsset`, `MediaJob`, `MediaRef`, `MediaRefClaim`, `Message`, `MonographDocument`, `Notification`, `OAuthClient`, `OAuthCode`, `OAuthGrant`, `OAuthToken`, `Objection`, `OpenDataRelease`, `OpenPicture`, `PageDraft`, `PageHold`, `PageLayout`, `PagePreview`, `PageRefreshJob`, `PageTextUnit`, `PageTranslation`, `PasswordResetRequest`, `PasswordResetToken`, `PictureCheck`, `PictureDeclaration`, `PlaceLookup`, `Process`, `ProcessCondition`, `ProcessStage`, `Provider`, `QueuedProposal`, `QuotaLedger`, `QuotaPolicy`, `Reaction`, `ReactionCitation`, `ReviewEvent`, `RiverBasin`, `RiverReach`, `RiverReachDistrict`, `RoleRequest`, `RoutePolicy`, `SavedItem`, `SecretTestResult`, `SharedExportFile`, `SharedTermCraft`, `Source`, `SourceLease`, `SourcePace`, `SourceUpkeep`, `StageMaterial`, `StageReview`, `StagedReview`, `StagedReviewItem`, `StateEnvValue`, `StoredDocument`, `StoredDocumentVersion`, `StructureProposal`, `StudentProfile`, `SuppliedSource`, `TaskReservation`, `Term`, `TermConcept`, `TermCraft`, `TermSummary`, `TranslationReader`, `TrustTierOverride`, `TwoFactorChallenge`, `UploadLink`, `UsageEvent`, `User`, `UserPreference`, `VoiceSession`, `WebFetch`, `WikidataPoint`.
+Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `AllowanceBucket`, `Answer`, `AnswerCitation`, `AnswerGap`, `AnswerSentence`, `AnswerTrace`, `AnswerVerdict`, `AppSetting`, `ArticleSection`, `ArtisanContribution`, `ArtisanConversation`, `ArtisanConversationAudio`, `ArtisanCraft`, `ArtisanProfile`, `AuditLog`, `AuthNonce`, `CandidateCheck`, `Chunk`, `Claim`, `ClaimSource`, `ClaimTranslation`, `ComponentProposal`, `Compound`, `Concept`, `ConceptEdge`, `ConditionReading`, `ConsentRecord`, `Conversation`, `Craft`, `CraftAlias`, `CraftCategory`, `CraftCode`, `CraftGiRecord`, `CraftGroupName`, `CraftLocation`, `CraftPageSnapshot`, `CraftPrice`, `CraftSpelling`, `CraftSteward`, `CraftSubCategory`, `CraftWorkforce`, `CuratedCategory`, `CuratedCategoryClaim`, `CuratedClaim`, `CuratedCraft`, `CxaCraftMap`, `DataRequest`, `DatasetTable`, `DatasetUpload`, `DesignReadCache`, `DistrictEnvValue`, `DistrictGeology`, `DrawnPicture`, `EnrichmentJob`, `EnrichmentProposal`, `EnvDataset`, `EvalCase`, `EvalResult`, `EvalRun`, `FieldImage`, `FieldImageCraft`, `FieldPhotoReview`, `FieldPhotoScreen`, `FieldRecording`, `FieldRecordingCraft`, `FieldSegment`, `FieldVoiceStream`, `ImageContribution`, `ImageFingerprint`, `ImageScreen`, `Invite`, `Job`, `KnowledgePiece`, `KnowledgePieceSubject`, `KnowledgePieceUnlink`, `LayoutProposal`, `LessonPack`, `ManagedSecret`, `MapLayerProposal`, `Material`, `McpTask`, `McpTermsAcceptance`, `McpToolCall`, `McpToolCallDay`, `MediaAsset`, `MediaJob`, `MediaRef`, `MediaRefClaim`, `Message`, `MonographDocument`, `Notification`, `OAuthClient`, `OAuthCode`, `OAuthGrant`, `OAuthToken`, `Objection`, `OpenDataRelease`, `OpenPicture`, `PageDraft`, `PageHold`, `PageLayout`, `PagePreview`, `PageProposal`, `PageRefreshJob`, `PageTextUnit`, `PageTranslation`, `PasswordResetRequest`, `PasswordResetToken`, `PictureCheck`, `PictureDeclaration`, `PlaceLookup`, `Process`, `ProcessCondition`, `ProcessStage`, `Provider`, `QueuedProposal`, `QuotaLedger`, `QuotaPolicy`, `Reaction`, `ReactionCitation`, `ReviewEvent`, `RiverBasin`, `RiverReach`, `RiverReachDistrict`, `RoleRequest`, `RoutePolicy`, `SavedItem`, `SecretTestResult`, `SharedExportFile`, `SharedTermCraft`, `Source`, `SourceLease`, `SourcePace`, `SourceUpkeep`, `StageMaterial`, `StageReview`, `StagedReview`, `StagedReviewItem`, `StateEnvValue`, `StoredDocument`, `StoredDocumentVersion`, `StructureProposal`, `StudentProfile`, `SuppliedSource`, `TaskReservation`, `Term`, `TermConcept`, `TermCraft`, `TermSummary`, `TranslationReader`, `TrustTierOverride`, `TwoFactorChallenge`, `UploadLink`, `UsageEvent`, `User`, `UserPreference`, `VoiceSession`, `WebFetch`, `WikidataPoint`.
 
 ## HTTP API
 
-**258 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 138 GET, 81 POST, 25 PUT, 2 PATCH, 12 DELETE.
+**264 operations** in `backend/app/api/routes/` and `backend/app/main.py`: 142 GET, 83 POST, 25 PUT, 2 PATCH, 12 DELETE.
 
 | Module | Operations |
 | --- | ---: |
@@ -35,6 +35,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 | `explainers.py` | 6 |
 | `image_contributions.py` | 6 |
 | `oauth_consent.py` | 6 |
+| `page_proposal_reviews.py` | 6 |
 | `page_proposals.py` | 6 |
 | `password_links.py` | 6 |
 | `shared.py` | 6 |
@@ -119,15 +120,15 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 858 | 6369 |
-| Backend, on Postgres | 236 | 1076 |
-| Tools | 31 | 256 |
+| Backend, without a database | 871 | 6451 |
+| Backend, on Postgres | 238 | 1082 |
+| Tools | 35 | 286 |
 | Craft data ETL | 7 | 51 |
 | Geo ETL | 21 | 223 |
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 231 | 1641 |
+| Unit specs (`*-unit.spec.ts`) | 236 | 1676 |
 | Browser and release specs | 23 | 71 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -136,7 +137,7 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | What | Count |
 | --- | ---: |
-| Decision records (`docs/decisions/`) | 232 |
+| Decision records (`docs/decisions/`) | 237 |
 | Contracts (`docs/contracts/`) | 40 |
 | Workflows (`.github/workflows/`) | 30 |
 | Curated craft dossiers | 32 |
@@ -146,15 +147,15 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1609 | 227,485 |
-| `backend/tests` | 1277 | 166,744 |
-| `backend/migrations` | 98 | 12,111 |
-| `frontend/app` | 118 | 10,301 |
-| `frontend/components` | 702 | 47,620 |
-| `frontend/lib` | 299 | 29,621 |
-| `frontend/e2e` | 373 | 41,184 |
+| `backend/app` | 1633 | 230,961 |
+| `backend/tests` | 1293 | 168,743 |
+| `backend/migrations` | 100 | 12,317 |
+| `frontend/app` | 119 | 10,433 |
+| `frontend/components` | 722 | 48,709 |
+| `frontend/lib` | 308 | 30,234 |
+| `frontend/e2e` | 378 | 42,174 |
 | `etl` | 80 | 11,545 |
-| `tools` | 121 | 10,971 |
+| `tools` | 132 | 12,757 |
 | `infra` | 19 | 2,524 |
 
 Code files are `.py`, `.ts`, `.tsx`, `.mjs`, `.css`, `.sh`, `.tf` and `.sql`; lines are newlines.

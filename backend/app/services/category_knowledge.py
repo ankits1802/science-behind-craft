@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import ArticleSection as SectionRow, Claim, Source
 from app.models.enums import DISCIPLINES
-from app.research.knowledge_api import FACTS_LIMIT_DEFAULT, CraftFacts, CraftSection
+from app.research.knowledge_api import FACTS_LIMIT_DEFAULT, CraftFacts, CraftSection, Fact
 from app.research.vocabulary import LEVEL_ORDER
 from app.retrieval.statements import lexical_rank, text_query
 from app.retrieval.text import or_tsquery
@@ -18,7 +18,9 @@ from . import knowledge_view
 from .candidate_store import FactSubject, subject_claims
 from .coverage_reads import FACT_TASK_KINDS, FIELD_TASK_KINDS, fact_details, subject_field_work
 from .knowledge_api import (
+    NO_DETAILS,
     article_section,
+    chosen_views,
     cited_sources,
     claim_fields,
     fact_of,
@@ -29,7 +31,7 @@ from .knowledge_api import (
 )
 from .open_work_subjects import CATEGORY, WorkSubject
 
-__all__ = ["category_facts", "category_sections"]
+__all__ = ["category_fact_list", "category_facts", "category_sections"]
 
 FIELD_ORDER = {discipline: rank for rank, discipline in enumerate(DISCIPLINES)}
 Views = list[knowledge_view.ClaimView]
@@ -43,24 +45,36 @@ async def category_facts(
     field: str | None = None,
     query: str | None = None,
     limit: int = FACTS_LIMIT_DEFAULT,
+    ids: Sequence[uuid.UUID] = (),
 ) -> CraftFacts:
     views, sources = await _held_views(session, subject, query)
     placed = await claim_fields(session, [view.id for view in views])
-    chosen = [view for view in views if field is None or field in placed[view.id]]
+    chosen = chosen_views(views, placed, field=field, ids=ids)
     ordered = (ranked_views(chosen) if query else _in_field_order(chosen, placed))[:limit]
     details = await fact_details(session, [view.id for view in ordered])
     facts = [fact_of(view, placed[view.id], details) for view in ordered]
     page = subject.task_subject(site)
+    work = (
+        []
+        if ids
+        else await subject_field_work(session, subject, site=site, kinds=FACT_TASK_KINDS, field=field)
+    )
     return CraftFacts(
         subject=page,
         field=field,
         query=query,
         facts=facts,
         by_field=facts_by_field(placed, facts, field),
-        open_work=await subject_field_work(session, subject, site=site, kinds=FACT_TASK_KINDS, field=field),
+        open_work=work,
         sources=cited_sources(facts, sources),
         page_url=page.page_url,
     )
+
+
+async def category_fact_list(session: AsyncSession, subject: WorkSubject) -> list[Fact]:
+    views, _ = await _held_views(session, subject, None)
+    placed = await claim_fields(session, [view.id for view in views])
+    return [fact_of(view, placed[view.id], NO_DETAILS) for view in _in_field_order(views, placed)]
 
 
 async def category_sections(

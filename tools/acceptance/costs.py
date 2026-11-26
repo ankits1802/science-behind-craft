@@ -13,6 +13,7 @@ __all__ = [
     "CACHE_READ_FACTOR",
     "CACHE_WRITE_FACTOR",
     "CAP_CEILING_USD",
+    "CAP_DEFAULT_USD",
     "Budget",
     "Prices",
     "UnknownPrice",
@@ -24,7 +25,8 @@ __all__ = [
 MILLION = Decimal(1_000_000)
 CACHE_WRITE_FACTOR = Decimal("1.25")
 CACHE_READ_FACTOR = Decimal("0.1")
-CAP_CEILING_USD = Decimal(50)
+CAP_CEILING_USD = Decimal(40)
+CAP_DEFAULT_USD = Decimal(25)
 CATALOGUE = "backend/app/providers/catalogue_specs.py"
 
 

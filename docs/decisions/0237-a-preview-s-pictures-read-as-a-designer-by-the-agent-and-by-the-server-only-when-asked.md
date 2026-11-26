@@ -93,7 +93,10 @@ judges its pictures), [decision 0229](0229-a-preview-card-that-minimises-and-wha
    opinion is handed the server's notes and asked whether the pictures bear each out and what they
    missed; the summary lists the model's own critique and the server's notes as notes, never the
    verdict. The server's read spends the site's own judge budget, at most $0.50 a run, outside the
-   run's cap.
+   run's cap. Reconciled the same round by
+   [decision 0240](0240-an-agent-reads-a-page-s-brief-in-one-call-and-the-acceptance-run-tells-the-whole-story.md):
+   the run asks for the read on each preview it calls for the model, at most $0.50 for each new set
+   of pictures, and draws nothing again.
 
 Nothing here departs from the design skill, and no motion is added.
 

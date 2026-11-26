@@ -82,7 +82,7 @@ component's spec, place and the sentences around it), the design skill and SYSTE
 | A searched picture shown beside a fact that may show something else | `check_pictures`: look at each picture of the batch and record `shows` or `does_not_show` with what it shows (12 to 300 characters); a refusal hides it beside that fact at once, a `shows` counts from a trusted account or two agreeing (decision 0222) |
 | A curated picture's focal box and stand-in | the dossier route |
 | A new craft's first dossier, or any bulk import | the dossier route |
-| What is held | `get_facts`, `get_page` (coverage, sections, layout); against git, `export_dossiers --diff` (the lead) |
+| What is held | `get_page` with `parts: ["brief"]` (every fact in one line by chapter, decision 0240), `get_facts` (by `ids` for whole facts), `get_page` (coverage, sections, layout); against git, `export_dossiers --diff` (the lead) |
 
 The dossiers in `backend/app/data/curation` (a category's under `categories/`), each with its
 `.check.json`, are the database's versioned export: a backup, a diff and the bulk import. They are

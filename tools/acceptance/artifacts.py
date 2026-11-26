@@ -11,7 +11,8 @@ from atomic_write import write_text_atomically
 
 from .costs import CACHE_READ_FACTOR, CACHE_WRITE_FACTOR, Prices
 from .loop import LoopOutcome, Turn
-from .preview import Picture
+from .pictures import Picture
+from .spend import ToolSpend
 from .transcript import RunFacts, transcript
 
 __all__ = [
@@ -48,6 +49,7 @@ class Spend:
     turns: Sequence[Turn]
     loop_usd: Decimal
     opinion_usd: Decimal = Decimal(0)
+    tools: Sequence[ToolSpend] = ()
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -77,6 +79,18 @@ def cost_record(spend: Spend) -> dict[str, Any]:
         },
         "cacheWriteFactor": str(CACHE_WRITE_FACTOR),
         "cacheReadFactor": str(CACHE_READ_FACTOR),
+        "byTool": [
+            {
+                "tool": row.name,
+                "calls": row.calls,
+                "errors": row.errors,
+                "resultChars": row.result_chars,
+                "argumentChars": row.argument_chars,
+                "estimatedTokens": row.tokens,
+                "estimatedUsd": str(row.usd),
+            }
+            for row in spend.tools
+        ],
     }
 
 
