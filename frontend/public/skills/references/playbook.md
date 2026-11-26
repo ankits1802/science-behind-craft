@@ -10,10 +10,13 @@ worked example of that thinking, never a template. Each step names what to read 
 
 ## The thinking
 
-1. **Find the craft's story in its facts.** `get_page` with the subject, then `get_facts`: its
-   process, chemistry, place, history and people, and what is distinctive in each. Derive the
-   page's lists (`page-checklist/1`): mechanisms, ambiguous terms, the signature fact.
-   `reserve_tasks` the keys you will close.
+1. **Find the craft's story in its facts.** `get_page` with the subject and `parts: ["brief"]`:
+   the page as published (lede, chapters, headings, figures), every fact as its id and one line
+   under its chapter, and rule 29's opportunities; its `cursor` brings the lines still to come,
+   never repeating one. Read whole with `get_facts` and `ids` only the facts you will cite, never
+   field by field. Find its process, chemistry, place, history and people, and what is
+   distinctive in each. Derive the page's lists (`page-checklist/1`): mechanisms, ambiguous terms,
+   the signature fact. `reserve_tasks` the keys you will close.
 2. **Decide what a reader must see and do to understand it.** Read the design principles first
    (`kalavigyan-design/1`, the whole system at `system/1`). Every field the sources cover is dense
    with cited detail; a figure sits beside the prose that needs it, never a wall of text; plates

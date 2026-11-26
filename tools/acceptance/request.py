@@ -4,9 +4,13 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
+from .preview import PREVIEW_TOOL
+
 __all__ = [
     "ALLOWED_TOOLS",
+    "CONNECTOR_TOOLS",
     "EFFORT",
+    "HARNESS_TOOLS",
     "MAX_TOKENS",
     "MCP_BETA",
     "SERVER_NAME",
@@ -27,8 +31,10 @@ EFFORT = "high"
 READING = ("find_crafts", "get_page", "get_facts", "list_components")
 SOURCES = ("search_sources", "read_source", "lookup")
 WORK = ("list_open_work", "my_work", "get_proposal")
-STUDIO = ("edit_draft", "compose_component", "preview_page")
-ALLOWED_TOOLS = frozenset((*READING, *SOURCES, *WORK, *STUDIO))
+STUDIO = ("edit_draft", "compose_component")
+CONNECTOR_TOOLS = frozenset((*READING, *SOURCES, *WORK, *STUDIO))
+HARNESS_TOOLS = frozenset({PREVIEW_TOOL})
+ALLOWED_TOOLS = CONNECTOR_TOOLS | HARNESS_TOOLS
 CLIENT_LINE = (
     "You are Claude, connected to the KalaVigyan MCP server at {server} with a contributor's account."
 )
@@ -45,6 +51,7 @@ class RunSettings:
     model: str
     server_url: str
     system: str
+    harness_tools: tuple[dict[str, Any], ...] = ()
 
 
 def craft_name(slug: str) -> str:
@@ -75,7 +82,7 @@ def toolset() -> dict[str, Any]:
         "type": "mcp_toolset",
         "mcp_server_name": SERVER_NAME,
         "default_config": {"enabled": False},
-        "configs": {name: {"enabled": True} for name in sorted(ALLOWED_TOOLS)},
+        "configs": {name: {"enabled": True} for name in sorted(CONNECTOR_TOOLS)},
     }
 
 
@@ -91,7 +98,7 @@ def turn_params(settings: RunSettings, token: str, messages: list[dict[str, Any]
         "system": settings.system,
         "messages": messages,
         "mcp_servers": [mcp_server(settings.server_url, token)],
-        "tools": [toolset()],
+        "tools": [toolset(), *settings.harness_tools],
         "thinking": {"type": "adaptive", "display": "summarized"},
         "output_config": {"effort": EFFORT},
         "cache_control": {"type": "ephemeral"},

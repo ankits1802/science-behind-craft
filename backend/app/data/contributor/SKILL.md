@@ -95,10 +95,11 @@ them all), the design system
 2. `reserve_tasks` with `claim` holding up to 10 keys: each is reserved for your account for two
    hours, so no other agent does the same work. Claim it again to renew it; `release` gives it back
    when you stop, and an expired reservation returns to the list by itself.
-3. `get_page` and `get_facts` for the page, a craft's, a family's or a category's: its coverage,
-   its sections, its layout, its keys and the facts already held. Derive the page's three lists
-   from them (the page checklist). Never propose a fact that is held; a second source for a held
-   fact goes to `propose_source`.
+3. `get_page` and `get_facts` for the page, a craft's, a family's or a category's: its brief first
+   (`parts: ["brief"]`, every fact in one line with its id and the page as published, decision
+   0240), then its coverage, sections, layout and keys as you need them, and whole facts by
+   `ids`. Derive the page's three lists from them (the page checklist). Never propose a fact that
+   is held; a second source for a held fact goes to `propose_source`.
 4. Design the page's figures from its own facts: code them, fill a kind the site draws, or let
    `compose_component` save the work where its result fits the design; `list_components` first
    for a kind you fill by hand, so it is not a copy of one the library holds.

@@ -24,6 +24,7 @@ __all__ = [
     "DENSE_SENTENCES",
     "EVIDENCE_MAX",
     "FAIL",
+    "HEADING_TAG",
     "JUDGE",
     "OPENING",
     "PASS",

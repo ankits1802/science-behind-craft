@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import base64
 import json
-import re
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
@@ -14,28 +12,14 @@ from .transcript import Call
 __all__ = [
     "BAR_COUNTS",
     "PREVIEW_TOOL",
-    "Picture",
     "PreviewFacts",
     "last_preview",
-    "picture_file_name",
     "preview_facts",
     "preview_reply",
-    "reply_pictures",
 ]
 
 PREVIEW_TOOL = "preview_page"
 BAR_COUNTS = ("pictures", "figures", "interactives", "maps")
-EXTENSIONS = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp"}
-SLUG_CHARS = 60
-NOT_WORD = re.compile(r"[^a-z0-9]+")
-
-
-@dataclass(frozen=True)
-class Picture:
-    name: str
-    caption: str
-    mime: str
-    data: bytes
 
 
 @dataclass(frozen=True)
@@ -87,32 +71,6 @@ def preview_facts(reply: dict[str, Any]) -> PreviewFacts:
         picture_names=tuple(str(image.get("name")) for image in drawing.get("images") or []),
         beside_bar=_beside_bar(report.get("bar") or {}),
     )
-
-
-def reply_pictures(content: Sequence[dict[str, Any]]) -> list[Picture]:
-    pictures: list[Picture] = []
-    caption = ""
-    for item in content:
-        if item.get("type") == "text":
-            caption = str(item.get("text", ""))
-            continue
-        if item.get("type") != "image":
-            continue
-        mime = str(item.get("mimeType"))
-        data = base64.b64decode(item.get("data", ""), validate=True)
-        pictures.append(Picture(picture_file_name(len(pictures) + 1, caption, mime), caption, mime, data))
-        caption = ""
-    return pictures
-
-
-def picture_file_name(number: int, caption: str, mime: str) -> str:
-    extension = EXTENSIONS.get(mime)
-    if extension is None:
-        raise ValueError(
-            f"the preview returned a picture of type {mime}; expected one of {sorted(EXTENSIONS)}"
-        )
-    slug = NOT_WORD.sub("-", caption.lower()).strip("-")[:SLUG_CHARS].rstrip("-") or "picture"
-    return f"{number:02d}-{slug}.{extension}"
 
 
 def _beside_bar(bar: dict[str, Any]) -> tuple[str, ...]:

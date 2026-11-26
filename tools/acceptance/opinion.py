@@ -6,7 +6,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-from .preview import Picture
+from .pictures import Picture
 from .request import EFFORT
 
 __all__ = [

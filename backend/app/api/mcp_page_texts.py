@@ -2,6 +2,7 @@ from __future__ import annotations
 
 __all__ = [
     "ADD",
+    "BRIEF_NEXT",
     "CONFIRM",
     "CREATED",
     "EDIT_DESCRIPTION",
@@ -38,9 +39,16 @@ REVIEWED = (
     "figures, propose_page with the same draft_id or bundle."
 )
 READ_NEXT = (
-    "Next, building this page (playbook/1): get_facts for its facts and find its story, decide what a reader "
-    "must see by the design principles, read how Kutch Ajrakh answered the same questions (bar/1 lists its "
-    "worked chapters), then open its draft with edit_draft, subject and lists."
+    "Next, building this page (playbook/1): read its brief (get_page, parts brief), its story and every fact "
+    "in one line, and find its story, reading a fact whole with get_facts and ids; decide what a reader must "
+    "see by the design principles, read how Kutch Ajrakh answered the same questions (bar/1 lists its worked "
+    "chapters), then open its draft with edit_draft, subject and lists."
+)
+BRIEF_NEXT = (
+    "Find the craft's story in these lines; get_facts with ids gives any fact's full text, quotes and sources, "
+    "and get_page with the cursor gives the fact lines still to come. Next (playbook/1, step 2): decide what a "
+    "reader must see by the design principles (kalavigyan-design/1), then read how Kutch Ajrakh answered the "
+    "same questions (bar/1) before opening the draft with edit_draft."
 )
 FOLLOW = "Follow each part with get_proposal or my_work."
 CONFIRM = (

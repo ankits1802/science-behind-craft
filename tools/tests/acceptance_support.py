@@ -42,6 +42,10 @@ def call(call_id: str, name: str, arguments: dict[str, Any] | None = None) -> di
     }
 
 
+def run_call(call_id: str, name: str, arguments: dict[str, Any] | None = None) -> dict[str, Any]:
+    return {"type": "tool_use", "id": call_id, "name": name, "input": arguments or {}}
+
+
 def result(call_id: str, texts: Sequence[str], *, is_error: bool = False) -> dict[str, Any]:
     content = [{"type": "text", "text": said} for said in texts]
     return {"type": "mcp_tool_result", "tool_use_id": call_id, "is_error": is_error, "content": content}

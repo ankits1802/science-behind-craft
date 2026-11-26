@@ -14,10 +14,10 @@ on:
         type: string
         default: Deepen this craft's page to the KalaVigyan bar.
       cap:
-        description: The run's cap in US dollars, above 1 and at most 50; 1 of it is kept for the second opinion
+        description: The run's cap in US dollars, above 1 and at most 40; 1 of it is kept for the second opinion
         required: true
         type: string
-        default: "12"
+        default: "25"
       model:
         description: The Claude model the contributor's AI runs
         required: true
