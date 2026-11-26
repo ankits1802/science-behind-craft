@@ -1,17 +1,15 @@
 "use client";
 
 import type { KeyboardEvent, ReactNode } from "react";
-import { Pause, Play } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import type { PlayInView } from "@/components/motion/usePlayInView";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
 import { spreadPositions } from "@/lib/timelinePlay";
-
-import type { TimelinePlay } from "./useTimelinePlay";
+import { cn } from "@/lib/utils";
 
 export type TrackPoint = { key: string; position: number; name: string; shown: ReactNode };
 
-type TrackProps = { points: readonly TrackPoint[]; play: TimelinePlay; label: string; first: string; last: string };
+type TrackProps = { points: readonly TrackPoint[]; play: PlayInView; label: string; first: string; last: string };
 
 const SPACE = " ";
 
@@ -21,16 +19,6 @@ function spaceToggles(toggle: () => void) {
     event.preventDefault();
     if (event.type === "keydown") toggle();
   };
-}
-
-function PlayButton({ play }: { play: TimelinePlay }) {
-  const pressed = play.playing;
-  return (
-    <Button variant="quiet" size="sm" aria-pressed={play.motion ? pressed : undefined} onClick={play.toggle} data-testid="timeline-play">
-      {pressed ? <Pause className="size-3.5" aria-hidden /> : <Play className="size-3.5" aria-hidden />}
-      <span>{pressed ? "Pause" : "Play"}</span>
-    </Button>
-  );
 }
 
 function Points({ points, play, label }: Omit<TrackProps, "first" | "last">) {
@@ -70,7 +58,7 @@ export function TimelineTrack({ points, play, label, first, last }: TrackProps) 
         <p className="min-w-0 font-headline text-h3 text-ink-1 [font-variant-numeric:lining-nums_tabular-nums]" data-testid="timeline-year">
           {shown?.shown}
         </p>
-        <PlayButton play={play} />
+        <PlayPauseButton playing={play.playing} motion={play.motion} onToggle={play.toggle} testId="timeline-play" />
       </div>
       <Points points={points} play={play} label={label} />
       <div className="flex min-w-0 justify-between gap-3 font-ui text-caption text-ink-3 [font-variant-numeric:lining-nums_tabular-nums]" aria-hidden>

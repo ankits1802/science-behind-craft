@@ -10,12 +10,13 @@ import { MaterialCardView } from "@/components/answer/matter/MaterialCardView";
 import { MOLECULE_MOVES, MoleculeTools, MoleculeView, moveMolecule } from "@/components/answer/matter/MoleculeView";
 import { ReactionPlayerView } from "@/components/answer/matter/ReactionPlayer";
 import { moleculeFailure } from "@/components/answer/matter/useMolecule";
+import { moleculeTurns } from "@/components/answer/matter/useMoleculeTurn";
 import { ApiError } from "@/lib/api";
 import { CONFORMER_MAX_BYTES, conformerSdf, fetchConformer, MOLFILE_VERSIONS } from "@/lib/conformer";
 import { MOLECULE_CONFORMER_PATH } from "@/lib/explainerMatter";
 import type { SectionView } from "@/lib/explainerState";
 import { blockCitations, blockSentences, blockSourceIds, explainerSourceNumbers } from "@/lib/explainerView";
-import { moleculeScene, type SceneViewer } from "@/lib/moleculeViewer";
+import { moleculeScene, SPIN_SPEED, TURN_DEGREES_PER_SECOND, type SceneViewer } from "@/lib/moleculeViewer";
 import { materialRoleText } from "@/lib/processView";
 import {
   carriedKeys,
@@ -26,7 +27,11 @@ import {
   PLAYBACK_START,
   playable,
   playbackStep,
+  railKey,
+  reactionBeat,
   reactionCast,
+  shownStep,
+  STEP_SECONDS,
   stepPosition,
   stepRoles,
   stepSignal,
@@ -130,16 +135,34 @@ test("reduced motion shows every step with its equation, species and citations, 
   for (const step of player().steps) expect(html).toContain(step.label);
 });
 
-test("playing shows the cast lit for the open step, one step open and the playback controls", () => {
+test("a player rests on its first step with one Play, a rail of steps to press and every step stacked in one box, the one shown lit", () => {
   const html = withReading(createElement(ReactionPlayerView, { block: player(), reduce: false }));
   expect(attribute(html, "reaction-player", "data-step")).toEqual(["1"]);
-  expect(attribute(html, "cast-species", "data-role")).toEqual(["REACTANT", "REACTANT", "PRODUCT", "PRODUCT", ...Array(9).fill("none")]);
+  expect(attribute(html, "reaction-player", "data-plays")).toEqual(["view"]);
   expect(attribute(html, "reaction-step", "data-open")).toEqual(["true", "false", "false", "false"]);
-  expect(attribute(html, "reaction-step-detail", "data-testid")).toHaveLength(1);
+  const rail = html.slice(html.indexOf('data-testid="reaction-rail"'), html.indexOf('data-testid="reaction-stage"'));
+  expect([...rail.matchAll(/<button[^>]*aria-pressed="(\w+)"/g)].map((found) => found[1])).toEqual(["true", "false", "false", "false"]);
+  expect([...rail.matchAll(/<button[^>]*tabindex="(-?\d+)"/g)].map((found) => found[1])).toEqual(["0", "-1", "-1", "-1"]);
+  expect(attribute(html, "reaction-step-detail", "data-testid")).toHaveLength(4);
+  const stage = html.slice(html.indexOf('data-testid="reaction-stage"'));
+  expect([...stage.matchAll(/data-shown="(\w+)"/g)].map((found) => found[1])).toEqual(["true", "false", "false", "false"]);
+  expect(stage.match(/<div class="[^"]*invisible[^"]*" aria-hidden="true" inert=""/g)).toHaveLength(3);
+  expect(attribute(html, "cast-species", "data-role").slice(0, 13)).toEqual(["REACTANT", "REACTANT", "PRODUCT", "PRODUCT", ...Array(9).fill("none")]);
   expect(html).toContain("Step 1 of 4");
-  expect(html).toContain('data-testid="reaction-play"');
-  expect(/<button[^>]*aria-label="Previous step"[^>]*>/.exec(html)?.[0]).toContain("disabled");
-  expect(html).toContain('aria-current="step"');
+  const play = /<button[^>]*data-testid="reaction-play"[^>]*>[\s\S]*?<\/button>/.exec(html)?.[0] ?? "";
+  expect(play).toContain("<span>Play</span>");
+  expect(play).not.toContain("aria-pressed");
+  expect(html).not.toContain('aria-label="Previous step"');
+  expect(html).not.toContain('aria-label="Next step"');
+  expect(html).not.toContain("Play again");
+  expect(html.match(/aria-current="step"/g)).toHaveLength(1);
+  expect(html).toContain('role="status" aria-live="polite">Step 1 of 4');
+});
+
+test("the player's steps are arrows, Home and End on its rail, and each play lasts the step's beat", () => {
+  expect(["ArrowDown", "ArrowUp", "ArrowRight", "Home", "End", "Tab"].map(railKey)).toEqual(["ArrowRight", "ArrowLeft", "ArrowRight", "Home", "End", "Tab"]);
+  expect(reactionBeat()).toBe(STEP_SECONDS * 1000);
+  expect([shownStep(-1, 4), shownStep(2, 4), shownStep(9, 4)]).toEqual([0, 2, 3]);
 });
 
 test("each step shows its stage, the conditions and colours its sources state, and why it happens", () => {
@@ -245,9 +268,40 @@ test("keyboard readers turn, tilt and zoom a molecule with buttons that drive th
     ["zoom", 0.8, 600],
     ["rotate", 90, "x", 0]
   ]);
-  const html = withApp(createElement(MoleculeTools, { scene, exploring: false, reduce: false, onExplore: () => undefined }));
+  const resting = { wanted: true, motion: false, toggle: () => undefined };
+  const html = withApp(createElement(MoleculeTools, { scene, turn: resting, exploring: false, reduce: false, onExplore: () => undefined }));
   expect([...html.matchAll(/<button[^>]*>(?:<svg[\s\S]*?<\/svg>)?([^<]+)<\/button>/g)].map((found) => found[1])).toEqual(["Turn", "Tilt", "Zoom in", "Zoom out", "Explore"]);
   expect(html).toContain('role="toolbar"');
+  expect(/<button[^>]*data-testid="molecule-turn"[^>]*>/.exec(html)?.[0]).not.toContain("aria-pressed");
+  const turning = withApp(createElement(MoleculeTools, { scene, turn: { ...resting, motion: true }, exploring: false, reduce: false, onExplore: () => undefined }));
+  expect(/<button[^>]*data-testid="molecule-turn"[^>]*>/.exec(turning)?.[0]).toContain('aria-pressed="true"');
+  expect(turning).toMatch(/data-testid="molecule-turn"[^>]*>(?:<svg[\s\S]*?<\/svg>)?Pause<\/button>/);
+  const paused = withApp(createElement(MoleculeTools, { scene, turn: { ...resting, motion: true, wanted: false }, exploring: false, reduce: false, onExplore: () => undefined }));
+  expect(/<button[^>]*data-testid="molecule-turn"[^>]*>/.exec(paused)?.[0]).toContain('aria-pressed="false"');
+});
+
+test("a molecule turns slowly once in view and holds still under the pointer, in focus, while explored, paused or under either switch", () => {
+  const free = { exploring: false, hovered: false, focused: false };
+  expect(moleculeTurns(true, true, true, free)).toBe(true);
+  expect(moleculeTurns(false, true, true, free)).toBe(false);
+  expect(moleculeTurns(true, false, true, free)).toBe(false);
+  expect(moleculeTurns(true, true, false, free)).toBe(false);
+  expect(moleculeTurns(true, true, true, { ...free, hovered: true })).toBe(false);
+  expect(moleculeTurns(true, true, true, { ...free, focused: true })).toBe(false);
+  expect(moleculeTurns(true, true, true, { ...free, exploring: true })).toBe(false);
+  const calls: unknown[][] = [];
+  const viewer = { rotate: () => undefined, zoom: () => undefined, spin: (...args: unknown[]) => calls.push(["spin", ...args]), getCanvas: () => ({ getContext: () => null }), clear: () => undefined } as unknown as SceneViewer;
+  const scene = moleculeScene(viewer, { replaceChildren: () => undefined } as unknown as HTMLElement);
+  scene.spin(true);
+  scene.spin(false);
+  scene.dispose();
+  expect(calls).toEqual([
+    ["spin", "y", 0.375],
+    ["spin", false, 0.375],
+    ["spin", false]
+  ]);
+  expect(SPIN_SPEED * 40).toBe(TURN_DEGREES_PER_SECOND);
+  expect(TURN_DEGREES_PER_SECOND).toBe(15);
 });
 
 test("a conformer drawn again revalidates the route's ETag from the browser cache instead of asking afresh", async () => {

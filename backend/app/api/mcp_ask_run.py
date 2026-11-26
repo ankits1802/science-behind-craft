@@ -37,9 +37,11 @@ from app.services import reader_profiles
 from app.services.answer_runs import AnswerRun, answer_to_the_end
 from app.services.answer_store import build_answer_pipeline
 from app.services.answering import AnswerAsk, AnswerPipeline
+from app.services.compose_components import stored_conformers
 from app.services.craft_resolver import CraftIndexStore
 from app.services.explainer_history import latest_version
 from app.services.live_sources import LiveSourcesStore
+from app.services.mcp_ask_molecules import ConformerOpener
 
 __all__ = [
     "THROTTLED",
@@ -95,6 +97,7 @@ class AskTools:
     pipeline: PipelineFor = fresh_pipeline
     stored: StoredAnswer = latest_version
     timeout_seconds: float = ASK_TIMEOUT_SECONDS
+    conformers: ConformerOpener = stored_conformers
 
 
 async def ask_refusal(session: AsyncSession, user: User, depth: str) -> str | None:

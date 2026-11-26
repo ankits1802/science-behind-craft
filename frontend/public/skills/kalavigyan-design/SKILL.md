@@ -369,6 +369,8 @@ thumb.
   once in view and loop, with one visible Pause (the player's own button, `aria-pressed`) and the
   status `aria-live="off"` while they play; a step pressed plays on from there; the player holds
   the height of its tallest step so nothing around it moves. Under either switch none of them moves.
+  An answer's figures do the same, on the site and in the MCP answer view, a kit figure that names a
+  motion and a what-if lab with them, and an answer's timeline map has no slider (decision 0238).
 - **Reduced motion has two switches**: `prefers-reduced-motion` and
   `html[data-reduced-motion="true"]`, read before anything moves. The end state is the default
   style; motion is added only under a variant that checks both; under either, `animation` and

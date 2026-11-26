@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
 import { CircleHelp } from "lucide-react";
 
 import { SentenceWithReadings } from "@/components/answer/SentencesDiffer";
+import { usePlayInView, type PlayInView } from "@/components/motion/usePlayInView";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
+import { StepStack } from "@/components/ui/StepStack";
 import type { WhatIfBlock, WhatIfOption } from "@/lib/explainerPlay";
 import { cn } from "@/lib/utils";
-import { isUnknownOption, optionNote, UNKNOWN_OUTCOME } from "@/lib/whatIfView";
+import { isUnknownOption, optionNote, UNKNOWN_OUTCOME, whatIfBeat } from "@/lib/whatIfView";
 
 function OptionButton({ option, on, onPick }: { option: WhatIfOption; on: boolean; onPick: () => void }) {
   return (
@@ -47,31 +50,51 @@ function Outcomes({ option }: { option: WhatIfOption }) {
   );
 }
 
-export function WhatIfLabView({ block }: { block: WhatIfBlock; reduce?: boolean }) {
-  const [chosen, setChosen] = useState(0);
-  const option = block.options[chosen];
+function OutcomePanels({ block, at }: { block: WhatIfBlock; at: number }) {
+  const steps = block.options.map((option, index) => ({
+    key: `${option.label}-${index}`,
+    node: (
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2">
+        <p className="kicker min-w-0 break-words">{option.label}</p>
+        <Outcomes option={option} />
+      </div>
+    )
+  }));
+  return <StepStack steps={steps} at={at} testId="what-if-panels" />;
+}
+
+export function WhatIfLabView({ block, play }: { block: WhatIfBlock; play: PlayInView }) {
+  const at = Math.min(Math.max(0, play.at), block.options.length - 1);
   const titleId = `${block.id}-title`;
   return (
-    <section className="kv-figure grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4" aria-labelledby={titleId} data-testid="what-if" data-chosen={chosen + 1}>
-      <header className="min-w-0">
-        <p className="kicker">What if</p>
-        <h3 id={titleId} className="mt-1 break-words font-reading text-h3 text-ink-1">
-          {block.changed}
-        </h3>
+    <section className="kv-figure grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4" aria-labelledby={titleId} data-testid="what-if" data-chosen={at + 1} data-plays="view">
+      <header className="flex min-w-0 flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="kicker">What if</p>
+          <h3 id={titleId} className="mt-1 break-words font-reading text-h3 text-ink-1">
+            {block.changed}
+          </h3>
+        </div>
+        <PlayPauseButton playing={play.playing} motion={play.motion} onToggle={play.toggle} testId="what-if-play" />
       </header>
       <div role="group" aria-labelledby={titleId} className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(3,minmax(0,1fr))]">
         {block.options.map((entry, index) => (
-          <OptionButton key={entry.label} option={entry} on={index === chosen} onPick={() => setChosen(index)} />
+          <OptionButton key={entry.label} option={entry} on={index === at} onPick={() => play.choose(index)} />
         ))}
       </div>
-      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 bg-sunk p-4" aria-live="polite" data-testid="what-if-outcomes">
-        <p className="kicker min-w-0 break-words">{option.label}</p>
-        <Outcomes option={option} />
+      <div className="min-w-0 bg-sunk p-4" aria-live={play.playing ? "off" : "polite"} data-testid="what-if-outcomes">
+        <OutcomePanels block={block} at={at} />
       </div>
     </section>
   );
 }
 
 export function WhatIfLab({ block }: { block: WhatIfBlock }) {
-  return <WhatIfLabView block={block} />;
+  const watched = useRef<HTMLDivElement | null>(null);
+  const play = usePlayInView(block.options.length, 0, watched, whatIfBeat);
+  return (
+    <div ref={watched} className="min-w-0">
+      <WhatIfLabView block={block} play={play} />
+    </div>
+  );
 }

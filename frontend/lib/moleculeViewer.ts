@@ -7,10 +7,11 @@ export type MoleculeScene = {
   turn: (degrees: number, milliseconds: number) => void;
   tilt: (degrees: number, milliseconds: number) => void;
   zoom: (factor: number, milliseconds: number) => void;
+  spin: (on: boolean) => void;
   dispose: () => void;
 };
 export type MoleculeViewer = { show: (element: HTMLElement, sdf: string) => MoleculeScene | null };
-export type SceneViewer = Pick<GLViewer, "rotate" | "zoom" | "getCanvas" | "clear">;
+export type SceneViewer = Pick<GLViewer, "rotate" | "zoom" | "spin" | "getCanvas" | "clear">;
 export type HeldListener = { target: EventTarget; type: string; listener: EventListenerOrEventListenerObject; options: boolean | EventListenerOptions | undefined };
 type Adding = EventTarget["addEventListener"];
 
@@ -18,6 +19,9 @@ export const MOLECULE_STYLE = { stick: { radius: 0.14 }, sphere: { scale: 0.24 }
 export const VIEWER_SPEC = { backgroundAlpha: 0, antialias: true } as const;
 export const TURN_AXIS = "y";
 export const TILT_AXIS = "x";
+export const TURN_DEGREES_PER_SECOND = 15;
+export const SPIN_STEPS_PER_SECOND = 40;
+export const SPIN_SPEED = TURN_DEGREES_PER_SECOND / SPIN_STEPS_PER_SECOND;
 
 let loading: Promise<MoleculeViewer> | null = null;
 
@@ -79,7 +83,11 @@ export function moleculeScene(viewer: SceneViewer, element: HTMLElement, held: r
     zoom(factor, milliseconds) {
       viewer.zoom(factor, milliseconds);
     },
+    spin(on) {
+      viewer.spin(on ? TURN_AXIS : false, SPIN_SPEED);
+    },
     dispose() {
+      viewer.spin(false);
       const canvas = viewer.getCanvas();
       viewer.clear();
       release(canvas);

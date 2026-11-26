@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
 import { motionAllowedNow } from "@/components/motion/useMotionAllowed";
-import { Button } from "@/components/ui/button";
+import { usePlayInView } from "@/components/motion/usePlayInView";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
 import type { KitMotion } from "@/lib/artKit";
-import { kitSchedule, kitStatus, kitStillStep, kitTimings } from "@/lib/artKitMotion";
+import { kitBeat, kitPanel, kitStatus, kitTimings } from "@/lib/artKitMotion";
 
 export type KitPlayProps = { figureId: string; labels: string[]; motions: (KitMotion | null)[] };
 
@@ -14,6 +15,7 @@ function readToken(token: string): string {
 }
 
 function replay(element: Element): void {
+  if (!motionAllowedNow()) return;
   element.removeAttribute("data-playing");
   element.getBoundingClientRect();
   element.setAttribute("data-playing", "");
@@ -28,53 +30,28 @@ function mark(figure: HTMLElement | null, panel: number | null): void {
 }
 
 export function KitPlay({ figureId, labels, motions }: KitPlayProps) {
-  const [status, setStatus] = useState("");
-  const [playing, setPlaying] = useState(false);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const shown = useRef<number | null>(null);
+  const watched = useRef<Element | null>(null);
+  const rest = labels.length;
+  const beat = useCallback((at: number) => kitBeat(motions, at, kitTimings(readToken)), [motions]);
+  const play = usePlayInView(rest + 1, rest, watched, beat);
+  const panel = kitPanel(play.at, rest);
+  const moving = play.motion;
 
-  const stop = useCallback(() => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
-  }, []);
+  useLayoutEffect(() => {
+    watched.current = document.getElementById(figureId);
+  }, [figureId]);
 
-  useEffect(() => stop, [stop]);
-
-  const show = useCallback(
-    (panel: number | null, moves: boolean) => {
-      const figure = document.getElementById(figureId);
-      shown.current = panel;
-      mark(figure, panel);
-      if (moves && panel !== null) figure?.querySelectorAll(`[data-kit-move="${panel}"]`).forEach(replay);
-      setStatus(kitStatus(panel, labels));
-    },
-    [figureId, labels]
-  );
-
-  const play = useCallback(() => {
-    stop();
-    if (!motionAllowedNow()) {
-      show(kitStillStep(shown.current, labels.length), false);
-      return;
-    }
-    setPlaying(true);
-    for (const beat of kitSchedule(motions, kitTimings(readToken))) {
-      timers.current.push(
-        setTimeout(() => {
-          show(beat.panel, beat.moves);
-          if (beat.panel === null) setPlaying(false);
-        }, beat.at)
-      );
-    }
-  }, [labels.length, motions, show, stop]);
+  useEffect(() => {
+    const figure = document.getElementById(figureId);
+    mark(figure, panel);
+    if (panel !== null && moving && motions[panel] !== null) figure?.querySelectorAll(`[data-kit-move="${panel}"]`).forEach(replay);
+  }, [figureId, panel, moving, motions]);
 
   return (
-    <div className="kv-kit-play">
-      <Button variant="quiet" size="sm" aria-pressed={playing} onClick={play}>
-        Play
-      </Button>
-      <p className="kv-kit-status" role="status" aria-live="polite">
-        {status}
+    <div className="kv-kit-play" data-testid="kit-play" data-at={play.at}>
+      <PlayPauseButton playing={play.playing} motion={play.motion} onToggle={play.toggle} testId="kit-play-button" />
+      <p className="kv-kit-status" role="status" aria-live={play.playing ? "off" : "polite"}>
+        {moving || play.at !== rest ? kitStatus(panel, labels) : ""}
       </p>
     </div>
   );

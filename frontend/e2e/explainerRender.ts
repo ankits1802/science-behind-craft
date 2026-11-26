@@ -4,10 +4,15 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { CitationProvider, type CitationLookup } from "@/components/answer/CitationContext";
 import { ExplainerReadingProvider } from "@/components/answer/ExplainerReading";
 import { AuthProvider } from "@/components/AuthProvider";
+import type { PlayInView } from "@/components/motion/usePlayInView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ENGLISH } from "@/lib/answerLanguages";
 
 export const NO_CITATIONS: CitationLookup = { numbers: new Map(), sourcesById: new Map() };
+
+export function stillPlay(at: number, playing = false, motion = false): PlayInView {
+  return { at, playing, motion, choose: () => undefined, toggle: () => undefined };
+}
 
 export function withReading(child: ReactElement, lookup: CitationLookup = NO_CITATIONS): string {
   const reading = { language: ENGLISH, original: false, hiddenTerms: new Set<string>(), onTerm: () => undefined, listen: null };

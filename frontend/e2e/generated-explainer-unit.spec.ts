@@ -13,7 +13,7 @@ import type { HidingControls } from "@/components/answer/play/useSimulationHidin
 import type { SimulationBlock, SimulationValue } from "@/lib/explainerPlay";
 import { canHideGenerated } from "@/lib/permissions";
 import type { RegionDataset } from "@/lib/regionContract";
-import { FRAME_GUARD, FRAME_MAX_HEIGHT, FRAME_MIN_HEIGHT, FRAME_MOTION_GUARD, FRAME_SIZER, FRAME_STILLNESS, frameHeightFrom, ownFrameHeight, sandboxData, sandboxDocument } from "@/lib/sandboxFrame";
+import { FRAME_GUARD, FRAME_MAX_HEIGHT, FRAME_MIN_HEIGHT, FRAME_MOTION_GUARD, FRAME_SIZER, FRAME_STILLNESS, FRAME_VIEW, frameHeightFrom, ownFrameHeight, sandboxData, sandboxDocument } from "@/lib/sandboxFrame";
 import { ShapeError } from "@/lib/shape";
 import { hiddenFrom, keptAsPiece, setSimulationHidden, simulationHiddenPath, simulationValueText, valueBases } from "@/lib/simulationView";
 import type { User, UserRole } from "@/lib/types";
@@ -85,7 +85,7 @@ test("the frame document opens with the plan's policy and hands the code its val
   expect(sandboxDocument(block.html, block.values)).toBe(
     `<!doctype html><html lang="en" data-reduced-motion="true"><head><meta http-equiv="Content-Security-Policy" content="${POLICY}"><meta charset="utf-8">` +
       `<meta name="viewport" content="width=device-width, initial-scale=1"><script type="application/json" id="kv-data">${DATA}</script>` +
-      `<script>${FRAME_GUARD}</script><script>${FRAME_SIZER}</script><script>${FRAME_STILLNESS}</script>` +
+      `<script>${FRAME_GUARD}</script><script>${FRAME_SIZER}</script><script>${FRAME_STILLNESS}</script><script>${FRAME_VIEW}</script>` +
       `<style>${FRAME_MOTION_GUARD}</style></head><body>${block.html}</body></html>`
   );
   expect(block.html).toContain(`document.getElementById("${PHASE_C.sandbox.dataElementId}")`);

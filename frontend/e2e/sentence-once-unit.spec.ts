@@ -14,7 +14,7 @@ import { parseShape } from "@/lib/shape";
 import { supplyLayout } from "@/lib/supplyView";
 import { entryGroups, groupState, timelineEntries } from "@/lib/timelineView";
 
-import { attribute, shownText, withApp, withReading } from "./explainerRender";
+import { attribute, shownText, stillPlay, withApp, withReading } from "./explainerRender";
 import { phaseBBlock } from "./phaseBFixture";
 import { phaseDBlock } from "./phaseDFixture";
 import { phaseCBlock } from "./playFixture";
@@ -162,7 +162,7 @@ test("a point and a route one sentence states are one entry with both their year
     ["current", "past", "later"],
     ["later", "later", "later"]
   ]);
-  const html = withApp(createElement(TimelineMapView, { block, at: 1, onChoose: () => undefined }));
+  const html = withApp(createElement(TimelineMapView, { block, play: stillPlay(1) }));
   expect(attribute(html, "timeline-entry", "data-state")).toEqual(["past", "current", "later"]);
   expect(attribute(html, "timeline-item", "data-kind")).toEqual(["point", "point", "route", "point"]);
   expect(shown(html, "timeline-years")).toEqual(["15th century", "1586", "1586–1631", "2001"]);

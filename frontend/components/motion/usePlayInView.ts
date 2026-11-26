@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useState, type RefObject } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState, type RefObject } from "react";
 
 import { motionAllowedNow } from "@/components/motion/useMotionAllowed";
-import { isPlaying, played, restingPlay, TIMELINE_STEP_MS } from "@/lib/timelinePlay";
+import { IN_VIEW_MARGIN, isPlaying, played, restingPlay } from "@/lib/playInView";
 
-export type TimelinePlay = {
+export type PlayInView = {
   at: number;
   playing: boolean;
   motion: boolean;
@@ -13,12 +13,19 @@ export type TimelinePlay = {
   toggle: () => void;
 };
 
-const IN_VIEW = { rootMargin: "-20% 0px -20% 0px" };
+export type BeatLength = (at: number) => number;
 
-export function useTimelinePlay(count: number, rest: number, watched: RefObject<Element | null>): TimelinePlay {
+const IN_VIEW = { rootMargin: IN_VIEW_MARGIN };
+
+export function usePlayInView(count: number, rest: number, watched: RefObject<Element | null>, beat: BeatLength): PlayInView {
   const [state, dispatch] = useReducer(played, rest, restingPlay);
   const [chosen, setChosen] = useState(0);
+  const length = useRef(beat);
   const playing = isPlaying(state, count);
+
+  useEffect(() => {
+    length.current = beat;
+  });
 
   useEffect(() => {
     const node = watched.current;
@@ -29,11 +36,14 @@ export function useTimelinePlay(count: number, rest: number, watched: RefObject<
   }, [watched]);
 
   useEffect(() => {
+    if (playing) dispatch({ type: "start" });
+  }, [playing]);
+
+  useEffect(() => {
     if (!playing) return;
-    dispatch({ type: "start" });
-    const timer = window.setInterval(() => dispatch(motionAllowedNow() ? { type: "tick", count } : { type: "still" }), TIMELINE_STEP_MS);
-    return () => window.clearInterval(timer);
-  }, [playing, count, chosen]);
+    const timer = window.setTimeout(() => dispatch(motionAllowedNow() ? { type: "tick", count } : { type: "still" }), length.current(state.at));
+    return () => window.clearTimeout(timer);
+  }, [playing, count, chosen, state.at]);
 
   const choose = useCallback((at: number) => {
     dispatch({ type: "choose", at });

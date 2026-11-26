@@ -6,7 +6,7 @@ import { clip } from "../production/checks";
 import { expectedProblems, heldProblems, otherStep, unchangedProblems } from "./controlPlan";
 import { changedFrom, reached, type ControlWatch } from "./controlWatch";
 import { documentDrawn } from "./documentControls";
-import { earlierDipPlayer, earlierMolecule, earlierReactionPlayer, kitPlaysInView } from "./earlierPlayers";
+import { earlierAnswerReactionPlayer, earlierDipPlayer, earlierMolecule, earlierReactionPlayer, kitPlaysInView } from "./earlierPlayers";
 
 const QUICK_MS = 5_000;
 const PLAY_MS = 9_000;
@@ -79,27 +79,29 @@ export async function kitReactionPlayer(page: Page): Promise<string[]> {
 
 export async function answerReactionPlayer(page: Page): Promise<string[]> {
   const player = page.locator(ANSWER_PLAYER).first();
-  await player.scrollIntoViewIfNeeded();
+  if ((await player.getAttribute("data-plays")) === null) return earlierAnswerReactionPlayer(player);
+  await centred(player);
   const step = attribute(player, "data-step");
+  if ((await step()) === "all") return ["the figure's reaction player shows every step at once and cannot be played"];
+  const play = player.getByTestId("reaction-play");
+  const pressed = attribute(play, "aria-pressed");
+  const playing = await reached(pressed, "true", QUICK_MS);
   const before = await step();
-  if (before === "all") return ["the figure's reaction player shows every step at once and cannot be played"];
-  await player.getByRole("button", { name: "Next step" }).click();
-  const next = await changedFrom(step, before, QUICK_MS);
-  await player.getByTestId("reaction-step").first().getByRole("button").click();
-  const chosen = await reached(step, "1", QUICK_MS);
-  await player.getByTestId("reaction-play").click();
-  const pause = await player.getByTestId("reaction-pause").waitFor({ state: "visible", timeout: QUICK_MS }).then(
-    () => [],
-    () => ["the figure's reaction player shows no Pause after Play"]
-  );
-  const moved = await changedFrom(step, chosen, PLAY_MS);
-  const pauseButton = player.getByTestId("reaction-pause");
-  if (await pauseButton.isVisible()) await pauseButton.click();
+  const moved = await changedFrom(step, before, PLAY_MS);
+  const target = otherStep(Number(moved), await player.getByTestId("reaction-step").count());
+  if (target === null) return ["the figure's reaction player has one step"];
+  await player.getByTestId("reaction-step").nth(target - 1).getByRole("button").click();
+  const chosen = await reached(step, String(target), QUICK_MS);
+  const still = await pressed();
+  await play.click();
+  const paused = await reached(pressed, "false", QUICK_MS);
   return [
-    ...unchangedProblems("the figure's reaction player's Next step", before, next),
-    ...expectedProblems("the figure's reaction player's first step", "1", chosen),
-    ...pause,
-    ...unchangedProblems("the figure's reaction player while playing", chosen, moved)
+    ...expectedProblems("the figure's reaction player in view", "true", playing),
+    ...unchangedProblems("the figure's reaction player while playing", before, moved),
+    ...expectedProblems(`the figure's reaction player's step ${target}`, String(target), chosen),
+    ...expectedProblems("the figure's reaction player after a step is pressed", "true", still),
+    ...expectedProblems("the figure's reaction player's Pause", "false", paused),
+    ...(await pausedProblems("the paused figure reaction player", step, page))
   ];
 }
 

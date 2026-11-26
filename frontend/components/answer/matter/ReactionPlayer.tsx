@@ -1,87 +1,65 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Pause, Play, RotateCcw, SkipBack, SkipForward } from "lucide-react";
+import { useMemo, useRef } from "react";
 
 import { useFilmScene } from "@/components/answer/FilmScene";
-import { ReactionStepList } from "@/components/answer/matter/ReactionStepList";
+import { ReactionStepList, ReactionStepRail } from "@/components/answer/matter/ReactionStepList";
 import { SpeciesCast } from "@/components/answer/matter/SpeciesCast";
-import { usePlayback, type PlaybackControls } from "@/components/answer/matter/usePlayback";
+import { StepDetail } from "@/components/answer/matter/StepDetail";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { Button } from "@/components/ui/button";
-import { IconButton } from "@/components/ui/IconButton";
-import { reactionNotes, type ReactionPlayerBlock, type ReactionStep } from "@/lib/explainerMatter";
+import { usePlayInView, type PlayInView } from "@/components/motion/usePlayInView";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
+import { StepStack } from "@/components/ui/StepStack";
+import { reactionNotes, type ReactionPlayerBlock } from "@/lib/explainerMatter";
 import { stepAt } from "@/lib/filmScenes";
-import { carriedKeys, playable, reactionCast, stepPosition, stepRoles, type PlaybackAction } from "@/lib/reactionPlayer";
+import { carriedKeys, playable, reactionBeat, reactionCast, shownStep, stepPosition, stepRoles } from "@/lib/reactionPlayer";
 
-const ICON = "h-4 w-4";
+type StageProps = { block: ReactionPlayerBlock; at: number; animate: boolean };
 
-function PlayButton({ playback, atEnd }: { playback: PlaybackControls; atEnd: boolean }) {
-  if (playback.playing) {
-    return (
-      <Button variant="quiet" size="sm" className="min-w-28" onClick={() => playback.send({ type: "pause" })} data-testid="reaction-pause">
-        <Pause className={ICON} aria-hidden />
-        Pause
-      </Button>
-    );
-  }
+function PlayerControls({ play, at, count }: { play: PlayInView; at: number; count: number }) {
   return (
-    <Button variant="quiet" size="sm" className="min-w-28" onClick={() => playback.send({ type: "play" })} data-testid="reaction-play">
-      {atEnd ? <RotateCcw className={ICON} aria-hidden /> : <Play className={ICON} aria-hidden />}
-      {atEnd ? "Play again" : "Play"}
-    </Button>
-  );
-}
-
-function PlayerControls({ playback, count }: { playback: PlaybackControls; count: number }) {
-  const atEnd = playback.at >= count - 1;
-  return (
-    <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-t border-rule pt-3" data-testid="reaction-controls">
-      <span className="font-ui text-label text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]" aria-live="polite">
-        {stepPosition(playback.at, count)}
+    <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-2" data-testid="reaction-controls">
+      <span className="font-ui text-label text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]" role="status" aria-live={play.playing ? "off" : "polite"}>
+        {stepPosition(at, count)}
       </span>
-      <div role="toolbar" aria-label="Reaction playback" className="flex items-center gap-2">
-        <IconButton label="Previous step" edge icon={<SkipBack className={ICON} />} onClick={() => playback.send({ type: "previous" })} disabled={playback.at === 0} />
-        <PlayButton playback={playback} atEnd={atEnd} />
-        <IconButton label="Next step" edge icon={<SkipForward className={ICON} />} onClick={() => playback.send({ type: "next" })} disabled={atEnd} />
-      </div>
+      <PlayPauseButton playing={play.playing} motion={play.motion} onToggle={play.toggle} testId="reaction-play" />
     </div>
   );
 }
 
-function useTouchedPlayback(count: number, running: boolean): PlaybackControls & { touched: boolean } {
-  const playback = usePlayback(count, running);
-  const [touched, setTouched] = useState(false);
-  const send = (action: PlaybackAction) => {
-    setTouched(true);
-    playback.send(action);
-  };
-  return { ...playback, send, touched };
+function ReactionStage({ block, at, animate }: StageProps) {
+  const cast = useMemo(() => reactionCast(block.steps), [block.steps]);
+  const steps = block.steps.map((step, index) => ({
+    key: step.reactionId,
+    node: (
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-3">
+        <SpeciesCast cast={cast} roles={stepRoles(step)} carried={carriedKeys(block.steps, index)} />
+        <StepDetail step={step} notes={reactionNotes(block, step.reactionId)} animate={animate && index === at} />
+      </div>
+    )
+  }));
+  return <StepStack steps={steps} at={at} testId="reaction-stage" />;
 }
 
 export function ReactionPlayerView({ block, reduce }: { block: ReactionPlayerBlock; reduce: boolean }) {
   const count = block.steps.length;
   const interactive = playable(count, reduce);
   const film = useFilmScene();
-  const playback = useTouchedPlayback(count, interactive && film === null);
-  const cast = useMemo(() => reactionCast(block.steps), [block.steps]);
-  const at = film ? stepAt(film.progress, count) : playback.at;
-  const open = interactive ? at : null;
+  const watched = useRef<HTMLDivElement | null>(null);
+  const play = usePlayInView(count, 0, watched, reactionBeat);
+  const at = film ? stepAt(film.progress, count) : shownStep(play.at, count);
+  const notesFor = (step: ReactionPlayerBlock["steps"][number]) => reactionNotes(block, step.reactionId);
   return (
-    <div className="kv-figure grid min-w-0 grid-cols-[minmax(0,1fr)] gap-3" data-testid="reaction-player" data-step={open === null ? "all" : String(open + 1)}>
+    <div ref={film ? undefined : watched} className="kv-figure grid min-w-0 grid-cols-[minmax(0,1fr)] gap-3" data-testid="reaction-player" data-step={interactive ? String(at + 1) : "all"} data-plays="view">
       {interactive ? (
         <>
-          <SpeciesCast cast={cast} roles={stepRoles(block.steps[at] ?? null)} carried={carriedKeys(block.steps, at)} />
-          {film ? null : <PlayerControls playback={playback} count={count} />}
+          {film ? null : <PlayerControls play={play} at={at} count={count} />}
+          <ReactionStepRail steps={block.steps} at={at} onChoose={play.choose} />
+          <ReactionStage block={block} at={at} animate={film !== null || play.motion} />
         </>
-      ) : null}
-      <ReactionStepList
-        steps={block.steps}
-        open={open}
-        animate={!reduce && (playback.touched || film !== null)}
-        onChoose={(index) => playback.send({ type: "choose", index })}
-        notesFor={(step: ReactionStep) => reactionNotes(block, step.reactionId)}
-      />
+      ) : (
+        <ReactionStepList steps={block.steps} notesFor={notesFor} />
+      )}
     </div>
   );
 }

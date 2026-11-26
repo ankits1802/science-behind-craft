@@ -1,13 +1,13 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { PIN_DISC, READING_PROSE } from "@/components/answer/place/figureMarks";
 import { CitedText } from "@/components/answer/ProseBlockView";
 import type { ExplainerSentence } from "@/lib/explainerBlockBase";
 import { sentenceKey } from "@/lib/sentenceGroups";
-import { groupedEntries, groupState, stopLabel, yearSpanText, type PlacedPlace, type TimelineEntry, type TimelineEntryState, type TimelineSource } from "@/lib/timelineView";
+import { groupedEntries, groupState, yearSpanText, type PlacedPlace, type TimelineEntry, type TimelineEntryState, type TimelineSource } from "@/lib/timelineView";
 import { cn } from "@/lib/utils";
 
 export type TimelineTexts<S> = { say: (sentence: S, className: string) => ReactNode; keyOf: (sentence: S) => string; idOf: (sentence: S) => string };
@@ -25,38 +25,6 @@ const ENTRY_RULE: Record<TimelineEntryState, string> = {
 };
 
 type Places = Pick<TimelineSource<unknown>, "places">;
-
-export function TimelineSlider<S>({ entries, stops, at, onChoose }: { entries: readonly TimelineEntry<S>[]; stops: readonly number[]; at: number; onChoose: (index: number) => void }) {
-  const id = useId();
-  const label = stopLabel(entries, stops[at]);
-  return (
-    <div className="grid min-w-0 gap-1" data-testid="timeline-slider">
-      <div className="flex min-w-0 items-baseline justify-between gap-3">
-        <label htmlFor={id} className="font-ui text-label text-ink-2">
-          Year
-        </label>
-        <span className="font-headline text-h3 text-ink-1 [font-variant-numeric:lining-nums_tabular-nums]" data-testid="timeline-year">
-          {label}
-        </span>
-      </div>
-      <input
-        id={id}
-        type="range"
-        min={0}
-        max={stops.length - 1}
-        step={1}
-        value={at}
-        aria-valuetext={label}
-        onChange={(event) => onChoose(Number(event.currentTarget.value))}
-        className="h-11 w-full min-w-0 cursor-pointer accent-indigo"
-      />
-      <div className="flex min-w-0 justify-between gap-3 font-ui text-caption text-ink-3 [font-variant-numeric:lining-nums_tabular-nums]" aria-hidden>
-        <span>{stopLabel(entries, stops[0])}</span>
-        <span>{stopLabel(entries, stops[stops.length - 1])}</span>
-      </div>
-    </div>
-  );
-}
 
 function PlaceName({ name, pin }: { name: string; pin: number | null }) {
   return (

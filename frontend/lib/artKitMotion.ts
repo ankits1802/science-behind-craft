@@ -2,7 +2,6 @@ import type { KitMotion, SpeciesRole } from "@/lib/artKit";
 import { MOTION_CLASS, parseDuration, type NamedMotion } from "@/lib/motion";
 
 export type KitTimings = { dip: number; hold: number; oxidise: number; vat: number };
-export type KitBeat = { panel: number | null; moves: boolean; at: number };
 export type ReactionMove = SpeciesRole | "arrow" | "break";
 
 export const KIT_NAMED_MOTION: Readonly<Record<KitMotion, NamedMotion | null>> = { dip: "dip", take: "dip", dry: "oxidise", react: null };
@@ -29,20 +28,12 @@ export function kitBeatLength(motion: KitMotion | null, timings: KitTimings): nu
   return KIT_NAMED_MOTION[motion] === "oxidise" ? timings.oxidise : timings.dip;
 }
 
-export function kitSchedule(motions: readonly (KitMotion | null)[], timings: KitTimings): KitBeat[] {
-  const beats: KitBeat[] = [];
-  let at = 0;
-  motions.forEach((motion, panel) => {
-    beats.push({ panel, moves: motion !== null, at });
-    at += kitBeatLength(motion, timings) + timings.hold;
-  });
-  beats.push({ panel: null, moves: false, at });
-  return beats;
+export function kitBeat(motions: readonly (KitMotion | null)[], at: number, timings: KitTimings): number {
+  return kitBeatLength(motions[at] ?? null, timings) + timings.hold;
 }
 
-export function kitStillStep(current: number | null, count: number): number | null {
-  if (current === null) return count > 0 ? 0 : null;
-  return current + 1 < count ? current + 1 : null;
+export function kitPanel(at: number, count: number): number | null {
+  return at >= 0 && at < count ? at : null;
 }
 
 export function kitStatus(panel: number | null, labels: readonly string[]): string {

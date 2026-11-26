@@ -4,14 +4,9 @@ export const POINT_GAP_PERCENT = 6;
 const FULL = 100;
 const MIDDLE = 50;
 
-export type PlayState = { at: number; wanted: boolean; seen: boolean; started: boolean; motion: boolean };
-export type PlayAction =
-  | { type: "seen"; on: boolean; motion: boolean }
-  | { type: "still" }
-  | { type: "start" }
-  | { type: "tick"; count: number }
-  | { type: "choose"; at: number }
-  | { type: "toggle"; motion: boolean; count: number };
+export function timelineBeat(): number {
+  return TIMELINE_STEP_MS;
+}
 
 export function pointPositions(values: readonly number[]): number[] {
   if (values.length === 0) return [];
@@ -28,36 +23,4 @@ export function spreadPositions(positions: readonly number[], gap: number = POIN
   spread[spread.length - 1] = Math.min(spread[spread.length - 1], FULL);
   for (let at = spread.length - 2; at >= 0; at -= 1) spread[at] = Math.min(spread[at], spread[at + 1] - room);
   return spread.map((position) => Math.round(position * 100) / 100);
-}
-
-export function nextStop(at: number, count: number): number {
-  return count > 0 && at + 1 < count ? at + 1 : 0;
-}
-
-export function restingPlay(rest: number): PlayState {
-  return { at: rest, wanted: true, seen: false, started: false, motion: false };
-}
-
-export function isPlaying(state: PlayState, count: number): boolean {
-  return state.motion && state.wanted && state.seen && count > 1;
-}
-
-export function played(state: PlayState, action: PlayAction): PlayState {
-  switch (action.type) {
-    case "seen":
-      if (state.seen === action.on && (!action.on || state.motion === action.motion)) return state;
-      return { ...state, seen: action.on, motion: action.on ? action.motion : state.motion };
-    case "still":
-      return state.motion ? { ...state, motion: false } : state;
-    case "start":
-      return state.started ? state : { ...state, at: 0, started: true };
-    case "tick":
-      return { ...state, at: nextStop(state.at, action.count) };
-    case "choose":
-      return { ...state, at: action.at, started: true };
-    case "toggle":
-      if (!action.motion) return { ...state, motion: false, at: nextStop(state.at, action.count) };
-      if (isPlaying(state, action.count)) return { ...state, wanted: false };
-      return { ...state, wanted: true, seen: true, motion: true };
-  }
 }

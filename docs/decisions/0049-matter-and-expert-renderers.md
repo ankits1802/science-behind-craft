@@ -11,6 +11,7 @@ Date: 2026-11-17. Status: accepted.
 | The contract it was built to | [0042 Phase B contract: place, matter and the expert panel](0042-phase-b-contract.md) |
 | The review that fixed it | [0050 Phase B review fixes](0050-phase-b-review-fixes.md) |
 | What amended part of it | [0152](0152-matter-read-once-and-the-science-seed-kept-true.md): The listeners 3Dmol.js adds removed at dispose, and the renderers checked in the dark and by touch |
+| The reaction player plays in view and loops, with one Play/Pause and its steps stacked (amends this record) | [decision 0238](0238-an-answer-s-figures-play-like-a-page-s-on-the-site-and-over-mcp.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

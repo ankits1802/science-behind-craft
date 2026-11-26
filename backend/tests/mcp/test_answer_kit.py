@@ -75,3 +75,29 @@ async def test_the_view_carries_the_light_and_dark_tokens() -> None:
     assert f"--ground:{ground['light']['hex']};" in page
     assert f':root[data-theme="dark"]{{color-scheme:dark;--ground:{ground["dark"]["hex"]};' in page
     assert TOKENS["type"]["families"]["reading"]["stack"] in page
+
+
+async def test_the_view_carries_the_depicted_materials_atoms_and_motion_durations_its_figures_draw_with() -> (
+    None
+):
+    page = (await read(VIEW_URI))["text"]
+    for token in ("dye-leuco", "dye-indigo", "dip-2"):
+        assert f"--{token}:{TOKENS['specimen'][token]['hex']};" in page
+    assert f"--atom-c:{TOKENS['molecule']['atoms']['C']['light']['hex']};" in page
+    assert f"--mol-bond:{TOKENS['molecule']['kit']['mol-bond']['light']['hex']};" in page
+    for name, value in TOKENS["motion"]["durations"].items():
+        assert f"--dur-{name}:{value};" in page
+
+
+async def test_the_view_plays_its_figures_with_one_pause_and_no_slider_or_scroll_bar() -> None:
+    page = (await read(VIEW_URI))["text"]
+    assert "range" not in page
+    for part in (
+        "IntersectionObserver",
+        "prefers-reduced-motion: reduce",
+        "data-reduced-motion",
+        "aria-pressed",
+        '"Pause"',
+    ):
+        assert part in page
+    assert [rule for rule in ("overflow:auto", "overflow-x:auto", "overflow:scroll") if rule in page] == []

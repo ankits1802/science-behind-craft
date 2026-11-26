@@ -22,7 +22,7 @@ test("the listeners a viewer adds to the page while it is made are removed when 
   page.dispatchEvent(new Event("resize"));
   expect(heard).toEqual(["mouseup", "touchend", "resize"]);
 
-  const viewer = { rotate: () => undefined, zoom: () => undefined, getCanvas: () => ({ getContext: () => null }), clear: () => undefined } as unknown as SceneViewer;
+  const viewer = { rotate: () => undefined, zoom: () => undefined, spin: () => undefined, getCanvas: () => ({ getContext: () => null }), clear: () => undefined } as unknown as SceneViewer;
   const element = { replaceChildren: () => undefined } as unknown as HTMLElement;
   moleculeScene(viewer, element, held).dispose();
   for (const type of ["mouseup", "touchend"]) body.dispatchEvent(new Event(type));

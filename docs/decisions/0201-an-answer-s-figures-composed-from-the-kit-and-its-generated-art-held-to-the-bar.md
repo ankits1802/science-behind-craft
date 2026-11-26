@@ -25,6 +25,7 @@ tokens and the reduced-motion switch) and [decision 0199](0199-a-kit-of-figure-p
 | The frame and its policy | [decision 0059](0059-sandbox-and-what-if-renderers.md), [decision 0061](0061-phase-c-review-fixes.md) |
 | The depicted colours a cited colour and substance name | [decision 0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md) |
 | The design's motion and reduced-motion switches | the kalavigyan-design skill, section 6 |
+| A kit figure that names a motion plays its panels in view and loops (amends this record) | [decision 0238](0238-an-answer-s-figures-play-like-a-page-s-on-the-site-and-over-mcp.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

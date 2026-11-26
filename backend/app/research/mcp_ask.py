@@ -5,15 +5,18 @@ from collections.abc import Iterable, Mapping
 from typing import Literal
 from urllib.parse import urlencode
 
+from pydantic import Field
+
 from .base import ContractModel
 from .blocks import BlockBase
 from .blocks_component import ComponentBlock
 from .citations import AnswerSentence, SourceRef
 from .coverage_answers import ConsultedField, consulted_fields
 from .crafts import CraftRef
-from .explainer import Explainer
+from .explainer import Explainer, ExplainerSection
 from .explainer_versions import ExplainerVersionDocument
 from .knowledge_api import ATTRIBUTION
+from .mcp_ask_figures import AskedFigure, section_figures
 from .vocabulary import AnswerLanguage, Depth, Discipline, ShownLevel, SourceType, TrustTier
 
 __all__ = [
@@ -68,6 +71,7 @@ class AskedSection(ContractModel):
     title: str
     sentences: list[AskedSentence]
     components: list[PlacedComponent]
+    figures: list[AskedFigure] = Field(default_factory=list)
 
 
 class AskedSource(ContractModel):
@@ -136,19 +140,20 @@ def asked_answer(document: ExplainerVersionDocument, *, site: str, data_note: st
 
 
 def _sections(explainer: Explainer, numbers: Mapping[str, int], site: str) -> list[AskedSection]:
-    return [
-        AskedSection(
-            id=section.id,
-            field=section.discipline,
-            title=section.title,
-            sentences=[_sentence(sentence, numbers) for sentence in _sentences(section.blocks)],
-            components=[
-                _component(block, site) for block in section.blocks if isinstance(block, ComponentBlock)
-            ],
-        )
-        for section in explainer.sections
-        if section.state == READY
-    ]
+    return [_section(section, numbers, site) for section in explainer.sections if section.state == READY]
+
+
+def _section(section: ExplainerSection, numbers: Mapping[str, int], site: str) -> AskedSection:
+    sentences = list(_sentences(section.blocks))
+    said = {sentence.id: at for at, sentence in enumerate(sentences)}
+    return AskedSection(
+        id=section.id,
+        field=section.discipline,
+        title=section.title,
+        sentences=[_sentence(sentence, numbers) for sentence in sentences],
+        components=[_component(block, site) for block in section.blocks if isinstance(block, ComponentBlock)],
+        figures=section_figures(section.blocks, said),
+    )
 
 
 def _sentences(blocks: Iterable[BlockBase]) -> Iterable[AnswerSentence]:
