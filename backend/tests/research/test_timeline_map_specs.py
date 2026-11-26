@@ -56,7 +56,7 @@ def route_map(
 
 
 def test_the_timeline_map_is_delivered_in_its_declared_form_only() -> None:
-    assert "timeline_map" in CONTRIBUTABLE_KINDS and len(CONTRIBUTABLE_KINDS) == 24
+    assert "timeline_map" in CONTRIBUTABLE_KINDS and len(CONTRIBUTABLE_KINDS) == 25
     assert DECLARED_ONLY_KINDS == ("timeline_map",) and AUTHORED_SCRIPT_KINDS == ("model_explainer",)
     assert not_contributable("timeline_map") is None
     assert not_contributable("model_explainer") == (

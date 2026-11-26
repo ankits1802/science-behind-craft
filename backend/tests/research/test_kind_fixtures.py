@@ -44,7 +44,7 @@ FIXTURE_LIST = _fixtures()
 
 def test_every_contributable_kind_is_proven_on_a_craft_other_than_kutch_ajrakh() -> None:
     assert {fixture["kind"] for fixture in FIXTURE_LIST} == set(CONTRIBUTABLE_KINDS)
-    assert len(CONTRIBUTABLE_KINDS) == 24
+    assert len(CONTRIBUTABLE_KINDS) == 25
     assert all(fixture["craft"] != KUTCH for fixture in FIXTURE_LIST)
     assert {"Bidriware", "Blue-Pottery-Of-Jaipur", "Bastar-Dhokra"} <= {f["craft"] for f in FIXTURE_LIST}
 
@@ -117,7 +117,7 @@ def test_dip_phases_are_the_spec_s_own_words_each_named_once() -> None:
 def test_the_preview_is_served_its_fixtures_in_page_order_with_each_drawing_s_four_themes() -> None:
     served = served_kind_fixtures()
     assert [fixture["label"] for fixture in served] == [fixture["label"] for fixture in kind_fixtures()]
-    assert len(served) == len(KIND_FIXTURE_ORDER) == 27
+    assert len(served) == len(KIND_FIXTURE_ORDER) == 28
     (drawing,) = [fixture for fixture in served if fixture["kind"] == "drawing"]
     themes = drawing["spec"]["themes"]
     assert list(themes) == list(THEMES) == ["light", "dark", "hcLight", "hcDark"]

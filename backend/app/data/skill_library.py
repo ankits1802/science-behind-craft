@@ -109,7 +109,7 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
             Reference(
                 "components",
                 "Authoring a component",
-                "Choosing among the 23 kinds a contributor delivers and their declared specs, units and citations "
+                "Choosing among the 25 kinds a contributor delivers and their declared specs, units and citations "
                 "in a spec, depicted materials, and the design rules for a contributed figure",
             ),
             Reference(

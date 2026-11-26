@@ -52,7 +52,7 @@ Choose by what the reader must see:
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
 | what no kind or composer draws: molecules meeting and a bond breaking, a bath scene, a route or map states on the site's base, a stage scene that moves, a three.js model | `coded_figure`, your own code run sandboxed over the page's cited data (`kalavigyan://contracts/component-specs-general.md`, A coded figure) |
 
-The 24 kinds a contributor delivers, by group:
+The 25 kinds a contributor delivers, by group:
 
 - **Figures from data** (5): `drawing`, `chart`, `fact_table`, `timeline`, `map_layer`.
 - **Data and place** (4): `stat_tiles`, `map_sequence`, `source_disagreements`, `timeline_map`.
