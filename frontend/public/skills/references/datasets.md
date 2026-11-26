@@ -124,7 +124,7 @@ export tables, a registry's records, prices over the years):
 
 ## Maps of places
 
-A `timeline_map` is the map for a page's places: where the craft is practised, where it began,
+A `map_layer`, or a `timeline_map` for places through time, is the map for a page's places: where the craft is practised, where it began,
 where it spread, where its artisans moved and when. You give the places and the facts; the site
 draws the map on its own base map, with India's outline as the Survey of India depicts it, framed
 to your places.
@@ -149,8 +149,8 @@ to your places.
    points, the boundary record and every layer's dataset record into the stored spec, and the page
    prints the boundary note and each credit under the map.
 
-A map you draw yourself, as a `drawing` or a `map_layer` of your own SVG (an outline, a base map's
-colours, place dots), is refused with a pointer to the `timeline_map`.
+A map you draw yourself, as a `drawing` or your own SVG (an outline, a base map's colours, place
+dots), is refused with a pointer to the `map_layer` and the `timeline_map`.
 
 ## Contributed datasets
 

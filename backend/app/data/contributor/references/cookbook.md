@@ -37,14 +37,15 @@ unit id (`u0001`).
 - **Designed first.** Decide what the reader must see or do, from the facts and the design
   principles (`kalavigyan-design/1`, `system/1`), before choosing a tool.
 - **Coded freely.** A `coded_figure` is yours to design and write: its markup, style and script
-  over the page's cited units and values, drawn in a sandbox with a still (lane
-  `fix/ux-coded-figures`, decision 0231). Match the kit (`kit-stylesheet/1`, `kit-script/1`).
+  (three.js and d3 are served to it, pinned) over the page's cited units and values, drawn in a
+  sandbox with a still (decision 0231). Match the kit (`kit-stylesheet/1`, `kit-script/1`).
 - **A kind the site draws** when it says exactly what you need: the declared kinds from data, the
   others in their own form, filled by the shape below, the schema and the worked example.
 - **A composer when it helps.** `compose_component` builds a craft's reactions, baths,
-  molecules and what-if choices into players from the page's structure, finished and cited; more kinds and a call
-  that composes all of them at once come with other lanes. Its result is a draft to take, change
-  or set aside for a design of your own.
+  molecules and what-if choices into players from the page's structure, finished and cited; with
+  no kind it composes every kind the craft's facts allow in one call, and the preview's rule 29
+  lists what the facts could still show. Its result is a draft to take, change or set aside for a
+  design of your own.
 - **Given.** Pictures go through `give_pictures`, never as a component.
 - **The site's own** are drawn from the page's data on every page; a proposal of one is refused.
 
@@ -57,17 +58,22 @@ component's label or a text unit's id; `order` counts from 1 within the chapter,
 - **Chapters.** A generated page has `opening` (the masthead), `glance`, `made`, `chem`, `why`,
   `history`, `market`, `whatif`, `people`, `kin` and `sources`. Ajrakh's `answer` is `opening`,
   `cloth` is `glance`, `chemistry` is `chem`, `why-kachchh` is `why` and `what-if` is `whatif`;
-  its `reading` and `media` chapters are the site's own.
+  a generated page also has `reading` and `media`, where the student version and the reading
+  tools stand unless the layout places them (decision 0233).
 - **Roles.** `HERO` is the masthead picture, once a page. `OPENER` is a chapter's opening picture,
   once a chapter. `PLATE` is a picture in the run of a chapter, `FIGURE` any other component.
   `SIDEBAR` is a note beside the prose, `PULL_QUOTE` a text unit set large, `BODY` running text.
-- **Sizes.** `COLUMN` keeps it to the reading measure; `WIDE` gives it the content width, for a
-  player, map or chart with a lane per step; `BLEED` runs it edge to edge, for a chapter opener;
-  `MARGIN` sets it in the right margin from 1200 px wide and inline after its paragraph below that,
-  for a small plate, stat tiles or a short note. (The web honours sizes once lane `fix/ux-layout`
-  lands; place them now.)
-- **Crop.** A picture's focal box `{x, y, width, height}`, each from 0 to 1 of the picture, keeps
-  people and work in frame on a phone.
+- **Sizes.** Place every figure with intent. `COLUMN` is the reading measure (a molecule, a
+  toggle, a small chart). `WIDE` is the content width (a player, a map, swatch cards, a table).
+  `BLEED` is edge to edge (one strong picture or map per page). `MARGIN` sits beside the
+  paragraph it follows from 1200 px and after it below (a material card, a small plate, a sidebar
+  sentence). With no size, `SIDEBAR` is `MARGIN`, `OPENER` is `WIDE` and `PLATE` is `COLUMN`
+  (decision 0227).
+- **Order.** Name only a chapter's figures, pull quotes and sidebars, and the page sets each one
+  after the paragraph that tells it; name a paragraph's unit as `BODY` only to fix your exact order.
+- **Crop.** A picture's focal box `{x, y, width, height}`, each from 0 to 1 of the picture, is the
+  part of the picture that is shown; it keeps people and work in frame on a phone. Check the
+  preview at 1440: every margin item stands beside its paragraph.
 - **Rhythm.** A short run of prose, the figure it sets up, the prose that reads it; the worked
   chapters show the rhythm. Never all prose first and the figures after.
 
@@ -76,7 +82,9 @@ component's label or a text unit's id; `order` counts from 1 within the chapter,
 `preview_page` returns pictures of the first screen at 390 and 1440 px and of each chapter. For
 every component look for: drawn whole at rest, inside its column, its title stating what it shows,
 every cited unit with its citation, no text cut or scrolled, and rule 28's drawing checks passed.
-Then read each chapter as a reader would: does it show what its words explain?
+Then read each chapter as a reader would: does it show what its words explain? Rule 29 lists what
+the craft's own facts could still show (a reaction with no drawing, stages with no player, places
+and dates with no map, quantities with no figure); it is yours to judge, never a fail.
 
 ## `coded_figure`
 
@@ -87,10 +95,20 @@ Then read each chapter as a reader would: does it show what its words explain?
 - **In Kutch Ajrakh**: none of this kind; Ajrakh's authored players and its fibre explainer
   (`model_explainer`, `ajrakh-chemistry/1`) are what such a figure reaches for, because its
   chemistry turns on changes a reader has to see happen.
-- **Made by**: `edit_draft` with a coded figure once lane `fix/ux-coded-figures` (decision 0231)
-  lands: its HTML, CSS and script written by you over the page's structured data, drawn in a
-  sandboxed frame with a still for paper and reduced motion.
-- **Facts**: every text a cited unit, every value stated by a unit or a dataset row.
+- **Made by**: `edit_draft` with a coded figure (decision 0231): its HTML, CSS and script written
+  by you over the page's structured data, drawn in a sandboxed frame with a still for paper and
+  reduced motion. Compose first; code where no kind or composer expresses what the facts need
+  (molecules meeting and a bond breaking, a dye bath, a route or map states on the site's base, a
+  moving stage, a three.js model, a film the site holds). Pinned d3 7.9.2 and three 0.187.0 are
+  served to the frame; code up to 64 KiB; the frame up to 1,200 px tall; films only from files
+  under `/monographs/`.
+- **Facts**: every fact in a cited unit, shown by `data-unit`; every number in `values` with a
+  reading that states it. Labels, controls and decoration are free text.
+- **Motion**: read `document.documentElement.dataset.reducedMotion` and draw the last state at
+  once when it is set; give the motion a pause button.
+- **Maps**: draw only through `map` and `kvMap` (the Survey of India outline, states, districts,
+  rivers and relief are drawn for you); never draw geography yourself.
+- **Still**: send a `still` for a canvas or WebGL figure; an svg figure's still is cut for you.
 - **Place**: the chapter of what it shows, role `FIGURE`, size `WIDE`.
 - **Check**: the still shows the figure whole; motion stops under reduced motion and has a pause.
   Match the kit (`kit-stylesheet/1`, `kit-script/1`) and the tokens (`system/1`).
@@ -106,9 +124,12 @@ Then read each chapter as a reader would: does it show what its words explain?
   (`#rp-blue`, leaf to fibre), `kutch-ajrakh/chemistry/red-alum-madder-player` (`#rp-red`, red only
   where alum was printed), `kutch-ajrakh/chemistry/iron-tannin-black-player` (`#rp-black`, iron on
   tannin) and `kutch-ajrakh/chemistry/white-resist-player` (`#rp-white`, cloth the dye never reached).
-- **Made by**: `compose_component` with kind `reaction_player` (`about {reaction}` for one) can
-  compose it from the page's reactions; scenes that move (each step's species, the bond that breaks,
-  the reagent that arrives) come with lane `fix/ux-players`. Or design it as a `coded_figure`.
+- **Made by**: `compose_component` with kind `reaction_player` (`about {reaction}` for one)
+  composes it from the page's reactions, each step's scene drawn from its own species with the
+  kit's `species` part and `react` motion: the reagent that arrives (oxygen, a mordant), a bond
+  that breaks only where the reaction is a hydrolysis, dehydration, dehydroxylation or a split,
+  colours only from recorded materials (decision 0228). The player plays on its own in view, loops
+  and has one Pause. Or design it as a `coded_figure`.
 - **Facts**: a `REACTION` structure item per reaction with every formula, balanced, and its stage.
 - **Place**: `chem`, role `FIGURE`, size `WIDE`, after the prose that names the change.
 - **Check**: every step names its species and formulas without scrolling; the resting step is the
@@ -211,24 +232,38 @@ Then read each chapter as a reader would: does it show what its words explain?
 
 ## `map_layer`
 
-- **Shows**: a value at each of a set of places on India's map, each a numbered disc sized by its
-  value.
-- **When a page needs it**: a dataset gives a value at each place, and the pattern across places is
-  part of the story.
-- **In Kutch Ajrakh**: why Kachchh is dry ground is read from its rainfall, its trend, heat and
-  soil beside its neighbours (`ajrakh-why-kachchh/1`): `shared/climate/kachchh-district-climate-map`
-  (`[aria-labelledby="fig3-t"]`). The river, earthquake and move are four small drawn maps of the
-  authored page: `kutch-ajrakh/geography/suran-flowing-north-map`,
-  `kutch-ajrakh/geography/suran-dry-below-tapar-dam-map`,
-  `kutch-ajrakh/geology/dhamadka-epicentre-circle-map` and
-  `kutch-ajrakh/history/dhamadka-to-ajrakhpur-move-map`.
-- **Made by**: `edit_draft`, a declared spec on a dataset (`propose_dataset` first). Places without
-  values are a `timeline_map`; a drawn map is a `coded_figure` on the site's base map.
-- **Shape**: `{head {title, caption?}, dataset? {code}, valueLabel?, places [{longitude, latitude,
-  name, reading, value?, cell?}]}`.
-- **Facts**: the dataset's rows, or a fact stating each value.
+- **Shows**: the craft's places on the site's own map base, framed to them: relief with hillshade,
+  rivers and lakes, the Survey of India outline with state and district lines, neighbouring land,
+  sea and salt flats, the home district hatched, each place a numbered disc named beside it, a
+  scale bar and the India locator; and, when asked, an arrow for a move, a ring of a stated radius,
+  a value per district, and a sequence that plays with Play, Pause and a step to press
+  (decision 0232).
+- **When a page needs it**: where the craft is made and what lies around it is part of the story:
+  a town and its neighbours, a move after a flood or earthquake, a distance, rainfall across
+  districts, a spread told step by step.
+- **In Kutch Ajrakh**: `shared/climate/kachchh-district-climate-map` (`ajrakh-why-kachchh/1`,
+  `[aria-labelledby="fig3-t"]`) is what a `districts` part draws;
+  `kutch-ajrakh/geology/dhamadka-epicentre-circle-map` is a 20 km `ring` round Dhamadka;
+  `kutch-ajrakh/history/dhamadka-to-ajrakhpur-move-map` is a `route`; the two Suran maps
+  (`kutch-ajrakh/geography/suran-flowing-north-map` and
+  `kutch-ajrakh/geography/suran-dry-below-tapar-dam-map`) are a frame on the villages with
+  `rivers` emphasised (the Suran itself is too small for the site's data, so its sentence carries
+  it).
+- **Made by**: `edit_draft`, a declared spec by hand (values from a dataset: `propose_dataset`
+  first). Places with years or moves through time: a `timeline_map`. Never draw geography.
+- **Shape**: `{head {title, caption?}, places [{longitude, latitude, name, reading, value?,
+  cell?}], valueLabel?, dataset? {code}, frame? {places [i] | district | state}, emphasis?
+  {layers? [relief|rivers|water], rivers? [name]}, routes? [{start, end, text}], rings? [{place,
+  radiusKm, text}], districts? {valueLabel, values [{district, value, reading}]}, sequence?
+  [{text, places [i], routes [i], rings [i], districts}]}`; indices count from 0 in the spec's own
+  lists; up to 20 routes, 6 rings (up to 500 km each), 2 to 60 districts, 2 to 12 steps.
+- **Facts**: a route's unit states the move ("moved from Dhamadka to Ajrakhpur"), a ring's states
+  its kilometres, a district reading states its value, and each cites a fact; every step cites a
+  fact. Name districts and states by LGD code (`lookup`), rivers by the site's own river names.
 - **Place**: `why`, role `FIGURE`, size `WIDE`.
-- **Check**: every disc has its number in the list under the map.
+- **Check**: the map frames the places, not all of India; every disc is named and numbered in the
+  list; each arrow, ring and value sits where its sentence puts it; a sequence rests on its last
+  step.
 
 ## `map_sequence`
 

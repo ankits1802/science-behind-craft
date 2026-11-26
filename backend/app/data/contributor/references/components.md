@@ -41,7 +41,7 @@ Choose by what the reader must see:
 | the craft's dated record, its places and when | `timeline_map`, as Kutch Ajrakh's history chapter holds it |
 | a short ladder of dates about one thing | `timeline` |
 | where a craft is practised, began, spread or moved, and when | `timeline_map` (A map of places, below) |
-| a value at each place, from a dataset | `map_layer` |
+| places and what lies around them: neighbours, a move, a ring, a value per district, a story in steps | `map_layer`, on the site's own base map |
 | a mechanism, a section, a tool or an object | a composed `diagram` (The figure kit), or `drawing` for what no kit part draws |
 | one stated equation | `equation_card` |
 | molecules | `structure_diagram` (flat, with their PubChem records from `lookup`) or `molecule_3d` |
@@ -109,7 +109,11 @@ written in camelCase (`valueLabel`) or snake_case (`value_label`); the stored sp
 - `map_layer`: `head`; `places`, 1 to 60, each `{longitude, latitude, name, reading, value?,
   cell?}`, inside longitude 68 to 97.5 and latitude 6.5 to 37.5; every place has a value or none
   does, a value is zero or more, and `valueLabel` names what the values measure when, and only when,
-  they are given. Each place is a numbered disc whose area follows its value.
+  they are given. Each place is a numbered disc whose area follows its value. What the map is
+  about, all optional: `frame?`, `emphasis?`, `routes?`, `rings?`, `districts?` and `sequence?`
+  (shapes in the cookbook's `map_layer` and the general contract). The site draws the base
+  beneath it: relief, rivers, the Survey of India outline with state and district lines, the home
+  district hatched, a scale bar and the India locator (decision 0232).
 
 A `chart`, `fact_table` or `map_layer` drawn from a stored dataset names it as `dataset {code}` and
 each value's place in its table as `cell {row, column}` (a table's rows by `row`, its columns by
@@ -119,9 +123,10 @@ credit under the figure.
 
 ## A map of places
 
-Never draw a map. A map of the page's places is a `timeline_map` you declare and the site draws,
-with the answers' own timeline map, on its base map and the Survey of India outline, framed to
-your places. A `drawing` or a `map_layer` of your own SVG that is a map (the base map's colours,
+Never draw geography. A map of the page's places is a `map_layer` (places, routes, rings,
+district values, a sequence) or, for places through time, a `timeline_map`; you declare it and the
+site draws it on its base map and the Survey of India outline, framed to your places. A map story
+beyond them is a `coded_figure` drawing through `map` and `kvMap`. A `drawing` or a `map_layer` of your own SVG that is a map (the base map's colours,
 an outline with dots, places marked as dots in the place colours) is refused with this pointer.
 
 - `timeline_map`: `head`; `places`, 1 to 30, each `{name, home?}` and one of `wikidata` (an item
