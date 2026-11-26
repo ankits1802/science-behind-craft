@@ -28,6 +28,7 @@ __all__ = [
     "quote_occurs",
     "quote_overlap",
     "spans_in_key",
+    "states_value",
     "trivial_quote",
     "unsupported_figures",
 ]
@@ -176,6 +177,16 @@ def formulas_in(text: str) -> list[str]:
 def numbers_in(text: str) -> list[str]:
     rest = FORMULA.sub(" ", _figure_text(text))
     return list(dict.fromkeys(m.group().replace(",", "") for m in NUMBER.finditer(rest)))
+
+
+def states_value(text: str, value: float) -> bool:
+    for figure in numbers_in(text):
+        try:
+            if float(figure) == value:
+                return True
+        except ValueError:
+            continue
+    return False
 
 
 def figures_in(text: str) -> list[str]:

@@ -1,51 +1,30 @@
 "use client";
 
-import { useId, useMemo, useRef } from "react";
+import { useId, useMemo } from "react";
 
-import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
-import { indiaOutlinePath, project, VIEW_BOX } from "@/components/map/projection";
+import { mapLayerDrawn } from "@/components/map/mapLayerFrame";
+import { PlacesMap } from "@/components/map/PlacesMap";
 import { GeneralFigure, type RenderUnit } from "@/components/monograph/kinds/general/GeneralFigure";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
-import { mapLayerSpecShape, parsedSpec, placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
+import { mapLayerSpecShape, parsedSpec, type MapLayerSpec, type MapPlace } from "@/lib/componentSpecsGeneral";
+import { homeDistrictsOf, shownMarks, type ShownMarks } from "@/lib/componentSpecsMapLayer";
+import { cn } from "@/lib/utils";
 
-const LABEL_SIZE = "calc(var(--text-caption) * var(--k, 1))";
-const HALO_WIDTH = "calc(3px * var(--k, 1))";
-const LABEL_GAP = 4;
+import { DistrictList, MarkNotes } from "./MapLayerNotes";
+import { MapSequence } from "./MapSequence";
+import { useMapSequence } from "./useMapSequence";
 
-export function largestValue(places: readonly MapPlace[]): number {
-  return Math.max(0, ...places.map((place) => place.value ?? 0));
-}
+const NO_TEXT = () => "";
 
-function PlaceMap({ places, labelledBy }: { places: MapPlace[]; labelledBy: string }) {
-  const ref = useRef<SVGSVGElement | null>(null);
-  const scale = useFitScale(ref, VIEW_BOX.width);
-  const largest = largestValue(places);
-  return (
-    <svg ref={ref} viewBox={`0 0 ${VIEW_BOX.width} ${VIEW_BOX.height}`} role="img" aria-labelledby={labelledBy} data-fit="" className="block h-auto w-full [forced-color-adjust:none]" style={fitStyle(scale)} data-testid="general-map">
-      <path d={indiaOutlinePath()} fillRule="evenodd" fill="var(--map-land)" stroke="var(--map-coast)" strokeWidth={1.2} vectorEffect="non-scaling-stroke" />
-      {places.map((place, at) => {
-        const { x, y } = project(place.longitude, place.latitude);
-        const radius = placeRadius(place.value, largest) * scale;
-        return (
-          <g key={place.reading}>
-            <circle cx={x} cy={y} r={radius} fill={place.value === null ? "var(--map-marker)" : "var(--chart-series)"} fillOpacity={place.value === null ? 1 : 0.85} stroke="var(--map-marker-ring)" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
-            <text x={x + radius + LABEL_GAP * scale} y={y} dominantBaseline="central" fill="var(--map-label)" stroke="var(--map-label-halo)" strokeLinejoin="round" paintOrder="stroke" style={{ fontSize: LABEL_SIZE, strokeWidth: HALO_WIDTH }}>
-              {at + 1}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
+export { largestValue } from "@/lib/componentSpecsGeneral";
 
-function PlaceList({ places, valueLabel, renderUnit }: { places: MapPlace[]; valueLabel: string | null; renderUnit: RenderUnit }) {
+function PlaceList({ places, valueLabel, marks, renderUnit }: { places: MapPlace[]; valueLabel: string | null; marks: ShownMarks; renderUnit: RenderUnit }) {
   return (
     <div className="grid content-start gap-2">
       {valueLabel ? <p className="font-ui text-caption text-ink-3">{renderUnit(valueLabel)}</p> : null}
       <ol className="grid" data-testid="general-places">
         {places.map((place, at) => (
-          <li key={place.reading} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-2 border-t border-rule py-2">
+          <li key={place.reading} className={cn("grid grid-cols-[1.75rem_minmax(0,1fr)] gap-2 border-t border-rule py-2", marks.current.has(at) ? "border-s-2 border-s-ink-1 ps-2" : null)} aria-current={marks.current.has(at) ? "step" : undefined}>
             <span className="font-ui text-label text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]">{at + 1}</span>
             <div className="grid min-w-0 gap-0.5">
               <p className="font-ui text-ui font-medium text-ink-1">{renderUnit(place.name)}</p>
@@ -58,16 +37,34 @@ function PlaceList({ places, valueLabel, renderUnit }: { places: MapPlace[]; val
   );
 }
 
-export function MapLayerView({ spec, renderUnit }: ComponentViewProps) {
+function PlacedLayer({ layer, home, labelledBy, renderUnit, nameOf }: { layer: MapLayerSpec; home: number[]; labelledBy: string; renderUnit: RenderUnit; nameOf: (ref: string) => string }) {
+  const steps = layer.sequence ?? [];
+  const { at, playing, watch, choose, toggle } = useMapSequence(steps.length);
+  const drawn = useMemo(() => mapLayerDrawn(layer, home), [layer, home]);
+  const marks = useMemo(() => shownMarks(layer, layer.places.length, at), [layer, at]);
+  return (
+    <div ref={watch} className="grid gap-5 md:grid-cols-[minmax(0,1.5fr)_minmax(15rem,1fr)] md:items-start" data-testid="places-map-figure" data-step={steps.length ? at : undefined}>
+      <div className="grid min-w-0 gap-3">
+        <PlacesMap spec={layer} drawn={drawn} marks={marks} labelledBy={labelledBy} nameOf={nameOf} renderUnit={renderUnit} />
+        {steps.length > 1 ? <MapSequence steps={steps} play={{ at, playing, choose, toggle }} renderUnit={renderUnit} /> : null}
+      </div>
+      <div className="grid min-w-0 content-start gap-4">
+        <PlaceList places={layer.places} valueLabel={layer.valueLabel} marks={marks} renderUnit={renderUnit} />
+        <MarkNotes layer={layer} renderUnit={renderUnit} />
+        <DistrictList layer={layer} renderUnit={renderUnit} />
+      </div>
+    </div>
+  );
+}
+
+export function MapLayerView({ component, spec, renderUnit, unitText }: ComponentViewProps) {
   const layer = useMemo(() => parsedSpec(mapLayerSpecShape, spec), [spec]);
+  const home = useMemo(() => homeDistrictsOf(component.subjects), [component.subjects]);
   const titleId = useId();
   if (!layer) return null;
   return (
     <GeneralFigure kind="map_layer" head={layer.head} dataset={layer.dataset} titleId={titleId} renderUnit={renderUnit}>
-      <div className="grid gap-5 md:grid-cols-[minmax(0,1.25fr)_minmax(15rem,1fr)] md:items-start">
-        <PlaceMap places={layer.places} labelledBy={titleId} />
-        <PlaceList places={layer.places} valueLabel={layer.valueLabel} renderUnit={renderUnit} />
-      </div>
+      <PlacedLayer layer={layer} home={home} labelledBy={titleId} renderUnit={renderUnit} nameOf={unitText ?? NO_TEXT} />
     </GeneralFigure>
   );
 }

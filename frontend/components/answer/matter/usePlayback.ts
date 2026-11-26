@@ -6,8 +6,8 @@ import { PLAYBACK_START, playbackStep, STEP_SECONDS, type Playback, type Playbac
 
 export type PlaybackControls = Playback & { send: (action: PlaybackAction) => void };
 
-export function usePlayback(count: number, running: boolean): PlaybackControls {
-  const [state, send] = useReducer((current: Playback, action: PlaybackAction) => playbackStep(current, action, count), PLAYBACK_START);
+export function usePlayback(count: number, running: boolean, start: Playback = PLAYBACK_START): PlaybackControls {
+  const [state, send] = useReducer((current: Playback, action: PlaybackAction) => playbackStep(current, action, count), start);
   const playing = running && state.playing;
 
   useEffect(() => {

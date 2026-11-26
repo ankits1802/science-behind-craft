@@ -25,8 +25,10 @@ export const PEAK_TIERS: Readonly<Record<string, PeakPlacement>> = {
 };
 
 const PEAK_SIZE = 5.2;
+export const SHADE = "var(--map-hillshade-opacity)";
+export const STRONG_SHADE = "min(1, calc(var(--map-hillshade-opacity) * 1.6))";
 
-export const ReliefUnder = memo(function ReliefUnder({ file }: { file: ReliefFile }) {
+export const ReliefUnder = memo(function ReliefUnder({ file, strong = false }: { file: ReliefFile; strong?: boolean }) {
   const maskId = `kv-relief-shade-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const bands = useMemo(() => file.bands.map((band) => ringsPath(decodeRings(band.rings))), [file]);
   const corner = project(file.shade.west, file.shade.north);
@@ -43,7 +45,7 @@ export const ReliefUnder = memo(function ReliefUnder({ file }: { file: ReliefFil
           <image href={file.shade.href} {...box} preserveAspectRatio="none" />
         </mask>
       </defs>
-      <rect {...box} fill="var(--map-relief-shade)" mask={`url(#${maskId})`} style={{ opacity: "var(--map-hillshade-opacity)" }} data-testid="relief-shade" />
+      <rect {...box} fill="var(--map-relief-shade)" mask={`url(#${maskId})`} style={{ opacity: strong ? STRONG_SHADE : SHADE }} data-testid="relief-shade" />
     </g>
   );
 });

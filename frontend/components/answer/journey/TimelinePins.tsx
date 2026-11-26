@@ -9,8 +9,10 @@ import { PIN_DISC } from "@/components/answer/place/figureMarks";
 import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
 import { AbroadInset, type InsetPin, type InsetRoute } from "@/components/map/AbroadInset";
 import type { MapBox } from "@/components/map/basemap";
+import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { IndiaMap, type MapPoint } from "@/components/map/IndiaMap";
 import { frameScale, WHOLE_MAP } from "@/components/map/layout";
+import { MapScale } from "@/components/map/MapScale";
 import { listText } from "@/lib/format";
 import type { BoundaryNote } from "@/lib/regionContract";
 import { wikidataUrl } from "@/lib/supplyView";
@@ -93,6 +95,7 @@ export function TimelinePins({ placed, reached, routes, boundary, parts = {} }: 
     <>
       {parts.overlay ? parts.overlay(scale) : null}
       <RouteLines routes={routes} ring={frameScale(frame)} />
+      {parts.frame ? <MapScale frame={frame} scale={scale} /> : null}
     </>
   );
   const source = (
@@ -104,8 +107,9 @@ export function TimelinePins({ placed, reached, routes, boundary, parts = {} }: 
   const texts = { title: parts.titled === false ? undefined : listText(placed.map((place) => place.name)), source };
   return (
     <AnswerFigure texts={texts} className="lg:sticky lg:top-24" data-testid="timeline-pins">
-      <div ref={box} style={fitStyle(scale)} className="min-w-0">
+      <div ref={box} style={fitStyle(scale)} className="relative min-w-0">
         <IndiaMap points={points} hoveredKey={hovered} selectedKey={pinned} onSelect={(key) => setPinned((current) => (current === key ? null : key))} onHover={setHovered} underlay={parts.underlay} overlay={overlay} frame={frame} />
+        {parts.frame && parts.frame !== WHOLE_MAP ? <IndiaLocator marked={[]} frame={frame} label={locatorLabel([])} className={LOCATOR_INSET} /> : null}
       </div>
       {parts.key}
       {abroad.length > 0 ? <Abroad places={abroad} routes={routes} /> : null}

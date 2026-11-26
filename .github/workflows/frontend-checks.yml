@@ -113,6 +113,15 @@ jobs:
       - name: Unit specs
         run: npm run test:unit
 
+      - name: Keep the places map stills
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: places-map-stills
+          path: frontend/test-results/**/places-map-*.png
+          if-no-files-found: ignore
+          retention-days: 7
+
   build:
     name: Production build
     runs-on: ubuntu-26.04

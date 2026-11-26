@@ -3,10 +3,13 @@ import { INDIA_BOUNDS } from "@/components/map/indiaBounds";
 import { placesFrame, type FramedPoint } from "@/components/map/placesFrame";
 import { districtLayer, foundPoints, homeDistricts, physicalLayers, type TimelineMapSpec } from "@/lib/componentSpecsTimelineMap";
 import type { MineralKeyRow } from "@/lib/mapPhysical";
+import type { BoundaryNote, RegionDataset } from "@/lib/regionContract";
 import type { LayerLegend } from "@/lib/regionView";
 
-export type LayerNames = { physical: readonly string[]; district: string | null; home: readonly number[] };
+export type LayerEmphasis = { layers: readonly string[]; rivers: readonly string[] };
+export type LayerNames = { physical: readonly string[]; district: string | null; home: readonly number[]; base?: boolean; valued?: readonly number[]; emphasis?: LayerEmphasis };
 export type StillRiver = { rank: number; d: string };
+export type StillDistrict = { lgd: number; d: string; x: number; y: number };
 export type MapStill = {
   box: MapBox;
   grid: number;
@@ -16,6 +19,12 @@ export type MapStill = {
   home: string | null;
   minerals: MineralKeyRow[] | null;
   district: LayerLegend | null;
+  lines?: string | null;
+  neighbours?: string | null;
+  valued?: StillDistrict[] | null;
+  named?: string | null;
+  credits?: RegionDataset[] | null;
+  boundary?: BoundaryNote | null;
 };
 export type TimelineMapDrawn = { frame: MapBox; names: LayerNames; still: MapStill | null };
 
@@ -42,5 +51,6 @@ export function timelineMapDrawn(map: TimelineMapSpec): TimelineMapDrawn {
 }
 
 export function stillKey(frame: MapBox, names: LayerNames): string {
-  return [viewBoxOf(frame), names.physical.join(","), names.home.join(",")].join("|");
+  const base = names.base ? ["base", (names.valued ?? []).join(",")] : [];
+  return [viewBoxOf(frame), names.physical.join(","), names.home.join(","), ...base].join("|");
 }

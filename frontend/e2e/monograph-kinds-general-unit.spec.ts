@@ -161,7 +161,8 @@ test("a map layer marks each place on India's outline with a disc sized by its v
   expect(placeRadius(null, 2072)).toBe(7);
   expect(placeRadius(2072, 2072)).toBe(22);
   const html = drawn("map_layer", MAP);
-  expect(html.match(/<circle /g)).toHaveLength(2);
+  expect(html.match(/data-testid="map-place"/g)).toHaveLength(2);
+  expect(html).toContain('data-testid="map-land"');
   expect(html).not.toContain("StateLines");
   expect(html).toContain("[u0004]");
 });

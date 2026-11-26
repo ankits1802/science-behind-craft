@@ -5,19 +5,22 @@ import { useCallback, useMemo, type ReactNode } from "react";
 import { useRemote } from "@/components/hooks/useRemote";
 import { DistrictFills, PLACE_TONE } from "@/components/map/DistrictLayer";
 import { LayerStatus, useMapLayer, usePaletteFill } from "@/components/map/MapLayerView";
-import { StillHome, StillRelief, StillRivers } from "@/components/map/MapStillLayers";
+import { PLAIN, StillHome, StillRelief, StillRivers, type Strength } from "@/components/map/MapStillLayers";
 import { MineralSymbols } from "@/components/map/physical/MineralsLayer";
 import { MineralKey, ReliefKey, RiversKey } from "@/components/map/physical/PhysicalSide";
 import { ReliefOver, ReliefUnder } from "@/components/map/physical/ReliefLayer";
 import { RiversOver, RiversUnder } from "@/components/map/physical/RiversLayer";
 import { loadShapes, shapePath, type DistrictShape } from "@/components/map/shapeGeometry";
-import type { LayerNames, MapStill } from "@/components/map/timelineMapStill";
+import type { LayerEmphasis, LayerNames, MapStill } from "@/components/map/timelineMapStill";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { loadPhysical, mineralKeyRows, mineralSites, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
+import { layerCredits, loadPhysical, mineralKeyRows, mineralSites, type MineralSite, type MineralsFile, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
+import type { RegionDataset } from "@/lib/regionContract";
 
 export const DRAWING_MINERALS = "Drawing the mineral deposits";
+export const NO_EMPHASIS: LayerEmphasis = { layers: [], rivers: [] };
 
-export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode };
+export type LayerParts = { relief: ReactNode; fills: ReactNode; rivers: ReactNode; home: ReactNode };
+export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode; parts: LayerParts; credits: RegionDataset[] };
 export type Physical = { relief: ReliefFile | null; rivers: RiversFile | null; minerals: MineralsFile | null; sites: readonly MineralSite[] };
 
 function usePhysical<K extends "relief" | "rivers" | "minerals">(id: K, names: LayerNames) {
@@ -36,14 +39,14 @@ export function HomeHatch({ shapes, home }: { shapes: readonly DistrictShape[]; 
   );
 }
 
-export function ReliefUnderOrStill({ file, still }: { file: ReliefFile | null; still: MapStill | null }) {
-  if (file) return <ReliefUnder file={file} />;
+export function ReliefUnderOrStill({ file, still, strong = false }: { file: ReliefFile | null; still: MapStill | null; strong?: boolean }) {
+  if (file) return <ReliefUnder file={file} strong={strong} />;
   return still?.relief ? <StillRelief still={still} bands={still.relief} /> : null;
 }
 
-export function RiversUnderOrStill({ file, still }: { file: RiversFile | null; still: MapStill | null }) {
-  if (file) return <RiversUnder file={file} />;
-  return still?.rivers ? <StillRivers still={still} rivers={still.rivers} lakes={still.lakes} /> : null;
+export function RiversUnderOrStill({ file, still, strength = PLAIN }: { file: RiversFile | null; still: MapStill | null; strength?: Strength }) {
+  if (file) return <RiversUnder file={file} strength={strength} />;
+  return still?.rivers ? <StillRivers still={still} rivers={still.rivers} lakes={still.lakes} strength={strength} /> : null;
 }
 
 export function HomeOrStill({ shapes, home, still }: { shapes: readonly DistrictShape[] | null; home: readonly number[]; still: MapStill | null }) {
@@ -67,11 +70,11 @@ export function PhysicalKey({ names, layers, still = null }: { names: LayerNames
   );
 }
 
-function PhysicalOver({ layers, scale }: { layers: Physical; scale: number }) {
+function PhysicalOver({ layers, scale, rivers }: { layers: Physical; scale: number; rivers: readonly string[] }) {
   return (
     <>
       {layers.relief ? <ReliefOver file={layers.relief} scale={scale} /> : null}
-      {layers.rivers ? <RiversOver file={layers.rivers} /> : null}
+      {layers.rivers ? <RiversOver file={layers.rivers} named={rivers} /> : null}
       {layers.minerals ? <MineralSymbols sites={layers.sites} scale={scale} /> : null}
     </>
   );
@@ -86,12 +89,20 @@ export function useTimelineMapLayers(names: LayerNames, still: MapStill | null =
   const fillOf = usePaletteFill(district.layer.data);
   const homes = useRemote(names.home.length ? loadShapes : null).data;
   const layers: Physical = { relief, rivers, minerals, sites };
+  const emphasis = names.emphasis ?? NO_EMPHASIS;
+  const strength: Strength = { rivers: emphasis.layers.includes("rivers"), water: emphasis.layers.includes("water") };
+  const parts: LayerParts = {
+    relief: <ReliefUnderOrStill file={relief} still={still} strong={emphasis.layers.includes("relief")} />,
+    fills: district.layer.data && district.shapes.data ? <DistrictFills shapes={district.shapes.data} fillOf={fillOf} /> : null,
+    rivers: <RiversUnderOrStill file={rivers} still={still} strength={strength} />,
+    home: <HomeOrStill shapes={homes} home={names.home} still={still} />
+  };
   const underlay = (
     <>
-      <ReliefUnderOrStill file={relief} still={still} />
-      {district.layer.data && district.shapes.data ? <DistrictFills shapes={district.shapes.data} fillOf={fillOf} /> : null}
-      <RiversUnderOrStill file={rivers} still={still} />
-      <HomeOrStill shapes={homes} home={names.home} still={still} />
+      {parts.relief}
+      {parts.fills}
+      {parts.rivers}
+      {parts.home}
     </>
   );
   const key = (
@@ -100,5 +111,6 @@ export function useTimelineMapLayers(names: LayerNames, still: MapStill | null =
       {names.district ? <LayerStatus layer={district.layer} shapes={district.shapes} held={still?.district ?? null} /> : null}
     </div>
   );
-  return { underlay, overlay: (scale) => <PhysicalOver layers={layers} scale={scale} />, key };
+  const credits = layerCredits([...(relief?.datasets ?? []), ...(rivers?.datasets ?? [])]);
+  return { underlay, overlay: (scale) => <PhysicalOver layers={layers} scale={scale} rivers={emphasis.rivers} />, key, parts, credits };
 }

@@ -6,7 +6,7 @@ import { createElement, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
-import { decodeRings, linesPath, ringsPath, viewBoxOf } from "@/components/map/basemap";
+import { decodeRings, linesPath, ringsPath, viewBoxOf, type NeighbourFile } from "@/components/map/basemap";
 import { PLACE_TONE } from "@/components/map/DistrictLayer";
 import { DRAWING_DISTRICT_VALUES, LayerStatus } from "@/components/map/MapLayerView";
 import { cutStill, STILL_GRID, stillLayers, type StillFiles } from "@/components/map/mapStillCut";
@@ -37,7 +37,8 @@ const RELIEF = read<ReliefFile>(FRONTEND, "public", "layers", "relief.json");
 const RIVERS = read<RiversFile>(FRONTEND, "public", "layers", "rivers.json");
 const MINERALS = read<MineralsFile>(FRONTEND, "public", "layers", "minerals.json");
 const SHAPES = read<ShapesFile>(FRONTEND, "public", "boundaries", "district-shapes.json");
-const FILES: StillFiles = { relief: RELIEF, rivers: RIVERS, minerals: MINERALS, shapes: SHAPES };
+const NEIGHBOURS = read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json");
+const FILES: StillFiles = { relief: RELIEF, rivers: RIVERS, minerals: MINERALS, shapes: SHAPES, neighbours: NEIGHBOURS };
 const LAYERS = stillLayers(FILES);
 const [BIDRIWARE] = parseKindFixtures({ fixtures: [read<unknown>(REPO, "backend", "app", "data", "kind_fixtures", "timeline_map.json")] });
 const KUTCH = read<Record<string, unknown>>(REPO, "backend", "app", "data", "monographs", "Kutch-Ajrakh", "specs", "kutch-ajrakh__history__dated-record-timeline-map.json");

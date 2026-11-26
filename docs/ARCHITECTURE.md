@@ -824,7 +824,9 @@ first-screen Latin faces are declared and preloaded by the root layout after a m
 (`app/FirstScreenFaces.tsx`). A declared timeline map's relief, rivers and home hatch,
 with its minerals key and district legend, are cut on the server into a small still for its frame
 when a document is read (`lib/server/mapStills.ts`, decision 0220) and drawn at first paint until
-each layer's file lands. The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at
+each layer's file lands; a declared places map (`map_layer`) is drawn on the same base for its own
+frame, with neighbouring land, district lines and its valued districts in its still, a scale bar,
+the India locator and the routes, rings and sequence its spec asks for (decision 0232). The smoke job measures Kutch Ajrakh and a page of every kind on a slowed phone at
 360 against their recorded numbers (`frontend/e2e/phone-budget.json`, decision 0205) and records
 each load's path to its largest element (`frontend/e2e/phonePath.ts`, decision 0209). Practice rules are `frontend-practices`.
 

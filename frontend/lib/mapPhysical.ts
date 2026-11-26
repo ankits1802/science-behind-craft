@@ -1,3 +1,5 @@
+import type { RegionDataset } from "@/lib/regionContract";
+
 export type PhysicalLayerId = "relief" | "rivers" | "minerals";
 export type PhysicalLayer = { id: PhysicalLayerId; title: string; hint: string; asset: string };
 
@@ -92,6 +94,17 @@ export function mineralFinding(sites: readonly MineralSite[], classes: readonly 
   if (!states.length || !leading.length) return null;
   const top = classes[Number(leading[0].key)]?.label.toLowerCase() ?? "";
   return `${states[0].label} holds ${states[0].count} of the ${sites.length.toLocaleString("en-IN")} recorded deposits; the largest class, with ${leading[0].count}, is ${top}.`;
+}
+
+function regionCredit(row: DatasetRow): RegionDataset {
+  const { code, title, publisher, edition, period, nativeResolution, licence, licenceUrl, attribution, citation, url, version, crs, redistributable, doi, landingUrl, readOn, sha256 } = row;
+  return { code, title, publisher, edition, period, nativeResolution, licence, licenceUrl, attribution, citation, url, version, crs, redistributable, doi, landingUrl, readOn, sha256 };
+}
+
+export function layerCredits(rows: readonly DatasetRow[]): RegionDataset[] {
+  const seen = new Map<string, RegionDataset>();
+  for (const row of rows) if (!seen.has(row.code)) seen.set(row.code, regionCredit(row));
+  return [...seen.values()];
 }
 
 export function riverWidth(rank: number): number {

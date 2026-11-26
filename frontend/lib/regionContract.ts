@@ -171,7 +171,7 @@ const placeShape: Shape<RegionPlace> = object<RegionPlace>({
   facets: list(regionFacetShape)
 });
 
-const boundaryShape: Shape<BoundaryNote> = object<BoundaryNote>({ caption: text, dataset: datasetShape });
+export const boundaryShape: Shape<BoundaryNote> = object<BoundaryNote>({ caption: text, dataset: datasetShape });
 
 const layerSummaryShape: Shape<MapLayerSummary> = object<MapLayerSummary>({
   id: matching(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "a layer id"),

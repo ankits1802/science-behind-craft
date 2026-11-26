@@ -1,18 +1,25 @@
-import { cutStill, heldStill, stillLayers, type StillGeometry, type StillLayers } from "@/components/map/mapStillCut";
+import { mapLayerFrame, mapLayerNames } from "@/components/map/mapLayerFrame";
+import { cutStill, heldStill, namedBox, stillLayers, type StillGeometry, type StillLayers } from "@/components/map/mapStillCut";
 import { stillKey, timelineMapFrame, timelineMapNames, type MapStill } from "@/components/map/timelineMapStill";
-import { parsedSpec } from "@/lib/componentSpecsGeneral";
+import { isDeclared, mapLayerSpecShape, parsedSpec, type MapLayerSpec } from "@/lib/componentSpecsGeneral";
+import { homeDistrictsOf, MAP_LAYER_KIND, namedFrameKey } from "@/lib/componentSpecsMapLayer";
 import { declaredForm, TIMELINE_MAP_KIND, TIMELINE_MAP_STILL, timelineMapSpecShape, type TimelineMapSpec } from "@/lib/componentSpecsTimelineMap";
 import type { MonographDocument } from "@/lib/monographDocument";
-import { MAP_LAYER_PATH } from "@/lib/regionContract";
+import { MAP_LAYER_PATH, MAP_LAYERS_PATH, mapLayerListShape, type BoundaryNote } from "@/lib/regionContract";
 import { layerLegend, parsedMapLayer, type LayerLegend } from "@/lib/regionView";
 import { publicFetch } from "@/lib/server/serverFetch";
+import { parseShape } from "@/lib/shape";
 
 export const STILLS_KEPT = 200;
 export const MAP_LAYER_TAG = "map-layer";
+export const MAP_LAYERS_TAG = "map-layers";
 
 type Spec = Record<string, unknown>;
+type Kept = Map<string, StillGeometry>;
 export type DeclaredMap = { label: string; spec: Spec; map: TimelineMapSpec };
+export type PlacesMap = { label: string; spec: Spec; map: MapLayerSpec; home: number[] };
 export type StillOf = (map: TimelineMapSpec) => MapStill | null;
+export type PlacesStillOf = (map: PlacesMap) => MapStill | null;
 
 function withoutStill(spec: Spec): Spec {
   return Object.fromEntries(Object.entries(spec).filter(([key]) => key !== TIMELINE_MAP_STILL));
@@ -30,6 +37,16 @@ export function declaredMaps(document: MonographDocument): DeclaredMap[] {
   });
 }
 
+export function placesMaps(document: MonographDocument): PlacesMap[] {
+  return document.content.components.flatMap((component) => {
+    const found = component.kind === MAP_LAYER_KIND && Object.hasOwn(document.specs, component.label) ? document.specs[component.label] : null;
+    if (!found || !isDeclared(found)) return [];
+    const spec = withoutStill(found);
+    const map = parsedSpec(mapLayerSpecShape, spec);
+    return map ? [{ label: component.label, spec, map, home: homeDistrictsOf(component.subjects) }] : [];
+  });
+}
+
 export function stilledDocument(document: MonographDocument, maps: readonly DeclaredMap[], stillOf: StillOf): MonographDocument {
   const labels = timelineMapLabels(document);
   if (!labels.length) return document;
@@ -42,19 +59,52 @@ export function stilledDocument(document: MonographDocument, maps: readonly Decl
   return { ...document, specs };
 }
 
-export function stillOfMaps(layers: StillLayers, legends: ReadonlyMap<string, LayerLegend>, kept: Map<string, StillGeometry> = new Map()): StillOf {
+export function placesStilledDocument(document: MonographDocument, maps: readonly PlacesMap[], stillOf: PlacesStillOf): MonographDocument {
+  if (!maps.length) return document;
+  const specs = { ...document.specs };
+  for (const found of maps) {
+    const still = stillOf(found);
+    specs[found.label] = still ? { ...found.spec, [TIMELINE_MAP_STILL]: still } : found.spec;
+  }
+  return { ...document, specs };
+}
+
+function keptGeometry(kept: Kept, key: string, cut: () => StillGeometry): StillGeometry {
+  const held = kept.get(key);
+  if (held) return held;
+  const geometry = cut();
+  const oldest = kept.keys().next();
+  if (kept.size >= STILLS_KEPT && !oldest.done) kept.delete(oldest.value);
+  kept.set(key, geometry);
+  return geometry;
+}
+
+export function stillOfMaps(layers: StillLayers, legends: ReadonlyMap<string, LayerLegend>, kept: Kept = new Map()): StillOf {
   return (map) => {
     const frame = timelineMapFrame(map);
     const names = timelineMapNames(map);
-    const key = stillKey(frame, names);
-    const geometry = kept.get(key) ?? cutStill(layers, frame, names);
-    if (!kept.has(key)) {
-      const oldest = kept.keys().next();
-      if (kept.size >= STILLS_KEPT && !oldest.done) kept.delete(oldest.value);
-      kept.set(key, geometry);
-    }
+    const geometry = keptGeometry(kept, stillKey(frame, names), () => cutStill(layers, frame, names));
     return heldStill(geometry, names.district ? (legends.get(names.district) ?? null) : null);
   };
+}
+
+export function stillOfPlaces(layers: StillLayers, boundary: BoundaryNote | null, kept: Kept = new Map()): PlacesStillOf {
+  return ({ map, home }) => {
+    const named = namedBox(layers, map.frame);
+    const frame = named ?? mapLayerFrame(map);
+    const names = mapLayerNames(map, home);
+    const geometry = keptGeometry(kept, stillKey(frame, names), () => cutStill(layers, frame, names));
+    const still = heldStill(geometry, null);
+    if (!still) return null;
+    const key = named ? namedFrameKey(map.frame) : null;
+    return { ...still, boundary, ...(key ? { named: key } : {}) };
+  };
+}
+
+async function listedBoundary(places: readonly PlacesMap[]): Promise<BoundaryNote | null> {
+  if (!places.length) return null;
+  const result = await publicFetch(MAP_LAYERS_PATH, { parse: (body) => parseShape(mapLayerListShape, body), tags: [MAP_LAYERS_TAG] });
+  return result.ok ? result.body.boundary : null;
 }
 
 async function districtLegends(maps: readonly DeclaredMap[]): Promise<Map<string, LayerLegend>> {
@@ -64,7 +114,7 @@ async function districtLegends(maps: readonly DeclaredMap[]): Promise<Map<string
 }
 
 let held: Promise<StillLayers> | null = null;
-const KEPT = new Map<string, StillGeometry>();
+const KEPT: Kept = new Map();
 const NO_STILL: StillOf = () => null;
 
 function heldLayers(): Promise<StillLayers> {
@@ -79,7 +129,9 @@ function heldLayers(): Promise<StillLayers> {
 
 export async function withMapStills(document: MonographDocument): Promise<MonographDocument> {
   const maps = declaredMaps(document);
-  if (!maps.length) return stilledDocument(document, maps, NO_STILL);
-  const [layers, legends] = await Promise.all([heldLayers(), districtLegends(maps)]);
-  return stilledDocument(document, maps, stillOfMaps(layers, legends, KEPT));
+  const places = placesMaps(document);
+  if (!maps.length && !places.length) return stilledDocument(document, maps, NO_STILL);
+  const [layers, legends, boundary] = await Promise.all([heldLayers(), districtLegends(maps), listedBoundary(places)]);
+  const timeline = stilledDocument(document, maps, stillOfMaps(layers, legends, KEPT));
+  return placesStilledDocument(timeline, places, stillOfPlaces(layers, boundary, KEPT));
 }
