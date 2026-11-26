@@ -1,3 +1,4 @@
+import type { MapBox } from "@/components/map/basemap";
 import { project, VIEW_BOX } from "@/components/map/projection";
 import type { DistrictShape } from "@/components/map/shapeGeometry";
 
@@ -28,6 +29,12 @@ export function districtFrame(shape: DistrictShape | null): ZoomFrame {
   const height = Math.max(maxY - minY, 1);
   const scale = clamp(Math.min(VIEW_BOX.width / (width * ZOOM_ROOM), VIEW_BOX.height / (height * ZOOM_ROOM)), 1, MAX_ZOOM);
   return { scale: Number(scale.toFixed(2)), x: shift((minX + maxX) / 2, VIEW_BOX.width, scale), y: shift((minY + maxY) / 2, VIEW_BOX.height, scale) };
+}
+
+export function zoomedBox(zoom: ZoomFrame): MapBox {
+  const width = VIEW_BOX.width / zoom.scale;
+  const height = VIEW_BOX.height / zoom.scale;
+  return { x: ((0 - parseFloat(zoom.x)) / 100) * width, y: ((0 - parseFloat(zoom.y)) / 100) * height, width, height };
 }
 
 export function inFrame(longitude: number, latitude: number): { x: number; y: number } {
