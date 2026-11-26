@@ -189,6 +189,11 @@ The rules below refer to them.
   390 and 1440 px and of each chapter with rule 28's drawing checks. Look at the pictures, fix what
   breaks a rule and preview again before `propose_page`, which refuses a page whose latest preview
   fails rule 28. Read the link at 360 and 1440 px, in light and dark, for what the pictures leave out.
+- Beside rule 29, the pictures are read as a designer would, chapter by chapter, against the rubric
+  in `design-critique/1`: the agent writes its notes, fixes what it found and gives them as
+  `critique` with the next preview, and the reviewer of its layout reads the latest. A client that
+  cannot see the pictures asks the server to read them with `read_pictures`. Either way the notes
+  are yours to judge and never fail a page.
 - The report sets the page's pictures, figures, interactives and maps beside Kutch Ajrakh's, chapter
   by chapter: how far the page is from the bar, as guidance. A count never passes or fails a page.
 - After a page is built, one critic reads it in a browser, design and science together, at 360 and
@@ -206,6 +211,7 @@ The rules below refer to them.
 | The curation skill carries this very file | `test_skill_references.py` again, comparing the two files' bytes |
 | The drawing checks of rule 28 | `backend/app/data/design/drawing-checks.js`, the one copy the renderer (`backend/app/renderer`) and Monograph parity (`frontend/e2e/parity/drawingChecks.ts`) both run, tested on fixture pages in `parity-drawing-unit.spec.ts` |
 | `propose_page` refusing after a failed drawing | `test_render_review_db.py` in `backend/tests/db` |
+| The design critique and the server's read, beside rule 29 and never a verdict | `services/page_critique.py` and `services/page_design_read.py`, tested in `test_page_critique.py` and `test_page_design_read.py` in `backend/tests/pages` |
 | The opportunities of rule 29, judged and never failed | `research/page_report_drawable.py` with `services/page_report_held.py`, tested in `test_page_report_drawable.py` in `backend/tests/research` and `test_page_report_held.py` in `backend/tests/pages` |
 
 Read it again whenever a critic's finding becomes a rule, or a rule's title changes (the report quotes it).

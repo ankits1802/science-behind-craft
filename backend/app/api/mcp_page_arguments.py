@@ -8,6 +8,7 @@ from pydantic import Field, model_validator
 from pydantic.json_schema import DEFAULT_REF_TEMPLATE, GenerateJsonSchema, JsonSchemaMode
 
 from app.research.component_proposals import SUBJECT_LINK
+from app.research.design_critique import NOTES_MAX, VERDICT_CHARS, DesignCritique
 from app.research.knowledge_writes import FactProposal
 from app.research.monograph_document import SUBJECT_KINDS
 from app.research.page_drafts import DRAFT_PARTS, SUPPLIED_PER_DRAFT_MAX, DraftAddition, PageLists
@@ -43,6 +44,7 @@ __all__ = [
     "PreviewWork",
     "bundle_parts",
     "bundle_schema",
+    "critique_schema",
     "undelivered",
 ]
 
@@ -55,6 +57,15 @@ BUNDLE = (
 NEEDS_SPEC = (
     "a component is delivered finished: give its spec (the kind's spec data) and the units it places, each "
     "unit's text with the ids of the facts it rests on; only a SUBJECT_LINK carries none"
+)
+CRITIQUE = (
+    "Your critique of the pictures your last preview returned, read by design-critique/1: a verdict and notes "
+    "[{chapter, where, problem, fix}], one for each thing you would fix; recorded with this preview, shown "
+    "to the reviewer with your layout, never a gate"
+)
+READ_PICTURES = (
+    "Only for a client that cannot see the returned pictures: true asks the server to read them by "
+    "design-critique/1 (report.designRead), within a fixed cost; off by default"
 )
 ONE_PAGE = "name the draft by its page's subject or by its draft_id, one of them"
 ONE_WORK = "give a bundle or a draft_id, one of them"
@@ -182,6 +193,19 @@ def _parts(most: int) -> dict[str, Any]:
     return {"type": "array", "items": {"type": "object"}, "maxItems": most}
 
 
+def critique_schema() -> dict[str, Any]:
+    return {
+        "type": ["object", "null"],
+        "description": CRITIQUE,
+        "properties": {
+            "verdict": {"type": "string", "maxLength": VERDICT_CHARS},
+            "notes": {"type": "array", "maxItems": NOTES_MAX, "items": {"type": "object"}},
+        },
+        "required": ["verdict"],
+        "additionalProperties": False,
+    }
+
+
 def bundle_schema() -> dict[str, Any]:
     subject = {
         "type": "object",
@@ -239,6 +263,23 @@ class PageWork(StudioArguments):
 
 class PreviewWork(PageWork):
     read_token: ReadToken = None
+    critique: DesignCritique | None = Field(default=None, description=CRITIQUE)
+    read_pictures: bool = Field(default=False, description=READ_PICTURES)
+
+    @classmethod
+    def model_json_schema(
+        cls,
+        by_alias: bool | None = None,
+        ref_template: str = DEFAULT_REF_TEMPLATE,
+        schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
+        mode: JsonSchemaMode = "validation",
+        *,
+        union_format: Literal["any_of", "primitive_type_array"] = "any_of",
+    ) -> dict[str, Any]:
+        schema = super().model_json_schema(
+            by_alias, ref_template, schema_generator, mode, union_format=union_format
+        )
+        return {**schema, "properties": {**schema["properties"], "critique": critique_schema()}}
 
     def builds_components(self) -> bool:
         return self.bundle is not None and bool(self.bundle.components)

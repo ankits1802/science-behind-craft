@@ -55,6 +55,7 @@ from app.models.curation import (
     CuratedCraft,
 )
 from app.models.datasets import DatasetTable, DatasetUpload, MapLayerProposal
+from app.models.design_reads import DesignReadCache
 from app.models.evaluation import EvalCase, EvalResult, EvalRun
 from app.models.field_photo_reviews import FieldPhotoReview, FieldPhotoScreen
 from app.models.field_voices import (
@@ -198,6 +199,7 @@ __all__ = [
     "DataRequest",
     "DatasetTable",
     "DatasetUpload",
+    "DesignReadCache",
     "DistrictEnvValue",
     "DistrictGeology",
     "EnrichmentJob",

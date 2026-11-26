@@ -45,7 +45,10 @@ worked example of that thinking, never a template. Each step names what to read 
    figures it sets up, each with its role, size and crop.
 9. **Preview and judge it as a reader.** `preview_page`; look at every picture it returns; fix
    each failed rule from the checklist page it hands you; ask of each chapter whether a reader
-   sees what they need beside the words. Preview again.
+   sees what they need beside the words. Then read the pictures as the page's designer, chapter
+   by chapter, against the rubric (`design-critique/1`): write your notes, work through every one
+   of them, and preview again with them as `critique` before you propose. A client that cannot
+   see the pictures asks the server to read them with `read_pictures`.
 10. **Propose, then the next round.** `propose_page` with the draft. A draft holds 10 components
     and 20 facts, so a full page goes in rounds: follow the parts with `get_proposal`, open the
     next draft for the same page with `edit_draft` and go on from step 5.
@@ -57,8 +60,9 @@ carrying that token.
 ## Done
 
 When the latest preview fails no rule, every field its sources cover is dense on the page, each
-mechanism, stage and moment of its story has the figure a reader needs beside its prose, and no
-screen is a wall of text. The report's counts beside Ajrakh's are a mirror, never a target.
+mechanism, stage and moment of its story has the figure a reader needs beside its prose, no
+screen is a wall of text, and your latest critique of its pictures leaves nothing you would still
+fix. The report's counts beside Ajrakh's are a mirror, never a target.
 
 ## What to ask the person
 

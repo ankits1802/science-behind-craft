@@ -18,8 +18,24 @@ from . import artifacts
 from .connection import McpConnection, McpRefused
 from .costs import CAP_CEILING_USD, Budget, Prices, dollars, prices_for, turn_cost
 from .loop import API_FAILED, OFF_LIST, LoopOutcome, Turn, run_loop
-from .opinion import DESIGN_SKILL, OPINION_RESERVE_USD, design_principles, opinion_params, opinion_text
-from .preview import PREVIEW_TOOL, Picture, last_preview, preview_facts, preview_reply, reply_pictures
+from .opinion import (
+    DESIGN_SKILL,
+    OPINION_RESERVE_USD,
+    OpinionAsk,
+    design_principles,
+    opinion_params,
+    opinion_text,
+)
+from .preview import (
+    PREVIEW_TOOL,
+    Picture,
+    design_notes,
+    last_preview,
+    preview_facts,
+    preview_reply,
+    redraw_arguments,
+    reply_pictures,
+)
 from .request import ALLOWED_TOOLS, RunSettings, send_turn, system_prompt, user_turn
 from .summary import Evidence, summary_markdown
 from .transcript import Call, RunFacts, paired_calls, trimmed
@@ -33,7 +49,8 @@ FAILED_RUN = 1
 FAILING_STOPS = (API_FAILED, OFF_LIST)
 REDRAWN = (
     "The connector hands the model the text of each tool result only, so the pictures were drawn again "
-    "after the run from the last preview_page call's arguments: one more private preview of the same draft."
+    "after the run from the last preview_page call's arguments with read_pictures added, so the server read "
+    "them as a client that cannot see them asks: one more private preview of the same draft."
 )
 SEEN = "Through the connector the model received {count} non-text items in tool results ({kinds})."
 UNSEEN = "Through the connector the model received no picture: every tool result reached it as text only."
@@ -108,7 +125,9 @@ def _evidence(client: Any, server: McpConnection, run: Ran, args: argparse.Names
     found = last_preview(calls)
     reply = preview_reply(found.texts) if found is not None else None
     pictures, drawn = _redrawn(server, found, notes) if found is not None else ([], None)
-    opinion, opinion_usd = _second_opinion(client, (args.model, args.cap), pictures, (budget, prices), notes)
+    read = design_notes(drawn) if drawn else ()
+    asked = OpinionAsk(args.model, args.cap, read)
+    opinion, opinion_usd = _second_opinion(client, asked, pictures, (budget, prices), notes)
     artifacts.write_cost(args.out, artifacts.Spend(facts, prices, outcome.turns, budget.spent, opinion_usd))
     artifacts.write_json(args.out / artifacts.PREVIEW_FILE, {"asTheModelGotIt": reply, "drawnAgain": drawn})
     drawn_url = drawn.get("previewUrl") if drawn else None
@@ -127,6 +146,7 @@ def _evidence(client: Any, server: McpConnection, run: Ran, args: argparse.Names
         pictures=artifacts.write_pictures(args.out, pictures),
         opinion=opinion,
         notes=notes,
+        read=read,
     )
 
 
@@ -140,7 +160,7 @@ def _redrawn(
     server: McpConnection, found: Call, notes: list[str]
 ) -> tuple[list[Picture], dict[str, Any] | None]:
     try:
-        result = server.call_tool(PREVIEW_TOOL, found.arguments)
+        result = server.call_tool(PREVIEW_TOOL, redraw_arguments(found.arguments))
     except (McpRefused, httpx.HTTPError) as failed:
         notes.append(f"The last preview could not be drawn again for its pictures: {failed}")
         return [], None
@@ -154,20 +174,21 @@ def _redrawn(
 
 def _second_opinion(
     client: Any,
-    asked: tuple[str, Decimal],
+    asked: OpinionAsk,
     pictures: list[Picture],
     money: tuple[Budget, Prices],
     notes: list[str],
 ) -> tuple[str | None, Decimal]:
-    (model, cap), (budget, prices) = asked, money
+    budget, prices = money
     if not pictures:
         return None, Decimal(0)
-    if cap - budget.spent < OPINION_RESERVE_USD:
+    if asked.cap - budget.spent < OPINION_RESERVE_USD:
         notes.append(f"No second opinion: less than {dollars(OPINION_RESERVE_USD)} of the cap was left.")
         return None, Decimal(0)
     principles = design_principles((REPO_ROOT / DESIGN_SKILL).read_text(encoding="utf-8"))
+    params = opinion_params(asked.model, principles, pictures, read=asked.read)
     try:
-        with client.messages.stream(**opinion_params(model, principles, pictures)) as stream:
+        with client.messages.stream(**params) as stream:
             message = stream.get_final_message().model_dump(mode="json")
     except anthropic.APIError as failed:
         notes.append(f"No second opinion: the API failed ({type(failed).__name__}).")

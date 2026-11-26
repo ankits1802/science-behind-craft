@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from app.providers import picture_vision
+from app.providers import vision_calls
 from app.providers.base import Adapter, ChatRequest, ChatResult, ProviderError
 from app.providers.catalogue import AiTask
 from app.providers.picture_vision import FAILED, provider_content, screen_with_vision
@@ -74,10 +74,10 @@ def screening(monkeypatch: pytest.MonkeyPatch, failure: BaseException | None) ->
     async def settle(_session: Any, event_id: Any, **settled: Any) -> None:
         recorded.settled.append(settled)
 
-    monkeypatch.setattr(picture_vision, "load_routes", routes)
-    monkeypatch.setattr(picture_vision, "build_adapter", lambda **_: CutAdapter(failure))
-    monkeypatch.setattr(picture_vision, "sessionmaker", recorded.sessions)
-    monkeypatch.setattr(picture_vision, "settle", settle)
+    monkeypatch.setattr(vision_calls, "load_routes", routes)
+    monkeypatch.setattr(vision_calls, "build_adapter", lambda **_: CutAdapter(failure))
+    monkeypatch.setattr(vision_calls, "sessionmaker", recorded.sessions)
+    monkeypatch.setattr(vision_calls, "settle", settle)
     return recorded
 
 

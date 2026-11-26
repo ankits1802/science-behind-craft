@@ -30,6 +30,7 @@ class PagePreview(Base):
     createdAt: Mapped[datetime] = created_at()
     drawing: Mapped[str | None] = mapped_column(String(PREVIEW_DRAWING_CHARS), nullable=True)
     drawingProblems: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB, nullable=True)
+    critique: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
 
     __table_args__ = (
         CheckConstraint(one_of("subjectKind", PREVIEW_SUBJECT_KINDS), name="subjectKind"),

@@ -18,6 +18,7 @@ from app.research.review_queue import LAYOUTS, LayoutItem, QueueDecision
 from . import audit
 from .knowledge_view import craft_ref
 from .open_work_subjects import WorkSubject, subject_by_key
+from .page_critique import layout_critique
 from .page_layout_proposals import APPROVED, PENDING, REJECTED, current_version, proposal_subject
 from .page_layouts import layout_of, store_layout, subject_path
 from .review_queue_delivery import placed_deliveries
@@ -160,6 +161,7 @@ async def _review(session: AsyncSession, row: LayoutProposal, subject: WorkSubje
             [entry.ref for entry in proposed],
             None if subject.kind == CATEGORY_SUBJECT else subject.slug,
         ),
+        critique=layout_critique(row),
     )
 
 

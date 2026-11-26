@@ -572,7 +572,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `get_proposal` | work | contribute | read-only | `ProposalTicket` (`knowledge-writes.md`) |
 | `propose_source` | proposing | contribute | writes | `SourceProposalReply {schemaVersion, outcome, claimId, quotesAdded, held, gates, message}` |
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` and, when the call adds components, `guide` (`HandedGuide`, Guide pages below) |
-| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `nextStep` (the playbook's step 9: fix each failed rule, design the figure a chapter's story still needs, preview again, then propose; decision 0230), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
+| `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `nextStep` (the playbook's step 9: fix each failed rule, read the pictures against the designer's rubric and preview again with the notes as `critique`, then propose, with the server's notes when `read_pictures` asked for them; decisions 0230 and 0237), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
 | `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind (null when none was named), composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices, guide}` (`guide`: the storyboard's pages), each component in the snake_case `edit_draft`'s add takes (decision 0198); with no kind, every kind at once, `missing` and `leftOut` each prefixed with its kind (decision 0229) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
@@ -674,7 +674,7 @@ and reading sources and Never:
 | The contributor skill | `kalavigyan://skills/kalavigyan-contributor/SKILL.md` | `text/markdown` |
 | The datasets skill | `kalavigyan://skills/kalavigyan-datasets/SKILL.md` | `text/markdown` |
 | The interactives skill and its two references (`skill_library.SKILL_FILES`) | `kalavigyan://skills/kalavigyan-interactives/SKILL.md`, `.../references/flagships.md` and `.../references/storyboard.md` | `text/markdown` |
-| The eight references | `kalavigyan://skills/references/<name>.md` (`playbook`, `cookbook`, `page-checklist`, `sources`, `quotes`, `fields`, `components`, `datasets`) | `text/markdown` |
+| The nine references | `kalavigyan://skills/references/<name>.md` (`playbook`, `cookbook`, `page-checklist`, `design-critique`, `sources`, `quotes`, `fields`, `components`, `datasets`) | `text/markdown` |
 | The design skill and the whole design system (decision 0230), each the same text as `.claude/skills/kalavigyan-design` | `kalavigyan://skills/kalavigyan-design/SKILL.md` and `.../references/SYSTEM.md` | `text/markdown` |
 | The five contracts a contributor's client follows (round 7), each the same text as `docs/contracts/<name>.md` | `kalavigyan://contracts/<name>.md` (`knowledge-writes`, `open-work`, `component-specs-general`, `image-contributions`, `mcp-ask-and-upload`) | `text/markdown` |
 | The design tokens | `kalavigyan://design/tokens.json` | `application/json` |
@@ -687,11 +687,13 @@ and reading sources and Never:
   one self-contained page, `default-src 'none'` and its one script allowed by hash, the four themes'
   colours and the status colours inlined from `tokens.json`, every text set as text, `https` links
   opened through `ui/open-link`; it draws a `preview_page` result: the private link, the rules failed
-  first with their evidence, what the craft's facts could show, coverage by field, figures, sources
-  by grade, pictures by licence, one quiet line of the page's counts beside Kutch Ajrakh's and each
-  part's outcome. Each card starts as one line (the page's name, its counts passed, failed and yours
-  to judge, Open the private preview and Show the full preview) and minimises back to it, Escape
-  included, telling the host its height at every change (decision 0229).
+  first with their evidence, what the craft's facts could show, the agent's design critique (or the
+  ask for one) and the server's read when asked, coverage by field, figures, sources by grade,
+  pictures by licence, one quiet line of the page's counts beside Kutch Ajrakh's and each part's
+  outcome. Each card starts as one line (the page's name, its counts passed, failed and yours to
+  judge, the count of design notes to judge when there is a critique or a read, Open the private
+  preview and Show the full preview) and minimises back to it, Escape included, telling the host
+  its height at every change (decisions 0229 and 0237).
 - `resources/templates/list` gives `kalavigyan://components/{kind}.schema.json`, and every kind a
   contributor may deliver is also listed as its own resource (`api/mcp_component_schemas.py`): the
   JSON schema of the kind's spec, the model the server checks a delivered spec with. It gives
@@ -949,6 +951,24 @@ contributor writes and, where the registry has a composer for it, `compose_compo
 as a shortcut. A sentence is a placed `p` unit with facts outside a component; the lede
 is the sentences of the opening; a picture is a `picture_plate`.
 
+The report also carries `critique?` and `designRead?` (decision 0237), neither of which changes a
+verdict, a count or the message. `critique` is `DesignCritique {verdict (at most 400 characters),
+notes[{chapter, where, problem, fix}] (at most 24)}` (`research/design_critique.py`): the agent's
+own notes on the pictures of its previous preview, read against the designer's rubric
+(`design-critique/1`), given as `preview_page`'s `critique` and kept on the new preview
+(`PagePreview.critique`, `services/page_critique.critiqued`). `propose_page` copies the latest
+live critique for the page to the layout part it proposes (`LayoutProposal.critique`,
+`attach_critique`), so the reviewer of the layout reads it. `designRead` is `DesignRead {state READ |
+SKIPPED, verdict?, notes[], chapters[], reason?, provider?, model?, costUsd, capUsd, cached}`
+(`research/design_read.py`): the server's own read of the pictures, only when `preview_page` is given
+`read_pictures: true`, for a client that receives tool results as text. It runs on the first judge
+route whose model reads pictures (`providers/design_vision.py` over `providers/vision_calls.py`),
+by the same rubric with the design skill's sections 1 to 3 and Kutch Ajrakh's chapters as set; it is
+SKIPPED with its reason when the drawing failed or could not be made, when its estimate passes the
+cap of $0.50 a preview (`DESIGN_READ_CAP_USD`), when the budget refuses it or the call fails, and a
+read of the same pictures (`pictures_key`, a SHA-256 over every picture's name and bytes) is taken
+from `DesignReadCache` for 30 days at no cost.
+
 | Rule | Checked |
 |---|---|
 | 1 | no page or component title ends with a question mark; the lede holds at most 3 sentences |
@@ -1032,8 +1052,8 @@ tokens resource equal to the design skill's `tokens.json`. After editing the ski
 served place; the tokens are regenerated into both places by `tools/design_tokens.py`.
 
 **One source per rule (round 7).** The rules every contributor follows, over MCP or in the
-repository, are eight references in `data/contributor/references/` (the page playbook and the
-component cookbook since decision 0230): the page checklist (its 27
+repository, are nine references in `data/contributor/references/` (the page playbook and the
+component cookbook since decision 0230, the designer's critique since decision 0237): the page checklist (its 27
 rules), what counts as a source (grades and licences), quotes and locators (with one fact per
 sentence), the fields, authoring a component, and datasets. The contributor skill, the curation
 skill (`.claude/skills/kalavigyan-craft-pages`) and the datasets skill
@@ -1089,6 +1109,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Stewardship | `backend/tests/db/test_stewardship_db.py` |
 | Component proposals and their delivery | `backend/tests/research/test_component_proposals.py`, `backend/tests/db/test_component_proposals_db.py` and `test_delivered_components_db.py` |
 | Bundles, previews and the checklist report | `backend/tests/research/test_page_proposals.py`, `test_page_report.py`, `backend/tests/db/test_page_bundles_db.py`, `backend/tests/pages/test_page_preview_links.py` and `backend/tests/mcp/test_page_preview_view.py` |
+| The agent's critique and the server's read (decision 0237) | `backend/tests/pages/test_page_critique.py`, `test_page_design_read.py`, `backend/tests/research/test_design_read.py`, `backend/tests/images/test_design_vision.py`, `backend/tests/mcp/test_mcp_preview_critique.py`, `backend/tests/db/test_design_feedback_db.py`, `frontend/e2e/page-preview-card-unit.spec.ts` and `frontend/e2e/design-critique-unit.spec.ts` |
 | The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing; rule 29's opportunities and the one-call composition (`test_page_report_drawable.py`, `backend/tests/pages/test_page_report_held.py`, `backend/tests/mcp/test_compose_tool.py`) and the card (`frontend/e2e/page-preview-card-unit.spec.ts`) | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
 | Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |

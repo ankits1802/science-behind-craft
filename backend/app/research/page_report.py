@@ -11,6 +11,8 @@ from app.models.enums import DISCIPLINES
 
 from .base import ContractModel
 from .coverage_chapters import field_chapter
+from .design_critique import DesignCritique
+from .design_read import DesignRead
 from .page_counts import BarCounts, bar_counts
 from .page_render import DrawingReport
 from .page_report_drawable import Opportunity, opportunities
@@ -117,6 +119,8 @@ class PageReport(ContractModel):
     drawing: DrawingReport | None = None
     bar: BarCounts | None = None
     opportunities: list[Opportunity] = Field(default_factory=list)
+    critique: DesignCritique | None = None
+    design_read: DesignRead | None = None
 
 
 def page_report(given: ReportInput, titles: Mapping[int, str]) -> PageReport:

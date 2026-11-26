@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import base64
 from collections.abc import Sequence
+from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
+
+from app.research.design_read_prompt import skill_sections
 
 from .preview import Picture
 from .request import EFFORT
@@ -13,6 +16,9 @@ __all__ = [
     "DESIGN_SKILL",
     "OPINION_MAX_TOKENS",
     "OPINION_RESERVE_USD",
+    "READ_HEAD",
+    "UNREAD_LINE",
+    "OpinionAsk",
     "design_principles",
     "opinion_params",
     "opinion_text",
@@ -32,23 +38,34 @@ OPINION_ASK = (
     "whether the page meets it, misses it or cannot be judged from the pictures, with the reason you see. "
     "End with a rating out of 10 and the three changes that would help the page most."
 )
+READ_HEAD = (
+    "The preview's own read of these pictures, asked for with read_pictures, gave these notes. Say for each "
+    "whether the pictures bear it out, then add what it missed:"
+)
+UNREAD_LINE = "The preview's own read of these pictures gave no note."
+
+
+@dataclass(frozen=True)
+class OpinionAsk:
+    model: str
+    cap: Decimal
+    read: tuple[str, ...] = ()
 
 
 def design_principles(skill_text: str) -> str:
-    start = skill_text.find(PRINCIPLES_START)
-    end = skill_text.find(PRINCIPLES_END, start + 1) if start >= 0 else -1
-    if start < 0 or end < 0:
-        raise ValueError(f"{DESIGN_SKILL} has no '{PRINCIPLES_START}' section followed by '{PRINCIPLES_END}'")
-    return skill_text[start:end].strip()
+    return skill_sections(skill_text, PRINCIPLES_START, PRINCIPLES_END)
 
 
-def opinion_params(model: str, principles: str, pictures: Sequence[Picture]) -> dict[str, Any]:
+def opinion_params(
+    model: str, principles: str, pictures: Sequence[Picture], *, read: Sequence[str] = ()
+) -> dict[str, Any]:
     if not pictures:
         raise ValueError("a second opinion needs at least one picture of the page")
     content: list[dict[str, Any]] = [{"type": "text", "text": principles}]
     for picture in pictures:
         content.append({"type": "text", "text": picture.caption or picture.name})
         content.append({"type": "image", "source": _image_source(picture)})
+    content.append({"type": "text", "text": _read_text(read)})
     content.append({"type": "text", "text": OPINION_ASK})
     return {
         "model": model,
@@ -63,6 +80,12 @@ def opinion_params(model: str, principles: str, pictures: Sequence[Picture]) -> 
 def opinion_text(message: dict[str, Any]) -> str:
     texts = [block.get("text", "") for block in message.get("content") or [] if block.get("type") == "text"]
     return "\n\n".join(text.strip() for text in texts if text.strip())
+
+
+def _read_text(read: Sequence[str]) -> str:
+    if not read:
+        return UNREAD_LINE
+    return "\n".join([READ_HEAD, *(f"- {line}" for line in read)])
 
 
 def _image_source(picture: Picture) -> dict[str, str]:

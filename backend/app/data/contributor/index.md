@@ -72,6 +72,7 @@ Written by `tools/mcp_index_build.py` from the registry; never edit it by hand.
 - `kalavigyan://skills/references/playbook.md`: The page playbook, a KalaVigyan reference.
 - `kalavigyan://skills/references/cookbook.md`: The component cookbook, a KalaVigyan reference.
 - `kalavigyan://skills/references/page-checklist.md`: The page checklist, a KalaVigyan reference.
+- `kalavigyan://skills/references/design-critique.md`: The designer's critique, a KalaVigyan reference.
 - `kalavigyan://skills/references/sources.md`: What counts as a source, a KalaVigyan reference.
 - `kalavigyan://skills/references/quotes.md`: Quotes and locators, a KalaVigyan reference.
 - `kalavigyan://skills/references/fields.md`: The fields, a KalaVigyan reference.

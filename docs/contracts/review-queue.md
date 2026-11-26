@@ -164,6 +164,10 @@ Each item has `id`, `kind`, `origin`, `submittedAt`, `craft {slug, name, path}` 
   sources}]`, the facts the units rest on with their sources and verbatim quotes.
 - A `layout` item's `placed [{label, title, kind, delivery}]` (round 7): the waiting components of
   the same proposer that the layout places, as a page bundle delivers them, each with its `delivery`.
+- A `layout` item's `critique` (decision 0237): `{verdict, notes [{chapter, where, problem, fix}]}`,
+  the proposer's AI's own design critique of its last preview's pictures, copied when `propose_page`
+  proposed the layout, else `null`; the card shows it under the changes as the agent's judgement,
+  never a check (`components/review/AgentCritique.tsx`).
 - `layout`: `subject {kind, slug}`, `subjectName`, `pageUrl`, `baseVersion`, `currentVersion` (the
   page's layout now, 0 for none), `stale` (the two differ, so approval is refused), `note`,
   `entryCount` and `changes [{ref, change (ADDED, CHANGED, REMOVED), before, after}]`: the proposal
