@@ -13,6 +13,7 @@ and the held images of decision 0091; the legal floor and the rest of both stand
 |---|---|
 | What it amends | [0084 Field voices v2: both portals, full transcripts and craft images, by cursor with tombstones](0084-field-voices-v2.md): point 5 of its amendment of 2026-11-18; the legal floor stands |
 | What it amends | [0091 Field voices v2 in KalaVigyan: storage, citation, the craft page and the reading view](0091-field-voices-kalavigyan-side.md): its held images, each field photograph filed on an artisan now reviewed by a person |
+| A field photograph its craft's page publishes, never one filed on an artisan, placed on the page by its label | [decision 0233](0233-room-for-a-whole-page-its-reading-tools-and-the-site-s-own-gaps.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

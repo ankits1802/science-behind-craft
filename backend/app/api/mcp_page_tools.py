@@ -24,7 +24,14 @@ from app.services.page_renders import page_renderer
 from app.services.page_revalidation import refresh_pages
 from app.services.trust_tiers import publishes_at_once
 
-from .mcp_guide_steps import HandedGuide, failed_rules_guide, kinds_guide, refuse_unread
+from .mcp_guide_steps import (
+    HandedGuide,
+    design_sheets,
+    failed_rules_guide,
+    handed,
+    kinds_guide,
+    refuse_unread,
+)
 from .mcp_page_arguments import ONE_PAGE, ONE_WORK, EditDraft, PageWork, PreviewWork, bundle_parts
 from .mcp_page_texts import (
     ADD,
@@ -113,8 +120,18 @@ async def _edit_draft(context: ToolContext, arguments: EditDraft) -> DraftReply:
     step = SUBMITTED if row.result else (PREVIEW if changed else ADD)
     view = page_drafts.draft_view(row, message=f"{opened}{_held(row)}", next_step=step, full=not changed)
     return DraftReply.model_validate(
-        {**view.model_dump(), "notices": arguments.notices(), "guide": kinds_guide(kinds)}
+        {
+            **view.model_dump(),
+            "notices": arguments.notices(),
+            "guide": _draft_guide(row, kinds, opened=bool(opened)),
+        }
     )
+
+
+def _draft_guide(row: PageDraft, kinds: list[str], *, opened: bool) -> HandedGuide | None:
+    if kinds or not opened or page_drafts.held_parts(row).components:
+        return kinds_guide(kinds)
+    return handed(design_sheets())
 
 
 async def _work(

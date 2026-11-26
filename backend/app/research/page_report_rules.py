@@ -6,6 +6,8 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
+from app.models.component_kinds import LINK_TOOL_KINDS
+
 from .component_specs_general import is_declared
 from .coverage_chapters import field_chapter
 from .elements import ELEMENTS
@@ -37,14 +39,12 @@ __all__ = [
 PASS, FAIL, JUDGE = VERDICTS = ("PASS", "FAIL", "JUDGE")
 OPENING = "opening"
 PICTURE_KIND = "picture_plate"
-SENTENCE_TAG = "p"
-HEADING_TAG = "h3"
+SENTENCE_TAG, HEADING_TAG = "p", "h3"
 LEDE_MAX = 3
 DENSE_SENTENCES = 3
 MECHANISM_MIN = 2
 EVIDENCE_MAX = 12
-CATEGORY = "category"
-CHART_KIND = "chart"
+CATEGORY, CHART_KIND = "category", "chart"
 REPEAT_MIN_CHARS = 40
 PROGRESS = re.compile(
     r"\bwriting (the )?section\b"
@@ -116,7 +116,7 @@ class ReadPage:
             for ref in placed
             if (unit := content.units.get(ref)) is not None and unit.tag == SENTENCE_TAG and unit.claim_ids
         )
-        figures = tuple(c for c in content.components if c.kind != PICTURE_KIND)
+        figures = tuple(c for c in content.components if c.kind not in (PICTURE_KIND, *LINK_TOOL_KINDS))
         pictures = tuple(c for c in content.components if c.kind == PICTURE_KIND)
         return cls(document, sentences, within, figures, pictures)
 

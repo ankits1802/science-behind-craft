@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from app.core.errors import InvalidInput
-from app.research.chapter_keys import CHAPTER_KEYS
+from app.research.chapter_keys import CHAPTER_KEYS, kind_chapter
 from app.research.coverage import FieldCoverage
 from app.research.coverage_chapters import field_chapter
 from app.research.monograph_document import MonographDocument
@@ -33,9 +33,10 @@ from .knowledge_view import ClaimView
 from .monograph_generated_colours import place_colour_key
 from .monograph_generated_drawings import Drawings, spec_unit_keys
 from .monograph_generated_grids import StatedValue, fact_grid
-from .monograph_generated_kin import KinRead, place_kin
+from .monograph_generated_kin import KinRead
 from .monograph_generated_parts import RegisteredComponent, StoredSection, component_binding_of
 from .monograph_generated_pictures import PICTURE_KIND, PlateSource, plate_spec
+from .monograph_generated_reading import ReadingRead, place_page_tools
 from .monograph_generated_structure import CHAPTER_FIELDS, BlockSpecs, PlacedStructure, placed_structure
 from .monograph_generated_units import (
     LEDE_FIELD,
@@ -81,6 +82,7 @@ class GeneratedParts:
     ground: CraftGround | None = None
     unwritten: Mapping[str, tuple[ClaimView, ...]] = field(default_factory=dict)
     kin: KinRead = field(default_factory=KinRead)
+    reading: ReadingRead = field(default_factory=ReadingRead)
 
 
 @dataclass
@@ -220,7 +222,7 @@ def _components(parts: GeneratedParts, page: _Page, drawings: Drawings) -> dict[
     for component in parts.components:
         if component.label in page.components or not _drawn(parts, page, drawings, component):
             continue
-        chapter = field_chapter(component.field)
+        chapter = kind_chapter(component.kind, field_chapter(component.field))
         page.components[component.label] = ComponentEntry(
             label=component.label,
             chapter=chapter,
@@ -233,7 +235,7 @@ def _components(parts: GeneratedParts, page: _Page, drawings: Drawings) -> dict[
             subjects=list(component.subjects),
         )
         by_chapter.setdefault(chapter, []).append(component.label)
-    place_kin(parts.kin, parts.subject_slug, page, by_chapter)
+    place_page_tools((parts.kin, parts.reading), parts.subject_slug, page, by_chapter)
     return by_chapter
 
 
@@ -341,8 +343,7 @@ def _headed(record: SubjectRecord, page: _Page, arranged: Sequence[LayoutEntry])
 
 
 def _chapter_head(chapter: str, record: SubjectRecord, page: _Page) -> list[LayoutEntry]:
-    heading = chapter_heading(chapter, record)
-    if heading is None:
+    if (heading := chapter_heading(chapter, record)) is None:
         return []
     ref, unit = heading
     page.units[ref] = unit
@@ -369,8 +370,7 @@ def _cite(
             if entry.ref in page.blocks:
                 page.specs[entry.ref] = specs.spec(page.blocks[entry.ref], book)
             continue
-        draft = page.drafts.get(entry.ref)
-        if draft is None:
+        if (draft := page.drafts.get(entry.ref)) is None:
             page.units[entry.ref] = page.units[entry.ref].model_copy(update={"chapter": entry.chapter})
             continue
         unit, quotes = cited_unit(draft, parts.visible, book, parts.sources)

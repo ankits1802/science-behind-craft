@@ -19,6 +19,7 @@ the rest of decision 0101 (the gates, the review switch, trust tiers) stands.
 | A draft's withdrawals, its borrowed placements refused, and a trusted account's draft held for one confirmation | [decision 0193](0193-components-withdrawn-replaced-or-borrowed-and-pages-held-for-one-confirmation.md) |
 | A preview drawn and checked as a reader sees it, rule 28, and a proposal refused after a failed drawing | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
 | The `curate_page` prompt carrying the checklist's opening and the bar as guide pages, not every reference whole, and a draft's first components waiting for the design pages | [decision 0203](0203-the-guide-handed-over-page-by-page-at-the-step-it-serves.md) |
+| A draft and its bundle hold a whole page, an add keeps the old size, and a page's parts count against one whole page's hour (amends this record's limits) | [decision 0233](0233-room-for-a-whole-page-its-reading-tools-and-the-site-s-own-gaps.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -28,6 +28,12 @@ __all__ = [
 ]
 
 LANG_PATTERN = r"^[a-z]{2,3}$"
+PAGE_LINK_PATTERN = r"^/(crafts|categories)/[A-Za-z0-9-]+(/[a-z]{2,3})?$"
+LANGUAGE_OPTIONS_MAX = 13
+LINKED_OR_SHOWN = (
+    "a language switch either links every option to the page in its language, with no English unit or "
+    "panels, or shows the English unit and one panel for each language after the first"
+)
 
 UnitRef = Annotated[str, Field(pattern=UNIT_REF_PATTERN)]
 ComponentLabel = Annotated[str, Field(pattern=COMPONENT_LABEL_PATTERN)]
@@ -168,16 +174,24 @@ class LanguageOption(ContractModel):
     name: Words
     direction: Direction
     status: Words
+    href: Annotated[str, Field(pattern=PAGE_LINK_PATTERN)] | None = None
 
 
 class LanguageSwitchSpec(ContractModel):
     label: Words
-    options: list[LanguageOption] = Field(min_length=2, max_length=6)
-    english: UnitRef
-    panels: list[LanguagePanel]
+    options: list[LanguageOption] = Field(min_length=2, max_length=LANGUAGE_OPTIONS_MAX)
+    english: UnitRef | None = None
+    panels: list[LanguagePanel] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def _a_panel_for_each_other_language(self) -> Self:
+    def _linked_or_a_panel_for_each_other_language(self) -> Self:
+        linked = [option.href is not None for option in self.options]
+        if all(linked):
+            if self.english is not None or self.panels:
+                raise ValueError(LINKED_OR_SHOWN)
+            return self
+        if any(linked) or self.english is None:
+            raise ValueError(LINKED_OR_SHOWN)
         others = [option.lang for option in self.options[1:]]
         if [panel.lang for panel in self.panels] != others:
             raise ValueError("each language after the first has one panel, in the options' order")

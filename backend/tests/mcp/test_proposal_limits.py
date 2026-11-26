@@ -6,14 +6,21 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from app.api import mcp_dataset_tools, mcp_page_tools, mcp_picture_tools
+from app.api import mcp_dataset_tools, mcp_page_tools, mcp_picture_tools, page_proposal_deps
 from app.api.mcp_tools import ToolContext, answer
-from app.api.proposal_limits import refuse_tool_when_spent, wait_words
+from app.api.proposal_limits import (
+    LIMIT_NOUNS,
+    PAGE_PART_LIMITS,
+    refuse_page_part_when_spent,
+    refuse_tool_when_spent,
+    wait_words,
+)
 from app.api.routes import knowledge_writes
 from app.core import allowances
 from app.core.allowances import ALLOWANCE_UNREAD, AllowanceUnread, Ask, Bucket, Counted, Taken
 from app.core.db import get_session
 from app.core.deps import get_current_user
+from app.core.errors import InvalidInput
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE, READ_SCOPE
 from app.core.rate_limit import (
     COMPONENT_PROPOSALS,
@@ -27,7 +34,7 @@ from app.core.rate_limit import (
 )
 from app.main import create_app
 from app.models import User
-from app.research.page_proposals import PageBundle
+from app.research.page_proposals import COMPONENTS_MAX, FACTS_MAX, STRUCTURE_MAX, WITHDRAWALS_MAX, PageBundle
 from app.services import page_proposals, upload_links
 from app.services.craft_resolver import CraftIndexStore
 from app.services.open_work_subjects import WorkSubject
@@ -337,3 +344,34 @@ def test_the_site_s_picture_and_component_routes_share_the_limits(
     student = person("STUDENT", 33)
     assert client(student).post(path, json={}).status_code == 403
     assert not allowance_counter.asked(str(student.id), kind)
+
+
+@pytest.mark.parametrize("kind", [FACT_PROPOSALS, STRUCTURE_PROPOSALS, COMPONENT_PROPOSALS])
+async def test_a_page_s_parts_count_against_an_hour_sized_for_one_whole_page(
+    kind: str, allowance_counter: MemoryCounter
+) -> None:
+    researcher = person("RESEARCHER", 37)
+    await spend(kind, researcher)
+    with pytest.raises(InvalidInput, match=f"{LIMITS[kind]} {LIMIT_NOUNS[kind]}"):
+        await refuse_tool_when_spent(kind, researcher)
+    await refuse_page_part_when_spent(kind, researcher)
+    allowance_counter.fill(str(researcher.id), kind, PAGE_PART_LIMITS[kind])
+    with pytest.raises(InvalidInput, match=f"{PAGE_PART_LIMITS[kind]} {LIMIT_NOUNS[kind]}"):
+        await refuse_page_part_when_spent(kind, researcher)
+
+
+def test_the_page_allowances_hold_one_whole_draft_of_each_kind() -> None:
+    assert PAGE_PART_LIMITS == {
+        FACT_PROPOSALS: FACTS_MAX,
+        STRUCTURE_PROPOSALS: STRUCTURE_MAX,
+        COMPONENT_PROPOSALS: COMPONENTS_MAX + WITHDRAWALS_MAX,
+    }
+    assert all(PAGE_PART_LIMITS[kind] > LIMITS[kind] for kind in PAGE_PART_LIMITS)
+
+
+async def test_a_bundle_of_one_part_keeps_its_kind_s_own_hour_and_a_whole_page_takes_the_page_s() -> None:
+    researcher = person("RESEARCHER", 38)
+    await spend(COMPONENT_PROPOSALS, researcher)
+    with pytest.raises(InvalidInput, match="10 component proposals"):
+        await page_proposal_deps._spend(researcher, COMPONENT_PROPOSALS, whole=False)
+    await page_proposal_deps._spend(researcher, COMPONENT_PROPOSALS, whole=True)

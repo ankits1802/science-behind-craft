@@ -20,6 +20,7 @@ components of round 7 (`component-specs-general.md`) and decision 0111 (the MCP 
 | The kind fixtures served from the backend with each drawing's themes | [decision 0177](0177-differences-named-and-the-monograph-shell-measured.md) |
 | `timeline_map` delivered in its declared form, a map the site draws from places it resolves (amends this record) | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md) |
 | `diagram` takes a declared form composed from the figure kit, and the kind fixtures gain a composed diagram (amends this record) | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
+| `reading_level` delivered, and Ask next and the page's languages built for every generated page (amends this record's page tools) | [decision 0233](0233-room-for-a-whole-page-its-reading-tools-and-the-site-s-own-gaps.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

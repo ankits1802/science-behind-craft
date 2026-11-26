@@ -14,10 +14,11 @@ from app.services.craft_resolver import CraftIndexStore
 from app.services.page_proposals import PageTools, propose_page
 from app.services.written_vectors import embed_structure_claims
 
+from .mcp_page_arguments import bundle_parts
 from .mcp_picture_tools import start_picture
 from .mcp_tool_base import ToolContext
 from .proposal_deps import gate_adapters
-from .proposal_limits import refuse_tool_when_spent
+from .proposal_limits import refuse_page_part_when_spent, refuse_tool_when_spent
 
 __all__ = ["page_proposed"]
 
@@ -33,7 +34,7 @@ async def page_proposed(
             gates=gate_adapters(user, fetcher),
             fetcher=fetcher,
             start_picture=partial(start_picture, context),
-            spend=partial(_spend, user),
+            spend=partial(_spend, user, whole=bundle_parts(bundle) > 1),
             origin=origin,
             site=site,
         )
@@ -47,5 +48,8 @@ def _written_structures(parts: list[PartReport]) -> list[uuid.UUID]:
     return [uuid.UUID(part.id) for part in kept if part.id]
 
 
-async def _spend(user: User, kind: str) -> None:
+async def _spend(user: User, kind: str, *, whole: bool) -> None:
+    if whole:
+        await refuse_page_part_when_spent(kind, user)
+        return
     await refuse_tool_when_spent(kind, user)

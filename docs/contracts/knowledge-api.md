@@ -29,8 +29,9 @@ flowchart LR
   class E accent
 ```
 
-The server offers 24 tools in six groups to every connection (decision 0111; decision 0114 added
-`propose_dataset`, decision 0198 `compose_component`, decision 0222 `check_pictures`), and four more in a seventh group, `admin`,
+The server offers 26 tools in six groups to every connection (decision 0111; decision 0114 added
+`propose_dataset`, decision 0198 `compose_component`, decision 0222 `check_pictures`, decision 0233
+`report_site_gap` and `list_field_photos`), and four more in a seventh group, `admin`,
 listed only to a token holding the `review` scope (decision 0170); each tool names its group in `tools/list` as
 `_meta["kalavigyan/group"]`, so a screen can group them without a list of names:
 
@@ -39,10 +40,10 @@ listed only to a token holding the `review` scope (decision 0170); each tool nam
 | reading | `find_crafts`, `get_page`, `get_facts`, `list_components` | read (anyone) | this file, `coverage.md`, `page-layout.md` |
 | reading | `ask` | ask | `mcp-ask-and-upload.md` |
 | sources | `search_sources` (contribute; a pictures-only search is read), `read_source` (contribute), `lookup` (read), `supply_source` (contribute) | as listed | this file, Source tools; `knowledge-writes.md` for `supply_source` |
-| work | `list_open_work` (read; its review queues need review), `my_work`, `reserve_tasks`, `steward_craft`, `get_proposal` | contribute | `open-work.md`, `knowledge-writes.md` |
+| work | `list_open_work` (read; its review queues need review), `my_work`, `reserve_tasks`, `steward_craft`, `get_proposal`, `report_site_gap` | contribute | `open-work.md`, `knowledge-writes.md`; Site gaps below for `report_site_gap` |
 | proposing | `propose_facts`, `propose_structure`, `propose_source`, `propose_dataset` | contribute | `knowledge-writes.md`, decision 0108; decision 0114 for `propose_dataset`, the datasets reference for its `layer` and `review-queue.md` for `LAYERS` |
 | pages | `edit_draft`, `preview_page`, `propose_page`, `compose_component` | contribute | `open-work.md`; `component-specs-science.md` for what `compose_component` builds |
-| pictures | `give_pictures`, `check_pictures` | contribute | `mcp-ask-and-upload.md`; `open-work.md`, Picture checks, for `check_pictures` |
+| pictures | `give_pictures`, `check_pictures` (contribute), `list_field_photos` (read) | as listed | `mcp-ask-and-upload.md`; `open-work.md`, Picture checks, for `check_pictures`; `page-layout.md`, Field photographs, for `list_field_photos` |
 | admin | `review_queue`, `stage_reviews`, `refresh_pages`, `admin_reports` | review (Admin and Master Admin, `mcp-oauth.md`) | `review-queue.md`, Staged over MCP and Published content (removing and editing what is published, guided by the resource `kalavigyan://admin/published-content.md`); `nightly-upkeep.md`, Refresh pages now; Admin reports below |
 
 ## The endpoint
@@ -318,8 +319,23 @@ the weekly retrieval-eval, `RELEASE_CHECK` from each release's retrieval check: 
 release commit, settled spend, cap, fresh or not, floors held and the mean of each measure), then
 each floor of `app/data/eval/floors.json` with the value the latest run measuring it found
 (`measuredBy`), `measured: null` where none has (`services/eval_run_store`, the `EvalRun` table,
-decision 0176); a run's full report stays its workflow's artifact. The code is
-`api/mcp_report_tools.py`, `mcp_report_reads.py` and `mcp_report_pages.py`.
+decision 0176); a run's full report stays its workflow's artifact; `site_gaps`: what contributors'
+agents reported the site could not do in the last `days`, newest first (Site gaps below). The code
+is `api/mcp_report_tools.py`, `mcp_report_reads.py` and `mcp_report_pages.py`.
+
+## Site gaps (decision 0233)
+
+`report_site_gap {subject? {kind, slug}, kind, wanted, tried?, evidence[]}` (contribute, Researcher
+and above, 20 an hour as `site gaps`) files what KalaVigyan could not do for a page an agent was
+building: `kind` one of `KIND` (no component kind draws it), `TOOL` (no tool makes, places or reads
+it), `LIMIT` (a bound or allowance stops it), `DRAWING` (the site draws a part wrongly or not at all)
+and `OTHER`; `wanted` 10 to 600 characters, `tried` up to 600, and one to five pieces of `evidence`
+of up to 600 each. It writes one `AuditLog` row (`site_gap.reported`, target `PageSubject`
+`<kind>:<slug>`, the fields and the client's name as `detail`; `services/site_gaps.record_gap`) and
+answers `FiledGap {filed, kind, message, nextStep}`; nothing on the page changes. Admins and the lead
+read the rows with `admin_reports`' `site_gaps` (`services/site_gaps.recent_gaps`, at most 500,
+`SiteGapRow {filedAt, kind, subject, wanted, tried, evidence, client}`, no account named). The code
+is `api/mcp_gap_tools.py` and `research/site_gaps.py`.
 
 ## Coverage
 
@@ -360,6 +376,7 @@ not break (decision 0101, item 15). `serverInfo.version` is `1.0.0`.
 |---|---|
 | The tools, their groups and the list's budget | `backend/tests/mcp/test_tool_budget.py`: at most 32 tools in the six groups, 100 KB of input with no component kind enumerated, 200 KB in all; an Admin's list four more tools and 108 KB of input (decision 0191) |
 | The admin reports | `backend/tests/mcp/test_admin_reports.py` and `backend/tests/db/test_admin_reports_db.py` |
+| Site gaps filed, refused and read | `backend/tests/mcp/test_site_gaps.py` |
 | The protocol, framing and the event stream | `backend/tests/mcp/test_mcp_protocol.py`, `test_mcp_route.py` and `test_mcp_stream.py` |
 | Browser clients | `backend/tests/mcp/test_mcp_cors.py` |
 | The read tools | `backend/tests/mcp/test_mcp_page_read.py`, `test_mcp_fact_tools.py`, `backend/tests/contribution_scale/test_craft_finding.py` and `backend/tests/db/test_craft_finder_db.py` |

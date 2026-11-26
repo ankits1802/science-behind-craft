@@ -1,7 +1,7 @@
 # Component specs: delivered components and the declared kinds
 
 A component arrives finished: its kind's spec data and the texts it places, each resting on shown
-facts. The 23 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
+facts. The 24 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
 way; five of them (`drawing`, `chart`, `fact_table`, `timeline`, `map_layer`) also take a declared
 spec that draws anything new from data, `diagram` also takes a declared spec that composes a
 figure from the site's kit of designed parts (decision 0199), and `timeline_map` is delivered only

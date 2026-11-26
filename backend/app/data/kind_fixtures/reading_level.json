@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "kind": "reading_level",
+  "craft": "Bastar-Dhokra",
+  "craftName": "Bastar Dhokra",
+  "label": "bastar-dhokra/process/student-version",
+  "title": "Casting a dhokra figure, the student version",
+  "description": "The student version of how a Bastar dhokra figure is cast: the wax wrapped round a clay model, the soil over it and the molten metal that takes the wax's place, in one cited paragraph for a younger reader.",
+  "field": "PROCESS",
+  "within": null,
+  "spec": {
+    "level": "teen",
+    "summary": "The student version",
+    "detail": "For a younger reader, open to read",
+    "title": "u0001",
+    "lede": "u0002"
+  },
+  "units": {
+    "u0001": {
+      "text": "Wax, soil and metal: how a dhokra figure is cast",
+      "claims": []
+    },
+    "u0002": {
+      "text": "The caster wraps wax strings round a hard clay model, covers it with soil from a termite hill, and pours molten metal in where the wax melts away.",
+      "claims": [
+        "C061",
+        "C066",
+        "C070"
+      ]
+    }
+  },
+  "facts": {
+    "C061": {
+      "text": "Wax strings are wrapped closely around the hard, green-coated model, and further designs are added in plain wax.",
+      "quotes": [
+        {
+          "source": "S03",
+          "locator": "lines 1418-1421",
+          "quote": "When wax strings are ready as required, they are wrapped closely around the model, which is hard and dry and green with the application of sem-leaf liquid. When the model is totally covered with wax strings, designs of choice can be made with plain wax too."
+        },
+        {
+          "source": "S23",
+          "locator": "lines 103-104",
+          "quote": "7. Wrapping of strings (Tikkal Chadana): Wax strings are tightly wrapped around the dry clay form"
+        }
+      ]
+    },
+    "C066": {
+      "text": "A final layer of powdered termite-hill soil covers the model, with larger wax channels added to form an inverted funnel for pouring the metal.",
+      "quotes": [
+        {
+          "source": "S03",
+          "locator": "lines 1460-1461",
+          "quote": "Soil from the termite hill is brought, powdered and kneaded to make a smooth mixture."
+        },
+        {
+          "source": "S03",
+          "locator": "lines 1461-1464",
+          "quote": "a bigger channel or channels from wax are added to the earlier channels (for pouring metal) made at the bottom and covered with termite soil mixture to make the passage ready (inverted funnel shape) and dried."
+        }
+      ]
+    },
+    "C070": {
+      "text": "When the fired mould turns red it is held upside down, and molten metal from the crucible is poured into its funnel to replace the wax.",
+      "quotes": [
+        {
+          "source": "S03",
+          "locator": "lines 1476-1477",
+          "quote": "The model in the first furnace turns red on being properly kept in fire."
+        },
+        {
+          "source": "S03",
+          "locator": "lines 1478-1482",
+          "quote": "The model is held upside down for the liquid bell metal to be poured in the channels or funnels made at the bottom. The crucible is then lifted with long-handled pincers and the molten metal is poured in the funnel so that it can pass through the channel to replace the wax inside the model."
+        },
+        {
+          "source": "S15",
+          "locator": "lines 1162-1164",
+          "quote": "The wax inside the model is replaced by molten metal poured through funnel."
+        }
+      ]
+    }
+  },
+  "sources": {
+    "S03": {
+      "title": "Geographical Indications Journal No. 24",
+      "publisher": "Geographical Indications Registry, Government of India",
+      "year": 2008,
+      "url": "https://ipindia.nic.in/girindia/journal/24.pdf",
+      "reliability": "A"
+    },
+    "S15": {
+      "title": "Dhokra Shilp: The Bell Metal Craft of Bastar",
+      "publisher": "D'source, Industrial Design Centre, IIT Bombay",
+      "year": null,
+      "url": "https://dsource.in/sites/default/files/resource/dhokra-shilp/downloads/file/dhokra_shilp_bell_metal_craft_bastar.pdf",
+      "reliability": "B"
+    },
+    "S23": {
+      "title": "Dhokra craft Kondagaon",
+      "publisher": "Gaatha",
+      "year": null,
+      "url": "https://gaatha.org/Craft-of-India/dhokra-craft-kondagaon/",
+      "reliability": "D"
+    }
+  }
+}

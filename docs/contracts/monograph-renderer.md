@@ -392,8 +392,8 @@ holds that no science component keeps a cited passage outside a unit, and
 | `explainer` | kicker, title, sentence and key unit refs; `cardsLabel`; cards `{source, byline, quote or quoteUnit, locator, keyed}` | how to read a page: the keys a to d and the quote cards, title and grade from the source |
 | `quiz` | title, dek, score, status unit refs; kicker; `nextLabel`; questions `{before, after, cite {key, sources}, choices [{term, right, sentence nodes}]}`, one right choice each | one question at a time; a choice reveals each choice's cited sentence; the score is the reader's own (the `score` unit is the template's placeholder) |
 | `ask_next` | `craft`, `action`, questions | links to the app's ask screen (`/ask?q=…&craft=…`), through sign-in for a reader who is signed out |
-| `language_switch` | label; options `{lang, name, direction, status}`; the English unit; one panel per other language `{lang, direction, provenance, lede nodes, actions, section {kind, title unit, body nodes}, figure label, note units, plate}` | a segmented choice with each name in its language; every panel stays in the page, the others `hidden` |
-| `reading_level` | level, summary, detail, title and lede unit refs | a closed `details` that opens to the version |
+| `language_switch` | label; options `{lang, name, direction, status, href?}`; either the English unit and one panel per other language `{lang, direction, provenance, lede nodes, actions, section {kind, title unit, body nodes}, figure label, note units, plate}`, or every option's `href` and neither (the page's languages, decision 0233) | with panels, a segmented choice with each name in its language, every panel in the page and the others `hidden`; linked, `LanguageLinks`: a list of links to the page in each language, each name with `lang`, `dir` and `data-script`, its English name beside it, the page's own `aria-current` |
+| `reading_level` | level, summary, detail, title and lede unit refs | a closed `details` that opens to the version; delivered by a contributor (decision 0233) |
 | `generator` | stage, switch, replay, status; sections `{number, title or titleUnit, kind, text nodes or textUnit, media labels, split}`; `film` label; rail title and detail units; jobs | rests finished; "Watch it being made" replays one section at a time unless motion is reduced; the switch hides the AI media |
 
 Every unit the layout places within a tool component is named by its spec, and nothing else is
@@ -429,7 +429,7 @@ when any of them changes (`kv-prefs`). The menu's display tools change the app's
 | The approved page's masthead, contents, margin notes, sub-rail and source groups on a generated page, at 360, 768 and 1440 in light and dark, and a passage's last popover docked whole at 1440 | `frontend/e2e/monograph-template-unit.spec.ts`, and `monograph-template.smoke.spec.ts` against the built site |
 | A chapter's listed facts drawn as one cited list after its prose | `frontend/e2e/cited-list-unit.spec.ts` |
 | Native views and the whole shell | `frontend/e2e/monograph-native-unit.spec.ts`, and `monograph-native.smoke.spec.ts` against the built site |
-| The page tools | `frontend/e2e/monograph-tools-unit.spec.ts` and `backend/tests/research/test_component_specs_tools.py` |
+| The page tools, and a generated page's reading chapter with its linked language switch | `frontend/e2e/monograph-tools-unit.spec.ts`, `reading-tools-unit.spec.ts`, `backend/tests/research/test_component_specs_tools.py` and `test_language_links.py` |
 | The first sheet: what it keeps and leaves, its names, its route, and the boxes a page draws named in it | `frontend/e2e/kit-first-sheet-unit.spec.ts` and `kit-first-scopes-unit.spec.ts` |
 | The served page against the approved board | the Monograph parity run (`.github/workflows/monograph-parity.yml`) |
 

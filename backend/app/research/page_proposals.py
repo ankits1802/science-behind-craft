@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import re
 import uuid
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from datetime import datetime
+from types import MappingProxyType
 from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
@@ -26,22 +27,28 @@ from .upload_links import CLAIMS_MAX, SlotDeclaration, UploadStart
 __all__ = [
     "ACCEPTED",
     "COMPONENT",
+    "COMPONENTS_PER_CALL_MAX",
     "FACT",
+    "FACTS_PER_CALL_MAX",
     "FACT_REF",
     "LAYOUT",
     "LISTED",
     "PAGE_PROPOSAL_SCHEMA_VERSION",
     "PART_KINDS",
     "PART_OUTCOMES",
+    "PER_CALL",
     "PICTURE",
+    "PICTURES_PER_CALL_MAX",
     "PREVIEW_OUTCOMES",
     "PROPOSAL_OUTCOMES",
     "REFUSED",
     "SHOWN",
     "STRUCTURE",
+    "STRUCTURE_PER_CALL_MAX",
     "TRANSLATION",
     "WITHDRAWAL",
     "WITHDRAWALS_MAX",
+    "WITHDRAWALS_PER_CALL_MAX",
     "FactRef",
     "PageBundle",
     "PageComponent",
@@ -54,14 +61,20 @@ __all__ = [
     "PageWithdrawal",
     "PartReport",
     "fact_index",
+    "one_call_problem",
 ]
 
 PAGE_PROPOSAL_SCHEMA_VERSION = 1
-FACTS_MAX = 20
-STRUCTURE_MAX = 20
-COMPONENTS_MAX = 10
-PICTURES_MAX = 10
-WITHDRAWALS_MAX = 10
+FACTS_MAX = 200
+STRUCTURE_MAX = 100
+COMPONENTS_MAX = 100
+PICTURES_MAX = 40
+WITHDRAWALS_MAX = 100
+FACTS_PER_CALL_MAX = 20
+STRUCTURE_PER_CALL_MAX = 20
+COMPONENTS_PER_CALL_MAX = 10
+PICTURES_PER_CALL_MAX = 10
+WITHDRAWALS_PER_CALL_MAX = 10
 NOTE_MAX_CHARS = 500
 WITHDRAW_REASON_MIN_CHARS = 3
 FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION, WITHDRAWAL = PART_KINDS = (
@@ -77,9 +90,22 @@ ACCEPTED, REFUSED = PROPOSAL_OUTCOMES = ("ACCEPTED", "REFUSED")
 SHOWN, LISTED = "SHOWN", "LISTED"
 PREVIEW_OUTCOMES = (SHOWN, LISTED, REFUSED)
 PART_OUTCOMES = (ACCEPTED, REFUSED, SHOWN, LISTED)
-FACT_REF_PATTERN = r"^fact:(\d{1,2})$"
+FACT_REF_PATTERN = r"^fact:(\d{1,3})$"
 FACT_REF = re.compile(FACT_REF_PATTERN)
 SLUG_PATTERN = r"^[A-Za-z0-9-]+$"
+PER_CALL: Mapping[str, int] = MappingProxyType(
+    {
+        "facts": FACTS_PER_CALL_MAX,
+        "structure": STRUCTURE_PER_CALL_MAX,
+        "components": COMPONENTS_PER_CALL_MAX,
+        "pictures": PICTURES_PER_CALL_MAX,
+        "withdrawals": WITHDRAWALS_PER_CALL_MAX,
+    }
+)
+ONE_CALL = (
+    "a bundle sent in one call holds at most {most} {part}; a larger page is built in a draft, "
+    "edit_draft adding up to that many a call"
+)
 
 FactRef = Annotated[str, Field(pattern=FACT_REF_PATTERN)]
 ClaimRef = uuid.UUID | FactRef
@@ -88,6 +114,13 @@ ClaimRef = uuid.UUID | FactRef
 def fact_index(ref: str) -> int | None:
     found = FACT_REF.match(ref)
     return None if found is None else int(found.group(1))
+
+
+def one_call_problem(counts: Mapping[str, int]) -> str | None:
+    over = [(part, most) for part, most in PER_CALL.items() if counts.get(part, 0) > most]
+    if not over:
+        return None
+    return "; ".join(ONE_CALL.format(most=most, part=part) for part, most in over)
 
 
 class PageSubject(ContractModel):
@@ -158,6 +191,9 @@ class PageBundle(ContractModel):
         default_factory=list, max_length=WITHDRAWALS_MAX, exclude_if=empty
     )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
+
+    def counts(self) -> dict[str, int]:
+        return {part: len(getattr(self, part)) for part in PER_CALL}
 
     @model_validator(mode="after")
     def _holds_work(self) -> Self:

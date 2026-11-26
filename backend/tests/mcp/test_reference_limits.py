@@ -56,10 +56,11 @@ KIND_GROUPS = {
         "experiment_lab",
         "choice_toggle",
     ),
+    "Reading": ("reading_level",),
     "Built by the site for every page": PAGE_TOOL_KINDS,
     "The authored page's own": (*AUTHORED_ART_KINDS, *AUTHORED_SCRIPT_KINDS),
 }
-DELIVERED_GROUPS = ("Figures from data", "Data and place", "Plates and voices", "Science")
+DELIVERED_GROUPS = ("Figures from data", "Data and place", "Plates and voices", "Science", "Reading")
 GROUP = re.compile(
     r"^- \*\*(?P<group>[^*]+)\*\* \((?P<count>\d+)\): (?P<kinds>.+?)(?=\n- |\n\n)", re.M | re.S
 )

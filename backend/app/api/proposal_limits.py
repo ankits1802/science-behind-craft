@@ -19,16 +19,20 @@ from app.core.rate_limit import (
     PAGE_PROPOSALS,
     PICTURE_CHECKS,
     PROPOSAL_LIMITS,
+    SITE_GAPS,
     STRUCTURE_PROPOSALS,
     proposal_attempt,
     retry_after_value,
 )
 from app.models import User
+from app.research.page_proposals import COMPONENTS_MAX, FACTS_MAX, STRUCTURE_MAX, WITHDRAWALS_MAX
 
 __all__ = [
     "LIMIT_NOUNS",
+    "PAGE_PART_LIMITS",
     "Spent",
     "proposal_limit",
+    "refuse_page_part_when_spent",
     "refuse_tool_when_spent",
     "refuse_when_spent",
     "spent_limit",
@@ -45,6 +49,14 @@ LIMIT_NOUNS: Mapping[str, str] = MappingProxyType(
         PAGE_PROPOSALS: "page bundles",
         PAGE_PREVIEWS: "page previews",
         PICTURE_CHECKS: "picture checks",
+        SITE_GAPS: "site gap reports",
+    }
+)
+PAGE_PART_LIMITS: Mapping[str, int] = MappingProxyType(
+    {
+        FACT_PROPOSALS: FACTS_MAX,
+        STRUCTURE_PROPOSALS: STRUCTURE_MAX,
+        COMPONENT_PROPOSALS: COMPONENTS_MAX + WITHDRAWALS_MAX,
     }
 )
 SPENT = "This account made {limit} {noun} this hour, the most one account may. Try again in {wait}."
@@ -68,14 +80,15 @@ def wait_words(seconds: float) -> str:
     return f"{whole} second" if whole == 1 else f"{whole} seconds"
 
 
-async def spent_limit(kind: str, user: Any) -> Spent | None:
-    taken = await proposal_attempt(kind, user)
+async def spent_limit(kind: str, user: Any, *, limit: int | None = None) -> Spent | None:
+    taken = await proposal_attempt(kind, user, limit=limit)
     if taken.granted:
         return None
     if taken.unread:
         return Spent(message=ALLOWANCE_UNREAD, wait_seconds=taken.wait_seconds, unread=True)
     words = wait_words(taken.wait_seconds)
-    message = SPENT.format(limit=PROPOSAL_LIMITS[kind], noun=LIMIT_NOUNS[kind], wait=words)
+    allowed = PROPOSAL_LIMITS[kind] if limit is None else limit
+    message = SPENT.format(limit=allowed, noun=LIMIT_NOUNS[kind], wait=words)
     return Spent(message=message, wait_seconds=taken.wait_seconds)
 
 
@@ -86,10 +99,14 @@ async def refuse_when_spent(kind: str, user: Any) -> None:
         raise HTTPException(refused, spent.message, {"Retry-After": retry_after_value(spent.wait_seconds)})
 
 
-async def refuse_tool_when_spent(kind: str, user: Any) -> None:
-    spent = await spent_limit(kind, user)
+async def refuse_tool_when_spent(kind: str, user: Any, *, limit: int | None = None) -> None:
+    spent = await spent_limit(kind, user, limit=limit)
     if spent is not None:
         raise InvalidInput(spent.message)
+
+
+async def refuse_page_part_when_spent(kind: str, user: Any) -> None:
+    await refuse_tool_when_spent(kind, user, limit=PAGE_PART_LIMITS.get(kind))
 
 
 def proposal_limit(kind: str, proposer: Proposer) -> Callable[..., Awaitable[None]]:

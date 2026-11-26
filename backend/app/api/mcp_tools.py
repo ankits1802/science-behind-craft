@@ -13,6 +13,8 @@ from .mcp_check_tools import CHECK_TOOLS
 from .mcp_compose_tools import COMPOSE_TOOLS
 from .mcp_dataset_tools import DATASET_TOOLS
 from .mcp_fact_tools import FACT_TOOLS
+from .mcp_field_photo_tools import FIELD_PHOTO_TOOLS
+from .mcp_gap_tools import GAP_TOOLS
 from .mcp_guides import guide_read, guide_template, is_guide_uri
 from .mcp_lookup_tools import LOOKUP_TOOLS
 from .mcp_page_tools import PAGE_TOOLS
@@ -50,6 +52,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *LOOKUP_TOOLS,
             *STUDIO_SOURCE_TOOLS,
             *WORK_TOOLS,
+            *GAP_TOOLS,
             *FACT_TOOLS,
             *STRUCTURE_TOOLS,
             *SOURCE_TOOLS,
@@ -58,6 +61,7 @@ TOOLS: Mapping[str, Tool] = MappingProxyType(
             *COMPOSE_TOOLS,
             *PICTURE_TOOLS,
             *CHECK_TOOLS,
+            *FIELD_PHOTO_TOOLS,
             *REVIEW_TOOLS,
             *REPORT_TOOLS,
         )

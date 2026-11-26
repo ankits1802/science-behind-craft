@@ -28,6 +28,7 @@ __all__ = [
     "KinShown",
     "kin_label",
     "kin_placed",
+    "page_label",
     "place_kin",
     "shared_materials",
     "subject_kin",
@@ -117,8 +118,12 @@ async def shared_materials(
 
 
 def kin_label(slug: str) -> str:
+    return page_label(slug, LABEL_TAIL)
+
+
+def page_label(slug: str, tail: str) -> str:
     stem = re.sub(r"-+", "-", re.sub(r"[^a-z0-9-]", "", slug.lower())).strip("-")
-    return f"{stem}/{LABEL_TAIL}"
+    return f"{stem}/{tail}"
 
 
 def kin_placed(read: KinRead, slug: str) -> KinPlaced | None:

@@ -149,6 +149,9 @@ def opening_guide() -> HandedGuide:
 
 
 def page_guide(address: str) -> HandedGuide:
+    design = design_sheets()
+    if address in {sheet.address for sheet in design}:
+        return handed(design)
     return handed([guide_sheet(address)])
 
 
