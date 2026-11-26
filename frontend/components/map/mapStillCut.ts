@@ -95,6 +95,7 @@ function baseParts(layers: StillLayers, names: LayerNames, cut: StillCut, held: 
   const drawn = drawsWaters(waters);
   return {
     lines: cutLines(districts, cut) || null,
+    states: cutLines(layers.stateLines, cut) || null,
     neighbours: cutRings(layers.neighbours, cut) || null,
     valued: valuedDistricts(layers, names.valued ?? [], cut),
     credits: drawn ? [...layers.credits, ...held.credits] : layers.credits,

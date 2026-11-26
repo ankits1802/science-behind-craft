@@ -26,13 +26,13 @@ export interface IndiaMapProps {
   className?: string;
 }
 
-export function IndiaMapBase({ underlay, frame = WHOLE_MAP }: { underlay?: ReactNode; frame?: MapBox }) {
+export function IndiaMapBase({ underlay, frame = WHOLE_MAP, states }: { underlay?: ReactNode; frame?: MapBox; states?: ReactNode }) {
   return (
     <>
       <MapPatterns />
       <MapLand frame={frame} />
       {underlay}
-      <StateLines />
+      {states === undefined ? <StateLines /> : states}
       <SaltFlats />
       <MapCoast />
     </>

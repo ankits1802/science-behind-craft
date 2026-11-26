@@ -159,6 +159,16 @@ test("the still is small and cut to the frame the view draws, and a named frame 
   expect(mapLayerFrame({ ...map, frame: { district: 110 } })).not.toEqual(named.still.box);
 });
 
+test("a places map's state lines are in the server's still and drawn at first paint, and a map without its still has none until its script loads", () => {
+  const across = { ...SANGANERI, places: [SANGANERI.places[1], { name: "u0009", value: null, reading: "u0010", latitude: 27.18, longitude: 78.01 }] };
+  const spec = stilled(across) as { still: { states?: string | null } };
+  expect(spec.still.states).toMatch(/^M/);
+  const html = drawn(spec);
+  expect(html.match(/data-testid="still-states"/g)).toHaveLength(1);
+  expect(html).not.toContain('data-testid="map-states"');
+  expect(drawn(across)).not.toContain('data-testid="still-states"');
+});
+
 test("a route, a ring and a sequence are drawn only from the spec's own places, radius and steps, and a part off its shape draws nothing", () => {
   const html = shownText(drawn(stilled(PARTS)));
   expect(html.match(/data-testid="map-route"/g)).toHaveLength(1);
