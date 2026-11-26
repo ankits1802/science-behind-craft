@@ -80,7 +80,11 @@ lacked. Each claim was checked against the code and the run's files before it wa
    placed part whose containing block lies outside its slot.
 3. **Borrowed figures held to the page's facts.** `subject_components` draws a borrowed (library or
    other craft's) component only when `held_claims` holds every fact its units cite, the test the
-   draft already applied, so the published page and the preview follow one rule. A `why_here` with
+   draft already applied, so the published page and the preview follow one rule. A family's or a
+   category's page tells its crafts' science: there a fact also counts as held when it is about a
+   concept one of the page's own facts is about, the tie by which a category chooses its shared
+   figures, so a shared figure on that science still draws and one on another craft's science does
+   not (`held_rows`); a craft's page holds only its own facts. A `why_here` with
    no note sentence is not drawn (rule 15: a card with no sentence is not drawn). Rules 9 and 15 read
    a figure's units from its spec as well as from the layout, and its citations by their cite marks
    (`research/page_report_read.py`), so a borrowed figure drawn on facts the page holds cites them.
