@@ -1,7 +1,7 @@
 import pytest
 
 from app.data.water_tiles import held_water_tile, held_waters_index
-from app.geo.map_base import SITE_WIDTH, WHOLE_SITE, SiteBox, projected_frame, site_point
+from app.geo.map_base import SITE_WIDTH, UNITS_PER_DEGREE, WHOLE_SITE, SiteBox, projected_frame, site_point
 from app.geo.map_waters import NO_WATERS, WaterAsk, WaterTile, tiles_in_box, water_shapes, water_tile
 
 SURAN = "Suran"
@@ -9,6 +9,7 @@ TAPPAR = "Tappar Reservoir"
 TAPPAR_AT = (70.1275, 23.2473)
 SURAN_WEST, SURAN_EAST = 70.111, 70.161
 DHAMADKA = (70.02, 23.28)
+ROUNDING_UNITS = 0.0005 * UNITS_PER_DEGREE
 
 
 def kutch_box() -> SiteBox:
@@ -40,7 +41,13 @@ def test_the_named_river_is_drawn_strong_on_its_own_line_and_the_dam_where_its_r
     (dam,) = drawn.dams
     x, y = site_point(*TAPPAR_AT)
     assert dam.name == TAPPAR and dam.at == pytest.approx((x - box.x, y - box.y))
-    assert all(0 <= px <= box.width and 0 <= py <= box.height for line in drawn.lines for px, py in line)
+    edge = ROUNDING_UNITS
+    inside = (
+        -edge <= px <= box.width + edge and -edge <= py <= box.height + edge
+        for line in drawn.lines
+        for px, py in line
+    )
+    assert all(inside)
 
 
 def test_a_name_the_waters_do_not_hold_draws_nothing_strong_and_marks_no_dam() -> None:

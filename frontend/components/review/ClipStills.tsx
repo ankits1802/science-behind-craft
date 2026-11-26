@@ -14,7 +14,10 @@ function ClipStill({ film, alt }: { film: ClipFilm; alt: string }) {
       {missing ? (
         <p className="font-ui text-label text-ink-2">{CLIP_STILL_MISSING}</p>
       ) : (
-        <img src={clipStillHref(film.clip)} alt={alt} loading="lazy" decoding="async" onError={() => setMissing(true)} className="block h-auto w-full rounded-plate border border-rule bg-sunk" />
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element -- the API's JPEG still, nothing for next/image to optimise */}
+          <img src={clipStillHref(film.clip)} alt={alt} loading="lazy" decoding="async" onError={() => setMissing(true)} className="block h-auto w-full rounded-plate border border-rule bg-sunk" />
+        </>
       )}
       {film.credit ? <figcaption className="font-ui text-caption text-ink-3">{film.credit}</figcaption> : null}
     </figure>
