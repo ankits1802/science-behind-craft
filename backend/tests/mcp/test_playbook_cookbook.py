@@ -128,6 +128,16 @@ def test_the_playbook_teaches_the_thinking_and_sets_no_page_to_copy_ajrakh() -> 
             assert parity not in text, parity
 
 
+def test_the_server_instructions_start_a_page_with_its_brief_as_playbook_step_1_does() -> None:
+    playbook = reference_text("playbook")
+    step_one = playbook[playbook.index("\n1. **") : playbook.index("\n2. **")]
+    for said in (step_one, SERVER_INSTRUCTIONS):
+        assert 0 <= said.find('parts: ["brief"]') < said.find("get_facts"), said[:120]
+    assert 'get_page and parts: ["brief"]' in SERVER_INSTRUCTIONS
+    assert "get_facts with ids" in SERVER_INSTRUCTIONS
+    assert "get_facts for its facts" not in SERVER_INSTRUCTIONS
+
+
 @pytest.mark.parametrize("name", ["playbook", "cookbook"])
 def test_every_guide_address_it_names_is_a_page_the_server_serves(name: str) -> None:
     named = {match["address"] for match in ADDRESS.finditer(reference_text(name))}

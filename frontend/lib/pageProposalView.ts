@@ -12,6 +12,7 @@ import type {
   PartState,
   PartView
 } from "@/lib/pageProposalContract";
+import { UUID_PATTERN } from "@/lib/answerShapes";
 import { KIND_NOUNS } from "@/lib/reviewQueueView";
 
 export const SIDE_TITLES: Record<DrawnSide, string> = { BEFORE: "As it stands", AFTER: "As it will be" };
@@ -20,6 +21,7 @@ export const CHANGE_KIND_WORDS: Record<ChangeKind, string> = { SENTENCE: "Senten
 export const PART_STATE_WORDS: Record<PartState, string> = { WAITING: "Waiting", APPROVED: "Approved", REJECTED: "Rejected", CLOSED: "Closed" };
 export const FIRST_SCREEN_WIDTHS = [390, 1440] as const;
 export const WHOLE_PAGE: PageScope = { scope: "PAGE", chapter: null, label: null };
+export const PROPOSAL_PARAM = "proposal";
 
 export type PicturePair = { key: string; caption: string; before: DrawnPicture | null; after: DrawnPicture | null };
 
@@ -127,4 +129,13 @@ export function drawnComponents(chapter: ChapterChanges): string[] {
 export function withProposal(list: readonly PageProposalView[], updated: PageProposalView): PageProposalView[] {
   if (!updated.waiting) return list.filter((view) => view.id !== updated.id);
   return list.map((view) => (view.id === updated.id ? { ...updated, chapters: view.chapters } : view));
+}
+
+export function proposalFromSearch(params: URLSearchParams): string | null {
+  const named = params.get(PROPOSAL_PARAM)?.trim().toLowerCase() ?? "";
+  return UUID_PATTERN.test(named) ? named : null;
+}
+
+export function proposalAnchor(id: string): string {
+  return `page-proposal-${id}`;
 }

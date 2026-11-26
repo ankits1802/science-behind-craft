@@ -43,14 +43,18 @@ from .coverage_reads import (
 )
 
 __all__ = [
+    "NO_DETAILS",
     "UNKNOWN_CRAFT",
+    "UNKNOWN_FACTS",
     "article_section",
+    "chosen_views",
     "cited_sources",
     "claim_fields",
     "craft_facts",
     "craft_section",
     "craft_sections",
     "every_fact",
+    "fact_list",
     "fact_of",
     "facts_by_field",
     "field_list",
@@ -63,6 +67,9 @@ __all__ = [
 ]
 
 UNKNOWN_CRAFT = "No craft has the slug {slug}; find_crafts gives the slugs."
+UNKNOWN_FACTS = (
+    "No fact of this page has the id {ids}; the page's brief (get_page, parts brief) lists its facts' ids."
+)
 PUBLIC_MODE = "HYBRID"
 PUBLISHED = "PUBLISHED"
 CRAFT_SUBJECT = "craft"
@@ -103,12 +110,12 @@ async def craft_facts(
     query: str | None = None,
     limit: int = FACTS_LIMIT_DEFAULT,
     held: HeldFacts = HELD_LEFT_OUT,
+    ids: Sequence[uuid.UUID] = (),
 ) -> CraftFacts:
     craft = await known_craft(session, slug)
-    read = knowledge_view.contributor_claims_for if held == HELD_KEPT else knowledge_view.claims_for
-    views, sources = await read(session, craft, mode=PUBLIC_MODE, question=query, acls=OPEN_CHUNK_ACLS)
+    views, sources = await _claim_views(session, craft, held=held, query=query)
     placed = await claim_fields(session, [view.id for view in views])
-    chosen = [view for view in views if field is None or field in placed[view.id]]
+    chosen = chosen_views(views, placed, field=field, ids=ids)
     ordered = (ranked_views(chosen) if query else knowledge_view.order_claims(chosen))[:limit]
     details = await fact_details(session, [view.id for view in ordered])
     facts = [fact_of(view, placed[view.id], details) for view in ordered]
@@ -118,10 +125,43 @@ async def craft_facts(
         query=query,
         facts=facts,
         by_field=facts_by_field(placed, facts, field),
-        open_work=await craft_field_work(session, craft, site=site, kinds=FACT_TASK_KINDS, field=field),
+        open_work=[]
+        if ids
+        else await craft_field_work(session, craft, site=site, kinds=FACT_TASK_KINDS, field=field),
         sources=cited_sources(facts, sources),
         page_url=f"{site}/crafts/{craft.slug}",
     )
+
+
+async def fact_list(session: AsyncSession, slug: str, *, held: HeldFacts = HELD_LEFT_OUT) -> list[Fact]:
+    craft = await known_craft(session, slug)
+    views, _ = await _claim_views(session, craft, held=held, query=None)
+    placed = await claim_fields(session, [view.id for view in views])
+    return [fact_of(view, placed[view.id], NO_DETAILS) for view in knowledge_view.order_claims(views)]
+
+
+def chosen_views(
+    views: Sequence[knowledge_view.ClaimView],
+    placed: Mapping[uuid.UUID, list[str]],
+    *,
+    field: str | None,
+    ids: Sequence[uuid.UUID],
+) -> list[knowledge_view.ClaimView]:
+    if not ids:
+        return [view for view in views if field is None or field in placed[view.id]]
+    held = {view.id for view in views}
+    unknown = sorted(str(fact_id) for fact_id in set(ids) - held)
+    if unknown:
+        raise InvalidInput(UNKNOWN_FACTS.format(ids=", ".join(unknown)))
+    wanted = set(ids)
+    return [view for view in views if view.id in wanted]
+
+
+async def _claim_views(
+    session: AsyncSession, craft: Craft, *, held: HeldFacts, query: str | None
+) -> tuple[list[knowledge_view.ClaimView], dict[uuid.UUID, Source]]:
+    read = knowledge_view.contributor_claims_for if held == HELD_KEPT else knowledge_view.claims_for
+    return await read(session, craft, mode=PUBLIC_MODE, question=query, acls=OPEN_CHUNK_ACLS)
 
 
 async def every_fact(session: AsyncSession, craft: Craft) -> tuple[list[Fact], list[FactSource]]:

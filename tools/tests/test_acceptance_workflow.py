@@ -41,7 +41,7 @@ def test_the_inputs_are_the_craft_the_request_the_cap_and_the_model_with_the_bri
     assert {name: entry["default"] for name, entry in inputs.items()} == {
         "craft": "Sanganeri-Hand-Block-Printing",
         "request": "Deepen this craft's page to the KalaVigyan bar.",
-        "cap": "12",
+        "cap": "25",
         "model": "claude-opus-5-5",
     }
 

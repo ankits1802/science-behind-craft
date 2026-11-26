@@ -638,10 +638,12 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   the account's role.
 - `initialize` declares `tools`, `prompts` (`listChanged` false) and `resources` (`subscribe` and
   `listChanged` false).
-- The server's `instructions` say where to start, name the tools in the order of the work, say that
-  the tools hand the guide over page by page as the agent works and that `get_page` with `guide`
-  reads any other page (`contents/1` lists them), and name the groups, the index and, once for every
-  tool, the data note (`api/mcp_protocol.py`, decision 0203).
+- The server's `instructions` say where to start (a page's brief, `get_page` with `parts: ["brief"]`,
+  then `get_facts` with `ids` for the facts to cite, as playbook step 1 does, decision 0240), name
+  the tools in the order of the work, say that the tools hand the guide over page by page as the
+  agent works and that `get_page` with `guide` reads any other page (`contents/1` lists them), and
+  name the groups, the index and, once for every tool, the data note (`api/mcp_protocol.py`,
+  decision 0203).
 
 ### Protocol 2026-07-28: skills, tasks, questions and files (decision 0235)
 
@@ -687,7 +689,10 @@ things more; a client on the 2025-11-25 handshake reaches everything above exact
   with its expiry (or that it has none); `supply_source` with no passages, text, upload or file asks
   for the source's words and where they stand. A decline sends nothing and opens nothing. A client
   without form elicitation is answered as before (`edit_draft` names the page "one of them",
-  `supply_source` takes its words "one way").
+  `supply_source` takes its words "one way"). One admin tool asks after it runs (decision 0243):
+  `stage_reviews`, once it has stored a batch, asks the Admin whose AI staged it to confirm all, some
+  or none of it, saying what each item will do; only the person's answer in the form confirms, and
+  what is left waits on the Review page (`review-queue.md`, Confirmed in the person's client).
 - **Files** (`io.modelcontextprotocol/files`, the experimental extension, `api/mcp_files.py`), on
   while `MCP_FILE_UPLOADS_ENABLED` is true. To a client that declares `upload`, `tools/list` adds
   `supply_source.file` (a PDF or text file, 20 MB), `give_pictures.files` (one photograph for each

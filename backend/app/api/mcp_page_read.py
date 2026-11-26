@@ -9,24 +9,31 @@ from app.research.base import ContractModel, absent, empty
 from app.research.coverage import FieldCoverage
 from app.research.knowledge_api import ATTRIBUTION, ComponentSubject, CraftSection, FieldInfo, FieldSection
 from app.research.open_work import OpenTask
+from app.research.page_brief import CURSOR_PATTERN, PageBrief
 from app.research.page_layout import PageLayout
 from app.research.page_proposals import PageSubject
 from app.research.vocabulary import Discipline
-from app.services import category_knowledge, coverage_reads, knowledge_api
+from app.services import category_knowledge, coverage_reads, knowledge_api, page_brief
 from app.services.open_work_subjects import CATEGORY, WorkSubject, subject_by_key
 from app.services.page_keys import page_keys
 from app.services.page_layouts import layout_of, subject_path
 
 from .mcp_guide_steps import HandedGuide, opening_guide, page_guide
 from .mcp_guides import ADDRESS_PATTERN, CONTENTS_ADDRESS
-from .mcp_page_texts import READ_NEXT
+from .mcp_page_texts import BRIEF_NEXT, READ_NEXT
 from .mcp_tool_base import Arguments, Tool, ToolContext
 
-__all__ = ["GET_PAGE", "PAGE_PARTS", "GetPage", "PageRead"]
+__all__ = ["BRIEF", "GET_PAGE", "PAGE_PARTS", "PARTS", "GetPage", "PageRead"]
 
 COVERAGE, SECTIONS, LAYOUT = PAGE_PARTS = ("coverage", "sections", "layout")
+BRIEF = "brief"
+PARTS = (*PAGE_PARTS, BRIEF)
 DESCRIPTION = (
-    "Read one craft, family or category page in the parts you name. coverage: the cited claims, "
+    "Read one craft, family or category page in the parts you name. brief, the first read for building a "
+    "page: in one compact result its story as published (lede, each chapter's headings, sentences, fields' "
+    "standing, figures with kind, role and size, pictures), every fact as its id and one line under its "
+    "chapter, rule 29's opportunities and the layout's version; a cursor continues the fact lines and never "
+    "repeats one, and get_facts with ids gives any fact whole. coverage: the cited claims, "
     "structure-cited claims, sources, published section and figures it holds in each of the sixteen fields, "
     "which are covered, thin or missing. sections: the page's published prose as the page draws it, one field "
     "or every field, each sentence with the facts it rests on. layout: where each text unit and component is "
@@ -38,6 +45,7 @@ DESCRIPTION = (
     "built, and the Kutch Ajrakh bar, its worked example, naming the next page; a page's next_step is the "
     f"playbook's next step. guide reads any page of the guide by its address ({CONTENTS_ADDRESS} lists them)."
 )
+CURSOR_DESCRIPTION = "The cursor a brief gave, to read the page's next fact lines; none starts the brief"
 GUIDE_DESCRIPTION = (
     f"A page of the guide to read, by the address a result names, such as page-checklist/2; {CONTENTS_ADDRESS} "
     "lists every page"
@@ -49,19 +57,22 @@ class GetPage(Arguments):
         default=None,
         description="The page: kind craft, family or category and its slug from find_crafts; none lists the fields",
     )
-    parts: list[Literal[*PAGE_PARTS]] | None = Field(
+    parts: list[Literal[*PARTS]] | None = Field(
         default=None,
         min_length=1,
-        max_length=len(PAGE_PARTS),
-        description="Any of coverage, sections and layout; every part the page has when absent",
+        max_length=len(PARTS),
+        description="Any of brief, coverage, sections and layout; coverage, sections and layout when absent",
     )
     field: Discipline | None = Field(default=None, description="One field's section only")
     guide: str | None = Field(default=None, pattern=ADDRESS_PATTERN, description=GUIDE_DESCRIPTION)
+    cursor: str | None = Field(default=None, pattern=CURSOR_PATTERN, description=CURSOR_DESCRIPTION)
 
     @model_validator(mode="after")
     def _parts_need_a_page(self) -> Self:
         if self.subject is None and (self.parts or self.field):
             raise ValueError("name the page as subject {kind, slug} to read its parts")
+        if self.cursor is not None and BRIEF not in (self.parts or ()):
+            raise ValueError("a cursor continues the brief: ask for parts [brief] with it")
         return self
 
 
@@ -75,6 +86,7 @@ class PageRead(ContractModel):
     sections: list[ArticleSection] = Field(default_factory=list, exclude_if=empty)
     by_field: list[FieldSection] = Field(default_factory=list, exclude_if=empty)
     layout: PageLayout | None = None
+    brief: PageBrief | None = Field(default=None, exclude_if=absent)
     keys: list[ComponentSubject] = Field(default_factory=list, exclude_if=empty)
     open_work: list[OpenTask] = Field(default_factory=list)
     page_url: str | None = Field(default=None, exclude_if=absent)
@@ -109,6 +121,15 @@ async def _get_page(context: ToolContext, arguments: GetPage) -> PageRead:
         work = [*work, *section.open_work]
     if LAYOUT in parts:
         read["layout"] = await layout_of(context.session, subject)
+    if BRIEF in parts:
+        read["brief"], brief_work = await page_brief.read_page_brief(
+            context.session,
+            subject,
+            site=context.site,
+            held=knowledge_api.held_facts_for(context.user),
+            cursor=arguments.cursor,
+        )
+        read["next_step"], work = BRIEF_NEXT, [*work, *brief_work]
     return PageRead.model_validate({**read, "open_work": _once(work), "guide": _guide(arguments, parts)})
 
 

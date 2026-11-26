@@ -134,12 +134,18 @@ def asked(monkeypatch: pytest.MonkeyPatch) -> list[tuple[str, str, str]]:
     return reads.seen
 
 
-async def test_get_page_is_a_read_tool_with_three_parts_and_a_compact_output_schema() -> None:
+async def test_get_page_is_a_read_tool_with_its_parts_a_brief_cursor_and_a_compact_output_schema() -> None:
     reply = await answer({"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}, CONTEXT)
     assert reply is not None
     (listed,) = [tool for tool in reply["result"]["tools"] if tool["name"] == "get_page"]
     assert listed["annotations"]["readOnlyHint"] is True
-    assert set(listed["inputSchema"]["properties"]) == {"subject", "parts", "field", "guide"}
+    assert set(listed["inputSchema"]["properties"]) == {"subject", "parts", "field", "guide", "cursor"}
+    assert listed["inputSchema"]["properties"]["parts"]["items"]["enum"] == [
+        "coverage",
+        "sections",
+        "layout",
+        "brief",
+    ]
     output = listed["outputSchema"]["properties"]
     assert {"coverage", "sections", "layout", "openWork", "pageUrl", "attribution"} <= set(output)
     assert output["coverage"] == {"type": ["null", "object"]} and output["openWork"] == {"type": "array"}

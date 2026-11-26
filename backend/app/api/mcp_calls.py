@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Awaitable, Mapping, Sequence
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 from types import MappingProxyType
 from typing import Any
 
-from pydantic import ValidationError
+from pydantic import BaseModel, ValidationError
 
 from app.core.config import get_settings
 from app.core.errors import InvalidInput, Refused
@@ -14,7 +14,15 @@ from app.core.errors import InvalidInput, Refused
 from .mcp_files import FileInput, file_problem, given_files, upload_required
 from .mcp_input import Answer, Question, answers_to, input_required
 from .mcp_protocol import INVALID_PARAMS, RequestError, tool_error, tool_result
-from .mcp_state import ASKED, UPLOADED, SealedCall, arguments_digest, opened_state, sealed_state
+from .mcp_state import (
+    ASKED,
+    ASKED_AFTER,
+    UPLOADED,
+    SealedCall,
+    arguments_digest,
+    opened_state,
+    sealed_state,
+)
 from .mcp_tasks import TaskCall, task_reply
 from .mcp_tool_base import Sessions, Tool, ToolContext, scope_refusal, shown_images
 
@@ -24,6 +32,7 @@ ASKED_FOR = timedelta(hours=1)
 UPLOAD_GRACE = timedelta(minutes=30)
 TASK = "task"
 ANOTHER_CALL = "requestState belongs to another call, tool or account; call the tool again without it"
+NOT_ASKED = "requestState answers a form, and this client declares no form elicitation to answer it with"
 RUNNING = "{title}: running"
 
 
@@ -34,6 +43,8 @@ async def call_tool(tool: Tool, params: Mapping[str, Any], context: ToolContext)
     arguments, files = prepared
     now = datetime.now(UTC)
     sealed = _opened(tool, params, context, now)
+    if sealed is not None and sealed.purpose == ASKED_AFTER:
+        return await _answered_after(tool, arguments, params, context, sealed)
     context = replace(context, files=tuple(files))
     if sealed is not None and sealed.purpose == UPLOADED:
         context = replace(context, uploaded=MappingProxyType(dict(sealed.refs)))
@@ -53,19 +64,13 @@ async def call_tool(tool: Tool, params: Mapping[str, Any], context: ToolContext)
     sessions = await _task_sessions(tool, context, now)
     if sessions is not None:
         return await _task(tool, arguments, replace(context, sessions=sessions), params=params, now=now)
+    if tool.after is not None and _elicits(context):
+        return await _asked_after(tool, arguments, params, context, now)
     return await run_tool(tool, arguments, context)
 
 
 async def run_tool(tool: Tool, arguments: Any, context: ToolContext) -> dict[str, Any]:
-    try:
-        reply = await tool.run(context, arguments)
-    except (InvalidInput, Refused) as refused:
-        if tool.commits:
-            await context.session.rollback()
-        return tool_error(str(refused))
-    if tool.commits:
-        await context.session.commit()
-    return tool_result(reply.model_dump(mode="json", by_alias=True), shown_images(reply))
+    return _replied(await _ran(tool, tool.run(context, arguments), context))
 
 
 def problems(refused: ValidationError) -> str:
@@ -107,9 +112,54 @@ def _opened(tool: Tool, params: Mapping[str, Any], context: ToolContext, now: da
 
 
 async def _questions(tool: Tool, arguments: Any, context: ToolContext) -> Sequence[Question]:
-    if tool.asks is None or context.meta is None or not context.meta.elicits_forms():
+    if tool.asks is None or not _elicits(context):
         return ()
     return await tool.asks(context, arguments)
+
+
+def _elicits(context: ToolContext) -> bool:
+    return context.meta is not None and context.meta.elicits_forms()
+
+
+async def _ran(tool: Tool, work: Awaitable[BaseModel], context: ToolContext) -> BaseModel | dict[str, Any]:
+    try:
+        reply = await work
+    except (InvalidInput, Refused) as refused:
+        if tool.commits:
+            await context.session.rollback()
+        return tool_error(str(refused))
+    if tool.commits:
+        await context.session.commit()
+    return reply
+
+
+def _replied(ran: BaseModel | dict[str, Any]) -> dict[str, Any]:
+    if isinstance(ran, dict):
+        return ran
+    return tool_result(ran.model_dump(mode="json", by_alias=True), shown_images(ran))
+
+
+async def _asked_after(
+    tool: Tool, arguments: Any, params: Mapping[str, Any], context: ToolContext, now: datetime
+) -> dict[str, Any]:
+    ran = await _ran(tool, tool.run(context, arguments), context)
+    follow = None if tool.after is None or isinstance(ran, dict) else await tool.after.ask(context, ran)
+    if follow is None:
+        return _replied(ran)
+    keys = (follow.question.key,)
+    expires = now + ASKED_FOR
+    state = _seal(tool, params, context, purpose=ASKED_AFTER, expires=expires, keys=keys, refs=follow.refs)
+    return input_required([follow.question], state)
+
+
+async def _answered_after(
+    tool: Tool, arguments: Any, params: Mapping[str, Any], context: ToolContext, sealed: SealedCall
+) -> dict[str, Any]:
+    if tool.after is None or not _elicits(context):
+        raise RequestError(INVALID_PARAMS, NOT_ASKED)
+    answers = MappingProxyType(answers_to(sealed.keys, params.get("inputResponses")))
+    asked = replace(context, answers=answers)
+    return _replied(await _ran(tool, tool.after.answered(asked, arguments, sealed.refs), asked))
 
 
 def _answers(

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -8,13 +7,23 @@ from decimal import Decimal
 from .costs import dollars
 from .loop import LoopOutcome
 from .preview import PreviewFacts
+from .progress import build_progress, progress_lines
 from .request import craft_name
-from .transcript import Call, RunFacts
+from .spend import CHARS_PER_TOKEN, RunSpend
+from .transcript import Call, RunFacts, trimmed
 
-__all__ = ["PROBLEMS_SHOWN", "Evidence", "summary_markdown", "tool_counts"]
+__all__ = ["ERROR_CHARS", "PROBLEMS_SHOWN", "Evidence", "summary_markdown"]
 
 PROBLEMS_SHOWN = 12
+ERROR_CHARS = 600
+KILO = 1000
 NO_PREVIEW = "No preview_page call succeeded, so no page was drawn or checked."
+SPEND_NOTE = (
+    "Est. $ is an estimate the API does not report per tool: each argument and result at {chars} characters a "
+    "token, paid once as output when the model wrote it, written to the cache once and read by every later "
+    "request ({requests} in this run). The turns cost {input} of input and {output} of output; the rest of the "
+    "input is the prompt, the tool list and the model's own thinking and text."
+)
 
 
 @dataclass(frozen=True)
@@ -23,6 +32,7 @@ class Evidence:
     outcome: LoopOutcome
     calls: Sequence[Call]
     spent: Decimal
+    spend: RunSpend | None = None
     preview: PreviewFacts | None = None
     pictures: Sequence[tuple[str, str]] = ()
     opinion: str | None = None
@@ -30,18 +40,12 @@ class Evidence:
     read: Sequence[str] = field(default_factory=tuple)
 
 
-def tool_counts(calls: Sequence[Call]) -> list[tuple[str, int, int]]:
-    made = Counter(call.name for call in calls)
-    failed = Counter(call.name for call in calls if call.is_error)
-    return sorted(
-        ((name, count, failed[name]) for name, count in made.items()), key=lambda row: (-row[1], row[0])
-    )
-
-
 def summary_markdown(evidence: Evidence) -> str:
     sections = [
         _heading(evidence),
-        _calls(evidence.calls),
+        _progress(evidence),
+        _calls(evidence.calls, evidence.spend),
+        _errors(evidence.calls),
         _components(evidence.preview),
         _verdicts(evidence.preview),
         _pictures(evidence.pictures),
@@ -65,12 +69,42 @@ def _heading(evidence: Evidence) -> str:
     )
 
 
-def _calls(calls: Sequence[Call]) -> str:
-    rows = [f"| `{name}` | {count} | {failed} |" for name, count, failed in tool_counts(calls)]
-    if not rows:
+def _progress(evidence: Evidence) -> str:
+    lines = progress_lines(build_progress(evidence.calls, evidence.preview))
+    return "\n".join(["### How far the build got", "", *lines])
+
+
+def _calls(calls: Sequence[Call], spend: RunSpend | None) -> str:
+    if not calls:
         return "### Tool calls\n\nThe model called no tool."
-    head = f"### Tool calls ({len(calls)})\n\n| Tool | Calls | Errors |\n|---|---|---|"
-    return "\n".join([head, *rows])
+    head = f"### Tool calls ({len(calls)})\n\n| Tool | Calls | Errors | Result KB | Est. tokens | Est. $ |"
+    rows = [
+        f"| `{row.name}` | {row.calls} | {row.errors} | {row.result_chars / KILO:.1f} | {row.tokens:,} | "
+        f"{dollars(row.usd)} |"
+        for row in (spend.tools if spend is not None else [])
+    ]
+    note = (
+        SPEND_NOTE.format(
+            chars=CHARS_PER_TOKEN,
+            requests=spend.requests,
+            input=dollars(spend.input_usd),
+            output=dollars(spend.output_usd),
+        )
+        if spend is not None
+        else ""
+    )
+    return "\n".join([head, "|---|---|---|---|---|---|", *rows, "", note]).rstrip()
+
+
+def _errors(calls: Sequence[Call]) -> str:
+    failed = [call for call in calls if call.is_error]
+    if not failed:
+        return ""
+    lines = [
+        f"- Turn {call.turn}, `{call.name}`: {trimmed(' '.join(' '.join(call.texts).split()), ERROR_CHARS)}"
+        for call in failed
+    ]
+    return "\n".join([f"### Tool errors ({len(failed)})", "", *lines])
 
 
 def _components(preview: PreviewFacts | None) -> str:
@@ -117,7 +151,7 @@ def _design(evidence: Evidence) -> str:
     lines = ["### Design notes (never the verdict)", ""]
     lines.append(f"The model's own critique with its last preview: {_counted(len(critique))}.")
     lines += [f"- {note}" for note in critique]
-    lines.append(f"\nThe server's read of the pictures drawn again: {_counted(len(evidence.read))}.")
+    lines.append(f"\nThe server's read of the last preview's pictures: {_counted(len(evidence.read))}.")
     lines += [f"- {note}" for note in evidence.read]
     return "\n".join(lines) if evidence.preview else ""
 

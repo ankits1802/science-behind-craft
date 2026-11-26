@@ -10,10 +10,12 @@ worked example of that thinking, never a template. Each step names what to read 
 
 ## The thinking
 
-1. **Find the craft's story in its facts.** `get_page` with the subject, then `get_facts`: its
-   process, chemistry, place, history and people, and what is distinctive in each. Derive the
-   page's lists (`page-checklist/1`): mechanisms, ambiguous terms, the signature fact.
-   `reserve_tasks` the keys you will close.
+1. **Find the craft's story in its facts.** `get_page` with the subject and `parts: ["brief"]`:
+   the page as published, every fact as its id and one line under its chapter, and rule 29's
+   opportunities; its `cursor` brings the rest of the lines. Read whole with `get_facts` and `ids`
+   only the facts you will cite, never field by field. Find its process, chemistry, place, history
+   and people, and what is distinctive in each. Derive the page's lists (`page-checklist/1`):
+   mechanisms, ambiguous terms, the signature fact. `reserve_tasks` the keys you will close.
 2. **Decide what a reader must see and do to understand it.** Read the design principles first
    (`kalavigyan-design/1`, the whole system at `system/1`). Every field the sources cover is dense
    with cited detail; a figure sits beside the prose that needs it, never a wall of text; plates
@@ -38,7 +40,7 @@ worked example of that thinking, never a template. Each step names what to read 
    schema `kalavigyan://components/<kind>.schema.json`; a table of values goes in as a dataset,
    `datasets/1`). `compose_component` is a helper that can save the work of a reaction, dip,
    molecule or what-if lab built from the page's structure: take what it returns when it fits your
-   design, and build your own when it does not.
+   design, else build your own.
 7. **Give the pictures, the masthead first.** Read rules 2, 3, 7 and 14 (`page-checklist/1` on).
    An open-licence picture goes by its `page_url`; a person's own only with their declaration.
 8. **Lay it out.** Read the cookbook's placing section. Each chapter alternates prose and the
@@ -46,23 +48,22 @@ worked example of that thinking, never a template. Each step names what to read 
 9. **Preview and judge it as a reader.** `preview_page`; look at every picture it returns; fix
    each failed rule from the checklist page it hands you; ask of each chapter whether a reader
    sees what they need beside the words. Then read the pictures as the page's designer, chapter
-   by chapter, against the rubric (`design-critique/1`): write your notes, work through every one
-   of them, and preview again with them as `critique` before you propose. A client that cannot
-   see the pictures asks the server to read them with `read_pictures`.
+   by chapter, against the rubric (`design-critique/1`): write your notes, work through each, and
+   preview again with them as `critique` before you propose. A client that cannot see pictures
+   adds `read_pictures` for the server's read.
 10. **Propose, then the next round.** `propose_page` with the draft. A draft holds 10 components
     and 20 facts, so a full page goes in rounds: follow the parts with `get_proposal`, open the
     next draft for the same page with `edit_draft` and go on from step 5.
 
 The first `edit_draft` that adds components is answered with the design pages, a `read_token` and
-nothing changed: the expected first answer, not a failure. Read the pages and repeat the call
-carrying that token.
+nothing changed, which is expected, not a failure. Read the pages and repeat the call with that
+token.
 
 ## Done
 
 When the latest preview fails no rule, every field its sources cover is dense on the page, each
 mechanism, stage and moment of its story has the figure a reader needs beside its prose, no
-screen is a wall of text, and your latest critique of its pictures leaves nothing you would still
-fix. The report's counts beside Ajrakh's are a mirror, never a target.
+screen is a wall of text, and your latest critique leaves nothing you would still fix. The report's counts beside Ajrakh's are a mirror, never a target.
 
 ## What to ask the person
 
@@ -73,10 +74,10 @@ holds the page for them.
 
 ## When the site falls short
 
-A thing the page needs that no tool here can make is KalaVigyan's gap, never the person's problem
-and never theirs to fix. Build everything else, then tell them in one line what the page still
-lacks and that the site has to add it; a refused call is already recorded with its reason for the
-team, and the open work lists the gaps the server computes.
+A thing the page needs that no tool here can make is KalaVigyan's gap, never the person's problem.
+Build everything else, then tell them in one line what the page still lacks and that the site has
+to add it; a refused call is already recorded with its reason for the team, and the open work
+lists the gaps the server computes.
 
 ## How this reference is kept true
 

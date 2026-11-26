@@ -5,12 +5,14 @@ import json
 from decimal import Decimal
 
 import pytest
-from acceptance_support import REPO, call, message, result, text
+from acceptance_support import PRICES, REPO, call, message, result, text
 
 from acceptance.loop import MODEL_STOPPED, LoopOutcome, Turn
 from acceptance.opinion import DESIGN_SKILL, OPINION_ASK, design_principles, opinion_params
-from acceptance.preview import Picture, last_preview, preview_facts, preview_reply, reply_pictures
-from acceptance.summary import Evidence, summary_markdown, tool_counts
+from acceptance.pictures import Picture, reply_pictures
+from acceptance.preview import last_preview, preview_facts, preview_reply
+from acceptance.spend import run_spend
+from acceptance.summary import Evidence, summary_markdown
 from acceptance.transcript import RunFacts, block_entry, paired_calls, transcript, trimmed
 
 FACTS = RunFacts(
@@ -68,12 +70,14 @@ def turns_with_a_preview() -> list[Turn]:
 
 
 def test_a_long_argument_or_result_is_trimmed_and_says_how_much_was_left_out() -> None:
-    assert trimmed("a" * 2_500) == "a" * 2_000 + " [... 500 more characters]"
+    assert trimmed("a" * 4_500) == "a" * 4_000 + " [... 500 more characters]"
     assert trimmed("short") == "short"
-    entry = block_entry(call("c1", "edit_draft", {"text": "b" * 3_000}))
-    assert entry["name"] == "edit_draft"
-    assert entry["arguments"].endswith("more characters]")
-    assert len(entry["arguments"]) < 2_100
+    entry = block_entry(call("c1", "edit_draft", {"text": "b" * 5_000}))
+    assert (entry["name"], entry["by"], entry["chars"]) == ("edit_draft", "connector", 5_012)
+    assert entry["arguments"].endswith(" [... 1012 more characters]")
+    assert len(entry["arguments"]) < 4_100
+    kept = block_entry(call("c2", "edit_draft", {"text": "b" * 3_000}))
+    assert kept["arguments"] == '{"text": "' + "b" * 3_000 + '"}'
 
 
 def test_a_result_keeps_its_text_and_names_what_was_not_text() -> None:
@@ -88,6 +92,7 @@ def test_a_result_keeps_its_text_and_names_what_was_not_text() -> None:
         "callId": "c1",
         "isError": False,
         "text": "one\ntwo",
+        "chars": 7,
         "otherContent": ["image"],
     }
     listing = {"type": "mcp_tool_listing", "mcp_server_name": "kalavigyan", "tools": [{"name": "get_page"}]}
@@ -106,12 +111,16 @@ def test_calls_are_paired_with_their_results_across_the_run() -> None:
         [Turn(1, message("end_turn", [call("c9", "get_page")]).model_dump(mode="json"), Decimal(0))]
     )
     assert unanswered[0].answered is False
-    assert tool_counts(calls) == [("preview_page", 2, 1), ("edit_draft", 1, 0)]
+    assert [(found.chars, found.argument_chars) for found in calls] == [
+        (10, 42),
+        (8, 18),
+        (len(json.dumps(REPLY)), 18),
+    ]
 
 
 def test_the_transcript_records_each_turn_with_its_cost_and_blocks() -> None:
     written = transcript(FACTS, LoopOutcome(MODEL_STOPPED, "end_turn", turns_with_a_preview()))
-    assert (written["schemaVersion"], written["stopped"], written["trimmedAt"]) == (1, MODEL_STOPPED, 2_000)
+    assert (written["schemaVersion"], written["stopped"], written["trimmedAt"]) == (2, MODEL_STOPPED, 4_000)
     assert [turn["costUsd"] for turn in written["turns"]] == ["0.6", "0.63"]
     assert [block["type"] for block in written["turns"][1]["blocks"]] == ["call", "result", "text"]
 
@@ -148,7 +157,7 @@ def test_a_preview_that_answered_an_error_never_hides_the_one_that_drew_before_i
     assert last_preview(paired_calls(only_failed)) is None
 
 
-def test_a_redrawn_preview_s_pictures_are_named_from_their_captions_in_order() -> None:
+def test_a_preview_s_pictures_are_named_from_their_captions_in_order() -> None:
     jpeg, png = b"\xff\xd8jpeg", b"\x89PNGpng"
     content = [
         {"type": "text", "text": json.dumps(REPLY)},
@@ -169,11 +178,13 @@ def test_a_redrawn_preview_s_pictures_are_named_from_their_captions_in_order() -
 def test_the_summary_names_calls_components_verdicts_pictures_and_cost() -> None:
     turns = turns_with_a_preview()
     calls = paired_calls(turns)
+    outcome = LoopOutcome(MODEL_STOPPED, "end_turn", turns)
     evidence = Evidence(
         facts=FACTS,
-        outcome=LoopOutcome(MODEL_STOPPED, "end_turn", turns),
+        outcome=outcome,
         calls=calls,
         spent=Decimal("1.234"),
+        spend=run_spend(outcome, PRICES),
         preview=preview_facts(REPLY),
         pictures=[("pictures/01-390-px-the-first-screen.jpg", "390 px, the first screen")],
         opinion="Meets principle 1.",
@@ -183,7 +194,13 @@ def test_the_summary_names_calls_components_verdicts_pictures_and_cost() -> None
     assert summary.startswith("## Agent acceptance: Sanganeri Hand Block Printing\n")
     assert "Stopped: the model stopped (end_turn) after 2 turns." in summary
     assert "Cost: $1.23 of $12." in summary
-    assert "| `preview_page` | 2 | 1 |" in summary
+    assert (
+        "| `preview_page` | 2 | 1 | " in summary and "| `edit_draft` | 1 | 0 | 0.0 | 21 | $0.00 |" in summary
+    )
+    assert "- Turn 1, `preview_page`: not json" in summary
+    assert "- Opened a draft: in turn 1." in summary
+    assert "- Previewed: 1 times, the last failing 2 rules." in summary
+    assert "(4 in this run)" in summary
     assert "| `map_layer` | 2 |" in summary
     assert "20 rules pass, 2 fail, 6 are left to judge on the private link." in summary
     assert "- Fails rule 28. The page draws whole at both widths" in summary

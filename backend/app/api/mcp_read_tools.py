@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import uuid
 from typing import Self
 
 from pydantic import Field, model_validator
@@ -29,14 +30,17 @@ FIND_DESCRIPTION = (
     "its cited claims per field: which fields are covered, thin or missing."
 )
 FACTS_DESCRIPTION = (
-    "The cited facts of one craft, family or category page, optionally one field and ranked by words, each "
-    "with its evidence level, verbatim quotes, locators, stored quantities and the figures resting on it; "
-    "grouped by field with counts, and every field the page holds too few facts in named as open work with its "
-    "task key. A category's are the facts its page links and those proposed for it. Next, building a page "
-    "(playbook/1): find the craft's story in them, decide what a reader must see to understand it, and read how "
-    "Kutch Ajrakh answered the same questions (bar/1) before opening its draft with edit_draft."
+    "The cited facts of one craft, family or category page whole, each with its evidence level, verbatim "
+    "quotes, locators, stored quantities and the figures resting on it, and the sources they cite. ids reads "
+    "the facts you name, up to 50, as the page's brief (get_page, parts brief) lists them; otherwise "
+    "optionally one field and ranked by words, grouped by field with counts, and every field the page holds "
+    "too few facts in named as open work with its task key. A category's are the facts its page links and "
+    "those proposed for it. Building a page (playbook/1), read the brief first: it lists every fact in one "
+    "line, and these are the full texts of the facts a figure will cite."
 )
 ONE_PAGE = "name the page as subject {kind, slug} or give a craft_slug, one of them"
+IDS_ALONE = "ids name the facts to read; leave field and query out"
+IDS_DESCRIPTION = "The facts to read whole, by the ids the page's brief lists; field and query are left out"
 COMPONENTS_DESCRIPTION = (
     "The registered interactive components (players, maps, molecules, charts), each with its label, title, "
     "description, kind, fields and the subjects it is keyed to. Search it before you fill a spec by hand: one "
@@ -69,12 +73,23 @@ class GetFacts(Arguments):
         default=None, min_length=1, max_length=QUESTION_MAX_CHARS, description="Words to rank the facts by"
     )
     limit: int = Field(default=FACTS_LIMIT_DEFAULT, ge=1, le=FACTS_LIMIT_MAX)
+    ids: list[uuid.UUID] | None = Field(
+        default=None, min_length=1, max_length=FACTS_LIMIT_MAX, description=IDS_DESCRIPTION
+    )
 
     @model_validator(mode="after")
     def _one_page(self) -> Self:
         if (self.craft_slug is None) == (self.subject is None):
             raise ValueError(ONE_PAGE)
+        if self.ids and (self.field is not None or self.query is not None):
+            raise ValueError(IDS_ALONE)
         return self
+
+    def wanted(self) -> list[uuid.UUID]:
+        return list(dict.fromkeys(self.ids or ()))
+
+    def most(self) -> int:
+        return len(self.wanted()) or self.limit
 
 
 class ListComponents(Arguments):
@@ -113,7 +128,8 @@ async def _get_facts(context: ToolContext, arguments: GetFacts) -> CraftFacts:
         site=context.site,
         field=arguments.field,
         query=arguments.query,
-        limit=arguments.limit,
+        limit=arguments.most(),
+        ids=arguments.wanted(),
     )
 
 
@@ -124,8 +140,9 @@ async def _craft_facts(context: ToolContext, arguments: GetFacts, slug: str) -> 
         site=context.site,
         field=arguments.field,
         query=arguments.query,
-        limit=arguments.limit,
+        limit=arguments.most(),
         held=knowledge_api.held_facts_for(context.user),
+        ids=arguments.wanted(),
     )
 
 
