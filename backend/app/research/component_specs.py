@@ -31,6 +31,7 @@ __all__ = [
     "SPEC_MODELS",
     "checked_spec",
     "not_contributable",
+    "spec_model",
     "withheld_form",
 ]
 
@@ -73,9 +74,14 @@ CONTRIBUTABLE_KINDS = tuple(
 )
 
 
-def checked_spec(kind: str, spec: Mapping[str, Any]) -> ContractModel:
+def spec_model(kind: str, spec: Mapping[str, Any]) -> type[ContractModel] | None:
     model = form_model(kind, spec) or SPEC_MODELS.get(kind)
-    if model is None or not issubclass(model, ContractModel):
+    return model if model is not None and issubclass(model, ContractModel) else None
+
+
+def checked_spec(kind: str, spec: Mapping[str, Any]) -> ContractModel:
+    model = spec_model(kind, spec)
+    if model is None:
         raise InvalidInput(f"No spec model draws the component kind {kind!r}")
     return model.model_validate(spec)
 

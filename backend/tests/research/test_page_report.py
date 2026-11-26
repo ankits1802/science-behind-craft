@@ -163,3 +163,36 @@ def test_the_rule_titles_come_from_the_checklist_reference() -> None:
     assert titles[27] == "Every figure speaks the design's vocabulary"
     assert titles[28] == "The page draws whole at both widths"
     assert titles[29] == "What the craft's facts can show is weighed for a figure"
+
+
+BORROWED = "shared/chemistry/alizarin-held"
+
+
+def borrowed_document(*, cited: bool) -> MonographDocument:
+    body = page_document().model_dump(mode="json", by_alias=True)
+    content = body["content"]
+    mark = {"m": "cite", "key": "kutch-ajrakh:c7", "g": ["g1"], "c": ["red"]}
+    nodes: list[Any] = ["Alizarin holds the alum ", mark] if cited else ["Alizarin holds the alum red"]
+    content["units"]["u0100"] = {
+        "chapter": "chem",
+        "tag": "span",
+        "field": "CHEMISTRY",
+        "nodes": nodes,
+        "claimIds": [],
+    }
+    if cited:
+        content["citations"]["kutch-ajrakh:c7"] = [{"source": "g1", "locator": "p. 2", "quote": "alizarin"}]
+    figure = next(component for component in content["components"] if component["label"] == FIGURE)
+    content["components"].append({**figure, "label": BORROWED, "kind": "molecule_3d"})
+    content["layout"].append({"chapter": "chem", "kind": "component", "ref": BORROWED, "within": None})
+    body["specs"][BORROWED] = {"head": {"title": "u0100"}}
+    return MonographDocument.model_validate(body)
+
+
+def test_a_borrowed_figure_cites_through_the_units_its_spec_names_and_their_cite_marks() -> None:
+    cited = given(borrowed_document(cited=True))
+    assert f"figure {BORROWED} cites nothing through its units" not in evidence(cited, 9)
+    assert f"{BORROWED} holds no sentence" not in evidence(cited, 15)
+    bare = given(borrowed_document(cited=False))
+    assert f"figure {BORROWED} cites nothing through its units" in evidence(bare, 9)
+    assert f"{BORROWED} holds no sentence" not in evidence(bare, 15)

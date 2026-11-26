@@ -1,3 +1,4 @@
+import re
 from decimal import Decimal
 from typing import Any
 
@@ -5,6 +6,7 @@ import pytest
 
 from app.api import mcp_page_tools
 from app.api.mcp_page_texts import REVIEWED
+from app.api.mcp_rule_fixes import FIXES_HEAD, RULE_FIXES, rule_fixes
 from app.api.mcp_tools import TOOLS
 from app.data.skill_library import reference_text
 from app.research.design_critique import DesignCritique, DesignNote
@@ -81,7 +83,11 @@ async def test_a_critique_given_with_a_preview_is_recorded_and_shown_and_none_is
     assert seen == [{"critique": DesignCritique.model_validate(CRITIQUE)}, {"asked": False}]
     report = shown["structuredContent"]["report"]
     assert report["critique"] == CRITIQUE and report["designRead"] is None
-    assert shown["structuredContent"]["nextStep"] == REVIEWED and "design-critique/1" in REVIEWED
+    failed = sorted(rule["rule"] for rule in report["rules"] if rule["verdict"] == "FAIL")
+    fixes = "; ".join(f"rule {number}, {RULE_FIXES[number]}" for number in failed)
+    assert failed and set(failed) <= set(RULE_FIXES)
+    assert shown["structuredContent"]["nextStep"] == f"{REVIEWED}{FIXES_HEAD}{fixes}."
+    assert "design-critique/1" in REVIEWED
     assert shown["content"][1:] == [
         {"type": "text", "text": SHOT.caption},
         {"type": "image", "data": SHOT.data, "mimeType": "image/jpeg"},
@@ -131,3 +137,16 @@ def test_the_preview_s_input_names_the_critique_and_read_pictures_without_a_dang
     assert "`design-critique/1`" in reference_text("playbook")
     assert properties["read_pictures"]["type"] == "boolean" and "$defs" not in schema
     assert "$ref" not in str(properties["critique"])
+
+
+def test_each_rule_the_sanganeri_run_left_failing_names_the_tool_that_fixes_it() -> None:
+    for number in (2, 6, 9, 15, 20, 23, 24, 25, 26, 28):
+        assert set(re.findall(r"[a-z_]+", RULE_FIXES[number])) & set(TOOLS), number
+    assert "give_pictures" in RULE_FIXES[2] and "MASTHEAD" in RULE_FIXES[2]
+    assert "edit_draft add facts in that field" in RULE_FIXES[23]
+
+
+def test_a_preview_with_no_failed_rule_or_only_judged_ones_names_no_fix() -> None:
+    assert rule_fixes([]) == ""
+    assert rule_fixes([5, 8, 11]) == ""
+    assert rule_fixes([28, 2, 28]).startswith(f"{FIXES_HEAD}rule 2, give_pictures")

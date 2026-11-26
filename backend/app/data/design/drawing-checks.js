@@ -91,14 +91,34 @@
     return PICTURES.includes(tag) && visible(node) && (tag !== "img" || loaded(node));
   }
 
-  function isBar(node) {
-    if (node.children.length || (node.textContent ?? "").trim() || !visible(node)) return false;
+  function filled(node) {
+    if (node.children.length || (node.textContent ?? "").trim() || !shown(node)) return false;
     const fill = getComputedStyle(node).backgroundColor;
     return fill !== "transparent" && !/^rgba\(.*,\s*0\)$/.test(fill);
   }
 
+  function isBar(node) {
+    return sized(node) && filled(node);
+  }
+
   function marks(element, role) {
     return nodesOf(element).filter((node) => isGraphic(node) || (role === "chart" && isBar(node))).length;
+  }
+
+  function flatBars(element) {
+    return nodesOf(element).filter((node) => {
+      const box = node.getBoundingClientRect();
+      return box.height >= 1 && box.width < 1 && filled(node);
+    }).length;
+  }
+
+  function outsideProblems(element) {
+    for (const node of nodesOf(element)) {
+      if (getComputedStyle(node).position !== "absolute" || !visible(node)) continue;
+      const holder = node.offsetParent;
+      if (holder && !element.contains(holder)) return [`a ${node.tagName.toLowerCase()} is drawn against the page outside its slot, so the slot does not hold its height`];
+    }
+    return [];
   }
 
   function moving(element) {
@@ -122,7 +142,10 @@
     const running = moving(element);
     if (running) problems.push(`still moves at rest (${running} animations running)`);
     if (role === "map" && !marks(element, role)) problems.push("draws no map");
-    if (role === "chart" && !marks(element, role)) problems.push("draws no marks");
+    if (role === "chart" && !marks(element, role)) {
+      const flat = flatBars(element);
+      problems.push(flat ? `draws no marks: its ${flat} bars draw 0px wide` : "draws no marks");
+    }
     return problems;
   }
 
@@ -135,6 +158,7 @@
     if (component.role === "picture") problems.push(...pictureProblems(element));
     else if (!drawsSomething(element)) problems.push("draws empty");
     if (AT_REST_ROLES.has(component.role)) problems.push(...restProblems(element, component.role));
+    problems.push(...outsideProblems(element));
     problems.push(...overflows(element, view));
     return [...new Set(problems)].slice(0, PROBLEMS_MAX);
   }

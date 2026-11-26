@@ -5,6 +5,7 @@ import pytest
 
 from app.models.page_previews import PREVIEW_DRAWINGS
 from app.research.component_specs_plates_parts import PICTURE_PATTERN
+from app.research.monograph_page import LayoutEntry
 from app.research.page_render import (
     DESKTOP_WIDTH,
     DRAWING_STATES,
@@ -59,6 +60,33 @@ def test_the_plan_names_each_component_its_masthead_and_the_chapters_after_the_o
     ]
     assert plan.masthead == PICTURE
     assert plan.chapters == ["chem"]
+
+
+def test_a_toggle_its_lab_draws_is_checked_inside_the_lab_and_a_toggle_with_no_lab_is_placed_alone() -> None:
+    base = page_document()
+    lab, toggle, alone = (
+        "test-craft/chemistry/lab",
+        "test-craft/chemistry/inside",
+        "test-craft/chemistry/alone",
+    )
+    template = next(component for component in base.content.components if component.label == FIGURE)
+    added = [
+        template.model_copy(update={"label": label, "kind": kind})
+        for label, kind in ((lab, "experiment_lab"), (toggle, "choice_toggle"), (alone, "choice_toggle"))
+    ]
+    layout = [
+        *base.content.layout,
+        *(LayoutEntry(chapter="chem", kind="component", ref=entry.label, within=None) for entry in added),
+    ]
+    content = base.content.model_copy(
+        update={"components": [*base.content.components, *added], "layout": layout}
+    )
+    specs = {**base.specs, lab: {"experiments": [{"key": "inside", "toggle": {"component": toggle}}]}}
+    plan = render_plan(base.model_copy(update={"content": content, "specs": specs}))
+    placed = {component.label: (component.role, component.placed) for component in plan.components}
+    assert placed[lab] == ("interactive", True)
+    assert placed[toggle] == ("interactive", False)
+    assert placed[alone] == ("interactive", True)
 
 
 def test_a_picture_s_size_is_its_decoded_bytes() -> None:

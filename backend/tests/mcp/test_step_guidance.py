@@ -23,6 +23,7 @@ from app.api.mcp_guide_steps import (
 from app.api.mcp_guides import GuideSheet, guide_sheets
 from app.api.mcp_page_texts import READ_NEXT, REVIEWED
 from app.api.mcp_protocol import SERVER_INSTRUCTIONS
+from app.api.mcp_rule_fixes import FIXES_HEAD, RULE_FIXES
 from app.api.mcp_tools import ToolContext, answer
 from app.models import PageDraft, User
 from app.research.page_proposals import PageBundle, PagePreviewResult
@@ -252,7 +253,8 @@ async def test_a_failed_rule_hands_over_the_checklist_page_it_lives_on(
         "structuredContent"
     ]
     failed = sorted(rule["rule"] for rule in shown["report"]["rules"] if rule["verdict"] == "FAIL")
-    assert shown["nextStep"] == REVIEWED and "propose_page" in REVIEWED
+    fixes = "; ".join(f"rule {number}, {RULE_FIXES[number]}" for number in failed)
+    assert shown["nextStep"] == f"{REVIEWED}{FIXES_HEAD}{fixes}." and "propose_page" in REVIEWED
     guide = shown["guide"]
     assert 28 in failed and [line["rule"] for line in guide["rules"]] == failed
     for line in guide["rules"]:

@@ -88,12 +88,13 @@ def test_long_notes_are_cut_and_never_fail_the_read() -> None:
     assert read.verdict is not None and len(read.verdict) == 401
 
 
-def test_a_failed_or_unmade_drawing_skips_the_read_and_a_checked_one_with_pictures_does_not() -> None:
+def test_any_drawing_that_made_pictures_is_read_and_one_without_pictures_is_skipped() -> None:
     problem = DrawnProblem(width=390, label="page", problem="is 310px wider than the 390px screen")
     failed = DrawingReport(state="FAILED", widths=[390, 1440], problems=[problem], images=[])
     unmade = DrawingReport(state="UNMADE", widths=[], problems=[], images=[], reason="down")
     checked = DrawingReport(state="CHECKED", widths=[390, 1440], problems=[], images=[])
-    assert drawing_skip(failed, [image("first-screen-390")]) == DRAWING_FAILED
+    assert drawing_skip(failed, [image("first-screen-390")]) is None
+    assert drawing_skip(failed, []) == DRAWING_FAILED
     assert drawing_skip(unmade, []) == NOT_DRAWN
     assert drawing_skip(None, []) == NO_REPORT
     assert drawing_skip(checked, []) == NO_PICTURES

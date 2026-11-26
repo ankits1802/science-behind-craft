@@ -61,6 +61,7 @@ ALLOWED = {
     "get_proposal",
     "edit_draft",
     "compose_component",
+    "give_pictures",
     "preview_page",
 }
 NEVER_OFFERED = {
@@ -70,7 +71,6 @@ NEVER_OFFERED = {
     "propose_source",
     "propose_dataset",
     "supply_source",
-    "give_pictures",
     "check_pictures",
     "reserve_tasks",
     "steward_craft",
@@ -222,6 +222,7 @@ def test_the_system_prompt_is_the_client_line_the_server_s_own_words_and_the_lim
     )
     assert "Instructions from the KalaVigyan server:\nKalaVigyan holds cited knowledge." in prompt
     assert "never call propose_page" in prompt
+    assert "give open-licence pictures to your draft with give_pictures" in prompt
     assert "Instructions from the KalaVigyan server" not in system_prompt(SERVER_URL, "  ")
 
 

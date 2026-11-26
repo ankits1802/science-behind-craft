@@ -89,7 +89,7 @@ def _drawing(
     page: tuple[str | None, str],
 ) -> MonographDocument | None:
     chapter = field_chapter(row.field)
-    drawn = drawn_delivery(delivered, place=(chapter, row.field), visible=visible, taken=())
+    drawn = drawn_delivery(row.kind, delivered, place=(chapter, row.field), visible=visible, taken=())
     if drawn is None:
         return None
     sources = {str(key): stored_source(knowledge_view.source_ref(found)) for key, found in rows.items()}

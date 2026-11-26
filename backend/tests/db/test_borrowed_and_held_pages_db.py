@@ -10,6 +10,8 @@ from app.core.errors import InvalidInput, Refused
 from app.models import AuditLog, ComponentProposal, KnowledgePiece, PageLayout, TrustTierOverride
 from app.research.page_drafts import DraftAddition
 from app.research.page_proposals import PageBundle, PageProposalResult, PageSubject
+from app.services.monograph_generated_parts import held_rows, subject_components
+from app.services.open_work_subjects import subject_by_key
 from app.services.page_drafts import add_to_draft, bundle_of, create_draft
 from app.services.page_holds import HoldPlace, UnknownHold, confirm_hold, discard_hold, held_page, hold_page
 from app.services.page_preview import preview_page
@@ -29,7 +31,16 @@ from .component_lifecycle_seed import (
     person,
     replacement,
 )
-from .page_documents_seed import CONCEPT_PLAYER, CRAFT_SLUG
+from .page_documents_seed import (
+    BARE_SLUG,
+    CATEGORY_CLAIM,
+    CATEGORY_SLUG,
+    CONCEPT_PLAYER,
+    CRAFT_CLAIM,
+    CRAFT_SLUG,
+    FAMILY_CLAIM,
+    FAMILY_SLUG,
+)
 from .test_page_bundles_db import tools
 from .testimony_seed import rolled_back_session
 
@@ -125,6 +136,47 @@ async def test_a_borrowed_component_whose_facts_the_page_holds_is_still_placed(s
         ("component", "ACCEPTED"),
         ("layout", "ACCEPTED"),
     ]
+
+
+async def test_the_page_draws_a_borrowed_component_only_when_it_holds_every_fact_its_units_cite(
+    session: AsyncSession,
+) -> None:
+    subject = await subject_by_key(session, "craft", CRAFT_SLUG)
+    labels = {component.label for component in await subject_components(session, subject, [])}
+    assert CONCEPT_PLAYER in labels
+    assert FOREIGN not in labels
+
+
+async def _shared(session: AsyncSession) -> list[KnowledgePiece]:
+    rows = await session.scalars(
+        select(KnowledgePiece).where(KnowledgePiece.label.in_([CONCEPT_PLAYER, FOREIGN]))
+    )
+    return sorted(rows.all(), key=lambda row: str(row.label))
+
+
+async def test_a_family_or_category_page_draws_a_shared_figure_on_the_science_its_own_facts_tell(
+    session: AsyncSession,
+) -> None:
+    shared = await _shared(session)
+    for kind, slug, told in (
+        ("family", FAMILY_SLUG, FAMILY_CLAIM),
+        ("category", CATEGORY_SLUG, CATEGORY_CLAIM),
+    ):
+        subject = await subject_by_key(session, kind, slug)
+        assert [row.label for row in await held_rows(session, subject, shared, [told])] == [CONCEPT_PLAYER], (
+            kind
+        )
+        assert await held_rows(session, subject, shared, []) == [], kind
+
+
+async def test_a_craft_page_holds_a_shared_figure_by_its_own_facts_whatever_science_it_tells(
+    session: AsyncSession,
+) -> None:
+    shared = await _shared(session)
+    bare = await subject_by_key(session, "craft", BARE_SLUG)
+    assert CONCEPT_PLAYER not in [row.label for row in await held_rows(session, bare, shared, [CRAFT_CLAIM])]
+    craft = await subject_by_key(session, "craft", CRAFT_SLUG)
+    assert [row.label for row in await held_rows(session, craft, shared, [])] == [CONCEPT_PLAYER]
 
 
 async def test_only_an_account_whose_proposals_reach_readers_at_once_has_its_pages_held(

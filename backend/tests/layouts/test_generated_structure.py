@@ -8,13 +8,14 @@ from app.research.component_specs import checked_spec
 from app.research.component_specs_blocks import ANSWER_BLOCK_KIND, AnswerBlockSpec
 from app.research.craft_page import CraftPage
 from app.research.monograph_document import MonographDocument
+from app.research.page_report_rules import DENSE_SENTENCES
 from app.services.document_components import DocumentStructure, document_structure
 from app.services.knowledge_view import ClaimView
 from app.services.monograph_generated_assembly import GeneratedParts, assembled_document
 from app.services.monograph_generated_drawings import Drawings
 from app.services.monograph_generated_parts import StoredSection
-from app.services.monograph_generated_structure import shown_claim_ids, with_page_claims
-from app.services.monograph_generated_units import SubjectRecord, stored_source
+from app.services.monograph_generated_structure import shown_claim_ids, told_sentences, with_page_claims
+from app.services.monograph_generated_units import DraftUnit, SubjectRecord, stored_source
 
 from ..contracts.golden import golden_json
 
@@ -126,18 +127,38 @@ def test_a_block_s_sources_are_the_document_s_numbered_sources(document: Monogra
             assert sources[listed.key].title == listed.ref.title
 
 
-def test_a_sentence_a_figure_or_record_already_shows_is_not_retold_in_its_field_s_prose(
+def test_a_sentence_a_figure_or_record_already_shows_is_retold_only_to_keep_its_field_dense(
     page: CraftPage, document: MonographDocument
 ) -> None:
     structure = document_structure(page)
     structured = structure.claim_ids()
-    prose = [
-        unit
-        for ref, unit in document.content.units.items()
-        if unit.tag == "p" and unit.claim_ids and not ref.startswith("s-") and unit.chapter != "opening"
-    ]
+    prose: dict[str | None, list[bool]] = defaultdict(list)
+    for ref, unit in document.content.units.items():
+        if unit.tag == "p" and unit.claim_ids and not ref.startswith("s-") and unit.chapter != "opening":
+            prose[unit.field].append({uuid.UUID(claim) for claim in unit.claim_ids} <= structured)
     assert prose
-    assert all(not {uuid.UUID(claim) for claim in unit.claim_ids} <= structured for unit in prose)
+    for retold in prose.values():
+        fresh = retold.count(False)
+        assert fresh >= DENSE_SENTENCES or len(retold) <= DENSE_SENTENCES
+        assert fresh < DENSE_SENTENCES or not any(retold)
+
+
+def _draft(unit_id: str, claim: uuid.UUID) -> DraftUnit:
+    return DraftUnit(unit_id, "made", "PROCESS", f"Sentence {unit_id}.", (claim,))
+
+
+def test_a_field_s_sentences_a_figure_shows_stay_in_its_prose_until_it_holds_three() -> None:
+    shown, told = uuid.uuid4(), uuid.uuid4()
+    drafts = [_draft("u1", shown), _draft("u2", told), _draft("u3", shown), _draft("u4", shown)]
+    kept = told_sentences(drafts, lede=(), shown={shown})
+    assert [draft.unit_id for draft in kept] == ["u1", "u2", "u3"]
+    many = [*drafts, _draft("u5", told), _draft("u6", told)]
+    assert [draft.unit_id for draft in told_sentences(many, lede=(), shown={shown})] == ["u2", "u5", "u6"]
+    assert [draft.unit_id for draft in told_sentences(drafts, lede=("u2",), shown={shown})] == [
+        "u1",
+        "u3",
+        "u4",
+    ]
 
 
 def test_the_document_numbers_its_chapters_from_the_page_and_lists_its_sources(

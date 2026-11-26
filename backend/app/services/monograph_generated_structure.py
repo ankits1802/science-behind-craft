@@ -12,6 +12,7 @@ from app.research.citations import SourceRef
 from app.research.component_specs import checked_spec
 from app.research.component_specs_blocks import ANSWER_BLOCK_KIND
 from app.research.monograph_page import ComponentEntry, TextUnit
+from app.research.page_report_rules import DENSE_SENTENCES
 
 from .document_components import DocumentStructure, StructureBlock, StructureItem
 from .document_components_parts import HEADING_TAG, HYPOTHESIS, StructureText
@@ -26,6 +27,7 @@ __all__ = [
     "placed_structure",
     "shown_claim_ids",
     "structure_claim_ids",
+    "told_sentences",
     "with_page_claims",
 ]
 
@@ -74,6 +76,16 @@ def shown_claim_ids(sections: Sequence[StoredSection], structure: DocumentStruct
     if structure is not None:
         shown |= structure.claim_ids()
     return shown
+
+
+def told_sentences(
+    drafts: Sequence[DraftUnit], lede: Collection[str], shown: Collection[uuid.UUID]
+) -> list[DraftUnit]:
+    written = [draft for draft in drafts if draft.unit_id not in lede]
+    fresh = {draft.unit_id for draft in written if not set(draft.claim_ids) <= set(shown)}
+    wanted = max(0, DENSE_SENTENCES - len(fresh))
+    retold = set([draft.unit_id for draft in written if draft.unit_id not in fresh][:wanted])
+    return [draft for draft in written if draft.unit_id in fresh or draft.unit_id in retold]
 
 
 def with_page_claims(

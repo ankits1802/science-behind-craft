@@ -30,7 +30,8 @@ from .media_ref_store import stored_media_refs
 from .monograph_generated_drawings import Drawings
 from .monograph_generated_pictures import PlateSource, contributed_plates, curated_plate
 from .monograph_generated_units import SubjectRecord
-from .open_work_subjects import CATEGORY, WorkSubject
+from .open_work_subjects import CATEGORY, CRAFT, WorkSubject
+from .page_held_facts import held_claims
 from .page_layouts_backfill import curated_pictures
 
 __all__ = [
@@ -38,6 +39,7 @@ __all__ = [
     "RegisteredComponent",
     "StoredSection",
     "component_binding_of",
+    "held_rows",
     "piece_subject_keys",
     "registered_component",
     "subject_components",
@@ -129,12 +131,45 @@ async def subject_components(
         labels = [component.label for component in listed.components]
         found = list(await session.scalars(select(KnowledgePiece).where(KnowledgePiece.label.in_(labels))))
     owner = None if subject.kind == CATEGORY else subject.id
-    rows = [row for row in found if row.craftId is None or row.craftId == owner]
+    rows = await held_rows(
+        session, subject, [row for row in found if row.craftId in (None, owner)], claim_ids
+    )
     subjects = await piece_subject_keys(session, [row.id for row in rows])
     return sorted(
         (registered_component(row, subjects.get(row.id, ()), owner) for row in rows if row.label is not None),
         key=lambda component: component.label,
     )
+
+
+async def held_rows(
+    session: AsyncSession, subject: WorkSubject, rows: list[KnowledgePiece], page_claims: Sequence[uuid.UUID]
+) -> list[KnowledgePiece]:
+    owner = None if subject.kind == CATEGORY else subject.id
+    cited = [claim for row in rows if _borrowed(row, owner) for claim in row.claimIds or ()]
+    held = await held_claims(session, subject, cited)
+    if subject.kind != CRAFT:
+        held |= await _told_alike(session, cited, page_claims)
+    return [row for row in rows if not _borrowed(row, owner) or set(row.claimIds or ()) <= held]
+
+
+async def _told_alike(
+    session: AsyncSession, cited: Sequence[uuid.UUID], page_claims: Sequence[uuid.UUID]
+) -> frozenset[uuid.UUID]:
+    if not cited or not page_claims:
+        return frozenset()
+    told = select(Claim.subjectId).where(
+        Claim.id.in_(list(page_claims)), Claim.subjectType == CONCEPT_SUBJECT
+    )
+    alike = await session.scalars(
+        select(Claim.id).where(
+            Claim.id.in_(list(cited)), Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId.in_(told)
+        )
+    )
+    return frozenset(alike.all())
+
+
+def _borrowed(row: KnowledgePiece, owner: uuid.UUID | None) -> bool:
+    return row.craftId is None or row.craftId != owner
 
 
 async def subject_pictures(session: AsyncSession, subject: WorkSubject) -> list[PlateSource]:
@@ -222,5 +257,5 @@ def registered_component(
         monograph=monograph if isinstance(monograph, str) else None,
         anchor=anchor if isinstance(anchor, str) else None,
         delivered=stored_delivery(str(row.label), payload),
-        borrowed=row.craftId is None or row.craftId != owner,
+        borrowed=_borrowed(row, owner),
     )

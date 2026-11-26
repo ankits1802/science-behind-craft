@@ -2,20 +2,18 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
-from typing import Any
-
-from app.models.component_kinds import LINK_TOOL_KINDS
 
 from .component_specs_general import is_declared
 from .coverage_chapters import field_chapter
 from .elements import ELEMENTS
 from .monograph_document import MonographDocument
-from .monograph_page import ComponentEntry, MonographContent
+from .monograph_page import MonographContent
 from .page_drafts import PageLists
 from .page_report_design import DESIGN_RULE, design_evidence
 from .page_report_drawable import DRAWABLE_RULE, HeldShapes, drawable_evidence, opportunities
+from .page_report_read import OPENING, PICTURE_KIND, ReadPage, Sentence, node_text
 from .page_report_sources import counted_apart
 from .quotes import quote_key, unsupported_figures
 from .structure_proposals import ReactionItem
@@ -39,9 +37,7 @@ __all__ = [
 ]
 
 PASS, FAIL, JUDGE = VERDICTS = ("PASS", "FAIL", "JUDGE")
-OPENING = "opening"
-PICTURE_KIND = "picture_plate"
-SENTENCE_TAG, HEADING_TAG = "p", "h3"
+HEADING_TAG = "h3"
 LEDE_MAX = 3
 DENSE_SENTENCES = 3
 MECHANISM_MIN = 2
@@ -74,15 +70,6 @@ Verdict = tuple[str, list[str]]
 
 
 @dataclass(frozen=True)
-class Sentence:
-    unit_id: str
-    text: str
-    field: str | None
-    chapter: str
-    claim_ids: tuple[str, ...]
-
-
-@dataclass(frozen=True)
 class ReportInput:
     document: MonographDocument
     lists: PageLists | None = None
@@ -91,68 +78,6 @@ class ReportInput:
     supplied: Mapping[str, str] = field(default_factory=dict)
     bar: MonographContent | None = None
     held: HeldShapes | None = None
-
-
-def node_text(nodes: Sequence[Any]) -> str:
-    return "".join(
-        node if isinstance(node, str) else node_text(node.get("c", []))
-        for node in nodes
-        if isinstance(node, str | dict)
-    )
-
-
-@dataclass(frozen=True)
-class ReadPage:
-    document: MonographDocument
-    sentences: tuple[Sentence, ...]
-    within: Mapping[str, str]
-    figures: tuple[ComponentEntry, ...]
-    pictures: tuple[ComponentEntry, ...]
-
-    @classmethod
-    def of(cls, document: MonographDocument) -> ReadPage:
-        content = document.content
-        within = {entry.ref: entry.within for entry in content.layout if entry.within is not None}
-        placed = [entry.ref for entry in content.layout if entry.kind == "unit" and entry.within is None]
-        sentences = tuple(
-            Sentence(ref, node_text(unit.nodes).strip(), unit.field, unit.chapter, tuple(unit.claim_ids))
-            for ref in placed
-            if (unit := content.units.get(ref)) is not None and unit.tag == SENTENCE_TAG and unit.claim_ids
-        )
-        figures = tuple(c for c in content.components if c.kind not in (PICTURE_KIND, *LINK_TOOL_KINDS))
-        pictures = tuple(c for c in content.components if c.kind == PICTURE_KIND)
-        return cls(document, sentences, within, figures, pictures)
-
-    def text(self, unit_id: str) -> str:
-        unit = self.document.content.units.get(unit_id)
-        return "" if unit is None else node_text(unit.nodes).strip()
-
-    def held(self, label: str) -> list[str]:
-        return [unit for unit, owner in self.within.items() if owner == label]
-
-    def cited(self, label: str) -> bool:
-        citations = self.document.content.citations
-        spec = self.document.specs.get(label, {})
-        return (
-            any(unit in citations for unit in self.held(label))
-            or bool(spec.get("sources"))
-            or label in self.document.fragments
-        )
-
-    def plate(self, label: str) -> tuple[str, str, str]:
-        spec = self.document.specs.get(label, {})
-        figure = spec.get("figure") or {}
-        captions = [
-            self.text(str(c.get("unit"))) for c in figure.get("captions") or [] if isinstance(c, dict)
-        ]
-        credit = self.text(str(figure.get("credit"))) if figure.get("credit") else ""
-        return str((spec.get("picture") or {}).get("src") or ""), " ".join(captions), credit
-
-    def lede(self) -> list[Sentence]:
-        return [sentence for sentence in self.sentences if sentence.chapter == OPENING]
-
-    def by_field(self) -> Counter[str]:
-        return Counter(sentence.field for sentence in self.sentences if sentence.field)
 
 
 def checked_rules(given: ReportInput) -> dict[int, Verdict]:
@@ -279,7 +204,7 @@ def _cards_hold_text(page: ReadPage, given: ReportInput) -> Verdict:
     empty = [
         f"{f.label} holds no sentence"
         for f in page.figures
-        if not any(page.text(unit) for unit in page.held(f.label)) and not page.cited(f.label)
+        if not any(page.text(unit) for unit in page.named(f.label)) and not page.cited(f.label)
     ]
     return _verdict(empty, f"each of {len(page.figures)} figures holds its text")
 

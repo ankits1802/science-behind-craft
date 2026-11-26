@@ -95,12 +95,26 @@ async def test_the_server_s_read_is_off_unless_the_preview_asks_for_it(cache: di
     assert reader.asked == [] and cache == {}
 
 
-async def test_a_failed_drawing_skips_the_read_without_calling_the_model(
+async def test_a_failed_drawing_with_pictures_is_read_so_a_client_that_cannot_see_them_learns_what_broke(
     cache: dict[str, DesignRead],
 ) -> None:
     reader = Reader(reading())
     problem = DrawnProblem(width=390, label="page", problem="is 310px wider than the 390px screen")
     shown = await designed_preview(Session(), USER, drawn([problem]), asked=True, now=NOW, reader=reader)
+    assert shown.report is not None and shown.report.design_read is not None
+    assert (shown.report.design_read.state, len(shown.report.design_read.notes)) == (READ, 1)
+    assert len(reader.asked) == 1 and len(cache) == 1
+
+
+async def test_a_failed_drawing_without_pictures_skips_the_read_without_calling_the_model(
+    cache: dict[str, DesignRead],
+) -> None:
+    reader = Reader(reading())
+    problem = DrawnProblem(width=390, label="page", problem="is 310px wider than the 390px screen")
+    bare = drawn([problem])
+    shown = await designed_preview(
+        Session(), USER, DrawnPreview(report=bare.report, images=[]), asked=True, now=NOW, reader=reader
+    )
     assert shown.report is not None and shown.report.design_read is not None
     assert (shown.report.design_read.state, shown.report.design_read.reason) == (SKIPPED, DRAWING_FAILED)
     assert reader.asked == [] and cache == {}

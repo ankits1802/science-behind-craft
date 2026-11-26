@@ -58,6 +58,8 @@ const BROKEN: DrawingPlan = {
     { label: "test/bare-chart", role: "chart", placed: true },
     { label: "test/loading", role: "interactive", placed: true },
     { label: "test/spinning", role: "interactive", placed: true },
+    { label: "test/flat-bars", role: "chart", placed: true },
+    { label: "test/tiles", role: "figure", placed: true },
     { label: "test/gone", role: "interactive", placed: true },
     { label: "test/unplaced", role: "map", placed: false }
   ]
@@ -76,7 +78,9 @@ test("the preview's review fails each drawing a reader would see broken, naming 
       '<div data-component="test/wide" style="width:300px"><p>Rows</p><table style="width:700px;border-collapse:collapse"><tbody><tr><td>a</td></tr></tbody></table></div>',
       '<div data-component="test/bare-chart"><p>Title only</p></div>',
       '<div data-component="test/loading" aria-busy="true"><button type="button">Play</button></div>',
-      '<div data-component="test/spinning"><span style="display:inline-block;animation:turn 1s linear infinite">x</span></div>'
+      '<div data-component="test/spinning"><span style="display:inline-block;animation:turn 1s linear infinite">x</span></div>',
+      '<div data-component="test/flat-bars"><p>Shares</p><span style="display:block;width:0;height:8px;background:#333"></span></div>',
+      '<div style="position:relative"><div data-component="test/tiles" style="height:20px"><div style="position:absolute;inset:0 0 auto 0;height:200px"><p>315</p></div></div></div>'
     ].join("")
   );
   const review = await drawingReview(page, BROKEN);
@@ -90,6 +94,8 @@ test("the preview's review fails each drawing a reader would see broken, naming 
     { label: "test/bare-chart", problem: "draws no marks" },
     { label: "test/loading", problem: "is still loading at rest" },
     { label: "test/spinning", problem: "still moves at rest (1 animations running)" },
+    { label: "test/flat-bars", problem: "draws no marks: its 1 bars draw 0px wide" },
+    { label: "test/tiles", problem: "a div is drawn against the page outside its slot, so the slot does not hold its height" },
     { label: "test/gone", problem: "is placed in the layout but the page does not draw it" }
   ]);
 });
@@ -103,7 +109,8 @@ const WHOLE: DrawingPlan = {
     { label: "test/bars", role: "chart", placed: true },
     { label: "test/map", role: "map", placed: true },
     { label: "test/player", role: "interactive", placed: true },
-    { label: "test/table", role: "figure", placed: true }
+    { label: "test/table", role: "figure", placed: true },
+    { label: "test/overlay", role: "figure", placed: true }
   ]
 };
 
@@ -119,6 +126,7 @@ test("a page drawn whole passes the review, a scrolled table included, and its c
       '<div data-component="test/map"><svg viewBox="0 0 100 100" style="display:block;width:200px;height:200px"><path d="M10 10L90 90" stroke="#000"></path></svg></div>',
       '<div data-component="test/player"><p>Step 1: the cloth goes in.</p><button type="button">Next</button></div>',
       '<div data-component="test/table"><div style="overflow-x:auto"><table style="width:700px"><tbody><tr><td>wide</td></tr></tbody></table></div></div>',
+      '<div data-component="test/overlay"><div style="position:relative;height:60px"><span style="position:absolute;inset:0">A label on its own figure</span></div></div>',
       "</section>"
     ].join("")
   );

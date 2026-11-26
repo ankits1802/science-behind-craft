@@ -74,3 +74,13 @@
   block-size: calc(100% / var(--kv-crop-h));
   object-fit: fill;
 }
+
+.kv-monograph .bx-pt[data-component-kind="stat_tiles"] .ws-stats {
+  position: static;
+  inset: auto;
+  block-size: auto;
+}
+
+.kv-monograph .bx-pt[data-component-kind="stat_tiles"][data-size="margin"] .ws-stats {
+  grid-template-columns: minmax(0, 1fr);
+}

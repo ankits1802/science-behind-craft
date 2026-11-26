@@ -21,6 +21,8 @@ judges its pictures), [decision 0229](0229-a-preview-card-that-minimises-and-wha
 `preview_page`, the view), `docs/contracts/review-queue.md` (the layout item) and
 `docs/contracts/mcp-ask-and-upload.md` (the view's line).
 
+Amended by [decision 0248](0248-what-the-fresh-agent-could-not-fix-on-sanganeri.md): the server reads a failed drawing's pictures too.
+
 | For | Read |
 |---|---|
 | The preview and its pictures | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |

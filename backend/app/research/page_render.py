@@ -12,6 +12,7 @@ from app.models.page_previews import PREVIEW_DRAWINGS
 from .base import ContractModel
 from .monograph_document import MonographDocument
 from .page_report_rules import OPENING, PICTURE_KIND
+from .spec_strings import spec_strings
 
 __all__ = [
     "BROWSER",
@@ -58,6 +59,7 @@ __all__ = [
     "component_role",
     "image_bytes",
     "kept_images",
+    "nested_labels",
     "render_plan",
 ]
 
@@ -184,7 +186,7 @@ def component_role(kind: str) -> str:
 
 def render_plan(document: MonographDocument) -> RenderPlan:
     content = document.content
-    placed = {entry.ref for entry in content.layout if entry.kind == "component"}
+    placed = {entry.ref for entry in content.layout if entry.kind == "component"} - nested_labels(document)
     components = [
         RenderedComponent(label=c.label, role=component_role(c.kind), placed=c.label in placed)
         for c in content.components
@@ -199,6 +201,16 @@ def render_plan(document: MonographDocument) -> RenderPlan:
         masthead=masthead,
         chapters=[key for key in chapters if key != OPENING],
     )
+
+
+def nested_labels(document: MonographDocument) -> set[str]:
+    labels = {component.label for component in document.content.components}
+    return {
+        value
+        for owner, spec in document.specs.items()
+        for value in spec_strings(spec)
+        if value in labels and value != owner
+    }
 
 
 def image_bytes(image: RenderedImage) -> int:
