@@ -12,12 +12,21 @@ from app.core.rate_limit import PAGE_PREVIEWS, PAGE_PROPOSALS
 from app.data.page_preview_view import PAGE_PREVIEW_VIEW_URI
 from app.models import PageDraft, User
 from app.research.base import absent
+from app.research.design_critique import note_line
 from app.research.page_drafts import DraftView, PageLists, parts_counts
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult
-from app.research.page_render import RenderedImage
+from app.research.page_render import RENDERED_MIME, RenderedImage
 from app.research.page_report import PageReport
 from app.research.review_switch import AGENT
-from app.services import page_drafts, page_holds, page_preview, page_report, page_reviews
+from app.services import (
+    page_critique,
+    page_design_read,
+    page_drafts,
+    page_holds,
+    page_preview,
+    page_report,
+    page_reviews,
+)
 from app.services.borrowed_placements import held_refusal
 from app.services.component_lifecycle import withdrawn_owners
 from app.services.page_renders import page_renderer
@@ -37,6 +46,8 @@ from .mcp_page_texts import (
     ADD,
     CONFIRM,
     CREATED,
+    DESIGN_MORE,
+    DESIGN_NOTES,
     EDIT_DESCRIPTION,
     FIX_FIRST,
     FOLLOW,
@@ -55,7 +66,8 @@ from .proposal_limits import refuse_tool_when_spent
 
 __all__ = ["PAGE_TOOLS", "PICTURE_MIME", "DraftReply", "PageReply", "PreviewReply"]
 
-PICTURE_MIME = "image/jpeg"
+PICTURE_MIME = RENDERED_MIME
+NOTES_IN_STEP = 6
 
 
 class DraftReply(DraftView):
@@ -158,6 +170,12 @@ async def _preview_page(context: ToolContext, arguments: PreviewWork) -> Preview
     drawn = await page_reviews.drawn_preview(
         context.session, user, previewed, report, renderer=page_renderer(), now=now
     )
+    drawn = await page_critique.critiqued(
+        context.session, user, previewed, drawn, critique=arguments.critique, now=now
+    )
+    drawn = await page_design_read.designed_preview(
+        context.session, user, drawn, asked=arguments.read_pictures, now=now
+    )
     if row is not None:
         await page_drafts.record_preview(context.session, row, previewed, drawn.report)
     reply = PreviewReply.model_validate(
@@ -165,11 +183,23 @@ async def _preview_page(context: ToolContext, arguments: PreviewWork) -> Preview
             **previewed.model_dump(),
             "draftId": arguments.draft_id,
             "report": drawn.report,
+            "nextStep": _next_step(drawn.report),
             "notices": arguments.notices(),
             "guide": failed_rules_guide(drawn.report),
         }
     )
     return reply.showing(_pictures(drawn.images))
+
+
+def _next_step(report: PageReport | None) -> str:
+    read = report.design_read if report is not None else None
+    if read is None or not read.notes:
+        return REVIEWED
+    shown = "; ".join(note_line(note) for note in read.notes[:NOTES_IN_STEP])
+    more = len(read.notes) - NOTES_IN_STEP
+    if more > 0:
+        shown += DESIGN_MORE.format(count=more)
+    return REVIEWED + DESIGN_NOTES.format(count=len(read.notes), notes=shown)
 
 
 def _pictures(images: list[RenderedImage]) -> list[ToolImage]:
@@ -188,6 +218,7 @@ async def _propose_page(context: ToolContext, arguments: PageWork) -> PageReply:
     if whole and await publishes_at_once(context.session, user.id, AGENT):
         return await _hold_page(context, user, (bundle, row), arguments, now)
     result = await page_proposed(context.session, bundle, user, origin=AGENT, site=context.site)
+    await page_critique.attach_critique(context.session, user, result, now=now)
     if row is not None:
         await page_drafts.record_submission(context.session, row, result, now=now)
     await _refresh_withdrawn(context, result)

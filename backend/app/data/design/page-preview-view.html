@@ -179,7 +179,29 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     marks.appendChild(tally("PASS", report.passed));
     marks.appendChild(tally("FAIL", report.failed));
     marks.appendChild(tally("JUDGE", report.judged));
+    var notes = designNotes(report);
+    if (notes) {
+      var noted = status(notes.length ? "JUDGE" : "PASS");
+      noted.classList.add("kv-design-count");
+      noted.lastChild.textContent = noteCount(notes.length);
+      marks.appendChild(noted);
+    }
     return marks;
+  }
+
+  function held(report, key) {
+    return report && report[key] && typeof report[key] === "object" ? report[key] : null;
+  }
+
+  function designNotes(report) {
+    var critique = held(report, "critique");
+    if (critique) return list(critique.notes);
+    var read = held(report, "designRead");
+    return read && read.state === "READ" ? list(read.notes) : null;
+  }
+
+  function noteCount(n) {
+    return n === 0 ? "No design note" : n + (n === 1 ? " design note" : " design notes") + " to judge";
   }
 
   function line(result, report) {
@@ -359,6 +381,63 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
     return block;
   }
 
+  function dollars(value) {
+    var amount = Number(value);
+    return "$" + (isFinite(amount) ? amount : 0).toFixed(2);
+  }
+
+  function readBy(read) {
+    if (read.cached) return "Read once already for these very pictures, so this preview spent nothing on it.";
+    if (!read.model) return "";
+    return "Read by " + read.model + " for " + dollars(read.costUsd) + " of the " + dollars(read.capUsd) + " one preview's read may spend.";
+  }
+
+  function designNote(note) {
+    var entry = el("li");
+    entry.appendChild(el("p", "kv-rule-title", words(note.chapter) + ": " + String(note.where || "")));
+    var said = el("ul", "kv-evidence");
+    said.appendChild(el("li", null, "What is wrong: " + String(note.problem || "")));
+    said.appendChild(el("li", null, "What to do: " + String(note.fix || "")));
+    entry.appendChild(said);
+    return entry;
+  }
+
+  function noteList(block, verdict, notes, empty) {
+    if (verdict) block.appendChild(el("p", "kv-lede", verdict));
+    var items = el("ol", "kv-list");
+    notes.forEach(function (note) { items.appendChild(designNote(note)); });
+    block.appendChild(notes.length ? items : el("p", null, empty));
+  }
+
+  function critiqued(report) {
+    var critique = held(report, "critique");
+    var block = el("section", "kv-critique");
+    block.appendChild(el("h2", null, "Your design critique"));
+    if (!critique) {
+      block.appendChild(el("p", null, "Read these pictures chapter by chapter against the designer's rubric (design-critique/1), fix what you find and preview again with your notes as critique."));
+      return block;
+    }
+    block.appendChild(el("p", "kv-meta", "The notes you gave with this preview on the pictures you read before it: yours to work through, never a failure, and shown to the reviewer of your layout."));
+    noteList(block, critique.verdict, list(critique.notes), "You read every chapter and would change nothing.");
+    return block;
+  }
+
+  function designed(report) {
+    var read = held(report, "designRead");
+    if (!read) return null;
+    var block = el("section", "kv-design");
+    block.appendChild(el("h2", null, "The server's read of the pictures"));
+    block.appendChild(el("p", "kv-meta", "Asked for with read_pictures, for a client that cannot see the pictures: yours to judge, never a failure."));
+    if (read.state !== "READ") {
+      block.appendChild(el("p", null, String(read.reason || "The pictures were not read this time.")));
+      return block;
+    }
+    noteList(block, read.verdict, list(read.notes), "Not one chapter has a note: " + list(read.chapters).map(words).join(", ") + ".");
+    var by = readBy(read);
+    if (by) block.appendChild(el("p", "kv-meta", by));
+    return block;
+  }
+
   function bundleParts(result) {
     var block = el("section");
     block.appendChild(el("h2", null, "Each part of the bundle"));
@@ -409,7 +488,7 @@ footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-si
   function render(result) {
     var report = result.report && typeof result.report === "object" ? result.report : null;
     var contents = head(result, report);
-    if (report) [rules(report), drawable(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
+    if (report) [rules(report), drawable(report), critiqued(report), designed(report), drawn(report), details(report), beside(report)].forEach(function (part) { if (part) contents.push(part); });
     if (list(result.parts).length) contents.push(bundleParts(result));
     var foot = el("footer");
     foot.appendChild(el("p", null, "Drawn from the preview's own result; every text is shown as text and nothing is loaded from the network. Every preview starts as one line; opening one minimises the others."));

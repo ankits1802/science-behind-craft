@@ -1,0 +1,11 @@
+{
+  "provider": "ANTHROPIC",
+  "model": "claude-opus-5-5",
+  "chapters": ["opening", "made", "chem"],
+  "pictures": [
+    {"name": "first-screen-390", "caption": "The first screen at 390 px wide, as a reader opens the page"},
+    {"name": "chapter-made", "caption": "Chapter made at 1440 px wide: its first 1600 px, at two fifths of their size"},
+    {"name": "chapter-chem", "caption": "Chapter chem at 1440 px wide: its first 1600 px, at two fifths of their size"}
+  ],
+  "reply": "{\"notes\": [{\"chapter\": \"made\", \"where\": \"The eight paragraphs from 'The cloth is first scoured' to 'washed in the river'\", \"problem\": \"A wall of text: the chapter's whole first screen is prose in one centred column, with no figure, plate or margin note beside the stages it lists.\", \"fix\": \"Set the stages as a stage player beside the first paragraph and move the dye plate into the margin beside the dyeing paragraph.\"}, {\"chapter\": \"chem\", \"where\": \"Figure 2, the mordant reaction\", \"problem\": \"The reaction is drawn as three static boxes joined by arrows.\", \"fix\": \"Draw it as a reaction player that steps from alum and cotton to the bound lake, each step cited.\"}, {\"chapter\": \"elsewhere\", \"where\": \"a chapter not in the pictures\", \"problem\": \"Off the list.\", \"fix\": \"Dropped.\"}], \"verdict\": \"The opening is set well, but the making chapter is a wall of prose and the chemistry draws a change as still boxes.\"}"
+}

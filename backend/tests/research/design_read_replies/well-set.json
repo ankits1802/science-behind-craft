@@ -1,0 +1,10 @@
+{
+  "provider": "ANTHROPIC",
+  "model": "claude-opus-5-5",
+  "chapters": ["opening", "made"],
+  "pictures": [
+    {"name": "first-screen-1440", "caption": "The first screen at 1440 px wide, as a reader opens the page"},
+    {"name": "chapter-made", "caption": "Chapter made at 1440 px wide: its first 1600 px, at two fifths of their size"}
+  ],
+  "reply": "```json\n{\"notes\": [], \"verdict\": \"Every chapter sets its figures beside the prose that needs them, in the design's colours.\"}\n```"
+}

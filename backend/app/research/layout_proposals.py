@@ -9,6 +9,7 @@ from pydantic import Field, model_validator
 from .base import ContractModel
 from .chapter_keys import CHAPTER_KEYS
 from .crafts import SLUG_MAX_CHARS
+from .design_critique import DesignCritique
 from .monograph_document import SUBJECT_KINDS
 from .page_layout import LAYOUT_ENTRIES_MAX, PageLayoutEntry, check_entries
 from .review_queue_delivery import PlacedDelivery
@@ -87,6 +88,7 @@ class LayoutReview(ContractModel):
     entry_count: int = Field(ge=0)
     changes: list[LayoutChange]
     placed: list[PlacedDelivery] = Field(default_factory=list)
+    critique: DesignCritique | None = None
 
 
 def layout_changes(

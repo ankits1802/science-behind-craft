@@ -1,3 +1,4 @@
+import { AgentCritique } from "@/components/review/AgentCritique";
 import { DeliveredComponentView } from "@/components/review/DeliveredComponentView";
 import { LayoutChangeList } from "@/components/review/LayoutChangeList";
 import { QueueDecisionBar } from "@/components/review/QueueDecisionBar";
@@ -22,6 +23,7 @@ export function LayoutReviewCard({ item, onDecide }: { item: LayoutItem; onDecid
       </div>
       <p className="max-w-measure font-ui text-ui text-ink-1">{versionLine(review)}</p>
       <LayoutChangeList changes={review.changes} />
+      {review.critique ? <AgentCritique critique={review.critique} /> : null}
       {review.placed?.length ? <PlacedComponents placed={review.placed} /> : null}
       <QueueDecisionBar actions={layoutActions(review)} onDecide={onDecide} />
     </article>

@@ -846,10 +846,12 @@ fixture or the category page (`docs/contracts/category-page.md`).
   costs at most about its cap in API spend (above 1 and at most 50 US dollars; the loop stops before
   the cap less the 1 dollar kept for the second opinion, passing it by at most one turn) and up to
   three hours of runner time. The artifact `agent-acceptance-<run id>` holds the transcript, the last
-  preview with its pictures (drawn again after the run, since the connector passes text only), the
-  private link and the cost; the job summary lists the tool calls, the components by kind, the
-  preview's verdicts, the pictures and the cost, and a second opinion on the pictures that never
-  passes or fails the run. It needs the secrets `ANTHROPIC_API_KEY` and `E2E_PROFESSOR_*` and the
+  preview with its pictures (drawn again after the run with `read_pictures`, since the connector
+  passes text only, so the server reads them too: at most 0.50 US dollars of the site's own judge
+  budget, outside the cap, decision 0237), the private link and the cost; the job summary lists the
+  tool calls, the components by kind, the preview's verdicts, the pictures and the cost, the model's
+  own design critique and the server's notes, and a second opinion on the pictures that weighs
+  those notes and never passes or fails the run. It needs the secrets `ANTHROPIC_API_KEY` and `E2E_PROFESSOR_*` and the
   variable `API_BASE_URL`.
 - **Retrieval evaluation** (`retrieval-eval.yml`): runs `app.scripts.eval_retrieval` on the box,
   weekly and by hand, from main only (the deploy role trusts main):

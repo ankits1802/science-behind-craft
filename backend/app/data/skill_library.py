@@ -12,12 +12,15 @@ from .contributor_kit import CONTRIBUTOR_SKILL_PATH
 __all__ = [
     "CONTRACTS",
     "CONTRACTS_DIR",
+    "CRITIQUE_REFERENCE",
     "DESIGN_SKILL",
     "INDEX_PATH",
     "INDEX_URI",
     "REFERENCES",
     "REFERENCES_DIR",
+    "SKILL_ENTRY",
     "SKILL_FILES",
+    "SKILL_URI_PREFIX",
     "Contract",
     "Reference",
     "SkillFile",
@@ -44,6 +47,7 @@ SKILL_ENTRY = "SKILL.md"
 DATASETS_SKILL = "kalavigyan-datasets"
 INTERACTIVES_SKILL = "kalavigyan-interactives"
 DESIGN_SKILL = "kalavigyan-design"
+CRITIQUE_REFERENCE = "design-critique"
 HEADING = re.compile(r"^(#+) ", re.MULTILINE)
 
 
@@ -93,6 +97,13 @@ REFERENCES: Mapping[str, Reference] = MappingProxyType(
                 "The page checklist",
                 "The 29 rules every craft, family, category and answer page meets, and the three lists each "
                 "page derives first",
+            ),
+            Reference(
+                CRITIQUE_REFERENCE,
+                "The designer's critique",
+                "How an agent reads its own preview's pictures as a designer before proposing: the rubric drawn "
+                "from the design system and Kutch Ajrakh's chapters, the notes it writes chapter by chapter and "
+                "how it records them with the next preview",
             ),
             Reference(
                 "sources",

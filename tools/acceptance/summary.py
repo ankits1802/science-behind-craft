@@ -27,6 +27,7 @@ class Evidence:
     pictures: Sequence[tuple[str, str]] = ()
     opinion: str | None = None
     notes: Sequence[str] = field(default_factory=tuple)
+    read: Sequence[str] = field(default_factory=tuple)
 
 
 def tool_counts(calls: Sequence[Call]) -> list[tuple[str, int, int]]:
@@ -44,6 +45,7 @@ def summary_markdown(evidence: Evidence) -> str:
         _components(evidence.preview),
         _verdicts(evidence.preview),
         _pictures(evidence.pictures),
+        _design(evidence),
         _opinion(evidence.opinion),
         _notes(evidence.notes),
     ]
@@ -108,6 +110,22 @@ def _pictures(pictures: Sequence[tuple[str, str]]) -> str:
     if not pictures:
         return "### Pictures\n\nNo picture was kept."
     return "\n".join(["### Pictures", "", *(f"- `{name}`: {caption}" for name, caption in pictures)])
+
+
+def _design(evidence: Evidence) -> str:
+    critique = evidence.preview.critique if evidence.preview else ()
+    lines = ["### Design notes (never the verdict)", ""]
+    lines.append(f"The model's own critique with its last preview: {_counted(len(critique))}.")
+    lines += [f"- {note}" for note in critique]
+    lines.append(f"\nThe server's read of the pictures drawn again: {_counted(len(evidence.read))}.")
+    lines += [f"- {note}" for note in evidence.read]
+    return "\n".join(lines) if evidence.preview else ""
+
+
+def _counted(notes: int) -> str:
+    if notes == 0:
+        return "no notes"
+    return "1 note" if notes == 1 else f"{notes} notes"
 
 
 def _opinion(opinion: str | None) -> str:

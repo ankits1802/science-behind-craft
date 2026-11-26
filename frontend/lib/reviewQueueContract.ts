@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api";
 import { craftLinkShape, INSTANT, storedLevelShape, type CraftLink, type StoredLevel } from "@/lib/answerShapes";
+import { designCritiqueShape, type DesignCritique } from "@/lib/designCritique";
 import { imageContributionShape, type ImageContribution } from "@/lib/imageContributionContract";
 import { layerReviewShape, type LayerReview } from "@/lib/layerReviewContract";
 import { pictureCheckShape, type PictureCheckReview } from "@/lib/pictureCheckContract";
@@ -115,6 +116,7 @@ export type LayoutReview = {
   entryCount: number;
   changes: LayoutChange[];
   placed?: PlacedDelivery[];
+  critique?: DesignCritique | null;
 };
 
 export type StructureReview = {
@@ -275,7 +277,8 @@ const layoutShape: Shape<LayoutReview> = object<LayoutReview>({
   changes: list(
     object<LayoutChange>({ ref: text, change: oneOf(LAYOUT_CHANGES), before: nullable(layoutEntryShape), after: nullable(layoutEntryShape) })
   ),
-  placed: optional(list(placedShape))
+  placed: optional(list(placedShape)),
+  critique: optional(nullable(designCritiqueShape))
 });
 
 const structureShape: Shape<StructureReview> = object<StructureReview>({

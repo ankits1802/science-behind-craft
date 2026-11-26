@@ -27,7 +27,9 @@ PAGE_PREVIEW_VIEW = (
     "A KalaVigyan page preview",
     "The MCP App that draws a page preview's report in KalaVigyan's design, from the preview result's "
     "structured data alone: the private link, each checklist rule with its verdict and evidence, how the page "
-    "draws at 390 and 1440 px, what the craft's facts could show that the page does not draw, coverage by field, "
+    "draws at 390 and 1440 px, what the craft's facts could show that the page does not draw, the agent's own "
+    "design critique of its pictures and, when asked, the server's read of them (their count of notes on the "
+    "card's line), coverage by field, "
     "figures, sources by grade, pictures by licence and one line of the page's counts beside Kutch Ajrakh's. Each "
     "card starts as one line and minimises back to it. It loads nothing from the network.",
 )

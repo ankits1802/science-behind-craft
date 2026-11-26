@@ -4,6 +4,8 @@ __all__ = [
     "ADD",
     "CONFIRM",
     "CREATED",
+    "DESIGN_MORE",
+    "DESIGN_NOTES",
     "EDIT_DESCRIPTION",
     "FIX_FIRST",
     "FOLLOW",
@@ -32,10 +34,13 @@ SUBMITTED = (
     "(playbook/1, step 10)."
 )
 REVIEWED = (
-    "Fix each failed rule from the checklist page guide hands you; look at every picture as a reader and ask "
-    "of each chapter whether its story has the figure it needs beside the words, designing what is missing "
-    "(playbook/1, step 9; cookbook/1); preview again. When no rule fails and every field is dense with its "
-    "figures, propose_page with the same draft_id or bundle."
+    "Fix each failed rule from the checklist page guide hands you. Then read your own pictures chapter by "
+    "chapter as a designer, against the designer's rubric (design-critique/1): write a note for each thing you "
+    "would fix (chapter, where, problem, fix) and a verdict, fix what you found, designing the figure a "
+    "chapter's story still needs (playbook/1, step 9; cookbook/1), and preview again with your notes as "
+    "critique; a client that cannot see the pictures adds read_pictures for the server's read. When no rule "
+    "fails and every field is dense with its figures, propose_page with the same draft_id or bundle: your "
+    "latest critique goes to the reviewer with the layout."
 )
 READ_NEXT = (
     "Next, building this page (playbook/1): get_facts for its facts and find its story, decide what a reader "
@@ -84,9 +89,17 @@ PREVIEW_DESCRIPTION = (
     "pictures by licence and the page's pictures, figures, interactives and maps beside Kutch Ajrakh's, chapter "
     "by chapter, as guidance only; drawn by ui://kalavigyan/page-preview.html in clients that show MCP Apps. A "
     "translation draws the page in its language, authored pages too. guide hands over the checklist page of "
-    "each failed rule. A bundle with components waits, like a draft's first, for the read_token that comes "
-    "with the design pages. next_step says what to fix and add before propose_page (playbook/1, step 9)."
+    "each failed rule. Read the pictures as a designer by design-critique/1 and give your notes as critique "
+    "with the next preview: the report, the card and the reviewer of your layout show it, never a gate; "
+    "read_pictures asks the server to read them instead, for a client that cannot see them. A bundle with "
+    "components waits, like a draft's first, for the read_token that comes with the design pages. next_step "
+    "says what to fix and add before propose_page (playbook/1, step 9)."
 )
+DESIGN_NOTES = (
+    " The server's read of the pictures left {count} notes, yours to judge as your own and never a failure; "
+    "work through each before propose_page: {notes}."
+)
+DESIGN_MORE = "; and {count} more in report.designRead"
 PROPOSE_DESCRIPTION = (
     "Propose a draft once (draft_id), or a bundle, which may hold one part alone: a finished component or a "
     "figure after searching list_components, the page's layout built on get_page's version, or any mix of facts, "

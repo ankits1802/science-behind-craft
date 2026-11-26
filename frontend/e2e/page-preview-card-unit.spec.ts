@@ -63,7 +63,24 @@ function viewPage(): string {
   return VIEW.replace("__KV_THEME__", THEME).replace("__KV_SCRIPT_HASH__", hash);
 }
 
-async function shownCard(page: Page): Promise<void> {
+const CRITIQUE = {
+  verdict: "The making chapter is a wall of prose.",
+  notes: [{ chapter: "made", where: "the eight paragraphs on washing", problem: "A wall of text with no figure beside it.", fix: "Step through the washes with a stage player." }]
+};
+const READ = {
+  state: "READ",
+  verdict: "The opening needs its plate.",
+  notes: [{ chapter: "opening", where: "the masthead", problem: "No plate beside the lede.", fix: "Set the dye plate beside it." }],
+  chapters: ["opening", "made"],
+  reason: null,
+  provider: "ANTHROPIC",
+  model: "claude-opus-5-5",
+  costUsd: "0.214000",
+  capUsd: "0.50",
+  cached: false
+};
+
+async function shownCard(page: Page, result: object = RESULT): Promise<void> {
   await page.setContent(viewPage());
   await page.evaluate(() => {
     const sizes: number[] = [];
@@ -73,7 +90,7 @@ async function shownCard(page: Page): Promise<void> {
       if (message?.method === "ui/notifications/size-changed" && typeof message.params?.height === "number") sizes.push(message.params.height);
     });
   });
-  await page.evaluate((result) => window.postMessage({ jsonrpc: "2.0", method: "ui/notifications/tool-result", params: { structuredContent: result } }, "*"), RESULT);
+  await page.evaluate((shown) => window.postMessage({ jsonrpc: "2.0", method: "ui/notifications/tool-result", params: { structuredContent: shown } }, "*"), result);
   await expect(page.locator(".kv-line")).toBeVisible();
 }
 
@@ -129,6 +146,44 @@ test("the open card lists what the craft's facts could show and sets the page be
   await expect(page.getByRole("heading", { name: "Beside Kutch Ajrakh" })).toHaveCount(0);
   await expect(page.locator("caption", { hasText: "Kutch Ajrakh" })).toHaveCount(0);
   await expect(page.getByText("For reference, never a target: this page holds 4 pictures, 12 figures, 3 interactives, 1 map; Kutch Ajrakh, the approved page, 14 pictures, 80 figures, 30 interactives, 6 maps.")).toBeVisible();
+});
+
+test("without a critique the open card asks for one, and its line counts no design note", async ({ page }) => {
+  await page.setViewportSize(DESKTOP);
+  await shownCard(page);
+  await expect(page.locator(".kv-design-count")).toHaveCount(0);
+  await toggle(page).click();
+  await expect(page.getByRole("heading", { level: 2, name: "Your design critique" })).toBeVisible();
+  await expect(page.getByText("against the designer's rubric (design-critique/1)")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The server's read of the pictures" })).toHaveCount(0);
+});
+
+test("the line counts the agent's design notes, and the open card shows its critique and the server's read beside rule 29", async ({ page }) => {
+  await page.setViewportSize(DESKTOP);
+  await shownCard(page, { ...RESULT, report: { ...RESULT.report, critique: CRITIQUE, designRead: READ } });
+  await expect(page.locator(".kv-design-count")).toHaveText("1 design note to judge");
+  await expect(page.locator(".kv-counts")).toHaveText(/19 passed\s*3 failed\s*7 yours to judge\s*1 design note to judge/);
+  expect(await lastHeight(page)).toBeLessThanOrEqual(LINE_MOST);
+  await toggle(page).click();
+  const sections = page.locator("section h2");
+  const titles = await sections.allTextContents();
+  expect(titles.indexOf("Your design critique")).toBe(titles.indexOf("What the facts could show") + 1);
+  await expect(page.getByText("The making chapter is a wall of prose.")).toBeVisible();
+  await expect(page.getByText("Made: the eight paragraphs on washing")).toBeVisible();
+  await expect(page.getByText("What to do: Step through the washes with a stage player.")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "The server's read of the pictures" })).toBeVisible();
+  await expect(page.getByText("Opening: the masthead")).toBeVisible();
+  await expect(page.getByText("Read by claude-opus-5-5 for $0.21 of the $0.50 one preview's read may spend.")).toBeVisible();
+});
+
+test("a critique with no note says every chapter was read, and the line marks it as passing", async ({ page }) => {
+  await page.setViewportSize(PHONE);
+  await shownCard(page, { ...RESULT, report: { ...RESULT.report, critique: { verdict: "Set well.", notes: [] } } });
+  await expect(page.locator(".kv-design-count")).toHaveText("No design note");
+  await expect(page.locator(".kv-design-count.kv-pass")).toHaveCount(1);
+  await toggle(page).click();
+  await expect(page.getByText("You read every chapter and would change nothing.")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(PHONE.width);
 });
 
 test("Escape minimises an open card and leaves the focus on its control", async ({ page }) => {

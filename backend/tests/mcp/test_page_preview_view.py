@@ -86,3 +86,13 @@ async def test_the_card_reports_the_height_of_what_it_shows_so_a_minimised_card_
     page = (await view())["text"]
     assert "ui/notifications/size-changed" in page and "root.getBoundingClientRect()" in page
     assert "scrollHeight" not in page and "new ResizeObserver(report_size)" in page
+
+
+async def test_the_card_shows_the_agent_s_critique_beside_rule_29_and_the_server_s_read_only_when_asked() -> (
+    None
+):
+    page = (await view())["text"]
+    assert "Your design critique" in page and "design-critique/1" in page
+    assert "The server's read of the pictures" in page and "Asked for with read_pictures" in page
+    assert "drawable(report), critiqued(report), designed(report)" in page
+    assert 'held(report, "critique")' in page and 'held(report, "designRead")' in page

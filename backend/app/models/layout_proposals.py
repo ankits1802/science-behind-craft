@@ -42,6 +42,7 @@ class LayoutProposal(Base):
     baseVersion: Mapped[int] = mapped_column(Integer, nullable=False)
     entries: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False)
     note: Mapped[str | None] = mapped_column(String(LAYOUT_REVIEW_NOTE_CHARS))
+    critique: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
     origin: Mapped[str] = mapped_column(String(STATUS_CHARS), nullable=False)
     status: Mapped[str] = mapped_column(String(STATUS_CHARS), nullable=False, server_default="PENDING")
     reviewedById: Mapped[uuid.UUID | None] = _person()

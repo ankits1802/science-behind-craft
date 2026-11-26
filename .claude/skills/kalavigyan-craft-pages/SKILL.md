@@ -27,6 +27,7 @@ One source per rule, served to every contributor over MCP and read here from the
 | The page playbook: the order a page is built in to the Kutch Ajrakh bar, what to read before each step | `backend/app/data/contributor/references/playbook.md` | `kalavigyan://skills/references/playbook.md` |
 | The component cookbook: every kind, the tool that makes it, its Ajrakh example and its place | `backend/app/data/contributor/references/cookbook.md` | `kalavigyan://skills/references/cookbook.md` |
 | The page checklist: the three lists a page derives first and its 29 rules | `backend/app/data/contributor/references/page-checklist.md` | `kalavigyan://skills/references/page-checklist.md` |
+| The designer's critique: reading a preview's pictures against the design before proposing, and the notes recorded with the next preview | `backend/app/data/contributor/references/design-critique.md` | `kalavigyan://skills/references/design-critique.md` |
 | What counts as a source: grades, recording, licences | `backend/app/data/contributor/references/sources.md` | `kalavigyan://skills/references/sources.md` |
 | Quotes and locators, and one fact per sentence | `backend/app/data/contributor/references/quotes.md` | `kalavigyan://skills/references/quotes.md` |
 | The fields and what each holds | `backend/app/data/contributor/references/fields.md` | `kalavigyan://skills/references/fields.md` |
