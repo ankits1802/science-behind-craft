@@ -41,8 +41,8 @@ CHAPTER_PREFIX = "chapter-"
 NO_REPORT = "The preview has no report, so its pictures were not read."
 NOT_DRAWN = "The pictures could not be made, so there was nothing to read."
 DRAWING_FAILED = (
-    "The page failed its drawing checks (rule 28), so the pictures were not read: fix what fails and preview "
-    "again, and the read comes with the next drawing."
+    "The page failed its drawing checks (rule 28) and no picture came back, so there was nothing to read: fix "
+    "what fails and preview again, and the read comes with the next drawing."
 )
 NO_PICTURES = "No picture came back from the drawing, so there was nothing to read."
 UNREADABLE = "The server's read answered in a shape that could not be read, so it gives no notes this time."
@@ -79,9 +79,11 @@ def skipped(reason: str) -> DesignRead:
 def drawing_skip(drawing: DrawingReport | None, images: Sequence[RenderedImage]) -> str | None:
     if drawing is None:
         return NO_REPORT
+    if images:
+        return None
     if drawing.state != CHECKED:
         return DRAWING_FAILED if drawing.problems else NOT_DRAWN
-    return None if images else NO_PICTURES
+    return NO_PICTURES
 
 
 def picture_chapter(name: str) -> str:

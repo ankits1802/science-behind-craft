@@ -18,6 +18,7 @@ from app.research.page_drafts import DraftView, PageLists, parts_counts
 from app.research.page_proposals import PageBundle, PagePreviewResult, PageProposalResult
 from app.research.page_render import RENDERED_MIME, RenderedImage
 from app.research.page_report import PageReport
+from app.research.page_report_rules import FAIL
 from app.research.review_switch import AGENT
 from app.services import (
     page_critique,
@@ -62,6 +63,7 @@ from .mcp_page_texts import (
 )
 from .mcp_protocol import ToolImage
 from .mcp_questions import chosen_page, contributes, page_question, send_question, sent
+from .mcp_rule_fixes import rule_fixes
 from .mcp_studio_arguments import STUDIO_DOES
 from .mcp_tool_base import PAGES, READ_ONLY, WRITES, Tool, ToolContext, contributor
 from .page_proposal_deps import page_proposed
@@ -212,14 +214,15 @@ async def _preview_page(context: ToolContext, arguments: PreviewWork) -> Preview
 
 
 def _next_step(report: PageReport | None) -> str:
+    fixes = rule_fixes([rule.rule for rule in report.rules if rule.verdict == FAIL] if report else [])
     read = report.design_read if report is not None else None
     if read is None or not read.notes:
-        return REVIEWED
+        return REVIEWED + fixes
     shown = "; ".join(note_line(note) for note in read.notes[:NOTES_IN_STEP])
     more = len(read.notes) - NOTES_IN_STEP
     if more > 0:
         shown += DESIGN_MORE.format(count=more)
-    return REVIEWED + DESIGN_NOTES.format(count=len(read.notes), notes=shown)
+    return REVIEWED + fixes + DESIGN_NOTES.format(count=len(read.notes), notes=shown)
 
 
 def _pictures(images: list[RenderedImage]) -> list[ToolImage]:

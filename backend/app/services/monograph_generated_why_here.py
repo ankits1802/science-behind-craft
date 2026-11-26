@@ -209,7 +209,7 @@ def place_why_here(
 ) -> None:
     texts, components = found
     placed = why_here_placed(ground, slug, texts.get(WHY_CHAPTER, []), page.drafts)
-    if placed is None:
+    if placed is None or not placed.held:
         return
     page.components[placed.label] = placed.entry
     page.specs[placed.label] = placed.spec

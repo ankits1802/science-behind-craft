@@ -74,6 +74,21 @@ def test_the_sentence_about_the_river_is_held_beside_its_reading_and_rain_stays_
     assert built.specs[LABEL]["notes"] == [{"reading": "river", "unit": river}]
 
 
+def test_a_ground_no_sentence_of_the_page_reads_draws_no_figure_that_would_cite_nothing(
+    tmp_path: Path,
+) -> None:
+    geography = StoredSection("GEOGRAPHY", 1, ({"text": RAIN, "claimIds": [str(BAGH)]},))
+    base = generated()
+    parts = dataclasses.replace(
+        base, sections=(*base.sections, geography), pictures=(), ground=fixture_ground()
+    )
+    built = assembled_document(parts, Drawings(root=tmp_path))
+    assert built is not None
+    assert LABEL not in {component.label for component in built.content.components}
+    assert LABEL not in built.specs
+    assert any(plain(unit.nodes) == RAIN for unit in built.content.units.values())
+
+
 def test_each_reading_holds_at_most_two_sentences_and_only_place_sentences_are_read() -> None:
     drafts = [
         draft("u1", "The river is near."),

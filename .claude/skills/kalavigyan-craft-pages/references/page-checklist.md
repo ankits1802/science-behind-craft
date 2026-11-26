@@ -140,7 +140,9 @@ The rules below refer to them.
     spacing scale, and no card that repeats a sentence already on screen.
 26. **A missing field is research, not a hole.** It never appears as an empty heading or a "not
     yet" note; it appears as a question that starts cited research, and as open work on the MCP
-    server.
+    server. Over MCP, rules 23 to 26 are met from the draft: each fact added with `edit_draft` is
+    drawn as a sentence of its field's section (`preview_page`'s `nextStep` names the tool for each
+    failed rule).
 
 ## Drawn in the design (owner, 2026-11-21)
 

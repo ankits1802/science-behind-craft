@@ -51,6 +51,7 @@ const PLACES: Readonly<Record<string, ComponentPlace>> = {
   source_list: { scope: "rm", frame: "wrap" },
   specimen_plate: { scope: "mb", frame: "screen" },
   stage_player: { scope: "pt", frame: "wrap" },
+  stat_tiles: { scope: "pt", frame: "wrap" },
   structure_diagram: { scope: "rm", frame: "wrap" },
   swatch_cards: { scope: "mb", frame: "screen" },
   timeline_map: { scope: "pt", frame: "wrap" },

@@ -16,6 +16,7 @@ from app.research.component_specs_general_delivery import (
     delivered_of,
     renamed_spec,
 )
+from app.research.spec_text_units import text_units_resolved
 from app.research.unit_ids import DELIVERED_UNITS
 
 from . import knowledge_view
@@ -49,6 +50,7 @@ def stored_delivery(label: str, payload: Mapping[str, Any]) -> DeliveredComponen
 
 
 def drawn_delivery(
+    kind: str,
     delivered: DeliveredComponent,
     *,
     place: tuple[str, str],
@@ -71,7 +73,9 @@ def drawn_delivery(
         )
         for ref in refs
     }
-    return DrawnDelivery(spec=renamed_spec(delivered.spec, names), drafts=drafts)
+    texts = {ref: unit.text for ref, unit in delivered.units.items()}
+    shown = text_units_resolved(kind, delivered.spec, texts)
+    return DrawnDelivery(spec=renamed_spec(shown, names), drafts=drafts)
 
 
 async def with_delivered_claims(

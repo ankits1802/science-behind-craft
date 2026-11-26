@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { FamilySwatch } from "@/components/crafts/FamilySwatch";
-import type { PlateMaterial } from "@/components/editorial/TypographicPlate";
+import { TypographicPlate, type PlateMaterial } from "@/components/editorial/TypographicPlate";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { parsedSpec } from "@/lib/componentSpecsGeneral";
 import { kinCraftsShape, kinMaterial, sharesLine, type KinCraft } from "@/lib/kinCraftsSpec";
@@ -11,7 +10,7 @@ function KinRow({ craft, material, renderUnit }: { craft: KinCraft; material: Pl
   const shares = sharesLine(craft.shares);
   return (
     <li className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 border-t border-rule py-4" data-testid="kin-craft">
-      <FamilySwatch material={material} className="row-span-3 h-12 w-12 rounded-plate border border-ink-2" />
+      <TypographicPlate material={material} englishName={craft.name} size="small" decorative className="row-span-3 w-28 rounded-plate border border-ink-2" />
       <Link href={craft.path} className="kv-link min-w-0 break-words font-reading text-h3">
         {craft.name}
       </Link>

@@ -128,6 +128,13 @@ test("bars are drawn at their share of the largest value from zero and the title
   expect(html).not.toContain("All 2 values");
 });
 
+test("a bar keeps a track of its own beside a long reading, which wraps instead of taking the bar's width", () => {
+  const html = drawn("chart", CHART);
+  expect(html).toContain("grid-cols-[minmax(5rem,9rem)_minmax(6rem,1fr)_minmax(0,14rem)]");
+  expect(html).not.toContain("minmax(0,1fr)_auto");
+  expect(html).toContain('class="min-w-0 break-words text-end');
+});
+
 test("a line is drawn across the plot with every value behind All N values", () => {
   const line = { ...CHART, form: "line" as const, emphasis: null };
   expect(linePoints(line.series[0], { low: 50, high: 100 })).toEqual([

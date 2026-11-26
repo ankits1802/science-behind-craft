@@ -35,10 +35,14 @@ test("a generated page's kin crafts are the declared form of related_crafts, and
   expect(drawn(KIN)).toContain('data-testid="kin-crafts"');
 });
 
-test("each kin craft shows its family swatch, its link, its place and tags, the materials it shares and its cited sentence", () => {
+test("each kin craft shows its own named plate, its link, its place and tags, the materials it shares and its cited sentence", () => {
   const html = drawn(KIN);
   expect(html.match(/data-testid="kin-craft"/g)).toHaveLength(2);
-  expect(html.match(/data-testid="family-swatch"/g)).toHaveLength(2);
+  expect(html.match(/data-testid="typographic-plate"/g)).toHaveLength(2);
+  expect(html).not.toContain('data-testid="family-swatch"');
+  expect(html).toMatch(/data-size="small"[^>]*data-material="textile"[^>]*aria-hidden="true"/);
+  expect(html).toMatch(/class="kv-plate-name kv-knock"[^>]*>Bagru Hand Block Print</);
+  expect(html).toMatch(/class="kv-plate-name kv-knock"[^>]*>Sanganeri Print</);
   expect(html).toContain("g-textile");
   expect(html).toContain('href="/crafts/Bagru-Hand-Block-Print"');
   expect(html).toContain("Shares Alum and Harda");
@@ -49,7 +53,7 @@ test("each kin craft shows its family swatch, its link, its place and tags, the 
   expect(html).not.toMatch(/Shares <\/span>|Shares $/);
 });
 
-test("the swatch is the family's plate ground and a craft sharing nothing names no share", () => {
+test("the plate is drawn in the family's material and a craft sharing nothing names no share", () => {
   expect(kinMaterial("Textiles · Hand block printing")).toBe("textile");
   expect(kinMaterial("Clay · Figurines and toys")).toBe("toys");
   expect(kinMaterial(null)).toBe("misc");

@@ -10,6 +10,8 @@ from app.core.errors import InvalidInput, Refused
 from app.models import AuditLog, ComponentProposal, KnowledgePiece, PageLayout, TrustTierOverride
 from app.research.page_drafts import DraftAddition
 from app.research.page_proposals import PageBundle, PageProposalResult, PageSubject
+from app.services.monograph_generated_parts import subject_components
+from app.services.open_work_subjects import subject_by_key
 from app.services.page_drafts import add_to_draft, bundle_of, create_draft
 from app.services.page_holds import HoldPlace, UnknownHold, confirm_hold, discard_hold, held_page, hold_page
 from app.services.page_preview import preview_page
@@ -125,6 +127,15 @@ async def test_a_borrowed_component_whose_facts_the_page_holds_is_still_placed(s
         ("component", "ACCEPTED"),
         ("layout", "ACCEPTED"),
     ]
+
+
+async def test_the_page_draws_a_borrowed_component_only_when_it_holds_every_fact_its_units_cite(
+    session: AsyncSession,
+) -> None:
+    subject = await subject_by_key(session, "craft", CRAFT_SLUG)
+    labels = {component.label for component in await subject_components(session, subject, [])}
+    assert CONCEPT_PLAYER in labels
+    assert FOREIGN not in labels
 
 
 async def test_only_an_account_whose_proposals_reach_readers_at_once_has_its_pages_held(

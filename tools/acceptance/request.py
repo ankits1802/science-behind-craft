@@ -32,7 +32,7 @@ EFFORT = "high"
 READING = ("find_crafts", "get_page", "get_facts", "list_components")
 SOURCES = ("search_sources", "read_source", "lookup")
 WORK = ("list_open_work", "my_work", "get_proposal")
-STUDIO = ("edit_draft", "compose_component")
+STUDIO = ("edit_draft", "compose_component", "give_pictures")
 CONNECTOR_TOOLS = frozenset((*READING, *SOURCES, *WORK, *STUDIO))
 HARNESS_TOOLS = frozenset({PREVIEW_TOOL})
 HARNESS_ADDS = {PREVIEW_TOOL: {READ_PICTURES: True}}
@@ -42,8 +42,9 @@ CLIENT_LINE = (
 )
 SERVER_HEADING = "Instructions from the KalaVigyan server:"
 LIMITS = (
-    "You may build drafts and previews. Do not propose, publish or review anything: never call propose_page "
-    "or any proposing, publishing or review tool. Those tools are not offered in this connection."
+    "You may build drafts and previews and give open-licence pictures to your draft with give_pictures. Do not "
+    "propose, publish or review anything: never call propose_page or any proposing, publishing or review tool. "
+    "Those tools are not offered in this connection."
 )
 REQUEST_LINE = "{request}\n\nThe craft: {name}."
 

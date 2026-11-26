@@ -214,8 +214,9 @@ for them before any search of your own.
   that licence is open, an open-access copy where Unpaywall knows one, and its DOI or address.
   `kinds` narrows the search to `scholarly`, `reference` or `web`, or adds `pictures`: open-licence
   pictures on Wikimedia Commons and Openverse with their author, licence, credit line, size and
-  the widths the site draws. Those come from elsewhere: KalaVigyan's team places them, credited to
-  their authors, and `give_pictures` takes only a picture the person holds.
+  the widths the site draws. Give one to the page with `give_pictures` by its `page_url` (slot
+  `MASTHEAD` for the opening picture), then name its `contribution_id` in the draft's `pictures`:
+  the preview draws it, credited to its author, and it is never given as one's own.
 - `read_source` with a result's `url` or `doi`: the text exactly as the gates will fetch and match
   it, a page at a time (`start`, then the reply's `nextStart`) or every passage holding the words
   you give (`around`), each passage with its locator. It names the licence the page states, the
@@ -500,6 +501,10 @@ your text, and supplying a source counts against the hour's fact proposals.
 - At least three sentences, in the order of the craft's process or history, tense as in the facts.
 - A sentence the facts cannot support is not written: research the missing fact and propose it.
 - KalaVigyan publishes section prose only through its own rebuild from the facts that pass.
+- From a draft, a field's prose is written with facts: each fact added with `edit_draft` (or a
+  bundle's facts) is drawn as a sentence of its field's section in the preview, so three facts in
+  a thin field make it dense (rules 23 to 26). A figure that shows a fact keeps its sentence in the
+  prose while the field holds fewer than three.
 
 ## Facts that lost their sources
 

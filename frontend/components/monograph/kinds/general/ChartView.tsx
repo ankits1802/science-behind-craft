@@ -13,12 +13,12 @@ function BarRows({ series, range, emphasis, renderUnit }: { series: ChartSeries;
   return (
     <ol className="grid" data-testid="general-bars">
       {series.points.map((point, at) => (
-        <li key={point.reading} className="grid grid-cols-[minmax(5rem,9rem)_minmax(0,1fr)_auto] items-center gap-3 border-t border-rule py-2 font-ui text-label">
+        <li key={point.reading} className="grid grid-cols-[minmax(5rem,9rem)_minmax(6rem,1fr)_minmax(0,14rem)] items-center gap-3 border-t border-rule py-2 font-ui text-label">
           <span className="min-w-0 break-words text-ink-1">{renderUnit(point.label)}</span>
           <span className="kv-general-track relative h-2" aria-hidden>
             <i className="kv-general-bar absolute inset-y-0 start-0" data-emph={at === emphasis || undefined} style={{ width: `${(share(point.value, range) * 100).toFixed(2)}%` }} />
           </span>
-          <span className="text-end text-ink-1 [font-variant-numeric:lining-nums_tabular-nums]">{renderUnit(point.reading)}</span>
+          <span className="min-w-0 break-words text-end text-ink-1 [font-variant-numeric:lining-nums_tabular-nums]">{renderUnit(point.reading)}</span>
         </li>
       ))}
     </ol>

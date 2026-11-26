@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -104,6 +107,13 @@ function chemistry(): MonographDocument {
     {}
   );
 }
+
+test("contributed stat tiles are drawn in the authored tiles' scope, in the flow at their own height, never as an overlay", () => {
+  expect(componentHome("test-craft/market/counted", "stat_tiles", { classes: [], tiles: [] })).toMatchObject({ scope: "pt", source: "kind" });
+  const sheet = readFileSync(join(__dirname, "..", "components", "monograph", "documentPage.css"), "utf8");
+  expect(sheet).toMatch(/\.bx-pt\[data-component-kind="stat_tiles"\] \.ws-stats \{\s*position: static;\s*inset: auto;\s*block-size: auto;/);
+  expect(componentHome("test-craft/market/counted", "fact_table", { head: {}, columns: [], rows: [] })).toMatchObject({ scope: "mb" });
+});
 
 test("a figure left at the end of a chapter stands after the paragraph it illustrates", () => {
   const given = chemistry();

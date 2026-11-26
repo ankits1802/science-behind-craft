@@ -5,7 +5,6 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from app.core.errors import InvalidInput
 from app.research.chapter_keys import CHAPTER_KEYS, kind_chapter
 from app.research.coverage import FieldCoverage
 from app.research.coverage_chapters import field_chapter
@@ -19,25 +18,26 @@ from .component_proposals_drawn import drawn_delivery
 from .craft_page_unwritten import listed_units
 from .document_components import DocumentStructure, StructureBlock
 from .document_components_data import (
-    READER_SCOPE,
-    fragment_sentences,
     kit_data,
     merged_data,
-    monograph_data,
-    reader_data,
-    unit_sentences,
 )
-from .document_components_homes import home_scopes
 from .drawing_themes import themed_spec
 from .knowledge_view import ClaimView
+from .monograph_generated_borrowed import borrow_drawn
 from .monograph_generated_colours import place_colour_key
-from .monograph_generated_drawings import Drawings, spec_unit_keys
+from .monograph_generated_drawings import Drawings
 from .monograph_generated_grids import StatedValue, fact_grid
 from .monograph_generated_kin import KinRead
 from .monograph_generated_parts import RegisteredComponent, StoredSection, component_binding_of
 from .monograph_generated_pictures import PICTURE_KIND, PlateSource, plate_spec
 from .monograph_generated_reading import ReadingRead, place_page_tools
-from .monograph_generated_structure import CHAPTER_FIELDS, BlockSpecs, PlacedStructure, placed_structure
+from .monograph_generated_structure import (
+    CHAPTER_FIELDS,
+    BlockSpecs,
+    PlacedStructure,
+    placed_structure,
+    told_sentences,
+)
 from .monograph_generated_units import (
     LEDE_FIELD,
     LEDE_SENTENCES,
@@ -117,7 +117,7 @@ def assembled_document(parts: GeneratedParts, drawings: Drawings) -> MonographDo
     )
     book = SourceBook()
     citations, claims = _cite(parts, page, arranged, book)
-    _borrow(page, drawings, book, citations, claims)
+    borrow_drawn(page, drawings, book, citations, claims)
     content = MonographContent(
         craft_slug=parts.subject_slug,
         sources=book.sources,
@@ -154,7 +154,7 @@ def _texts(parts: GeneratedParts, page: _Page) -> dict[str, list[str]]:
         page.drafts.update((draft.unit_id, draft) for draft in drafts)
         if section.field == LEDE_FIELD and not page.lede:
             page.lede = [draft.unit_id for draft in drafts if draft.unit_id not in named][:LEDE_SENTENCES]
-        body = [d for d in drafts if d.unit_id not in page.lede and not set(d.claim_ids) <= shown]
+        body = told_sentences(drafts, page.lede, shown)
         listed = listed_units(section.field, parts.unwritten, page.drafts, taken)
         if not body and not listed:
             continue
@@ -245,7 +245,9 @@ def _drawn(parts: GeneratedParts, page: _Page, drawings: Drawings, component: Re
     if component.delivered is not None:
         place = (field_chapter(component.field), component.field)
         taken = {*page.units, *page.drafts}
-        drawn = drawn_delivery(component.delivered, place=place, visible=parts.visible, taken=taken)
+        drawn = drawn_delivery(
+            component.kind, component.delivered, place=place, visible=parts.visible, taken=taken
+        )
         if drawn is None:
             return False
         page.specs[component.label] = themed_spec(component.kind, drawn.spec)
@@ -264,48 +266,6 @@ def _drawn(parts: GeneratedParts, page: _Page, drawings: Drawings, component: Re
     else:
         return False
     return True
-
-
-def _borrow(
-    page: _Page, drawings: Drawings, book: SourceBook, citations: dict[str, Any], claims: dict[str, list[str]]
-) -> None:
-    for label, monograph in page.reused.items():
-        filled = drawings.fragment(monograph, label, book)
-        page.fragments[label] = filled.markup
-        citations.update(filled.citations)
-        claims.update(filled.citation_claims)
-    for label, monograph in page.borrowed_specs.items():
-        cited = drawings.spec_cites(monograph, page.specs[label], book)
-        page.specs[label] = cited.spec
-        citations.update(cited.citations)
-        claims.update(cited.citation_claims)
-        named = drawings.spec_units(monograph, page.specs[label], book)
-        for key, unit in named.units.items():
-            if page.units.get(key, unit) != unit:
-                raise InvalidInput(f"The spec of {label} names unit {key}, which this page already holds")
-            page.units[key] = unit
-        citations.update(named.citations)
-        claims.update(named.citation_claims)
-    _borrow_data(page, drawings, book)
-
-
-def _borrow_data(page: _Page, drawings: Drawings, book: SourceBook) -> None:
-    read: dict[str, dict[str, Any]] = {}
-    for label, monograph in {**page.reused, **page.borrowed_specs}.items():
-        if monograph not in read:
-            read[monograph] = monograph_data(drawings.root, monograph)
-        found = kit_data(read[monograph], page.components[label].kind, page.specs.get(label))
-        merged_data(page.data, found)
-        if home_scopes(monograph).get(label) == READER_SCOPE:
-            numbers = drawings.source_numbers(monograph, book)
-            merged_data(page.data, reader_data(read[monograph], _held_sentences(page, label), numbers))
-
-
-def _held_sentences(page: _Page, label: str) -> set[str]:
-    if label in page.fragments:
-        return fragment_sentences(page.fragments[label])
-    named = spec_unit_keys(page.specs.get(label, {}))
-    return unit_sentences(page.units[key].nodes for key in sorted(named) if key in page.units)
 
 
 def _lay_out(page: _Page, found: Sequence[Mapping[str, list[str]]]) -> None:

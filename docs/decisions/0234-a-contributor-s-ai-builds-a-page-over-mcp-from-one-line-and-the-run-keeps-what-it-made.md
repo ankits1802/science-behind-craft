@@ -15,6 +15,8 @@ sees the page): a client on the API's MCP connector receives only the text of a 
 contract is `docs/contracts/mcp-oauth.md` (How this document is kept true); the operations are in
 `docs/RUNBOOK.md`, Release gate.
 
+Amended by [decision 0248](0248-what-the-fresh-agent-could-not-fix-on-sanganeri.md): the run offers `give_pictures`.
+
 | For | Read |
 |---|---|
 | The preview, its pictures and its drawing checks | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |

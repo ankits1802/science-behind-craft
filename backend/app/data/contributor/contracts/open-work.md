@@ -733,7 +733,8 @@ and reading sources and Never:
   component, the source steps (`search_sources`, then `lookup`, `read_source` for the text the gates
   will read and with `quotes` on every quote, with the agent's own search where they find nothing;
   `write_section`, `propose_component` and `deliver_dataset` name the same tools in their own steps,
-  and `give_picture` ends on `search_sources` with kinds pictures for open pictures the team places),
+  and `give_picture` ends on `search_sources` with kinds pictures for open pictures given by their
+  `page_url` with `give_pictures`),
   `propose_facts` with idempotency keys and the claimed task as `task_key`, then `get_proposal` or
   `my_work` for the outcome; a component or page is built finished and seen with `preview_page`
   before `propose_page`; a picture is given with `give_pictures` only after the person confirms the
@@ -1055,8 +1056,9 @@ SKIPPED, verdict?, notes[], chapters[], reason?, provider?, model?, costUsd, cap
 (`research/design_read.py`): the server's own read of the pictures, only when `preview_page` is given
 `read_pictures: true`, for a client that receives tool results as text. It runs on the first judge
 route whose model reads pictures (`providers/design_vision.py` over `providers/vision_calls.py`),
-by the same rubric with the design skill's sections 1 to 3 and Kutch Ajrakh's chapters as set; it is
-SKIPPED with its reason when the drawing failed or could not be made, when its estimate passes the
+by the same rubric with the design skill's sections 1 to 3 and Kutch Ajrakh's chapters as set; a
+drawing that failed its checks but drew its pictures is read, so a client that cannot see them learns
+what broke (decision 0248); it is SKIPPED with its reason when no picture came back, when its estimate passes the
 cap of $0.50 a preview (`DESIGN_READ_CAP_USD`), when the budget refuses it or the call fails, and a
 read of the same pictures (`pictures_key`, a SHA-256 over every picture's name and bytes) is taken
 from `DesignReadCache` for 30 days at no cost.

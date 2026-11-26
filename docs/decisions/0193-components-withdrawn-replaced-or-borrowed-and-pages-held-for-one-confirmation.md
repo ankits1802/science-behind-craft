@@ -19,6 +19,8 @@ The contracts are `docs/contracts/open-work.md` (Withdrawn, replaced, borrowed a
 `docs/contracts/review-queue.md` (Staged over MCP), `docs/contracts/contribution-screens.md`,
 `docs/contracts/knowledge-writes.md` (Trust tiers) and `docs/contracts/page-layout.md`.
 
+Amended by [decision 0248](0248-what-the-fresh-agent-could-not-fix-on-sanganeri.md): a borrowed component citing facts the page does not hold is not drawn on the page either.
+
 | For | Read |
 |---|---|
 | Who may withdraw, and the consent rule it amends | [decision 0101](0101-knowledge-architecture-for-every-craft.md), items 8 and 12 |
