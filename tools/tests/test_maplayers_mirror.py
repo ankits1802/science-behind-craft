@@ -1,8 +1,20 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
-from maplayers.mirror import MEASURED_FILES, MEASURED_OUTPUT, mirror_measured, unmirrored
+from basemap.polyline import decode_records
+from maplayers.mirror import (
+    BASE_FILES,
+    INDIA_SOURCE,
+    MEASURED_FILES,
+    MEASURED_OUTPUT,
+    OUTLINE_FILE,
+    mirror_base,
+    mirror_measured,
+    unmirrored,
+    unmirrored_base,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DRAWN = REPO_ROOT / "frontend" / "public" / "layers"
@@ -11,6 +23,30 @@ DRAWN = REPO_ROOT / "frontend" / "public" / "layers"
 def test_the_api_measures_from_the_same_layer_files_the_map_draws() -> None:
     assert MEASURED_FILES == ("relief.json", "rivers.json", "minerals.json")
     assert unmirrored(DRAWN, REPO_ROOT / MEASURED_OUTPUT) == []
+
+
+def test_the_api_draws_paper_maps_on_the_outline_and_state_lines_the_web_map_draws() -> None:
+    assert BASE_FILES == ("state-borders.json",)
+    assert unmirrored_base(REPO_ROOT) == [], "run tools/maplayers_mirror.py"
+    outline = json.loads((REPO_ROOT / MEASURED_OUTPUT / OUTLINE_FILE).read_text(encoding="utf-8"))
+    rings = decode_records(outline["payload"], True)
+    assert rings and all(len(points) >= 3 for _, points in rings)
+    assert not rings[0][0]
+
+
+def test_a_base_mirror_follows_its_sources(tmp_path: Path) -> None:
+    (tmp_path / INDIA_SOURCE).parent.mkdir(parents=True)
+    (tmp_path / INDIA_SOURCE).write_text('const PAYLOAD =\n  "abc" +\n  "def";\n', encoding="utf-8")
+    boundaries = tmp_path / "frontend" / "public" / "boundaries"
+    boundaries.mkdir(parents=True)
+    (boundaries / "state-borders.json").write_text('{"schemaVersion":1,"lines":"Ew"}\n', encoding="utf-8")
+    assert unmirrored_base(tmp_path) == ["state-borders.json", OUTLINE_FILE]
+    mirror_base(tmp_path)
+    assert unmirrored_base(tmp_path) == []
+    held = json.loads((tmp_path / MEASURED_OUTPUT / OUTLINE_FILE).read_text(encoding="utf-8"))
+    assert held == {"schemaVersion": 1, "payload": "abcdef"}
+    (boundaries / "state-borders.json").write_text('{"schemaVersion":1,"lines":"Fw"}\n', encoding="utf-8")
+    assert unmirrored_base(tmp_path) == ["state-borders.json"]
 
 
 def test_a_build_mirrors_each_measured_layer_byte_for_byte(tmp_path: Path) -> None:

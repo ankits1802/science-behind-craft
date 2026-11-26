@@ -19,6 +19,7 @@ from .page_export_coded import coded_figure_figure
 from .page_export_figures import FigureAsk, PaperPage, generic_figure
 from .page_export_kit import kit_diagram_figure, label_card_figure, swatch_cards_figure, timeline_map_figure
 from .page_export_labs import choice_toggle_figure, experiment_lab_figure
+from .page_export_maps import places_map_figure
 from .page_export_model import ExportBlock, ExportChapter, ExportFigure, ExportText, PageExport
 from .page_export_pictures import NO_PICTURES, PagePictures
 from .page_export_plates import picture_plate_figure, specimen_plate_figure
@@ -42,6 +43,7 @@ FIGURES: Mapping[str, FigureBuilder] = MappingProxyType(
         "specimen_plate": specimen_plate_figure,
         "diagram": kit_diagram_figure,
         "timeline_map": timeline_map_figure,
+        "map_layer": places_map_figure,
         "swatch_cards": swatch_cards_figure,
         "label_card": label_card_figure,
         "reaction_player": reaction_player_figure,

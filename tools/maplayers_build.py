@@ -100,9 +100,9 @@ def _shade(bounds: tuple[float, float, float, float]) -> dict[str, Any]:
 
 
 def _mirrored(folder: Path, root: Path) -> int:
-    from maplayers.mirror import MEASURED_OUTPUT, mirror_measured
+    from maplayers.mirror import MEASURED_OUTPUT, mirror_base, mirror_measured
 
-    for path in mirror_measured(folder, root / MEASURED_OUTPUT):
+    for path in [*mirror_measured(folder, root / MEASURED_OUTPUT), *mirror_base(root)]:
         print(f"{path.as_posix()} mirrored")
     return 0
 

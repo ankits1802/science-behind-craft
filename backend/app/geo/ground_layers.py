@@ -12,6 +12,7 @@ __all__ = [
     "GroundLayers",
     "Line",
     "RiverLabel",
+    "decode_flagged",
     "decode_records",
     "ground_layers",
     "line_of",
@@ -93,18 +94,27 @@ def _numbers(payload: str) -> Iterator[int]:
 
 
 def decode_records(payload: str) -> list[list[Point]]:
+    return [points for _, points in _records(payload, flagged=False)]
+
+
+def decode_flagged(payload: str) -> list[tuple[bool, list[Point]]]:
+    return _records(payload, flagged=True)
+
+
+def _records(payload: str, *, flagged: bool) -> list[tuple[bool, list[Point]]]:
     numbers = _numbers(payload)
-    records: list[list[Point]] = []
+    records: list[tuple[bool, list[Point]]] = []
     x = y = 0
     for count in numbers:
         if count <= 0:
             break
+        hole = next(numbers) != 0 if flagged else False
         points: list[Point] = []
         for _ in range(count):
             x += next(numbers)
             y += next(numbers)
             points.append((x / SCALE, y / SCALE))
-        records.append(points)
+        records.append((hole, points))
     return records
 
 
