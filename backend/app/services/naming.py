@@ -19,6 +19,7 @@ __all__ = [
     "PlaceParts",
     "artisan_audio_file_name",
     "artisan_audio_key",
+    "clip_still_key",
     "content_disposition",
     "export_file_name",
     "export_key",
@@ -72,6 +73,8 @@ RESERVED_STEMS = frozenset(
 _ZERO_WIDTH = frozenset({"‌", "‍"})
 NameField = str | None
 DayField = datetime | None
+NameParts = tuple[str | None, str | None, str | None]
+Render = Callable[[list[str], list[str], list[str]], str]
 
 
 @dataclass(frozen=True)
@@ -138,12 +141,7 @@ def export_key(owner_id: uuid.UUID, digest: str, leaf: str) -> str:
     return f"{EXPORTS_PREFIX}/{owner_id}/{digest}/{_one_file_name(leaf, 'export')}"
 
 
-def _named(
-    fixed: tuple[str, ...],
-    tail: tuple[str, str | None],
-    ext: str,
-    parts: tuple[str | None, str | None, str | None],
-) -> str:
+def _named(fixed: tuple[str, ...], tail: tuple[str, str | None], ext: str, parts: NameParts) -> str:
     def render(place_words: list[str], craft_words: list[str], subject_words: list[str]) -> str:
         middle = ("-".join(place_words), "-".join(craft_words), "-".join(subject_words))
         stem = "_".join(part for part in (*fixed, *middle, *tail) if part)
@@ -214,9 +212,8 @@ def molecule_key(pubchem_cid: int, leaf: str) -> str:
 def river_topology_file_name(main_riv: int) -> str:
     if main_riv < 1:
         raise InvalidInput("A river topology is filed under its outlet reach id")
-    return (
-        "_".join((PORTAL, "Dataset", RIVER_TOPOLOGY_SUBJECT, "River-Topology", f"Basin-{main_riv}")) + ".json"
-    )
+    stem = "_".join((PORTAL, "Dataset", RIVER_TOPOLOGY_SUBJECT, "River-Topology", f"Basin-{main_riv}"))
+    return f"{stem}.json"
 
 
 def river_topology_key(edition: str, main_riv: int, sha256: str) -> str:
@@ -278,6 +275,15 @@ def field_voice_key(sha256: str, leaf: str) -> str:
 
 def page_media_key(sha256: str, leaf: str) -> str:
     return _hashed_key(PAGE_MEDIA_FOLDER, sha256, leaf, "A page copy is filed under its 64-hex SHA-256")
+
+
+def clip_still_key(page_key: str) -> str:
+    folder, _, leaf = page_key.rpartition("/")
+    _, video, mp4 = MEDIA_NAMES["VIDEO"]
+    fields = leaf.removesuffix(f".{mp4}").split("_")
+    if not folder.startswith(f"{MEDIA_PREFIX}/{PAGE_MEDIA_FOLDER}/") or fields[-2:-1] != [video]:
+        raise InvalidInput("A clip's still is filed beside the page copy of a generated video")
+    return f"{folder}/{'_'.join([*fields[:-2], 'Still', fields[-1]])}.jpg"
 
 
 def _hashed_key(folder: str, digest: str, leaf: str, refusal: str) -> str:
@@ -378,12 +384,7 @@ def _guard(stem: str) -> str:
     return f"{stem}-File" if stem.upper() in RESERVED_STEMS else stem
 
 
-def _fit(
-    render: Callable[[list[str], list[str], list[str]], str],
-    place: list[str],
-    craft: list[str],
-    subject: list[str],
-) -> str:
+def _fit(render: Render, place: list[str], craft: list[str], subject: list[str]) -> str:
     def too_long() -> bool:
         return len(render(place, craft, subject)) > FILE_MAX
 

@@ -10,7 +10,9 @@ from app.core.errors import InvalidInput
 from app.services.field_voices_feed import Live, parse_page
 from app.services.field_voices_images import ImageCopier
 from app.services.field_voices_items import ImageItem
+from app.services.malware_scan import MalwareFound, ScannerDown
 from tests.field_voices.fixtures import FR, FR_HOST, recorded, resigned
+from tests.upload_scanners import EICAR, EICAR_SIGNATURE, ScriptedScanner
 
 GPS_IFD = 0x8825
 ARTIST = 0x013B
@@ -86,3 +88,31 @@ async def test_a_copy_is_stored_once_for_the_same_picture() -> None:
     first = await copier(store, body, []).copy(portal_image(body))
     second = await copier(store, body, []).copy(portal_image(body))
     assert first.key == second.key and len(store.objects) == 1
+
+
+async def test_a_portal_picture_is_scanned_whole_before_it_is_decoded(
+    upload_scanner: ScriptedScanner,
+) -> None:
+    body = tagged_jpeg()
+    store: Any = FakeStore()
+    await copier(store, body, []).copy(portal_image(body))
+    assert upload_scanner.scanned == [body] and len(store.objects) == 1
+
+
+async def test_a_portal_picture_carrying_the_eicar_test_file_is_refused_and_nothing_is_stored() -> None:
+    body = tagged_jpeg() + EICAR.encode("ascii")
+    store: Any = FakeStore()
+    with pytest.raises(MalwareFound, match=EICAR_SIGNATURE):
+        await copier(store, body, []).copy(portal_image(body))
+    assert store.objects == {}
+
+
+async def test_with_the_scanner_down_no_portal_picture_is_decoded_or_stored(
+    upload_scanner: ScriptedScanner,
+) -> None:
+    upload_scanner.down = True
+    body = tagged_jpeg()
+    store: Any = FakeStore()
+    with pytest.raises(ScannerDown, match="not answering"):
+        await copier(store, body, []).copy(portal_image(body))
+    assert store.objects == {}

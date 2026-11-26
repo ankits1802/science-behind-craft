@@ -7,12 +7,13 @@ import pytest
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import DesignReadCache, LayoutProposal, PagePreview, User
+from app.models import DesignReadCache, LayoutProposal, PageHold, PagePreview, User
 from app.research.design_critique import DesignCritique, DesignNote
 from app.research.design_read import READ, DesignRead
-from app.research.page_proposals import PageBundle
+from app.research.page_proposals import PageBundle, PageProposalResult
 from app.services.page_critique import attach_critique, critiqued, latest_critique
 from app.services.page_design_read import CACHE_DAYS, cached_read, store_read
+from app.services.page_holds import HoldPlace, confirm_hold, held_page, hold_page
 from app.services.page_preview import preview_page
 from app.services.page_proposals import propose_page
 from app.services.page_reviews import DrawnPreview
@@ -39,6 +40,9 @@ READING = DesignRead(
     cost_usd=Decimal("0.214"),
 )
 CRITIQUE = DesignCritique(verdict="The making chapter is a wall of prose.", notes=[NOTE])
+OTHER = uuid.UUID("9e3a0000-0000-4000-8000-000000000002")
+HELD_AT = NOW + timedelta(minutes=10)
+CONFIRMED_AT = NOW + timedelta(days=2)
 
 
 @pytest.fixture
@@ -60,6 +64,26 @@ def bundle() -> PageBundle:
     return PageBundle.model_validate(
         {"subject": SUBJECT, "facts": [FACT_PART], "components": [component(LABEL)]}
     )
+
+
+def layout_only() -> PageBundle:
+    return PageBundle.model_validate({"subject": SUBJECT, "layout": {"baseVersion": 0, "entries": []}})
+
+
+async def held_and_confirmed(session: AsyncSession, user: User) -> tuple[PageHold, LayoutProposal]:
+    held = (await hold_page(session, user, layout_only(), None, HoldPlace(SITE, "Claude", HELD_AT))).held
+    assert held is not None
+
+    async def proposed(asked: PageBundle) -> PageProposalResult:
+        return await propose_page(session, user, asked, tools=tools(), now=CONFIRMED_AT)
+
+    view = await held_page(session, user, held.id, site=SITE, now=HELD_AT)
+    confirmed = await confirm_hold(session, user, held.id, proposed, HoldPlace(SITE, None, CONFIRMED_AT))
+    assert view.critique == confirmed.critique
+    row = await session.get(PageHold, held.id)
+    proposal = await session.scalar(select(LayoutProposal).where(LayoutProposal.proposerId == user.id))
+    assert row is not None and proposal is not None
+    return row, proposal
 
 
 async def test_a_read_is_kept_by_its_pictures_key_and_found_again_at_no_cost(session: AsyncSession) -> None:
@@ -100,3 +124,32 @@ async def test_the_latest_critique_rides_with_the_layout_to_the_review_queue(ses
     assert proposal is not None and proposal.critique == CRITIQUE.model_dump(mode="json")
     (rendered,) = await layout_items(session, [proposal.id])
     assert rendered.item.layout.critique == CRITIQUE
+
+
+async def test_a_held_page_shows_the_latest_critique_and_carries_it_to_its_layout_on_confirming(
+    session: AsyncSession,
+) -> None:
+    user = await maker(session)
+    previewed = await preview_page(session, user, bundle(), site=SITE, now=NOW)
+    await critiqued(session, user, previewed, DrawnPreview(report=None), critique=CRITIQUE, now=NOW)
+    assert await latest_critique(session, user.id, ("craft", CRAFT_SLUG), now=CONFIRMED_AT) is None
+    row, proposal = await held_and_confirmed(session, user)
+    assert row.critique == proposal.critique == CRITIQUE.model_dump(mode="json")
+    assert (await held_page(session, user, row.id, site=SITE, now=CONFIRMED_AT)).critique == CRITIQUE
+    (rendered,) = await layout_items(session, [proposal.id])
+    assert rendered.item.layout.critique == CRITIQUE
+
+
+async def test_a_held_page_without_a_critique_of_its_own_carries_none(session: AsyncSession) -> None:
+    user = await maker(session)
+    previewed = await preview_page(session, user, bundle(), site=SITE, now=NOW)
+    await critiqued(session, user, previewed, DrawnPreview(report=None), critique=CRITIQUE, now=NOW)
+    session.add(User(id=OTHER, name="Second maker", email=f"{OTHER.hex}@example.org", role="RESEARCHER"))
+    await session.flush()
+    other = await session.get(User, OTHER)
+    assert other is not None
+    await preview_page(session, other, bundle(), site=SITE, now=NOW)
+    row, proposal = await held_and_confirmed(session, other)
+    assert row.critique is None and proposal.critique is None
+    (rendered,) = await layout_items(session, [proposal.id])
+    assert rendered.item.layout.critique is None

@@ -167,7 +167,8 @@ Each item has `id`, `kind`, `origin`, `submittedAt`, `craft {slug, name, path}` 
   the same proposer that the layout places, as a page bundle delivers them, each with its `delivery`.
 - A `layout` item's `critique` (decision 0237): `{verdict, notes [{chapter, where, problem, fix}]}`,
   the proposer's AI's own design critique of its last preview's pictures, copied when `propose_page`
-  proposed the layout, else `null`; the card shows it under the changes as the agent's judgement,
+  proposed the layout or, for a page held for one confirmation, kept on the hold when it was held
+  and copied when the person confirmed it (decision 0245), else `null`; the card shows it under the changes as the agent's judgement,
   never a check (`components/review/AgentCritique.tsx`).
 - `layout`: `subject {kind, slug}`, `subjectName`, `pageUrl`, `baseVersion`, `currentVersion` (the
   page's layout now, 0 for none), `stale` (the two differ, so approval is refused), `note`,

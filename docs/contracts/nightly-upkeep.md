@@ -65,6 +65,7 @@ The workflow runs `python -m app.scripts.nightly_upkeep` as the `kalavigyan` use
 | 3e. Delete expired MCP tasks | `services/mcp_task_store.forget_expired_tasks` | every `McpTask` whose `expiresAt` (90 minutes after it was created) has passed (decision 0241) | the `McpTask` rows deleted |
 | 4. Reload monographs | `services/upkeep_pages.py` through `services/monograph_load.py` | `MONOGRAPHS_PER_NIGHT` = 20, a window that rotates by night | `ArticleSection`, `KnowledgePiece` (only what changed) |
 | 5. Rebuild stale craft pages | `services/upkeep_pages.py` through `services/craft_page_snapshots.py` | `PAGES_PER_NIGHT` = 60, oldest snapshot first | `CraftPageSnapshot` |
+| 5e. Raise the upgrade work of pages built before the UX round | `services/page_upgrades.raise_page_upgrades`, its lines `research/page_upgrades.upgrade_lines` | every contributor's page whose latest approved layout was written before `UPGRADE_CUTOFF`, once (decision 0245) | one `PageUpgrade` row per page, inserted only when it has none (`open-work.md`, Pages built before the UX round) |
 | 5a. Refresh the field work | `services/open_work_refresh.py` | every subject, once | `TaskReservation.ending` `COMPLETED` for a live reservation of a `MISSING_FIELD` or `THIN_FIELD` task no longer open (`open-work.md`) |
 | 5b. Questions become work | `services/answer_gap_refresh.py` | the thin and unanswered answers of the last 90 days, once | `AnswerGap` groups by craft and meaning, anonymised by rules and then screened for names by the cheapest model route (a question it could not read waits for the next night, decision 0159); `TaskReservation.ending` `COMPLETED` for an `ANSWER_GAP` task whose acceptance holds (`open-work.md`, Questions readers asked; decision 0113) |
 | 5c. Refresh the shared terms | `services/shared_term_crafts.refresh_shared_terms` | every glossary term linked to the concepts of two crafts or more, in batches of `TERMS_PER_BATCH` = 200 | `SharedTermCraft` rebuilt whole: each term and craft whose own fact-level claims name the term, with their concept and claim ids, the summary the shared-science explorer reads (`learning.md`; the release also runs it after the curation import) |
@@ -289,6 +290,19 @@ lists each craft's hidden facts by reason, the crafts with unexplained facts fir
 most hidden, under one line saying when the night counted, how many facts hide in how many crafts
 and how many are unexplained (spec `frontend/e2e/hidden-facts-unit.spec.ts`).
 
+### 5e. Upgrade work for pages built before the UX round
+
+Right after the pages are rebuilt, the night raises the upgrade work of every page a contributor
+built before the UX round of 2026-11-26 reached the site (`research/page_upgrades.UPGRADE_CUTOFF`,
+11:21 India time, when main took the round at commit 7f841c1c): a craft, family or category page
+other than Kutch Ajrakh whose latest approved `LayoutProposal` wrote a `PageLayout` before that
+moment. For each one without a `PageUpgrade` row it reads the page's live document
+(`monograph_document.stored_document`) and stores the lines of what its facts could now show
+(`open-work.md`, Pages built before the UX round), inserting with `ON CONFLICT DO NOTHING` so a second
+night or a race never raises a page twice. A page with no stored document yet waits for a later night
+(`noDocument`); a page whose craft cannot be read is reported in `failed` and tried again the next
+night. Neither changes `ok`.
+
 ## The report
 
 `python -m app.scripts.nightly_upkeep` prints one JSON object and exits 1 when `ok` is false:
@@ -308,6 +322,7 @@ and how many are unexplained (spec `frontend/e2e/hidden-facts-unit.spec.ts`).
  mcpTasks {expiredDeleted},
  answerGaps {questions, dropped, embedded, embeddingError, joined, opened, answered, lapsed, open, reservationsClosed},
  sharedTerms {terms, crafts},
+ pageUpgrades {raised[], alreadyRaised, noDocument[], failed {<kind>:<slug>: reason}},
  hiddenFacts {countedAt, crafts, byReason {HELD, RESTRICTED_FACT, HIDDEN_CONCEPT, NO_SHOWN_SOURCE},
               unexplained, craftsUnexplained[], perCraft[{craft, approved, hidden, unexplained[]}]},
  refresh {ok, pages, refreshed, unrefreshed[], reason?}}
@@ -318,7 +333,8 @@ read rule shows was left out of a reader's view (`hiddenFacts.unexplained`) or a
 could not be refreshed; an unreachable source or a failed archive is expected and only counted. An
 unset `WEB_REVALIDATE_SECRET` is reported (`reason`) and is not a failure. `--dry-run` prints `{ok, dryRun, sourcesDue,
 sourcesAtRisk, claimsHeld, sourcesRotten, monographs, pagesStale, clientsAbandoned, orphans[], mcpDaysToCount,
-mcpCallsToPrune, mcpTasksExpired}` and writes
+mcpCallsToPrune, mcpTasksExpired, pageUpgradesDue[]}` (`pageUpgradesDue` the `<kind>:<slug>` of each page
+the night would raise) and writes
 nothing.
 
 ## What the owner sets

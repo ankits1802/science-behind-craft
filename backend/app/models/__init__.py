@@ -121,6 +121,7 @@ from app.models.page_layouts import PageLayout
 from app.models.page_previews import PagePreview
 from app.models.page_proposals import DrawnPicture, PageProposal
 from app.models.page_translations import PageTextUnit, PageTranslation, TranslationReader
+from app.models.page_upgrades import PageUpgrade
 from app.models.place_lookups import PlaceLookup
 from app.models.profiles import ArtisanCraft, ArtisanProfile, StudentProfile
 from app.models.rivers import RiverBasin, RiverReach, RiverReachDistrict
@@ -258,6 +259,7 @@ __all__ = [
     "PageRefreshJob",
     "PageTextUnit",
     "PageTranslation",
+    "PageUpgrade",
     "PasswordResetRequest",
     "PasswordResetToken",
     "PictureCheck",

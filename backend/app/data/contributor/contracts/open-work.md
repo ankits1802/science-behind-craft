@@ -54,6 +54,7 @@ stateDiagram-v2
 | Picture checks (`CHECK_PICTURES`, decision 0222) | contract, keys and the trust rule `research/picture_checks.py`; the links waiting, disputed and served counted `services/picture_check_links.py`; the batch `services/picture_check_batches.py`; verdicts `services/picture_check_records.py`; the task `services/open_work_picture_checks.py`; the queue and an Admin's ruling `services/review_queue_picture_checks.py`; the tool `api/mcp_check_tools.py`; table `PictureCheck` with `MediaRefClaim.id` and `refusedAt` (`models/media_refs.py`, migration `0119_picture_checks`) |
 | The nightly refresh of field work | `services/open_work_refresh.py` |
 | Pages in the monograph form | `services/open_work_pages.py`; the folder is `data/monograph_files.MONOGRAPHS_DIR` |
+| Pages built before the UX round (`UPGRADE_PAGE`, decision 0245) | the cutoff and the lines `research/page_upgrades.py`; the raise `services/page_upgrades.py` (nightly upkeep step 5e); the open rows `services/open_work_upgrades.py`; the wording `research/open_work_texts.upgrade_wording`; table `PageUpgrade` (`models/page_upgrades.py`, migration `0124_leftovers`) |
 | Listing, standings, review queues, live reservations | `services/open_work.py` |
 | Questions readers asked: verdicts, privacy, keys, wording | `research/open_work_gaps.py`, `research/open_work_gap_privacy.py`, `research/open_work_gap_keys.py`, `research/open_work_gap_tasks.py` |
 | Recording each answer's verdict; the nightly grouping, acceptance and closing; the tasks | `services/answer_gaps.py` (from `SqlAnswerStore.finish`); `services/answer_gap_refresh.py` over `answer_gap_groups.py` and `answer_gap_checks.py`; `services/open_work_gaps.py`; tables `AnswerVerdict` and `AnswerGap` (`models/answer_gaps.py`, migration `0055_answer_gaps`) |
@@ -96,6 +97,7 @@ at most 20 ids; `count` is the whole number.
 | `FLAGSHIP` | one of the nine family pages draws no `reaction_player`, `dip_player`, `stage_player` or `experiment_lab` (The family flagships, below) | `FLAGSHIP:category:<slug>` | the backlog's facts | `deliver_page` |
 | `PAGE_FORM` | the page is not in the monograph form | `PAGE_FORM:<subject>:<slug>` | 0 | none |
 | `PAGE_LAYOUT` | in the monograph form without a layout | `PAGE_LAYOUT:<subject>:<slug>` | 0 | none |
+| `UPGRADE_PAGE` | a contributor built the page before the UX round of 2026-11-26 reached the site, and it has not been rebuilt since (Pages built before the UX round, below) | `UPGRADE_PAGE:<subject>:<slug>` | the lines it names | `deliver_page` |
 | `SECOND_SOURCE` | facts cited by one source only, per primary field | `SECOND_SOURCE:...[:<FIELD>]` | facts | `research_field` |
 | `SOURCES_DIFFER` | facts marked sources differ, per primary field | `SOURCES_DIFFER:...[:<FIELD>]` | facts | `research_field` |
 | `DEAD_SOURCE` | cited sources with no archive whose last fetch answered 404 or 410 | `DEAD_SOURCE:<subject>:<slug>` | sources | `research_field` |
@@ -171,7 +173,8 @@ Priority is set per subject:
   before not; then reader demand, most first; crafts, families, categories; name. Within a subject:
   healing first (re-source, corroborate, find another source; fields in vocabulary order), then
   the questions readers asked (their own priority, most askers first), then fields in vocabulary
-  order, components, the flagship, page, corroboration, links. A page that lost a fact is the first
+  order, components, the flagship, page, the upgrade of a page built before the UX round,
+  corroboration, links. A page that lost a fact is the first
   repair of its subject. Review queues lead the `HIGH` tasks, and picture and translation tasks
   follow the subjects' other tasks of their priority.
 - **The nightly upkeep** (`services/open_work_refresh.refresh_field_work`, the `fieldWork` part of
@@ -209,6 +212,20 @@ still lacks (the backlog's Missing line); a test keeps the two equal.
 |---|---|
 | **Open** | while the family page draws no registered component of kind `reaction_player`, `dip_player`, `stage_player` or `experiment_lab`: none rests on (`claimIds`) or is keyed to the concepts of the page's facts (its `CuratedCategoryClaim` claims and those its `PUBLISHED` sections cite), and none is named in its latest layout. `count` is the backlog's facts for it and `factIds` those facts; `needed` names the mechanism, the anchor and what is still lacking |
 | **Completed** | by a component proposal naming it as `task_key`: of one of those kinds, delivered with its spec, and keyed to the anchor craft (a `CRAFT` subject or its `craft_slug`), sent in a bundle for the category page. Any other proposal naming it is refused with the reason |
+
+## Pages built before the UX round (decision 0245)
+
+A page a contributor built before the UX round of 2026-11-26 reached the site gets the renderer's
+improvements but not what the round's tools make possible, so it is offered as one `UPGRADE_PAGE`
+task that a contributor's AI can pick up and rebuild.
+
+| What | Rule |
+|---|---|
+| Built before the round | a craft, family or category page other than Kutch Ajrakh whose latest approved `LayoutProposal` (a contributor's page, any origin) wrote its `PageLayout` before `research/page_upgrades.UPGRADE_CUTOFF`, 2026-11-26 11:21 India time (main took the round, decisions 0227 to 0234, at commit 7f841c1c). A page whose layout only the site wrote, or never approved, is not one |
+| Raised once | the nightly upkeep (`nightly-upkeep.md`, step 5e) stores one `PageUpgrade` row per such page, `{subjectKind, subjectSlug, layoutVersion, lines[], raisedAt}`, unique per page and inserted with `ON CONFLICT DO NOTHING`, so a page is never raised twice; a page with no stored document waits for a later night |
+| The lines | read from the page's live document by `research/page_upgrades.upgrade_lines`, in this order: rule 29's opportunities exactly as the preview words them (`page_report_drawable.opportunities` with the craft's held reactions and stages); a places map on the site's base (decision 0232) when the page holds sentences of places (`GEOGRAPHY`) and draws no `map_layer`, or for each `map_layer` whose spec names none of `frame`, `emphasis`, `routes`, `rings`, `districts`, `sequence`; a figure, a `coded_figure` among them (decision 0231), for each chapter of three cited paragraphs or more (`PROSE_RUN_MIN`) that draws no figure and that no earlier line names, since Kutch Ajrakh draws a figure in every chapter of cited prose (its market chapter, nine paragraphs beside three figures, the most prose per figure). Each line names its chapter and up to six of its facts |
+| The task | `needed` names the page, its lines (or, with none, asks for the page to be read against the design critique, `design-critique/1`) and the page playbook (`kalavigyan://skills/references/playbook.md`, guide page `playbook/1`); `acceptance`: the page rebuilt in a draft, previewed with `preview_page` and proposed whole with `propose_page`; `count` the lines; priority the subject's; listed with the page tasks |
+| Dropped | once an approved layout newer than the row's `layoutVersion` is written: the page is rebuilt. A layout written another way (a component swapped in place, the site's own backfill) is not a rebuild and keeps the task. While a layout proposal made at or after `raisedAt` waits for review, the task is closed, so a rebuild in review is not picked up twice; it opens again if that proposal is rejected |
 
 ## Questions readers asked (decision 0113)
 
@@ -550,13 +567,17 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
   agent switch, so a Professor or above, a `PROVEN` account, or an `ESTABLISHED` one under `AUTO`).
   `propose_page` over MCP with a draft or a bundle of more than one part then proposes nothing: it
   stores a `PageHold` (the bundle, the draft and its version, the client, the draft's live preview,
-  `WAITING` for 3 days, one waiting hold per account and page) and answers
+  the account's latest live design critique of the page as `critique`, decision 0245, `WAITING` for 3
+  days, one waiting hold per account and page) and answers
   `PageProposalResult {accepted 0, refused 0, parts [], held {id, confirmUrl, expiresAt}}` with a
   `nextStep` to give the person the link `<site>/contributions/pages/<id>`. Placements that cannot
   pass are refused first and nothing is held. Signed in to the same account, the person reads it
-  (`GET /api/knowledge/pages/held/{id}`, `PageHoldView`) and presses Confirm once (`POST
-  .../decision {decision CONFIRM}`): the bundle runs then, exactly as `propose_page` runs it with the
-  agent's origin, the hold keeps the result, and the draft, unchanged since, is marked submitted;
+  (`GET /api/knowledge/pages/held/{id}`, `PageHoldView`, whose `critique` the page draws as the
+  agent's design critique under the hold's parts, `components/review/AgentCritique.tsx`) and presses
+  Confirm once (`POST .../decision {decision CONFIRM}`): the bundle runs then, exactly as
+  `propose_page` runs it with the agent's origin, the hold's critique goes onto the layout it
+  proposes (`page_critique.carry_critique`; the preview it came from may have expired by then), the
+  hold keeps the result, and the draft, unchanged since, is marked submitted;
   `DISCARD` proposes nothing. Audited `page.held`, `page.hold_confirmed` and `page.hold_discarded`.
   Facts, single parts and an account whose parts wait for review are proposed at once as before.
 

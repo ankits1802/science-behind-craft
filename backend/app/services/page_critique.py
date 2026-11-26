@@ -14,7 +14,14 @@ from app.research.page_proposals import ACCEPTED, LAYOUT, PagePreviewResult, Pag
 from .page_preview_links import preview_key, preview_token, token_preview
 from .page_reviews import DrawnPreview
 
-__all__ = ["attach_critique", "critiqued", "latest_critique", "layout_critique"]
+__all__ = [
+    "attach_critique",
+    "carry_critique",
+    "critiqued",
+    "latest_critique",
+    "layout_critique",
+    "stored_critique",
+]
 
 
 async def critiqued(
@@ -54,20 +61,23 @@ async def latest_critique(
         .order_by(PagePreview.createdAt.desc())
         .limit(1)
     )
-    return _critique(stored)
+    return stored_critique(stored)
 
 
 async def attach_critique(
     session: AsyncSession, user: User, result: PageProposalResult, *, now: datetime
 ) -> None:
-    layout = next(
-        (part for part in result.parts if part.part == LAYOUT and part.outcome == ACCEPTED and part.id), None
-    )
-    if layout is None or layout.id is None:
+    if _accepted_layout(result) is None:
         return
     subject = (result.subject.kind, result.subject.slug)
-    critique = await latest_critique(session, user.id, subject, now=now)
-    proposal = None if critique is None else await session.get(LayoutProposal, uuid.UUID(layout.id))
+    await carry_critique(session, result, await latest_critique(session, user.id, subject, now=now))
+
+
+async def carry_critique(
+    session: AsyncSession, result: PageProposalResult, critique: DesignCritique | None
+) -> None:
+    layout = _accepted_layout(result)
+    proposal = None if critique is None or layout is None else await session.get(LayoutProposal, layout)
     if critique is None or proposal is None:
         return
     proposal.critique = critique.model_dump(mode="json")
@@ -75,13 +85,18 @@ async def attach_critique(
 
 
 def layout_critique(proposal: LayoutProposal) -> DesignCritique | None:
-    return _critique(proposal.critique)
+    return stored_critique(proposal.critique)
 
 
-def _critique(stored: object) -> DesignCritique | None:
+def stored_critique(stored: object) -> DesignCritique | None:
     if not isinstance(stored, dict):
         return None
     try:
         return DesignCritique.model_validate(stored)
     except ValidationError:
         return None
+
+
+def _accepted_layout(result: PageProposalResult) -> uuid.UUID | None:
+    part = next((part for part in result.parts if part.part == LAYOUT and part.outcome == ACCEPTED), None)
+    return None if part is None or part.id is None else uuid.UUID(part.id)

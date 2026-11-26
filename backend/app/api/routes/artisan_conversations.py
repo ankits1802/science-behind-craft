@@ -26,6 +26,7 @@ from app.research.testimony import RECORDING_NOTICE_VERSION
 from app.schemas.artisan import ConversationStartRequest
 from app.schemas.voice import RELAY_AUDIO_TYPES, RELAY_MAX_AUDIO_BYTES, RELAY_MAX_WAV_BYTES
 from app.schemas.voice_llm import CONVERSATION_HEADER, LlmChatRequest
+from app.services.malware_scan import MalwareFound, ScannerDown
 from app.services.object_store import media_bucket
 from app.voice.agent_turn import AgentCall
 from app.voice.artisan_agent import artisan_agent_reply, authorised_artisan_session, heard_message
@@ -298,6 +299,10 @@ async def _upload(request: Request, runtime: VoiceRuntime) -> ArtisanUpload:
         )
     except Refused:
         raise _audio_refusal(status.HTTP_413_CONTENT_TOO_LARGE) from None
+    except ScannerDown as down:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, str(down)) from None
+    except MalwareFound as found:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, str(found)) from None
     except InvalidInput:
         raise _audio_refusal(status.HTTP_400_BAD_REQUEST) from None
     except NotConfigured:

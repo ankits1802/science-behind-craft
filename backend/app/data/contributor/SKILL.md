@@ -404,7 +404,14 @@ Whatever your client draws looks like the site, whether it stays in your chat or
   beside Kutch Ajrakh as guidance only.
 - An account whose work goes live at once gets back `held.confirm_url` instead of a report when it
   proposes a draft or a several-part bundle. Send that link to your user and stop; they confirm it
-  once while signed in. Never park a finished redesign in a preview to avoid publishing.
+  once while signed in. Never park a finished redesign in a preview to avoid publishing. The hold
+  keeps the critique your latest preview took, so the person who confirms it sees what you judged,
+  and the layout it proposes carries it to its reviewer.
+- A page a contributor built before the UX round of 26 November 2026 is offered once as an
+  `UPGRADE_PAGE` task naming what its facts could now show: rule 29's opportunities, a places map on
+  the site's base, a figure or `coded_figure` where a chapter's prose runs on. Rebuild it by the
+  playbook (`kalavigyan://skills/references/playbook.md`) through `preview_page` and
+  `propose_page`; the task drops once the rebuilt layout is approved.
 
 ## Drafts
 

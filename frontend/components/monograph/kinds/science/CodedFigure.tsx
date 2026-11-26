@@ -1,6 +1,6 @@
 import { GeneralFigure } from "@/components/monograph/kinds/general/GeneralFigure";
 import { parsedSpec } from "@/lib/componentSpecsGeneral";
-import { CODED_FIGURE_KIND, codedFigureShape, codedWords, type CodedFigureSpec } from "@/lib/componentSpecsScienceCoded";
+import { clipFilms, CODED_FIGURE_KIND, codedFigureShape, codedWords, type CodedFigureSpec } from "@/lib/componentSpecsScienceCoded";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 
 import { NearCodedFrame } from "./NearCodedFrame";
@@ -26,6 +26,18 @@ function CodedWords({ figure, renderUnit }: { figure: CodedFigureSpec; renderUni
   );
 }
 
+function ClipCredits({ figure }: { figure: CodedFigureSpec }) {
+  const credited = clipFilms(figure).filter((film) => film.credit);
+  if (!credited.length) return null;
+  return (
+    <ul className="grid gap-1 font-ui text-caption text-ink-3" data-coded-credits="">
+      {credited.map((film) => (
+        <li key={film.key}>{film.credit}</li>
+      ))}
+    </ul>
+  );
+}
+
 export function CodedFigure({ component, spec, renderUnit, unitText }: ComponentViewProps) {
   const figure = parsedSpec(codedFigureShape, spec);
   if (!figure) return null;
@@ -40,6 +52,7 @@ export function CodedFigure({ component, spec, renderUnit, unitText }: Component
         <p id={altId} className="max-w-measure border-t border-rule pt-2 font-ui text-label text-ink-2">
           {renderUnit(figure.alt)}
         </p>
+        <ClipCredits figure={figure} />
         <CodedWords figure={figure} renderUnit={renderUnit} />
       </div>
     </GeneralFigure>

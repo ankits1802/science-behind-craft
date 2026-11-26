@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { HeldPage } from "@/components/contributions/HeldPage";
 import { ConfirmProvider } from "@/components/dialogs/ConfirmDialog";
+import type { DesignCritique } from "@/lib/designCritique";
 import {
   countsLine,
   decisionBody,
@@ -62,6 +63,15 @@ const CONFIRMED: PageHoldView = {
   message: "Confirmed: each part went through its own checks."
 };
 
+const CRITIQUE: DesignCritique = {
+  verdict: "The making chapter is a wall of prose.",
+  notes: [{ chapter: "made", where: "after the second stage", problem: "Eleven sentences run on with no figure.", fix: "Set a stage player beside them." }]
+};
+
+function held(view: PageHoldView): string {
+  return renderToStaticMarkup(createElement(ConfirmProvider, null, createElement(HeldPage, { view, onDecided: () => undefined })));
+}
+
 const RESEARCHER: User = { id: "r", email: "r@example.org", name: "R", role: "RESEARCHER", capabilities: ["PROPOSE_KNOWLEDGE"] };
 const STUDENT: User = { id: "s", email: "s@example.org", name: "S", role: "STUDENT", capabilities: [] };
 
@@ -113,4 +123,26 @@ test("only a Researcher or above opens a held page", () => {
   expect(gates["/contributions/pages"]).toBe("require(PROPOSE_KNOWLEDGE)");
   const path = `/contributions/pages/${HOLD}`;
   expect([canAccessRoute(RESEARCHER, path), canAccessRoute(STUDENT, path)]).toEqual([true, false]);
+});
+
+test("a held page shows its agent's design critique as a section of its own, waiting or confirmed", () => {
+  const critiqued: PageHoldView = { ...WAITING, critique: CRITIQUE };
+  expect(parseShape(pageHoldShape, critiqued)).toEqual(critiqued);
+  for (const view of [critiqued, { ...CONFIRMED, critique: CRITIQUE }]) {
+    const shown = held(view);
+    expect(shown).toContain('data-testid="agent-critique"');
+    expect(shown).toContain("design critique</h2>");
+    expect(shown).toContain("The making chapter is a wall of prose.");
+    expect(shown).toContain("Made: after the second stage");
+    expect(shown).toContain("Set a stage player beside them.");
+  }
+});
+
+test("a held page without a critique draws none, and a critique off its contract is refused", () => {
+  const none: PageHoldView = { ...WAITING, critique: null };
+  expect(parseShape(pageHoldShape, none)).toEqual(none);
+  expect(held(none)).not.toContain("agent-critique");
+  expect(held(WAITING)).not.toContain("agent-critique");
+  expect(() => parseShape(pageHoldShape, { ...WAITING, critique: { verdict: "Fine." } })).toThrow(ShapeError);
+  expect(() => parseShape(pageHoldShape, { ...WAITING, critique: { ...CRITIQUE, notes: [{ chapter: "made" }] } })).toThrow(ShapeError);
 });

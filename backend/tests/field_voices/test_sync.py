@@ -4,8 +4,11 @@ from typing import Any
 
 import httpx
 
+from app.services.field_voices_images import StoredCopy
+from app.services.field_voices_items import ImageItem
 from app.services.field_voices_reader import field_voices_reader
 from app.services.field_voices_sync import PortalReport, sync_portal
+from app.services.malware_scan import DOWN, MalwareFound, ScannerDown
 from tests.field_voices.fakes import FakeClock, FakeCopier, FakeLedger
 from tests.field_voices.fixtures import (
     DR,
@@ -39,6 +42,15 @@ async def run(
 
 def streams(report: PortalReport) -> dict[str, dict[str, Any]]:
     return {stream.stream: stream.as_dict() for stream in report.streams}
+
+
+class ScanningCopier(FakeCopier):
+    def __init__(self, failure: Exception) -> None:
+        super().__init__()
+        self.failure = failure
+
+    async def copy(self, item: ImageItem) -> StoredCopy:
+        raise self.failure
 
 
 async def test_a_first_run_reads_both_views_of_both_streams() -> None:
@@ -241,3 +253,25 @@ async def test_a_reread_starts_again_from_no_stamp() -> None:
     row = ledger.stream(FR, "transcripts")
     assert (row.cursor, row.last, row.rereading) == (None, None, True)
     assert row.gone_last is not None
+
+
+async def test_a_scanner_that_is_not_answering_stops_the_pictures_unread_without_a_refused_page() -> None:
+    ledger = FakeLedger()
+    report = streams(await run(FR, caught_up(FR), ledger, copier=ScanningCopier(ScannerDown(DOWN))))
+    assert (report["images"]["ok"], report["images"]["refusedPages"], report["images"]["imagesStored"]) == (
+        False,
+        0,
+        0,
+    )
+    assert "not answering" in report["images"]["error"]
+    assert report["transcripts"]["ok"]
+    assert ledger.stream(FR, "images").cursor is None
+
+
+async def test_a_picture_the_scan_finds_malware_in_refuses_its_page() -> None:
+    ledger = FakeLedger()
+    found = ScanningCopier(MalwareFound("Eicar-Test-Signature"))
+    report = streams(await run(FR, caught_up(FR), ledger, copier=found))
+    assert (report["images"]["ok"], report["images"]["refusedPages"]) == (False, 1)
+    assert "Eicar-Test-Signature" in report["images"]["error"]
+    assert ledger.stream(FR, "images").cursor is None

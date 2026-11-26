@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 
 from app.geo.map_base import BaseAsk, SiteBox
 from app.research.coded_figure_still import code_still, still_node, worded_still
-from app.research.component_specs_science_coded import CodedFigureSpec, CodedMap
+from app.research.component_specs_science_coded import CodedFigureSpec, CodedFilm, CodedMap
 from app.research.datasets import BOUNDARY_CAPTION
 
 from .export_map_base import base_datasets, on_base
 from .export_still_paint import numbers
 from .export_still_svg import svg_still
 from .page_export_figures import FigureAsk, dataset_credit
-from .page_export_model import ExportFigure, ExportText, plain_text
+from .page_export_model import ExportFigure, ExportPicture, ExportText, plain_text
+from .page_export_pictures import clip_still_src
 
 __all__ = ["DATA_MAP", "coded_figure_figure", "coded_map_box"]
 
@@ -30,13 +32,25 @@ def coded_figure_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
         *ask.units(text.unit for text in spec.texts),
         *ask.units(value.reading for value in spec.values),
     ]
+    clips = [film for film in spec.films if film.clip is not None]
+    credits = [film.credit for film in clips if film.credit]
     box = coded_map_box(markup) if spec.map is not None else None
-    if still is None or box is None or spec.map is None:
-        return ask.figure([still], lines, ask.title(spec.head.title))
-    base = _base_ask(spec.map)
-    credits = [dataset_credit(dataset) for dataset in base_datasets(box, base)]
-    lines.append(plain_text(BOUNDARY_CAPTION, "credit"))
-    return ask.figure([on_base(still, box, base)], lines, ask.title(spec.head.title), credits)
+    if still is not None and box is not None and spec.map is not None:
+        base = _base_ask(spec.map)
+        credits = [*(dataset_credit(dataset) for dataset in base_datasets(box, base)), *credits]
+        lines.append(plain_text(BOUNDARY_CAPTION, "credit"))
+        still = on_base(still, box, base)
+    figure = ask.figure([still], lines, ask.title(spec.head.title), credits)
+    return _with_clip_stills(ask, spec, clips, figure)
+
+
+def _with_clip_stills(
+    ask: FigureAsk, spec: CodedFigureSpec, clips: list[CodedFilm], figure: ExportFigure
+) -> ExportFigure:
+    stills = [ask.pictures.of(clip_still_src(film.clip)) for film in clips if film.clip is not None]
+    alt = ask.texts.plain(spec.alt)
+    pictures = tuple(ExportPicture(found, alt) for found in stills if found is not None)
+    return replace(figure, pictures=pictures) if pictures else figure
 
 
 def coded_map_box(markup: str | None) -> SiteBox | None:

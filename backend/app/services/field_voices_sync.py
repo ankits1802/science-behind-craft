@@ -22,6 +22,7 @@ from app.services.field_voices_feed import (
 from app.services.field_voices_images import StoredCopy
 from app.services.field_voices_items import ImageItem
 from app.services.field_voices_screen import PortalScreen
+from app.services.malware_scan import ScannerDown
 
 __all__ = [
     "CALL_SPACING_SECONDS",
@@ -234,7 +235,7 @@ class _Run:
         screen = PortalScreen()
         try:
             await self._stream(stream, report, screen)
-        except ExternalFailure as error:
+        except (ExternalFailure, ScannerDown) as error:
             _stopped(report, error, refused=False)
         except (AppError, ValueError) as error:
             _stopped(report, error, refused=True)

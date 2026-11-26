@@ -9,6 +9,7 @@ from pydantic import Field
 from app.models.component_lifecycle import HOLD_STATES
 
 from .base import ContractModel
+from .design_critique import DesignCritique
 from .page_drafts import DraftPart
 from .page_proposals import PageProposalResult, PageSubject
 
@@ -70,6 +71,7 @@ class PageHoldView(ContractModel):
     parts: list[DraftPart]
     preview_url: str | None
     result: PageProposalResult | None
+    critique: DesignCritique | None = None
     message: str
 
 

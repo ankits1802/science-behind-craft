@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api";
 import { INSTANT, UUID } from "@/lib/answerShapes";
+import { designCritiqueShape, type DesignCritique } from "@/lib/designCritique";
 import { countNoun, listText } from "@/lib/format";
 import { count, integer, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
 import { partReportShape, type PartReport } from "@/lib/translationContract";
@@ -39,6 +40,7 @@ export type PageHoldView = {
   parts: HeldPart[];
   previewUrl: string | null;
   result: PageProposalResult | null;
+  critique?: DesignCritique | null;
   message: string;
 };
 
@@ -86,6 +88,7 @@ export const pageHoldShape: Shape<PageHoldView> = object<PageHoldView>({
   parts: list(object<HeldPart>({ part: text, index: integer, summary: text })),
   previewUrl: nullable(text),
   result: nullable(resultShape),
+  critique: optional(nullable(designCritiqueShape)),
   message: text
 });
 

@@ -100,8 +100,8 @@ and dates with no map, quantities with no figure); it is yours to judge, never a
   reduced motion. Compose first; code where no kind or composer expresses what the facts need
   (molecules meeting and a bond breaking, a dye bath, a route or map states on the site's base, a
   moving stage, a three.js model, a film the site holds). Pinned d3 7.9.2 and three 0.187.0 are
-  served to the frame; code up to 64 KiB; the frame up to 1,200 px tall; films only from files
-  under `/monographs/`.
+  served to the frame; code up to 64 KiB; the frame up to 1,200 px tall; films from files under
+  `/monographs/` or the media store's approved clips made from the figure's facts (`films[].clip`).
 - **Facts**: every fact in a cited unit, shown by `data-unit`; every number in `values` with a
   reading that states it. Labels, controls and decoration are free text.
 - **Motion**: read `document.documentElement.dataset.reducedMotion` and draw the last state at

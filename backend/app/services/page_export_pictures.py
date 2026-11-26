@@ -14,6 +14,7 @@ from app.core.errors import InvalidInput
 from app.research.component_specs import checked_spec
 from app.research.component_specs_plates import PicturePlateSpec, SpecimenPlateSpec
 from app.research.component_specs_plates_parts import Picture as ShownPicture
+from app.research.component_specs_science_coded import CodedFigureSpec
 from app.research.licences import open_licence
 from app.research.monograph_document import MonographDocument
 from app.sources.reference.commons_urls import commons_fitting_width, commons_thumbnail_url
@@ -31,6 +32,7 @@ __all__ = [
     "PagePictures",
     "PaperPicture",
     "PlatePicture",
+    "clip_still_src",
     "copyable",
     "fetched_pictures",
     "paper_url",
@@ -45,6 +47,8 @@ MM_PER_INCH = 25.4
 PAPER_DPI = 150
 PAGE_PICTURE_SECONDS = 10.0
 PICTURE_KINDS = frozenset({"picture_plate", "specimen_plate"})
+CODED_KIND = "coded_figure"
+CLIP_STILL_PATH = "/api/crafts/media/{asset_id}/still"
 COMMONS_UPLOAD = "https://upload.wikimedia.org/wikipedia/commons/"
 
 
@@ -82,6 +86,10 @@ def plate_picture(spec: object) -> PlatePicture | None:
     return PlatePicture(spec.picture, spec.opener.credit if spec.opener is not None else None)
 
 
+def clip_still_src(asset_id: uuid.UUID) -> str:
+    return CLIP_STILL_PATH.format(asset_id=asset_id)
+
+
 def copyable(credit: str) -> bool:
     return open_licence(credit)
 
@@ -107,6 +115,10 @@ def wanted_pictures(
         wanted.setdefault(
             shown.picture.src, PaperPicture(uuid.uuid5(uuid.NAMESPACE_URL, url), url, shown.picture.src)
         )
+    for clip in _clips(document, specs):
+        src = clip_still_src(clip)
+        url = urljoin(document.page_url, src)
+        wanted.setdefault(src, PaperPicture(uuid.uuid5(uuid.NAMESPACE_URL, url), url, src))
     return list(wanted.values())
 
 
@@ -132,3 +144,16 @@ def _plates(document: MonographDocument, specs: Mapping[str, Mapping[str, Any]])
             continue
         if shown is not None:
             yield shown
+
+
+def _clips(document: MonographDocument, specs: Mapping[str, Mapping[str, Any]]) -> Iterator[uuid.UUID]:
+    for entry in document.content.components:
+        spec = specs.get(entry.label)
+        if entry.kind != CODED_KIND or spec is None:
+            continue
+        try:
+            checked = checked_spec(entry.kind, spec)
+        except InvalidInput, ValidationError:
+            continue
+        if isinstance(checked, CodedFigureSpec):
+            yield from (film.clip for film in checked.films if film.clip is not None)

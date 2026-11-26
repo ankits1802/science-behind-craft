@@ -1,8 +1,9 @@
 import type { CodedBase, CodedDam, CodedRiverPath, CodedStillBase } from "@/components/map/codedStillCut";
+import { UUID } from "@/lib/answerShapes";
 import { headShape, svgMarkup, themesShape, type DrawingThemes, type GeneralHead } from "@/lib/componentSpecsGeneral";
 import { unitRef } from "@/lib/componentSpecsScienceParts";
 import { mapBoxShape, STILL_PATH, watersShape } from "@/lib/mapStillShape";
-import { integer, list, matching, nullable, number, object, oneOf, optional, positive, text, type Shape } from "@/lib/shape";
+import { integer, list, matching, nullable, number, object, oneOf, optional, positive, ruled, text, type Shape } from "@/lib/shape";
 
 export const CODED_FIGURE_KIND = "coded_figure";
 export const CODED_LIBRARIES = ["d3", "three"] as const;
@@ -12,7 +13,8 @@ export type CodedLibrary = (typeof CODED_LIBRARIES)[number];
 export type MapLayer = (typeof MAP_LAYERS)[number];
 export type CodedValue = { key: string; value: number; reading: string };
 export type CodedText = { key: string; unit: string };
-export type CodedFilm = { key: string; src: string };
+export type CodedFilm = { key: string; src?: string; clip?: string; credit?: string };
+export type ClipFilm = CodedFilm & { clip: string };
 export type CodedMap = { layers: MapLayer[]; districts: number[]; rivers?: string[]; dams?: string[] };
 export type CodedFigureSpec = {
   head: GeneralHead;
@@ -46,6 +48,12 @@ export const codedBaseShape = object<CodedBase>({
   dams: list(object<CodedDam>({ name: text, x: number, y: number }))
 });
 const filmSource = matching(/^\/monographs\/[A-Za-z0-9][A-Za-z0-9._/-]*\.(mp4|webm)$/, "a film the site serves");
+export const ONE_FILM_SOURCE = "a film the site serves (src) or a clip of the media store (clip), one of the two";
+const filmShape = ruled(
+  object<CodedFilm>({ key: codeKey, src: optional(filmSource), clip: optional(UUID), credit: optional(text) }),
+  ONE_FILM_SOURCE,
+  (film) => (film.src === undefined) !== (film.clip === undefined)
+);
 
 export const codedFigureShape: Shape<CodedFigureSpec> = object<CodedFigureSpec>({
   head: headShape,
@@ -55,7 +63,7 @@ export const codedFigureShape: Shape<CodedFigureSpec> = object<CodedFigureSpec>(
   texts: list(object<CodedText>({ key: codeKey, unit: unitRef })),
   libraries: optional(list(oneOf(CODED_LIBRARIES))),
   map: optional(object<CodedMap>({ layers: list(oneOf(MAP_LAYERS)), districts: list(integer), rivers: optional(list(text)), dams: optional(list(text)) })),
-  films: optional(list(object<CodedFilm>({ key: codeKey, src: filmSource }))),
+  films: optional(list(filmShape)),
   still: optional(svgMarkup),
   themes: optional(themesShape),
   base: optional(codedBaseShape)
@@ -71,6 +79,10 @@ export function codedWords(figure: CodedFigureSpec, said: (ref: string) => strin
   const words: Record<string, string> = {};
   for (const text of figure.texts) words[text.key] = said(text.unit);
   return words;
+}
+
+export function clipFilms(figure: Pick<CodedFigureSpec, "films">): ClipFilm[] {
+  return (figure.films ?? []).filter((film): film is ClipFilm => film.clip !== undefined);
 }
 
 export function codedValues(figure: CodedFigureSpec): { key: string; value: number }[] {

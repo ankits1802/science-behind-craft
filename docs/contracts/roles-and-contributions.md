@@ -550,7 +550,8 @@ language or script is missing.
 
 **The relay turn route.** `POST /api/artisan/conversations/{id}/turns` (40 per 10 minutes, 429 +
 `Retry-After`) takes a multipart `audio` part under the relay rules of `voice.md` (types, sizes, the
-claim under the session row's lock, holds and refunds), and `continued` (`"true"`, or absent). It
+malware scan before anything decodes it, the claim under the session row's lock, holds and refunds),
+and `continued` (`"true"`, or absent). It
 answers `text/event-stream`:
 
 | Event | Payload |
