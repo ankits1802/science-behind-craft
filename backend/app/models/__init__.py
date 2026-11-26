@@ -103,6 +103,7 @@ from app.models.lessons import LessonPack
 from app.models.media_refs import MediaRef, MediaRefClaim, PictureCheck
 from app.models.monograph_documents import MonographDocument
 from app.models.oauth import (
+    McpTask,
     McpTermsAcceptance,
     McpToolCall,
     McpToolCallDay,
@@ -227,6 +228,7 @@ __all__ = [
     "ManagedSecret",
     "MapLayerProposal",
     "Material",
+    "McpTask",
     "McpTermsAcceptance",
     "McpToolCall",
     "McpToolCallDay",

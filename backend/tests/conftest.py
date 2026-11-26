@@ -13,9 +13,11 @@ import math
 import pytest
 
 from app.core import allowances, daily_allowances
+from app.services import malware_scan
 
 from .ai_caps import ALLOWANCES_AN_OWNER_MIGHT_SET
 from .allowance_counter import MemoryCounter
+from .upload_scanners import ScriptedScanner
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
@@ -32,6 +34,13 @@ def allowance_counter(monkeypatch: pytest.MonkeyPatch) -> MemoryCounter:
     counter = MemoryCounter()
     monkeypatch.setattr(allowances, "counter", counter)
     return counter
+
+
+@pytest.fixture(autouse=True)
+def upload_scanner(monkeypatch: pytest.MonkeyPatch) -> ScriptedScanner:
+    scanner = ScriptedScanner()
+    monkeypatch.setattr(malware_scan, "upload_scanner", lambda: scanner)
+    return scanner
 
 
 @pytest.fixture(autouse=True)

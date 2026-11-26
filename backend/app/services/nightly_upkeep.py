@@ -19,6 +19,7 @@ from app.sources.wayback_save import WaybackSaver
 from .answer_gap_refresh import AnswerGapsReport, refresh_answer_gaps
 from .claim_holds import shown_held_ids
 from .mcp_activity_upkeep import McpActivityReport, keep_mcp_activity, mcp_activity_plan
+from .mcp_task_store import McpTasksReport, expired_task_count, forget_expired_tasks
 from .open_work_refresh import FieldWorkReport, refresh_field_work
 from .orphan_concepts import OrphansReport, orphan_concepts, sweep_orphans
 from .page_refresh_jobs import claim_night, finish_job
@@ -95,6 +96,7 @@ class UpkeepReport:
     field_work: FieldWorkReport = field(default_factory=FieldWorkReport)
     allowances: AllowancesReport = field(default_factory=AllowancesReport)
     mcp_activity: McpActivityReport = field(default_factory=McpActivityReport)
+    mcp_tasks: McpTasksReport = field(default_factory=McpTasksReport)
     answer_gaps: AnswerGapsReport = field(default_factory=AnswerGapsReport)
     shared_terms: SharedTermsReport = field(default_factory=SharedTermsReport)
     late_costs: LateCostsReport = field(default_factory=LateCostsReport)
@@ -116,6 +118,7 @@ class UpkeepReport:
             "fieldWork": self.field_work.as_dict(),
             "allowances": self.allowances.as_dict(),
             "mcpActivity": self.mcp_activity.as_dict(),
+            "mcpTasks": self.mcp_tasks.as_dict(),
             "answerGaps": self.answer_gaps.as_dict(),
             "sharedTerms": self.shared_terms.as_dict(),
             "lateCosts": self.late_costs.as_dict(),
@@ -134,6 +137,7 @@ async def run_nightly_upkeep(session: AsyncSession, tools: UpkeepTools, *, now: 
     report.allowances = await sweep_allowances(session, now=now)
     report.late_costs = await settle_late_costs(session, now=now)
     report.mcp_activity = await keep_mcp_activity(session, now=now)
+    report.mcp_tasks = await forget_expired_tasks(session, now=now)
     await _rebuild_pages(session, tools, report=report.pages, now=now)
     report.field_work = await refresh_field_work(session, now=now)
     report.answer_gaps = await refresh_answer_gaps(session, tools.embed, now=now, names=tools.names)
@@ -174,4 +178,5 @@ async def plan_nightly_upkeep(
         "clientsAbandoned": await abandoned_client_count(session, now=now),
         "orphans": [orphan.as_dict() for orphan in orphans],
         **await mcp_activity_plan(session, now=now),
+        "mcpTasksExpired": await expired_task_count(session, now=now),
     }

@@ -1,5 +1,6 @@
 import uuid
 from datetime import date, datetime
+from typing import Any
 
 from sqlalchemy import (
     CheckConstraint,
@@ -13,7 +14,7 @@ from sqlalchemy import (
     UniqueConstraint,
     text,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, created_at, one_of, subset_of, uuid_pk
@@ -22,8 +23,10 @@ __all__ = [
     "CLIENT_NAME_CHARS",
     "MCP_REASON_CHARS",
     "MCP_SCOPE_VALUES",
+    "MCP_TASK_STATUSES",
     "MCP_TOOL_OUTCOMES",
     "OAUTH_TOKEN_KINDS",
+    "McpTask",
     "McpTermsAcceptance",
     "McpToolCall",
     "McpToolCallDay",
@@ -36,6 +39,7 @@ __all__ = [
 OAUTH_TOKEN_KINDS = ("ACCESS", "REFRESH")
 MCP_SCOPE_VALUES = ("read", "ask", "contribute", "review")
 MCP_TOOL_OUTCOMES = ("OK", "TOOL_ERROR", "PROTOCOL_ERROR")
+MCP_TASK_STATUSES = ("working", "completed", "failed", "cancelled")
 DIGEST_CHARS = 64
 CHALLENGE_CHARS = 43
 CLIENT_NAME_CHARS = 120
@@ -44,6 +48,8 @@ TERMS_VERSION_CHARS = 40
 TOOL_NAME_CHARS = 64
 OUTCOME_CHARS = 16
 MCP_REASON_CHARS = 300
+TASK_ID_CHARS = 64
+TASK_MESSAGE_CHARS = 300
 REASON_ONLY_ON_FAILURE = '"outcome" <> \'OK\' OR "reason" IS NULL'
 SCOPES_WITHIN = subset_of("scopes", MCP_SCOPE_VALUES)
 REDIRECT_URIS_COUNT = 'cardinality("redirectUris") BETWEEN 1 AND 10'
@@ -195,4 +201,27 @@ class McpToolCallDay(Base):
     __table_args__ = (
         CheckConstraint(one_of("outcome", MCP_TOOL_OUTCOMES), name="outcome"),
         CheckConstraint('"calls" >= 1', name="calls"),
+    )
+
+
+class McpTask(Base):
+    __tablename__ = "McpTask"
+
+    id: Mapped[str] = mapped_column(String(TASK_ID_CHARS), primary_key=True)
+    userId: Mapped[uuid.UUID] = _owner("User")
+    tool: Mapped[str] = mapped_column(String(TOOL_NAME_CHARS), nullable=False)
+    argumentsHash: Mapped[str] = mapped_column(String(DIGEST_CHARS), nullable=False)
+    status: Mapped[str] = mapped_column(String(OUTCOME_CHARS), nullable=False)
+    statusMessage: Mapped[str] = mapped_column(String(TASK_MESSAGE_CHARS), nullable=False)
+    result: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    error: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    createdAt: Mapped[datetime] = _stamp()
+    updatedAt: Mapped[datetime] = _stamp()
+    heartbeatAt: Mapped[datetime] = _stamp()
+    expiresAt: Mapped[datetime] = _stamp()
+
+    __table_args__ = (
+        CheckConstraint(one_of("status", MCP_TASK_STATUSES), name="status"),
+        Index(None, "userId", "expiresAt"),
+        Index(None, "expiresAt"),
     )

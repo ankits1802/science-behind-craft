@@ -9,7 +9,7 @@ from app.models import ImageContribution, UploadLink, User
 from app.research.image_contributions_give import GivenPicture
 from app.research.image_intake import IMAGE_BYTES_MAX
 from app.research.image_intake_types import ACCEPTED_TYPES
-from app.research.upload_links import slot_upload_url
+from app.research.upload_links import slot_lifetime, slot_upload_url
 from app.services import upload_links
 
 from .mcp_files import FileArgument, Staged
@@ -50,11 +50,14 @@ async def _staged(context: ToolContext, arguments: GivePictures) -> list[Staged]
     if endpoints is None:
         raise InvalidInput(NO_UPLOADS)
     staged: list[Staged] = []
+    lifetime = slot_lifetime(len(context.files))
     for (position, picture), file in zip(uploads, context.files, strict=True):
         slot = upload_slot(arguments.craft_slug, picture)
         declaration = slot_declaration(arguments.declaration, picture)
         await refuse_tool_when_spent(IMAGE_UPLOADS, user)
-        issued = await upload_links.start_upload(context.session, user, slot, declaration, now=_now())
+        issued = await upload_links.start_upload(
+            context.session, user, slot, declaration, now=_now(), lifetime=lifetime
+        )
         if issued.slot_token is None or issued.link_id is None:
             raise InvalidInput(UNDECLARED)
         url = slot_upload_url(endpoints.issuer, issued.slot_token)

@@ -9,6 +9,8 @@ from app.api.mcp_tasks import McpTasks
 from app.api.mcp_tools import ToolContext, answer
 from app.services.craft_resolver import CraftIndexStore
 
+from .task_stores import HeldTaskStore
+
 VERSION = "2026-07-28"
 SITE = "https://kalavigyan.example"
 TASKS = {"extensions": {"io.modelcontextprotocol/tasks": {}}}
@@ -51,7 +53,7 @@ async def no_session() -> AsyncIterator[Any]:
 
 
 def with_tasks(context: ToolContext) -> ToolContext:
-    return replace(context, tasks=McpTasks(), sessions=no_session)
+    return replace(context, tasks=McpTasks(HeldTaskStore()), sessions=no_session)
 
 
 async def result_of(message: dict[str, Any], context: ToolContext) -> dict[str, Any]:

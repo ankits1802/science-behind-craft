@@ -9,6 +9,13 @@ from typing import Literal
 from pydantic import Field
 
 from .base import ContractModel, HttpsUrl
+from .dataset_workbooks import (
+    SHEET_NAME_MAX_CHARS,
+    WORKBOOK_TYPES,
+    WorkbookRefused,
+    is_workbook,
+    workbook_lines,
+)
 from .datasets import DATASET_CODE_PATTERN, DOI_PATTERN, SHA256_PATTERN
 from .licences import open_licence
 from .map_layer_proposals import LAYER_TYPES, MapLayerPlan, layer_problems
@@ -37,7 +44,7 @@ TABLE_BYTES_MAX = 5 * 1024 * 1024
 ROWS_MAX = 20_000
 COLUMNS_MAX = 60
 CELL_MAX_CHARS = 500
-TABLE_TYPES = ("text/csv",)
+TABLE_TYPES = ("text/csv", *WORKBOOK_TYPES)
 SLOT_PREFIX = "kvds_"
 DATASET_UPLOAD_ROUTE = "/api/dataset-uploads"
 DATASET_UPLOAD_LIFETIME = timedelta(minutes=30)
@@ -62,6 +69,7 @@ class DatasetProposal(ContractModel):
     landing_url: HttpsUrl
     url: HttpsUrl
     sha256: str = Field(pattern=SHA256_PATTERN)
+    sheet: str | None = Field(default=None, min_length=1, max_length=SHEET_NAME_MAX_CHARS)
     layer: MapLayerPlan | None = None
 
 
@@ -107,6 +115,10 @@ def record_problems(proposal: DatasetProposal) -> list[str]:
         problems.append(f"the citation names its DOI {proposal.doi}")
     if proposal.layer is not None:
         problems += layer_problems(proposal.crs, proposal.layer)
+    if proposal.layer is not None and proposal.sheet is not None:
+        problems.append(
+            "a sheet names the workbook sheet a table is read from; a map layer is GeoJSON and has none"
+        )
     return problems
 
 
@@ -114,14 +126,30 @@ def upload_types(proposal: DatasetProposal) -> list[str]:
     return list(LAYER_TYPES if proposal.layer is not None else TABLE_TYPES)
 
 
-def parsed_table(data: bytes) -> ParsedTable:
+def parsed_table(data: bytes, *, sheet: str | None = None) -> ParsedTable:
     if not data or len(data) > TABLE_BYTES_MAX:
-        raise TableRefused(f"a table is 1 byte to {TABLE_BYTES_MAX // (1024 * 1024)} MB of CSV")
+        raise TableRefused(
+            f"a table is 1 byte to {TABLE_BYTES_MAX // (1024 * 1024)} MB of CSV or an .xlsx workbook"
+        )
+    if not is_workbook(data):
+        return _table(_csv_lines(data, sheet))
+    try:
+        return _table(workbook_lines(data, sheet=sheet, rows_max=ROWS_MAX, columns_max=COLUMNS_MAX))
+    except WorkbookRefused as refused:
+        raise TableRefused(str(refused)) from None
+
+
+def _csv_lines(data: bytes, sheet: str | None) -> list[list[str]]:
+    if sheet is not None:
+        raise TableRefused(f"the record names the sheet {sheet!r}, but the file is CSV, which has none")
     try:
         text = data.decode("utf-8").removeprefix(UTF8_BOM)
     except UnicodeDecodeError:
-        raise TableRefused("a table is UTF-8 CSV") from None
-    lines = list(csv.reader(io.StringIO(text, newline="")))
+        raise TableRefused("a table is UTF-8 CSV or an .xlsx workbook") from None
+    return list(csv.reader(io.StringIO(text, newline="")))
+
+
+def _table(lines: list[list[str]]) -> ParsedTable:
     if len(lines) < 2:
         raise TableRefused("a table has a header row and at least one row of values")
     header = tuple(cell.strip() for cell in lines[0])

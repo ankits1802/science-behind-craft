@@ -65,14 +65,14 @@ def discover_result() -> dict[str, Any]:
     }
 
 
-def modern_method(method: str, params: Mapping[str, Any], context: ToolContext) -> dict[str, Any]:
+async def modern_method(method: str, params: Mapping[str, Any], context: ToolContext) -> dict[str, Any]:
     if method == "server/discover":
         return discover_result()
     if method == "skills/list":
         return skill_list()
     if method == "skills/get":
         return skill_get(params)
-    return _task_method(method, params, context)
+    return await _task_method(method, params, context)
 
 
 def completed(method: str, result: Mapping[str, Any]) -> dict[str, Any]:
@@ -89,7 +89,7 @@ def modern_code(code: int) -> int:
     return INVALID_PARAMS if code == RESOURCE_NOT_FOUND else code
 
 
-def _task_method(method: str, params: Mapping[str, Any], context: ToolContext) -> dict[str, Any]:
+async def _task_method(method: str, params: Mapping[str, Any], context: ToolContext) -> dict[str, Any]:
     meta = context.meta
     if meta is None or not meta.runs_tasks():
         raise missing_capability({"extensions": {TASKS_EXTENSION: {}}})
@@ -98,9 +98,9 @@ def _task_method(method: str, params: Mapping[str, Any], context: ToolContext) -
         raise RequestError(INVALID_PARAMS, UNKNOWN)
     now = datetime.now(UTC)
     if method == "tasks/get":
-        return task_reply(tasks.get(principal, params.get("taskId"), now), COMPLETE)
+        return task_reply(await tasks.get(principal, params.get("taskId"), now), COMPLETE)
     if method == "tasks/cancel":
-        tasks.cancel(principal, params.get("taskId"), now)
+        await tasks.cancel(principal, params.get("taskId"), now)
         return {}
-    tasks.get(principal, params.get("taskId"), now)
+    await tasks.get(principal, params.get("taskId"), now)
     return {}

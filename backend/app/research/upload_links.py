@@ -29,6 +29,7 @@ __all__ = [
     "LINK_STATES",
     "OPEN",
     "OPEN_LINKS_MAX",
+    "SEVERAL_FILES_LIFETIME",
     "SLOT_PREFIX",
     "SLOT_UPLOAD_ROUTE",
     "UPLOAD_LINK_LIFETIME",
@@ -48,12 +49,14 @@ __all__ = [
     "UploadStart",
     "declared",
     "link_state",
+    "slot_lifetime",
     "slot_upload_url",
     "upload_page_url",
 ]
 
 UPLOAD_LINK_SCHEMA_VERSION = 1
 UPLOAD_LINK_LIFETIME = timedelta(minutes=30)
+SEVERAL_FILES_LIFETIME = timedelta(minutes=75)
 OPEN_LINKS_MAX = 10
 LINK_PREFIX = "kvup_pg_"
 SLOT_PREFIX = "kvup_sl_"
@@ -165,3 +168,7 @@ def upload_page_url(site: str, token: str) -> str:
 
 def slot_upload_url(api_origin: str, token: str) -> str:
     return f"{api_origin.rstrip('/')}{SLOT_UPLOAD_ROUTE}/{quote(token, safe='')}"
+
+
+def slot_lifetime(files: int) -> timedelta:
+    return SEVERAL_FILES_LIFETIME if files > 1 else UPLOAD_LINK_LIFETIME

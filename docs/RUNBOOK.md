@@ -38,6 +38,7 @@ This page lists what is provisioned, how to deploy, and how to roll back. It hol
 | `kv-worker`, `kv-fetcher` | Started only once a release ships `app.worker` / `app.fetcher`. `app/worker.py` (the media queue, decision 0018) ships with the media backend and runs as user `kalavigyan`; `journalctl -u kv-worker` shows its jobs. `kv-fetcher` runs as a user of its own that systemd makes at each start (`DynamicUser=yes`, outside the `kalavigyan` group, so it cannot read `.env`; `ProtectProc=invisible`, so it sees no other user's processes), with only `fetcher.env`, which systemd reads as root (decision 0173). |
 | `kv-renderer` | The page renderer (decision 0195; Page renderer, below): a user of its own like `kv-fetcher`, with only `renderer.env`, on 127.0.0.1:8091. |
 | `/opt/chrome-headless-shell/<version>`, `current` | The chrome-headless-shell `infra/deploy/chromium.pin` names, installed by `install_renderer.sh` on every release that lacks it (sha256 checked, root-owned); `current` points at the one the renderer runs |
+| `clamav-daemon`, `clamav-freshclam` | The upload scanner (decision 0241; Upload scanner, below): clamd on `/var/run/clamav/clamd.ctl` under MemoryMax 2G, its signatures from freshclam, installed by `install_scanner.sh` on every release |
 | `api-watchdog.timer` | Restarts a running colour after 2 failed `/health` checks a minute apart (`journalctl -t api-watchdog`) |
 | nginx site `kalavigyan` | `:80`. The snippet `kalavigyan-origin-verify.conf` returns 403 without CloudFront's header; loopback is exempt. |
 | `redis-server` | `127.0.0.1:6379`, 256 MB LRU |
@@ -182,6 +183,35 @@ To bring it up on a box that has never had it, after the release that ships it i
 `sudo kv-render-env && sudo systemctl enable --now kv-renderer`. A newer browser is a new pin: its
 version, its download from `googlechromelabs.github.io/chrome-for-testing` and the SHA-256 of that
 zip, shipped as a release; the old directory stays beside it.
+
+## Upload scanner
+
+Every uploaded file (a picture, a supplied PDF or text, a dataset's table or GeoJSON) is scanned by
+ClamAV before anything reads it (decision 0241). The API sends the bytes to clamd's `INSTREAM` over
+its socket, `MALWARE_SCAN_SOCKET` (the default `/var/run/clamav/clamd.ctl` is the package's own, so
+nothing is set in Parameter Store), and waits at most 90 seconds.
+
+| What | Value |
+|---|---|
+| Packages | `clamav-daemon`, `clamav-freshclam` and `clamdscan` from Ubuntu's archive (1.5.4 on 26.04), installed by `infra/deploy/install_scanner.sh` on every release that lacks them, after the renderer's browser and before the build; a failure is a warning and the release goes on |
+| clamd | `/etc/clamav/clamd.conf` with `ConcurrentDatabaseReload no` (one copy of the signatures in memory, about 1.3 GB; a reload pauses scans instead of doubling it), `LocalSocketMode 666` and `StreamMaxLength 25M`; the drop-in `/etc/systemd/system/clamav-daemon.service.d/kalavigyan.conf` sets MemoryMax 2G and `Restart=on-failure` |
+| Signatures | `clamav-freshclam` checks for new ones every hour (the package's 24 checks a day) into `/var/lib/clamav`, so they are never more than a day old |
+| The release's proof | a clean table passes and the EICAR test file is found (`clamdscan --stream`) before the build starts |
+| A file with malware | refused with its signature's name (422 on a route, a tool error over MCP); nothing is stored |
+| When it is down | every upload is refused: 503 on the upload routes, a tool error over MCP, the slot left open for another try; nothing else uses the scanner, so every other path keeps working |
+
+To look at it:
+
+```bash
+sudo systemctl status clamav-daemon clamav-freshclam
+journalctl -u clamav-daemon -n 50
+journalctl -u clamav-freshclam -n 20
+clamdscan --ping=1
+```
+
+To bring it up by hand on a box that has never had it, or after it failed in a release:
+`sudo bash /opt/kalavigyan/current/infra/deploy/install_scanner.sh`. The first run downloads about
+300 MB of signatures and loads them, a few minutes.
 
 ## Shell on the box
 
@@ -434,7 +464,7 @@ Deploy backend (`.github/workflows/deploy-backend.yml`):
 2. Assumes `kalavigyan-deploy` through GitHub OIDC (no static AWS keys in GitHub).
 3. Copies changed secrets into `/kalavigyan/env`.
 4. Uploads `git archive HEAD backend infra/deploy` to `s3://kalavigyan-media-626159998512/deploy/backend/<sha>/KalaVigyan_API_Release-Build_<sha12>.tar.gz`.
-5. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, ships the logs, installs the renderer's browser (`install_renderer.sh`; a failure is a warning, and previews then say their pictures could not be made), installs the CPython that `infra/deploy/python.pin` names into `/opt/cpython/<version>+<build>` unless it is there (over https, checksum checked before it is unpacked, staged then moved, root-owned; decision 0118), builds the venv with uv on that interpreter, writes `RELEASE=<sha>` to the release's `release.env` (the API colour reads it, so `/health` names the commit it runs), then `blue_green.sh release <sha> --within <seconds>`:
+5. Runs `infra/deploy/release.sh <sha>` on the box over SSM `AWS-RunShellScript`, logging to `deploy/logs/<sha>/`. The script installs units, renders the env, ships the logs, installs the renderer's browser (`install_renderer.sh`; a failure is a warning, and previews then say their pictures could not be made), installs and checks the upload scanner (`install_scanner.sh`; a failure is a warning, and uploads are refused until it runs), installs the CPython that `infra/deploy/python.pin` names into `/opt/cpython/<version>+<build>` unless it is there (over https, checksum checked before it is unpacked, staged then moved, root-owned; decision 0118), builds the venv with uv on that interpreter, writes `RELEASE=<sha>` to the release's `release.env` (the API colour reads it, so `/health` names the commit it runs), then `blue_green.sh release <sha> --within <seconds>`:
    1. migrate (`alembic upgrade head`; after three failed tries the live colour is stopped to free its pooler sessions, five more tries follow, and the live colour starts again as soon as one passes, so it serves through the seeds and the checks), seed (`seed_crafts`, `seed_claims`, `seed_districts`), bring the stored dataset records up to the registry (`sync_dataset_registry`, decision 0114) and import the curated dossiers (`import_curation`, decision 0053; a refused dossier exits 2 and stops the release like a failed seed), then rebuild the shared-science explorer's per-term summary (`refresh_shared_terms`, `docs/contracts/learning.md`) while the old colour serves; a non-zero exit of any of these six stops the release with "seeding failed" and nginx keeps the live colour, then sync crafts from both portals (`sync_portal_crafts`; a failure is a warning, the release goes on) and embed what the seeds and the import wrote (`embed_craft_descriptors`, then `embed_knowledge`, each bounded to 240 seconds; a failure is a warning too);
    2. start the other colour;
    3. wait for `/health/ready`: the new colour must start and reach its database, or it is stopped and nginx stays where it was;
@@ -518,9 +548,10 @@ origins; the issuer is the API origin and the consent page is `<PUBLIC_WEB_URL>/
 3. Switch off: `MCP_SERVER_ENABLED=false` and re-render; the route answers 404.
 
 Protocol 2026-07-28 (decision 0235) needs nothing switched on: the same route lists the five skills,
-runs long calls as tasks and asks the person through forms for clients that declare them. Tasks live
-in the API process, so a deploy forgets those still running and their clients are told the task is
-unknown. File uploads (`io.modelcontextprotocol/files`) are on while `MCP_FILE_UPLOADS_ENABLED` is
+runs long calls as tasks and asks the person through forms for clients that declare them. Tasks are
+kept in the database (`McpTask`, decision 0241): a deploy keeps those that finished, fails those
+still running with a reason to call the tool again, and the nightly upkeep deletes expired ones.
+File uploads (`io.modelcontextprotocol/files`) are on while `MCP_FILE_UPLOADS_ENABLED` is
 true, the default; to switch them off put `MCP_FILE_UPLOADS_ENABLED=false` at
 `/kalavigyan/env/MCP_FILE_UPLOADS_ENABLED` and re-render, and clients fall back to the upload slots.
 Claude sends files only to hosts Anthropic approved for a listed connector: email

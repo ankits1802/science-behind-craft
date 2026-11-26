@@ -159,14 +159,19 @@ not as one fact per value:
 
 1. Call `propose_dataset` with the dataset's record as above (code, title, publisher, edition,
    version, period, native_resolution, crs, licence with licence_url, attribution, redistributable,
-   citation with doi, landing_url, url of the file) and the SHA-256 of the CSV file you will send.
+   citation with doi, landing_url, url of the file) and the SHA-256 of the file you will send: a
+   UTF-8 CSV or an `.xlsx` workbook as it comes, with `sheet` naming the workbook's sheet when the
+   table is not on its first.
 2. The gates check the record: the licence is one they read as open and the dataset may be
    redistributed, the citation names its DOI, the code is new, and the landing page can be read.
    A refusal names every problem; nothing is stored.
-3. On a pass the reply gives a single-use upload slot: PUT the CSV file (UTF-8, a header row of
-   distinct column names, 1 to 20000 rows of at most 60 columns, at most 5 MB) to `upload_url`
-   within 30 minutes. The file's SHA-256 must be the one declared; the table is then stored with
-   the record and the slot is spent.
+3. On a pass the reply gives a single-use upload slot: PUT the file (a header row of distinct
+   column names, 1 to 20000 rows of at most 60 columns, at most 5 MB) to `upload_url` within 30
+   minutes. A workbook is read for the values it saved: a formula whose value was never saved, an
+   error value or a macro is refused by name, so open the workbook, let it calculate and save it
+   first; an OpenDocument (`.ods`) sheet is saved as `.xlsx` or CSV. The file is scanned for malware
+   and its SHA-256 must be the one declared; the table is then stored with the record and the slot
+   is spent.
 4. A `chart`, `fact_table` or `map_layer` cites the stored table: `dataset {code}` and, for each
    value, `cell {row, column}`, the row counted from 1 below the header and the column by its
    header name (a table's rows by `row` and its columns by `column`). The gates read each value

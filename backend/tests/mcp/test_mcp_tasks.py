@@ -2,7 +2,6 @@ import asyncio
 import json
 import uuid
 from dataclasses import replace
-from datetime import UTC, datetime
 from types import MappingProxyType
 from typing import Any
 
@@ -73,12 +72,13 @@ def echo_call(text: str = "indigo", *, capabilities: dict[str, Any] | None = Non
 
 
 async def settled(context: ToolContext, task_id: str) -> None:
-    assert context.tasks is not None and context.principal is not None
-    runner = context.tasks.get(context.principal, task_id, datetime.now(UTC)).runner
-    assert runner is not None
-    await asyncio.wait({runner}, timeout=5)
+    assert context.tasks is not None
+    runner = context.tasks.running(task_id)
+    if runner is not None:
+        await asyncio.wait({runner}, timeout=5)
+        assert runner.done()
     await asyncio.sleep(0)
-    assert runner.done()
+    assert context.tasks.running(task_id) is None
 
 
 async def polled(context: ToolContext, task_id: str) -> dict[str, Any]:

@@ -116,7 +116,14 @@ async def test_a_client_with_the_extension_is_offered_a_file_argument_on_the_thr
     assert photos["type"] == "array" and photos["items"]["x-mcp-file"]["maxSize"] == 10 * 1024 * 1024
     table = tools["propose_dataset"]["inputSchema"]["properties"]["file"]["x-mcp-file"]
     assert table == {
-        "accept": ["text/csv", "application/geo+json", ".csv", ".geojson"],
+        "accept": [
+            "text/csv",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "application/geo+json",
+            ".csv",
+            ".xlsx",
+            ".geojson",
+        ],
         "maxSize": 5 * 1024 * 1024,
     }
     assert {name for name, tool in TOOLS.items() if tool.files is not None} == {
@@ -237,7 +244,7 @@ def issuing(monkeypatch: pytest.MonkeyPatch) -> list[SlotDeclaration | None]:
     seen: list[SlotDeclaration | None] = []
 
     async def start(
-        session: Any, user: User, slot: UploadSlot, declaration: SlotDeclaration | None, *, now: datetime
+        session: Any, user: User, slot: UploadSlot, declaration: SlotDeclaration | None, **options: Any
     ) -> upload_links.IssuedLink:
         seen.append(declaration)
         return upload_links.IssuedLink(
@@ -365,13 +372,13 @@ async def test_a_csv_that_is_not_the_declared_file_is_refused_before_any_slot(
     assert refused["isError"] is True and "SHA-256" in refused["content"][0]["text"] and issued == []
     spreadsheet = {
         **CSV,
-        "name": "artisans.xlsx",
-        "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "name": "artisans.ods",
+        "mimeType": "application/vnd.oasis.opendocument.spreadsheet",
     }
     typed = await result_of(
         file_call("propose_dataset", {"proposal": DATASET, "file": spreadsheet}), sending()
     )
-    assert typed["isError"] is True and "text/csv" in typed["content"][0]["text"]
+    assert typed["isError"] is True and ".xlsx" in typed["content"][0]["text"]
 
 
 async def test_a_retry_on_another_account_or_with_other_arguments_is_refused(

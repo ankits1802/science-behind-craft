@@ -9,6 +9,7 @@ from pydantic import ValidationError
 
 from app.data.skill_library import reference_text
 from app.research.dataset_proposals import DatasetProposal, record_problems, upload_types
+from app.research.dataset_workbooks import XLSX_TYPE
 from app.research.map_layer_geojson import (
     FEATURES_MAX,
     LAYER_BYTES_MAX,
@@ -206,7 +207,7 @@ def test_a_layer_record_takes_its_plan_s_problems_and_a_geojson_upload() -> None
         "a map layer is in WGS 84 longitude and latitude (EPSG:4326), not 'EPSG:3857'"
     ]
     assert upload_types(proposal) == ["application/geo+json"]
-    assert upload_types(DatasetProposal.model_validate(RECORD)) == ["text/csv"]
+    assert upload_types(DatasetProposal.model_validate(RECORD)) == ["text/csv", XLSX_TYPE]
 
 
 def test_the_review_names_every_check_a_stored_layer_passed() -> None:

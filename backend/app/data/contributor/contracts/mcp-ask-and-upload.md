@@ -206,8 +206,10 @@ argument: the photographs themselves, each `{id, name, mimeType, size, digest?}`
 `upload: true`, in the same order. They need the call's `declaration` and `confirmation`, as pictures
 given in the call do. The first call opens each picture's slot as above and answers
 `upload_required`, each target the slot's `uploadUrl` (`PUT`, `Content-Type:
-application/octet-stream`, `credentials: omit`, the slot's expiry), so the bytes pass the slot's own
-screens and declaration; the client's retry with the same arguments and the `requestState` answers
+application/octet-stream`, `credentials: omit`, the slot's expiry), so the bytes pass the malware scan
+and the slot's own screens and declaration. A slot opened for one of several photographs sent in the
+call lasts 75 minutes, as Anthropic's file guide asks when a client uploads several files in turn,
+and a single photograph's keeps 30 (decision 0241). The client's retry with the same arguments and the `requestState` answers
 the `PicturesReply` with each photograph's `position`, `contributionId` and `status`, counted in
 `given`, or a refusal naming the picture whose photograph has not arrived. A count of files that is
 not the count of `upload: true` pictures, a missing declaration, or a file that is not a picture is
@@ -280,6 +282,8 @@ new link; a link of another account says so and points to the picture page witho
 | Fetching a picture's link | `backend/tests/fetcher/test_pictures.py` and `test_picture_client.py` |
 | Links, slots, their states and the HTTP routes | `backend/tests/mcp/test_upload_links.py`, `test_upload_link_routes.py` and `backend/tests/db/test_upload_links_db.py` |
 | Photographs sent as files on protocol 2026-07-28 | `backend/tests/mcp/test_mcp_file_uploads.py` |
+| A slot's 75 minutes for several photographs and 30 for one | `backend/tests/mcp/test_upload_slot_lifetimes.py` |
+| A picture scanned for malware before it is read | `backend/tests/test_malware_scan.py` and `backend/tests/mcp/test_upload_scan_routes.py` |
 | The routes' classes | `backend/tests/public/test_route_inventory.py` |
 | The landing page | `frontend/e2e/upload-links-unit.spec.ts` |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/mcp-ask-and-upload.md` byte for byte equal to this file |
