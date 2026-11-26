@@ -883,25 +883,29 @@ fixture or the category page (`docs/contracts/category-page.md`).
   registration, PKCE, the consent page with the E2E account) and calls tools against production,
   daily and after each post-deploy check. It needs the secrets `E2E_EMAIL` and `E2E_PASSWORD` and the
   variable `API_BASE_URL`, and keeps the issue `The MCP client cannot sign in to production`.
-- **Agent acceptance** (`agent-acceptance.yml`, by hand only, decision 0234): a contributor's AI
-  builds a page from one line. The Professor E2E account signs an MCP client in through the consent
-  page (`read contribute`), then Claude, driven through the Claude API's MCP connector with only the
-  reading, source, draft and preview tools offered, works on the request until it stops or reaches
-  the cap. Nothing is proposed, published or reviewed; the connection is revoked at the end. Run it
-  after a release that touches the MCP path, from main:
+- **Agent acceptance** (`agent-acceptance.yml`, by hand only, decisions 0234, 0237 and 0240): a
+  contributor's AI builds a page from one line. The Professor E2E account signs an MCP client in
+  through the consent page (`read contribute`), then Claude, driven through the Claude API's MCP
+  connector with only the reading, source and draft tools offered, and `preview_page` called by the
+  run itself, works on the request until it stops or reaches the cap. Nothing is proposed, published
+  or reviewed; the connection is revoked at the end. Run it after a release that touches the MCP
+  path, from main:
   `gh workflow run agent-acceptance.yml -R cxacraftecosystem-ui/KalaVigyan --ref main -f
   craft=Sanganeri-Hand-Block-Printing -f request="Deepen this craft's page to the KalaVigyan bar." -f
-  cap=12 -f model=claude-opus-5-5` (every input has that default, so a bare dispatch runs it). A run
-  costs at most about its cap in API spend (above 1 and at most 50 US dollars; the loop stops before
+  cap=25 -f model=claude-opus-5-5` (every input has that default, so a bare dispatch runs it). A run
+  costs at most about its cap in API spend (above 1 and at most 40 US dollars; the loop stops before
   the cap less the 1 dollar kept for the second opinion, passing it by at most one turn) and up to
-  three hours of runner time. The artifact `agent-acceptance-<run id>` holds the transcript, the last
-  preview with its pictures (drawn again after the run with `read_pictures`, since the connector
-  passes text only, so the server reads them too: at most 0.50 US dollars of the site's own judge
-  budget, outside the cap, decision 0237), the private link and the cost; the job summary lists the
-  tool calls, the components by kind, the preview's verdicts, the pictures and the cost, the model's
-  own design critique and the server's notes, and a second opinion on the pictures that weighs
-  those notes and never passes or fails the run. It needs the secrets `ANTHROPIC_API_KEY` and `E2E_PROFESSOR_*` and the
-  variable `API_BASE_URL`.
+  three hours of runner time. The artifact `agent-acceptance-<run id>` holds the transcript (every
+  call's arguments and result, cut at 4,000 characters with their full sizes), the model's last
+  preview with its pictures (kept by the run, never sent to the model; the run adds `read_pictures`
+  to every preview it calls, since the model cannot see them, so the server reads them too: at most
+  0.50 US dollars of the site's own judge budget for each new set of pictures, outside the cap,
+  decision 0237), the private link and the cost with each tool's estimated share; the job summary
+  says how far the build got, lists the tool calls with their estimated tokens and dollars, each tool
+  error with its message, the components by kind, the preview's verdicts, the pictures and the cost,
+  the model's own design critique and the server's notes, and a second opinion on the pictures that
+  weighs those notes and never passes or fails the run. It needs the secrets `ANTHROPIC_API_KEY` and
+  `E2E_PROFESSOR_*` and the variable `API_BASE_URL`.
 - **Retrieval evaluation** (`retrieval-eval.yml`): runs `app.scripts.eval_retrieval` on the box,
   weekly and by hand, from main only (the deploy role trusts main):
   `gh workflow run retrieval-eval.yml -R cxacraftecosystem-ui/KalaVigyan --ref main` (`-f cap=<USD>`

@@ -58,8 +58,9 @@ UNSUPPORTED_MESSAGE = "Unsupported protocol version"
 SERVER_INSTRUCTIONS = (
     "KalaVigyan holds cited knowledge about the crafts of India and the science behind them, from the "
     "Centre of Excellence for Unified AI-Enabled Craft Ecosystem Platform, IIT Kharagpur. To read: find_crafts "
-    "for a craft's slug, get_page for a page's coverage, sections and layout, get_facts for its facts with "
-    "their verbatim quotes and sources. To build or deepen a page: KalaVigyan guarantees the research and the "
+    'for a craft\'s slug, then start with get_page and parts: ["brief"] (the page as published and every fact '
+    "in one line by chapter), then get_facts with ids for only the facts you will cite, whole with their "
+    "verbatim quotes and sources. To build or deepen a page: KalaVigyan guarantees the research and the "
     "citations, and you do the design and the build. You are free to design and code any figure the page's "
     "cited facts support (three.js, d3, canvas, a short film, up to a chapter section), every fact it shows "
     "taken from the page's cited research. Follow the page playbook (get_page with guide playbook/1; get_page "

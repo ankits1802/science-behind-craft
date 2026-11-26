@@ -638,10 +638,12 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   the account's role.
 - `initialize` declares `tools`, `prompts` (`listChanged` false) and `resources` (`subscribe` and
   `listChanged` false).
-- The server's `instructions` say where to start, name the tools in the order of the work, say that
-  the tools hand the guide over page by page as the agent works and that `get_page` with `guide`
-  reads any other page (`contents/1` lists them), and name the groups, the index and, once for every
-  tool, the data note (`api/mcp_protocol.py`, decision 0203).
+- The server's `instructions` say where to start (a page's brief, `get_page` with `parts: ["brief"]`,
+  then `get_facts` with `ids` for the facts to cite, as playbook step 1 does, decision 0240), name
+  the tools in the order of the work, say that the tools hand the guide over page by page as the
+  agent works and that `get_page` with `guide` reads any other page (`contents/1` lists them), and
+  name the groups, the index and, once for every tool, the data note (`api/mcp_protocol.py`,
+  decision 0203).
 
 ### Protocol 2026-07-28: skills, tasks, questions and files (decision 0235)
 

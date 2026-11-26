@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
+from .handed import HARNESS_USE, HandedCall
 from .loop import LoopOutcome, Turn
 
 __all__ = [
@@ -12,15 +13,17 @@ __all__ = [
     "TRIM_CHARS",
     "Call",
     "RunFacts",
+    "all_calls",
     "block_entry",
+    "handed_entry",
     "paired_calls",
     "result_texts",
     "transcript",
     "trimmed",
 ]
 
-TRANSCRIPT_SCHEMA_VERSION = 1
-TRIM_CHARS = 2_000
+TRANSCRIPT_SCHEMA_VERSION = 2
+TRIM_CHARS = 4_000
 MORE = " [... {count} more characters]"
 
 
@@ -42,6 +45,9 @@ class Call:
     other_content: tuple[str, ...]
     is_error: bool
     answered: bool
+    chars: int = 0
+    argument_chars: int = 0
+    by_run: bool = False
 
 
 def trimmed(text: str, limit: int = TRIM_CHARS) -> str:
@@ -66,21 +72,25 @@ def block_entry(block: dict[str, Any]) -> dict[str, Any]:
         return {"type": "text", "text": trimmed(block.get("text", ""))}
     if kind == "thinking":
         return {"type": "thinking", "summary": trimmed(block.get("thinking") or "")}
-    if kind == "mcp_tool_use":
-        arguments = json.dumps(block.get("input") or {}, ensure_ascii=False)
+    if kind in ("mcp_tool_use", HARNESS_USE):
+        arguments = _arguments(block)
         return {
             "type": "call",
             "id": block.get("id"),
             "name": block.get("name"),
+            "by": "run" if kind == HARNESS_USE else "connector",
             "arguments": trimmed(arguments),
+            "chars": len(arguments),
         }
     if kind == "mcp_tool_result":
         texts, others = result_texts(block)
+        said = "\n".join(texts)
         return {
             "type": "result",
             "callId": block.get("tool_use_id"),
             "isError": bool(block.get("is_error")),
-            "text": trimmed("\n".join(texts)),
+            "text": trimmed(said),
+            "chars": len(said),
             "otherContent": list(others),
         }
     if kind == "mcp_tool_listing":
@@ -100,8 +110,27 @@ def paired_calls(turns: Sequence[Turn]) -> list[Call]:
         _call(turn.number, block, results.get(block.get("id")))
         for turn in turns
         for block in turn.message.get("content") or []
-        if block.get("type") == "mcp_tool_use"
+        if block.get("type") in ("mcp_tool_use", HARNESS_USE)
     ]
+
+
+def handed_entry(call: HandedCall) -> dict[str, Any]:
+    said = "\n".join(call.texts)
+    return {
+        "type": "result",
+        "callId": call.call_id,
+        "by": "run",
+        "isError": call.is_error,
+        "text": trimmed(said),
+        "chars": len(said),
+        "pictures": [picture.name for picture in call.pictures],
+    }
+
+
+def all_calls(outcome: LoopOutcome) -> list[Call]:
+    handed = {call.call_id: call for call in outcome.handed}
+    found = paired_calls(outcome.turns)
+    return [_run_call(call, handed[call.call_id]) if call.call_id in handed else call for call in found]
 
 
 def transcript(facts: RunFacts, outcome: LoopOutcome) -> dict[str, Any]:
@@ -114,7 +143,7 @@ def transcript(facts: RunFacts, outcome: LoopOutcome) -> dict[str, Any]:
         "stopped": outcome.stopped,
         "detail": outcome.detail,
         "trimmedAt": TRIM_CHARS,
-        "turns": [_turn_entry(turn) for turn in outcome.turns],
+        "turns": [_turn_entry(turn, outcome.handed) for turn in outcome.turns],
     }
 
 
@@ -129,14 +158,27 @@ def _call(turn: int, used: dict[str, Any], result: dict[str, Any] | None) -> Cal
         other_content=others,
         is_error=bool(result.get("is_error")) if result is not None else False,
         answered=result is not None,
+        chars=len("\n".join(texts)),
+        argument_chars=len(_arguments(used)),
     )
 
 
-def _turn_entry(turn: Turn) -> dict[str, Any]:
+def _run_call(call: Call, handed: HandedCall) -> Call:
+    return replace(
+        call, texts=handed.texts, is_error=handed.is_error, answered=True, chars=handed.chars, by_run=True
+    )
+
+
+def _arguments(block: dict[str, Any]) -> str:
+    return json.dumps(block.get("input") or {}, ensure_ascii=False)
+
+
+def _turn_entry(turn: Turn, handed: Sequence[HandedCall]) -> dict[str, Any]:
+    blocks = [block_entry(block) for block in turn.message.get("content") or []]
     return {
         "turn": turn.number,
         "stopReason": turn.message.get("stop_reason"),
         "costUsd": str(turn.cost),
         "usage": turn.message.get("usage"),
-        "blocks": [block_entry(block) for block in turn.message.get("content") or []],
+        "blocks": blocks + [handed_entry(call) for call in handed if call.turn == turn.number],
     }

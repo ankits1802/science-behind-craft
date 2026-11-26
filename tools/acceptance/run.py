@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from functools import partial
@@ -16,8 +16,9 @@ from atomic_write import write_text_atomically
 
 from . import artifacts
 from .connection import McpConnection, McpRefused
-from .costs import CAP_CEILING_USD, Budget, Prices, dollars, prices_for, turn_cost
-from .loop import API_FAILED, OFF_LIST, LoopOutcome, Turn, run_loop
+from .costs import CAP_CEILING_USD, CAP_DEFAULT_USD, Budget, Prices, dollars, prices_for, turn_cost
+from .handed import HandedCall, client_tool, run_handed
+from .loop import API_FAILED, OFF_LIST, LoopOutcome, run_loop
 from .opinion import (
     DESIGN_SKILL,
     OPINION_RESERVE_USD,
@@ -26,34 +27,37 @@ from .opinion import (
     opinion_params,
     opinion_text,
 )
-from .preview import (
-    PREVIEW_TOOL,
-    Picture,
-    design_notes,
-    last_preview,
-    preview_facts,
-    preview_reply,
-    redraw_arguments,
-    reply_pictures,
+from .pictures import Picture
+from .preview import design_notes, last_preview, preview_facts, preview_reply
+from .progress import build_progress, progress_lines
+from .request import (
+    ALLOWED_TOOLS,
+    HARNESS_ADDS,
+    HARNESS_TOOLS,
+    RunSettings,
+    send_turn,
+    system_prompt,
+    user_turn,
 )
-from .request import ALLOWED_TOOLS, RunSettings, send_turn, system_prompt, user_turn
+from .spend import run_spend
 from .summary import Evidence, summary_markdown
-from .transcript import Call, RunFacts, paired_calls, trimmed
+from .transcript import Call, RunFacts, all_calls
 
-__all__ = ["main"]
+__all__ = ["command_line", "main"]
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 HTTP_TIMEOUT = httpx.Timeout(180.0, connect=20.0)
 API_RETRIES = 4
 FAILED_RUN = 1
 FAILING_STOPS = (API_FAILED, OFF_LIST)
-REDRAWN = (
-    "The connector hands the model the text of each tool result only, so the pictures were drawn again "
-    "after the run from the last preview_page call's arguments with read_pictures added, so the server read "
-    "them as a client that cannot see them asks: one more private preview of the same draft."
+TOOL_FAILURES = (McpRefused, httpx.HTTPError)
+HANDED = (
+    "The run called preview_page itself for the model ({count} times) with read_pictures added, since the "
+    "model cannot see pictures, so the server read each one's pictures; the run kept the pictures as files "
+    "and the model got only the text, so no picture cost it a token."
 )
 SEEN = "Through the connector the model received {count} non-text items in tool results ({kinds})."
-UNSEEN = "Through the connector the model received no picture: every tool result reached it as text only."
+UNLISTED = "the server lists no {names}, which the run calls itself; nothing was sent to the model"
 
 Ran = tuple[RunFacts, LoopOutcome, Budget, Prices]
 
@@ -63,26 +67,22 @@ class Progress:
     out: Path
     facts: RunFacts
     prices: Prices
-    turns: list[Turn] = field(default_factory=list)
 
-    def __call__(self, turn: Turn, budget: Budget) -> None:
-        self.turns.append(turn)
-        names = [
-            block.get("name")
-            for block in turn.message.get("content") or []
-            if block.get("type") == "mcp_tool_use"
-        ]
+    def __call__(self, outcome: LoopOutcome, budget: Budget) -> None:
+        turn = outcome.turns[-1]
+        names = [call.name for call in all_calls(outcome) if call.turn == turn.number]
         print(
             f"turn {turn.number}: {turn.message.get('stop_reason')}, {len(names)} tool calls"
             f" ({', '.join(names) or 'none'}), {dollars(turn.cost)}; spent {dollars(budget.spent)}",
             flush=True,
         )
-        artifacts.write_transcript(self.out, self.facts, LoopOutcome("running", "", list(self.turns)))
-        artifacts.write_cost(self.out, artifacts.Spend(self.facts, self.prices, self.turns, budget.spent))
+        running = LoopOutcome("running", "", list(outcome.turns), list(outcome.handed))
+        artifacts.write_transcript(self.out, self.facts, running)
+        artifacts.write_cost(self.out, artifacts.Spend(self.facts, self.prices, outcome.turns, budget.spent))
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    args = command_line().parse_args(argv)
     if args.command == "revoke":
         return _revoke(args.token_file)
     return _run(args)
@@ -96,7 +96,8 @@ def _run(args: argparse.Namespace) -> int:
     client = anthropic.Anthropic(max_retries=API_RETRIES)
     with httpx.Client(timeout=HTTP_TIMEOUT) as http:
         server = McpConnection(args.token_file, http, mask=_mask)
-        settings = RunSettings(args.model, server.server, system_prompt(server.server, server.instructions()))
+        system = system_prompt(server.server, server.instructions())
+        settings = RunSettings(args.model, server.server, system, _harness_tools(server.listed_tools()))
         budget = Budget(cap=args.cap - OPINION_RESERVE_USD)
         outcome = run_loop(
             partial(send_turn, client, settings, server.token),
@@ -104,37 +105,42 @@ def _run(args: argparse.Namespace) -> int:
             budget=budget,
             prices=prices,
             allowed=ALLOWED_TOOLS,
-            failures=(anthropic.APIError, McpRefused, httpx.HTTPError),
+            harness=partial(run_handed, server.call_tool, TOOL_FAILURES, HARNESS_ADDS),
+            failures=(anthropic.APIError, *TOOL_FAILURES),
             report=Progress(args.out, facts, prices),
         )
-        evidence = _evidence(client, server, (facts, outcome, budget, prices), args)
+    evidence = _evidence(client, (facts, outcome, budget, prices), args)
     write_text_atomically(args.out / artifacts.SUMMARY_FILE, summary_markdown(evidence))
-    print(
-        f"{outcome.stopped} ({outcome.detail}); spent {dollars(evidence.spent)} of ${facts.cap_usd}",
-        flush=True,
-    )
+    print(f"{outcome.stopped} ({outcome.detail}); spent {dollars(evidence.spent)} of ${facts.cap_usd}")
+    print("\n".join(progress_lines(build_progress(evidence.calls, evidence.preview))), flush=True)
     return FAILED_RUN if outcome.stopped in FAILING_STOPS else 0
 
 
-def _evidence(client: Any, server: McpConnection, run: Ran, args: argparse.Namespace) -> Evidence:
+def _harness_tools(listed: Sequence[dict[str, Any]]) -> tuple[dict[str, Any], ...]:
+    found = {tool["name"]: tool for tool in listed if tool.get("name") in HARNESS_TOOLS}
+    missing = sorted(HARNESS_TOOLS - set(found))
+    if missing:
+        raise McpRefused(UNLISTED.format(names=", ".join(missing)))
+    return tuple(client_tool(found[name]) for name in sorted(found))
+
+
+def _evidence(client: Any, run: Ran, args: argparse.Namespace) -> Evidence:
     facts, outcome, budget, prices = run
     artifacts.write_transcript(args.out, facts, outcome)
-    artifacts.write_cost(args.out, artifacts.Spend(facts, prices, outcome.turns, budget.spent))
-    calls = paired_calls(outcome.turns)
-    notes = [_seen_note(calls)]
+    calls = all_calls(outcome)
     found = last_preview(calls)
-    reply = preview_reply(found.texts) if found is not None else None
-    pictures, drawn = _redrawn(server, found, notes) if found is not None else ([], None)
-    read = design_notes(drawn) if drawn else ()
+    drawn = _handed(outcome, found)
+    reply = (drawn.structured or preview_reply(drawn.texts)) if drawn is not None else None
+    notes = [*_seen_note(calls), HANDED.format(count=len(outcome.handed))]
+    pictures = list(drawn.pictures) if drawn is not None else []
+    read = design_notes(reply) if reply else ()
     asked = OpinionAsk(args.model, args.cap, read)
     opinion, opinion_usd = _second_opinion(client, asked, pictures, (budget, prices), notes)
-    artifacts.write_cost(args.out, artifacts.Spend(facts, prices, outcome.turns, budget.spent, opinion_usd))
-    artifacts.write_json(args.out / artifacts.PREVIEW_FILE, {"asTheModelGotIt": reply, "drawnAgain": drawn})
-    drawn_url = drawn.get("previewUrl") if drawn else None
-    model_url = reply.get("previewUrl") if reply else None
-    artifacts.write_preview_urls(
-        args.out, [("the model's last preview", model_url), ("drawn again", drawn_url)]
-    )
+    spend = run_spend(outcome, prices)
+    kept = artifacts.Spend(facts, prices, outcome.turns, budget.spent, opinion_usd, spend.tools)
+    artifacts.write_cost(args.out, kept)
+    artifacts.write_json(args.out / artifacts.PREVIEW_FILE, {"reply": reply})
+    artifacts.write_preview_urls(args.out, [("the model's last preview", (reply or {}).get("previewUrl"))])
     if opinion:
         write_text_atomically(args.out / artifacts.OPINION_FILE, opinion + "\n")
     return Evidence(
@@ -142,6 +148,7 @@ def _evidence(client: Any, server: McpConnection, run: Ran, args: argparse.Names
         outcome=outcome,
         calls=calls,
         spent=budget.spent + opinion_usd,
+        spend=spend,
         preview=preview_facts(reply) if reply else None,
         pictures=artifacts.write_pictures(args.out, pictures),
         opinion=opinion,
@@ -150,26 +157,17 @@ def _evidence(client: Any, server: McpConnection, run: Ran, args: argparse.Names
     )
 
 
-def _seen_note(calls: Sequence[Call]) -> str:
-    kinds = sorted({kind for call in calls for kind in call.other_content})
-    count = sum(len(call.other_content) for call in calls)
-    return SEEN.format(count=count, kinds=", ".join(kinds)) if count else UNSEEN
+def _handed(outcome: LoopOutcome, found: Call | None) -> HandedCall | None:
+    if found is None:
+        return None
+    return next((call for call in outcome.handed if call.call_id == found.call_id), None)
 
 
-def _redrawn(
-    server: McpConnection, found: Call, notes: list[str]
-) -> tuple[list[Picture], dict[str, Any] | None]:
-    try:
-        result = server.call_tool(PREVIEW_TOOL, redraw_arguments(found.arguments))
-    except (McpRefused, httpx.HTTPError) as failed:
-        notes.append(f"The last preview could not be drawn again for its pictures: {failed}")
-        return [], None
-    if result.get("isError"):
-        said = " ".join(item.get("text", "") for item in result.get("content") or [])
-        notes.append(f"Drawing the last preview again answered an error: {trimmed(said, 400)}")
-        return [], None
-    notes.append(REDRAWN)
-    return reply_pictures(result.get("content") or []), result.get("structuredContent")
+def _seen_note(calls: Sequence[Call]) -> list[str]:
+    connector = [call for call in calls if not call.by_run]
+    kinds = sorted({kind for call in connector for kind in call.other_content})
+    count = sum(len(call.other_content) for call in connector)
+    return [SEEN.format(count=count, kinds=", ".join(kinds))] if count else []
 
 
 def _second_opinion(
@@ -223,7 +221,7 @@ def _cap(text: str) -> Decimal:
     return cap
 
 
-def _parser() -> argparse.ArgumentParser:
+def command_line() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="A contributor's AI builds a page over MCP from one request."
     )
@@ -231,7 +229,12 @@ def _parser() -> argparse.ArgumentParser:
     run = commands.add_parser("run", help="drive the model through the MCP connector and keep what it made")
     run.add_argument("--craft", required=True, help="the craft's slug, named in the request")
     run.add_argument("--request", required=True, help="what the contributor asks for")
-    run.add_argument("--cap", type=_cap, required=True, help=f"US dollars, at most {CAP_CEILING_USD}")
+    run.add_argument(
+        "--cap",
+        type=_cap,
+        default=CAP_DEFAULT_USD,
+        help=f"US dollars, at most {CAP_CEILING_USD}; {CAP_DEFAULT_USD} when absent",
+    )
     run.add_argument("--model", required=True, help="the Claude model id")
     run.add_argument("--token-file", type=Path, required=True, help="the sign-in's token file")
     run.add_argument("--out", type=Path, required=True, help="the folder the run's artifacts are written to")

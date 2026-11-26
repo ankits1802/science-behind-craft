@@ -113,6 +113,9 @@ class McpConnection:
     def call_tool(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return self._rpc("tools/call", {"name": name, "arguments": arguments})
 
+    def listed_tools(self) -> list[dict[str, Any]]:
+        return list(self._rpc("tools/list", {}).get("tools") or [])
+
     def revoke(self) -> int:
         form = {"token": self.connection.refresh_token, "client_id": self.connection.client_id}
         return self.http.post(self.connection.api + REVOKE_PATH, data=form).status_code

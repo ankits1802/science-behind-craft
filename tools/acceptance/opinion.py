@@ -9,7 +9,7 @@ from typing import Any
 
 from app.research.design_read_prompt import skill_sections
 
-from .preview import Picture
+from .pictures import Picture
 from .request import EFFORT
 
 __all__ = [
