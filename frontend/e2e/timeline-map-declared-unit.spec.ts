@@ -100,7 +100,18 @@ test("the figure names its places, cites every sentence's unit and credits the b
   expect(html.match(/data-testid="dataset-credit"/g)).toHaveLength(2);
   expect(html).not.toContain("Coordinates: Wikidata.");
   expect(html).toContain('aria-label="Through time"');
-  expect(html).toContain('type="range"');
+  expect(html).not.toContain('type="range"');
+});
+
+test("the map's dated record plays with one Play and a point to press for each year, resting on the last", () => {
+  const html = drawn(BIDRIWARE);
+  expect(html).not.toContain("<input");
+  expect(html.match(/data-testid="timeline-play"/g)).toHaveLength(1);
+  const points = [...html.matchAll(/<button[^>]*data-testid="timeline-point"[^>]*>/g)].map((found) => found[0]);
+  expect(points.map((point) => /aria-label="([^"]+)"/.exec(point)?.[1])).toEqual(["1422–1436", "18th century", "19th century", "1956"]);
+  expect(points.map((point) => /aria-pressed="(\w+)"/.exec(point)?.[1])).toEqual(["false", "false", "false", "true"]);
+  expect(attribute(html, "timeline-map-play", "data-at")).toEqual(["3"]);
+  expect(attribute(html, "timeline-points", "aria-label")).toEqual(["Dated moments on the map"]);
 });
 
 test("phone first: every grid track can shrink and the map fills its column at 360 and 1440px", async ({ page }) => {

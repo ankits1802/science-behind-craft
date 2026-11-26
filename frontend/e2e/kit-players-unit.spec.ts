@@ -112,7 +112,7 @@ async function generated(page: Page, motion: "allowed" | (typeof SWITCHES)[numbe
   const head = `<meta charset="utf-8"><style>${PRIMITIVE_CSS}</style><style>${KIT_CSS}</style><style>${PAGE_CSS}</style><style>${ARTKIT_CSS}</style>`;
   await page.setContent(`<!doctype html><html lang="en" data-theme="light"${switched}><head>${head}</head><body>${body}</body></html>`, { waitUntil: "domcontentloaded" });
   await page.addScriptTag({ content: KIT_JS });
-  await expect(page.locator("figure.rp .rp-status")).toContainText("Step 2 of 2");
+  await expect(page.locator("figure.rp .rp-status")).toContainText(/Step \d of 2/);
 }
 
 test("the five kinds that take a kit scene are the backend's", () => {
@@ -185,8 +185,9 @@ test("a reaction step and a dip phase play their part's own motion when the read
   const moving = player.locator('.rx[data-i="1"] [data-kit-move]');
   expect(await moving.evaluate((node) => [node.hasAttribute("data-playing"), getComputedStyle(node).animationName])).toEqual([true, "kv-dip"]);
   const dip = page.locator("figure.vat");
-  await dip.locator(".vat-dip").click();
-  await expect(dip.locator(".vat-scene [data-kit-move][data-playing]")).toHaveCount(1);
+  await dip.evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await expect(dip.locator(".vat-dip")).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => dip.locator(".vat-scene [data-kit-move][data-playing]").count(), { intervals: [50] }).toBe(1);
 });
 
 for (const motion of SWITCHES) {

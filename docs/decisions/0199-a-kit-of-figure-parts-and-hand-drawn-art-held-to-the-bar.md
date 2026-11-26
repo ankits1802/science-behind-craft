@@ -27,6 +27,7 @@ The hand-drawn figure, checks 7 and 8) and `docs/contracts/component-specs-scien
 | The families each part serves | `.claude/skills/kalavigyan-interactives/references/flagships.md` |
 | The players, the toggle's stage box and the seal drawn from the kit, and their scenes held to the bar | [decision 0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | The kit drawing an answer's figure composed from its cited sentences (amends this record) | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
+| The kit's tenth part, a reaction's species, and its react motion (amends this record) | [decision 0228](0228-players-molecules-and-timelines-that-play-and-a-reaction-s-species-drawn-from-the-kit.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

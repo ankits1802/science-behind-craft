@@ -65,7 +65,7 @@ function kitPage(body: string, attributes = ""): string {
 
 test("the web's kit is the shared golden the backend reads", () => {
   expect(JSON.parse(JSON.stringify(ART_KIT))).toEqual(GOLDEN);
-  expect(KIT_PART_NAMES).toEqual(["cloth", "block", "bath", "paste", "heat", "water", "tool", "section", "piece"]);
+  expect(KIT_PART_NAMES).toEqual(["cloth", "block", "bath", "paste", "heat", "water", "tool", "section", "piece", "species"]);
   expect(KIT_MATERIALS).toHaveLength(38);
   expect(depictedToken("--dye-bidri-white")).toBe(true);
   expect(depictedToken("--dip-4")).toBe(true);
@@ -121,12 +121,12 @@ for (const part of MATERIAL_PARTS) {
 test("every part's every form is drawn and named on the kit sheet", () => {
   const sheet = kitSheet();
   expect(sheet.map((part) => part.name)).toEqual([...KIT_PART_NAMES]);
-  expect(sheet.map((part) => part.variants.length)).toEqual([7, 5, 5, 4, 4, 3, 7, 5, 8]);
-  expect(MATERIAL_PARTS.map((part) => part.name)).toEqual(["cloth", "block", "bath", "paste", "tool", "section", "piece"]);
+  expect(sheet.map((part) => part.variants.length)).toEqual([7, 5, 5, 4, 4, 3, 7, 5, 8, 5]);
+  expect(MATERIAL_PARTS.map((part) => part.name)).toEqual(["cloth", "block", "bath", "paste", "tool", "section", "piece", "species"]);
   expect(sheet[0].families).toBe("Serves Textiles and More crafts");
   const html = renderToStaticMarkup(createElement(KitSheet));
-  expect(html.match(/data-kit-tile="/g)).toHaveLength(48 + 7 * 38);
-  for (const material of KIT_MATERIALS) expect(html.match(new RegExp(`data-kit-specimen="${material}"`, "g")), material).toHaveLength(7);
+  expect(html.match(/data-kit-tile="/g)).toHaveLength(53 + 8 * 38);
+  for (const material of KIT_MATERIALS) expect(html.match(new RegExp(`data-kit-specimen="${material}"`, "g")), material).toHaveLength(8);
   expect(html.match(/data-kit-sheet-layout="/g)).toHaveLength(4);
 });
 
@@ -193,7 +193,7 @@ test("motion rests on the finished state, plays on the moving part only, and nev
 
 test("Play runs each panel in turn on the motion tokens, and steps one still panel a press when motion is off", () => {
   const timings = kitTimings(token);
-  expect(timings).toEqual({ dip: 600, hold: 500, oxidise: 1500 });
+  expect(timings).toEqual({ dip: 600, hold: 500, oxidise: 1500, vat: 2600 });
   expect(kitSchedule([null, "dip", null], timings)).toEqual([
     { panel: 0, moves: false, at: 0 },
     { panel: 1, moves: true, at: 1000 },
@@ -201,8 +201,9 @@ test("Play runs each panel in turn on the motion tokens, and steps one still pan
     { panel: null, moves: false, at: 3100 }
   ]);
   expect(kitSchedule(["dry"], timings).at(-1)?.at).toBe(2000);
+  expect(kitSchedule(["react"], timings).at(-1)?.at).toBe(3100);
   expect([kitStillStep(null, 3), kitStillStep(0, 3), kitStillStep(2, 3)]).toEqual([0, 1, null]);
   expect(kitStatus(1, ["Sanded level", "In the bath", "Lifted out"])).toBe("Step 2 of 3: In the bath");
   expect(kitStatus(null, ["Sanded level"])).toBe("At rest");
-  expect([kitMotionClass("dip"), kitMotionClass("take"), kitMotionClass("dry")]).toEqual(["motion-dip", "motion-dip", "motion-oxidise"]);
+  expect([kitMotionClass("dip"), kitMotionClass("take"), kitMotionClass("dry"), kitMotionClass("react")]).toEqual(["motion-dip", "motion-dip", "motion-oxidise", "kv-rx-form"]);
 });

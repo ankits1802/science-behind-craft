@@ -24,6 +24,7 @@ declared timeline map draws its layers). The contract is `docs/contracts/compone
 | Heavy kinds loaded near after their still, and the phone budget | [decision 0205](0205-a-page-measured-on-a-slowed-phone-held-to-its-budget-and-heavy-kinds-loaded-near.md) |
 | The lead chapter drawn by the server and the rest read later | [decision 0209](0209-a-phone-load-s-path-to-its-first-screen-recorded-and-cut.md) |
 | A places map's still, with neighbouring land, district lines and valued districts (amends this record) | [decision 0232](0232-every-places-map-drawn-on-the-site-s-own-map-base-and-told-what-it-is-about.md) |
+| The declared timeline map plays its events with one Play and pressable points, no slider (amends this record) | [decision 0228](0228-players-molecules-and-timelines-that-play-and-a-reaction-s-species-drawn-from-the-kit.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

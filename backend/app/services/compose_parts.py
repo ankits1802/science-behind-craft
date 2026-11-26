@@ -22,6 +22,7 @@ __all__ = [
     "key_word",
     "material_named",
     "rich_formula",
+    "species_token",
     "unique_word",
 ]
 
@@ -111,6 +112,11 @@ def material_named(craft: CraftHeld, name: str) -> HeldMaterial | None:
         if wanted in names:
             return material
     return None
+
+
+def species_token(craft: CraftHeld, name: str) -> str | None:
+    material = material_named(craft, name)
+    return material.tokens[0] if material is not None and material.tokens else None
 
 
 def rich_formula(formula: str | None) -> list[RichRun] | None:

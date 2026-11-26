@@ -27,6 +27,7 @@ own facts), `docs/contracts/component-specs-plates.md` (label_card) and
 | The composer and the kit driving every page's players | [decision 0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md) |
 | A dip's colours from the substances its stages name | [decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | The named motions and the two reduced-motion switches | [decision 0092](0092-design-system.md) and the kalavigyan-design skill, sections 2.13 and 6 |
+| A composed reaction step draws its species, not its stage, and the kit plays every player in view (amends this record) | [decision 0228](0228-players-molecules-and-timelines-that-play-and-a-reaction-s-species-drawn-from-the-kit.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

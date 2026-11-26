@@ -1,4 +1,4 @@
-import { ART_KIT, depictedToken, type ClothForm, type HeatSource, type KitLayout, type KitMotif, type KitMotion, type PasteForm, type PieceShape, type ToolName, type Vessel, type WaterForm } from "@/lib/artKit";
+import { ART_KIT, depictedToken, type ClothForm, type HeatSource, type KitLayout, type KitMotif, type KitMotion, type PasteForm, type PieceShape, type SpeciesRole, type ToolName, type Vessel, type WaterForm } from "@/lib/artKit";
 import { unitRef } from "@/lib/componentSpecsScienceParts";
 import { boolean, list, nullable, object, oneOf, optional, ShapeError, tagged, type Shape } from "@/lib/shape";
 
@@ -15,7 +15,8 @@ export type ToolPart = { part: "tool"; tool: ToolName; held?: boolean; load?: st
 export type SectionLayer = { material: string; label: string };
 export type SectionPart = { part: "section"; layers: SectionLayer[]; label: string };
 export type PiecePart = { part: "piece"; shape: PieceShape; material?: string | null; inlay?: KitPrint | null; label: string };
-export type KitPart = ClothPart | BlockPart | BathPart | PastePart | HeatPart | WaterPart | ToolPart | SectionPart | PiecePart;
+export type SpeciesPart = { part: "species"; role: SpeciesRole; material?: string | null; breaks?: boolean; label: string };
+export type KitPart = ClothPart | BlockPart | BathPart | PastePart | HeatPart | WaterPart | ToolPart | SectionPart | PiecePart | SpeciesPart;
 export type KitPanel = { label: string; text?: string | null; via?: string | null; motion?: KitMotion | null; parts: KitPart[] };
 export type KitHead = { title: string; caption?: string | null };
 export type KitDiagramSpec = { head: KitHead; layout: KitLayout; alt: string; panels: KitPanel[] };
@@ -48,7 +49,8 @@ export const kitPartShape = tagged<KitPart>("part", {
   water: object<WaterPart>({ part: oneOf(["water"] as const), form: oneOf(choices.water.choices.form), label: unitRef }),
   tool: object<ToolPart>({ part: oneOf(["tool"] as const), tool: oneOf(choices.tool.choices.tool), held: optional(boolean), load: maybe(material), label: unitRef }),
   section: object<SectionPart>({ part: oneOf(["section"] as const), layers: list(object<SectionLayer>({ material: layerMaterial, label: unitRef }), ART_KIT.layers[0]), label: unitRef }),
-  piece: object<PiecePart>({ part: oneOf(["piece"] as const), shape: oneOf(choices.piece.choices.shape), material: maybe(material), inlay: maybe(printShape), label: unitRef })
+  piece: object<PiecePart>({ part: oneOf(["piece"] as const), shape: oneOf(choices.piece.choices.shape), material: maybe(material), inlay: maybe(printShape), label: unitRef }),
+  species: object<SpeciesPart>({ part: oneOf(["species"] as const), role: oneOf(choices.species.choices.role), material: maybe(material), breaks: optional(boolean), label: unitRef })
 });
 
 const panelShape = object<KitPanel>({ label: unitRef, text: maybe(unitRef), via: maybe(unitRef), motion: maybe(oneOf(ART_KIT.motions)), parts: list(kitPartShape, 1) });
@@ -63,8 +65,14 @@ export const kitDiagramShape = object<KitDiagramSpec>({
 const MOVES: Readonly<Record<KitMotion, (part: KitPart) => boolean>> = {
   dip: (part) => part.part === "bath" && Boolean(part.piece),
   take: (part) => part.part === "cloth",
-  dry: (part) => part.part === "paste" && Boolean(part.dried)
+  dry: (part) => part.part === "paste" && Boolean(part.dried),
+  react: (part) => part.part === "species" && part.role === "product"
 };
+
+export function speciesParts(parts: readonly KitPart[]): SpeciesPart[] | null {
+  const species = parts.filter((part): part is SpeciesPart => part.part === "species");
+  return species.length > 0 && species.length === parts.length ? species : null;
+}
 
 export function movingPart(panel: Pick<KitPanel, "motion" | "parts">): number | null {
   const motion = panel.motion;
@@ -87,6 +95,8 @@ export function partMaterials(part: KitPart): string[] {
       return part.load ? [part.load] : [];
     case "piece":
       return [part.material, part.inlay?.material].filter((token): token is string => Boolean(token));
+    case "species":
+      return part.material ? [part.material] : [];
     default:
       return [];
   }

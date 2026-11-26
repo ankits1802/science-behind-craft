@@ -8,6 +8,7 @@ import { HeatArt } from "./parts/HeatArt";
 import { PasteArt } from "./parts/PasteArt";
 import { PieceArt } from "./parts/PieceArt";
 import { SectionArt } from "./parts/SectionArt";
+import { SpeciesArt } from "./parts/SpeciesArt";
 import { ToolArt } from "./parts/ToolArt";
 import { WaterArt } from "./parts/WaterArt";
 
@@ -33,6 +34,8 @@ export function KitPartArt({ part, ids, moving }: { part: KitPart; ids: PartIds;
       return <SectionArt part={part} ids={ids} />;
     case "piece":
       return <PieceArt part={part} ids={ids} />;
+    case "species":
+      return <SpeciesArt part={part} ids={ids} moving={moving} />;
   }
 }
 

@@ -16,7 +16,8 @@ export const PART_TITLES: Readonly<Record<KitPartName, string>> = {
   water: "Water and washing",
   tool: "A tool in a hand",
   section: "A layered section",
-  piece: "A shaped piece"
+  piece: "A shaped piece",
+  species: "A species of a reaction"
 };
 
 const MATERIAL_TILE: Readonly<Record<KitPartName, ((token: string) => KitPart) | null>> = {
@@ -28,7 +29,8 @@ const MATERIAL_TILE: Readonly<Record<KitPartName, ((token: string) => KitPart) |
   water: null,
   tool: (token) => ({ part: "tool", tool: "brush", load: token, label: LABEL }),
   section: (token) => ({ part: "section", layers: [{ material: ART_KIT.earth, label: LABEL }, { material: token, label: LABEL }], label: LABEL }),
-  piece: (token) => ({ part: "piece", shape: "lump", material: token, label: LABEL })
+  piece: (token) => ({ part: "piece", shape: "lump", material: token, label: LABEL }),
+  species: (token) => ({ part: "species", role: "reactant", material: token, label: LABEL })
 };
 
 const tile = (key: string, caption: string, part: KitPart): SheetTile => ({ key, caption, part });
@@ -54,7 +56,12 @@ const VARIANTS: Readonly<Record<KitPartName, () => SheetTile[]>> = {
     [2, 3, 4, 5, 6].map((count) =>
       tile(`layers-${count}`, `${count} layers`, { part: "section", layers: ["earth", "--dye-mud", "--dye-lime", "--dye-cloth", "--dye-indigo", "--dye-kut"].slice(0, count).map((material) => ({ material, label: LABEL })), label: LABEL })
     ),
-  piece: () => [...ART_KIT.parts.piece.choices.shape.map((shape) => tile(shape, shape, { part: "piece", shape, label: LABEL })), tile("inlaid", "inlaid", { part: "piece", shape: "vessel", material: "--dye-bidri-black", inlay: { motif: "lines", material: "--dye-bidri-silver" }, label: LABEL })]
+  piece: () => [...ART_KIT.parts.piece.choices.shape.map((shape) => tile(shape, shape, { part: "piece", shape, label: LABEL })), tile("inlaid", "inlaid", { part: "piece", shape: "vessel", material: "--dye-bidri-black", inlay: { motif: "lines", material: "--dye-bidri-silver" }, label: LABEL })],
+  species: () => [
+    ...ART_KIT.parts.species.choices.role.map((role) => tile(role, role, { part: "species", role, material: "--dye-madder", label: LABEL })),
+    tile("breaks", "a bond breaks", { part: "species", role: "reactant", material: "--dye-harda", breaks: true, label: LABEL }),
+    tile("unrecorded", "colour unrecorded", { part: "species", role: "product", label: LABEL })
+  ]
 };
 
 function familyLine(name: KitPartName): string {

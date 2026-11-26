@@ -81,8 +81,10 @@ The rules below refer to them.
 ## Complete at rest
 
 10. **No progress state at rest**: no "Writing section n of m", percentages or "n of m scenes". The
-    page and every component on it rest finished (a player on the step the page shows, a figure
-    whole), and any replay is opt-in.
+    page and every component on it rest finished at first paint (a player on the step the page
+    shows, a figure whole). A reaction, dip or stage player, a 3D molecule and a dated record then
+    play on their own once in view, each with one visible Pause and never under reduced motion
+    (decision 0228); any other replay is opt-in.
 11. **Feedback is visible where the reader is**: toasts are fixed to the viewport, and what a
     control did is announced where the reader pressed it.
 12. **Sticky bars are opaque and never overlap** each other or the chapter rail. A component draws

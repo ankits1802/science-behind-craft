@@ -117,7 +117,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Python suite | Files | Tests |
 | --- | ---: | ---: |
-| Backend, without a database | 831 | 6185 |
+| Backend, without a database | 833 | 6192 |
 | Backend, on Postgres | 233 | 1063 |
 | Tools | 27 | 213 |
 | Craft data ETL | 7 | 51 |
@@ -125,7 +125,7 @@ Tables: `AccessRoster`, `AdminDistrict`, `AdminState`, `AlertDigestSend`, `Allow
 
 | Frontend (`frontend/e2e/`) | Files | Tests |
 | --- | ---: | ---: |
-| Unit specs (`*-unit.spec.ts`) | 225 | 1599 |
+| Unit specs (`*-unit.spec.ts`) | 225 | 1602 |
 | Browser and release specs | 22 | 70 |
 
 A Python test is a `test_` function in a `test_` file; a frontend test is a `test(` call at the start of a line. Every suite runs on GitHub Actions, never on a development machine.
@@ -144,13 +144,13 @@ A Python test is a `test_` function in a `test_` file; a frontend test is a `tes
 
 | Area | Files | Lines |
 | --- | ---: | ---: |
-| `backend/app` | 1579 | 222,779 |
-| `backend/tests` | 1243 | 162,408 |
+| `backend/app` | 1577 | 222,727 |
+| `backend/tests` | 1245 | 162,515 |
 | `backend/migrations` | 96 | 11,937 |
 | `frontend/app` | 118 | 10,301 |
-| `frontend/components` | 690 | 46,835 |
-| `frontend/lib` | 295 | 29,101 |
-| `frontend/e2e` | 362 | 39,952 |
+| `frontend/components` | 685 | 46,485 |
+| `frontend/lib` | 294 | 28,997 |
+| `frontend/e2e` | 364 | 40,163 |
 | `etl` | 80 | 11,545 |
 | `tools` | 104 | 8,882 |
 | `infra` | 18 | 2,422 |

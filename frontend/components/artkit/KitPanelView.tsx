@@ -2,11 +2,12 @@ import type { ReactNode } from "react";
 
 import type { KitLayout } from "@/lib/artKit";
 import { kitMotionClass } from "@/lib/artKitMotion";
-import { movingPart, type KitPanel } from "@/lib/componentSpecsKit";
+import { movingPart, speciesParts, type KitPanel } from "@/lib/componentSpecsKit";
 
 import { KitKey } from "./KitKey";
 import { PANEL_BOXES, PlacedPart } from "./KitPartArt";
 import { partIds, type KitIds, type Moving } from "./kitIds";
+import { SpeciesSceneArt } from "./SpeciesScene";
 
 type RenderUnit = (ref: string) => ReactNode;
 type PanelProps = { panel: KitPanel; index: number; layout: KitLayout; ids: KitIds; renderUnit: RenderUnit };
@@ -22,6 +23,16 @@ function Arrow() {
 }
 
 export function PanelArt({ panel, index, layout, ids }: Omit<PanelProps, "renderUnit">) {
+  const species = speciesParts(panel.parts);
+  if (species) {
+    return (
+      <div className="kv-kit-art">
+        <svg viewBox="0 0 240 160" aria-hidden="true" focusable="false">
+          <SpeciesSceneArt parts={species} ids={ids} name={`p${index}`} panel={panel.motion === "react" ? index : null} />
+        </svg>
+      </div>
+    );
+  }
   const section = layout === "section";
   const boxes = section ? SECTION_BOX : PANEL_BOXES[panel.parts.length];
   const moves = movingPart(panel);

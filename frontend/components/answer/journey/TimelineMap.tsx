@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { useFilmScene } from "@/components/answer/FilmScene";
 import { CITED_TEXTS, TimelineEntries, TimelineSlider, TimelineUndatedList, type TimelineTexts } from "@/components/answer/journey/TimelineEntries";
@@ -11,12 +11,13 @@ import type { TimelineMapBlock } from "@/lib/explainerPlay";
 import { sceneStep } from "@/lib/filmScenes";
 import { boundaryNote } from "@/lib/placeView";
 import type { BoundaryNote } from "@/lib/regionContract";
-import { placedPlaces, reachedPlaces, routeLines, timelineEntries, timelineStops, timelineSummary, type Placeable, type TimelineSource } from "@/lib/timelineView";
+import { placedPlaces, reachedPlaces, routeLines, timelineEntries, timelineStops, timelineSummary, type Placeable, type TimelineEntry, type TimelineSource } from "@/lib/timelineView";
 
 const WITH_MAP = "grid min-w-0 grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-start";
 const WITHOUT_MAP = "grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4";
 
-export type TimelineMapDrawing<S> = { texts: TimelineTexts<S>; boundary: BoundaryNote | null; placeable?: Placeable; pinUndated?: boolean; parts?: TimelineMapParts };
+export type TimelineControl<S> = (props: { entries: readonly TimelineEntry<S>[]; stops: readonly number[]; at: number; onChoose: (index: number) => void }) => ReactNode;
+export type TimelineMapDrawing<S> = { texts: TimelineTexts<S>; boundary: BoundaryNote | null; placeable?: Placeable; pinUndated?: boolean; parts?: TimelineMapParts; control?: TimelineControl<S> };
 type FrameProps<S> = { source: TimelineSource<S>; at: number; onChoose: (index: number) => void; drawing: TimelineMapDrawing<S> };
 
 function undatedPlaces<S>(source: TimelineSource<S>): number[] {
@@ -37,7 +38,7 @@ export function TimelineMapFrame<S>({ source, at, onChoose, drawing }: FrameProp
     <div className={mapped ? WITH_MAP : WITHOUT_MAP} data-testid="timeline-map" data-year={year} role="group" aria-label={timelineSummary(source, entries)}>
       {mapped ? <TimelinePins placed={placed} reached={reached} routes={routes} boundary={drawing.boundary} parts={drawing.parts} /> : null}
       <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4">
-        {stops.length > 1 ? <TimelineSlider entries={entries} stops={stops} at={shown} onChoose={onChoose} /> : null}
+        {stops.length > 1 ? (drawing.control ? drawing.control({ entries, stops, at: shown, onChoose }) : <TimelineSlider entries={entries} stops={stops} at={shown} onChoose={onChoose} />) : null}
         {entries.length > 0 ? <TimelineEntries block={source} entries={entries} placed={placed} year={year} texts={drawing.texts} /> : null}
         {source.undated && source.undated.length > 0 ? <TimelineUndatedList block={source} undated={source.undated} placed={placed} texts={drawing.texts} /> : null}
       </div>

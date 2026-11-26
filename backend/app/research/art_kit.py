@@ -22,6 +22,8 @@ __all__ = [
     "PARTS_PER_PANEL_MAX",
     "PASTE_FORMS",
     "PIECE_SHAPES",
+    "SPECIES_PER_SCENE_MAX",
+    "SPECIES_ROLES",
     "TOOLS",
     "VESSELS",
     "WATER_FORMS",
@@ -41,9 +43,11 @@ HEAT_SOURCES = ("sun", "fire", "furnace", "lamp")
 WATER_FORMS = ("running", "still", "sprinkled")
 TOOLS = ("block", "brush", "chisel", "mallet", "knife", "stick")
 PIECE_SHAPES = ("lump", "vessel", "slab", "billet", "sheet", "figure", "culm")
-KIT_MOTIONS = ("dip", "take", "dry")
+SPECIES_ROLES = ("reactant", "reagent", "product")
+KIT_MOTIONS = ("dip", "take", "dry", "react")
 EARTH = "earth"
 PARTS_PER_PANEL_MAX = 3
+SPECIES_PER_SCENE_MAX = 8
 LAYERS_MIN = 2
 LAYERS_MAX = 6
 LAYOUTS = ("steps", "before_after", "section", "sequence")
@@ -150,6 +154,14 @@ KIT_PARTS: Mapping[str, KitPart] = MappingProxyType(
                 choices={"shape": PIECE_SHAPES, "inlay.motif": MOTIFS},
                 materials=("material", "inlay.material"),
             ),
+            _part(
+                "species",
+                FAMILIES,
+                "species reactant reactants reagent reagents",
+                choices={"role": SPECIES_ROLES},
+                materials=("material",),
+                motion="react",
+            ),
         )
     }
 )
@@ -161,6 +173,7 @@ def kit_vocabulary() -> dict[str, Any]:
         "families": list(FAMILIES),
         "layouts": {name: list(PANELS_PER_LAYOUT[name]) for name in LAYOUTS},
         "partsPerPanelMax": PARTS_PER_PANEL_MAX,
+        "speciesPerSceneMax": SPECIES_PER_SCENE_MAX,
         "layers": [LAYERS_MIN, LAYERS_MAX],
         "earth": EARTH,
         "motions": list(KIT_MOTIONS),

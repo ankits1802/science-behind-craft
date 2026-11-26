@@ -22,6 +22,59 @@
     o.observe(el);
   };
 
+  KV.seen = function (el, fn) {
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) { fn(true); return; }
+    var o = new IntersectionObserver(function (es) { es.forEach(function (e) { fn(e.isIntersecting); }); }, { rootMargin: '-20% 0px -20% 0px' });
+    o.observe(el);
+  };
+
+  KV.onMotion = function (fn) {
+    if (mq.addEventListener) mq.addEventListener('change', fn);
+    if ('MutationObserver' in window) new MutationObserver(fn).observe(root, { attributes: true, attributeFilter: ['data-reduced-motion'] });
+  };
+
+  KV.move = function (el) {
+    if (!el || reduced()) return;
+    arr(el.querySelectorAll('[data-kit-move]')).forEach(function (m) {
+      m.removeAttribute('data-playing'); void m.getBoundingClientRect(); m.setAttribute('data-playing', '');
+      m.addEventListener('animationend', function () { m.removeAttribute('data-playing'); }, { once: true });
+    });
+  };
+
+  KV.steady = function (el, pairs) {
+    pairs = pairs.filter(function (p) { return p[0] && p[1].length > 1; });
+    if (!el || !pairs.length) return;
+    function hold() {
+      var boxes = pairs.map(function (p) { return p[0]; }), aligns = boxes.map(function (b) { return b.style.alignSelf; });
+      var shown = pairs.map(function (p) { return p[1].filter(function (i) { return !i.hidden; })[0] || null; });
+      boxes.forEach(function (b) { b.style.minHeight = ''; b.style.alignSelf = 'start'; });
+      var bases = boxes.map(function (b, k) { return b.offsetHeight - (shown[k] ? shown[k].offsetHeight : 0); });
+      var hid = [];
+      pairs.forEach(function (p) { p[1].forEach(function (i) { if (i.hidden) { i.hidden = false; hid.push(i); } }); });
+      var most = pairs.map(function (p) { return Math.max.apply(null, p[1].map(function (i) { return i.offsetHeight; })); });
+      hid.forEach(function (i) { i.hidden = true; });
+      boxes.forEach(function (b, k) { b.style.alignSelf = aligns[k]; b.style.minHeight = Math.ceil(bases[k] + most[k]) + 'px'; });
+    }
+    var width = 0;
+    function first() {
+      width = el.offsetWidth; hold();
+      if ('ResizeObserver' in window) new ResizeObserver(function () { if (el.offsetWidth !== width) { width = el.offsetWidth; hold(); } }).observe(el);
+    }
+    if (!('IntersectionObserver' in window)) { first(); return; }
+    var o = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { o.disconnect(); first(); } }, { rootMargin: '0px 0px 300px 0px' });
+    o.observe(el);
+  };
+
+  KV.ratchet = function (el) {
+    if (!el) return;
+    var h = el.offsetHeight, now = parseFloat(el.style.minHeight) || 0;
+    if (h > now) el.style.minHeight = h + 'px';
+  };
+
+  KV.ICON_PLAY = 'M3 1.8 L12 7 L3 12.2 Z';
+  KV.ICON_PAUSE = 'M3 2 H6 V12 H3 Z M8 2 H11 V12 H8 Z';
+
   KV.scope = function (key) {
     var pre = key + '-';
     function roots() { return $$('.bx-' + key); }
@@ -797,13 +850,7 @@ KV.boot('chem', function (document) {
   function inRange(spec, s) {
     return spec.split(',').some(function (r) { var a = r.split('-'); return a.length > 1 ? s >= +a[0] && s <= +a[1] : s === +a[0]; });
   }
-  function kitMove(el) {
-    arr(el.querySelectorAll('[data-kit-move]')).forEach(function (m) {
-      m.removeAttribute('data-playing'); void m.getBoundingClientRect(); m.setAttribute('data-playing', '');
-      m.addEventListener('animationend', function () { m.removeAttribute('data-playing'); }, { once: true });
-    });
-  }
-  var players = [];
+  function kitMove(el) { KV.move(el); }
   function Player(fig) {
     var n = +fig.getAttribute('data-steps');
     var step = +fig.getAttribute('data-step');
@@ -816,7 +863,7 @@ KV.boot('chem', function (document) {
     var status = fig.querySelector('.rp-status');
     var playBtn = fig.querySelector('.rp-play');
     var stepMs = rxs.length ? 3600 : 3800;
-    var timers = [], playing = false, runT = 0;
+    var timers = [], playing = false, wanted = true, seen = false, started = false, runT = 0;
     function clear() { timers.forEach(clearTimeout); timers = []; }
     function apply(s) {
       els.forEach(function (el) {
@@ -835,6 +882,11 @@ KV.boot('chem', function (document) {
       var h = p.querySelector('h4');
       status.innerHTML = '<b>Step ' + s + ' of ' + n + '</b> · ' + esc(h ? h.textContent.replace(/\s*$/, '') : '') + '.';
     }
+    function run(held) {
+      if (!held) return;
+      held.forEach(function (el) { el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); });
+      clearTimeout(runT); runT = setTimeout(function () { held.forEach(function (el) { el.classList.remove('run'); }); }, 2800);
+    }
     function go(s, opts) {
       opts = opts || {};
       step = s;
@@ -845,57 +897,69 @@ KV.boot('chem', function (document) {
         b.tabIndex = on ? 0 : -1;
       });
       panels.forEach(function (p, i) { p.hidden = i + 1 !== s; });
-      chems.forEach(function (c, i) { c.hidden = i + 1 !== s; });
+      chems.forEach(function (c, i) { c.hidden = i + 1 !== s; c.classList.remove('run'); });
+      rxs.forEach(function (r, i) { r.hidden = i + 1 !== s; r.classList.remove('run'); });
+      var moves = opts.user && !reduced();
       if (rxs.length) {
-        rxs.forEach(function (r, i) { r.hidden = i + 1 !== s; r.classList.remove('run'); });
-        var r = rxs[s - 1];
-        arr(r.querySelectorAll('svg[data-fit]')).forEach(fit);
-        if (opts.user && !reduced()) {
-          void r.offsetWidth; r.classList.add('run'); kitMove(r);
-          clearTimeout(runT); runT = setTimeout(function () { r.classList.remove('run'); }, 2800);
-        }
-      } else apply(s);
+        arr(rxs[s - 1].querySelectorAll('svg[data-fit]')).forEach(fit);
+        if (moves) { run([rxs[s - 1], chems[s - 1]].filter(Boolean)); kitMove(rxs[s - 1]); }
+      } else {
+        apply(s);
+        if (moves && chems[s - 1]) run([chems[s - 1]]);
+      }
       say(s);
       if (opts.focus) btns[s - 1].focus();
     }
-    function setPlaying(on) {
-      playing = on;
-      fig.classList.toggle('is-playing', on);
-      playBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      playBtn.querySelector('span').textContent = on ? 'Pause' : 'Play';
-      playBtn.querySelector('path').setAttribute('d', on ? 'M3 2 H6 V12 H3 Z M8 2 H11 V12 H8 Z' : 'M3 1.8 L12 7 L3 12.2 Z');
+    function paint() {
+      fig.classList.toggle('is-playing', playing);
+      playBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      playBtn.querySelector('span').textContent = playing ? 'Pause' : 'Play';
+      playBtn.querySelector('path').setAttribute('d', playing ? KV.ICON_PAUSE : KV.ICON_PLAY);
+      if (status) status.setAttribute('aria-live', playing ? 'off' : 'polite');
     }
+    function restart() {
+      if (scene) { fig.classList.add('no-tr'); apply(0); void fig.getBoundingClientRect(); fig.classList.remove('no-tr'); }
+      go(1, { user: true });
+    }
+    function next() { if (step < n) go(step + 1, { user: true }); else restart(); }
     function schedule() {
       clear();
       if (!playing) return;
-      if (step >= n) { setPlaying(false); return; }
-      timers.push(setTimeout(function () { go(step + 1, { user: true }); schedule(); }, stepMs));
+      timers.push(setTimeout(function () {
+        if (reduced()) { sync(); return; }
+        next(); schedule();
+      }, stepMs));
+    }
+    function sync() {
+      var on = wanted && seen && !reduced();
+      if (on === playing) return;
+      playing = on; paint(); clear();
+      if (!on) return;
+      if (started) go(step, { user: true }); else { started = true; restart(); }
+      schedule();
     }
     playBtn.addEventListener('click', function () {
-      if (playing) { clear(); setPlaying(false); return; }
-      players.forEach(function (p) { if (p !== api) p.stop(); });
-      setPlaying(true);
-      if (step >= n) {
-        if (scene) { fig.classList.add('no-tr'); apply(0); void fig.getBoundingClientRect(); fig.classList.remove('no-tr'); }
-        timers.push(setTimeout(function () { go(1, { user: true }); schedule(); }, 260));
-      } else { go(step, { user: true }); schedule(); }
+      if (playing) { wanted = false; sync(); return; }
+      if (reduced()) { go(step < n ? step + 1 : 1, {}); return; }
+      wanted = true; seen = true; sync();
     });
     btns.forEach(function (b, i) {
-      b.addEventListener('click', function () { clear(); setPlaying(false); go(i + 1, { user: true }); });
+      b.addEventListener('click', function () { go(i + 1, { user: true }); schedule(); });
       b.addEventListener('keydown', function (e) {
         var k = e.key, t = null;
         if (k === 'ArrowRight' || k === 'ArrowDown') t = Math.min(n, i + 2);
         else if (k === 'ArrowLeft' || k === 'ArrowUp') t = Math.max(1, i);
         else if (k === 'Home') t = 1; else if (k === 'End') t = n;
-        if (t != null) { e.preventDefault(); clear(); setPlaying(false); go(t, { focus: true, user: true }); }
+        if (t != null) { e.preventDefault(); go(t, { focus: true, user: true }); schedule(); }
       });
     });
-    var api = { stop: function () { clear(); setPlaying(false); } };
     go(step, {});
-    setPlaying(false);
-    return api;
+    paint();
+    KV.steady(fig, [[fig.querySelector('.rp-text'), panels], [fig.querySelector('.rp-chems'), chems], [rxs.length ? fig.querySelector('.rp-scene') : null, rxs]]);
+    KV.seen(fig, function (on) { seen = on; sync(); });
+    KV.onMotion(sync);
   }
-  arr(document.querySelectorAll('.rp')).forEach(function (f) { players.push(Player(f)); });
+  arr(document.querySelectorAll('.rp')).forEach(function (f) { if (!f.closest('[inert]')) Player(f); });
 
   function bez(x1, y1, x2, y2) {
     function a(p1, p2) { return 1 - 3 * p2 + 3 * p1; } function b(p1, p2) { return 3 * p2 - 6 * p1; } function c(p1) { return 3 * p1; }
@@ -952,7 +1016,8 @@ KV.boot('chem', function (document) {
       return 'Dip ' + S.dips + ' of 4. Each dip deepens the blue.';
     }
     function say(p) { status.textContent = 'Dip ' + S.dips + ' of 4. ' + says[p || S.pose]; }
-    function label() { btn.textContent = S.dips >= 4 ? 'Start again' : 'Dip again'; }
+    var auto = dipPlay(fig, btn, status, TOT, dip, finish);
+    function label() { if (!auto.paint()) btn.textContent = S.dips >= 4 ? 'Start again' : 'Dip again'; }
     function frame(el) {
       var k;
       if (el < 600) { k = inOut(el / 600); S.dy = DIP * k; S.sy = 1 - (1 - SY) * k; S.g = el < 300 ? 0 : inOut((el - 300) / 300); S.f = -0.1; S.pose = 'vat'; }
@@ -969,15 +1034,55 @@ KV.boot('chem', function (document) {
       if (S.pose !== prev) say();
       requestAnimationFrame(step);
     }
-    btn.addEventListener('click', function () {
+    function dip() {
       if (anim) finish();
       S.dips = S.dips >= 4 ? 1 : S.dips + 1;
       if (reduced()) { finish(); return; }
       anim = { t0: performance.now() };
       frame(0); apply(); say('vat');
       requestAnimationFrame(step);
-    });
+    }
+    btn.addEventListener('click', function () { if (!auto.press()) dip(); });
     apply(); label();
+    auto.start(label);
+  }
+  function dipPlay(fig, btn, status, total, dip, settle) {
+    var wanted = true, seen = false, playing = false, timer = 0, painted = null, restLabel = btn.textContent;
+    function allowed() { return !reduced(); }
+    function paint() {
+      if (!allowed()) { btn.removeAttribute('aria-pressed'); btn.textContent = restLabel; if (status) status.setAttribute('aria-live', 'polite'); return false; }
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.textContent = playing ? 'Pause' : 'Play';
+      if (status) status.setAttribute('aria-live', playing ? 'off' : 'polite');
+      return true;
+    }
+    function loop() {
+      if (!playing) return;
+      if (!allowed()) { sync(); return; }
+      dip();
+      timer = setTimeout(loop, total + 1200);
+    }
+    function sync() {
+      var on = wanted && seen && allowed();
+      if (on !== playing) {
+        playing = on; clearTimeout(timer);
+        if (on) loop(); else settle();
+      }
+      if (painted) painted();
+    }
+    return {
+      paint: paint,
+      press: function () {
+        if (!allowed()) return false;
+        wanted = !playing; seen = seen || wanted; sync();
+        return true;
+      },
+      start: function (repaint) {
+        painted = repaint;
+        KV.seen(fig, function (on) { seen = on; sync(); });
+        KV.onMotion(sync);
+      }
+    };
   }
   function initDips(fig) {
     var strip = arr(fig.querySelectorAll('.vs')), dips = arr(fig.querySelectorAll('.dips li'));
@@ -997,6 +1102,7 @@ KV.boot('chem', function (document) {
     function scene(i) {
       swap(box, 'svg', rest, i === last ? null : strip[i]);
       swap(keys, '.kv-kit-key', restKey, i === last ? null : strip[i]);
+      KV.ratchet(keys);
       if (box && !reduced()) kitMove(box);
     }
     function show(i) {
@@ -1009,14 +1115,19 @@ KV.boot('chem', function (document) {
       status.textContent = (total > 1 ? 'Dip ' + S.dip + ' of ' + total + '. ' : '') + said(i);
     }
     function clear() { timers.forEach(clearTimeout); timers = []; }
-    btn.addEventListener('click', function () {
+    function dip() {
       clear();
       if (reduced() && S.at < last) { show(S.at + 1); return; }
       S.dip = S.dip >= total ? 1 : S.dip + 1;
       if (reduced()) { show(0); return; }
       var hold = Math.round(2600 / strip.length);
       strip.forEach(function (li, k) { timers.push(setTimeout(function () { show(k); }, k * hold)); });
-    });
+    }
+    function settle() { if (timers.length) { clear(); show(last); } }
+    var auto = dipPlay(fig, btn, status, 2600, dip, settle);
+    btn.addEventListener('click', function () { if (!auto.press()) dip(); });
+    auto.paint();
+    auto.start(auto.paint);
   }
   arr(document.querySelectorAll('figure.vat')).forEach(function (f) { if (!f.closest('[inert]')) initVat(f); });
 
@@ -1118,10 +1229,40 @@ KV.boot('chem', function (document) {
       e.preventDefault(); cancelAnimationFrame(anim);
       yaw += d[0]; pitch = Math.max(-1.5, Math.min(1.5, pitch + d[1])); draw();
     });
-    var tb = fig.querySelector('.mol-turn');
-    if (tb) tb.addEventListener('click', function () { turn(Math.PI * 2, 2400); });
+    var tb = fig.querySelector('.mol-turn'), stage = fig.querySelector('.mol-stage') || dial;
+    var spin = 0, last = 0, wanted = true, seen = false, hovered = false, focused = false;
+    var SPIN = Math.PI * 2 / 24000;
+    function spinning() { return wanted && seen && !hovered && !focused && !drag && !reduced(); }
+    function paintTurn() {
+      if (!tb) return;
+      if (reduced()) { tb.removeAttribute('aria-pressed'); tb.textContent = 'Turn'; return; }
+      tb.setAttribute('aria-pressed', wanted ? 'true' : 'false');
+      tb.textContent = wanted ? 'Pause' : 'Turn';
+    }
+    function frame(now) {
+      if (!spinning()) { spin = 0; return; }
+      if (last) yaw += Math.min(64, now - last) * SPIN;
+      last = now; draw(); spin = requestAnimationFrame(frame);
+    }
+    function sync() {
+      paintTurn();
+      if (spinning() && !spin) { last = 0; spin = requestAnimationFrame(frame); }
+      else if (!spinning() && spin) { cancelAnimationFrame(spin); spin = 0; }
+    }
+    if (tb) tb.addEventListener('click', function () {
+      if (reduced()) { turn(Math.PI * 2, 2400); return; }
+      wanted = !wanted; sync();
+    });
+    stage.addEventListener('pointerenter', function () { hovered = true; sync(); });
+    stage.addEventListener('pointerleave', function () { hovered = false; sync(); });
+    stage.addEventListener('focusin', function () { focused = true; sync(); });
+    stage.addEventListener('focusout', function (e) { focused = stage.contains(e.relatedTarget); sync(); });
+    dial.addEventListener('pointerup', sync); dial.addEventListener('pointercancel', sync);
     if ('ResizeObserver' in window) new ResizeObserver(function () { req(); }).observe(dial);
     draw();
+    paintTurn();
+    KV.seen(fig, function (on) { seen = on; sync(); });
+    KV.onMotion(sync);
     return { draw: draw };
   }
   arr(document.querySelectorAll('.mol[data-cid]')).forEach(function (f) { if (!f.closest('[inert]')) KV.near(f, function () { Viewer(f); }, 600); });
@@ -1366,32 +1507,137 @@ KV.boot('pt', function (document) {
       '<path d="M0 44.5 H1200 M0 495.5 H1200 M44.5 44 V496 M1155.5 44 V496" stroke="var(--dye-kut)" stroke-opacity=".55" stroke-width="1"/>' +
       '<rect width="1200" height="540" fill="url(#weave)"/>';
   }
+  function stageDriver(lc, o) {
+    var wanted = true, seen = false, playing = false, started = false, pt = 0, btn = o.btn;
+    var playLabel = btn ? btn.querySelector('span').textContent : '';
+    function paint() {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.querySelector('span').textContent = playing ? 'Pause' : playLabel;
+      var icon = btn.querySelector('svg');
+      if (icon) icon.innerHTML = '<path d="' + (playing ? KV.ICON_PAUSE : KV.ICON_PLAY) + '" fill="currentColor"/>';
+      if (o.live) o.live.setAttribute('aria-live', playing ? 'off' : 'polite');
+    }
+    function later(d) { clearTimeout(pt); pt = setTimeout(tick, Math.max(d || 0, 600) + 1600); }
+    function tick() {
+      if (!playing) return;
+      if (reduced()) { sync(); return; }
+      later(o.show(o.at() >= o.count ? 1 : o.at() + 1, true));
+    }
+    function sync() {
+      var on = wanted && seen && !reduced();
+      if (on === playing) return;
+      playing = on; clearTimeout(pt); paint();
+      if (!on) return;
+      later(o.show(started ? o.at() : 1, true));
+      started = true;
+    }
+    if (btn) btn.addEventListener('click', function () {
+      if (playing) { wanted = false; sync(); o.show(o.at(), false); return; }
+      if (reduced()) { o.show(o.at() >= o.count ? 1 : o.at() + 1, false); return; }
+      wanted = true; seen = true; sync();
+    });
+    paint();
+    KV.seen(o.watch || lc, function (on) { seen = on; sync(); });
+    KV.onMotion(sync);
+    return {
+      playing: function () { return playing; },
+      jump: function (n) { var d = o.show(n, true); if (playing) later(d); }
+    };
+  }
+  function stageKeys(btns, jump) {
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { jump(+b.getAttribute('data-go')); });
+      b.addEventListener('keydown', function (e) {
+        var k = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') k = Math.min(btns.length - 1, i + 1);
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') k = Math.max(0, i - 1);
+        else if (e.key === 'Home') k = 0; else if (e.key === 'End') k = btns.length - 1;
+        if (k === null) return;
+        e.preventDefault(); btns[k].focus(); jump(k + 1);
+      });
+    });
+  }
+  function ribbonTo(b) {
+    var ribbon = b && b.parentElement;
+    if (!ribbon || ribbon.scrollWidth <= ribbon.clientWidth) return;
+    var r = ribbon.getBoundingClientRect(), br = b.getBoundingClientRect();
+    if (br.left >= r.left && br.right <= r.right) return;
+    ribbon.scrollBy({ left: br.left - r.left - (r.width - br.width) / 2, behavior: reduced() ? 'auto' : 'smooth' });
+  }
+  function stageBand(big, b) {
+    var tile = b ? b.querySelector('svg') : null, fill = tile ? tile.querySelector('rect') : null;
+    var old = big.querySelector('.lc-band');
+    if (old) old.remove();
+    if (!fill || (fill.getAttribute('fill') || '').indexOf('var(') !== 0) return;
+    var band = document.createElement('span');
+    band.className = 'lc-band';
+    band.setAttribute('aria-hidden', 'true');
+    var drawn = tile.cloneNode(true);
+    drawn.setAttribute('class', 'lc-band-svg motion-dip');
+    drawn.setAttribute('data-kit-move', '0');
+    band.appendChild(drawn);
+    big.appendChild(band);
+  }
+  function genericStages(lc) {
+    var stages = JSON.parse(lc.getAttribute('data-stages'));
+    var btns = all('.rb', lc), items = all('.lc-step', lc), big = lc.querySelector('.lc-big');
+    var kEl = lc.querySelector('[data-k]'), hEl = lc.querySelector('[data-h]'), aEl = lc.querySelector('[data-a]'), live = lc.querySelector('[data-live]');
+    var rest = +lc.getAttribute('data-rest') || stages.length, cur = rest, n = stages.length, drive = null;
+    var restName = hEl ? hEl.innerHTML : '', restScene = big ? big.querySelector('svg') : null;
+    if (!n || !big) return;
+    function scene(s) {
+      var from = items[s - 1] ? items[s - 1].querySelector('svg.kv-kit-scene') : null, shown = big.querySelector(':scope > svg');
+      var drawn = s === rest || !from ? restScene : from.cloneNode(true);
+      if (shown && drawn && shown !== drawn) shown.replaceWith(drawn);
+    }
+    function show(s, animate) {
+      var st = stages[s - 1];
+      cur = s;
+      if (kEl) kEl.textContent = 'Stage ' + s + ' of ' + n;
+      if (hEl) hEl.innerHTML = s === rest ? restName : st.local ? '<i>' + esc(st.name) + '</i><span>' + esc(st.eng) + '</span>' : '<span class="nolocal">' + esc(st.eng) + '</span>';
+      if (aEl) aEl.textContent = st.after;
+      btns.forEach(function (b) { var on = +b.getAttribute('data-go') === s; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
+      items.forEach(function (it) { if (+it.getAttribute('data-stage') === s) it.setAttribute('aria-current', 'step'); else it.removeAttribute('aria-current'); });
+      scene(s);
+      stageBand(big, animate && !reduced() ? btns[s - 1] : null);
+      if (animate) KV.move(big);
+      ribbonTo(btns[s - 1]);
+      KV.ratchet(lc.querySelector('.lc-label'));
+      if (live && !(drive && drive.playing())) live.textContent = 'Stage ' + s + ' of ' + n + ', ' + st.name + ': ' + st.after + '.';
+      return 600;
+    }
+    drive = stageDriver(lc, { btn: lc.querySelector('[data-play]'), live: live, count: n, watch: lc.querySelector('.lc-stagebox'), at: function () { return cur; }, show: show });
+    stageKeys(btns, drive.jump);
+    clothApi[lc.id] = { go: drive.jump };
+  }
   var clothApi = {};
   all('[data-comp="cloth"]').forEach(function (lc) {
     var stages = JSON.parse(lc.getAttribute('data-stages'));
     var svg = lc.querySelector('.lc-bsvg');
-    if (!svg) return;
+    if (!svg) { genericStages(lc); return; }
+    var drive = null;
     var L = { base: svg.querySelector('[data-l="base"]'), top: svg.querySelector('[data-l="top"]'), ox: svg.querySelector('[data-l="ox"]') };
     var dipg = svg.querySelector('.dipg'), oxg = svg.querySelector('.oxg'), title = svg.querySelector('title');
     var btns = all('.rb', lc), items = all('.lc-step', lc);
     var kEl = lc.querySelector('[data-k]'), hEl = lc.querySelector('[data-h]'), aEl = lc.querySelector('[data-a]'), live = lc.querySelector('[data-live]'), playBtn = lc.querySelector('[data-play]');
-    var cur = +lc.getAttribute('data-rest'), timers = [], playing = false, paused = false, pt = null;
+    var cur = +lc.getAttribute('data-rest'), timers = [], n = stages.length;
     function mask(g, y, ms) { g.style.transition = ms ? 'transform ' + ms + 'ms ' + EASE : 'none'; g.style.transform = 'translate(0px, ' + y + 'px)'; }
     function reset() { timers.forEach(clearTimeout); timers = []; L.top.innerHTML = ''; L.ox.innerHTML = ''; mask(dipg, 600, 0); mask(oxg, -20, 0); }
     function label(n) {
       var s = stages[n - 1];
-      kEl.textContent = 'Stage ' + n + ' of 11';
+      kEl.textContent = 'Stage ' + n + ' of ' + stages.length;
       hEl.innerHTML = s.local ? '<i>' + esc(s.name) + '</i><span>' + esc(s.eng) + '</span>' : '<span class="nolocal">' + esc(s.eng) + '</span>';
       aEl.textContent = s.after;
       title.textContent = 'The cloth after stage ' + n + ', ' + s.name + ': ' + s.after;
       btns.forEach(function (b) { var on = +b.getAttribute('data-go') === n; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
       items.forEach(function (it) { if (+it.getAttribute('data-stage') === n) it.setAttribute('aria-current', 'step'); else it.removeAttribute('aria-current'); });
     }
-    function say(n, extra) { var s = stages[n - 1]; live.textContent = (extra || '') + 'Stage ' + n + ' of 11, ' + s.name + ': ' + s.after + '.'; }
-    function setStage(n, animate, extra) {
+    function say(n) { var s = stages[n - 1]; if (!drive || !drive.playing()) live.textContent = 'Stage ' + n + ' of ' + stages.length + ', ' + s.name + ': ' + s.after + '.'; }
+    function setStage(n, animate) {
       reset();
-      var prev = cur; cur = n;
-      label(n); say(n, extra);
+      cur = n;
+      label(n); say(n); KV.ratchet(lc.querySelector('.lc-label'));
       if (!animate || reduced()) { L.base.innerHTML = clothSVG(n); return 0; }
       if (n === 8) {
         L.top.innerHTML = clothSVG(8, true); mask(dipg, 600, 0); void svg.getBoundingClientRect(); mask(dipg, 0, 600);
@@ -1406,38 +1652,9 @@ KV.boot('pt', function (document) {
       return 600;
     }
     L.base.innerHTML = clothSVG(cur); reset(); label(cur);
-    function stopPlay(msg) {
-      playing = false; clearTimeout(pt);
-      playBtn.setAttribute('aria-pressed', 'false'); playBtn.querySelector('span').textContent = 'Play the stages';
-      playBtn.querySelector('svg').innerHTML = '<path d="M3 2 L12 7 L3 12 Z" fill="currentColor"/>';
-      if (msg) live.textContent = msg;
-    }
-    function step() {
-      if (!playing) return;
-      if (cur >= 11) { stopPlay('Played all eleven stages.'); return; }
-      var d = setStage(cur + 1, true, 'Playing. ');
-      pt = setTimeout(step, Math.max(d, 600) + 900);
-    }
-    playBtn.addEventListener('click', function () {
-      if (playing) { stopPlay('Paused at stage ' + cur + '.'); paused = true; return; }
-      var resume = paused; paused = false; playing = true;
-      playBtn.setAttribute('aria-pressed', 'true'); playBtn.querySelector('span').textContent = 'Pause';
-      playBtn.querySelector('svg').innerHTML = '<path d="M3 2 H6 V12 H3 Z M8 2 H11 V12 H8 Z" fill="currentColor"/>';
-      if (!resume || cur >= 11) { setStage(1, false, 'Playing. '); pt = setTimeout(step, 1200); } else step();
-    });
-    btns.forEach(function (b, i) {
-      b.addEventListener('click', function () { if (playing) stopPlay(); paused = false; setStage(+b.getAttribute('data-go'), true); });
-      b.addEventListener('keydown', function (e) {
-        var n = null;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = Math.min(btns.length - 1, i + 1);
-        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = Math.max(0, i - 1);
-        else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = btns.length - 1;
-        if (n === null) return;
-        e.preventDefault(); if (playing) stopPlay();
-        btns[n].focus(); setStage(n + 1, true);
-      });
-    });
-    clothApi[lc.id] = { go: function (n) { if (playing) stopPlay(); setStage(n, true); } };
+    drive = stageDriver(lc, { btn: playBtn, live: live, count: n, watch: lc.querySelector('.lc-stagebox'), at: function () { return cur; }, show: setStage });
+    stageKeys(btns, drive.jump);
+    clothApi[lc.id] = { go: drive.jump };
   });
   all('[data-goto-stage]').forEach(function (b) {
     b.addEventListener('click', function () {

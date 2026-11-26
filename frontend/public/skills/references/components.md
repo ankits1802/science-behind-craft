@@ -99,7 +99,8 @@ written in camelCase (`valueLabel`) or snake_case (`value_label`); the stored sp
   Bars start at zero, so a bar chart shows no negative value; a line joins two points or more.
 - `fact_table`: `head`; `columns`, 1 to 8, each `{label, numeric, column?}`; `rows`, 1 to 100, each
   `{cells, row?}` with one cell per column. Every cell of a numeric column states a number.
-- `timeline`: `head`; `events`, 2 to 40, each `{year, when, title, text}`, in the order of
+- `timeline`: drawn as a dated axis with a point to press for each event and one Play/Pause that
+  steps through them, playing on its own in view (no slider); `head`; `events`, 2 to 40, each `{year, when, title, text}`, in the order of
   their years, from -3000 to 2100 (a negative year is BCE).
 - `map_layer`: `head`; `places`, 1 to 60, each `{longitude, latitude, name, reading, value?,
   cell?}`, inside longitude 68 to 97.5 and latitude 6.5 to 37.5; every place has a value or none
@@ -235,12 +236,15 @@ stated by their units.
 
 ## The figure kit
 
-Cloth, vats, pastes, heat, water, tools, layered sections and shaped pieces are composed from the
-site's kit, never drawn: a `diagram` with a `head`, a `layout` (`steps`, `before_after`, `section` or `sequence`), an `alt`
-unit and `panels`, each panel naming one to three parts with a cited `label`. The parts are
-`cloth`, `block`, `bath`, `paste`, `heat`, `water`, `tool`, `section` and `piece`; each takes a
-depicted material, a named form or a layer list, never a coordinate, size or colour. A panel's
-`motion` (`dip`, `take`, `dry`) plays only on Play and rests complete. What each part takes, draws
+Cloth, vats, pastes, heat, water, tools, layered sections, shaped pieces and the species of a
+reaction are composed from the site's kit, never drawn: a `diagram` with a `head`, a `layout` (`steps`, `before_after`, `section` or `sequence`), an `alt`
+unit and `panels`, each panel naming one to three parts with a cited `label` (up to eight when
+every part is a species of one reaction). The parts are `cloth`, `block`, `bath`, `paste`, `heat`,
+`water`, `tool`, `section`, `piece` and `species` (its `role` a `reactant`, `reagent` or
+`product`, and `breaks` marking the reactant in which a stated bond is broken); each takes a depicted material, a named form or a
+layer list, never a coordinate, size or colour. A panel's `motion` (`dip`, `take`, `dry`, `react`)
+plays on Play in a diagram and rests complete; in a reaction, dip or stage player the kit plays it
+on its own once the player is in view, with one Pause, and never under reduced motion. What each part takes, draws
 and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure kit), and
 `/design/kit` shows every part in every material.
 

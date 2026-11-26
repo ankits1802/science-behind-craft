@@ -156,7 +156,7 @@ drawing, map, timeline, table), the caption is a cited sentence under it. Every 
 | `drawing` | `head`, `svg` (one SVG in the design's roles, cleaned at intake), `alt` (what it shows) | the drawing in the reader's theme: generated documents serve `themes {light, dark, hcLight, hcDark}` (`services/drawing_themes.themed_spec`), each the SVG with every role's value from the tokens and its text in the UI face, and the view shows the variant the page's theme asks for as an image (`img` of a `data:image/svg+xml` URI at its viewBox's size), following `data-theme`, `data-high-contrast` and the system preference as the tokens do; `alt` as its description |
 | `chart` | `head`, `form` (`bars` or `line`), `valueLabel` (what is measured, with its unit), `series` 1 to 3 `{name, points [{label, value, reading, cell?}]}`, `dataset?` (1 to 60, the same count in each), `emphasis` (the first series' point the title names) | one small multiple per series: bars as rows (label, bar at its share of the largest from zero, the cited reading), a line on a plot with three ticks and its first and last label, every value behind "All N values"; `--chart-series`, the emphasised mark `--chart-emph` |
 | `fact_table` | `head`, `columns` 1 to 8 `{label, numeric, column?}`, `rows` 1 to 100 `{cells, row?}` (one per column), `dataset?` | a table with the first cell of a row as its header, numeric columns at the end in tabular figures |
-| `timeline` | `head`, `events` 2 to 40 `{year, when, title, text}` in year order (-3000 to 2100) | a dated axis marking each event, its first and last year (BCE for negative years), then one row per event: the date as written, the title, the cited sentence |
+| `timeline` | `head`, `events` 2 to 40 `{year, when, title, text}` in year order (-3000 to 2100) | a dated axis with a point to press for each event at its year (points kept apart and inside the axis, `lib/timelinePlay.spreadPositions`), its first and last year (BCE for negative years) and one Play/Pause that steps through the events in order, then one row per event: the date as written, the title, the cited sentence; it plays on its own once in view and rests on the last event (decision 0228) |
 | `map_layer` | `head`, `places` 1 to 60 `{longitude 68 to 97.5, latitude 6.5 to 37.5, name, reading, value?, cell?}`, `dataset?`, `valueLabel` (only and always when places have values), and what the map is about: `frame?`, `emphasis?`, `routes?`, `rings?`, `districts?`, `sequence?` (The places map, below) | the site's map base for its frame (The places map, below), a numbered disc per place sized by the square root of its value with its name beside it, the routes, rings and district values it asks for, a sequence that plays, and the numbered list of places with their cited readings |
 
 General figures carry their kind as the kicker ("Chart", "Table") rather than a figure number:
@@ -345,7 +345,9 @@ layer's records from the registry) and `boundaryCaption` (`datasets.BOUNDARY_CAP
 (`lib/componentSpecsTimelineMap.declaredForm`), so Kutch Ajrakh's authored route map keeps its own
 view. The declared view turns the spec into the answers' timeline source
 (`timelineMapSource`, each entry's sentence a unit) and draws it with `TimelineMapFrame`, the
-answers' timeline map: the year slider, the entries through time with `aria-current="step"`, the
+answers' timeline map, its year slider replaced by the track a plain `timeline` draws (`control`,
+`TimelineTrack`: one Play/Pause and a point to press for each year, the places lighting in step;
+decision 0228), the entries through time with `aria-current="step"`, the
 undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracotta and places beyond
 India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
 and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
@@ -411,6 +413,7 @@ copies for the web (`frontend/lib/artKit.ts`), and both sides' tests hold the th
 | `tool` | `tool` (`block`, `brush`, `chisel`, `mallet`, `knife`, `stick`), `held` (default true), `load?` | the tool in a hand, a brush or a stick loaded with its material | textiles, metal, stone, wood, fibre, paper, more crafts |
 | `section` | `layers` 2 to 6, each `{material, label}` top to bottom, a material or `earth` | a layered section, earth in the hatch grammar's strata, each layer named in the key | textiles, metal, clay, leather, more crafts |
 | `piece` | `shape` (`lump`, `vessel`, `slab`, `billet`, `sheet`, `figure`, `culm`), `material?`, `inlay?` `{motif, material}` | a shaped piece in its material (line work and its family's texture when none is stated), an inlay tiled in its material | metal, clay, stone, wood, fibre, paper, more crafts |
+| `species` | `role` (`reactant`, `reagent`, `product`), `material?`, `breaks` (default false, a reactant's only) | a species of one reaction as a bead in its material with the speckle texture and an ink edge (a dashed outline when no colour is recorded), a crack across it where a bond breaks, a small arrow into a reagent that arrives; a scene of species stands the reactants and reagents before an arrow and the products after it (decision 0228) | every family |
 
 Motifs are `star`, `lattice`, `dots` and `lines`. A material is a depicted `--dye-*` or `--dip-*`
 token the design system records (`drawing_roles.MATERIAL_ROLES`); a material no record holds is
@@ -428,7 +431,10 @@ size or colour of its own.
 **Motion** is part of the kit and runs only when the reader presses Play: `dip` (a bath's piece
 going in, the dip motion), `take` (a cloth's colour taking from the bottom, the dip motion) and
 `dry` (a paste's wet colour withdrawing to its dried one, the oxidise motion), each on the one
-part it explains (`MOTION_NEEDS`). The figure rests complete: every end state is the default
+part it explains (`MOTION_NEEDS`), and `react` (decision 0228; a product species and a species it
+is made from): over the vat's 2,600 ms the reactants come in, a reagent comes down into place,
+the arrow, a breaking bond's crack and then the product appear, every species' layer at once
+(`artkit.css`, `kv-rx-*`), each at rest in its end state. The figure rests complete: every end state is the default
 style, the server and first client render move nothing, Play marks each panel in turn
 (`aria-current="step"`, the ink rule) and announces it, and under either reduced-motion switch
 each press shows the next panel at once and announces it (`artKitMotion.kitSchedule`,
@@ -440,7 +446,8 @@ material and the four layouts, at the sheet's widths, in the theme its switches 
 
 **Kit scenes** (decision 0200). A player's step, phase and stage drawing, a toggle's stage box and a
 label card's seal take a kit scene beside the free drawing: `{parts, motion?}`, one to three parts
-of the same vocabulary, each labelled by a cited unit (`component_specs_kit_scene.KitScene`, told
+of the same vocabulary, or up to eight when every part is a species of one reaction
+(`SPECIES_PER_SCENE_MAX`, as a diagram panel), each labelled by a cited unit (`component_specs_kit_scene.KitScene`, told
 from a drawing by `parts`). The five kinds are `KIT_SCENE_KINDS`: `reaction_player` (a step's
 `scene.art`, its where icon then optional), `dip_player` (`scene` and each phase's `drawing`),
 `stage_player` (`drawing`), `choice_toggle` (a `stage` part's `drawing`) and `label_card`
@@ -448,7 +455,9 @@ from a drawing by `parts`). The five kinds are `KIT_SCENE_KINDS`: `reaction_play
 player's scene); a stage player's drawing, a stage box and a seal rest as drawn and name none. The
 web draws it inside the slot's frame with the key beside it (`components/artkit/KitScene.tsx`), and
 the page kit plays the shown scene's moving part (`kitMove`) and never under either reduced-motion
-switch.
+switch. The kit plays every reaction, dip and stage player on its own once it is in view, and a
+3D molecule turns slowly; each has one Pause, and a step pressed plays on from there (decision
+0228, `docs/contracts/component-specs-science.md`).
 
 **The hand-drawn figure** (`research/drawn_art.drawn_art_problems`, in check 8): every free drawing
 a `drawing` or `diagram` delivery carries (a `drawing`'s SVG, a `diagram`'s drawing and chain
@@ -461,7 +470,7 @@ is refused, naming the kit part to use, when it
 - draws fewer than six shapes (`SHAPES_MIN`, outside its definitions) or has no line work in ink
   (no stroke whose paint resolves to `--ink-1` to `--ink-3` or a mix of one);
 - paints a depicted material by hand, textured or not, in a fill or a stroke (the kit's `cloth`,
-  `bath`, `paste`, `section` or `piece` part draws it, or the one its own words name); a figure
+  `bath`, `paste`, `section`, `piece` or `species` part draws it, or the one its own words name); a figure
   points to a composed diagram (`KIT_POINTER`), a scene to a kit scene in its own slot
   (`SCENE_POINTER`);
 - in a `drawing` or `diagram`, says it shows what a kit part draws (its title, description and
@@ -553,6 +562,8 @@ fault.
 | Its places resolved and refused, its layers held and credited, a looked-up item's point kept | `backend/tests/db/test_timeline_map_places_db.py` |
 | The hand-drawn map refused, both ways | `backend/tests/research/test_drawn_maps.py` |
 | The kit's vocabulary, its families and the golden both sides read | `backend/tests/research/test_art_kit.py` and `frontend/e2e/art-kit-unit.spec.ts` |
+| A species part's roles, its bond, a scene of up to eight species and the react motion, the page's still of it | `backend/tests/research/test_kit_species.py`, `backend/tests/exports/test_export_species.py`, `frontend/e2e/players-play-unit.spec.ts` |
+| A timeline's points and Play, no slider, and its play state | `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | The composed diagram's spec, its layouts, motions, materials and cited labels | `backend/tests/research/test_component_specs_kit.py` |
 | The hand-drawn figure refused and allowed, rule by rule, with Kutch Ajrakh's authored figures left alone | `backend/tests/research/test_drawn_art.py` |
 | Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |

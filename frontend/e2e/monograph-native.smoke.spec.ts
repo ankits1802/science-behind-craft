@@ -62,7 +62,7 @@ async function componentShot(pages: Pages, plan: AnchorPlan, run: Run): Promise<
 
 async function freshPage(browser: Browser, run: Run, path: string, prepare: Prepare): Promise<Page> {
   for (let open = 1; ; open += 1) {
-    const context = await browser.newContext(contextOptions(run.width, run.scheme));
+    const context = await browser.newContext({ ...contextOptions(run.width, run.scheme), reducedMotion: "reduce" });
     await restingVat(context);
     const page = await context.newPage();
     await prepare(page);

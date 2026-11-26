@@ -272,4 +272,85 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-reduced-motion="true"]) .kv-rx-meet[data-playing] {
+      animation: kv-rx-meet var(--dur-vat) var(--ease-out) both;
+    }
+
+    :root:not([data-reduced-motion="true"]) .kv-rx-arrive[data-playing] {
+      animation: kv-rx-arrive var(--dur-vat) var(--ease-inout) both;
+    }
+
+    :root:not([data-reduced-motion="true"]) .kv-rx-break[data-playing] {
+      animation: kv-rx-break var(--dur-vat) linear both;
+    }
+
+    :root:not([data-reduced-motion="true"]) .kv-rx-arrow[data-playing] {
+      animation: kv-rx-arrow var(--dur-vat) linear both;
+    }
+
+    :root:not([data-reduced-motion="true"]) .kv-rx-form[data-playing] {
+      animation: kv-rx-form var(--dur-vat) var(--ease-inout) both;
+    }
+  }
+}
+
+@keyframes kv-rx-meet {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes kv-rx-arrive {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  25% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kv-rx-break {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  60%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes kv-rx-arrow {
+  0%,
+  35% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes kv-rx-form {
+  0%,
+  55% {
+    opacity: 0;
+  }
+  80%,
+  100% {
+    opacity: 1;
+  }
 }

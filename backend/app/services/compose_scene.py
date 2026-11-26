@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
 from typing import Any
 
-from .compose_held import CraftHeld, HeldReaction, HeldSpecies, HeldStage
-from .compose_parts import material_named
+from app.research.art_kit import SPECIES_PER_SCENE_MAX
 
-__all__ = ["reaction_scene"]
+from .compose_held import CraftHeld, HeldReaction, HeldSpecies, HeldStage
+from .compose_parts import UnitBook, material_named, species_token
+
+__all__ = ["reaction_scene", "species_drawn", "species_scene"]
 
 SCENE_WIDTH = 640
 SCENE_HEIGHT = 180
@@ -21,8 +24,99 @@ GROUND = "var(--sunk)"
 OUTLINE_FILL = "var(--raised)"
 UNRECORDED_DASH = "6 4"
 
+SPECIES_PART = "species"
+REACTANT, REAGENT, PRODUCT = "reactant", "reagent", "product"
+REACT = "react"
+OXYGEN_WORD = "oxygen"
+OXYGEN_FORMULA = "O2"
+WATER_WORD = "water"
+WATER_FORMULA = "H2O"
+MORDANT_ROLE = "MORDANT"
+AGENT_WORDS = frozenset({"alum", "aluminium", "aluminum", "iron", "ferrous", "ferric", "mordant"})
+BREAKING_KINDS = frozenset({"HYDROLYSIS", "DEHYDRATION", "DEHYDROXYLATION"})
+WORD = re.compile(r"[a-z]+")
+
 Node = dict[str, Any]
 Played = tuple[HeldReaction, HeldStage | None]
+
+
+def species_drawn(reaction: HeldReaction) -> bool:
+    count = len(reaction.reactants) + len(reaction.products)
+    return bool(reaction.reactants) and 0 < count <= SPECIES_PER_SCENE_MAX
+
+
+def species_scene(craft: CraftHeld, reaction: HeldReaction, book: UnitBook) -> Node:
+    claims = craft.stated(reaction.claim_ids)
+    breaking = _breaking(reaction)
+    arriving = _arriving(craft, reaction.reactants) - {breaking}
+    parts = [
+        _species(
+            craft,
+            species,
+            book,
+            role=REAGENT if at in arriving else REACTANT,
+            breaks=at == breaking,
+            claims=claims,
+        )
+        for at, species in enumerate(reaction.reactants)
+    ]
+    parts += [
+        _species(craft, species, book, role=PRODUCT, breaks=False, claims=claims)
+        for species in reaction.products
+    ]
+    return {"parts": parts, **({"motion": REACT} if reaction.products else {})}
+
+
+def _species(
+    craft: CraftHeld, species: HeldSpecies, book: UnitBook, *, role: str, breaks: bool, claims: Sequence[Any]
+) -> Node:
+    part: Node = {"part": SPECIES_PART, "role": role, "label": book.cited(species.name, claims)}
+    token = species_token(craft, species.name)
+    if token is not None:
+        part["material"] = token
+    if breaks:
+        part["breaks"] = True
+    return part
+
+
+def _arriving(craft: CraftHeld, reactants: Sequence[HeldSpecies]) -> set[int]:
+    for found in (_oxygen, lambda species: _agent(craft, species)):
+        chosen = {at for at, species in enumerate(reactants) if found(species)}
+        if chosen and len(chosen) < len(reactants):
+            return chosen
+    return set()
+
+
+def _breaking(reaction: HeldReaction) -> int | None:
+    reactants = reaction.reactants
+    if len(reactants) == 1 and len(reaction.products) > 1:
+        return 0
+    if reaction.kind not in BREAKING_KINDS:
+        return None
+    return next((at for at, species in enumerate(reactants) if not _water(species)), None)
+
+
+def _oxygen(species: HeldSpecies) -> bool:
+    return _formula(species) == OXYGEN_FORMULA or OXYGEN_WORD in _words(species.name)
+
+
+def _water(species: HeldSpecies) -> bool:
+    return _formula(species) == WATER_FORMULA or _words(species.name) == {WATER_WORD}
+
+
+def _agent(craft: CraftHeld, species: HeldSpecies) -> bool:
+    material = material_named(craft, species.name)
+    return (material is not None and material.role == MORDANT_ROLE) or bool(
+        AGENT_WORDS & _words(species.name)
+    )
+
+
+def _formula(species: HeldSpecies) -> str:
+    return "".join((species.formula or "").split())
+
+
+def _words(text: str) -> set[str]:
+    return set(WORD.findall(text.casefold()))
 
 
 def reaction_scene(craft: CraftHeld, played: Sequence[Played], current: int) -> Node:

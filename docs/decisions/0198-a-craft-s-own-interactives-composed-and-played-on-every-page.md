@@ -23,6 +23,7 @@ more in the pages group). The contracts are `docs/contracts/component-specs-scie
 | A conformer kept once per CID, a miss asked again after 90 days | [decision 0152](0152-matter-read-once-and-the-science-seed-kept-true.md) |
 | The composed players' scenes built from the figure kit | [decision 0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | A dip's colours from the substances its stages name, and molecules of twenty elements (amends items 2 and 3) | [decision 0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
+| A composed reaction player draws each step's species from the kit, and every player plays in view (amends this record) | [decision 0228](0228-players-molecules-and-timelines-that-play-and-a-reaction-s-species-drawn-from-the-kit.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

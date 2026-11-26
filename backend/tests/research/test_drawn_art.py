@@ -122,10 +122,10 @@ def test_a_figure_with_no_line_work_in_ink_is_refused_and_a_group_s_ink_counts()
 
 
 def test_a_figure_that_paints_a_depicted_material_by_hand_is_sent_to_the_kit() -> None:
-    assert MATERIAL_PARTS == ("cloth", "bath", "paste", "section", "piece")
+    assert MATERIAL_PARTS == ("cloth", "bath", "paste", "section", "piece", "species")
     body = rects(6) + '<rect x="100" y="100" width="80" height="80" fill="var(--dye-indigo)"/>'
     assert found("drawing", declared(body)) == [
-        "the drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section or piece part "
+        "the drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section, piece or species part "
         f"draws textured, framed and named in a key; {KIT_POINTER}"
     ]
     said = {**TEXTS, "u0003": "A section through the mould"}
@@ -136,7 +136,7 @@ def test_a_figure_that_paints_a_depicted_material_by_hand_is_sent_to_the_kit() -
 
 
 PAINTED_INDIGO = (
-    "the drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section or piece part draws "
+    "the drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section, piece or species part draws "
     f"textured, framed and named in a key; {KIT_POINTER}"
 )
 NO_INK = (
@@ -161,8 +161,8 @@ def test_a_material_painted_through_a_gradient_a_pattern_or_a_used_shape_is_pain
         '<stop offset="1" style="stop-color: var(--dye-indigo)"/></linearGradient></defs>'
     )
     assert found("drawing", declared(gradient + rects(6) + TONE.format("url(#g)"))) == [
-        "the drawing paints --dye-indigo, --dye-leuco by hand, which the kit's cloth, bath, paste, section or "
-        f"piece part draws textured, framed and named in a key; {KIT_POINTER}"
+        "the drawing paints --dye-indigo, --dye-leuco by hand, which the kit's cloth, bath, paste, section, "
+        f"piece or species part draws textured, framed and named in a key; {KIT_POINTER}"
     ]
     pattern = (
         '<defs><pattern id="p" width="4" height="4"><path d="M0 0 L4 4" stroke="var(--dye-indigo)"/>'
@@ -210,7 +210,7 @@ PAINTED_THROUGH = (
 def test_a_variable_is_followed_through_the_drawing_s_own_declarations_where_it_is_declared() -> None:
     painted = (
         "the stage_player's drawing at drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, "
-        f"section or piece part draws textured, framed and named in a key; {AT_THE_KIT}"
+        f"section, piece or species part draws textured, framed and named in a key; {AT_THE_KIT}"
     )
     through = wrapped(
         "--tone: var(--dye-indigo)", wrapped("--dye-indigo: var(--sunk)", tinted("fill: var(--tone)"))
@@ -251,8 +251,8 @@ def chart(fill: str) -> dict[str, Any]:
 
 def test_a_chart_drawn_by_hand_in_a_depicted_material_is_sent_to_a_declared_diagram() -> None:
     assert found("chart", chart("var(--dye-indigo)")) == [
-        "the chart's drawing at drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section "
-        f"or piece part draws textured, framed and named in a key; {KIT_POINTER}"
+        "the chart's drawing at drawing paints --dye-indigo by hand, which the kit's cloth, bath, paste, section, "
+        f"piece or species part draws textured, framed and named in a key; {KIT_POINTER}"
     ]
     assert found("chart", chart("var(--chart-series)")) == []
     problems = spec_problems("chart", chart("var(--dye-indigo)"), {})
@@ -266,7 +266,7 @@ def test_a_map_layer_drawn_in_a_material_is_sent_to_the_kit_and_a_swatch_s_print
     layer = {"setting": "drawing", "drawing": chart("var(--dye-madder)")["drawing"]}
     assert found("map_layer", layer) == [
         "the map_layer's drawing at drawing paints --dye-madder by hand, which the kit's cloth, bath, paste, "
-        f"section or piece part draws textured, framed and named in a key; {KIT_POINTER}"
+        f"section, piece or species part draws textured, framed and named in a key; {KIT_POINTER}"
     ]
     fixture = next(fixture for fixture in kind_fixtures() if fixture["kind"] == "swatch_pair")
     printed = copy.deepcopy(fixture["spec"])
@@ -286,7 +286,7 @@ def test_a_player_s_hand_painted_material_is_sent_to_a_kit_scene_textured_or_not
     soil = {"tag": "ellipse", "attrs": {**SOIL, "fill": "var(--dye-field-soil)", "stroke": "var(--ink-1)"}}
     painted = (
         "the stage_player's drawing at drawing paints --dye-field-soil by hand, which the kit's cloth, bath, "
-        f"paste, section or piece part draws textured, framed and named in a key; {AT_THE_KIT}"
+        f"paste, section, piece or species part draws textured, framed and named in a key; {AT_THE_KIT}"
     )
     assert scene_found("stage_player", stage_player([*inked_rects(6), soil])) == [painted]
     pattern = {

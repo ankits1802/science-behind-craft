@@ -14,7 +14,6 @@ from .compose_held import (
     composed,
     refused,
 )
-from .compose_kit import stage_scene
 from .compose_parts import (
     FIGURE,
     UnitBook,
@@ -22,9 +21,10 @@ from .compose_parts import (
     joined,
     material_named,
     rich_formula,
+    species_token,
     unique_word,
 )
-from .compose_scene import reaction_scene
+from .compose_scene import reaction_scene, species_drawn, species_scene
 
 __all__ = ["REACTION_WORDS", "STEPS_MAX", "reaction_player"]
 
@@ -159,12 +159,15 @@ def _step(craft: CraftHeld, entry: Played, book: UnitBook, names: list[str]) -> 
 def _drawn_steps(
     craft: CraftHeld, played: Sequence[Played], steps: list[dict[str, Any]], book: UnitBook
 ) -> None:
-    stages = [stage for _, stage in played if stage is not None]
-    if len(stages) < len(played) or not all(stage_scene(craft, stage, UnitBook()) for stage in stages):
+    if not all(species_drawn(reaction) for reaction, _ in played):
         return
-    for step, stage in zip(steps, stages, strict=True):
-        where = book.label(stage.name, craft.stated(stage.claim_ids))
-        step["scene"] = {"where": where, "art": stage_scene(craft, stage, book)}
+    for step, (reaction, stage) in zip(steps, played, strict=True):
+        where = (
+            book.label(stage.name, craft.stated(stage.claim_ids))
+            if stage is not None
+            else book.label(step["name"], craft.stated(reaction.claim_ids))
+        )
+        step["scene"] = {"where": where, "art": species_scene(craft, reaction, book)}
 
 
 def _rail_name(reaction: HeldReaction, stage: HeldStage | None, taken: Sequence[str]) -> str:
@@ -207,7 +210,7 @@ def _side(craft: CraftHeld, species: Sequence[HeldSpecies]) -> list[dict[str, An
         items.append(
             {
                 "item": "species",
-                "swatch": material.tokens[0] if material is not None and material.tokens else CLEAR,
+                "swatch": species_token(craft, each.name) or CLEAR,
                 "name": [each.name],
                 "formula": rich_formula(each.formula),
                 "state": [],

@@ -142,7 +142,18 @@ def test_the_shared_kit_figures_read_back_byte_for_byte_and_draw_every_part_of_t
     blocks = fixture.sections[0].blocks
     assert [block.kind for block in blocks] == ["kit_figure"] * 3
     drawn = {part.part for block in blocks for panel in block.diagram.panels for part in panel.parts}
-    assert drawn == {"bath", "cloth", "paste", "block", "tool", "heat", "water", "piece", "section"}
+    assert drawn == {
+        "bath",
+        "cloth",
+        "paste",
+        "block",
+        "tool",
+        "heat",
+        "water",
+        "piece",
+        "section",
+        "species",
+    }
     assert [block.diagram.layout for block in blocks] == ["before_after", "steps", "section"]
     assert {source.id for source in fixture.sources} == {
         sid for block in blocks for sid in block.cited_source_ids()
