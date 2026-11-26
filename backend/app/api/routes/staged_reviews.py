@@ -12,14 +12,11 @@ from app.core.deps import get_current_user
 from app.core.errors import InvalidInput
 from app.core.roles import Capability, can
 from app.models import User
-from app.providers.embedding import router_embedder
-from app.providers.router import Principal
 from app.research.staged_reviews import StagedBatchList, StagedBatchView, StagedConfirmation
-from app.services.page_refresh_run import refresh_named
 from app.services.review_queue_errors import DecisionConflict, NotYourQueue, UnknownItem
 from app.services.staged_review_confirm import confirm_batch, discard_batch
+from app.services.staged_review_finish import finish_confirmed
 from app.services.staged_review_views import batch_view, open_batches
-from app.services.written_vectors import embed_decided
 
 router = APIRouter(prefix="/review-queue/staged", tags=["review"])
 
@@ -48,11 +45,7 @@ async def confirm_staged(
     session: AsyncSession = Depends(get_session),
 ) -> StagedBatchView:
     confirmed = await _changed(session, confirm_batch(session, batch_id, body, user, now=_now()))
-    background = request.app.state.shielded_work
-    note = await refresh_named(session, confirmed.owners, user, background, now=_now())
-    embed = router_embedder(Principal(user_id=user.id, role=user.role))
-    for decided in confirmed.decided:
-        await embed_decided(session, embed, decided)
+    note = await finish_confirmed(session, confirmed, user, request.app.state.shielded_work, now=_now())
     return await batch_view(session, confirmed.batch, now=_now(), refresh=note)
 
 

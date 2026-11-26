@@ -35,12 +35,14 @@ from app.research.page_proposal_review import (
     PageScope,
     PartView,
     ProposalPart,
+    parts_in_scope,
     scope_words,
 )
-from app.research.page_proposals import PageSubject
+from app.research.page_proposals import COMPONENT, PageSubject
 from app.research.review_labels import cut_label
 from app.research.review_queue import COMPONENTS, FACTS, IMAGES, LAYOUTS, STRUCTURE
 from app.research.review_queue_items import Proposer
+from app.research.staged_review_words import PageTouches, proposal_review_link
 
 from .open_work_subjects import subject_by_key
 from .page_layouts import page_path
@@ -55,6 +57,7 @@ __all__ = [
     "page_label",
     "page_proposal",
     "page_review_notes",
+    "page_touches",
     "part_states",
     "proposal_document",
     "reviewable",
@@ -168,6 +171,19 @@ async def page_label(session: AsyncSession, proposal_id: uuid.UUID, scope: PageS
         return None
     name = await _subject_name(session, row.subjectKind, row.subjectSlug)
     return cut_label(LABEL.format(name=name, scope=scope_words(scope)))
+
+
+async def page_touches(
+    session: AsyncSession, proposal_id: uuid.UUID, scope: PageScope, *, site: str
+) -> PageTouches | None:
+    row = await session.get(PageProposal, proposal_id)
+    if row is None:
+        return None
+    inside = parts_in_scope(stored_parts(row), scope)
+    titles = {chapter.key: chapter.title for chapter in map(ChapterChanges.model_validate, row.changes)}
+    chapters = dict.fromkeys(titles.get(part.chapter, part.chapter) for part in inside if part.chapter)
+    components = dict.fromkeys(part.title for part in inside if part.part == COMPONENT)
+    return PageTouches(tuple(chapters), tuple(components), proposal_review_link(site, row.id))
 
 
 async def page_review_notes(

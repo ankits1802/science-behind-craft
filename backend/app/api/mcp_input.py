@@ -68,8 +68,8 @@ def choice(title: str, description: str, options: Sequence[tuple[str, str]]) -> 
     }
 
 
-def yes_no(title: str, description: str) -> dict[str, Any]:
-    return {"type": "boolean", "title": title, "description": description, "default": True}
+def yes_no(title: str, description: str, *, default: bool = True) -> dict[str, Any]:
+    return {"type": "boolean", "title": title, "description": description, "default": default}
 
 
 def input_required(questions: Sequence[Question], state: str) -> dict[str, Any]:

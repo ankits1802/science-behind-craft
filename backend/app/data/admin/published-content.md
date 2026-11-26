@@ -3,8 +3,11 @@
 For an Admin's or Master Admin's AI client signed in with the review scope. Anything already published
 can be removed or edited over MCP, and nothing changes until a person confirms it: `stage_reviews`
 stores the decision in a batch, the Review page shows it with its reason and the client that proposed
-it, and an Admin presses Confirm selected once for the batch. A batch expires three days after it was
-staged, and an Admin stages at most 100 items in an India day. Every removal keeps the record, names
+it, and an Admin presses Confirm selected once for the batch. A client that shows forms asks the
+person whose AI staged the batch at once, in the client, to confirm all, some or none of it, saying
+what each item will do; only that person's answer confirms, never the AI, and what is left waits on
+the Review page. A batch expires three days after it was staged, and an Admin stages at most 100
+items in an India day. Every removal keeps the record, names
 who confirmed it and why in the audit log, and refreshes the pages it touched. A removal or an edit
 also drops every earlier edition of those pages (`/crafts/<slug>/v<N>`), so none still shows what was
 removed or the text an edit replaced; the page's next version is kept again.

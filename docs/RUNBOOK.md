@@ -582,7 +582,11 @@ An Admin or Master Admin with two-step verification on can review from their AI 
    with the client and the person who confirmed it, and the pages it touched are refreshed. A removed
    map layer an engineer already shipped in `tools/maplayers` stays on the maps until the engineer
    takes it out. A batch
-   expires after three days; Discard batch closes one unapplied.
+   expires after three days; Discard batch closes one unapplied. A client that shows forms (protocol
+   2026-07-28, Claude Code among them) asks the Admin at once, in the client, to confirm all, some or
+   none of the batch just staged, with what each item does and, for a page, a link that opens it on
+   Review as it stood and as it will be; the same checks and audits run, and what is not confirmed
+   there waits here (decision 0243).
 4. Who staged what: `StagedReview` and `StagedReviewItem` (who, which client, when, each decision),
    and the audit actions `review.staged_applied`, `review.staged_discarded` and each decision's own.
 

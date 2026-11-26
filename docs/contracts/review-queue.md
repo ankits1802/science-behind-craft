@@ -18,6 +18,7 @@ route per action. Reviewers and the engineers who add a kind or a decision read 
 | Decisions an Admin's AI stages over MCP for a person to confirm | [decision 0170](../decisions/0170-review-over-mcp-staged-and-pages-refreshed-now.md) and Staged over MCP below |
 | Removing and editing published content over MCP | [decision 0194](../decisions/0194-an-admin-removes-and-edits-published-content-over-mcp.md) and Published content below |
 | A page proposed whole, as it stood and as it will be, decided whole, by chapter or by component | [decision 0236](../decisions/0236-a-reviewer-sees-a-page-as-it-stood-and-as-it-will-be-and-decides-it-whole-by-chapter-or-by-component.md) and Page proposals below |
+| A staged batch confirmed by its person in their own MCP client | [decision 0243](../decisions/0243-a-staged-decision-confirmed-in-the-person-s-own-mcp-client.md) and Staged over MCP below |
 
 A reviewer's own contribution is approved at once by its own write path (`knowledge-writes.md`,
 `image-contributions.md`, `open-work.md`) and never enters the queue; the queue also leaves out
@@ -419,8 +420,8 @@ most put a decision in front of a person, who sees it with its reason and the ap
   `page {scope PAGE | CHAPTER | COMPONENT, chapter?, label?}`, which only a `PAGES` decision carries
   and a person cannot change; several chapters or components of one page may be staged in one call.
   It is checked and confirmed as the Page proposals decision above, with the confirming person as
-  reviewer. An MCP client's own confirmation form (elicitation) is not offered yet: a person confirms
-  on the Review page.
+  reviewer. A person confirms on the Review page or, asked at once, in their own MCP client
+  (Confirmed in the person's client, below).
 - **Published content** (decisions 0193 and 0194). Beside the queue's actions every kind takes
   actions on what is already published, listed once in `research/staged_reviews.PUBLISHED_ACTIONS`
   and carried out by that kind's entry in `services/staged_published.PUBLISHED_KINDS`, one module
@@ -521,6 +522,31 @@ most put a decision in front of a person, who sees it with its reason and the ap
   is 409.
 - **`POST /api/review-queue/staged/{batchId}/discard`** closes a batch unapplied
   (`review.staged_discarded`).
+- **Confirmed in the person's client** (decision 0243). When `stage_reviews` stores a batch for a
+  client on protocol 2026-07-28 that declares form elicitation, the call answers `input_required`
+  with one form (`api/mcp_staged_confirm.py`) instead of the staging reply, asked of the signed-in
+  person whose AI staged it, only while that account holds the review scope and
+  `REVIEW_CONTRIBUTIONS`, the batch is still open and was staged through the same OAuth grant
+  (`services/staged_review_summary.own_open_batch`). The form's message says what each staged item
+  will do, in plain words (`research/staged_review_words.decision_words`: the action, its label,
+  what readers then see, the filing, a source's corrected fields, an edit's fields before and after,
+  and the reason given); a page decision adds the chapters and components its scope's parts touch
+  and the private link to the page as it stood and as it will be,
+  `{site}/admin/review?proposal={id}` (`page_proposal_reviews.page_touches`), which opens that
+  proposal on the Review page. It asks `choice` (`all`, `some` or `none`) and one tick per item
+  (`item_1` …, unticked by default). The answer counts only from the client's `inputResponses` on
+  the retry that carries the server's sealed `requestState` (`api/mcp_state.py`, purpose
+  `asked_after`, bound to the tool, the arguments, the account and an hour, naming the batch), from a
+  client that still declares form elicitation (else `-32602`); the tool's arguments never carry it
+  (they forbid any field but `decisions`), and the retry never stages again. `all` confirms every
+  item, `some` the ticked ones; the server then runs `staged_review_confirm.confirm_as_staged`,
+  which hands each chosen item, as staged, to `confirm_batch`, so the checks, savepoints, `SKIPPED`
+  items and audits are the confirm route's, and `staged_review_finish.finish_confirmed` refreshes
+  the pages and embeds as the route does. The reply is the staging reply with `batch` (the
+  `StagedBatchView` after confirming), `published` true when an item applied, and a message naming
+  how many were confirmed, applied and refused. A decline, a cancel, `none`, `some` with nothing
+  ticked or no answer confirms nothing: the batch waits on the Review page, and the reply says so.
+  A client without form elicitation, or on the 2025-11-25 handshake, is answered as before.
 - **On the Review page** the open batches stand above the queue for Admins
   (`components/review/StagedBatches.tsx`, `StagedBatchCard.tsx`, `StagedItemRow.tsx`,
   `StagedSourceFields.tsx`; `app/(protected)/admin/review/useStagedReviews.ts`;
@@ -622,6 +648,7 @@ stay, and list decided items.
 | Only the pages whose copies draw a removed fact or component lose their kept versions, and two removals crossing the same pages wait in turn | `backend/tests/db/test_kept_versions_db.py` |
 | Published content: removal and edit of every kind, their gates, what depends on them, the batch's before and after | `backend/tests/research/test_published_content_rules.py`, `test_published_structure_entries.py`, `backend/tests/db/test_published_content_db.py`, `test_published_components_db.py`, `test_published_process_db.py`, `test_published_structure_db.py`, `backend/tests/mcp/test_review_tools.py` and `frontend/e2e/staged-reviews-unit.spec.ts` |
 | Page proposals: the record, the changes, the pictures, Draw it, a scope's decision, the note in `my_work`, over MCP and staged | `backend/tests/review_queue/test_page_changes.py`, `test_page_proposal_parts.py`, `backend/tests/db/test_page_proposal_reviews_db.py`, `backend/tests/mcp/test_page_review_view.py` and `frontend/e2e/review-pages-unit.spec.ts` |
+| Confirmed in the person's client: the form and its words, all, some or none, declined, old clients, the review scope, an answer only from the client it was asked of, the review link | `backend/tests/mcp/test_staged_review_elicit.py`, `backend/tests/review_queue/test_staged_review_words.py`, `test_page_touches.py`, `backend/tests/db/test_staged_review_elicit_db.py` and `frontend/e2e/review-pages-unit.spec.ts` |
 | The Review page | `frontend/e2e/review-queue-unit.spec.ts`, `review-layers-unit.spec.ts`, `review-layouts-unit.spec.ts`, `review-readings-unit.spec.ts`, `review-structure-unit.spec.ts`, `review-unknown-kinds-unit.spec.ts` and `revalidate-unit.spec.ts` |
 
 Re-read it when a kind joins the queue, a decision is added, or a capability moves between roles.

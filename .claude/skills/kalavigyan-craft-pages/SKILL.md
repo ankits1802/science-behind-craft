@@ -100,7 +100,8 @@ the item by `id` (or a component by `label`) to see the fields an edit changes. 
 `edit` with only the changed fields, plus a reason of at least 12 characters, using `stage_reviews`;
 add `entry` for a structure entry whose fact holds up more than one entry. A refusal quotes the gate
 that refused; fix the change and stage it anew. Nothing changes until a person confirms the batch on
-the Review page. Contributors withdraw their own components through a page's `withdrawals`, never
+the Review page or in the form a client that shows forms puts to them at once; never answer that form
+for them. Contributors withdraw their own components through a page's `withdrawals`, never
 these tools.
 
 ## The bar (Kutch Ajrakh, version 3)

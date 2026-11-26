@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Tabs } from "@/components/ui/Tabs";
 import { TextLink } from "@/components/ui/TextLink";
+import { proposalFromSearch } from "@/lib/pageProposalView";
 import { canAccessRoute } from "@/lib/permissions";
 import type { QueueKind, ReviewFilters } from "@/lib/reviewQueueContract";
 import { EVERY_KIND, filtersFromSearch, filtersSearch, isFiltered, kindTabs, NO_FILTERS } from "@/lib/reviewQueueView";
@@ -38,6 +39,7 @@ function ReviewScreen() {
   const pathname = usePathname();
   const search = useSearchParams().toString();
   const filters = useMemo(() => filtersFromSearch(new URLSearchParams(search)), [search]);
+  const focused = useMemo(() => proposalFromSearch(new URLSearchParams(search)), [search]);
   const queue = useReviewQueue(filters);
   const staged = useStagedReviews(queue.handlers.decidedElsewhere);
   const pages = usePageProposals(queue.handlers.decidedElsewhere);
@@ -54,6 +56,7 @@ function ReviewScreen() {
         <PageProposals
           proposals={pages.proposals}
           opened={pages.opened}
+          focused={focused}
           error={pages.error}
           notice={pages.notice}
           onOpen={pages.handlers.open}

@@ -10,6 +10,7 @@ const LEDE =
 export type PageProposalsProps = {
   proposals: PageProposalView[];
   opened: Record<string, PageProposalView>;
+  focused?: string | null;
   error: string | null;
   notice: string | null;
   onOpen: (id: string) => Promise<string | null>;
@@ -17,7 +18,7 @@ export type PageProposalsProps = {
   onDraw: (id: string, side: DrawnSide) => Promise<string | null>;
 };
 
-export function PageProposals({ proposals, opened, error, notice, onOpen, onDecide, onDraw }: PageProposalsProps) {
+export function PageProposals({ proposals, opened, focused = null, error, notice, onOpen, onDecide, onDraw }: PageProposalsProps) {
   if (!proposals.length && !error) return null;
   return (
     <section aria-labelledby="page-proposals-title" className="grid gap-4 border-t border-ink-1 pt-5" data-testid="page-proposals">
@@ -39,6 +40,7 @@ export function PageProposals({ proposals, opened, error, notice, onOpen, onDeci
             <PageProposalCard
               summary={summary}
               opened={opened[summary.id] ?? null}
+              focused={summary.id === focused}
               handlers={{
                 open: () => onOpen(summary.id),
                 decide: (scope, action, words) => onDecide(summary.id, scope, action, words),

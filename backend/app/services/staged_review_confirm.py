@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Collection
 from dataclasses import dataclass, field
 from datetime import datetime
 
 from pydantic import ValidationError
-from sqlalchemy import select, update
+from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import AppError, InvalidInput
@@ -31,8 +32,16 @@ from . import audit
 from .page_revalidation import merged_owners
 from .review_queue_errors import DecisionConflict, NotYourQueue, UnknownItem, refusal_of
 from .staged_review_apply import apply_decision
+from .staged_review_views import batch_items
 
-__all__ = ["STAGED_APPLIED", "STAGED_DISCARDED", "Confirmed", "confirm_batch", "discard_batch"]
+__all__ = [
+    "STAGED_APPLIED",
+    "STAGED_DISCARDED",
+    "Confirmed",
+    "confirm_as_staged",
+    "confirm_batch",
+    "discard_batch",
+]
 
 STAGED_APPLIED = "review.staged_applied"
 STAGED_DISCARDED = "review.staged_discarded"
@@ -40,6 +49,7 @@ NO_BATCH = "No staged batch has the id {id}."
 NOT_OPEN = "This batch is {status}, so nothing in it can be confirmed or discarded."
 NOT_IN_BATCH = "These items are not in this batch: {ids}."
 NOT_AN_ADMIN = "Confirming staged decisions is for Admins and Master Admins."
+NONE_CHOSEN = "No staged decision in this batch was chosen to confirm."
 OUTCOME_CHARS = 500
 
 
@@ -61,13 +71,7 @@ async def confirm_batch(
     session: AsyncSession, batch_id: uuid.UUID, chosen: StagedConfirmation, confirmer: User, *, now: datetime
 ) -> Confirmed:
     batch = await _open_batch(session, batch_id, confirmer, now=now)
-    items = list(
-        await session.scalars(
-            select(StagedReviewItem)
-            .where(StagedReviewItem.batchId == batch.id)
-            .order_by(StagedReviewItem.position)
-        )
-    )
+    items = await batch_items(session, batch.id)
     picked = {choice.id: choice for choice in chosen.items}
     strangers = sorted(str(key) for key in picked.keys() - {item.id for item in items})
     if strangers:
@@ -82,6 +86,19 @@ async def confirm_batch(
     batch.status, batch.decidedById, batch.decidedAt = CONFIRMED, confirmer.id, now
     await session.flush()
     return confirming.confirmed
+
+
+async def confirm_as_staged(
+    session: AsyncSession, batch_id: uuid.UUID, positions: Collection[int], confirmer: User, *, now: datetime
+) -> Confirmed:
+    chosen = [
+        StagedDecision.model_validate(item.decision).as_staged(item.id)
+        for item in await batch_items(session, batch_id)
+        if item.position in positions
+    ]
+    if not chosen:
+        raise InvalidInput(NONE_CHOSEN)
+    return await confirm_batch(session, batch_id, StagedConfirmation(items=chosen), confirmer, now=now)
 
 
 async def discard_batch(

@@ -24,6 +24,7 @@ the person in a form, and its file out of band). The contracts are `docs/contrac
 | The skill, references and guides it lists as skills | [decision 0230](0230-the-mcp-server-teaches-the-thinking-and-serves-the-context-the-authors-had.md) |
 | Supplied sources and their slot | [decision 0110](0110-contributor-supplied-sources.md) |
 | The run that watches a contributor's AI build a page | [decision 0234](0234-a-contributor-s-ai-builds-a-page-over-mcp-from-one-line-and-the-run-keeps-what-it-made.md) |
+| A fourth question, asked after `stage_reviews` stores a batch: confirm all, some or none | [decision 0243](0243-a-staged-decision-confirmed-in-the-person-s-own-mcp-client.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

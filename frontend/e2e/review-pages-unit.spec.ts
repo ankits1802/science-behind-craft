@@ -3,10 +3,11 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { ChapterChangeList } from "@/components/review/ChapterChangeList";
+import { PageProposalCard, type PageCardHandlers } from "@/components/review/PageProposalCard";
 import { PageShots } from "@/components/review/PageShots";
 import type { ProposalDocuments } from "@/components/review/useProposalDocuments";
 import { pageProposalListShape, pageProposalShape, type PageProposalView } from "@/lib/pageProposalContract";
-import { chapterCounts, chapterScope, componentScope, decides, decisionBody, partsIn, sidesToDraw, waitingLine, withProposal, WHOLE_PAGE } from "@/lib/pageProposalView";
+import { chapterCounts, chapterScope, componentScope, decides, decisionBody, partsIn, proposalAnchor, proposalFromSearch, sidesToDraw, waitingLine, withProposal, WHOLE_PAGE } from "@/lib/pageProposalView";
 import { parseShape } from "@/lib/shape";
 import { parseStagedBatch } from "@/lib/stagedReviewContract";
 
@@ -147,4 +148,26 @@ test("a page decision an Admin's AI staged reads with its scope, for a person to
     ]
   });
   expect(batch.items[0].decision.page).toEqual({ scope: "CHAPTER", chapter: "chem", label: null });
+});
+
+const HANDLERS: PageCardHandlers = { open: async () => null, decide: async () => null, draw: async () => null };
+
+test("a review link names one page proposal, and anything else in its place names none", () => {
+  expect(proposalFromSearch(new URLSearchParams(`proposal=${ID}`))).toBe(ID);
+  expect(proposalFromSearch(new URLSearchParams(`kind=FACTS&proposal=${ID.toUpperCase()}`))).toBe(ID);
+  expect(proposalFromSearch(new URLSearchParams("proposal=../admin"))).toBeNull();
+  expect(proposalFromSearch(new URLSearchParams("kind=FACTS"))).toBeNull();
+});
+
+test("the proposal a review link names opens on arrival as it stands and as it will be, and the others stay shut", () => {
+  const named = renderToStaticMarkup(createElement(PageProposalCard, { summary: view(), opened: null, handlers: HANDLERS, focused: true }));
+  expect(named).toContain(`id="${proposalAnchor(ID)}"`);
+  expect(named).toContain('aria-expanded="true"');
+  expect(named).toContain("Hide the page");
+  expect(named).toContain("Opening the page proposal");
+  const other = renderToStaticMarkup(createElement(PageProposalCard, { summary: view(), opened: null, handlers: HANDLERS }));
+  expect(other).not.toContain('aria-expanded="true"');
+  expect(other).toContain("Show the page as it stands and as it will be");
+  expect(other).not.toContain("Opening the page proposal");
+  expect(other).not.toContain("data-focused");
 });
