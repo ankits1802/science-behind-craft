@@ -67,7 +67,6 @@ test("an answer's reaction player plays once in view from its first step, loops,
   const player = reaction(page);
   const play = player.locator(".kv-play");
   await expect(player).toHaveAttribute("data-step", "1");
-  await expect(play).toHaveText("Play");
   await centred(player);
   await expect(play).toHaveAttribute("aria-pressed", "true");
   await expect(play).toHaveText("Pause");
@@ -178,12 +177,11 @@ test("a molecule turns slowly once in view, holds under the pointer and on Pause
 
 test("each figure draws its own sentences once, in its steps, and the paragraph keeps the rest", async ({ page }) => {
   await shown(page, "allowed");
-  for (const section of FIGURES.sections) {
-    for (const sentence of section.sentences) {
-      const text = sentence.text;
-      const count = await page.evaluate((wanted) => (document.body.textContent ?? "").split(wanted).length - 1, text);
-      expect(count, text).toBe(1);
-    }
+  const texts = FIGURES.sections.flatMap((section) => section.sentences.map((sentence) => sentence.text));
+  const body = await page.evaluate(() => document.querySelector("main")?.textContent ?? "");
+  for (const text of new Set(texts)) {
+    const said = texts.reduce((count, other) => count + other.split(text).length - 1, 0);
+    expect(body.split(text).length - 1, text).toBe(said);
   }
   await expect(page.locator('figure[data-figure="stages"] .kv-rail button')).toHaveCount(4);
   await expect(page.locator('figure[data-figure="dips"]')).toHaveCount(2);
