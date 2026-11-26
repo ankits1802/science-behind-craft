@@ -97,11 +97,23 @@ export function chapterPictures(view: PageProposalView, chapter: string): Pictur
   return pair.before || pair.after ? pair : null;
 }
 
+const NOT_KEPT = "Left out to keep the drawing's pictures within 1 MB.";
+const NOT_DRAWN: Record<DrawnSide, string> = {
+  BEFORE: "Not drawn yet: Draw it draws the page as it stands.",
+  AFTER: "Not drawn yet: Draw it draws the page as it will be."
+};
+const NOTHING_TO_DRAW: Record<DrawnSide, string> = {
+  BEFORE: "A new page: nothing stood here before it.",
+  AFTER: "Proposed without a preview, so only its parts are listed."
+};
+
+function emptyWord(view: PageProposalView, side: DrawnSide): string {
+  if (!view.drawable.includes(side)) return NOTHING_TO_DRAW[side];
+  return view.pictures.some((found) => found.side === side) ? NOT_KEPT : NOT_DRAWN[side];
+}
+
 export function emptyWords(view: PageProposalView): Record<DrawnSide, string> {
-  return {
-    BEFORE: view.drawable.includes("BEFORE") ? "Not drawn yet: Draw it draws the page as it stands." : "A new page: nothing stood here before it.",
-    AFTER: view.drawable.includes("AFTER") ? "Not drawn yet: Draw it draws the page as it will be." : "Proposed without a preview, so only its parts are listed."
-  };
+  return { BEFORE: emptyWord(view, "BEFORE"), AFTER: emptyWord(view, "AFTER") };
 }
 
 export function sidesToDraw(view: PageProposalView): DrawnSide[] {

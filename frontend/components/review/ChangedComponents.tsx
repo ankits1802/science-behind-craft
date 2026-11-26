@@ -31,7 +31,7 @@ export function ChangedComponents({ view, chapter, docs, onDecide }: { view: Pag
     <section className="grid gap-4" data-testid="changed-components">
       <ActionGroup align="start">
         <Button variant="quiet" aria-expanded={shown} busy={docs.busy} busyLabel="Reading" onClick={() => void toggle()}>
-          {shown ? "Hide the components drawn" : `Draw the ${changed.length === 1 ? "component" : `${changed.length} components`} that change`}
+          {shown ? "Hide the components drawn" : `Draw the ${changed.length === 1 ? "component that changes" : `${changed.length} components that change`}`}
         </Button>
       </ActionGroup>
       {docs.problem ? (

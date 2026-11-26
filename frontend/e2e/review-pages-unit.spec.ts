@@ -83,6 +83,7 @@ test("the page draws both versions side by side and marks what changed in each c
   expect(shots).toContain("As it stands");
   expect(shots).toContain("As it will be");
   expect(shots).not.toContain("Draw it");
+  expect(shots).toContain("Left out to keep the drawing&#x27;s pictures within 1 MB.");
   const chapters = renderToStaticMarkup(createElement(ChapterChangeList, { view: view(), docs: DOCS, onDecide: async () => null }));
   expect(chapters).toContain('data-change="CHANGED"');
   expect(chapters).toContain('data-change="ADDED"');
