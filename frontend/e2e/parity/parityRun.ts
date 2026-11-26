@@ -74,7 +74,7 @@ function missing(found: BorrowedCase): CaseResult {
 }
 
 export async function compareCase(authored: Page, rendered: Page, found: BorrowedCase, save: Shots): Promise<CaseResult> {
-  const mine = await generatedRoot(rendered, found.label, found.frame);
+  const mine = await generatedRoot(rendered, found.label, found.frame, found.root);
   if (!mine || !found.root) return missing(found);
   const text = await mine.evaluate((element) => (element as HTMLElement).innerText ?? "");
   const theirs = await authoredRoot(authored, found.root, text);

@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 import { apiOrigin, borrowedCases, craftsWithClaims, pageKind, pagesToVisit, sameText, subjectPage, type SubjectPage } from "./parityBorrowed";
-import { gatedDifferences } from "./parityComponent";
+import { gatedDifferences, generatedRoot } from "./parityComponent";
 import { sharedOnce } from "./parityShared";
 
 const CHAIN = "shared/chemistry/indigo-leaf-to-cloth-chain";
@@ -72,4 +72,18 @@ test("the documents are read once a run, however many workers ask", async () => 
   const found = await Promise.all([sharedOnce(folder, "pages", make), sharedOnce(folder, "pages", make), sharedOnce(folder, "pages", make)]);
   expect(made).toBe(1);
   expect(found).toEqual([{ pages: 1 }, { pages: 1 }, { pages: 1 }]);
+});
+
+test("a borrowed component's root is found by its authored selector inside whatever frame its layout size draws", async ({ page }) => {
+  const label = "shared/chemistry/alizarin-purpurin-3d";
+  await page.setContent(
+    `<div data-component="${label}" data-size="column"><div class="kv-size"><div class="mb"><figure class="mols mol-two"><p class="fig-no">Fig. 3</p></figure></div></div></div>` +
+      `<div data-component="other/plain"><div><section class="plain"><p>Plain</p></section></div></div>`
+  );
+  const sized = await generatedRoot(page, label, 0, '[class="mols mol-two"]');
+  expect(await sized?.evaluate((element) => element.className)).toBe("mols mol-two");
+  const counted = await generatedRoot(page, "other/plain", 0, null);
+  expect(await counted?.evaluate((element) => element.tagName)).toBe("DIV");
+  const unmatched = await generatedRoot(page, "other/plain", 1, ".absent");
+  expect(await unmatched?.evaluate((element) => element.className)).toBe("plain");
 });

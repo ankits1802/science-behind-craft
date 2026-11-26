@@ -39,14 +39,17 @@ export const GRAPHIC_TAGS = ["svg", "img", "canvas", "video", "picture"];
 const NODE_CAP = 500;
 const BOX_TOLERANCE_PX = 2;
 
-export async function generatedRoot(page: Page, label: string, depth: number): Promise<ElementHandle<Element> | null> {
+export async function generatedRoot(page: Page, label: string, depth: number, root: string | null = null): Promise<ElementHandle<Element> | null> {
   const handle = await page.evaluateHandle(
-    ({ wanted, steps }) => {
-      let node: Element | null = [...document.querySelectorAll("[data-component]")].find((found) => found.getAttribute("data-component") === wanted) ?? null;
+    ({ wanted, steps, selector }) => {
+      const home = [...document.querySelectorAll("[data-component]")].find((found) => found.getAttribute("data-component") === wanted) ?? null;
+      const named = home && selector ? home.querySelector(selector) : null;
+      if (named) return named;
+      let node: Element | null = home;
       for (let at = 0; node && at <= steps; at += 1) node = node.firstElementChild;
       return node;
     },
-    { wanted: label, steps: depth }
+    { wanted: label, steps: depth, selector: root }
   );
   return handle.asElement();
 }
