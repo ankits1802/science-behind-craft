@@ -33,4 +33,6 @@ def test_it_writes_the_delivered_columns_and_the_preview_table_as_the_models_hol
     assert step.PREVIEW_SUBJECT_KINDS == PREVIEW_SUBJECT_KINDS
     created = {"id", "userId", "subjectKind", "subjectSlug", "document", "expiresAt", "createdAt"}
     assert migration("0108_render_review").PREVIEWS == step.PREVIEWS
-    assert set(PagePreview.__table__.c.keys()) == created | {"drawing", "drawingProblems"}
+    critiqued = migration("0122_design_feedback")
+    assert critiqued.PREVIEWS == step.PREVIEWS
+    assert set(PagePreview.__table__.c.keys()) == created | {"drawing", "drawingProblems", critiqued.CRITIQUE}

@@ -7,7 +7,7 @@ from itertools import groupby
 from typing import Any
 
 from .design_read import picture_chapter
-from .monograph_page import MonographContent
+from .monograph_page import LayoutEntry, MonographContent
 from .page_render import RENDERED_MIME, RenderedImage
 from .structured import schema_object
 
@@ -50,8 +50,8 @@ AJRAKH_HEAD = (
 )
 PICTURES_HEAD = "# This page's pictures\n\nEach picture follows its chapter key and caption."
 PICTURE_LINE = "Picture {number}, chapter {chapter}: {caption}"
-PROSE_RUN = "{count} paragraphs of prose"
-ONE_PROSE = "a paragraph of prose"
+TEXT_RUN = "{count} blocks of text"
+ONE_TEXT = "a block of text"
 
 
 @dataclass(frozen=True)
@@ -93,21 +93,26 @@ def skill_sections(text: str, first: str, after: str) -> str:
 
 
 def ajrakh_rhythm(content: MonographContent) -> str:
-    kinds = {component.label: component for component in content.components}
     titles = {chapter.key: chapter.title for chapter in content.chapters}
-    lines = []
-    for chapter, entries in groupby(content.layout, key=lambda entry: entry.chapter):
-        runs = []
-        for is_unit, run in groupby(entries, key=lambda entry: entry.kind == "unit"):
-            items = list(run)
-            if is_unit:
-                runs.append(ONE_PROSE if len(items) == 1 else PROSE_RUN.format(count=len(items)))
-                continue
-            runs += [
-                _figure(kinds[item.ref].kind, kinds[item.ref].title) for item in items if item.ref in kinds
-            ]
-        lines.append(f"- {titles.get(chapter, chapter)} ({chapter}): {', then '.join(runs)}.")
-    return "\n".join(lines)
+    chapters: dict[str, list[LayoutEntry]] = {}
+    for entry in content.layout:
+        chapters.setdefault(entry.chapter, []).append(entry)
+    return "\n".join(
+        f"- {titles.get(key, key)} ({key}): {', then '.join(_runs(entries, content))}."
+        for key, entries in chapters.items()
+    )
+
+
+def _runs(entries: Sequence[LayoutEntry], content: MonographContent) -> list[str]:
+    kinds = {component.label: component for component in content.components}
+    runs: list[str] = []
+    for is_unit, run in groupby(entries, key=lambda entry: entry.kind == "unit"):
+        items = list(run)
+        if is_unit:
+            runs.append(ONE_TEXT if len(items) == 1 else TEXT_RUN.format(count=len(items)))
+            continue
+        runs += [_figure(kinds[item.ref].kind, kinds[item.ref].title) for item in items if item.ref in kinds]
+    return runs
 
 
 def design_schema(chapters: Sequence[str]) -> dict[str, Any]:

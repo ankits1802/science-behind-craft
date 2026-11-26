@@ -10,6 +10,9 @@ branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
 TABLE = "DesignReadCache"
+PREVIEWS = "PagePreview"
+LAYOUTS = "LayoutProposal"
+CRITIQUE = "critique"
 KEY_CHARS = 64
 PROVIDER_CHARS = 64
 MODEL_CHARS = 120
@@ -55,6 +58,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_column("LayoutProposal", "critique")
-    op.drop_column("PagePreview", "critique")
+    op.drop_column(LAYOUTS, CRITIQUE)
+    op.drop_column(PREVIEWS, CRITIQUE)
     op.drop_table(TABLE)

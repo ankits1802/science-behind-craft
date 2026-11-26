@@ -141,4 +141,4 @@ def test_kutch_ajrakh_s_rhythm_alternates_its_prose_and_figures_chapter_by_chapt
     keys = list(dict.fromkeys(entry.chapter for entry in content.layout))
     lines = rhythm.splitlines()
     assert len(lines) == len(keys) and all(f"({key}):" in line for key, line in zip(keys, lines, strict=True))
-    assert "paragraph" in rhythm and ", then a " in rhythm
+    assert "blocks of text" in rhythm and ", then a " in rhythm
