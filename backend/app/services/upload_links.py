@@ -89,6 +89,7 @@ class IssuedLink:
     material: SlotMaterial | None = None
     slot: str | None = None
     task_key: str | None = None
+    link_id: uuid.UUID | None = None
 
 
 @dataclass(frozen=True)
@@ -243,6 +244,7 @@ async def _issued(
         material=await _material(session, row),
         slot=row.slot,
         task_key=row.taskKey,
+        link_id=row.id,
     )
 
 

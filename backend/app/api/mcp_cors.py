@@ -42,7 +42,10 @@ OPEN_PATHS = frozenset(
     }
 )
 ALLOWED_METHODS = "GET, POST, OPTIONS"
-ALLOWED_HEADERS = "Authorization, Content-Type, Accept, MCP-Protocol-Version, Mcp-Session-Id, Last-Event-ID"
+ALLOWED_HEADERS = (
+    "Authorization, Content-Type, Accept, MCP-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Session-Id, "
+    "Last-Event-ID"
+)
 EXPOSED_HEADERS = "WWW-Authenticate, Retry-After, MCP-Protocol-Version, Mcp-Session-Id"
 PREFLIGHT_MAX_AGE = "600"
 ANY_ORIGIN = "*"

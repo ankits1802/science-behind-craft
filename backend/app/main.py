@@ -16,6 +16,7 @@ from app.api.auth_session import (
     TWO_FACTOR_REQUIRED_HEADER,
 )
 from app.api.mcp_cors import OpenCorsMiddleware
+from app.api.mcp_tasks import McpTasks
 from app.api.router import api_router
 from app.api.routes.oauth_well_known import router as oauth_well_known_router
 from app.api.routes.password_change import CONFIRM_PROVIDER_HEADER
@@ -114,6 +115,7 @@ def _attach_state(app: FastAPI) -> None:
     app.state.craft_index = CraftIndexStore()
     app.state.live_sources = LiveSourcesStore()
     app.state.shielded_work = ShieldedWork()
+    app.state.mcp_tasks = McpTasks()
     app.state.voice_runtime = VoiceRuntime(search=voice_stored_search)
     app.state.river_topologies = TopologyCache()
     app.state.public_summary = SummaryCache()

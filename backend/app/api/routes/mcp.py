@@ -12,9 +12,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.mcp_auth import SERVER_FAILED, mcp_caller, record_call, record_failed_call, scope_challenge
 from app.api.mcp_cors import is_web_origin
-from app.api.mcp_protocol import INTERNAL_ERROR, PARSE_ERROR, error_reply, supported_version
+from app.api.mcp_headers import VERSION_HEADER, modern_status, refused_up_front
+from app.api.mcp_meta import is_modern
+from app.api.mcp_protocol import (
+    INTERNAL_ERROR,
+    PARSE_ERROR,
+    error_reply,
+    supported_version,
+    unsupported_version,
+)
 from app.api.mcp_stream import EVENT_STREAM, STREAM_HEADERS, progress_token, reply_stream, streams
-from app.api.mcp_tools import ToolContext, answer
+from app.api.mcp_tools import ToolContext, answer, answered_whole
 from app.api.oauth_hosts import MCP_ROUTE
 from app.core.config import get_settings
 from app.core.db import get_session, release_connection, sessionmaker
@@ -25,10 +33,8 @@ router = APIRouter(tags=["mcp"])
 logger = logging.getLogger(__name__)
 
 MCP_PATH = MCP_ROUTE
-VERSION_HEADER = "mcp-protocol-version"
 NOT_ENABLED = "The KalaVigyan MCP server is not switched on."
 FOREIGN_ORIGIN = "This web origin may not call the KalaVigyan MCP server."
-UNKNOWN_VERSION = "This MCP protocol version is not supported; initialize again."
 UNREADABLE = "The body is not JSON."
 STREAMED_CALL = "mcp tools/call"
 
@@ -51,7 +57,9 @@ async def mcp_message(
     sessions: Sessions = Depends(stream_sessions),
 ) -> Response:
     _check_origin(request)
-    _check_version(request)
+    stale = _unknown_version(request)
+    if stale is not None:
+        return stale
     caller = await mcp_caller(request, session)
     try:
         message = json.loads(await request.body())
@@ -62,13 +70,17 @@ async def mcp_message(
     challenge = scope_challenge(message, caller)
     if challenge is not None:
         return challenge
-    if streams(request.headers.get("accept"), message):
+    refused = refused_up_front(request.headers, message)
+    if refused is not None:
+        body = error_reply(message.get("id"), refused.code, refused.message, refused.data)
+        return JSONResponse(body, status_code=status.HTTP_400_BAD_REQUEST)
+    if streams(request.headers.get("accept"), message) and not answered_whole(message):
         await release_connection(session)
         return _streamed(request, message, caller, sessions)
-    reply = await _answered(message, _context(request, caller, session), caller)
+    reply = await _answered(message, _context(request, caller, session, sessions), caller)
     if reply is None:
         return Response(status_code=status.HTTP_202_ACCEPTED)
-    return JSONResponse(reply)
+    return JSONResponse(reply, status_code=modern_status(reply) if is_modern(message) else status.HTTP_200_OK)
 
 
 def _streamed(
@@ -86,7 +98,7 @@ async def _answered_alone(
 ) -> dict[str, Any] | None:
     try:
         async with sessions() as session:
-            return await _answered(message, _context(request, caller, session), caller)
+            return await _answered(message, _context(request, caller, session, sessions), caller)
     except Exception:
         logger.exception("a streamed MCP call failed")
         return error_reply(message.get("id"), INTERNAL_ERROR, SERVER_FAILED)
@@ -104,7 +116,9 @@ async def _answered(message: Any, context: ToolContext, caller: McpCaller | None
     return reply
 
 
-def _context(request: Request, caller: McpCaller | None, session: AsyncSession) -> ToolContext:
+def _context(
+    request: Request, caller: McpCaller | None, session: AsyncSession, sessions: Sessions
+) -> ToolContext:
     return ToolContext(
         session=session,
         index=request.app.state.craft_index,
@@ -113,6 +127,8 @@ def _context(request: Request, caller: McpCaller | None, session: AsyncSession) 
         scopes=frozenset() if caller is None else caller.scopes,
         caller=caller,
         background=request.app.state.shielded_work,
+        sessions=sessions,
+        tasks=request.app.state.mcp_tasks,
     )
 
 
@@ -122,7 +138,10 @@ def _check_origin(request: Request) -> None:
         raise HTTPException(status.HTTP_403_FORBIDDEN, FOREIGN_ORIGIN)
 
 
-def _check_version(request: Request) -> None:
+def _unknown_version(request: Request) -> JSONResponse | None:
     version = request.headers.get(VERSION_HEADER)
-    if version is not None and not supported_version(version):
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, UNKNOWN_VERSION)
+    if version is None or supported_version(version):
+        return None
+    refused = unsupported_version(version)
+    body = error_reply(None, refused.code, refused.message, refused.data)
+    return JSONResponse(body, status_code=status.HTTP_400_BAD_REQUEST)

@@ -41,6 +41,7 @@ from .mcp_picture_arguments import (
     slot_declaration,
     upload_slot,
 )
+from .mcp_picture_files import PICTURE_FILES, received_pictures
 from .mcp_picture_texts import GIVE_DESCRIPTION, LINK_STEP, OPEN_STEP, SHELL_STEP
 from .mcp_protocol import ToolImage
 from .mcp_tool_base import OPEN_WRITES, PICTURES, Tool, ToolContext, signed_in
@@ -52,6 +53,10 @@ __all__ = ["GIVE_PICTURES", "PICTURE_TOOLS", "start_picture"]
 NO_BUCKET = "Pictures cannot be stored right now."
 UNFETCHED = "The picture's link could not be fetched right now; try again or send its bytes."
 NOTHING = "No picture was given and no upload was started: read each one's refusal, fix it and call again."
+RECEIVED = (
+    "{count} photograph(s) arrived as files and passed their screening; each waits for review as its "
+    "declaration says."
+)
 
 
 async def start_picture(
@@ -151,21 +156,24 @@ async def _open(position: int, picture: GivenOrUploaded, user: User) -> OpenGive
 
 async def _give_pictures(context: ToolContext, arguments: GivePictures) -> PicturesReply:
     user = signed_in(context)
+    received = await received_pictures(context, user) if context.uploaded else []
     given = await _given(context, user, arguments) if arguments.placed(GIVEN) else None
     opened = await _opened(context, user, arguments) if arguments.placed(OPEN) else None
-    uploads = [await _uploaded(context, arguments, at, picture) for at, picture in arguments.placed(UPLOADED)]
+    slots = [] if context.uploaded else arguments.placed(UPLOADED)
+    uploads = [await _uploaded(context, arguments, at, picture) for at, picture in slots]
     started = [place.upload for place in uploads if place.upload is not None]
     steps = [given.next_step] if given is not None else []
     steps += _open_steps(opened)
     steps += [started[0].next_step] if started else []
+    steps += [RECEIVED.format(count=len(received))] if received else []
     crafts = [given.craft] if given is not None else []
     crafts += [opened.craft] if opened is not None else []
     crafts += [started[0].craft] if started else []
-    pictures = [*(given.pictures if given else []), *(opened.pictures if opened else [])]
+    pictures = [*received, *(given.pictures if given else []), *(opened.pictures if opened else [])]
     reply = PicturesReply(
         craft=crafts[0] if crafts else None,
         declaration_id=None if given is None else given.declaration_id,
-        given=(given.given if given else 0) + (opened.given if opened else 0),
+        given=len(received) + (given.given if given else 0) + (opened.given if opened else 0),
         refused=(given.refused if given else 0)
         + (opened.refused if opened else 0)
         + len(uploads)
@@ -204,5 +212,6 @@ GIVE_PICTURES = Tool(
     CONTRIBUTE_SCOPE,
     OPEN_WRITES,
     group=PICTURES,
+    files=PICTURE_FILES,
 )
 PICTURE_TOOLS: tuple[Tool, ...] = (GIVE_PICTURES,)

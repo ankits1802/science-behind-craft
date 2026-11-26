@@ -1,18 +1,25 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Sequence
 from datetime import UTC, datetime
+from typing import Any
 
 from pydantic import Field
 
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE
 from app.core.rate_limit import FACT_PROPOSALS
-from app.research.supplied_sources import SuppliedSourceReply
+from app.models import SuppliedSource
+from app.research.supplied_sources import READY, SuppliedSourceReply
 from app.services import page_drafts, supplied_sources
 from app.services.supplied_sources_identity import scholarly_lookup
+from app.services.supplied_sources_pdf import FILE_BYTES_MAX, FILE_TYPES, PDF, TEXT
 from app.services.supplied_sources_views import slot_path, supplied_reply
 
+from .mcp_files import FileArgument, Staged
+from .mcp_input import Question
+from .mcp_questions import contributes, supplied_words, words_question
 from .mcp_studio_arguments import STUDIO_DOES, SupplySourceArguments
 from .mcp_tool_base import SOURCES, WRITES, Tool, ToolContext, contributor
 from .oauth_hosts import endpoints_or_none
@@ -21,6 +28,8 @@ from .proposal_limits import refuse_tool_when_spent
 __all__ = ["STUDIO_SOURCE_TOOLS", "SUPPLY_SOURCE", "SuppliedReply"]
 
 NO_UPLOADS = "Files cannot be uploaded to this server; give the source's passages or its whole text instead."
+NOT_ARRIVED = "The source's file has not arrived or did not pass its checks, so nothing was supplied."
+WHICH_KIND = "{name} is neither a PDF nor a text file; send the source as PDF or plain text"
 DESCRIPTION = (
     "Give KalaVigyan a source your own reach opened and its fetcher cannot: a paywalled paper read through your "
     "subscription or library, a book or PDF you hold, an archive, or a site that refuses automated reading. Give "
@@ -33,6 +42,9 @@ DESCRIPTION = (
     "them first with read_source's quotes), and the review queue shows that the fact rests on text you supplied. "
     "Counts against the hour's fact proposals, like a source proposal."
 )
+FILE_DESCRIPTION = "The source's own PDF or text file, sent without passing through the chat; at most 20 MB"
+SUPPLIED_FILE_TYPES = (FILE_TYPES[PDF], FILE_TYPES[TEXT], ".pdf", ".txt")
+TEXT_SUFFIXES = frozenset({".txt", ".md"})
 
 
 class SuppliedReply(SuppliedSourceReply):
@@ -42,24 +54,84 @@ class SuppliedReply(SuppliedSourceReply):
 
 async def _supply_source(context: ToolContext, arguments: SupplySourceArguments) -> SuppliedReply:
     user = contributor(context, "supply_source", STUDIO_DOES)
-    endpoints = endpoints_or_none()
-    if arguments.upload is not None and endpoints is None:
+    if context.uploaded:
+        return await _arrived(context, arguments)
+    words = {} if arguments.gives_words() else supplied_words(context)
+    if arguments.upload is not None and endpoints_or_none() is None:
         raise InvalidInput(NO_UPLOADS)
-    await refuse_tool_when_spent(FACT_PROPOSALS, user)
-    now = datetime.now(UTC)
-    async with scholarly_lookup(context.session) as lookup:
-        supplied = await supplied_sources.supply_source(
-            context.session, user, arguments.supplied(), lookup=lookup, now=now
-        )
+    supplied = await _recorded(context, arguments, words)
     if arguments.draft_id is not None:
-        await page_drafts.attach_supplied(context.session, user, arguments.draft_id, supplied.row.id, now=now)
-    upload_url = None
-    if supplied.slot_token is not None and endpoints is not None:
-        upload_url = f"{endpoints.issuer.rstrip('/')}{slot_path(supplied.slot_token)}"
-    reply = supplied_reply(supplied.row, upload_url)
+        await page_drafts.attach_supplied(
+            context.session, user, arguments.draft_id, supplied.row.id, now=_now()
+        )
+    return _reply(supplied.row, arguments, _upload_url(supplied.slot_token))
+
+
+async def _recorded(
+    context: ToolContext, arguments: SupplySourceArguments, words: dict[str, Any]
+) -> supplied_sources.Supplied:
+    user = contributor(context, "supply_source", STUDIO_DOES)
+    try:
+        draft = arguments.supplied(**words)
+    except ValueError as refused:
+        raise InvalidInput(str(refused)) from None
+    await refuse_tool_when_spent(FACT_PROPOSALS, user)
+    async with scholarly_lookup(context.session) as lookup:
+        return await supplied_sources.supply_source(context.session, user, draft, lookup=lookup, now=_now())
+
+
+async def _words_asked(context: ToolContext, arguments: SupplySourceArguments) -> Sequence[Question]:
+    if arguments.gives_words() or context.files or not contributes(context):
+        return []
+    return [words_question(arguments.identity.title)]
+
+
+async def _staged(context: ToolContext, arguments: SupplySourceArguments) -> list[Staged]:
+    file = context.files[0]
+    if endpoints_or_none() is None:
+        raise InvalidInput(NO_UPLOADS)
+    supplied = await _recorded(context, arguments, {"upload": _kind(file.mime_type, file.suffix, file.label)})
+    url, expires_at = _upload_url(supplied.slot_token), supplied.row.slotExpiresAt
+    if url is None or expires_at is None:
+        raise InvalidInput(NO_UPLOADS)
+    return [Staged(file_id=file.id, url=url, ref=str(supplied.row.id), expires_at=expires_at)]
+
+
+async def _arrived(context: ToolContext, arguments: SupplySourceArguments) -> SuppliedReply:
+    user = contributor(context, "supply_source", STUDIO_DOES)
+    ref = next(iter(context.uploaded.values()))
+    row = await supplied_sources.own_supplied(context.session, user, uuid.UUID(ref))
+    if row.state != READY:
+        raise InvalidInput(NOT_ARRIVED)
+    if arguments.draft_id is not None:
+        await page_drafts.attach_supplied(context.session, user, arguments.draft_id, row.id, now=_now())
+    return _reply(row, arguments, None)
+
+
+def _kind(mime: str, suffix: str, name: str) -> str:
+    if mime == FILE_TYPES[PDF] or suffix == ".pdf":
+        return PDF
+    if mime == FILE_TYPES[TEXT] or suffix in TEXT_SUFFIXES:
+        return TEXT
+    raise InvalidInput(WHICH_KIND.format(name=name))
+
+
+def _upload_url(slot_token: str | None) -> str | None:
+    endpoints = endpoints_or_none()
+    if slot_token is None or endpoints is None:
+        return None
+    return f"{endpoints.issuer.rstrip('/')}{slot_path(slot_token)}"
+
+
+def _reply(row: SuppliedSource, arguments: SupplySourceArguments, upload_url: str | None) -> SuppliedReply:
+    reply = supplied_reply(row, upload_url)
     return SuppliedReply.model_validate(
         {**reply.model_dump(), "draftId": arguments.draft_id, "notices": arguments.notices()}
     )
+
+
+def _now() -> datetime:
+    return datetime.now(UTC)
 
 
 SUPPLY_SOURCE = Tool(
@@ -72,6 +144,14 @@ SUPPLY_SOURCE = Tool(
     scope=CONTRIBUTE_SCOPE,
     annotations=WRITES,
     group=SOURCES,
+    asks=_words_asked,
+    files=FileArgument(
+        name="file",
+        accept=SUPPLIED_FILE_TYPES,
+        max_size=FILE_BYTES_MAX,
+        stage=_staged,
+        description=FILE_DESCRIPTION,
+    ),
 )
 
 STUDIO_SOURCE_TOOLS = (SUPPLY_SOURCE,)

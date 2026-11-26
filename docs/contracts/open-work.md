@@ -622,6 +622,60 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   reads any other page (`contents/1` lists them), and name the groups, the index and, once for every
   tool, the data note (`api/mcp_protocol.py`, decision 0203).
 
+### Protocol 2026-07-28: skills, tasks, questions and files (decision 0235)
+
+A client that speaks protocol 2026-07-28 (`knowledge-api.md`, The 2026-07-28 protocol) reaches four
+things more; a client on the 2025-11-25 handshake reaches everything above exactly as before.
+
+- **Skills** (`io.modelcontextprotocol/skills`, `api/mcp_skills.py`). `skills/list` gives five
+  skills, each `{uri, frontmatter, resources[{uri, digest sha256:<hex>, size}]}` computed from the
+  bytes served, and `skills/get {uri}` one of them (an unknown uri is `-32602`):
+  `skill://kalavigyan-contributor/SKILL.md` with the eight references as `references/<name>.md`
+  (the playbook and the cookbook among them), `skill://kalavigyan-design/SKILL.md` with
+  `references/SYSTEM.md`, `skill://kalavigyan-interactives/SKILL.md` with its two references,
+  `skill://kalavigyan-datasets/SKILL.md`, and `skill://kalavigyan-ajrakh/SKILL.md` (frontmatter, the
+  bar and the list of chapters) with each worked chapter as `chapters/<chapter>.md`. Each file is
+  read with `resources/read` at its `skill://` uri and is the very text of its resource or guide
+  (one source: the same function reads both). A skill's frontmatter is plain `key: value` lines a
+  YAML reader reads the same, its name its folder and its description at most 1,024 characters; the
+  contributor's and Ajrakh's tell an agent to load them whenever someone asks to build or deepen a
+  page, propose facts or deliver a figure.
+- **Tasks** (`io.modelcontextprotocol/tasks`, `api/mcp_tasks.py`). `ask`, `search_sources`,
+  `read_source`, `edit_draft`, `preview_page`, `propose_page`, `compose_component` and
+  `give_pictures` (`mcp_tools.LONG_RUNNING`) answer a signed-in client that declares the extension
+  with a task: `{resultType task, taskId, status working, statusMessage, createdAt, lastUpdatedAt,
+  ttlMs 5400000, pollIntervalMs 2000}`. `tasks/get {taskId}` gives it again with `result` (the tool's
+  own result, a refusal included as `isError`) once `completed`, or `error -32603` once `failed`;
+  `tasks/update` is acknowledged (no task asks anything once it runs); `tasks/cancel` cancels it.
+  Only the account that started a task reads it; an account holds at most 32 and the process 2,000,
+  past which the call is answered whole. Tasks are held by the API process, so a restart forgets
+  them and `tasks/get` answers `-32602`. A client without the extension gets the answer itself.
+- **Questions to the person** (form elicitation, `api/mcp_questions.py`). Through an
+  `input_required` result and a signed `requestState` (`api/mcp_state.py`), and only to a client that
+  declares form elicitation, three tools ask what is the person's to decide, and nothing else:
+  `edit_draft` with neither `subject` nor `draft_id` asks which craft (by name, matched as
+  `find_crafts` does) and what they want to contribute (a whole page, facts, figures, pictures or a
+  source only they can open), and its reply's first notice names the choice; `propose_page` sending a
+  whole page asks to send it now, showing the page, its parts and the draft's private preview link
+  with its expiry (or that it has none); `supply_source` with no passages, text, upload or file asks
+  for the source's words and where they stand. A decline sends nothing and opens nothing. A client
+  without form elicitation is answered as before (`edit_draft` names the page "one of them",
+  `supply_source` takes its words "one way").
+- **Files** (`io.modelcontextprotocol/files`, the experimental extension, `api/mcp_files.py`), on
+  while `MCP_FILE_UPLOADS_ENABLED` is true. To a client that declares `upload`, `tools/list` adds
+  `supply_source.file` (a PDF or text file, 20 MB), `give_pictures.files` (one photograph for each
+  picture that sets `upload true`, in order, 10 MB each, with the call's `declaration` and
+  `confirmation`) and `propose_dataset.file` (the CSV or GeoJSON whose `sha256` the record gives,
+  5 MB); other clients see today's arguments. The first call checks everything the bytes are not
+  needed for, makes the same single-use slot as `upload` does and answers `upload_required` with the
+  slot's url on the API origin (`PUT`, `Content-Type: application/octet-stream`, `credentials
+  omit`, the slot's expiry) and a `requestState`; the bytes pass the slot's own checks (size, type,
+  the PDF's text, the picture's screens and declaration, the table and its SHA-256); the retry with
+  the same arguments and that `requestState` answers the tool's result once the record is filled, or
+  a refusal saying the file has not arrived. A file from a client that did not declare `upload` is
+  `-32021`; bytes inside the call, an empty file, a repeated id, a type or size the tool does not
+  take are refusals naming the reason.
+
 ### Prompts
 
 `prompts/list` and `prompts/get` (`api/mcp_prompts.py`, steps in `api/mcp_prompt_steps.py`) give
@@ -666,7 +720,8 @@ and reading sources and Never:
 
 ### Resources
 
-`resources/list` and `resources/read` give these; an unknown uri is `-32002`.
+`resources/list` and `resources/read` give these; an unknown uri is `-32002` (`-32602` on protocol
+2026-07-28).
 
 | Resource | Uri | Type |
 |---|---|---|
@@ -1097,6 +1152,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | The prompts and resources | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |
 | Guide pages, the page each tool hands over, the read token and the instructions | `backend/tests/mcp/test_guide_pages.py` and `test_step_guidance.py` |
 | The skills and references served | `backend/tests/mcp/test_contributor_kit.py`, `test_skill_references.py`, `test_reference_limits.py` and `test_interactives_skill.py` |
+| Skills, tasks, questions and files on protocol 2026-07-28 | `backend/tests/mcp/test_mcp_skills.py`, `test_mcp_tasks.py`, `test_mcp_elicitation.py` and `test_mcp_file_uploads.py` |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/open-work.md` byte for byte equal to this file |
 
 The MCP section was last reviewed on 2026-11-21 (round 7: delivered components and pages, the

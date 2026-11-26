@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import uuid
+from collections.abc import Sequence
 from datetime import UTC, datetime
 
 from pydantic import Field, PrivateAttr
@@ -32,7 +33,8 @@ from .mcp_guide_steps import (
     kinds_guide,
     refuse_unread,
 )
-from .mcp_page_arguments import ONE_PAGE, ONE_WORK, EditDraft, PageWork, PreviewWork, bundle_parts
+from .mcp_input import Question
+from .mcp_page_arguments import ONE_WORK, EditDraft, PageWork, PreviewWork, bundle_parts
 from .mcp_page_texts import (
     ADD,
     CONFIRM,
@@ -48,6 +50,7 @@ from .mcp_page_texts import (
     SUBMITTED,
 )
 from .mcp_protocol import ToolImage
+from .mcp_questions import chosen_page, contributes, page_question, send_question, sent
 from .mcp_studio_arguments import STUDIO_DOES
 from .mcp_tool_base import PAGES, READ_ONLY, WRITES, Tool, ToolContext, contributor
 from .page_proposal_deps import page_proposed
@@ -94,22 +97,39 @@ def _held(row: PageDraft) -> str:
 
 async def _opened(
     context: ToolContext, user: User, arguments: EditDraft, now: datetime
-) -> tuple[PageDraft, str]:
+) -> tuple[PageDraft, str, str | None]:
     if arguments.draft_id is not None:
         changing = arguments.changes()
         row = await page_drafts.own_draft(
             context.session, user, arguments.draft_id, now=now, open_only=changing
         )
-        return row, ""
-    if arguments.subject is None:
-        raise InvalidInput(ONE_PAGE)
-    row = await page_drafts.create_draft(context.session, user, arguments.subject, now=now)
-    return row, CREATED.format(kind=row.subjectKind, slug=row.subjectSlug) + " "
+        return row, "", None
+    subject, chosen = (
+        (arguments.subject, None) if arguments.subject is not None else await chosen_page(context)
+    )
+    row = await page_drafts.create_draft(context.session, user, subject, now=now)
+    return row, CREATED.format(kind=row.subjectKind, slug=row.subjectSlug) + " ", chosen
+
+
+async def _page_asked(context: ToolContext, arguments: EditDraft) -> Sequence[Question]:
+    vague = arguments.subject is None and arguments.draft_id is None
+    return [page_question()] if vague and contributes(context) else []
+
+
+async def _send_asked(context: ToolContext, arguments: PageWork) -> Sequence[Question]:
+    if not contributes(context) or context.user is None:
+        return []
+    now = datetime.now(UTC)
+    if arguments.draft_id is None:
+        bundle = arguments.bundle
+        return [] if bundle is None or bundle_parts(bundle) <= 1 else [send_question(bundle, None, now)]
+    row = await page_drafts.own_draft(context.session, context.user, arguments.draft_id, now=now)
+    return [send_question(page_drafts.bundle_of(row), row, now)]
 
 
 async def _edit_draft(context: ToolContext, arguments: EditDraft) -> DraftReply:
     user, now = contributor(context, "edit_draft", STUDIO_DOES), datetime.now(UTC)
-    row, opened = await _opened(context, user, arguments, now)
+    row, opened, chosen = await _opened(context, user, arguments, now)
     kinds = arguments.component_kinds()
     if kinds and not page_drafts.held_parts(row).components:
         refuse_unread(arguments.read_token)
@@ -124,7 +144,7 @@ async def _edit_draft(context: ToolContext, arguments: EditDraft) -> DraftReply:
     return DraftReply.model_validate(
         {
             **view.model_dump(),
-            "notices": arguments.notices(),
+            "notices": [*([chosen] if chosen else []), *arguments.notices()],
             "guide": _draft_guide(row, kinds, opened=bool(opened)),
         }
     )
@@ -181,6 +201,7 @@ def _pictures(images: list[RenderedImage]) -> list[ToolImage]:
 
 async def _propose_page(context: ToolContext, arguments: PageWork) -> PageReply:
     user, now = contributor(context, "propose_page", STUDIO_DOES), datetime.now(UTC)
+    sent(context)
     bundle, row, _ = await _work(context, user, arguments, now)
     whole = row is not None or bundle_parts(bundle) > 1
     if whole:
@@ -241,6 +262,7 @@ PAGE_TOOLS: tuple[Tool, ...] = (
         CONTRIBUTE_SCOPE,
         WRITES,
         group=PAGES,
+        asks=_page_asked,
     ),
     Tool(
         "preview_page",
@@ -266,5 +288,6 @@ PAGE_TOOLS: tuple[Tool, ...] = (
         CONTRIBUTE_SCOPE,
         WRITES,
         group=PAGES,
+        asks=_send_asked,
     ),
 )

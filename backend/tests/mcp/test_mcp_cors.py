@@ -50,7 +50,7 @@ def test_every_endpoint_an_agent_calls_answers_a_preflight_from_any_origin_witho
     assert answered.headers["access-control-allow-origin"] == "*"
     assert "access-control-allow-credentials" not in answered.headers
     allowed = {name.strip().lower() for name in answered.headers["access-control-allow-headers"].split(",")}
-    assert {"authorization", "content-type", "mcp-protocol-version"} <= allowed
+    assert {"authorization", "content-type", "mcp-protocol-version", "mcp-method", "mcp-name"} <= allowed
     assert "POST" in answered.headers["access-control-allow-methods"]
 
 

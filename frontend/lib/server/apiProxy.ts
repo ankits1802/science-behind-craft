@@ -48,6 +48,8 @@ const FORWARDED_REQUEST_HEADERS = new Set([
   "origin",
   "x-forwarded-for",
   "mcp-protocol-version",
+  "mcp-method",
+  "mcp-name",
   "idempotency-key",
   "x-client-app",
   "x-confirm-provider",
