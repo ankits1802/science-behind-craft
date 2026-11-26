@@ -6,9 +6,9 @@ from fastapi.testclient import TestClient
 
 from app.api.routes import craft_media
 from app.core.db import get_session
-from app.core.errors import InvalidInput, NotConfigured
+from app.core.errors import ExternalFailure, InvalidInput, NotConfigured
 from app.main import create_app
-from app.services.clip_stills import clip_still, still_args
+from app.services.clip_stills import clip_still, delivered_stills, still_args
 from app.services.coded_clips import SharedClip
 from app.services.naming import clip_still_key
 from app.services.object_store import PresignedGet
@@ -129,3 +129,42 @@ def test_ffmpeg_is_asked_for_one_jpeg_frame_at_the_time_given() -> None:
     assert args[args.index("-ss") + 1] == "4.000" and args[args.index("-i") + 1] == "/tmp/clip.mp4"
     assert args[args.index("-frames:v") + 1] == "1" and args[args.index("-c:v") + 1] == "mjpeg"
     assert args.index("-ss") < args.index("-i") and args[-1] == "pipe:1"
+
+
+async def test_a_delivered_clip_has_its_still_cut_and_kept_before_any_export_asks() -> None:
+    bucket = Bucket({PAGE_KEY: b"mp4 bytes"})
+    asked: list[float] = []
+
+    async def cut(clip: bytes, at_seconds: float) -> bytes:
+        asked.append(at_seconds)
+        return JPEG
+
+    assert await delivered_stills(bucket, [SHARED], cut=cut) == [CLIP]
+    assert bucket.stored[STILL_KEY] == JPEG and asked == [4.0]
+    assert await delivered_stills(bucket, [SHARED], cut=cut) == [CLIP]
+    assert asked == [4.0]
+
+
+async def test_a_delivery_with_no_bucket_or_no_cut_keeps_nothing_and_is_not_refused() -> None:
+    async def never(clip: bytes, at_seconds: float) -> bytes:
+        raise AssertionError("nothing to cut")
+
+    async def broken(clip: bytes, at_seconds: float) -> bytes:
+        raise NotConfigured("ffmpeg", "ffmpeg is not installed on this machine")
+
+    assert await delivered_stills(None, [SHARED], cut=never) == []
+    copied = Bucket({PAGE_KEY: b"mp4 bytes"})
+    assert await delivered_stills(copied, [SHARED], cut=broken) == []
+    assert copied.puts == []
+    assert await delivered_stills(Bucket(), [], cut=never) == []
+
+
+async def test_a_store_that_fails_at_delivery_leaves_the_still_to_the_first_export() -> None:
+    class Down(Bucket):
+        async def get(self, key: str) -> bytes | None:
+            raise ExternalFailure("the media store did not answer", service="s3")
+
+    async def never(clip: bytes, at_seconds: float) -> bytes:
+        raise AssertionError("nothing to cut")
+
+    assert await delivered_stills(Down(), [SHARED], cut=never) == []

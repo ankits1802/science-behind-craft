@@ -4,7 +4,8 @@ import asyncio
 import logging
 import shutil
 import tempfile
-from collections.abc import Awaitable, Callable
+import uuid
+from collections.abc import Awaitable, Callable, Sequence
 from pathlib import Path
 from typing import Protocol
 
@@ -20,6 +21,7 @@ __all__ = [
     "CutStill",
     "StillObjects",
     "clip_still",
+    "delivered_stills",
     "ffmpeg_still",
     "still_args",
 ]
@@ -100,3 +102,22 @@ async def clip_still(
         return None
     await objects.put(key, still, content_type=STILL_MIME)
     return still
+
+
+async def delivered_stills(
+    objects: StillObjects | None, clips: Sequence[SharedClip], *, cut: CutStill | None = None
+) -> list[uuid.UUID]:
+    if objects is None:
+        if clips:
+            logger.warning("no media bucket, so %d delivered clips wait for their stills", len(clips))
+        return []
+    held = []
+    for clip in clips:
+        try:
+            still = await clip_still(objects, clip, cut=cut or ffmpeg_still)
+        except AppError as failed:
+            logger.warning("the still of clip %s was not cut at delivery: %s", clip.asset_id, failed)
+            continue
+        if still is not None:
+            held.append(clip.asset_id)
+    return held
