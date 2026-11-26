@@ -92,3 +92,50 @@ def test_a_map_still_prints_at_300_dots_an_inch_across_the_word_figure() -> None
     assert picture is not None
     assert max(picture.width, picture.height) == MAP_PRINT_PIXELS
     assert MAP_PRINT_PIXELS / (STILL_WIDTH_MM / MM_PER_INCH) >= PRINT_DPI
+
+
+SURAN = "Suran"
+TAPPAR = "Tappar Reservoir"
+KUTCH = ((70.02, 23.28), (70.1275, 23.2473))
+OSM = "OpenStreetMap"
+
+
+def _kutch_places(emphasis: dict[str, Any] | None) -> dict[str, Any]:
+    spec = fixture_page(("map_layer",)).specs[PLACES]
+    places = [
+        {**place, "longitude": longitude, "latitude": latitude}
+        for place, (longitude, latitude) in zip(spec["places"], KUTCH, strict=False)
+    ]
+    return {**spec, "places": places, **({"emphasis": emphasis} if emphasis else {})}
+
+
+def test_a_town_s_places_map_prints_the_small_waters_its_named_river_and_dam_and_their_credit() -> None:
+    figure = _figure(("map_layer",), PLACES, _kutch_places({"rivers": [SURAN], "dams": [TAPPAR]}))
+    (still,) = figure.stills
+    texts = [text.text for text in still.texts]
+    assert texts[:2] == [SURAN, TAPPAR] and texts[2:] == ["1", "2"]
+    assert _colour("--map-label-halo") in _lines(still)
+    assert _colour("--map-label") in _fills(still)
+    assert any(OSM in credit for credit in figure.credits)
+
+
+def test_a_town_s_map_naming_no_water_prints_the_small_waters_unnamed_and_a_wide_map_none() -> None:
+    plain = _figure(("map_layer",), PLACES, _kutch_places(None))
+    (still,) = plain.stills
+    assert [text.text for text in still.texts] == ["1", "2"]
+    assert _colour("--map-label-halo") not in _lines(still)
+    assert any(OSM in credit for credit in plain.credits)
+    wide = _figure(("map_layer",), PLACES)
+    assert not any(OSM in credit for credit in wide.credits)
+
+
+def test_a_coded_map_prints_the_waters_it_names_and_only_with_its_rivers_layer_the_rest() -> None:
+    spec = _coded_box_spec((69.95, 23.15, 70.25, 23.45), mapped=True)
+    named = {**spec, "map": {**spec["map"], "rivers": [SURAN], "dams": [TAPPAR]}}
+    figure = _figure(("coded_figure",), CODED, named)
+    (still,) = figure.stills
+    assert [text.text for text in still.texts] == [SURAN, TAPPAR]
+    assert any(OSM in credit for credit in figure.credits)
+    bare = _figure(("coded_figure",), CODED, {**spec, "map": {"layers": ["relief"], "districts": [JAIPUR]}})
+    (plain,) = bare.stills
+    assert plain.texts == () and not any(OSM in credit for credit in bare.credits)

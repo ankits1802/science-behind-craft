@@ -6,10 +6,11 @@ from collections.abc import Iterator, Sequence
 
 from app.geo.ground_measure import KM_PER_DEGREE
 from app.geo.map_base import BaseAsk, SiteBox, named_points, projected_frame, site_point
+from app.geo.map_waters import WaterAsk
 from app.research.component_specs_general import GeneralMapLayerSpec
 from app.research.datasets import BOUNDARY_CAPTION
 
-from .export_map_base import PaperPin, base_datasets, base_sources, pinned_still
+from .export_map_base import PaperPin, base_sources, paper_base, pinned_still
 from .page_export_figures import FigureAsk, dataset_credit, prefixed
 from .page_export_model import ExportFigure, ExportText, plain_text
 
@@ -31,14 +32,15 @@ def places_map_figure(ask: FigureAsk, spec: object) -> ExportFigure | None:
         PaperPin(site_point(place.longitude, place.latitude), at) for at, place in enumerate(spec.places, 1)
     ]
     routes = [(route.start + 1, route.end + 1) for route in spec.routes or []]
+    paper = paper_base(box, base, _water_ask(spec))
     lines = [
         ask.unit(spec.head.caption, "note"),
         *_place_lines(ask, spec),
         *_part_lines(ask, spec),
         plain_text(BOUNDARY_CAPTION, "credit"),
     ]
-    credits = [dataset_credit(dataset) for dataset in base_datasets(box, base)]
-    return ask.figure([pinned_still(box, base, pins, routes)], lines, ask.title(spec.head.title), credits)
+    credits = [dataset_credit(dataset) for dataset in paper.datasets]
+    return ask.figure([pinned_still(paper, pins, routes)], lines, ask.title(spec.head.title), credits)
 
 
 def places_box(spec: GeneralMapLayerSpec) -> SiteBox:
@@ -53,6 +55,13 @@ def places_box(spec: GeneralMapLayerSpec) -> SiteBox:
         if ring.place in chosen:
             points += _ring_corners(points[chosen.index(ring.place)], ring.radius_km)
     return _framed(points, PLACES_ZOOM)
+
+
+def _water_ask(spec: GeneralMapLayerSpec) -> WaterAsk:
+    emphasis = spec.emphasis
+    if emphasis is None:
+        return WaterAsk()
+    return WaterAsk(rivers=tuple(emphasis.rivers), dams=tuple(emphasis.dams))
 
 
 def home_districts(subjects: Sequence[str]) -> list[int]:
