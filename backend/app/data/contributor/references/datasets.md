@@ -149,7 +149,11 @@ to your places.
    A places map may also name a small river or a dam: a river as OpenStreetMap names it, or by the
    name the site's river register gives a river it matches to OpenStreetMap's by name and district,
    and a dam by OpenStreetMap's name for it or for the one reservoir it holds back. The site holds
-   them in its own layer (OpenStreetMap, ODbL) and refuses a name it does not hold.
+   them in its own layer (OpenStreetMap, ODbL) and refuses a name it does not hold. The register
+   records two names as one river (the Dravyavati and the Amanisha Nallah in Jaipur) only with a
+   source whose quote names both; an alias without one is refused. Where OpenStreetMap draws less of
+   a river than its course, the map draws what it holds and the river's cited sentence carries the
+   rest.
 4. Send no coordinates the server finds, no datasets and no credits: the server writes the places'
    points, the boundary record and every layer's dataset record into the stored spec, and the page
    prints the boundary note and each credit under the map.

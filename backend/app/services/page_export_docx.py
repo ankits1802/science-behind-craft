@@ -7,7 +7,7 @@ from app.research.vocabulary import ANSWER_LANGUAGE_SPECS, RIGHT_TO_LEFT_SCRIPTS
 
 from .docx_parts import DocColours
 from .docx_writer import JPEG, DocRun, DocxWriter
-from .export_still_png import still_png
+from .export_still_png import STILL_PIXELS, still_png
 from .export_stills import Colour, Still, ink, token_colour
 from .page_export_model import ExportFigure, ExportPicture, ExportText, PageExport, Role
 from .page_export_pdf import page_meta
@@ -107,7 +107,7 @@ def _picture(writer: DocxWriter, shown: ExportPicture) -> None:
 
 
 def _still(writer: DocxWriter, still: Still, description: str) -> None:
-    picture = still_png(still)
+    picture = still_png(still, pixels=still.pixels or STILL_PIXELS)
     if picture is None:
         return
     width = min(STILL_WIDTH_MM, STILL_HEIGHT_MM * picture.width / max(picture.height, 1))

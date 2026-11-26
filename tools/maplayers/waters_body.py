@@ -24,7 +24,8 @@ from .waters import (
     tile_bounds,
     tile_id,
 )
-from .waters_register import Register, accepted_names
+from .waters_names import WATERS_SCHEMA_VERSION, held_names, register_names
+from .waters_register import Register
 
 __all__ = [
     "TILES_MODULE",
@@ -38,7 +39,6 @@ __all__ = [
     "waters_build",
 ]
 
-WATERS_SCHEMA_VERSION = 1
 WATERS_SOURCE = "OpenStreetMap rivers, streams and dams, India extract by Geofabrik"
 WATERS_SITE = "https://www.openstreetmap.org/copyright"
 WATERS_LICENCE = "ODbL 1.0"
@@ -70,14 +70,8 @@ def district_finder(polygons: list[tuple[BaseGeometry, int, int]]) -> Districts:
 
 def _river_row(river: River, register: Register, districts: Districts) -> dict[str, Any]:
     crossed = districts(MultiLineString(list(river.lines)))
-    agreed = register.agreeing(river.name, crossed)
     row: dict[str, Any] = {"id": river.id, "name": river.name, "kind": river.kind, "districts": crossed}
-    also = [name for name in accepted_names(river.name, agreed) if name != river.name]
-    if also:
-        row["also"] = also
-    if agreed:
-        row["agrees"] = [{"name": found.name, "source": found.source} for found in agreed]
-    return row
+    return row | register_names(river.name, crossed, register)
 
 
 def _dam_row(dam: Dam, districts: Districts) -> dict[str, Any]:
@@ -119,22 +113,6 @@ def _tiles(features: WaterFeatures, register: Register, districts: Districts) ->
     return dict(sorted(tiles.items()))
 
 
-def _names(tiles: Mapping[str, Mapping[str, Any]], dataset: Mapping[str, Any]) -> dict[str, Any]:
-    rivers = {
-        name
-        for tile in tiles.values()
-        for row in tile["rivers"]
-        for name in (row["name"], *row.get("also", []))
-    }
-    dams = {row["name"] for tile in tiles.values() for row in tile["dams"]}
-    return {
-        "schemaVersion": WATERS_SCHEMA_VERSION,
-        "datasets": [dict(dataset)],
-        "rivers": sorted(rivers),
-        "dams": sorted(dams),
-    }
-
-
 def waters_build(
     features: WaterFeatures, register: Register, districts: Districts, dataset: Mapping[str, Any]
 ) -> WatersBuild:
@@ -153,7 +131,7 @@ def waters_build(
             for key, tile in tiles.items()
         ],
     }
-    return WatersBuild(index=index, tiles=tiles, names=_names(tiles, dataset))
+    return WatersBuild(index=index, tiles=tiles, names=held_names(tiles, dataset))
 
 
 def tiles_module(tiles: Iterable[str]) -> str:

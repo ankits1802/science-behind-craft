@@ -249,7 +249,7 @@ source line gives the boundary note and each layer's dataset credit.
 | Part | What it holds |
 |---|---|
 | `frame` | one of `{places: [i, ...]}` (framed to those places and their rings), `{district: <LGD code>}` or `{state: <LGD code>}` (framed to the shape the site holds); without one, the map is framed to all its places and rings |
-| `emphasis` | `{layers?, rivers?, dams?}`: `layers` names any of `relief`, `rivers`, `water` to draw stronger (the hillshade, the river lines, the lakes' edge); `rivers` names up to 6 rivers whose labels are always shown, each as Natural Earth names it (`rivers.json` labels), as OpenStreetMap names it (`waters`), or by a name of the site's river register that agrees with an OpenStreetMap river by name and district (a river place of a curated dossier or a river names dataset: the Suran by Kutch Ajrakh's "Dhamadka River (Suran)"), drawn stronger and named in the frame; `dams` names up to 6 dams by OpenStreetMap's name for the dam or for the one reservoir it holds back, each marked where its record puts it and named |
+| `emphasis` | `{layers?, rivers?, dams?}`: `layers` names any of `relief`, `rivers`, `water` to draw stronger (the hillshade, the river lines, the lakes' edge); `rivers` names up to 6 rivers whose labels are always shown, each as Natural Earth names it (`rivers.json` labels), as OpenStreetMap names it (`waters`), or by a name of the site's river register that agrees with an OpenStreetMap river by name and district (a river place of a curated dossier, a river names dataset, or a river alias the register records only with a source whose quote names the rivers as one: the Suran by Kutch Ajrakh's "Dhamadka River (Suran)", the Dravyavati by the alias `RIVER_ALIASES:dravyavati`, decision 0244), drawn stronger and named in the frame; `dams` names up to 6 dams by OpenStreetMap's name for the dam or for the one reservoir it holds back, each marked where its record puts it and named |
 | `routes` | `routes`, 1 to 20 `{start, end, text}`: an arrow for a move from one place to another; `text` is a unit that states the move from the start's name to the end's name and cites a fact |
 | `rings` | `rings`, 1 to 6 `{place, radiusKm, text}`: a ring of a stated radius (above 0 and up to 500 km) around a place, labelled with its kilometres; `text` states that number and cites a fact |
 | `districts` | `{valueLabel, values}`: 2 to 60 districts `{district, value, reading}`, each district by its LGD code and filled by the class of its value (up to five classes of near-equal counts, the density ramp), with the value printed at its centre; `reading` states the value and cites a fact |
@@ -299,7 +299,14 @@ boundary note read from `/map/layers` (`boundary`), and in a zoomed frame its sm
 (`waters`: their lines, each emphasised river with the point its label sits at, each named dam's
 point) with OpenStreetMap's credit. The view draws it at first paint in the map tokens; the
 hillshade and the river and range labels arrive with their files. A map drawn without the pass
-loads the waters tiles of its frame itself. Sanganeri's map's still is under 40 KB.
+loads the waters tiles of its frame itself. Sanganeri's map's still is under 40 KB. On paper
+(`services/page_export_maps.places_map_figure`, decision 0244) the PDF and Word export draw a
+declared map on the same base, cut by the API from the files it holds (`app/geo/map_base`,
+`services/export_map_base`): the Survey of India outline and state lines the web map draws (mirrored
+into `app/data/layers` by `tools/maplayers_mirror.py`), the relief bands, Natural Earth's rivers and
+lakes, district lines in a zoomed frame and the home districts outlined, with the numbered places,
+the routes, each part's sentence, the layers' credits and the boundary note, at 1800 pixels across
+in Word (300 dots an inch over its 150 mm). OpenStreetMap's small waters stay on the web map.
 
 **Every sentence on the page.** Beside the map, the numbered places with their readings, each
 route's and ring's sentence under its label ("Move", "Within 20 km") and the district readings by
@@ -358,12 +365,16 @@ answers' timeline map, which draws the track a plain `timeline` draws (`Timeline
 Play/Pause and a point to press for each year, the places lighting in step, no slider; decisions 0228
 and 0238), the entries through time with `aria-current="step"`, the
 undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracotta and places beyond
-India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
-and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
-physical layers' own drawings and keys, a district layer's fills and legend) with the home
-districts in the place hatch, a scale bar and the India locator with the frame marked (decision
-0232, `components/map/MapScale.tsx` in `TimelinePins` whenever a frame is given), and the source
-line gives the boundary note and every layer's dataset credit at first paint.
+India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`), the
+layers come from `components/map/TimelineMapLayers.tsx` (the physical layers' own drawings and keys,
+a district layer's fills and legend) with the home districts in the place hatch, a scale bar and
+the India locator with the frame marked (decision 0232), and the source line gives the boundary
+note and every layer's dataset credit at first paint. Every text and pin of a timeline map (the
+numbered pins, the scale's figure, the river, range and peak labels) is drawn in the places map's
+layer of screen pixels at the caption token (`MapLabelLayer`, `ScreenPins` through `IndiaMap`'s
+`screenLayer`, decision 0244), so it is the caption size before and after hydration and with no
+script, and a layer label whose point lies outside the frame is not drawn; the map's own `svg`
+holds only geometry.
 
 **The still** (decision 0220). When the site's web server reads a page
 (`lib/server/mapStills.withMapStills`, run by `lib/monographRenderServer.documentRead`, the preview
@@ -581,6 +592,9 @@ fault.
 | The places map's parts, their checks both ways and the old shape stored unchanged | `backend/tests/research/test_map_layer_parts.py` |
 | The places map drawn on the base, the outline always present, its still, a route, ring and sequence from the spec alone, and the map at 390 and 1440 px | `frontend/e2e/places-map-unit.spec.ts` |
 | The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
+| Every text and pin of a timeline map at the caption size at 390, 1440 and 1920 px with JavaScript off and on, and no layer label outside its frame | `frontend/e2e/timeline-map-labels-unit.spec.ts` |
+| A river named through the register's cited alias drawn and labelled, and an alias without a source refused | `backend/tests/geo/test_river_aliases.py`, `tools/tests/test_maplayers_waters_names.py`, `tools/tests/test_maplayers_waters_files.py`, `frontend/e2e/map-waters-unit.spec.ts` |
+| A places map and a coded map on paper on the site's base, with their credits and boundary note, at print resolution | `backend/tests/exports/test_map_exports.py`, `backend/tests/geo/test_map_base.py` |
 | A coded figure refused and accepted, rule by rule, its frame, words, map base and still | `backend/tests/research/test_coded_figures.py`, `frontend/e2e/coded-figure-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |

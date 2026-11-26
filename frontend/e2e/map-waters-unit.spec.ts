@@ -7,10 +7,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import type { NeighbourFile } from "@/components/map/basemap";
+import type { BordersFile } from "@/components/map/borderGeometry";
+import { codedStillBase } from "@/components/map/codedStillCut";
 import { mapLayerFrame } from "@/components/map/mapLayerFrame";
 import { stillLayers, type HeldWaters, type StillFiles } from "@/components/map/mapStillCut";
 import { frameShare } from "@/components/map/placesMapLabels";
-import { project } from "@/components/map/projection";
+import { project, VIEW_BOX } from "@/components/map/projection";
 import type { ShapesFile } from "@/components/map/shapeGeometry";
 import type { MapStill } from "@/components/map/timelineMapStill";
 import { heldTile, tilesInFrame } from "@/components/map/waterLayer";
@@ -38,7 +40,8 @@ const FILES: StillFiles = {
   rivers: read<RiversFile>(FRONTEND, "public", "layers", "rivers.json"),
   minerals: read<MineralsFile>(FRONTEND, "public", "layers", "minerals.json"),
   shapes: read<ShapesFile>(FRONTEND, "public", "boundaries", "district-shapes.json"),
-  neighbours: read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json")
+  neighbours: read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json"),
+  stateBorders: read<BordersFile>(FRONTEND, "public", "boundaries", "state-borders.json")
 };
 const LAYERS = stillLayers(FILES);
 const INDEX = read<WatersIndex>(FRONTEND, "public", "layers", "waters.json");
@@ -99,12 +102,45 @@ test("a small river named on a places map draws strong and labelled, and an unkn
   expect(html).toContain('data-testid="still-waters"');
   expect(html).toContain('data-name="Suran"');
   expect(html).toContain(">Suran</text>");
-  const unknown = stilled({ ...KUTCH, emphasis: { layers: [], rivers: ["Dravyavati"] } }, KACHCHH);
+  const unknown = stilled({ ...KUTCH, emphasis: { layers: [], rivers: ["Dhamadka Creek"] } }, KACHCHH);
   expect(unknown.still.waters?.strong).toEqual([]);
-  expect(drawn(unknown.spec, KACHCHH)).not.toContain(">Dravyavati</text>");
+  expect(drawn(unknown.spec, KACHCHH)).not.toContain(">Dhamadka Creek</text>");
   const sanganeri = stilled(SANGANERI, JAIPUR);
   expect(sanganeri.still.waters?.strong.map((river) => river.name)).toEqual(["Amanisha River"]);
   expect(JSON.stringify(sanganeri.still).length).toBeLessThan(STILL_CHARS_MOST);
+});
+
+test("a map names the Dravyavati through the register's cited alias and draws the way OpenStreetMap names Amanisha River", () => {
+  const amanisha = tile("e074n26").rivers.find((river) => river.name === "Amanisha River");
+  expect(amanisha?.agrees).toContainEqual({ name: "Dravyavati River", source: "RIVER_ALIASES:dravyavati" });
+  const dravyavati = stilled({ ...SANGANERI, emphasis: { layers: [], rivers: ["Dravyavati"] } }, JAIPUR);
+  const byDataset = stilled(SANGANERI, JAIPUR);
+  expect(dravyavati.still.waters?.strong.map((river) => river.name)).toEqual(["Dravyavati"]);
+  expect(dravyavati.still.waters?.strong[0].d).toBe(byDataset.still.waters?.strong[0].d);
+  const html = drawn(dravyavati.spec, JAIPUR);
+  expect(html).toContain('data-name="Dravyavati"');
+  expect(html).toContain(">Dravyavati</text>");
+  const unrecorded = stilled({ ...SANGANERI, emphasis: { layers: [], rivers: ["Saraswati of Sanganer"] } }, JAIPUR);
+  expect(unrecorded.still.waters?.strong).toEqual([]);
+});
+
+test("a coded map's still draws the state lines and, in a zoomed frame, the district lines, as a places map does", () => {
+  const corner = project(76.8, 28.95);
+  const far = project(77.6, 28.35);
+  const delhi = { x: corner.x, y: corner.y, width: far.x - corner.x, height: far.y - corner.y };
+  const zoomed = codedStillBase(LAYERS, delhi, { layers: [], districts: [] }, HELD);
+  expect(zoomed.states).toBeTruthy();
+  expect(zoomed.districts).toBeTruthy();
+  const india = { x: 0, y: 0, width: VIEW_BOX.width, height: VIEW_BOX.height };
+  const whole = codedStillBase(LAYERS, india, { layers: ["rivers"], districts: [] }, HELD);
+  expect(whole.states).toBeTruthy();
+  expect(whole.districts).toBeNull();
+  expect(codedStillBase(LAYERS, india, { layers: ["districts"], districts: [] }, HELD).districts).toBeTruthy();
+  const figure = { still: '<svg viewBox="0 0 10 10" data-map=""></svg>', themes: { light: "<svg/>", dark: "<svg/>", hcLight: "<svg/>", hcDark: "<svg/>" }, base: { still: zoomed, rivers: [], dams: [] } };
+  const html = renderToStaticMarkup(createElement(CodedStill, { figure, words: {} }));
+  expect(html).toContain('data-testid="coded-base-states"');
+  expect(html).toContain('data-testid="coded-base-districts"');
+  expect(html.indexOf("coded-base-states")).toBeLessThan(html.indexOf("coded-base-outline"));
 });
 
 test("a dam named on a places map marks the point its record gives, and one never named marks nothing", () => {

@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "register": {
+  "code": "RIVER_ALIASES",
+  "title": "River names the sources state as one river",
+  "publisher": "KalaVigyan"
+ },
+ "aliases": [
+  {
+   "id": "dravyavati",
+   "names": ["Dravyavati River", "Amanisha Nallah", "Dravayawati River", "Amanishah Nala"],
+   "districtLgds": [102],
+   "sources": [
+    {
+     "title": "EIA/EMP Report, Chapter 2: Description of Project (rejuvenation of Dravyavati River)",
+     "authors": [],
+     "publisher": "Jaipur Development Authority, filed on the Ministry of Environment, Forest and Climate Change's environmental clearance portal",
+     "year": 2017,
+     "url": "https://environmentclearance.nic.in/writereaddata/FormB/EC/FORM_1/170520176S4VOAIDChapter-2.pdf",
+     "doi": null,
+     "grade": "A",
+     "quote": "Dravyavati River was the active river of Jaipur which, over the time turned into a Nallah (Amanisha Nallah) due to rapid urbanization & industrialization on both side of the river.",
+     "locator": "Chapter 2, Description of Project, PDF page 2",
+     "retrievedAt": "2026-11-26"
+    },
+    {
+     "title": "Revitalization of Dravayawati River, Jaipur, India: A water-front development project",
+     "authors": ["Aman Randhawa", "Tarush Chandra"],
+     "publisher": "Academic Journals, Journal of Geography and Regional Planning 10(3), 28-38",
+     "year": 2017,
+     "url": "https://academicjournals.org/journal/JGRP/article-full-text/B15ADD362958",
+     "doi": "10.5897/JGRP2017.0620",
+     "grade": "A",
+     "quote": "The degraded Dravayawati River, commonly regarded as Amanishah Nala (drain) today, originates in north of Jaipur city in Amer Hills at Akadadoonga and runs down south through entire Jaipur to merge with the Dhund River which originates from the Jhalana Hills.",
+     "locator": "Study area",
+     "retrievedAt": "2026-11-26"
+    }
+   ]
+  }
+ ]
+}

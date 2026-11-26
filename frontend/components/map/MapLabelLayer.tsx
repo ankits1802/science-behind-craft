@@ -2,15 +2,18 @@ import type { ReactNode } from "react";
 
 import type { MapBox } from "@/components/map/basemap";
 import { scaleBar } from "@/components/map/mapDistance";
-import { SCALE_INSET, SCALE_TICK } from "@/components/map/MapScale";
+import { PEAK_SIZE } from "@/components/map/physical/ReliefLayer";
 import { TIER_HIDDEN } from "@/components/map/physical/RotatedLabel";
-import { frameShare, mapLabel, type MapLabel, type PeakLabel } from "@/components/map/placesMapLabels";
+import { frameShare, mapLabel, peakLabels, rangeLabels, riverLabels, type MapLabel, type PeakLabel } from "@/components/map/placesMapLabels";
 import type { Projected } from "@/components/map/projection";
+import type { ReliefFile, RiversFile } from "@/lib/mapPhysical";
 import { formatNumber } from "@/lib/measure";
 import { cn } from "@/lib/utils";
 
 export const LABEL_FONT = "var(--text-caption)";
 export const LABEL_HALO = 3;
+export const SCALE_INSET = 14;
+export const SCALE_TICK = 5;
 export const SCALE_TEXT_GAP = 6;
 export const DAM_WIDTH = 12;
 export const DAM_HEIGHT = 4;
@@ -102,6 +105,18 @@ export function LabelScale({ frame }: { frame: MapBox }) {
         </g>
       </g>
     </svg>
+  );
+}
+
+export type LabelFiles = { relief: Pick<ReliefFile, "ranges" | "peaks"> | null; rivers: Pick<RiversFile, "labels"> | null };
+
+export function PhysicalLabels({ files, frame, named }: { files: LabelFiles; frame: MapBox; named: readonly string[] }) {
+  return (
+    <>
+      <PlacedLabels frame={frame} labels={rangeLabels(files.relief, frame)} testId="relief-ranges" />
+      <PlacedLabels frame={frame} labels={riverLabels(files.rivers, frame, named)} testId="rivers-labels" />
+      <PeakMarks frame={frame} peaks={peakLabels(files.relief, frame, PEAK_SIZE)} size={PEAK_SIZE} />
+    </>
   );
 }
 

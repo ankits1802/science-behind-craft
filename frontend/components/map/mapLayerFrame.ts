@@ -17,6 +17,10 @@ export function showsDistrictLines(frame: MapBox): boolean {
   return frame.width <= WHOLE_MAP.width * DISTRICT_LINES_SHARE;
 }
 
+export function drawsDistrictLines(frame: MapBox, layers: readonly string[]): boolean {
+  return layers.includes("districts") || showsDistrictLines(frame);
+}
+
 export function framedPoints(spec: MapLayerSpec): FramedPoint[] {
   const chosen = spec.frame?.places ?? spec.places.map((_, at) => at);
   const places = chosen.flatMap((at) => (spec.places[at] ? [spec.places[at]] : []));

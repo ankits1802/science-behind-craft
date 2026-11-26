@@ -36,6 +36,7 @@ const codedStillBaseShape = object<CodedStillBase>({
   relief: nullable(list(STILL_PATH)),
   rivers: nullable(STILL_PATH),
   districts: nullable(STILL_PATH),
+  states: nullable(STILL_PATH),
   homes: nullable(STILL_PATH),
   waters: nullable(watersShape)
 });

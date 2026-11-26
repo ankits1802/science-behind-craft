@@ -1,3 +1,5 @@
+import { object, oneOf, parseShape, text, type Shape } from "@/lib/shape";
+
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 const VALUES = new Map<string, number>([...ALPHABET].map((character, index) => [character, index]));
 
@@ -6,11 +8,14 @@ const SCALE = 1000;
 export type BorderLine = Array<[number, number]>;
 
 export type BorderLevel = "state" | "district";
+export type BordersFile = { schemaVersion: 1; lines: string };
 
-const ASSET: Record<BorderLevel, string> = {
-  state: "/boundaries/state-borders.txt",
-  district: "/boundaries/district-borders.txt"
+export const BORDERS_ASSET: Record<BorderLevel, string> = {
+  state: "/boundaries/state-borders.json",
+  district: "/boundaries/district-borders.json"
 };
+
+export const bordersFileShape: Shape<BordersFile> = object<BordersFile>({ schemaVersion: oneOf([1]), lines: text });
 
 export function decodeBorders(payload: string): BorderLine[] {
   const lines: BorderLine[] = [];
@@ -49,12 +54,12 @@ const pending = new Map<BorderLevel, Promise<BorderLine[]>>();
 export function loadBorders(level: BorderLevel): Promise<BorderLine[]> {
   const existing = pending.get(level);
   if (existing) return existing;
-  const request = fetch(ASSET[level], { cache: "force-cache" })
+  const request = fetch(BORDERS_ASSET[level], { cache: "force-cache" })
     .then((response) => {
-      if (!response.ok) throw new Error(`${ASSET[level]} returned ${response.status}`);
-      return response.text();
+      if (!response.ok) throw new Error(`${BORDERS_ASSET[level]} returned ${response.status}`);
+      return response.json();
     })
-    .then(decodeBorders)
+    .then((body: unknown) => decodeBorders(parseShape(bordersFileShape, body).lines))
     .catch((cause: unknown) => {
       pending.delete(level);
       throw cause;

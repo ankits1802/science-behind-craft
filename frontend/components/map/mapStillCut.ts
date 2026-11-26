@@ -1,4 +1,5 @@
 import { decodeRings, type MapBox, type NeighbourFile } from "@/components/map/basemap";
+import { decodeBorders, type BordersFile } from "@/components/map/borderGeometry";
 import { decodePolyline, indiaRings, type Ring } from "@/components/map/indiaGeometry";
 import { NAMED_ZOOM, showsDistrictLines } from "@/components/map/mapLayerFrame";
 import { projectedFrame } from "@/components/map/placesFrame";
@@ -24,6 +25,7 @@ export type StillFiles = {
   minerals: Pick<MineralsFile, "classes" | "sites" | "statuses">;
   shapes: { districts: readonly { lgd: number; stateLgd: number; rings: readonly string[]; centroid: readonly number[] }[] };
   neighbours: Pick<NeighbourFile, "countries">;
+  stateBorders: Pick<BordersFile, "lines">;
 };
 
 type Rings = Projected[][];
@@ -34,6 +36,7 @@ export type StillLayers = {
   homes: ReadonlyMap<number, Rings>;
   centres: ReadonlyMap<number, Projected>;
   states: ReadonlyMap<number, number>;
+  stateLines: Rings;
   neighbours: Rings;
   minerals: MineralKeyRow[];
   credits: RegionDataset[];
@@ -55,7 +58,8 @@ export function stillLayers(files: StillFiles): StillLayers {
   const neighbours = files.neighbours.countries.flatMap((country) => decodeRings(country.rings).map(projected));
   const credits = layerCredits([...files.relief.datasets, ...files.rivers.datasets]);
   const lakes = decodeRings(files.rivers.lakes).map(projected);
-  return { relief: [india, ...bands], rivers, lakes, homes, centres, states, neighbours, minerals: mineralKeyRows(files.minerals, mineralSites(files.minerals)), credits };
+  const stateLines = decodeBorders(files.stateBorders.lines).map(projected);
+  return { relief: [india, ...bands], rivers, lakes, homes, centres, states, stateLines, neighbours, minerals: mineralKeyRows(files.minerals, mineralSites(files.minerals)), credits };
 }
 
 export function stillCut(frame: MapBox): StillCut {

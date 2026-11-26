@@ -100,6 +100,7 @@ class Still:
     height: float
     paths: tuple[StillPath, ...] = ()
     texts: tuple[StillText, ...] = ()
+    pixels: int | None = None
 
     @property
     def drawn(self) -> bool:

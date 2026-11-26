@@ -47,7 +47,7 @@ function PlacedMap({ map, renderUnit, textOf }: { map: TimelineMapSpec; renderUn
   const layers = useTimelineMapLayers(drawn.names, drawn.still);
   const texts = useMemo<TimelineTexts<UnitSaid>>(() => ({ say: (said, className) => <p className={className}>{renderUnit(said.id)}</p>, keyOf: (said) => said.id, idOf: (said) => said.id }), [renderUnit]);
   const coordinates = map.places.some((place) => place.found?.wikidataId !== undefined);
-  const parts = { frame: drawn.frame, underlay: layers.underlay, overlay: layers.overlay, key: layers.key, credits: <Credits map={map} />, titled: false, coordinates };
+  const parts = { frame: drawn.frame, underlay: layers.underlay, overlay: layers.overlay, labels: layers.labels, key: layers.key, credits: <Credits map={map} />, titled: false, coordinates };
   const drawing: TimelineMapDrawing<UnitSaid> = { texts, boundary: boundaryNote(map.boundaryCaption ?? "", map.datasets ?? []), placeable: SHOWN, pinUndated: true, parts };
   return (
     <div ref={watched} className="min-w-0" data-testid="timeline-map-play" data-at={play.at}>

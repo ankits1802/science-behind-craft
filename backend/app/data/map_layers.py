@@ -11,11 +11,15 @@ __all__ = [
     "LAYERS_DIR",
     "LAYER_FILES",
     "MINERALS_FILE",
+    "OUTLINE_FILE",
     "RELIEF_FILE",
     "RIVERS_FILE",
+    "STATE_BORDERS_FILE",
     "WATERS_NAMES_FILE",
     "WATERS_SCHEMA_VERSION",
+    "BaseFiles",
     "HeldShapes",
+    "held_base",
     "held_dam_names",
     "held_river_names",
     "held_shapes",
@@ -26,7 +30,10 @@ RELIEF_FILE = "relief.json"
 RIVERS_FILE = "rivers.json"
 MINERALS_FILE = "minerals.json"
 WATERS_NAMES_FILE = "waters-names.json"
+OUTLINE_FILE = "india-outline.json"
+STATE_BORDERS_FILE = "state-borders.json"
 WATERS_SCHEMA_VERSION = 1
+BASE_SCHEMA_VERSION = 1
 LAYER_FILES = (RELIEF_FILE, RIVERS_FILE, MINERALS_FILE)
 DISTRICT_SHAPES_FILE = DATA_DIR / "district-shapes.json"
 
@@ -35,6 +42,35 @@ DISTRICT_SHAPES_FILE = DATA_DIR / "district-shapes.json"
 class HeldShapes:
     districts: frozenset[int]
     states: frozenset[int]
+
+
+@dataclass(frozen=True)
+class BaseFiles:
+    outline: str
+    states: str
+    districts: tuple[tuple[int, int, tuple[str, ...]], ...]
+
+
+@cache
+def held_base() -> BaseFiles:
+    outline = _versioned(OUTLINE_FILE)
+    states = _versioned(STATE_BORDERS_FILE)
+    shapes = json.loads(DISTRICT_SHAPES_FILE.read_text(encoding="utf-8"))["districts"]
+    return BaseFiles(
+        outline=str(outline["payload"]),
+        states=str(states["lines"]),
+        districts=tuple(
+            (int(row["lgd"]), int(row["stateLgd"]), tuple(str(ring) for ring in row["rings"]))
+            for row in shapes
+        ),
+    )
+
+
+def _versioned(name: str) -> dict[str, object]:
+    body = json.loads((LAYERS_DIR / name).read_text(encoding="utf-8"))
+    if body.get("schemaVersion") != BASE_SCHEMA_VERSION:
+        raise ValueError(f"{name} is schema version {BASE_SCHEMA_VERSION}")
+    return body
 
 
 @cache

@@ -557,6 +557,23 @@ a zoomed map therefore also draws OpenStreetMap's waters.
   `OSM_RIVER_NAMES`) and the curated dossiers' river places with their district. A river that agrees
   answers to the register's names too (`also`), with each agreement recorded (`agrees`): the
   Dhamadka stream in Kachchh answers to "Suran" by Kutch Ajrakh's "Dhamadka River (Suran)".
+- **River aliases (decision 0244).** The register also holds `backend/app/data/rivers/river_aliases.json`
+  (`RIVER_ALIASES`, read by `app.data.river_aliases`): names that cited sources state are one river,
+  each alias with its districts and at least one source whose quote names two of its names, every name
+  quoted by one of them; an alias without a source, or a quote that names one river, is refused. The
+  first is the Dravyavati in Jaipur (102): "Dravyavati River was the active river of Jaipur which, over
+  the time turned into a Nallah (Amanisha Nallah) due to rapid urbanization & industrialization on
+  both side of the river." (Jaipur Development Authority, EIA/EMP Report, Chapter 2: Description of
+  Project, 2017, filed on the environmental clearance portal, grade A) and "The degraded Dravayawati
+  River, commonly regarded as Amanishah Nala (drain) today, originates in north of Jaipur city in Amer
+  Hills at Akadadoonga ..." (Randhawa and Chandra 2017, Journal of Geography and Regional Planning
+  10(3), 28-38, doi:10.5897/JGRP2017.0620, CC BY 4.0, found through OpenAlex). OpenStreetMap's way
+  "Amanisha River" agrees with "Amanisha Nallah" in Jaipur, so it answers to "Dravyavati" too. That
+  way is 0.8 km long near 26.94 N, 75.79 E in Jaipur city, against the 47.5 km both sources give
+  the river from the Nahargarh hills to the Dhund, and no other way of the extract is named for it: a
+  map draws that 0.8 km, labelled "Dravyavati", and the page's cited sentence carries the course.
+  `tools/maplayers_register.py` reads the register into the built tiles again without a download
+  (the map layers build does the same when it runs).
 - **Files.** Each line simplified at 0.002 degree (`WATERS_TOLERANCE`), coordinates to 0.001 degree,
   dams to 0.0001 degree, cut into tiles of two degrees (`frontend/public/layers/waters/<e068n22>.json`)
   with an index (`waters.json`: the dataset's record with the day read and the extract's SHA-256,
@@ -571,6 +588,20 @@ a zoomed map therefore also draws OpenStreetMap's waters.
 - **Licence.** The waters files are a derived database under the ODbL, credited "© OpenStreetMap
   contributors", kept in their own files and row and never merged into the CC BY tables (as the
   river names are).
+
+### The paper map's base (decision 0244)
+
+The page export draws a places map and a coded map on the API's own cut of the web map's base
+(`app/geo/map_base.py`, `services/export_map_base.py`): the Survey of India outline
+(`backend/app/data/layers/india-outline.json`, the payload of `frontend/components/map/indiaGeometry.ts`)
+and the state lines (`state-borders.json`, a byte copy of `frontend/public/boundaries/state-borders.json`),
+both mirrored by `tools/maplayers_mirror.py` and by the map layers build and held equal by
+`tools/tests/test_maplayers_mirror.py`; the ETOPO1 relief bands and Natural Earth rivers and lakes
+the API already measures from; and the district shapes (`DR_DISTRICT_SHAPES`) for district lines in a
+zoomed frame and the home districts. Each still credits the datasets it draws and prints the boundary
+note. The state lines file moved from `state-borders.txt` to JSON (`{schemaVersion, lines}`, the same
+encoded lines) so the web server and the API can both read it; `district-borders.json` followed.
+OpenStreetMap's small waters are not drawn on paper.
 
 ### Groundwater
 

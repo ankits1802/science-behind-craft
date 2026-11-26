@@ -25,7 +25,8 @@ export function CodedStillBaseView({ base, dams }: { base: CodedStillBase; dams:
         {base.land ? <path d={base.land} fillRule="evenodd" fill="var(--map-land)" /> : null}
         {relief.map((d, at) => (d ? <path key={`band-${at + 1}`} d={d} fillRule="evenodd" fill={`var(--elevation-${at + 1})`} /> : null))}
         {base.rivers ? <path d={base.rivers} fill="none" stroke="var(--map-river)" strokeWidth={1} vectorEffect="non-scaling-stroke" /> : null}
-        {base.districts ? <path d={base.districts} fill="none" stroke="var(--map-border-district)" strokeWidth={0.5} vectorEffect="non-scaling-stroke" /> : null}
+        {base.districts ? <path d={base.districts} fill="none" stroke="var(--map-border-district)" strokeWidth={0.5} vectorEffect="non-scaling-stroke" data-testid="coded-base-districts" /> : null}
+        {base.states ? <path d={base.states} fill="none" stroke="var(--map-border-state)" strokeWidth={0.8} vectorEffect="non-scaling-stroke" data-testid="coded-base-states" /> : null}
         {base.homes ? <path d={base.homes} fill="none" stroke="var(--terracotta)" strokeWidth={1.5} vectorEffect="non-scaling-stroke" /> : null}
       </g>
       {base.waters ? <StillWatersLines box={base.box} grid={base.grid} waters={base.waters} /> : null}

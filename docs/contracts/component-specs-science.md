@@ -281,7 +281,9 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   `emphasis` names them (component-specs-general.md, The places map; decision 0239), each refused by
   name at placement when the site does not hold it. The frame draws the site's base as the first group of every
   `svg[data-map]`, and again if the code removes it: the land, the relief bands, the rivers, the
-  district and state lines, the named districts outlined in place colour, the Rann and the Survey of
+  state lines (always, as a places map draws them; `states` is accepted and changes nothing, decision
+  0244), the district lines when asked or in a frame of at most 35 per cent of India's width
+  (`drawsDistrictLines`), the named districts outlined in place colour, the Rann and the Survey of
   India outline, in the India frame of `components/map/projection.ts` (`kvMap.viewBox`).
   `kvMap.project(longitude, latitude)` gives a point's `{x, y}` in that frame,
   `kvMap.box(west, south, east, north, margin?)` a `viewBox` for a part of it, and `kvMap.places`
@@ -293,10 +295,14 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   `kv-map-dam`, `kv-map-relief-1` to `-7`, `kv-map-home`, `kv-map-salt`) are drawn in the map tokens
   by the frame's sheet. A figure whose still is its `svg[data-map]` is drawn on the same base at first
   paint and on paper: the web server's pass (`lib/server/codedMapStills`) cuts the land, the Survey of
-  India outline, the relief, rivers, district lines and named districts it asks for, the small waters
-  and the named rivers and dams to the still's `viewBox` (served as `base`, which a delivered spec
-  may not carry) and the page draws them under the still's four theme variants; state lines are left
-  to the frame.
+  India outline, the state lines (from `public/boundaries/state-borders.json`, which the server
+  reads), the relief and rivers it asks for, the district lines the frame draws, the named districts,
+  the small waters and the named rivers and dams to the still's `viewBox` (served as `base`, which a
+  delivered spec may not carry) and the page draws them under the still's four theme variants
+  (decision 0244). The page export draws the still on the API's own cut of the same base
+  (`services/page_export_coded`, `services/export_map_base`: the outline, state lines, district lines,
+  relief and rivers, the named districts outlined) with the layers' credits and the boundary note,
+  at 1800 pixels across in Word; the small waters stay on the web.
 - **`films`**, up to 4 `{key, src}`: a film the site serves under `/monographs/` (`.mp4`, `.webm`),
   shown by `<video data-film="<key>">`, whose address the frame sets.
 - **`still`**: an SVG of the figure at rest. Without it the server cuts the still from the code's
@@ -313,7 +319,7 @@ theme, a sheet that draws buttons, `aria-pressed`, focus, status lines and the m
 timer, animation frame, animation or film plays. On the page the server draws the still, its words
 filled from the units, and the frame's code loads within two screens of the viewport
 (`kinds/science/NearCodedFrame.tsx`), the frame starting at the still's height. The export draws the
-still with the figure's units beneath it (`services/page_export_coded`), and the Review page shows
+still with the figure's units beneath it (`services/page_export_coded`, on the base for a map), and the Review page shows
 the still beside a live run (`components/review/CodedFigureReview.tsx`).
 
 Delivery refuses a coded figure only for these, each with its reason:
@@ -402,5 +408,6 @@ species an ink outline, dashed when no colour is recorded for it), so nothing is
 | On a generated page at 360 and 1440 px, each composed kind whole at rest and worked by the kit, under both reduced-motion switches | `frontend/e2e/composed-interactives-unit.spec.ts` |
 | A coded figure refused for a fact of its own, reaching out, not resting or its budget, with its reason, and accepted when it draws from its data with free labels; its still cut and served in four themes, and drawn on paper | `backend/tests/research/test_coded_figures.py`, `backend/tests/exports/test_coded_figure_export.py` |
 | A coded figure's still at first paint, its frame sandboxed with its words, data and pinned libraries and nothing reaching the network, at rest under reduced motion, played and paused with motion allowed, its map base and outline kept in the site's projection, and its still beside its run on the Review page | `frontend/e2e/coded-figure-unit.spec.ts` |
+| A coded map's still with its state lines and, in a zoomed frame, its district lines, and on paper on the site's base with its credits and boundary note | `frontend/e2e/map-waters-unit.spec.ts`, `backend/tests/exports/test_map_exports.py` |
 
 Re-read it when a science kind gains a field, a held passage becomes a unit, or the colour rule changes.
