@@ -174,12 +174,13 @@ test("a route, a ring and a sequence are drawn only from the spec's own places, 
   }
 });
 
-test("district values fill their districts by class, print each value at its centre and list each cited reading by rank", () => {
+test("district values fill their districts by class, print each value whose centre is in the frame and list each cited reading by rank", () => {
   const values = [{ district: 110, value: 410, reading: "u0017" }, { district: JAIPUR, value: 650, reading: "u0016" }];
   const html = shownText(drawn(stilled({ ...SANGANERI, districts: { valueLabel: "u0015", values } })));
   expect(html).toContain('data-testid="still-valued"');
   expect([...html.matchAll(/data-testid="still-valued"[\s\S]*?<\/g>/g)][0]?.[0].match(/data-lgd="(\d+)"/g)).toEqual(['data-lgd="110"', `data-lgd="${JAIPUR}"`]);
-  for (const value of ["410", "650"]) expect(html).toContain(`>${value}</text>`);
+  expect(html).toContain(">650</text>");
+  expect(html).not.toContain(">410</text>");
   const listed = html.split('data-testid="map-district-list"')[1] ?? "";
   expect(listed.indexOf(TEXTS.u0016)).toBeLessThan(listed.indexOf(TEXTS.u0017));
   expect(listed).toContain(TEXTS.u0015);

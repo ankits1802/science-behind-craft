@@ -22,8 +22,10 @@ export function codedMaps(document: MonographDocument): CodedMapFigure[] {
   return codedLabels(document).flatMap((label) => {
     const spec = withoutBase(document.specs[label]);
     const figure = parsedSpec(codedFigureShape, spec);
-    const box = figure?.map && figure.still && drawsOnBase(figure.still) ? drawingViewBox(figure.still) : null;
-    return figure?.map && box ? [{ label, spec, box, map: figure.map }] : [];
+    const map = figure?.map;
+    const still = figure?.still;
+    const box = map && still && drawsOnBase(still) ? drawingViewBox(still) : null;
+    return map && box ? [{ label, spec, box, map }] : [];
   });
 }
 

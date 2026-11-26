@@ -42,6 +42,11 @@ jobs:
           pytest pydantic pydantic-settings "sqlalchemy>=2.1.9" pgvector geoalchemy2
       - name: Install osmium
         run: sudo apt-get update && sudo apt-get install -y osmium-tool
+      - name: Keep the ETOPO1 grid between runs, as NOAA's ERDDAP servers at times refuse the runner
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: downloads/etopo1_india.asc
+          key: etopo1-ice-india-v1
       - name: Download Natural Earth, ETOPO1 and the USGS mineral sites
         shell: bash
         run: |
@@ -53,7 +58,7 @@ jobs:
             unzip -q -o "downloads/$name.zip" -d "downloads/$name"
             test -f "downloads/$name/$name.shp" || { echo "::error::$name.zip holds no $name.shp"; exit 1; }
           done
-          fetch downloads/etopo1_india.asc "$ETOPO_URL" || fetch downloads/etopo1_india.asc "$ETOPO_MIRROR"
+          test -s downloads/etopo1_india.asc || fetch downloads/etopo1_india.asc "$ETOPO_URL" || fetch downloads/etopo1_india.asc "$ETOPO_MIRROR"
           head -c 200 downloads/etopo1_india.asc | grep -qi "ncols" || { echo "::error::the ETOPO1 download is not an ESRI ASCII grid"; exit 1; }
           fetch downloads/mrds-csv.zip "$MRDS_URL"
           fetch downloads/india-latest.osm.pbf "$OSM_URL"

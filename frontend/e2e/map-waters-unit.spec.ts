@@ -148,7 +148,7 @@ test("a coded map's still is drawn on the site's base, with the Survey of India 
   const corner = project(69.6, 23.6);
   const far = project(70.6, 22.9);
   const box = [corner.x, corner.y, far.x - corner.x, far.y - corner.y].map((value) => value.toFixed(1)).join(" ");
-  const onMap = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" data-map=""><circle cx="${corner.x + 5}" cy="${corner.y + 5}" r="1" fill="#000000" /></svg>`;
+  const onMap = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" data-map=""><circle cx="${corner.x + 5}" cy="${corner.y + 5}" r="1" /></svg>`;
   const { document, label } = codedFixture(onMap);
   const figures = codedMaps(document);
   expect(figures.map((figure) => figure.label)).toEqual([label]);
