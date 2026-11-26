@@ -8,7 +8,7 @@ STEP = migration("0123_mcp_tasks")
 
 
 def test_the_task_table_follows_the_coded_figures_migration() -> None:
-    assert (STEP.revision, STEP.down_revision) == ("0123_mcp_tasks", "0121_coded_figures")
+    assert (STEP.revision, STEP.down_revision) == ("0123_mcp_tasks", "0122_review_diff")
 
 
 def test_the_migration_and_the_model_hold_the_same_statuses_and_bounds() -> None:
