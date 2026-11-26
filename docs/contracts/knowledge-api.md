@@ -380,6 +380,7 @@ not break (decision 0101, item 15). `serverInfo.version` is `1.0.0`.
 | The protocol, framing and the event stream | `backend/tests/mcp/test_mcp_protocol.py`, `test_mcp_route.py` and `test_mcp_stream.py` |
 | Browser clients | `backend/tests/mcp/test_mcp_cors.py` |
 | The read tools | `backend/tests/mcp/test_mcp_page_read.py`, `test_mcp_fact_tools.py`, `backend/tests/contribution_scale/test_craft_finding.py` and `backend/tests/db/test_craft_finder_db.py` |
+| The page brief, its cursor and facts read by id (decision 0240) | `backend/tests/research/test_page_brief.py` and `backend/tests/mcp/test_page_brief_reads.py` |
 | The source tools and their allowances | `backend/tests/mcp/test_mcp_source_tools.py`, `test_lookup_tools.py`, `test_lookup_reading.py` and `test_lookup_references.py` |
 | One set of argument names | `backend/tests/mcp/test_mcp_body_names.py` |
 | Every tool, prompt and resource is in the index once | `backend/tests/mcp/test_skill_references.py` |
