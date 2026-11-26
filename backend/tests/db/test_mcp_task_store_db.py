@@ -127,10 +127,10 @@ async def test_a_finished_task_survives_a_restart_and_a_running_one_is_failed_wh
 
     first = McpTasks(store)
     done = await first.start(mine, quick(), call=CALL, now=datetime.now(UTC))
+    finishing = first.running(done.task_id)
+    assert finishing is not None
+    await asyncio.wait({finishing}, timeout=10)
     running = await first.start(mine, waiting(), call=CALL, now=datetime.now(UTC))
-    runner = first.running(done.task_id)
-    assert runner is not None
-    await asyncio.wait({runner}, timeout=10)
     await first.close()
     later = McpTasks(store)
     found = await later.get(mine, done.task_id, datetime.now(UTC))

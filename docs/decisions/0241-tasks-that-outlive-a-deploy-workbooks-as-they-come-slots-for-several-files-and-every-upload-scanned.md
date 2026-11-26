@@ -79,7 +79,8 @@ byte). The contracts are `docs/contracts/open-work.md` (Protocol 2026-07-28: Tas
    `openpyxl` is the maintained reader of the format, pure Python, with `et-xmlfile` its one
    dependency; its streamed sheets are parsed by the standard library's expat, which limits entity
    expansion, and its other parts by the lxml already installed, with entities left unresolved, so
-   `defusedxml` is not added.
+   `defusedxml` is not added. It is imported only when a workbook is read, since it loads Pillow
+   and the API loads no file library until a file is made (decision 0070's rule for exports).
 3. **Slots long enough for several files** (`research/upload_links.slot_lifetime`). Each slot a
    `give_pictures` call opens for several photographs lasts 75 minutes (`SEVERAL_FILES_LIFETIME`), as
    the file guide asks; a single file's slot keeps 30 minutes, so a slot nobody fills still closes

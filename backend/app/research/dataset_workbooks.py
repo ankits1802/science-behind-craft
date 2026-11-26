@@ -6,11 +6,10 @@ import zipfile
 from collections.abc import Iterator, Sequence
 from contextlib import ExitStack, closing
 from datetime import date, datetime, time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from openpyxl import load_workbook
-from openpyxl.utils.exceptions import InvalidFileException
-from openpyxl.workbook.workbook import Workbook
+if TYPE_CHECKING:
+    from openpyxl.workbook.workbook import Workbook
 
 __all__ = [
     "SHEET_NAME_MAX_CHARS",
@@ -34,7 +33,6 @@ OPEN_DOCUMENT_MARK = "mimetype"
 MACRO_PARTS = ("vbaproject.bin", "xl/macrosheets/", "xl/dialogsheets/", "xl/activex/")
 MACRO_ENABLED = b"macroEnabled"
 UNREADABLE_ERRORS = (
-    InvalidFileException,
     zipfile.BadZipFile,
     KeyError,
     ValueError,
@@ -109,9 +107,12 @@ def _refuse_macros(names: set[str], content_types: bytes) -> None:
 
 
 def _opened(data: bytes, *, values_only: bool) -> Workbook:
+    from openpyxl import load_workbook
+    from openpyxl.utils.exceptions import InvalidFileException
+
     try:
         return load_workbook(io.BytesIO(data), read_only=True, data_only=values_only, keep_links=False)
-    except UNREADABLE_ERRORS as failed:
+    except (InvalidFileException, *UNREADABLE_ERRORS) as failed:
         raise WorkbookRefused(UNREADABLE.format(kind=type(failed).__name__)) from None
 
 
