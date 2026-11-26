@@ -12,6 +12,7 @@ from .blocks_kit import KitFigureBlock
 from .blocks_matter import Molecule3dBlock, ReactionPlayerBlock, ReactionStep
 from .component_specs_kit import KitPanel
 from .component_specs_science_geometry import MoleculeGeometry
+from .timeline import year_span_text
 
 __all__ = [
     "COLOUR_SPECIMENS",
@@ -43,8 +44,6 @@ REACTIONS_TITLE = "The reactions, step by step"
 STAGES_TITLE = "The stages, one after another"
 STEPS_MIN = 2
 STOPS_MIN = 2
-BCE = "{year} BCE"
-SPAN = "{start}–{end}"
 
 FigureMotion = Literal["dip", "take", "dry", "react", "oxidise"]
 OXIDISED = ("GREEN", "BLUE")
@@ -75,6 +74,7 @@ class AskedPlayer(ContractModel):
 
 class AskedStop(ContractModel):
     label: str
+    year: int
     places: list[str]
     said: list[int]
 
@@ -229,16 +229,8 @@ def _stops(block: TimelineMapBlock, said: Mapping[str, int]) -> Iterator[AskedSt
         held = [entry for entry in dated if entry[0] == year]
         names = dict.fromkeys(block.places[place].name for _, _, places, _ in held for place in places)
         yield AskedStop(
-            label=_years(year, held[0][1]),
+            label=year_span_text(year, min(end for _, end, _, _ in held)),
+            year=year,
             places=list(names),
             said=_indices((sentence for _, _, _, sentence in held), said),
         )
-
-
-def _years(start: int, end: int) -> str:
-    first, last = _year(start), _year(end)
-    return first if start == end else SPAN.format(start=first, end=last)
-
-
-def _year(year: int) -> str:
-    return BCE.format(year=-year) if year < 0 else str(year)

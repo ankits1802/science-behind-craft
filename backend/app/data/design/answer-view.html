@@ -90,6 +90,9 @@ footer p{margin:0 0 8px}
   var initId = null;
   var SVG = "http://www.w3.org/2000/svg";
   var BEAT = { reaction: 4000, stages: 4000, dips: 2600, timeline: 3200 };
+  var FULL = 100;
+  var MIDDLE = 50;
+  var POINT_GAP_PERCENT = 6;
   var KICKER = { reaction: "Reactions", stages: "Stages", dips: "Dips" };
   var MOTION_ON = "data-reduced-motion";
   var TURN_DEGREES_PER_SECOND = 15;
@@ -407,6 +410,23 @@ footer p{margin:0 0 8px}
     return box;
   }
 
+  function yearPositions(years) {
+    if (!years.length) return [];
+    var first = Math.min.apply(null, years);
+    var span = Math.max.apply(null, years) - first;
+    return years.map(function (year) { return span > 0 ? ((year - first) / span) * FULL : MIDDLE; });
+  }
+
+  function spreadPositions(positions) {
+    if (positions.length < 2) return positions.slice();
+    var room = Math.min(POINT_GAP_PERCENT, FULL / (positions.length - 1));
+    var spread = positions.map(function (position) { return Math.min(FULL, Math.max(0, position)); });
+    for (var at = 1; at < spread.length; at += 1) spread[at] = Math.max(spread[at], spread[at - 1] + room);
+    spread[spread.length - 1] = Math.min(spread[spread.length - 1], FULL);
+    for (var back = spread.length - 2; back >= 0; back -= 1) spread[back] = Math.min(spread[back], spread[back + 1] - room);
+    return spread.map(function (position) { return Math.round(position * 100) / 100; });
+  }
+
   function stopPanel(stop, sentences) {
     var panel = el("div", "kv-panel");
     panel.appendChild(el("h4", null, stop.label));
@@ -436,11 +456,13 @@ footer p{margin:0 0 8px}
     ends.appendChild(el("span", null, stops[0].label));
     ends.appendChild(el("span", null, stops[stops.length - 1].label));
     var panels = stops.map(function (stop) { return stopPanel(stop, sentences); });
+    var placed = spreadPositions(yearPositions(stops.map(function (stop) { return Number(stop.year); })));
     var points = stops.map(function (stop, index) {
       var point = el("button");
       point.type = "button";
       point.setAttribute("aria-label", stop.label);
-      point.style.insetInlineStart = (stops.length > 1 ? (index * 100) / (stops.length - 1) : 50) + "%";
+      point.setAttribute("data-year", String(stop.year));
+      point.style.insetInlineStart = placed[index] + "%";
       point.appendChild(el("span"));
       track.appendChild(point);
       return point;

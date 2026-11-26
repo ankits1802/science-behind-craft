@@ -4,15 +4,11 @@ import type { ReactionSpecies } from "@/lib/scienceContract";
 
 export const STEP_SECONDS = 4;
 
-export type Playback = { at: number; playing: boolean };
-export type PlaybackAction = { type: "play" | "pause" | "next" | "previous" | "tick" } | { type: "choose"; index: number };
 export type CastRole = ReactionSpecies["role"];
 export type CastMember = { key: string; formula: string | null; name: string };
 export type StepSignal = "BALANCED" | "UNBALANCED";
 export type ColourWord = (typeof COLOUR_WORDS)[number];
 export type ColourChange = { before: StepColour | null; after: StepColour | null };
-
-export const PLAYBACK_START: Playback = { at: 0, playing: false };
 
 export const CAST_ROLE_LABEL: Record<CastRole, string> = { REACTANT: "Reactant", PRODUCT: "Product" };
 
@@ -72,28 +68,6 @@ export function railKey(key: string): string {
 
 export function shownStep(at: number, count: number): number {
   return stepIndex(at, count);
-}
-
-export function playbackStep(state: Playback, action: PlaybackAction, count: number): Playback {
-  const last = count - 1;
-  switch (action.type) {
-    case "play":
-      if (count < 2) return PLAYBACK_START;
-      return { at: state.at >= last ? 0 : stepIndex(state.at, count), playing: true };
-    case "pause":
-      return { at: state.at, playing: false };
-    case "next":
-      return { at: stepIndex(state.at + 1, count), playing: false };
-    case "previous":
-      return { at: stepIndex(state.at - 1, count), playing: false };
-    case "choose":
-      return { at: stepIndex(action.index, count), playing: false };
-    case "tick": {
-      if (!state.playing) return state;
-      const at = stepIndex(state.at + 1, count);
-      return { at, playing: at < last };
-    }
-  }
 }
 
 export function castKey(species: ReactionSpecies): string {

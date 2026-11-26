@@ -7,12 +7,15 @@ from types import MappingProxyType
 from .quotes import fold_digits, normalise_quote_text, quote_occurs
 
 __all__ = [
+    "BCE_SUFFIX",
     "CENTURY_WORDS",
     "MOVEMENT_WORDS",
     "YEAR_MAX",
     "YEAR_MIN",
     "YearSpan",
+    "ordinal",
     "states_movement",
+    "year_span_text",
     "years_named",
     "years_offered",
     "years_stated",
@@ -22,6 +25,10 @@ YEAR_MIN = 1000
 YEAR_MAX = 2099
 YEARS_PER_CENTURY = 100
 YEARS_PER_DECADE = 10
+BCE_SUFFIX = " BCE"
+ORDINAL_SUFFIXES = MappingProxyType({1: "st", 2: "nd", 3: "rd"})
+TEENS = range(11, 14)
+SPAN_DASH = "–"
 CENTURY_WORDS = MappingProxyType(
     {
         "first": 1,
@@ -145,6 +152,27 @@ def years_offered(texts: Iterable[str]) -> set[YearSpan]:
     plain = [_unmeasured(fold_digits(normalise_quote_text(text))) for text in texts]
     dated = {year for text in plain for year in _dated_singles(text)}
     return {span for span in years_named(plain) if span[0] != span[1] or span[0] in dated}
+
+
+def ordinal(number: int) -> str:
+    suffix = "th" if number % 100 in TEENS else ORDINAL_SUFFIXES.get(number % 10, "th")
+    return f"{number}{suffix}"
+
+
+def year_span_text(start: int, end: int) -> str:
+    if start == end:
+        return _year_text(start)
+    if start > 0 and start % YEARS_PER_CENTURY == 1 and end % YEARS_PER_CENTURY == 0 and end > start:
+        first, last = start // YEARS_PER_CENTURY + 1, end // YEARS_PER_CENTURY
+        named = ordinal(first) if first == last else f"{ordinal(first)}{SPAN_DASH}{ordinal(last)}"
+        return f"{named} century"
+    if start > 0 and start % YEARS_PER_DECADE == 0 and end == start + YEARS_PER_DECADE - 1:
+        return f"{start}s"
+    return f"{_year_text(start)}{SPAN_DASH}{_year_text(end)}"
+
+
+def _year_text(year: int) -> str:
+    return f"{-year}{BCE_SUFFIX}" if year < 0 else str(year)
 
 
 def states_movement(texts: Iterable[str], start: str, end: str) -> bool:

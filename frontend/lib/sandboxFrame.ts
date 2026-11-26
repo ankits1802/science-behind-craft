@@ -94,6 +94,56 @@ export const FRAME_VIEW = [
   "})();"
 ].join(" ");
 
+export const FRAME_IN_VIEW_WORDS = [FRAME_VIEW_EVENT, FRAME_IN_VIEW, "dataset.inView"] as const;
+export const FRAME_PLAY_CONTROLS = 'button,[role="button"],input[type="button"]';
+export const FRAME_PLAY_WORD = "\\bplay\\b";
+export const FRAME_PAUSE_WORD = "\\bpause\\b";
+export const FRAME_PLAY = [
+  "(function () {",
+  "const root = document.documentElement;",
+  `const controls = ${JSON.stringify(FRAME_PLAY_CONTROLS)};`,
+  `const play = new RegExp(${JSON.stringify(FRAME_PLAY_WORD)}, "i");`,
+  `const pause = new RegExp(${JSON.stringify(FRAME_PAUSE_WORD)}, "i");`,
+  "let wanted = true;",
+  "let running = false;",
+  "let pressing = false;",
+  `const still = function () { return root.getAttribute(${JSON.stringify(FRAME_REDUCED_MOTION)}) === "true" || matchMedia("(prefers-reduced-motion: reduce)").matches; };`,
+  'const named = function (node) { return (node.getAttribute("aria-label") || node.textContent || node.value || "").trim(); };',
+  "const find = function (word) { for (const node of document.querySelectorAll(controls)) if (word.test(named(node)) && !node.disabled && node.getClientRects().length > 0) return node; return null; };",
+  'const pressed = function (node) { const value = node.getAttribute("aria-pressed"); return value === "true" ? true : value === "false" ? false : null; };',
+  "const sync = function () {",
+  "if (still()) return;",
+  "const starter = find(play);",
+  "const stopper = find(pause);",
+  "const control = starter || stopper;",
+  "if (!control) return;",
+  "const told = pressed(control);",
+  "const on = told !== null ? told : starter && stopper && starter !== stopper ? running : !starter;",
+  `const want = wanted && root.getAttribute(${JSON.stringify(FRAME_IN_VIEW)}) === "true";`,
+  "if (want === on) return;",
+  "pressing = true;",
+  "try { (want ? control : stopper || control).click(); } finally { pressing = false; }",
+  "running = want;",
+  "};",
+  'document.addEventListener("click", function (event) {',
+  "if (pressing || !event.isTrusted || !(event.target instanceof Element)) return;",
+  "const node = event.target.closest(controls);",
+  "if (!node) return;",
+  "const name = named(node);",
+  "if (!play.test(name) && !pause.test(name)) return;",
+  "const told = pressed(node);",
+  "wanted = told !== null ? !told : !pause.test(name);",
+  "running = wanted;",
+  "}, true);",
+  `document.addEventListener(${JSON.stringify(FRAME_VIEW_EVENT)}, sync);`,
+  'window.addEventListener("load", sync);',
+  "})();"
+].join(" ");
+
+export function speaksInView(html: string): boolean {
+  return FRAME_IN_VIEW_WORDS.some((word) => html.includes(word));
+}
+
 export function sandboxData(values: readonly Pick<SimulationValue, "key" | "value">[]): string {
   const data: Record<string, number> = {};
   for (const value of values) {
@@ -135,6 +185,10 @@ function frameIsStill(look: FrameLook | null): boolean {
 export type FramePieces = { csp: string; head: string };
 
 export const NO_PIECES: FramePieces = { csp: SANDBOX_CSP, head: "" };
+
+export function explainerPieces(html: string): FramePieces {
+  return speaksInView(html) ? NO_PIECES : { csp: SANDBOX_CSP, head: `<script>${FRAME_PLAY}</script>` };
+}
 
 export function sandboxDocument(html: string, values: readonly Pick<SimulationValue, "key" | "value">[], look: FrameLook | null = null, pieces: FramePieces = NO_PIECES): string {
   return [

@@ -27,6 +27,15 @@ export function attribute(html: string, testId: string, name: string): string[] 
   return [...html.matchAll(new RegExp(`<[^>]*data-testid="${testId}"[^>]*>`, "g"))].map((tag) => new RegExp(`${name}="([^"]*)"`).exec(tag[0])?.[1] ?? "");
 }
 
+export function stackedSteps(html: string, testId: string): string[] {
+  const at = html.indexOf(`data-testid="${testId}"`);
+  return at < 0 ? [] : html.slice(at).split(/data-shown="/).slice(1);
+}
+
+export function shownStackStep(html: string, testId: string): string {
+  return stackedSteps(html, testId).find((step) => step.startsWith("true")) ?? "";
+}
+
 export function gridTracks(html: string): string[] {
   return [...html.matchAll(/grid-cols-\[([^\]]+)\]/g)].flatMap((found) => found[1].split("_"));
 }

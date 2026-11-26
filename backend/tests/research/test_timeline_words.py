@@ -1,6 +1,6 @@
 import pytest
 
-from app.research.timeline import states_movement, years_named, years_offered
+from app.research.timeline import ordinal, states_movement, year_span_text, years_named, years_offered
 
 
 @pytest.mark.parametrize(
@@ -85,3 +85,45 @@ def test_a_route_is_a_move_one_text_states_from_its_start_to_its_end(
     texts: list[str], start: str, end: str, moves: bool
 ) -> None:
     assert states_movement(texts, start, end) is moves
+
+
+@pytest.mark.parametrize(
+    ("start", "end", "words"),
+    [
+        (1586, 1586, "1586"),
+        (1586, 1631, "1586–1631"),
+        (1401, 1500, "15th century"),
+        (1001, 1400, "11th–14th century"),
+        (2001, 2100, "21st century"),
+        (1950, 1959, "1950s"),
+        (1400, 1500, "1400–1500"),
+        (1401, 1499, "1401–1499"),
+        (1950, 1960, "1950–1960"),
+        (1951, 1960, "1951–1960"),
+        (-500, -500, "500 BCE"),
+        (-499, -400, "499 BCE–400 BCE"),
+    ],
+)
+def test_a_span_of_years_is_written_as_the_web_writes_a_timeline_s_span(
+    start: int, end: int, words: str
+) -> None:
+    assert year_span_text(start, end) == words
+
+
+def test_an_ordinal_takes_th_for_the_teens_and_st_nd_rd_after_them() -> None:
+    assert [ordinal(n) for n in (1, 2, 3, 4, 11, 12, 13, 21, 22, 23, 111, 112, 113, 121)] == [
+        "1st",
+        "2nd",
+        "3rd",
+        "4th",
+        "11th",
+        "12th",
+        "13th",
+        "21st",
+        "22nd",
+        "23rd",
+        "111th",
+        "112th",
+        "113th",
+        "121st",
+    ]

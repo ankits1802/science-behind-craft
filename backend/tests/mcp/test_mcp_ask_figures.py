@@ -84,14 +84,27 @@ def test_a_player_of_one_step_is_not_played_and_a_block_that_does_not_move_draws
 def test_a_timeline_steps_through_each_year_with_its_places_and_sentences() -> None:
     (timeline,) = figures(blocks("explainer.phase-c.golden.json", "s4"))
     assert isinstance(timeline, AskedTimeline)
-    assert [(stop.label, stop.places, stop.said) for stop in timeline.stops] == [
-        ("1401–1500", ["Fustat"], [0]),
-        ("1586", ["Dhamadka", "Sindh", "Kutch"], [1, 3]),
-        ("2001", ["Ajrakhpur"], [2]),
+    assert [(stop.label, stop.year, stop.places, stop.said) for stop in timeline.stops] == [
+        ("15th century", 1401, ["Fustat"], [0]),
+        ("1586", 1586, ["Dhamadka", "Sindh", "Kutch"], [1, 3]),
+        ("2001", 2001, ["Ajrakhpur"], [2]),
     ]
     (block,) = blocks("explainer.phase-c.golden.json", "s4")
     one = block.model_copy(update={"points": block.points[:1], "routes": []})
     assert figures([one]) == []
+
+
+def test_a_stop_is_labelled_by_its_shortest_span_and_placed_by_its_first_year() -> None:
+    (block,) = blocks("explainer.phase-c.golden.json", "s4")
+    route = block.routes[0]
+    assert (route.year_from, route.year_to) == (1586, 1631)
+    alone = block.model_copy(update={"points": [p for p in block.points if p.year_from != 1586]})
+    (timeline,) = figures([alone])
+    assert [(stop.label, stop.year) for stop in timeline.stops] == [
+        ("15th century", 1401),
+        ("1586–1631", 1586),
+        ("2001", 2001),
+    ]
 
 
 def test_a_kit_figure_with_a_motion_plays_its_panels_and_one_without_draws_none() -> None:

@@ -5,14 +5,14 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 
 import { SignatureFigure } from "@/components/answer/SignatureFigure";
-import { VatFigure } from "@/components/answer/VatFigure";
-import { atomRows, currentFrame, dipStatus, formulaAtoms, hillOrder, nextDip, vatEquation } from "@/lib/answerVat";
+import { VatFigure, VatFigureView } from "@/components/answer/VatFigure";
+import { atomRows, dipStatus, formulaAtoms, hillOrder, vatBeat, VAT_BEATS, VAT_REST, vatEquation, vatFrameAt, vatShown } from "@/lib/answerVat";
 import { signatureFigureShape } from "@/lib/explainerContract";
 import type { IndigoVatBlock, SignatureBlock } from "@/lib/explainerSignature";
 import { signatureSentences, signatureSourceIds } from "@/lib/explainerSignature";
 import { parseShape } from "@/lib/shape";
 
-import { attribute, shownText, withApp } from "./explainerRender";
+import { attribute, shownText, stillPlay, withApp } from "./explainerRender";
 
 const FIGURES = JSON.parse(readFileSync(join(__dirname, "..", "..", "shared", "explainer.signature.golden.json"), "utf8")) as unknown[];
 const figure = (index: number): SignatureBlock => parseShape(signatureFigureShape, FIGURES[index]);
@@ -64,23 +64,63 @@ test("no equation is drawn when the forms do not differ by one hydrogen molecule
   expect(atomRows([{ coefficient: 1, formula: "H2", name: "hydrogen" }], [{ coefficient: 1, formula: "H2O", name: "water" }])).toBeNull();
 });
 
-test("the vat steps four dips and names each phase in its status", () => {
+test("the vat plays four dips of three phases each, every phase as long as its motion and a hold, and names each in its status", () => {
   expect(dipStatus(1, "rest")).toBe("Dip 1 of 4. In the air the cloth turns from green to blue.");
   expect(dipStatus(3, "lifted")).toBe("Dip 3 of 4. Lifted out, the cloth is green.");
-  expect([nextDip(1), nextDip(3), nextDip(4)]).toEqual([2, 4, 1]);
-  expect([currentFrame("rest"), currentFrame("in"), currentFrame("lifted"), currentFrame("air")]).toEqual(["air", "in", "lifted", "air"]);
+  expect([VAT_BEATS, VAT_REST]).toEqual([12, 2]);
+  expect([0, 1, 2, 3, 11, 12, -1].map(vatShown)).toEqual([
+    { dip: 1, frame: "in" },
+    { dip: 1, frame: "lifted" },
+    { dip: 1, frame: "air" },
+    { dip: 2, frame: "in" },
+    { dip: 4, frame: "air" },
+    { dip: 4, frame: "air" },
+    { dip: 1, frame: "in" }
+  ]);
+  expect([vatFrameAt(1, 0), vatFrameAt(3, 1), vatFrameAt(4, 2)]).toEqual([0, 7, 11]);
+  const timings = { delay: 800, dip: 600, hold: 500, oxidise: 1500 };
+  expect([0, 1, 2, 5].map((at) => vatBeat(at, timings))).toEqual([1100, 1000, 2000, 2000]);
+});
+
+function vatNumbers(block: IndigoVatBlock): Map<string, number> {
+  return new Map([...signatureSentences(block).flatMap((sentence) => sentence.citations.map((citation) => citation.sourceId)), ...signatureSourceIds(block)].map((id, index): [string, number] => [id, index + 1]));
+}
+
+function vatPlay(html: string): string {
+  return /<button[^>]*data-testid="vat-play"[^>]*>[\s\S]*?<\/button>/.exec(html)?.[0] ?? "";
+}
+
+test("playing, the vat figure reads Pause, shows the dip and phase it plays and says nothing while it moves; at rest it reads Play", () => {
+  const block = vat();
+  const playing = withApp(createElement(VatFigureView, { block, number: 1, play: stillPlay(4, true, true) }), { numbers: vatNumbers(block), sourcesById: new Map() });
+  expect(attribute(playing, "vat-figure", "data-dip")).toEqual(["2"]);
+  expect(attribute(playing, "vat-figure", "data-phase")).toEqual(["lifted"]);
+  expect([...playing.matchAll(/<li aria-current="step"[^>]*data-frame="([a-z]+)"/g)].map((found) => found[1])).toEqual(["lifted"]);
+  expect(attribute(playing, "vat-frame", "aria-pressed")).toEqual(["false", "true", "false"]);
+  expect(vatPlay(playing)).toContain('aria-pressed="true"');
+  expect(vatPlay(playing)).toContain("<span>Pause</span>");
+  expect(attribute(playing, "vat-status", "aria-live")).toEqual(["off"]);
+  expect(shownText(playing)).toContain("Dip 2 of 4. Lifted out, the cloth is green.");
+  const still = withApp(createElement(VatFigureView, { block, number: 1, play: stillPlay(VAT_REST) }), { numbers: vatNumbers(block), sourcesById: new Map() });
+  expect(vatPlay(still)).toContain("<span>Play</span>");
+  expect(vatPlay(still)).not.toContain("aria-pressed");
+  expect(attribute(still, "vat-status", "aria-live")).toEqual(["polite"]);
 });
 
 test("the vat figure rests on its third frame with every sentence of the block cited once, the equation and its atom count", () => {
   const block = vat();
-  const numbers = new Map([...signatureSentences(block).flatMap((sentence) => sentence.citations.map((citation) => citation.sourceId)), ...signatureSourceIds(block)].map((id, index): [string, number] => [id, index + 1]));
+  const numbers = vatNumbers(block);
   const html = withApp(createElement(VatFigure, { block, number: 1 }), { numbers, sourcesById: new Map() });
   expect(html).toMatch(/Fig\.(?: |<!-- -->)+<b>1<\/b>/);
   expect(attribute(html, "vat-frames", "data-testid")).toHaveLength(1);
   expect([...html.matchAll(/data-frame="([a-z]+)"/g)].map((found) => found[1])).toEqual(["in", "lifted", "air"]);
   expect([...html.matchAll(/<li aria-current="step"[^>]*data-frame="([a-z]+)"/g)].map((found) => found[1])).toEqual(["air"]);
+  expect(attribute(html, "vat-frame", "aria-pressed")).toEqual(["false", "false", "true"]);
+  expect(attribute(html, "vat-figure", "data-plays")).toEqual(["view"]);
   expect(shownText(html)).toContain("Dip 1 of 4. In the air the cloth turns from green to blue.");
-  expect(attribute(html, "vat-dip", "data-variant")).toEqual(["quiet"]);
+  expect(attribute(html, "vat-play", "data-variant")).toEqual(["quiet"]);
+  expect(html).not.toContain("Dip again");
+  expect(html).not.toContain("Start again");
   const drawn = attribute(html, "answer-sentence", "data-sentence-id");
   expect(new Set(drawn).size).toBe(drawn.length);
   expect(attribute(html, "citation-chip", "data-numbers").join(",")).not.toContain("·");

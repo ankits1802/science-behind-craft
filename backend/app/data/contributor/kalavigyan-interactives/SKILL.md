@@ -153,7 +153,8 @@ design's bar or left out.
   playing goes on from it. A 3D molecule turns slowly in view and holds still under the pointer,
   in focus or paused. A dated record plays its events with one Play and a point to press for each.
   An answer's players, molecules, timeline maps, moving kit figures and what-if labs play the same
-  way, on the site and in the MCP answer view (decision 0238).
+  way, on the site and in the MCP answer view (decision 0238), as do its vat figure, zoom story and
+  river story, a places map's sequence and a stored explainer's own Play (decision 0242).
 - Under either reduced-motion switch (`prefers-reduced-motion`, `html[data-reduced-motion="true"]`)
   nothing moves or plays: the figure rests on its state with every end state drawn, and each press
   shows the next state at once and announces it.

@@ -5,9 +5,11 @@ import { join } from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { STEP_SECONDS } from "@/lib/reactionPlayer";
-import { TIMELINE_STEP_MS } from "@/lib/timelinePlay";
+import { POINT_GAP_PERCENT, pointPositions, spreadPositions, TIMELINE_STEP_MS } from "@/lib/timelinePlay";
+import { stopLabel, timelineEntries, timelineStops } from "@/lib/timelineView";
 
 import { FRONTEND } from "./moduleGraph";
+import { phaseCBlock } from "./playFixture";
 
 const VIEW = readFileSync(join(FRONTEND, "..", "backend", "app", "data", "design", "answer-view.html"), "utf8");
 const THEME = readFileSync(join(FRONTEND, "app", "tokens.css"), "utf8");
@@ -155,6 +157,24 @@ test("the timeline has no slider: it rests on its last year, a point pressed jum
   await expect(dated.locator(".kv-play")).toHaveAttribute("aria-pressed", "false");
   await page.keyboard.press(" ");
   await expect(dated.locator(".kv-play")).toHaveAttribute("aria-pressed", "true");
+});
+
+test("the timeline's points are placed by year as on the web, not evenly, and each is labelled as the web writes its span", async ({ page }) => {
+  expect(VIEW).toContain(`POINT_GAP_PERCENT = ${POINT_GAP_PERCENT}`);
+  await shown(page, "allowed");
+  const points = timeline(page).locator(".kv-track button");
+  const years = await points.evaluateAll((nodes) => nodes.map((node) => Number(node.getAttribute("data-year"))));
+  const placed = await points.evaluateAll((nodes) => nodes.map((node) => parseFloat((node as HTMLElement).style.insetInlineStart)));
+  expect(years).toEqual([1401, 1586, 2001]);
+  expect(placed).toEqual([0, 30.83, 100]);
+  expect(placed).toEqual(spreadPositions(pointPositions(years)));
+  expect(placed[1]).not.toBe(50);
+  const source = phaseCBlock("timeline_map", "s4.b1");
+  const entries = timelineEntries(source);
+  const labels = await points.evaluateAll((nodes) => nodes.map((node) => node.getAttribute("aria-label")));
+  expect(labels).toEqual(timelineStops(entries).map((stop) => stopLabel(entries, stop)));
+  expect(labels).toEqual(["15th century", "1586", "2001"]);
+  await expect(timeline(page).locator(".kv-ends span").first()).toHaveText("15th century");
 });
 
 test("a molecule turns slowly once in view, holds under the pointer and on Pause", async ({ page }) => {

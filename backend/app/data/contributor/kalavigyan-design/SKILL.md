@@ -349,7 +349,7 @@ thumb.
 | dip | cloth going into a bath: a band fills from the bottom (clip-path) | choosing a stage on the living cloth | the band shown filled |
 | oxidise | leuco green turning indigo in air from the top edge down | stage 8, the vat's last phase | the blue end state with the green as a still frame beside it |
 | press | a citation numeral or the Saved mark settling from 1.02 to 1 | pressing it | the state changes at once |
-| vat | dip, hold lifted and green, oxidise: the one orchestrated animation | landing: once per visit and Play again; VatFigure: Dip again | the finished blue cloth and the three captioned phases as stills |
+| vat | dip, hold lifted and green, oxidise: the one orchestrated animation | landing: once per visit and Play again; VatFigure: in view, looping, one Play/Pause | the finished blue cloth and the three captioned phases as stills |
 
 - **The vat on the landing** tints only the authored dyed-region mask of the photograph (green
   rises with a 3 per cent meniscus, blue returns from the top with a 12 per cent ragged edge),
@@ -358,8 +358,9 @@ thumb.
   key `kv-vat-played`, read and written in try/catch). The photograph is never at opacity 0 and
   the tint layer is off the LCP path (the 960 hero preloaded with `fetchpriority="high"`). The
   label's steps are non-pressable progress with one quiet Play again text button and an
-  `aria-live` status naming each phase. The answer's VatFigure plays it on the drawn cloth from
-  Dip again, steps `--dip-1…4` and offers Start again after the fourth dip. The authored mask
+  `aria-live` status naming each phase. The answer's VatFigure plays it on the drawn cloth once in
+  view, a phase a beat through dips `--dip-1…4`, looping, with one Play/Pause and each frame to
+  press (decision 0242). The authored mask
   reaches the tint as `--vat-mask: url(…)` on the `vat-tint` layer, intersected with the two
   moving edges. Under either reduced-motion switch, `useVatMoment().play` steps one still phase
   per press (in the vat, lifted, in the air, rest) and announces it; autoplay shows the rest
@@ -370,7 +371,10 @@ thumb.
   status `aria-live="off"` while they play; a step pressed plays on from there; the player holds
   the height of its tallest step so nothing around it moves. Under either switch none of them moves.
   An answer's figures do the same, on the site and in the MCP answer view, a kit figure that names a
-  motion and a what-if lab with them, and an answer's timeline map has no slider (decision 0238).
+  motion and a what-if lab with them, and an answer's timeline map has no slider (decision 0238);
+  so do the vat figure, the zoom story by its levels, the river story by its reaches, a places
+  map's sequence, which loops, and a stored explainer whose own Play the frame presses in view
+  (decision 0242).
 - **Reduced motion has two switches**: `prefers-reduced-motion` and
   `html[data-reduced-motion="true"]`, read before anything moves. The end state is the default
   style; motion is added only under a variant that checks both; under either, `animation` and
@@ -463,7 +467,7 @@ state and prop is in SYSTEM.md section 3.
 | MapLegend, RankedList | `map/*` (today `map/ChoroplethLegend.tsx`), `map/RankedList.tsx` | Stepped legend with labelled breaks in the unit, salt, water, place and no-reading swatches; under the map on a phone, over open sea from 768px. The ranked list beside every map: top ten, then "All N". |
 | Formula, Swatch | `chem/Formula.tsx`, `chem/Swatch.tsx` (new; today `answer/ChemEquation.tsx`) | True subscripts at 12px or more, the equation rule; swatches framed with the weave texture. |
 | LivingCloth | `cloth/*` (new, one SVG engine) | One deterministic ajrakh drawing in its eleven states; stage buttons are a `role="toolbar"` with roving tabindex, each `aria-pressed`. |
-| VatFigure | `answer/VatFigure.tsx` | Three frames with the current frame's ink rule, Dip again, live status, the balanced equation with its atom count. |
+| VatFigure | `answer/VatFigure.tsx` | Three frames to press with the current frame's ink rule, one Play/Pause, live status, the balanced equation with its atom count. |
 
 **Shell and status**
 

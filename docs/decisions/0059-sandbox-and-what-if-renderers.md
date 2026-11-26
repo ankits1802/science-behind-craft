@@ -14,6 +14,7 @@ Date: 2026-11-18. Status: accepted.
 | The frame's document carries the design's tokens and the reduced-motion switch (amends this record) | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
 | The frame also runs a contributor's coded figure, held to the sandbox's safety rules alone (amends this record) | [decision 0231](0231-a-contributor-s-ai-writes-a-figure-s-code-over-the-page-s-cited-data.md) |
 | The what-if lab plays its options in view and the frame tells an explainer when it is seen (amends this record) | [decision 0238](0238-an-answer-s-figures-play-like-a-page-s-on-the-site-and-over-mcp.md) |
+| The frame presses a stored explainer's own Play in view and its Pause out of view (amends this record) | [decision 0242](0242-every-moving-figure-plays-the-vat-the-zoom-the-river-a-map-s-sequence-and-a-stored-explainer.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

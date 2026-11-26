@@ -28,6 +28,7 @@ layer credits and the boundary note). The contract is `docs/contracts/component-
 | The still the server cuts to a map's frame | [decision 0220](0220-a-declared-timeline-map-complete-at-rest-from-a-still-the-server-cuts-to-its-frame.md) |
 | The map stack, its physical layers and its still cuts | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md), [decision 0220](0220-a-declared-timeline-map-complete-at-rest-from-a-still-the-server-cuts-to-its-frame.md) |
 | Motion, the reduced-motion switches and the design's map tokens | `kalavigyan-design`, sections 3 and 6 |
+| The sequence loops through the shared play-in-view code instead of stopping on its last step (amends this record) | [decision 0242](0242-every-moving-figure-plays-the-vat-the-zoom-the-river-a-map-s-sequence-and-a-stored-explainer.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

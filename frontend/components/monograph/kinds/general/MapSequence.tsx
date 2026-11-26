@@ -1,10 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Pause, Play } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { useMotionAllowed } from "@/components/motion/useMotionAllowed";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
 import type { MapStepSpec } from "@/lib/componentSpecsMapLayer";
+import { stepPosition } from "@/lib/reactionPlayer";
 import { cn } from "@/lib/utils";
 
 import type { SequenceControls } from "./useMapSequence";
@@ -16,13 +17,14 @@ type SequenceProps = { steps: readonly MapStepSpec[]; play: SequenceControls; re
 const STEP = "grid size-11 place-items-center rounded-full font-ui text-label font-medium transition-colors duration-state [font-variant-numeric:lining-nums_tabular-nums]";
 
 export function MapSequence({ steps, play, renderUnit }: SequenceProps) {
+  const motion = useMotionAllowed();
   return (
-    <div className="grid min-w-0 gap-2" data-testid="map-sequence">
+    <div className="grid min-w-0 gap-2" data-testid="map-sequence" data-plays="view">
       <div className="flex min-w-0 items-center gap-3">
-        <Button variant="quiet" size="sm" onClick={play.toggle} data-testid="map-sequence-play">
-          {play.playing ? <Pause className="size-3.5" aria-hidden /> : <Play className="size-3.5" aria-hidden />}
-          <span>{play.playing ? "Pause" : "Play"}</span>
-        </Button>
+        <PlayPauseButton playing={play.playing} motion={motion} onToggle={play.toggle} testId="map-sequence-play" />
+        <p className="font-ui text-label text-ink-2 [font-variant-numeric:lining-nums_tabular-nums]" role="status" aria-live={play.playing ? "off" : "polite"} data-testid="map-sequence-status">
+          {stepPosition(play.at, steps.length)}
+        </p>
       </div>
       <ol className="grid min-w-0" aria-label={STEPS_LABEL} data-testid="map-steps">
         {steps.map((step, at) => {

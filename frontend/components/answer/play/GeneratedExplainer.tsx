@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AlertCircle, Code2, Eye, EyeOff } from "lucide-react";
 
 import { useAnswerId } from "@/components/answer/AnswerContext";
@@ -13,6 +13,7 @@ import { ActionGroup } from "@/components/ui/ActionGroup";
 import { Button } from "@/components/ui/button";
 import type { SimulationBlock } from "@/lib/explainerPlay";
 import { canHideGenerated } from "@/lib/permissions";
+import { explainerPieces } from "@/lib/sandboxFrame";
 import { generatedCaption, keptAsPiece, valueBases } from "@/lib/simulationView";
 
 const FIGURE = "kv-figure m-0 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4";
@@ -76,6 +77,7 @@ function ExplainerActions({ block, code, onCode, hiding }: { block: SimulationBl
 
 export function GeneratedExplainerView({ block, canHide, hiding }: { block: SimulationBlock; canHide: boolean; hiding: HidingControls | null }) {
   const [code, setCode] = useState(false);
+  const pieces = useMemo(() => explainerPieces(block.html), [block.html]);
   const bases = valueBases(block);
   if (bases === null) return null;
   if (hiding?.hidden ?? block.hidden) return canHide ? <HiddenExplainer block={block} hiding={hiding} /> : null;
@@ -88,7 +90,7 @@ export function GeneratedExplainerView({ block, canHide, hiding }: { block: Simu
           {block.title}
         </h3>
       </header>
-      <SandboxFrame block={block} />
+      <SandboxFrame block={block} pieces={pieces} />
       <GeneratedSources values={block.values} bases={bases} grounds={block.grounds ?? []} reactions={block.reactions ?? []} />
       <ExplainerActions block={block} code={code} onCode={() => setCode((open) => !open)} hiding={hiding} />
       {code ? <GeneratedCode id={`${block.id}-code`} html={block.html} /> : null}

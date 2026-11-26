@@ -8,7 +8,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { BLOCK_RENDERERS } from "@/components/answer/blockRenderers";
 import { MapLayerBlockView } from "@/components/answer/place/MapLayerBlockView";
-import { RegionStory } from "@/components/answer/place/RegionStory";
+import { RegionStory, storyFocus, StoryTools } from "@/components/answer/place/RegionStory";
 import { RiverStage, type StageFocus } from "@/components/answer/place/RiverStage";
 import { SeasonsStrip } from "@/components/answer/place/SeasonsStrip";
 import { boxesMeet, saltInView, storyGeometry, storyTone, type StoryGeometry } from "@/components/answer/place/storyGeometry";
@@ -16,6 +16,7 @@ import { PLACE_KEY, StoryKey } from "@/components/answer/place/StoryKey";
 import { StorySteps } from "@/components/answer/place/StorySteps";
 import { SupplyMapView } from "@/components/answer/place/SupplyMapView";
 import { useRiverFlow, type RiverFlow } from "@/components/answer/place/useRiverFlow";
+import type { StoryLayer } from "@/components/answer/place/useStoryLayer";
 import { SALT_EXTRA } from "@/components/map/ChoroplethLegend";
 import { PLACE_PATTERN } from "@/components/map/MapBase";
 import { project } from "@/components/map/projection";
@@ -26,14 +27,34 @@ import { HYDRORIVERS_DATASET_CODE, type MapLayerBlock, type RegionStoryBlock, ty
 import { blockCitations, blockSentences } from "@/lib/explainerView";
 import { isGone } from "@/lib/placeView";
 import type { RegionDataset } from "@/lib/regionContract";
-import { ALL_PASSED, districtEntries, flowThresholds, NOT_YET, passedFraction, playingStep, riverCourse, stepBadges, stretchOf, type Course, type CourseSpan } from "@/lib/regionStory";
+import {
+  ALL_PASSED,
+  ALL_REACHED,
+  districtEntries,
+  flowSeconds,
+  flowStart,
+  flowsOn,
+  flowThresholds,
+  FLOW_SECONDS,
+  NOT_YET,
+  passedFraction,
+  riverCourse,
+  stepBadges,
+  STOP_HOLD_MS,
+  stopBeat,
+  storyStatus,
+  storyStops,
+  stretchOf,
+  type Course,
+  type CourseSpan
+} from "@/lib/regionStory";
 import { cumulativeLengths, framedView, joinLines, lineLength, orientDownstream, pointAlong, type Point } from "@/lib/riverGeometry";
 import { riverBasinOf, type RiverBasin } from "@/lib/riverTopology";
 import { annualRain, monthsText, rainfallFinding, rainText, wettestMonth } from "@/lib/seasonsView";
 import { parseShape } from "@/lib/shape";
 import { supplyLayout } from "@/lib/supplyView";
 
-import { attribute, withApp, withReading } from "./explainerRender";
+import { attribute, stillPlay, withApp, withReading } from "./explainerRender";
 import { eagerModules } from "./moduleGraph";
 
 const ROOT = join(__dirname, "..", "..");
@@ -81,11 +102,11 @@ function storyGeometryOfFixture(drawnFrom: RiverBasin = basin()): StoryGeometry 
 }
 
 function still(): RiverFlow {
-  return { progress: motionValue(1), moving: false, passed: ALL_PASSED, replay: null };
+  return { progress: motionValue(1), moving: false, passed: ALL_PASSED };
 }
 
 function moving(): RiverFlow {
-  return { progress: motionValue(0), moving: true, passed: NOT_YET, replay: null };
+  return { progress: motionValue(0), moving: true, passed: NOT_YET };
 }
 
 function focusOf(flow: RiverFlow, geometry: StoryGeometry, district: number | null = null, stretch = false): StageFocus {
@@ -163,7 +184,6 @@ test("districts light where the basin file says the water enters them, in the se
   expect(stretchOf(unknown, 2)).toEqual([]);
   expect(flowThresholds(new Map([[1, 0], [2, 0.5]]), [0.5, 1])).toEqual([0, 0.5, 1]);
   expect([passedFraction([0, 0.5, 1], -0.1), passedFraction([0, 0.5, 1], 0.4), passedFraction([0, 0.5, 1], 1)]).toEqual([NOT_YET, 0, 1]);
-  expect([playingStep([0, 0.5, 1, 0], 0.6), playingStep([0.5, 0.5], 0.5), playingStep([0, 0.5], 1), playingStep([0, 0.5], NOT_YET)]).toEqual([1, 0, null, null]);
   expect(stepBadges(story().steps)).toEqual([]);
   const steps = placedStory().steps;
   expect(stepBadges(steps)).toEqual([{ districtLgd: KACHCHH, label: "1–4", first: 0 }]);
@@ -188,14 +208,14 @@ test("the Kutch Ajrakh story is drawn from the geo ETL's basin file and the real
   expect(geometry.river?.stretches.get(KACHCHH)?.match(/M/g)).toHaveLength(3);
 });
 
-test("the story rests complete, with the full river, every reached district and every step; the flow plays only when asked", () => {
-  function Probe({ reduce, drawn = true }: { reduce: boolean; drawn?: boolean }) {
-    const flow = useRiverFlow([0, 1], { expected: true, drawn }, reduce);
-    return createElement("span", { "data-moving": String(flow.moving), "data-passed": flow.passed, "data-replay": String(flow.replay !== null) });
+test("the story rests complete, with the full river, every reached district and every step, until it plays its reaches", () => {
+  function Probe({ at, drawn = true }: { at: number; drawn?: boolean }) {
+    const flow = useRiverFlow([0, 0.5, 1], { stops: [0, 0.5, 1], at, playing: false }, drawn);
+    return createElement("span", { "data-moving": String(flow.moving), "data-passed": flow.passed });
   }
-  expect(renderToStaticMarkup(createElement(Probe, { reduce: true }))).toContain('data-moving="false" data-passed="1" data-replay="false"');
-  expect(renderToStaticMarkup(createElement(Probe, { reduce: false }))).toContain('data-moving="false" data-passed="1" data-replay="true"');
-  expect(renderToStaticMarkup(createElement(Probe, { reduce: false, drawn: false }))).toContain('data-moving="false" data-passed="1" data-replay="false"');
+  expect(renderToStaticMarkup(createElement(Probe, { at: 2 }))).toContain('data-moving="false" data-passed="1"');
+  expect(renderToStaticMarkup(createElement(Probe, { at: 1 }))).toContain('data-moving="true"');
+  expect(renderToStaticMarkup(createElement(Probe, { at: 1, drawn: false }))).toContain('data-moving="false" data-passed="1"');
 
   const full = stage(still());
   expect(attribute(full, "river-course", "data-flow")).toEqual(["still"]);
@@ -218,6 +238,56 @@ test("the story rests complete, with the full river, every reached district and 
   expect(attribute(steps, "story-step", "data-reached")).toEqual(["true", "true", "true", "true"]);
   expect(steps).toContain("Kachchh · Gujarat");
   for (const step of placedStory().steps) expect(steps).toContain(step.sentence.text);
+});
+
+test("the water stops at each step's district in turn, never going back up the river, and then at the outlet", () => {
+  const steps = placedStory().steps;
+  const entries = new Map([[KACHCHH, 0.25], [7, 0.75], [8, 0.5]]);
+  const mixed = [steps[0], { ...steps[1], districtLgd: 7 }, { ...steps[2], districtLgd: 8 }, { ...steps[3], districtLgd: null }];
+  expect(storyStops(mixed, entries)).toEqual([0.25, 0.75, 0.75, 0.75, ALL_PASSED]);
+  expect(storyStops([{ ...steps[0], districtLgd: null }], entries)).toEqual([0, ALL_PASSED]);
+  expect(storyStops(steps, storyGeometryOfFixture().entries)).toEqual([0, 0, 0, 0, ALL_PASSED]);
+  const stops = [0.25, 0.75, ALL_PASSED];
+  expect(FLOW_SECONDS).toBe(5);
+  expect([stopBeat(stops, 0), stopBeat(stops, 1), stopBeat(stops, 2)]).toEqual([1250 + STOP_HOLD_MS, 2500 + STOP_HOLD_MS, 1250 + STOP_HOLD_MS]);
+  expect([flowSeconds(0.25, 0.75), flowSeconds(0.75, 0.25)]).toEqual([2.5, 0]);
+  expect([flowStart(1, 0.25), flowStart(0.25, 0.75)]).toEqual([0, 0.25]);
+});
+
+test("the water flows only to the next stop while playing; a stop pressed, a pause or a still page shows its water at once", () => {
+  expect(flowsOn(0, 1, 3, true)).toBe(true);
+  expect(flowsOn(2, 0, 3, true)).toBe(true);
+  expect(flowsOn(0, 2, 3, true)).toBe(false);
+  expect(flowsOn(0, 1, 3, false)).toBe(false);
+  expect(flowsOn(1, 1, 3, true)).toBe(false);
+  expect(flowsOn(null, 0, 3, true)).toBe(false);
+});
+
+test("the story names the step it shows and its district, and at rest that the water has reached every district", () => {
+  const block = placedStory();
+  expect(storyStatus(block, 1)).toBe("Step 2 of 4: Kachchh · Gujarat");
+  expect(storyStatus(story(), 0)).toBe("Step 1 of 4");
+  expect(storyStatus(block, 4)).toBe(ALL_REACHED);
+  const geometry = storyGeometryOfFixture();
+  const choose = () => undefined;
+  const resting = storyFocus(block, geometry, ALL_PASSED, { at: 4, choose });
+  expect([resting.step, resting.focus.district, resting.focus.stretch, resting.focus.reached]).toEqual([null, null, false, [true, true, true, true]]);
+  const shown = storyFocus(block, geometry, NOT_YET, { at: 1, choose });
+  expect([shown.step, shown.focus.district, shown.focus.stretch, shown.focus.reached]).toEqual([1, KACHCHH, true, [false, false, false, false]]);
+});
+
+test("a drawn river has one Play that reads Pause while the water flows; a story without a river has none", () => {
+  const layers: StoryLayer = { offered: [], chosen: null, choose: () => undefined, layer: { data: null, failure: null, retry: () => undefined } };
+  const tools = (play: ReturnType<typeof stillPlay>, drawn: boolean) => renderToStaticMarkup(createElement(StoryTools, { story: layers, played: { play, drawn }, base: "Water" }));
+  const resting = tools(stillPlay(4), true);
+  expect(resting).toContain('data-testid="story-play"');
+  expect(resting).toContain("<span>Play</span>");
+  expect(resting).not.toContain("aria-pressed");
+  const playing = tools(stillPlay(1, true, true), true);
+  expect(playing).toContain('aria-pressed="true"');
+  expect(playing).toContain("<span>Pause</span>");
+  expect(tools(stillPlay(4), false)).toBe("");
+  expect(withApp(createElement(RegionStory, { block: story() }))).not.toContain("Follow the water");
 });
 
 test("a step the server could not place in a district its sentence names is numbered, with no district and no badge", () => {
