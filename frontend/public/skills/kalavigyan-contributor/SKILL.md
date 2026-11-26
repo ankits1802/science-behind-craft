@@ -308,16 +308,14 @@ Two kinds of task are completed by a component, each named as the proposal's `ta
   facts. A page's edition `/crafts/<slug>/v<N>` and the rest of a page drawn at that version stay readable after a rebuild, until something is removed, edited, withdrawn or retracted from the page, which drops its earlier editions (the one current then once the web has refreshed the page); a page drawn at a dropped version reads the rest of the current one, and Monograph parity names a page whose rest could not be read. A close match in the library refuses it with the matches and two ways on. An Admin's
   approval registers it so every page it applies to draws it; a Professor's or Admin's own is
   registered at once.
-- **Maps.** Never draw geography: the site draws its own base under every map (relief, rivers,
-  the Survey of India outline with state and district lines, the home district hatched, a scale and
-  the India locator). Places and what lies around them, a move, a ring of a stated radius, a value
-  per district or a story told in steps: a declared `map_layer` (decision 0232; the cookbook's
-  `map_layer`). Places through time: a declared `timeline_map`: name each place by the Wikidata
+- **Maps.** Never draw geography: the site draws its own base under every map. For the places
+  your page names, declare a `map_layer` (its cookbook entry lists what it can ask for). Places
+  through time: a declared `timeline_map`: name each place by the Wikidata
   `qid` `lookup` found, its LGD district, or a coordinate a fact states (`at`); caption every place
   with a point, route or undated fact whose unit states its years, names its place or states the
   move; ask for `relief`, `rivers`, `minerals` or a district layer by name, and send no coordinates
-  or credits. A map story beyond these: a `coded_figure` drawing through `map` and `kvMap`. The
-  server refuses a place it cannot resolve, by name; a `drawing` or your own SVG that is a map is
+  or credits. Anything past these is yours to code (the cookbook's `coded_figure`). The server
+  refuses a place it cannot resolve, by name; a `drawing`, or SVG of your own, that is a map is
   refused (the dataset guide, Maps of places).
 - A figure drawn from a table of values rests on a dataset, not on one fact per value:
   `propose_dataset` gives the dataset's record (`datasets.md`, Recording a dataset) and returns a
