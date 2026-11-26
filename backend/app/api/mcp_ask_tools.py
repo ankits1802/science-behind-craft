@@ -15,6 +15,7 @@ from app.research.mcp_ask import ANSWER_VIEW_URI, AskedAnswer, asked_answer
 from app.research.vocabulary import AnswerLanguage, Depth
 from app.services.answering import AnswerAsk
 from app.services.explainer_history import UnknownExplainer
+from app.services.mcp_ask_molecules import drawn_molecules
 
 from .mcp_ask_run import (
     AskTools,
@@ -77,7 +78,9 @@ def ask_tool(tools: AskTools) -> Tool:
             document = await tools.stored(context.session, outcome.answer_id, user.id)
         except UnknownExplainer:
             raise InvalidInput(NOT_KEPT) from None
-        return asked_answer(document, site=context.site, data_note=DATA_NOTE)
+        return await drawn_molecules(
+            asked_answer(document, site=context.site, data_note=DATA_NOTE), tools.conformers
+        )
 
     return Tool(
         "ask",

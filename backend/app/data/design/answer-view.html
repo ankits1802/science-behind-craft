@@ -22,7 +22,7 @@ section{padding-top:24px;margin-top:24px;border-top:1px solid var(--ink-1)}
 .kv-cite{font-family:var(--font-ui);font-size:max(0.6875rem,0.62em);font-weight:500;font-variant-numeric:lining-nums tabular-nums;line-height:0;vertical-align:super;white-space:nowrap}
 a{color:var(--indigo);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{color:var(--indigo-hover);text-decoration-thickness:2px}
-a:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
 .kv-cite a{text-decoration:none}
 .kv-card{display:grid;gap:6px;margin:16px 0;padding:16px;background:var(--raised);border:1px solid var(--rule-strong);border-radius:6px}
 .kv-card .kv-kicker{margin:0}
@@ -33,7 +33,51 @@ li{margin:0 0 12px}
 footer{margin-top:32px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--font-ui);font-size:var(--text-caption);color:var(--ink-3)}
 footer p{margin:0 0 8px}
 .kv-status{font-family:var(--font-ui);font-size:var(--text-ui);color:var(--ink-2)}
-@media (forced-colors: active){.kv-cite a{color:LinkText}}
+.kv-fig{display:grid;gap:12px;min-width:0;margin:20px 0;padding-top:12px;border-top:1px solid var(--ink-1)}
+.kv-fig *{min-width:0;overflow-wrap:anywhere}
+.kv-fig figcaption{display:grid;gap:4px}
+.kv-fig figcaption .kv-kicker{margin:0}
+.kv-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px}
+.kv-say{flex:1 1 12rem;margin:0;min-height:calc(1.4em * 2);font-family:var(--font-ui);font-size:var(--text-label);line-height:1.4;color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.kv-play{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--rule-strong);border-radius:4px;background:var(--raised);color:var(--ink-1);font-family:var(--font-ui);font-size:var(--text-ui);font-weight:500;cursor:pointer}
+.kv-play:hover{background:var(--sunk)}
+.kv-rail{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.kv-rail li{margin:0}
+.kv-rail button{display:inline-flex;align-items:center;gap:6px;min-height:44px;max-width:100%;padding:4px 10px;border:1px solid var(--rule-strong);border-radius:4px;background:var(--raised);color:var(--ink-1);font-family:var(--font-ui);font-size:var(--text-label);text-align:start;cursor:pointer}
+.kv-rail button[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-wash);color:var(--indigo-hover)}
+.kv-rail b{font-weight:600;font-variant-numeric:lining-nums tabular-nums}
+.kv-stack{display:grid;grid-template-columns:minmax(0,1fr)}
+.kv-stack>*{grid-area:1/1;min-width:0}
+.kv-stack>[aria-hidden="true"]{visibility:hidden}
+.kv-panel{display:grid;gap:8px;align-content:start;padding:12px;background:var(--sunk)}
+.kv-panel h4{margin:0;font-family:var(--font-ui);font-size:var(--text-h4);font-weight:600;line-height:1.35}
+.kv-panel p{margin:0;font-size:var(--text-body-sm)}
+.kv-note{font-family:var(--font-ui);font-size:var(--text-caption);color:var(--ink-3)}
+.kv-eq{font-family:var(--font-reading);font-size:var(--text-body);font-variant-numeric:lining-nums;white-space:normal}
+.kv-species{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.kv-species li{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:4px;max-width:100%;margin:0;padding:2px 8px;border:1px solid var(--rule);border-radius:2px;background:var(--raised);font-family:var(--font-ui);font-size:var(--text-label)}
+.kv-species li[data-role="product"]{border-color:var(--ink-1)}
+.kv-species i{font-style:normal;color:var(--ink-3);font-size:var(--text-caption)}
+.kv-swatch{position:relative;display:block;height:48px;border:1px solid var(--ink-2);border-radius:2px;box-shadow:inset 0 0 0 2px var(--raised);overflow:hidden;forced-color-adjust:none}
+.kv-swatch>span{position:absolute;inset:2px}
+.kv-track{position:relative;height:44px}
+.kv-track::before{content:"";position:absolute;inset-inline:0;top:50%;height:1px;background:var(--ink-1)}
+.kv-track button{position:absolute;top:50%;display:grid;place-items:center;width:24px;height:24px;margin-inline-start:-12px;padding:0;border:0;border-radius:50%;background:transparent;transform:translateY(-50%);cursor:pointer}
+.kv-track button span{display:block;width:10px;height:10px;border:1px solid var(--ink-2);border-radius:50%;background:var(--raised)}
+.kv-track button[aria-pressed="true"] span{border-color:var(--indigo);background:var(--indigo)}
+.kv-ends{display:flex;justify-content:space-between;gap:12px;font-family:var(--font-ui);font-size:var(--text-caption);color:var(--ink-3);font-variant-numeric:lining-nums tabular-nums}
+.kv-year{margin:0;font-family:var(--font-headline);font-size:var(--text-h3);line-height:1.2;font-variant-numeric:lining-nums tabular-nums}
+.kv-mol{display:block;width:100%;height:auto;aspect-ratio:4/3;background:var(--sunk);border-radius:2px;touch-action:pan-y}
+.kv-mol text{font-family:var(--font-ui);font-weight:600;text-anchor:middle;dominant-baseline:central;fill:var(--mol-letter)}
+.kv-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media (prefers-reduced-motion: no-preference){
+:root:not([data-reduced-motion="true"]) .kv-swatch-after[data-playing="dip"],:root:not([data-reduced-motion="true"]) .kv-swatch-after[data-playing="take"]{animation:kv-dip var(--dur-dip) ease-in-out both}
+:root:not([data-reduced-motion="true"]) .kv-swatch-after[data-playing="dry"],:root:not([data-reduced-motion="true"]) .kv-swatch-after[data-playing="oxidise"]{animation:kv-oxidise var(--dur-oxidise) ease-in-out both}
+:root:not([data-reduced-motion="true"]) .kv-swatch-after[data-playing="react"]{animation:kv-oxidise var(--dur-vat) ease-in-out both}
+}
+@keyframes kv-dip{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes kv-oxidise{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@media (forced-colors: active){.kv-cite a{color:LinkText}.kv-rail button[aria-pressed="true"],.kv-track button[aria-pressed="true"] span{background:Highlight;color:HighlightText}}
 </style>
 </head>
 <body>
@@ -44,6 +88,17 @@ footer p{margin:0 0 8px}
   var root = document.getElementById("kv-answer");
   var nextId = 1;
   var initId = null;
+  var SVG = "http://www.w3.org/2000/svg";
+  var BEAT = { reaction: 4000, stages: 4000, dips: 2600, timeline: 3200 };
+  var KICKER = { reaction: "Reactions", stages: "Stages", dips: "Dips" };
+  var MOTION_ON = "data-reduced-motion";
+  var TURN_DEGREES_PER_SECOND = 15;
+  var QUARTER = 90;
+  var PITCH = 0.35;
+  var PAINT = /^(var\(--(dye|dip)-[a-z0-9-]+\)|color-mix\(in srgb, var\(--dye-[a-z0-9-]+\) \d{1,2}%, var\(--dye-[a-z0-9-]+\)\))$/;
+  var ATOM = /^[A-Z][a-z]?$/;
+  var reducedQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
+  var watchers = [];
 
   function send(message) {
     window.parent.postMessage(message, "*");
@@ -65,6 +120,32 @@ footer p{margin:0 0 8px}
     if (className) node.className = className;
     if (text !== undefined && text !== null) node.textContent = String(text);
     return node;
+  }
+
+  function svg(tag, attributes) {
+    var node = document.createElementNS(SVG, tag);
+    Object.keys(attributes || {}).forEach(function (name) { node.setAttribute(name, String(attributes[name])); });
+    return node;
+  }
+
+  function still() {
+    return reducedQuery.matches || document.documentElement.getAttribute(MOTION_ON) === "true";
+  }
+
+  function onMotion(fn) {
+    watchers.push(fn);
+  }
+
+  function motionChanged() {
+    watchers.forEach(function (fn) { fn(); });
+  }
+
+  if (reducedQuery.addEventListener) reducedQuery.addEventListener("change", motionChanged);
+  new MutationObserver(motionChanged).observe(document.documentElement, { attributes: true, attributeFilter: [MOTION_ON] });
+
+  function seen(node, fn) {
+    if (!("IntersectionObserver" in window)) { fn(true); return; }
+    new IntersectionObserver(function (entries) { entries.forEach(function (entry) { fn(entry.isIntersecting); }); }).observe(node);
   }
 
   function safeUrl(value) {
@@ -129,11 +210,408 @@ footer p{margin:0 0 8px}
     return aside;
   }
 
+  function playButton(label) {
+    var button = el("button", "kv-play");
+    button.type = "button";
+    button.appendChild(el("span", null, label || "Play"));
+    return button;
+  }
+
+  function stepper(options) {
+    var at = options.rest;
+    var wanted = true;
+    var inView = false;
+    var started = false;
+    var timer = 0;
+    function playing() { return wanted && inView && !still() && options.count > 1; }
+    function paint() {
+      var on = playing();
+      if (still()) options.button.removeAttribute("aria-pressed");
+      else options.button.setAttribute("aria-pressed", on ? "true" : "false");
+      options.button.firstChild.textContent = on ? "Pause" : "Play";
+      options.status.setAttribute("aria-live", on ? "off" : "polite");
+    }
+    function show(next, moves) {
+      at = next;
+      options.show(at, moves && !still());
+      options.status.textContent = options.say(at);
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (!playing()) return;
+      timer = setTimeout(function () {
+        if (still()) { sync(); return; }
+        show((at + 1) % options.count, true);
+        schedule();
+      }, options.beat);
+    }
+    function sync() {
+      paint();
+      if (playing() && !started) { started = true; show(0, true); }
+      schedule();
+    }
+    options.button.addEventListener("click", function () {
+      if (still()) { started = true; show((at + 1) % options.count, false); return; }
+      if (playing()) wanted = false;
+      else { wanted = true; inView = true; }
+      sync();
+    });
+    show(at, false);
+    paint();
+    seen(options.node, function (on) { inView = on; sync(); });
+    onMotion(sync);
+    return {
+      choose: function (next) { started = true; show(next, true); schedule(); },
+      toggle: function () { options.button.click(); }
+    };
+  }
+
+  function stacked(panels) {
+    var stack = el("div", "kv-stack");
+    panels.forEach(function (panel) { stack.appendChild(panel); });
+    return stack;
+  }
+
+  function mark(panels, at) {
+    panels.forEach(function (panel, index) {
+      if (index === at) panel.removeAttribute("aria-hidden");
+      else panel.setAttribute("aria-hidden", "true");
+      panel.inert = index !== at;
+    });
+  }
+
+  function paint(value) {
+    return typeof value === "string" && PAINT.test(value) ? value : null;
+  }
+
+  function swatch(step) {
+    var after = paint(step.after);
+    if (!after) return null;
+    var box = el("span", "kv-swatch");
+    box.setAttribute("aria-hidden", "true");
+    var below = el("span", "kv-swatch-before");
+    below.style.background = paint(step.before) || "var(--dye-cloth)";
+    var over = el("span", "kv-swatch-after");
+    over.style.background = after;
+    box.appendChild(below);
+    box.appendChild(over);
+    return box;
+  }
+
+  function replay(panel, motion) {
+    var over = panel.querySelector(".kv-swatch-after");
+    if (!over) return;
+    over.removeAttribute("data-playing");
+    void over.getBoundingClientRect();
+    over.setAttribute("data-playing", motion || "dip");
+  }
+
+  function speciesList(species) {
+    var shown = list(species);
+    if (!shown.length) return null;
+    var items = el("ul", "kv-species");
+    items.setAttribute("aria-label", "Species");
+    shown.forEach(function (one) {
+      var item = el("li", null, one.formula || one.name);
+      item.setAttribute("data-role", one.role === "product" ? "product" : "reactant");
+      if (one.formula && one.name && one.name !== one.formula) item.appendChild(el("i", null, one.name));
+      item.appendChild(el("span", "kv-sr", one.role === "product" ? ", a product" : ", a reactant"));
+      items.appendChild(item);
+    });
+    return items;
+  }
+
+  function stepPanel(step, number, count, sentences) {
+    var panel = el("div", "kv-panel");
+    panel.setAttribute("data-step", String(number));
+    panel.appendChild(el("h4", null, step.label));
+    if (step.note) panel.appendChild(el("p", "kv-note", step.note));
+    if (step.equation) panel.appendChild(el("p", "kv-eq", step.equation));
+    var species = speciesList(step.species);
+    if (species) panel.appendChild(species);
+    var cloth = swatch(step);
+    if (cloth) panel.appendChild(cloth);
+    var said = list(step.said).map(function (index) { return sentences[index]; }).filter(Boolean);
+    if (said.length) panel.appendChild(paragraph(said));
+    return panel;
+  }
+
+  function caption(kicker, title) {
+    var head = el("figcaption");
+    head.appendChild(el("p", "kv-kicker", kicker));
+    if (title) head.appendChild(el("h3", null, title));
+    return head;
+  }
+
+  function railKeys(rail, buttons, choose) {
+    rail.addEventListener("keydown", function (event) {
+      var at = buttons.indexOf(document.activeElement);
+      if (at < 0) return;
+      var keys = { ArrowRight: at + 1, ArrowDown: at + 1, ArrowLeft: at - 1, ArrowUp: at - 1, Home: 0, End: buttons.length - 1 };
+      if (!(event.key in keys)) return;
+      event.preventDefault();
+      var next = (keys[event.key] + buttons.length) % buttons.length;
+      choose(next);
+      buttons[next].focus();
+    });
+  }
+
+  function steppedFigure(figure, sentences) {
+    var steps = list(figure.steps);
+    var kind = BEAT[figure.kind] ? figure.kind : "reaction";
+    var box = el("figure", "kv-fig");
+    box.setAttribute("data-figure", kind);
+    box.appendChild(caption(KICKER[kind] || "Steps", figure.title));
+    var bar = el("div", "kv-bar");
+    var status = el("p", "kv-say");
+    status.setAttribute("role", "status");
+    var button = playButton();
+    bar.appendChild(status);
+    bar.appendChild(button);
+    var rail = el("ol", "kv-rail");
+    rail.setAttribute("aria-label", "Steps");
+    var panels = steps.map(function (step, index) { return stepPanel(step, index + 1, steps.length, sentences); });
+    var buttons = steps.map(function (step, index) {
+      var item = el("li");
+      var pick = el("button");
+      pick.type = "button";
+      pick.appendChild(el("b", null, index + 1));
+      pick.appendChild(el("span", null, step.label));
+      item.appendChild(pick);
+      rail.appendChild(item);
+      return pick;
+    });
+    box.appendChild(bar);
+    box.appendChild(rail);
+    box.appendChild(stacked(panels));
+    var player = stepper({
+      node: box,
+      count: steps.length,
+      rest: 0,
+      beat: BEAT[kind],
+      button: button,
+      status: status,
+      say: function (at) { return "Step " + (at + 1) + " of " + steps.length + ": " + steps[at].label; },
+      show: function (at, moves) {
+        box.setAttribute("data-step", String(at + 1));
+        mark(panels, at);
+        buttons.forEach(function (pick, index) {
+          pick.setAttribute("aria-pressed", index === at ? "true" : "false");
+          pick.tabIndex = index === at ? 0 : -1;
+        });
+        if (moves) replay(panels[at], steps[at].motion);
+      }
+    });
+    buttons.forEach(function (pick, index) { pick.addEventListener("click", function () { player.choose(index); }); });
+    railKeys(rail, buttons, player.choose);
+    return box;
+  }
+
+  function stopPanel(stop, sentences) {
+    var panel = el("div", "kv-panel");
+    panel.appendChild(el("h4", null, stop.label));
+    if (list(stop.places).length) panel.appendChild(el("p", "kv-note", list(stop.places).join(" · ")));
+    var said = list(stop.said).map(function (index) { return sentences[index]; }).filter(Boolean);
+    if (said.length) panel.appendChild(paragraph(said));
+    return panel;
+  }
+
+  function timelineFigure(figure, sentences) {
+    var stops = list(figure.stops);
+    var box = el("figure", "kv-fig");
+    box.setAttribute("data-figure", "timeline");
+    box.appendChild(caption("Through time", null));
+    var bar = el("div", "kv-bar");
+    var year = el("p", "kv-year");
+    var button = playButton();
+    bar.appendChild(year);
+    bar.appendChild(button);
+    var track = el("div", "kv-track");
+    track.setAttribute("role", "group");
+    track.setAttribute("aria-label", "Dated moments");
+    var status = el("p", "kv-sr");
+    status.setAttribute("role", "status");
+    var ends = el("div", "kv-ends");
+    ends.setAttribute("aria-hidden", "true");
+    ends.appendChild(el("span", null, stops[0].label));
+    ends.appendChild(el("span", null, stops[stops.length - 1].label));
+    var panels = stops.map(function (stop) { return stopPanel(stop, sentences); });
+    var points = stops.map(function (stop, index) {
+      var point = el("button");
+      point.type = "button";
+      point.setAttribute("aria-label", stop.label);
+      point.style.insetInlineStart = (stops.length > 1 ? (index * 100) / (stops.length - 1) : 50) + "%";
+      point.appendChild(el("span"));
+      track.appendChild(point);
+      return point;
+    });
+    box.appendChild(bar);
+    box.appendChild(track);
+    box.appendChild(ends);
+    box.appendChild(status);
+    box.appendChild(stacked(panels));
+    var player = stepper({
+      node: box,
+      count: stops.length,
+      rest: stops.length - 1,
+      beat: BEAT.timeline,
+      button: button,
+      status: status,
+      say: function (at) { return stops[at].label; },
+      show: function (at) {
+        box.setAttribute("data-step", String(at + 1));
+        year.textContent = stops[at].label;
+        mark(panels, at);
+        points.forEach(function (point, index) { point.setAttribute("aria-pressed", index === at ? "true" : "false"); });
+      }
+    });
+    points.forEach(function (point, index) {
+      point.addEventListener("click", function () { player.choose(index); });
+      point.addEventListener("keydown", function (event) {
+        if (event.key !== " ") return;
+        event.preventDefault();
+        player.toggle();
+      });
+      point.addEventListener("keyup", function (event) {
+        if (event.key === " ") event.preventDefault();
+      });
+    });
+    return box;
+  }
+
+  function atoms(geometry) {
+    return list(geometry && geometry.atoms).filter(function (atom) { return Array.isArray(atom) && ATOM.test(String(atom[0])) && atom.slice(1, 4).every(Number.isFinite); });
+  }
+
+  function moleculeDrawing(geometry) {
+    var held = atoms(geometry);
+    var bonds = list(geometry.bonds).filter(function (bond) { return Array.isArray(bond) && held[bond[0]] && held[bond[1]]; });
+    var reach = Math.max(1, Number(geometry.radius) || 1);
+    var picture = svg("svg", { viewBox: [-reach * 1.2, -reach * 0.9, reach * 2.4, reach * 1.8].join(" "), class: "kv-mol", role: "img" });
+    var group = svg("g", {});
+    picture.appendChild(group);
+    var drawn = held.map(function (atom) {
+      var node = svg("g", {});
+      var size = atom[0] === "H" ? 0.2 : 0.38;
+      var ball = svg("circle", { r: size, fill: "var(--atom-" + atom[0].toLowerCase() + ")", stroke: "var(--ink-2)", "stroke-width": 0.03 });
+      node.appendChild(ball);
+      if (atom[0] !== "C" && atom[0] !== "H") {
+        var letter = svg("text", { "font-size": size * 1.1 });
+        letter.textContent = atom[0];
+        node.appendChild(letter);
+      }
+      return { node: node, ball: ball, letter: node.querySelector("text") };
+    });
+    var lines = bonds.map(function () { return svg("line", { stroke: "var(--mol-bond)", "stroke-width": 0.08, "stroke-linecap": "round" }); });
+    function draw(yaw) {
+      var cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(PITCH), sp = Math.sin(PITCH);
+      var placed = held.map(function (atom) {
+        var x = cy * atom[1] + sy * atom[3], z = -sy * atom[1] + cy * atom[3];
+        return [x, cp * atom[2] - sp * z, sp * atom[2] + cp * z];
+      });
+      var order = [];
+      placed.forEach(function (point, index) {
+        drawn[index].ball.setAttribute("cx", point[0].toFixed(3));
+        drawn[index].ball.setAttribute("cy", (-point[1]).toFixed(3));
+        if (drawn[index].letter) { drawn[index].letter.setAttribute("x", point[0].toFixed(3)); drawn[index].letter.setAttribute("y", (-point[1]).toFixed(3)); }
+        order.push([point[2], drawn[index].node]);
+      });
+      bonds.forEach(function (bond, index) {
+        var from = placed[bond[0]], to = placed[bond[1]];
+        lines[index].setAttribute("x1", from[0].toFixed(3));
+        lines[index].setAttribute("y1", (-from[1]).toFixed(3));
+        lines[index].setAttribute("x2", to[0].toFixed(3));
+        lines[index].setAttribute("y2", (-to[1]).toFixed(3));
+        order.push([(from[2] + to[2]) / 2 - 0.1, lines[index]]);
+      });
+      order.sort(function (a, b) { return a[0] - b[0]; });
+      order.forEach(function (entry) { group.appendChild(entry[1]); });
+    }
+    return { picture: picture, draw: draw };
+  }
+
+  function moleculeFigure(figure) {
+    var box = el("figure", "kv-fig");
+    box.setAttribute("data-figure", "molecule");
+    box.appendChild(caption("Molecule", figure.title));
+    if (figure.formula) box.appendChild(el("p", "kv-eq", figure.formula));
+    if (!atoms(figure.geometry).length) return box;
+    var drawing = moleculeDrawing(figure.geometry);
+    drawing.picture.setAttribute("aria-label", figure.title + " in three dimensions");
+    var yaw = 0, wanted = true, inView = false, hovered = false, focused = false, frame = 0, last = 0;
+    var bar = el("div", "kv-bar");
+    var status = el("p", "kv-say");
+    status.setAttribute("role", "status");
+    var button = playButton("Turn");
+    bar.appendChild(status);
+    bar.appendChild(button);
+    box.appendChild(drawing.picture);
+    box.appendChild(bar);
+    function turning() { return wanted && inView && !hovered && !focused && !still(); }
+    function show() {
+      drawing.draw((yaw * Math.PI) / 180);
+      box.setAttribute("data-yaw", String(Math.round(yaw) % 360));
+      status.textContent = "Turned " + (Math.round(yaw) % 360) + " degrees";
+    }
+    function tick(now) {
+      frame = 0;
+      if (!turning()) return;
+      if (last) yaw += (Math.min(64, now - last) * TURN_DEGREES_PER_SECOND) / 1000;
+      last = now;
+      show();
+      frame = requestAnimationFrame(tick);
+    }
+    function sync() {
+      if (still()) { button.removeAttribute("aria-pressed"); button.firstChild.textContent = "Turn"; }
+      else { button.setAttribute("aria-pressed", wanted ? "true" : "false"); button.firstChild.textContent = wanted ? "Pause" : "Turn"; }
+      status.setAttribute("aria-live", turning() ? "off" : "polite");
+      if (turning() && !frame) { last = 0; frame = requestAnimationFrame(tick); }
+      if (!turning() && frame) { cancelAnimationFrame(frame); frame = 0; }
+    }
+    button.addEventListener("click", function () {
+      if (still()) { yaw += QUARTER; show(); return; }
+      wanted = !wanted;
+      sync();
+    });
+    box.addEventListener("pointerenter", function () { hovered = true; sync(); });
+    box.addEventListener("pointerleave", function () { hovered = false; sync(); });
+    box.addEventListener("focusin", function () { focused = true; sync(); });
+    box.addEventListener("focusout", function (event) { focused = box.contains(event.relatedTarget); sync(); });
+    show();
+    sync();
+    seen(box, function (on) { inView = on; sync(); });
+    onMotion(sync);
+    return box;
+  }
+
+  function figureOf(figure, sentences) {
+    if (!figure || typeof figure !== "object") return null;
+    if (figure.kind === "timeline" && list(figure.stops).length > 1) return timelineFigure(figure, sentences);
+    if (figure.kind === "molecule") return moleculeFigure(figure);
+    if (BEAT[figure.kind] && list(figure.steps).length > 1) return steppedFigure(figure, sentences);
+    return null;
+  }
+
+  function drawnIndices(figures) {
+    var drawn = {};
+    figures.forEach(function (figure) {
+      list(figure && (figure.steps || figure.stops)).forEach(function (part) {
+        list(part && part.said).forEach(function (index) { drawn[index] = true; });
+      });
+    });
+    return drawn;
+  }
+
   function section(part, number) {
     var block = el("section");
     block.appendChild(el("p", "kv-kicker", "Section " + number));
     block.appendChild(el("h2", null, part.title));
-    if (list(part.sentences).length) block.appendChild(paragraph(part.sentences));
+    var sentences = list(part.sentences);
+    var figures = list(part.figures).map(function (figure) { return { data: figure, node: figureOf(figure, sentences) }; }).filter(function (one) { return one.node; });
+    var drawn = drawnIndices(figures.map(function (one) { return one.data; }));
+    var prose = sentences.filter(function (sentence, index) { return !drawn[index]; });
+    if (prose.length) block.appendChild(paragraph(prose));
+    figures.forEach(function (one) { block.appendChild(one.node); });
     list(part.components).forEach(function (component) { block.appendChild(card(component)); });
     return block;
   }
@@ -183,6 +661,7 @@ footer p{margin:0 0 8px}
     if (list(answer.sources).length) parts.push(sources(answer.sources));
     parts.push(credit(answer));
     root.replaceChildren.apply(root, parts);
+    root.setAttribute("aria-live", "off");
     report();
   }
 

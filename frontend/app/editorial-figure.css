@@ -120,3 +120,22 @@
     }
   }
 }
+
+.kv-chem {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.kv-chem .katex-display > .katex,
+.kv-chem .katex {
+  max-inline-size: 100%;
+  white-space: normal;
+}
+
+.kv-chem-terms {
+  white-space: normal;
+}
+
+.kv-chem-term .katex {
+  white-space: nowrap;
+}

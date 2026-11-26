@@ -63,3 +63,28 @@ export async function earlierMolecule(page: Page, molecule: Locator): Promise<st
   const after = await changedFrom(turned, before, QUICK_MS);
   return unchangedProblems("the 3D molecule's Turn", before, after);
 }
+
+export async function earlierAnswerReactionPlayer(player: Locator): Promise<string[]> {
+  await player.scrollIntoViewIfNeeded();
+  const step = attribute(player, "data-step");
+  const before = await step();
+  if (before === "all") return ["the figure's reaction player shows every step at once and cannot be played"];
+  await player.getByRole("button", { name: "Next step" }).click();
+  const next = await changedFrom(step, before, QUICK_MS);
+  await player.getByTestId("reaction-step").first().getByRole("button").click();
+  const chosen = await reached(step, "1", QUICK_MS);
+  await player.getByTestId("reaction-play").click();
+  const pause = await player.getByTestId("reaction-pause").waitFor({ state: "visible", timeout: QUICK_MS }).then(
+    () => [],
+    () => ["the figure's reaction player shows no Pause after Play"]
+  );
+  const moved = await changedFrom(step, chosen, PLAY_MS);
+  const pauseButton = player.getByTestId("reaction-pause");
+  if (await pauseButton.isVisible()) await pauseButton.click();
+  return [
+    ...unchangedProblems("the figure's reaction player's Next step", before, next),
+    ...expectedProblems("the figure's reaction player's first step", "1", chosen),
+    ...pause,
+    ...unchangedProblems("the figure's reaction player while playing", chosen, moved)
+  ];
+}

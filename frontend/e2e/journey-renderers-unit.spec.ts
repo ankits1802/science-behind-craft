@@ -22,7 +22,7 @@ import { parseShape } from "@/lib/shape";
 import { entryState, placedPlaces, timelineEntries, timelineStops, yearSpanText } from "@/lib/timelineView";
 import { zoomSummary } from "@/lib/zoomView";
 
-import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownText, withApp } from "./explainerRender";
+import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownText, stillPlay, withApp } from "./explainerRender";
 import { eagerModules } from "./moduleGraph";
 import { PHASE_C, phaseCBlock } from "./playFixture";
 
@@ -221,7 +221,7 @@ test("points and routes are listed in time order, each with its years, places an
   expect(timelineStops(entries)).toEqual([1401, 1586, 2001]);
   expect(entries.map((entry) => entryState(entry, 1586))).toEqual(["past", "current", "current", "later"]);
   expect(placedPlaces(timeline(), INDIA_BOX).map((place) => [place.name, place.pin, place.beyond])).toEqual([["Fustat", 1, true]]);
-  const html = drawn(createElement(TimelineMapView, { block: timeline(), at: 2, onChoose: () => undefined }));
+  const html = drawn(createElement(TimelineMapView, { block: timeline(), play: stillPlay(2) }));
   const shown = shownText(html);
   expect(attribute(html, "timeline-map", "data-year")).toEqual(["2001"]);
   expect(attribute(html, "timeline-item", "data-kind")).toEqual(["point", "point", "route", "point"]);
@@ -234,29 +234,46 @@ test("points and routes are listed in time order, each with its years, places an
   expect(attribute(html, "timeline-entry-pin", "data-testid")).toHaveLength(1);
 });
 
-test("the slider runs over every point's and route's years and the map follows it", () => {
-  const latest = drawn(createElement(TimelineMapView, { block: timeline(), at: 2, onChoose: () => undefined }));
-  const slider = /<input[^>]*type="range"[^>]*>/.exec(latest)?.[0] ?? "";
-  for (const part of ['min="0"', 'max="2"', 'step="1"', 'value="2"', 'aria-valuetext="2001"']) expect(slider).toContain(part);
+test("the answer's timeline map has no slider: one Play/Pause over every year and a point to press for each, and the map follows it", () => {
+  const latest = drawn(createElement(TimelineMapView, { block: timeline(), play: stillPlay(2) }));
+  expect(latest).not.toContain('type="range"');
+  expect(latest).not.toContain("<input");
+  const points = [...latest.matchAll(/<button[^>]*data-testid="timeline-point"[^>]*>/g)].map((found) => found[0]);
+  expect(points.map((point) => /aria-label="([^"]+)"/.exec(point)?.[1])).toEqual(["15th century", "1586", "2001"]);
+  expect(points.map((point) => /aria-pressed="(\w+)"/.exec(point)?.[1])).toEqual(["false", "false", "true"]);
+  expect(attribute(latest, "timeline-points", "aria-label")).toEqual(["Dated moments on the map"]);
+  expect(latest).toMatch(/data-testid="timeline-play"[^>]*>.*?<span>Play<\/span>/);
+  expect(playTag(latest)).not.toContain("aria-pressed");
   expect([...latest.matchAll(/data-testid="timeline-year">([^<]+)</g)].map((found) => found[1])).toEqual(["2001"]);
   expect(latest).toMatch(/<span>15th century<\/span><span>2001<\/span>/);
-  const earliest = drawn(createElement(TimelineMapView, { block: timeline(), at: 0, onChoose: () => undefined }));
+  const earliest = drawn(createElement(TimelineMapView, { block: timeline(), play: stillPlay(0) }));
   expect(attribute(earliest, "timeline-map", "data-year")).toEqual(["1401"]);
   expect(attribute(earliest, "timeline-entry", "data-state")).toEqual(["current", "later", "later", "later"]);
-  expect(earliest).toContain('aria-valuetext="15th century"');
+  expect(attribute(earliest, "timeline-point", "aria-pressed")).toEqual(["true", "false", "false"]);
   expect(attribute(earliest, "timeline-abroad-pin", "data-pin")).toEqual(["1"]);
+  const playing = drawn(createElement(TimelineMapView, { block: timeline(), play: stillPlay(1, true, true) }));
+  expect(playTag(playing)).toContain('aria-pressed="true"');
+  expect(playing).toMatch(/data-testid="timeline-play"[^>]*>.*?<span>Pause<\/span>/);
+  expect(playing).toContain('role="status" aria-live="off"');
+  expect(attribute(playing, "timeline-map", "data-year")).toEqual(["1586"]);
   expect([sceneStep(2, 3, 0, true), sceneStep(2, 3, 0, false), sceneStep(2, 3, null, false), sceneStep(2, 3, 0.5, false)]).toEqual([2, 0, 2, 1]);
   expect(attribute(filmed(createElement(TimelineMap, { block: timeline() }), 0), "timeline-map", "data-year")).toEqual(["1401"]);
   expect(attribute(filmed(createElement(TimelineMap, { block: timeline() }), 0.5), "timeline-map", "data-year")).toEqual(["1586"]);
-  expect(attribute(drawn(createElement(TimelineMap, { block: timeline() })), "timeline-map", "data-year")).toEqual(["2001"]);
+  const resting = drawn(createElement(TimelineMap, { block: timeline() }));
+  expect(attribute(resting, "timeline-map", "data-year")).toEqual(["2001"]);
+  expect(attribute(resting, "timeline-map-play", "data-at")).toEqual(["2"]);
 });
+
+function playTag(html: string): string {
+  return /<button[^>]*data-testid="timeline-play"[^>]*>/.exec(html)?.[0] ?? "";
+}
 
 function viewBoxOf(html: string, testId: string): number[] {
   return attribute(html, testId, "viewBox")[0].split(" ").map(Number);
 }
 
 test("a place beyond India is a pin in an inset frame of its own bounds on the plain ground, with its Wikidata item, under the boundary caption", () => {
-  const html = drawn(createElement(TimelineMapView, { block: timeline(), at: 2, onChoose: () => undefined }));
+  const html = drawn(createElement(TimelineMapView, { block: timeline(), play: stillPlay(2) }));
   expect(attribute(html, "timeline-abroad-pin", "data-pin")).toEqual(["1"]);
   expect(html).toContain('data-testid="timeline-abroad-name">Fustat</text>');
   expect(shownText(html)).toContain("Beyond the map of India: 1 Fustat");
@@ -280,38 +297,39 @@ test("a place beyond India is a pin in an inset frame of its own bounds on the p
 test("the inset leaves India's frame as it is and draws a route that leaves India inside the inset", () => {
   const block = placedTimeline();
   const routed = parseShape(BLOCK_SHAPES.timeline_map, { ...block, routes: block.routes.map((route) => ({ ...route, start: 0 })) });
-  const html = drawn(createElement(TimelineMapView, { block: routed, at: 2, onChoose: () => undefined }));
+  const html = drawn(createElement(TimelineMapView, { block: routed, play: stillPlay(2) }));
   const india = [...html.matchAll(/<svg viewBox="0 0 1000 ([\d.]+)"/g)].map((found) => Number(found[1]));
   expect(india).toHaveLength(1);
   expect(india[0]).toBeCloseTo(1114.2, 1);
   expect(attribute(html, "timeline-abroad-route", "data-testid")).toHaveLength(1);
   expect(attribute(html, "timeline-route", "data-testid")).toHaveLength(1);
-  const inland = drawn(createElement(TimelineMapView, { block: placedTimeline(), at: 2, onChoose: () => undefined }));
+  const inland = drawn(createElement(TimelineMapView, { block: placedTimeline(), play: stillPlay(2) }));
   expect(inland).not.toContain('data-testid="timeline-abroad-route"');
 });
 
 test("placed places inside the frame are pins, and a stated move between two placed ends is a route", () => {
   const block = placedTimeline();
-  const latest = drawn(createElement(TimelineMapView, { block, at: 2, onChoose: () => undefined }));
+  const latest = drawn(createElement(TimelineMapView, { block, play: stillPlay(2) }));
   expect(pinLabels(latest).sort()).toEqual(["2", "3", "4"]);
   expect(attribute(latest, "timeline-route", "data-testid")).toHaveLength(1);
   expect(attribute(latest, "timeline-entry-pin", "data-testid")).toHaveLength(4);
-  const earliest = drawn(createElement(TimelineMapView, { block, at: 0, onChoose: () => undefined }));
+  const earliest = drawn(createElement(TimelineMapView, { block, play: stillPlay(0) }));
   expect(pinLabels(earliest)).toEqual([]);
   expect(earliest).not.toContain('data-testid="timeline-route"');
   expect(attribute(earliest, "timeline-abroad-pin", "data-pin")).toEqual(["1"]);
 });
 
-test("with nothing placed there is no map, and with one moment there is no slider", () => {
+test("with nothing placed there is no map, and with one moment there is no track to play", () => {
   const block = timeline();
   const unplaced = parseShape(BLOCK_SHAPES.timeline_map, { ...block, places: block.places.map((place) => ({ ...place, wikidataId: null, latitude: null, longitude: null })) });
-  const listOnly = drawn(createElement(TimelineMapView, { block: unplaced, at: 2, onChoose: () => undefined }));
+  const listOnly = drawn(createElement(TimelineMapView, { block: unplaced, play: stillPlay(2) }));
   expect(listOnly).not.toContain('data-testid="timeline-pins"');
   expect(listOnly).not.toContain('data-testid="map-attribution"');
   expect(attribute(listOnly, "timeline-entry", "data-testid")).toHaveLength(4);
   const single = parseShape(BLOCK_SHAPES.timeline_map, { ...block, places: block.places.slice(0, 1), points: block.points.slice(0, 1), routes: [] });
-  const one = drawn(createElement(TimelineMapView, { block: single, at: 0, onChoose: () => undefined }));
+  const one = drawn(createElement(TimelineMapView, { block: single, play: stillPlay(0) }));
   expect(one).not.toContain('type="range"');
+  expect(one).not.toContain('data-testid="timeline-track"');
   expect(attribute(one, "timeline-entry", "data-state")).toEqual(["current"]);
   expect(attribute(one, "timeline-abroad-pin", "data-pin")).toEqual(["1"]);
 });
@@ -322,7 +340,7 @@ test("journey renderers lay out in shrinkable columns so nothing widens a phone 
     drawn(createElement(ZoomStoryView, { block, reduce: false, at: 1, onChoose: () => undefined })),
     drawn(createElement(ZoomStoryView, { block, reduce: true, at: 0, onChoose: () => undefined })),
     drawn(createElement(ZoomDistrictMap, { shapes: shapes(), district: block.levels[0].district!, boundary: { caption: block.boundaryCaption!, dataset: block.datasets[0] }, moving: true })),
-    drawn(createElement(TimelineMapView, { block: placedTimeline(), at: 1, onChoose: () => undefined }))
+    drawn(createElement(TimelineMapView, { block: placedTimeline(), play: stillPlay(1) }))
   ].join("");
   const tracks = gridTracks(html);
   expect(tracks.length).toBeGreaterThan(0);

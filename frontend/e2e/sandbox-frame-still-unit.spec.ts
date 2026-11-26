@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { SandboxFrame } from "@/components/answer/play/SandboxFrame";
-import { FRAME_MOTION_GUARD, FRAME_STILLNESS, sandboxDocument, type FrameLook } from "@/lib/sandboxFrame";
+import { FRAME_MOTION_GUARD, FRAME_STILLNESS, FRAME_VIEW, sandboxDocument, type FrameLook } from "@/lib/sandboxFrame";
 
 import { phaseCBlock } from "./playFixture";
 
@@ -77,7 +77,7 @@ test("the frame the server draws is still before the page reads its look, and ke
   const block = phaseCBlock("simulation", "s1.b1");
   const server = sandboxDocument(block.html, block.values);
   expect(server.startsWith('<!doctype html><html lang="en" data-reduced-motion="true"><head>')).toBe(true);
-  expect(server).toContain(`<script>${FRAME_STILLNESS}</script><style>${FRAME_MOTION_GUARD}</style></head>`);
+  expect(server).toContain(`<script>${FRAME_STILLNESS}</script><script>${FRAME_VIEW}</script><style>${FRAME_MOTION_GUARD}</style></head>`);
   const drawn = renderToStaticMarkup(createElement(SandboxFrame, { block }));
   expect(drawn).toContain('data-reduced-motion=&quot;true&quot;');
   const moving = sandboxDocument(block.html, block.values, MOVING_LOOK);

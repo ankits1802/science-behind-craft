@@ -38,6 +38,25 @@ a paste or a dye yourself; link the answer.
 - A kicker of its `kind` (underscores as spaces), its `title` in the UI face at 16px, 600.
 - One link, "Open the figure on KalaVigyan", to its `url`.
 
+## Moving figures
+
+A section's `figures` are the reaction, stage and dip players, timelines and molecules the site
+draws, given as data. Draw each after the section's sentences, or link `answerUrl` when you cannot
+play them.
+
+- A player's `steps` and a timeline's `stops` are shown one at a time in one box as tall as the
+  tallest, with one Play/Pause button (`aria-pressed`) and each step or stop a button that shows it
+  at once. It plays on its own once in view, a step every few seconds, back to the first after the
+  last, and pauses out of view. A timeline has no slider.
+- `said` indexes the section's `sentences` a step or stop shows: draw those sentences in it, with
+  their clusters, and leave them out of the section's paragraph.
+- `before` and `after` are depicted materials' paints: a framed swatch, `after` filling over
+  `before` as the step is shown. Never paint them as anything else.
+- A molecule with `geometry` turns slowly (15 degrees a second) in view and holds still under the
+  pointer, in focus and on Pause; without it, name it and its formula.
+- Under either reduced-motion switch nothing moves: the figure rests and each press shows the next
+  step at once. Names, formulas and equations wrap inside their box and never scroll.
+
 ## Sources
 
 - Each entry: its `title`; then authors, year and publisher in the UI face, 13px, `--ink-3`;

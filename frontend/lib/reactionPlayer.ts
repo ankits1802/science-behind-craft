@@ -56,8 +56,22 @@ function stepIndex(index: number, count: number): number {
   return Math.min(Math.max(0, Math.trunc(index)), Math.max(0, count - 1));
 }
 
+const RAIL_KEYS: Readonly<Record<string, string>> = { ArrowDown: "ArrowRight", ArrowUp: "ArrowLeft" };
+
 export function playable(count: number, reduce: boolean): boolean {
   return count > 1 && !reduce;
+}
+
+export function reactionBeat(): number {
+  return STEP_SECONDS * 1000;
+}
+
+export function railKey(key: string): string {
+  return RAIL_KEYS[key] ?? key;
+}
+
+export function shownStep(at: number, count: number): number {
+  return stepIndex(at, count);
 }
 
 export function playbackStep(state: Playback, action: PlaybackAction, count: number): Playback {

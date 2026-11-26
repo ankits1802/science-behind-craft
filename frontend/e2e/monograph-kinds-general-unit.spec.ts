@@ -25,7 +25,8 @@ import {
   type ChartSpec
 } from "../lib/componentSpecsGeneral";
 import { TIMELINE_MAP_KIND } from "../lib/componentSpecsTimelineMap";
-import { isPlaying, nextStop, played, pointPositions, restingPlay, spreadPositions, type PlayAction } from "../lib/timelinePlay";
+import { isPlaying, nextStop, played, restingPlay, type PlayAction } from "../lib/playInView";
+import { pointPositions, spreadPositions } from "../lib/timelinePlay";
 import type { ComponentView } from "../lib/componentViewContract";
 import type { MonographComponent } from "../lib/monographDocument";
 

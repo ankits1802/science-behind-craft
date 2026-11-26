@@ -13,6 +13,7 @@ Date: 2026-11-18. Status: accepted.
 | The review that fixed it | [0061 Phase C review fixes](0061-phase-c-review-fixes.md) |
 | The film's bed and cues through one Web Audio gain where the element volume is fixed | [decision 0154](0154-ai-media-and-film-scores-kept-true.md) |
 | A place beyond the India frame is a pin in an inset frame of its own bounds (amends item 4) | [decision 0180](0180-places-abroad-yearly-series-picture-levels-figures-and-kin-crafts.md) |
+| The answer's timeline map has one Play/Pause and points to press, no slider (amends this record) | [decision 0238](0238-an-answer-s-figures-play-like-a-page-s-on-the-site-and-over-mcp.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

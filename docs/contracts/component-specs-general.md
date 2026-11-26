@@ -345,9 +345,9 @@ layer's records from the registry) and `boundaryCaption` (`datasets.BOUNDARY_CAP
 (`lib/componentSpecsTimelineMap.declaredForm`), so Kutch Ajrakh's authored route map keeps its own
 view. The declared view turns the spec into the answers' timeline source
 (`timelineMapSource`, each entry's sentence a unit) and draws it with `TimelineMapFrame`, the
-answers' timeline map, its year slider replaced by the track a plain `timeline` draws (`control`,
-`TimelineTrack`: one Play/Pause and a point to press for each year, the places lighting in step;
-decision 0228), the entries through time with `aria-current="step"`, the
+answers' timeline map, which draws the track a plain `timeline` draws (`TimelineTrack`: one
+Play/Pause and a point to press for each year, the places lighting in step, no slider; decisions 0228
+and 0238), the entries through time with `aria-current="step"`, the
 undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracotta and places beyond
 India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
 and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
@@ -435,10 +435,11 @@ part it explains (`MOTION_NEEDS`), and `react` (decision 0228; a product species
 is made from): over the vat's 2,600 ms the reactants come in, a reagent comes down into place,
 the arrow, a breaking bond's crack and then the product appear, every species' layer at once
 (`artkit.css`, `kv-rx-*`), each at rest in its end state. The figure rests complete: every end state is the default
-style, the server and first client render move nothing, Play marks each panel in turn
-(`aria-current="step"`, the ink rule) and announces it, and under either reduced-motion switch
-each press shows the next panel at once and announces it (`artKitMotion.kitSchedule`,
-`kitStillStep`). **Layout** (`components/artkit/artkit.css`): one column on a phone (steps two),
+style, the server and first client render move nothing; once in view the figure plays on its
+own, marking each panel in turn (`aria-current="step"`, the ink rule) and then a rest beat, and
+loops, with one Play/Pause and its status `aria-live="off"` while it plays (decision 0238); under
+either reduced-motion switch nothing plays and each press shows the next panel at once and
+announces it (`artKitMotion.kitBeat`, `kitPanel`, `usePlayInView`). **Layout** (`components/artkit/artkit.css`): one column on a phone (steps two),
 two or three from 640 px, four from 1024 px; a sequence's arrows point down on a phone and along
 the line from 640 px, mirrored right to left; a section sets its drawing beside its key from
 640 px. **The kit sheet** (`/design/kit`) draws every part in every form and every depicted
@@ -563,7 +564,7 @@ fault.
 | The hand-drawn map refused, both ways | `backend/tests/research/test_drawn_maps.py` |
 | The kit's vocabulary, its families and the golden both sides read | `backend/tests/research/test_art_kit.py` and `frontend/e2e/art-kit-unit.spec.ts` |
 | A species part's roles, its bond, a scene of up to eight species and the react motion, the page's still of it | `backend/tests/research/test_kit_species.py`, `backend/tests/exports/test_export_species.py`, `frontend/e2e/players-play-unit.spec.ts` |
-| A timeline's points and Play, no slider, and its play state | `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `frontend/e2e/timeline-map-declared-unit.spec.ts` |
+| A timeline's points and Play, no slider, and its play state, on a page and in an answer | `frontend/e2e/monograph-kinds-general-unit.spec.ts`, `frontend/e2e/timeline-map-declared-unit.spec.ts`, `frontend/e2e/journey-renderers-unit.spec.ts`, `frontend/e2e/answer-players-unit.spec.ts` |
 | The composed diagram's spec, its layouts, motions, materials and cited labels | `backend/tests/research/test_component_specs_kit.py` |
 | The hand-drawn figure refused and allowed, rule by rule, with Kutch Ajrakh's authored figures left alone | `backend/tests/research/test_drawn_art.py` |
 | Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |

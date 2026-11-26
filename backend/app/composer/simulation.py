@@ -53,10 +53,17 @@ SIMULATION_SYSTEM_PROMPT = (
     "(what the value is, in a few words, with no figure) and unit (the unit copied word for word from "
     'the value\'s stated words, or ""). Values may be empty when the explainer rests on statements or '
     "reactions.\n"
-    "- Play the mechanism as it happens: a Play and Pause control and a Step control, one stage at a time "
-    "(the reactants, what changes and why, the conditions the statements give, any intermediate, the "
-    "products). Show each species by the name and formula its reaction gives, and an equation exactly as "
-    "the reaction gives it, coefficients included. Show a colour only where a statement names it.\n"
+    "- Play the mechanism as it happens, one stage at a time (the reactants, what changes and why, the "
+    "conditions the statements give, any intermediate, the products), on its own: the frame sets "
+    'document.documentElement.dataset.inView to "true" while the learner can see it and "false" when '
+    'not, and fires a kv-view event on document at each change; while it is "true" play from the first '
+    "stage, a stage every few seconds, back to the first after the last, and hold the stage shown when "
+    'it turns "false". One button, with aria-pressed, reads Pause while it plays and Play when it does '
+    "not; each stage is also a button that shows it at once, and playing goes on from it. Every stage "
+    "is drawn in one box that holds the height of the tallest, so nothing around it moves. Show each "
+    "species by the name and formula its reaction gives, and an equation exactly as the reaction gives "
+    "it, coefficients included; a name, formula or equation wraps inside its box and never scrolls. "
+    "Show a colour only where a statement names it.\n"
     f"- html: the fragment, at most {SIMULATION_HTML_MAX_CHARS} characters: one style element, the "
     "markup, then one script element with no attributes.\n"
     "Every rule below is checked and a fragment that breaks one is thrown away:\n"

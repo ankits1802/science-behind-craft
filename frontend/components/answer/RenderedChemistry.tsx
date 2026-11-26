@@ -32,16 +32,17 @@ export function useChemistryHtml(equation: string, display: boolean, held: strin
   return drawn !== null && drawn.key === key ? drawn.html : null;
 }
 
-export type ChemistryMarkupProps = { html: string | null; text: string; display: boolean; label: string; className?: string };
+export type ChemistryMarkupProps = { html: string | null; text: string; display: boolean; label: string; className?: string; hidden?: boolean };
 
-export function ChemistryMarkup({ html, text, display, label, className }: ChemistryMarkupProps) {
-  const shape = cn("block max-w-full overflow-x-auto text-ink-1", !display && "inline-block align-middle", className);
+export function ChemistryMarkup({ html, text, display, label, className, hidden = false }: ChemistryMarkupProps) {
+  const shape = cn("kv-chem max-w-full text-ink-1", display ? "flow-root" : "inline-block align-middle", className);
+  const named = hidden ? { "aria-hidden": true } : { role: "math", "aria-label": label };
   if (html === null) {
     return (
-      <span role="math" aria-label={label} className={shape}>
+      <span {...named} className={shape}>
         {text}
       </span>
     );
   }
-  return <span role="math" aria-label={label} className={shape} dangerouslySetInnerHTML={{ __html: html }} />;
+  return <span {...named} className={shape} dangerouslySetInnerHTML={{ __html: html }} />;
 }

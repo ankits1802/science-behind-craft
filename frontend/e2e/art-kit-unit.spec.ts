@@ -12,7 +12,8 @@ import { kitIds, partIds } from "../components/artkit/kitIds";
 import { KitPartArt } from "../components/artkit/KitPartArt";
 import { COMPONENT_VIEWS } from "../components/monograph/componentViews";
 import { ART_KIT, depictedToken, KIT_MATERIALS, KIT_PART_NAMES } from "../lib/artKit";
-import { kitMotionClass, kitSchedule, kitStatus, kitStillStep, kitTimings } from "../lib/artKitMotion";
+import { kitBeat, kitMotionClass, kitPanel, kitStatus, kitTimings } from "../lib/artKitMotion";
+import { nextStop } from "../lib/playInView";
 import { kitSheet, kitSheetLayouts } from "../lib/artKitSheet";
 import { declaredForm } from "../lib/componentSpecsTimelineMap";
 import { kitDiagramShape, movingPart, type KitDiagramSpec, type KitPart } from "../lib/componentSpecsKit";
@@ -191,18 +192,15 @@ test("motion rests on the finished state, plays on the moving part only, and nev
   expect((await state()).dry[1]).toBe("none");
 });
 
-test("Play runs each panel in turn on the motion tokens, and steps one still panel a press when motion is off", () => {
+test("a kit figure plays each panel in turn on the motion tokens and a rest beat, then loops, and steps one still panel a press when motion is off", () => {
   const timings = kitTimings(token);
   expect(timings).toEqual({ dip: 600, hold: 500, oxidise: 1500, vat: 2600 });
-  expect(kitSchedule([null, "dip", null], timings)).toEqual([
-    { panel: 0, moves: false, at: 0 },
-    { panel: 1, moves: true, at: 1000 },
-    { panel: 2, moves: false, at: 2100 },
-    { panel: null, moves: false, at: 3100 }
-  ]);
-  expect(kitSchedule(["dry"], timings).at(-1)?.at).toBe(2000);
-  expect(kitSchedule(["react"], timings).at(-1)?.at).toBe(3100);
-  expect([kitStillStep(null, 3), kitStillStep(0, 3), kitStillStep(2, 3)]).toEqual([0, 1, null]);
+  const motions = [null, "dip", null] as const;
+  expect([0, 1, 2, 3].map((at) => kitBeat(motions, at, timings))).toEqual([1000, 1100, 1000, 1000]);
+  expect(kitBeat(["dry"], 0, timings)).toBe(2000);
+  expect(kitBeat(["react"], 0, timings)).toBe(3100);
+  expect([0, 1, 2, 3, -1].map((at) => kitPanel(at, 3))).toEqual([0, 1, 2, null, null]);
+  expect([3, 0, 1, 2].map((at) => nextStop(at, 4))).toEqual([0, 1, 2, 3]);
   expect(kitStatus(1, ["Sanded level", "In the bath", "Lifted out"])).toBe("Step 2 of 3: In the bath");
   expect(kitStatus(null, ["Sanded level"])).toBe("At rest");
   expect([kitMotionClass("dip"), kitMotionClass("take"), kitMotionClass("dry"), kitMotionClass("react")]).toEqual(["motion-dip", "motion-dip", "motion-oxidise", "kv-rx-form"]);

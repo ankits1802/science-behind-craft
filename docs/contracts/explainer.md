@@ -838,16 +838,25 @@ route answers 404 for is not drawn. `explainerView.blockSentences` and `blockCit
 steps', rows' and links' sentences, so their citations join the answer's one numbering.
 
 The matter kinds (decision 0049) enter through `components/answer/matter/matterRenderers.tsx` and
-the expert view through `components/answer/experts/expertRenderers.tsx`. A reaction player shows a
-cast of its species with the open step's reactants and products lit by role, and its steps in
-order: the open step's badges, its equation through `ChemEquation` (or the species row without
-every formula) and its citations; Play advances a step every 4 s and stops on the last, and under
-either reduced-motion switch every step is open and there is no playback. A material card shows
+the expert view through `components/answer/experts/expertRenderers.tsx`. A reaction player shows
+its steps as a rail of buttons (`aria-pressed`, one tab stop, arrows, Home and End) over one box that
+stacks every step (`components/ui/StepStack`), so it holds the height of the tallest: the shown
+step's cast of species lit by role, its badges, its equation through `ChemEquation` (set term by
+term, so a line breaks between terms and never scrolls; `chemistryKeys.equationPieces`), or the
+species row without every formula, its colours and its citations. It plays on its own once in view
+(`components/motion/usePlayInView` over `lib/playInView.played`, the reducer the page's timelines
+use): from its first step, a step every 4 s, back to the first after the last, pausing out of view,
+with one Play/Pause (`components/ui/PlayPauseButton`, `aria-pressed`) and its status
+`aria-live="off"` while it plays; a step pressed is shown at once and playing goes on from it
+(decision 0238). Under either reduced-motion switch every step is open and nothing plays. A material card shows
 its stored name, local names, role, formula (a PubChem link only with a CID) and cited facts and
 handling. A molecule loads 3Dmol.js (`lib/moleculeViewer.ts`, the one adapter, imported only when
 the block nears the viewport) and the SDF of `GET /api/molecules/{pubchemCid}/conformer`, checked
-as the PubChem adapter checks it (`lib/conformer.ts`); without WebGL, on a 404 or an SDF off the
-contract it draws nothing, and it cites its record source with a numbered chip
+as the PubChem adapter checks it (`lib/conformer.ts`), and turns slowly (15 degrees a second,
+`MoleculeScene.spin`) once in view, holding still under the pointer, while anything in it has focus,
+while explored and when its Turn button, which reads Pause while it turns, is pressed; under either
+switch Turn turns a quarter at once (`useMoleculeTurn`, decision 0238); without WebGL, on a 404 or
+an SDF off the contract it draws nothing, and it cites its record source with a numbered chip
 (`explainerView.blockSourceIds`). A section's expert views are one panel where the first one
 stands (`lib/expertPanel.sectionRuns`): seat cards, then one "Experts differ" card per pair both
 seats state, the two sentences side by side with their citations; pairs that share a sentence are
@@ -858,10 +867,15 @@ The generated explainer and the what-if lab (decision 0059) enter through
 explainer is the sandboxed frame below with its caption, title, "Built from" values and View code;
 Professors and above (`permissions.canHideGenerated`) get Hide explainer once the answer is done
 and see a hidden one as a dashed card with Show again, which nobody else sees. A what-if shows the
-changed input, its options with their count of cited outcomes (the first chosen) and the chosen
-option's cited outcome sentences (a hypothesis with its Hypothesis badge, decision 0056); an option
-with none reads "Unknown". Under either reduced-motion
-switch the outcomes change in place with no motion. `blockCitations` reads a simulation's values'
+changed input, its options with their count of cited outcomes (the first chosen) and every option's
+cited outcome sentences stacked in one box with the chosen one shown (a hypothesis with its
+Hypothesis badge, decision 0056); an option with none reads "Unknown". It plays its options on its
+own once in view, one every 4.8 s (`whatIfView.WHAT_IF_STEP_MS`), with one Play/Pause, and an option
+pressed is shown at once and playing goes on from it; under either reduced-motion switch nothing
+plays and Play shows the next option (decision 0238). The sandboxed frame tells the explainer when
+the reader can see it: `data-in-view` on its root and a `kv-view` event on `document`
+(`sandboxFrame.FRAME_VIEW`), and the generated explainer is asked to play on its own while it is
+`"true"`, with one Pause and its stages to press (`composer/simulation.py`). `blockCitations` reads a simulation's values'
 citations and `blockSentences` a what-if's outcomes, so both join the one numbering.
 
 The zoom story and the timeline map (decision 0060) enter through
@@ -875,8 +889,11 @@ is listed in zoom order with no rail or motion. A timeline lists its points and 
 order, each with its span as the texts state it (`lib/timelineView.yearSpanText`: `1586`,
 `1586–1631`, `1950s`, `15th century`, `11th–14th century`), its places and its cited sentence (a
 point and a route one sentence states are one entry with both their lines, past, current or later
-over their joint span, `entryGroups`, `groupState`), beside a slider over the distinct first years (opening at the last, so everything shows; an entry
-is past, current or later at the chosen year). Placed places are numbered in order of first use
+over their joint span, `entryGroups`, `groupState`), beside a track over the distinct first years
+with no slider: one Play/Pause that steps through them, playing on its own once in view, and a point
+to press for each year, Space on a point toggling play (`TimelineTrack`, the page's own, decision
+0238); it rests on the last year, so everything shows, and an entry is past, current or later at the
+year shown. Placed places are numbered in order of first use
 and link their Wikidata item; a place inside the India frame is a pin, one outside it a pin with
 its number and name in an inset frame under the map (`components/map/AbroadInset`), drawn in the
 same projection (`projection.frameProjection`) over its own bounds (India's and every place abroad,
@@ -1033,7 +1050,8 @@ datasets, "Model" is all a model may do, and every validator fails closed. Lanes
   as came, migrated, settled, invited or traded, in one sentence or quote); facts only. **Piece:**
   the section's slot. Drawn over the India district shapes under the caption, placed points as
   pins (a point beyond India on the plain ground past the shapes, never another country's
-  outline), routes between placed ends, a time slider over every point's and route's years, the
+  outline), routes between placed ends, a Play/Pause and a point to press for every point's and route's first
+  year (no slider, decision 0238), the
   unplaced points listed beside the map, each point and route with its citation.
 
 ### What-if builder as built (decision 0056)
@@ -1353,7 +1371,9 @@ fails its checks is redrafted only when the time left is at least the time the f
   sentence (not translated, ledgered or read aloud); its label texts are shown labels; it is never
   kept as a piece (`UNSTORED_BLOCK_KINDS`). The web draws it with `KitFigure`
   (`components/answer/play/KitFigureView.tsx`): the kicker Diagram, the title, the panels with each
-  key's cited labels, the alt line, and Play only when a panel names a motion. Its citations count
+  key's cited labels, the alt line, and Play only when a panel names a motion: the figure then plays
+  its panels in turn on its own once in view, a rest beat after the last, and loops, with one
+  Play/Pause and its status `aria-live="off"` while it plays (`KitPlay`, decision 0238). Its citations count
   in the answer's source numbering (`explainerView.blockCitations`). The shared fixture is
   `shared/explainer.kit-figure.golden.json`, one figure in each of three layouts drawing every part.
 - **Composed, no model** (`science/kit_figures.concept_kit_figure`): for each of the section's concepts in

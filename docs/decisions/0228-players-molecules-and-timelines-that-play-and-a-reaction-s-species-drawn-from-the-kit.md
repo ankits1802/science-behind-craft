@@ -34,6 +34,7 @@ players, `molecule_3d`, Composed from a craft's own facts).
 | The kit's parts and motions | [decision 0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md) |
 | The players drawn from the kit | [decision 0200](0200-players-and-cards-drawn-from-the-kit.md) |
 | The declared timeline map at rest | [decision 0220](0220-a-declared-timeline-map-complete-at-rest-from-a-still-the-server-cuts-to-its-frame.md) |
+| An answer's figures play like a page's, on the site and over MCP, and its timeline map has no slider (amends this record) | [decision 0238](0238-an-answer-s-figures-play-like-a-page-s-on-the-site-and-over-mcp.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

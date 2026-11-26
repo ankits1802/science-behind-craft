@@ -76,6 +76,24 @@ export const FRAME_STILLNESS = [
   "})();"
 ].join(" ");
 
+export const FRAME_IN_VIEW = "data-in-view";
+export const FRAME_VIEW_EVENT = "kv-view";
+export const FRAME_VIEW = [
+  "(function () {",
+  "const root = document.documentElement;",
+  `const flag = ${JSON.stringify(FRAME_IN_VIEW)};`,
+  "const tell = function (on) {",
+  'const value = on ? "true" : "false";',
+  "if (root.getAttribute(flag) === value) return;",
+  "root.setAttribute(flag, value);",
+  `document.dispatchEvent(new Event(${JSON.stringify(FRAME_VIEW_EVENT)}));`,
+  "};",
+  'root.setAttribute(flag, "false");',
+  "if (!window.IntersectionObserver) { tell(true); return; }",
+  "new IntersectionObserver(function (entries) { for (const entry of entries) tell(entry.isIntersecting); }).observe(root);",
+  "})();"
+].join(" ");
+
 export function sandboxData(values: readonly Pick<SimulationValue, "key" | "value">[]): string {
   const data: Record<string, number> = {};
   for (const value of values) {
@@ -128,6 +146,7 @@ export function sandboxDocument(html: string, values: readonly Pick<SimulationVa
     `<script>${FRAME_GUARD}</script>`,
     `<script>${FRAME_SIZER}</script>`,
     `<script>${FRAME_STILLNESS}</script>`,
+    `<script>${FRAME_VIEW}</script>`,
     pieces.head,
     `<style>${look ? frameLookStyle(look) : FRAME_MOTION_GUARD}</style>`,
     `</head><body>${html}</body></html>`

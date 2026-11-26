@@ -2,14 +2,13 @@
 
 import { useId, useMemo, useRef } from "react";
 
+import { TimelineTrack, type TrackPoint } from "@/components/answer/journey/TimelineTrack";
+import { usePlayInView } from "@/components/motion/usePlayInView";
 import { GeneralFigure, type RenderUnit } from "@/components/monograph/kinds/general/GeneralFigure";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
 import { eraYear, parsedSpec, timelineSpecShape, type TimelineEvent } from "@/lib/componentSpecsGeneral";
-import { pointPositions } from "@/lib/timelinePlay";
+import { pointPositions, timelineBeat } from "@/lib/timelinePlay";
 import { cn } from "@/lib/utils";
-
-import { TimelineTrack, type TrackPoint } from "./TimelineTrack";
-import { useTimelinePlay } from "./useTimelinePlay";
 
 const POINTS_LABEL = "Dated moments";
 
@@ -23,7 +22,7 @@ function trackPoints(events: readonly TimelineEvent[], renderUnit: RenderUnit, t
 
 function Played({ events, renderUnit, textOf }: { events: TimelineEvent[]; renderUnit: RenderUnit; textOf: (ref: string) => string }) {
   const watched = useRef<HTMLDivElement | null>(null);
-  const play = useTimelinePlay(events.length, events.length - 1, watched);
+  const play = usePlayInView(events.length, events.length - 1, watched, timelineBeat);
   const points = useMemo(() => trackPoints(events, renderUnit, textOf), [events, renderUnit, textOf]);
   return (
     <div className="grid gap-3" ref={watched} data-testid="general-timeline-play" data-at={play.at}>

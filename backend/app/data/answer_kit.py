@@ -10,7 +10,7 @@ from typing import Any
 
 from .contributor_kit import design_tokens
 from .craft_master_loader import DATA_DIR
-from .design_palette import THEMES, four_themes_css, type_css
+from .design_palette import THEMES, design_palettes, four_themes_css, type_css
 
 __all__ = [
     "ANSWER_KIT_PATH",
@@ -48,6 +48,7 @@ KIT_COLOURS = (
     "turmeric-wash",
 )
 KIT_FONTS = ("headline", "reading", "ui")
+FIGURE_PAINTS = ("dye-", "dip-", "mol-", "atom-")
 SCRIPT = re.compile(r"<script>(?P<body>.*?)</script>", re.DOTALL)
 
 
@@ -72,8 +73,17 @@ def script_hash(page: str) -> str:
 
 
 def theme_css(tokens: Mapping[str, Any]) -> str:
-    colours = {theme: _colours(tokens, theme) for theme in THEMES}
-    return f":root{{{type_css(tokens)}}}" + four_themes_css(colours)
+    colours = {theme: _colours(tokens, theme) + _paints(theme) for theme in THEMES}
+    return f":root{{{type_css(tokens)}{_durations(tokens)}}}" + four_themes_css(colours)
+
+
+def _paints(theme: str) -> str:
+    palette = design_palettes()[theme]
+    return "".join(f"--{name}:{value};" for name, value in palette.items() if name.startswith(FIGURE_PAINTS))
+
+
+def _durations(tokens: Mapping[str, Any]) -> str:
+    return "".join(f"--dur-{name}:{value};" for name, value in tokens["motion"]["durations"].items())
 
 
 def _tokens() -> dict[str, Any]:

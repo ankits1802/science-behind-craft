@@ -59,7 +59,7 @@ async function answerViews(browser: Browser, page: Page, records: readonly Answe
   const problems: string[] = [];
   for (const width of ANSWER_WIDTHS) {
     for (const scheme of SCHEMES) {
-      const context = await browser.newContext({ ...contextOptions(width, scheme), baseURL: baseUrl(), storageState });
+      const context = await browser.newContext({ ...contextOptions(width, scheme), baseURL: baseUrl(), storageState, reducedMotion: "reduce" });
       try {
         const view = await context.newPage();
         const run = new ScreenRun(view, `${runLabel(width, scheme)} answers`, { scheme });
