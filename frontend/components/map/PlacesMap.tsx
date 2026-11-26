@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useRef, type ReactNode } from "react";
 
 import { AnswerMapSource } from "@/components/answer/place/AnswerMapSource";
-import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
+import { useFitScale } from "@/components/charts/useFitScale";
 import { DatasetCredit } from "@/components/DatasetCredit";
 import { useRemote } from "@/components/hooks/useRemote";
 import { RANN_PATH, viewBoxOf, type MapBox } from "@/components/map/basemap";
@@ -14,9 +14,9 @@ import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/Indi
 import { IndiaMapBase } from "@/components/map/IndiaMap";
 import { showsDistrictLines, type MapLayerDrawn } from "@/components/map/mapLayerFrame";
 import { StillLines, StillNeighbours, StillValued } from "@/components/map/MapStillLayers";
-import { MapScale } from "@/components/map/MapScale";
 import { PlaceHatchOrStill } from "@/components/map/PlaceHatch";
-import { MapRings, MapRoutes, PlacePins, placedPins, ValueLabels, type ValueMark } from "@/components/map/PlacesMapMarks";
+import { MapRings, MapRoutes, placedPins, type ValueMark } from "@/components/map/PlacesMapMarks";
+import { PlacesOverlay } from "@/components/map/PlacesOverlay";
 import { bordersToPath, project } from "@/components/map/projection";
 import { loadShapes, type DistrictShape } from "@/components/map/shapeGeometry";
 import type { MapStill } from "@/components/map/timelineMapStill";
@@ -109,9 +109,9 @@ function PlacesSource({ still, credits }: { still: MapStill | null; credits: Map
 }
 
 export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }: PlacesMapProps) {
-  const box = useRef<HTMLDivElement | null>(null);
+  const map = useRef<SVGSVGElement | null>(null);
   const { frame, still } = drawn;
-  const scale = useFitScale(box, frame.width);
+  const scale = useFitScale(map, frame.width);
   const layerNames = useMemo(() => ({ ...drawn.names, home: [] }), [drawn.names]);
   const layers = useTimelineMapLayers(layerNames, still);
   const values = useDistrictValues(spec, still);
@@ -128,16 +128,13 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
   );
   return (
     <div className="grid min-w-0 gap-3" data-testid="places-map">
-      <div ref={box} style={fitStyle(scale)} className="relative min-w-0">
-        <svg viewBox={viewBoxOf(frame)} role="img" aria-labelledby={labelledBy} className="block h-auto w-full rounded-plate border border-rule [forced-color-adjust:none]" data-fit="" data-testid="general-map">
+      <div className="relative min-w-0 overflow-hidden rounded-plate border border-rule">
+        <svg ref={map} viewBox={viewBoxOf(frame)} role="img" aria-labelledby={labelledBy} className="block h-auto w-full [forced-color-adjust:none]" data-fit="" data-testid="general-map">
           <IndiaMapBase underlay={underlay} frame={frame} />
-          {layers.overlay(scale)}
-          {marks.districts ? <ValueLabels values={values.labels} /> : null}
-          <MapRings rings={spec.rings ?? []} places={spec.places} marks={marks} scale={scale} />
+          <MapRings rings={spec.rings ?? []} places={spec.places} marks={marks} />
           <MapRoutes routes={spec.routes ?? []} pins={pins} marks={marks} scale={scale} />
-          <PlacePins places={spec.places} pins={pins} marks={marks} frame={frame} scale={scale} nameOf={nameOf} />
-          <MapScale frame={frame} scale={scale} />
         </svg>
+        <PlacesOverlay spec={spec} frame={frame} marks={marks} values={values.labels} files={layers.files} named={layerNames.emphasis?.rivers ?? []} nameOf={nameOf} />
         <IndiaLocator marked={[]} frame={frame} label={locatorLabel([])} className={LOCATOR_INSET} />
       </div>
       <PlacesKey spec={spec} drawn={drawn} values={values} layerKey={layers.key} renderUnit={renderUnit} />
