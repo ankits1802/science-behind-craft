@@ -65,7 +65,7 @@ async def test_the_reports_are_listed_only_to_a_connection_with_the_review_scope
     assert "admin_reports" not in await listed(context("read"))
     assert "admin_reports" not in await listed(context("read", "ask", "contribute"))
     tool = (await listed(context("read", "review")))["admin_reports"]
-    assert tool["annotations"] == READ_ONLY
+    assert tool["annotations"] == {"title": tool["title"], **READ_ONLY}
     assert tool["_meta"]["kalavigyan/group"] == "admin"
     assert set(tool["inputSchema"]["properties"]) == ARGUMENT_NAMES
     assert tool["inputSchema"]["required"] == ["report"]

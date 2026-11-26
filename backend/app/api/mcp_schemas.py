@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from app.models.component_kinds import PIECE_KINDS
 
-__all__ = ["KINDS_LISTED_ONCE", "compact", "input_schema", "output_schema", "schema_types"]
+__all__ = ["KINDS_LISTED_ONCE", "compact", "input_schema", "output_schema", "schema_types", "typed"]
 
 DATA_KEYS = frozenset({"default", "const", "enum", "examples"})
 MAP_KEYS = frozenset({"properties", "$defs", "patternProperties"})
@@ -29,7 +29,7 @@ def output_schema(model: type[BaseModel]) -> dict[str, Any]:
 
 @cache
 def _input(model: type[BaseModel]) -> dict[str, Any]:
-    return compact(model.model_json_schema())
+    return typed(compact(model.model_json_schema()))
 
 
 @cache
@@ -59,6 +59,38 @@ def compact(node: Any) -> Any:
         else:
             kept[key] = compact(value)
     return _kinds_unlisted(_nullable(kept))
+
+
+def typed(schema: Mapping[str, Any]) -> dict[str, Any]:
+    return _typed(schema, schema.get("$defs", {}))
+
+
+def _typed(node: Any, defs: Mapping[str, Any]) -> Any:
+    if isinstance(node, list):
+        return [_typed(item, defs) for item in node]
+    if not isinstance(node, dict):
+        return node
+    kept: dict[str, Any] = {}
+    for key, value in node.items():
+        if key in DATA_KEYS:
+            kept[key] = value
+        elif key in MAP_KEYS and isinstance(value, dict):
+            children = {name: _typed(child, defs) for name, child in value.items()}
+            kept[key] = {name: _stated(child, defs) for name, child in children.items()}
+        elif key == "items":
+            kept[key] = _stated(_typed(value, defs), defs)
+        else:
+            kept[key] = _typed(value, defs)
+    return kept
+
+
+def _stated(node: Any, defs: Mapping[str, Any]) -> Any:
+    if not isinstance(node, dict) or "type" in node:
+        return node
+    types = sorted(schema_types(node, defs), key=lambda kind: (kind == "null", kind))
+    if not types:
+        return node
+    return {"type": types[0] if len(types) == 1 else types, **node}
 
 
 def schema_types(node: Mapping[str, Any], defs: Mapping[str, Any]) -> list[str]:

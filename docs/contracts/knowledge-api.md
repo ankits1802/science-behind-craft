@@ -329,8 +329,22 @@ string the server checks against the library, `list_components` describes it by 
 never grows the list; output schemas are compact and listed only where a client reads the result.
 `tests/mcp/test_tool_budget.py` fails when the list grows past 32 tools, 100 KB of input schemas and
 descriptions, or 200 KB in all (decision 0191 raised it from 22 tools, 60 KB and 120 KB for the
-page-quality tools; on 2026-11-23 it held 61,316 bytes of input and 68,737 in all). A tool whose
-guidance outgrows its description points to a served reference, paged like the skill's references. The admin tools are left out
+page-quality tools; on 2026-11-23 it held 61,316 bytes of input and 68,737 in all, on 2026-11-26
+75,209 and 84,577).
+
+Every tool lists `annotations.title`, its human title, beside its hints, and every parameter of
+every input schema has a JSON Schema `type`, in both protocol eras (decision 0247):
+`mcp_schemas.typed` gives a property that is only a `$ref`, an `anyOf` of options, a discriminated
+union or a nullable reference the type its options resolve to (`object` for a model, `string` for a
+choice), and `mcp_files.file_schema` types its own. A description says only what the tool does,
+takes and returns, its limits, who may call it and what it costs: no order to the model, no other
+tool's name, no order of calls and no pointer to a guide page, the playbook or a skill. That
+guidance lives in the server's `instructions`, the page playbook and the contributor skill, and in
+the results' `nextStep`, `guide` and notices; `read_source` names the services it reads with their
+documentation (the Unpaywall REST API, the Wayback Machine's Availability API and Save Page Now,
+the publisher's own page). `tests/mcp/test_directory_listing.py` fails on a parameter without a
+type, a tool without its title annotation, and a description naming another tool, a guide page, the
+model ("you") or opening a sentence with an order. The admin tools are left out
 of every list a token without `review` sees (`mcp_tool_base.listed_to`), so the contributors' list
 does not grow; an Admin's list has its own budget, 26 tools and 68 KB of input (66,576 bytes and
 74,893 in all on 2026-11-23), and no admin tool lists an output schema.

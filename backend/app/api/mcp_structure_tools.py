@@ -17,17 +17,17 @@ from .structure_proposal_deps import structure_proposed
 __all__ = ["PROPOSE_STRUCTURE", "STRUCTURE_TOOLS", "ProposeStructure", "StructureToolReply"]
 
 PROPOSE_DESCRIPTION = (
-    "Propose one piece of a curated page's structure with the fact and the verbatim quotes that state it: a "
+    "Proposes one piece of a curated page's structure with the fact and the verbatim quotes that state it: a "
     "stage's after (STAGE_AFTER, with colours) or why (STAGE_WHY), a native name (NATIVE_NAME), a reaction "
     "(REACTION), a material's botanical name (BOTANICAL_NAME) or stand-in (ALTERNATIVE), a glossary term "
     "(GLOSSARY_TERM), an open question (OPEN_QUESTION), GI record parts (GI_RECORD), held facts that disagree "
     "(CONFLICT: their ids, no new fact), or a community or person a source names (GROUP_NAME: sources only, "
     "any craft; kept out of AI pictures, never shown). A category takes a reaction without a stage, a term, a "
-    "question or a conflict. Stage and material keys are the page's own (get_facts, get_page). Every name, "
-    "colour and number must be in a quote; the gates re-find every quote and grade each source. It waits for "
-    "review; approval writes it into the page and its dossier. A passing proposal completes the field task "
-    "you claimed as task_key. Names are snake_case. compose_component reads these items: a stage's after "
-    "and why, a reaction with its formulas and an alternative are what its players and labs are composed from."
+    "question or a conflict. Stage and material keys are the page's own. Every name, colour and number "
+    "must be in a quote; the gates re-find every quote and grade each source. It waits for review; "
+    "approval writes it into the page and its dossier, where a stage's after and why, a reaction with its "
+    "formulas and an alternative become what the page's players and labs are composed from. A passing "
+    "proposal completes the field task named as task_key. Names are snake_case."
 )
 NEEDS_PROPOSER = (
     "propose_structure needs an account of Researcher or above; this account cannot propose structure."
@@ -41,7 +41,7 @@ class ProposeStructure(SnakeBodyArguments):
     proposal: StructureProposal = Field(
         description=(
             "subject {kind, slug}, item (its kind and parts, such as stage_key), field, statement (one sentence), "
-            "sources [{url, title, licence, language, quotes [{text, locator}]}], the task_key you claimed, an "
+            "sources [{url, title, licence, language, quotes [{text, locator}]}], the task_key it is for, an "
             "optional note; CONFLICT gives no field, statement or sources, GROUP_NAME sources only"
         )
     )

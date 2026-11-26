@@ -19,7 +19,7 @@ from app.services.page_keys import page_keys
 from app.services.page_layouts import layout_of, subject_path
 
 from .mcp_guide_steps import HandedGuide, opening_guide, page_guide
-from .mcp_guides import ADDRESS_PATTERN, CONTENTS_ADDRESS
+from .mcp_guides import ADDRESS_PATTERN
 from .mcp_page_texts import BRIEF_NEXT, READ_NEXT
 from .mcp_tool_base import Arguments, Tool, ToolContext
 
@@ -29,33 +29,29 @@ COVERAGE, SECTIONS, LAYOUT = PAGE_PARTS = ("coverage", "sections", "layout")
 BRIEF = "brief"
 PARTS = (*PAGE_PARTS, BRIEF)
 DESCRIPTION = (
-    "Read one craft, family or category page in the parts you name. brief, the first read for building a "
-    "page: in one compact result its story as published (lede, each chapter's headings, sentences, fields' "
-    "standing, figures with kind, role and size, pictures), every fact as its id and one line under its "
-    "chapter, rule 29's opportunities and the layout's version; a cursor continues the fact lines and never "
-    "repeats one, and get_facts with ids gives any fact whole. coverage: the cited claims, "
+    "One craft, family or category page in the parts named. brief: in one compact result the page's story as "
+    "published (lede, each chapter's headings, sentences, fields' standing, figures with kind, role and size, "
+    "pictures), every fact as its id and one line under its chapter, rule 29's opportunities and the layout's "
+    "version; its cursor continues the fact lines and never repeats one. coverage: the cited claims, "
     "structure-cited claims, sources, published section and figures it holds in each of the sixteen fields, "
     "which are covered, thin or missing. sections: the page's published prose as the page draws it, one field "
     "or every field, each sentence with the facts it rests on. layout: where each text unit and component is "
     "placed (chapter, order, role, a picture's crop, size and caption), its version, and null where the page "
     "has none; a layout never holds a fact. Each part's open field work comes with its task key. A craft's or "
     "family's page also gives its keys: the craft and its districts, as a component proposal names its "
-    "subjects. With no subject it lists the sixteen fields, each with what it covers and its chapter. With "
-    "the fields or a page's coverage comes guide: the page playbook (playbook/1), how a page is designed and "
-    "built, and the Kutch Ajrakh bar, its worked example, naming the next page; a page's next_step is the "
-    f"playbook's next step. guide reads any page of the guide by its address ({CONTENTS_ADDRESS} lists them)."
+    "subjects. With no subject it lists the sixteen fields, each with what it covers and its chapter. An "
+    "address alone returns one page of KalaVigyan's contributor documentation."
 )
 CURSOR_DESCRIPTION = "The cursor a brief gave, to read the page's next fact lines; none starts the brief"
 GUIDE_DESCRIPTION = (
-    f"A page of the guide to read, by the address a result names, such as page-checklist/2; {CONTENTS_ADDRESS} "
-    "lists every page"
+    "The address (topic/page) of one page of KalaVigyan's contributor documentation, read alone"
 )
 
 
 class GetPage(Arguments):
     subject: PageSubject | None = Field(
         default=None,
-        description="The page: kind craft, family or category and its slug from find_crafts; none lists the fields",
+        description="The page: its kind (craft, family or category) and its slug; none lists the fields",
     )
     parts: list[Literal[*PARTS]] | None = Field(
         default=None,

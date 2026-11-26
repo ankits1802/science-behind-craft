@@ -51,21 +51,21 @@ __all__ = [
 FACT = "fact"
 BUNDLE = (
     "One page's parts: subject {kind, slug} and any of facts, structure, components ({proposal, cites}), "
-    "layout {base_version, entries}, pictures, withdrawals and a note, each part exactly as edit_draft's add takes it "
-    "(its input schema holds every part's fields), and translation; one part alone works"
+    "layout {base_version, entries}, pictures, withdrawals and a note, each part in the same shape as a page "
+    "draft's add, whose input schema holds every part's fields, and translation; one part alone works"
 )
 NEEDS_SPEC = (
     "a component is delivered finished: give its spec (the kind's spec data) and the units it places, each "
     "unit's text with the ids of the facts it rests on; only a SUBJECT_LINK carries none"
 )
 CRITIQUE = (
-    "Your critique of the pictures your last preview returned, read by design-critique/1: a verdict and notes "
-    "[{chapter, where, problem, fix}], one for each thing you would fix; recorded with this preview, shown "
-    "to the reviewer with your layout, never a gate"
+    "A critique of the pictures the previous preview returned: a verdict and notes [{chapter, where, problem, "
+    "fix}], one for each thing to fix; recorded with this preview, shown to the reviewer with the layout, "
+    "never a gate"
 )
 READ_PICTURES = (
-    "Only for a client that cannot see the returned pictures: true asks the server to read them by "
-    "design-critique/1 (report.designRead), within a fixed cost; off by default"
+    "For a client that cannot see the returned pictures: true has the server read them (report.designRead), "
+    "within a fixed cost; off by default"
 )
 ONE_PAGE = "name the draft by its page's subject or by its draft_id, one of them"
 ONE_WORK = "give a bundle or a draft_id, one of them"
@@ -99,7 +99,7 @@ class DraftAdd(Arguments):
     structure: list[StructureProposal] = Field(
         default_factory=list,
         max_length=STRUCTURE_PER_CALL_MAX,
-        description="Structure items as propose_structure takes them",
+        description="Structure items, each a structure proposal",
     )
     components: list[PageComponent] = Field(
         default_factory=list,
@@ -110,15 +110,17 @@ class DraftAdd(Arguments):
     pictures: list[PagePicture] = Field(
         default_factory=list,
         max_length=PICTURES_PER_CALL_MAX,
-        description="{contribution_id} for one given with give_pictures, or a new {claim_ids, declaration}",
+        description="{contribution_id} of a picture already given, or a new {claim_ids, declaration}",
     )
     supplied_sources: list[uuid.UUID] = Field(
-        default_factory=list, max_length=SUPPLIED_PER_DRAFT_MAX, description="Ids from supply_source"
+        default_factory=list,
+        max_length=SUPPLIED_PER_DRAFT_MAX,
+        description="Ids of sources this account supplied",
     )
     withdrawals: list[PageWithdrawal] = Field(
         default_factory=list,
         max_length=WITHDRAWALS_PER_CALL_MAX,
-        description="{label, reason} of your registered components",
+        description="{label, reason} of this account's registered components",
     )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
@@ -159,7 +161,7 @@ class EditDraft(StudioArguments):
     lists: PageLists | None = Field(
         default=None,
         description=(
-            "The page's own lists, derived first: mechanisms, ambiguous_terms and the signature fact "
+            "The page's own lists, derived from its facts: mechanisms, ambiguous_terms and the signature fact "
             "(fact:N of this draft, or a stored fact's id); replaces the draft's"
         ),
     )
@@ -233,7 +235,7 @@ def bundle_schema() -> dict[str, Any]:
 
 class PageWork(StudioArguments):
     bundle: PageBundle | None = Field(default=None, description=BUNDLE)
-    draft_id: uuid.UUID | None = Field(default=None, description="Or an open draft's id, from edit_draft")
+    draft_id: uuid.UUID | None = Field(default=None, description="Or an open draft's id")
 
     @model_validator(mode="after")
     def _one_work(self) -> Self:

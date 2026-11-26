@@ -72,7 +72,12 @@ async def test_propose_source_is_listed_as_a_write_needing_the_contribute_scope(
     reply = await answer({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}, context(None))
     assert reply is not None
     (tool,) = [tool for tool in reply["result"]["tools"] if tool["name"] == "propose_source"]
-    assert tool["annotations"] == {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}
+    assert tool["annotations"] == {
+        "title": "Propose a source for a fact",
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "openWorldHint": False,
+    }
     assert tool["inputSchema"]["required"] == ["proposal"]
     assert mcp_source_tools.PROPOSE_SOURCE.scope == CONTRIBUTE_SCOPE
 

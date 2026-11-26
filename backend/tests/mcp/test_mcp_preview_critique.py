@@ -6,6 +6,7 @@ import pytest
 from app.api import mcp_page_tools
 from app.api.mcp_page_texts import REVIEWED
 from app.api.mcp_tools import TOOLS
+from app.data.skill_library import reference_text
 from app.research.design_critique import DesignCritique, DesignNote
 from app.research.design_read import READ, DesignRead
 from app.research.page_report import page_report
@@ -124,7 +125,9 @@ def test_the_preview_s_input_names_the_critique_and_read_pictures_without_a_dang
     properties = schema["properties"]
     assert (
         properties["critique"]["required"] == ["verdict"]
-        and "design-critique/1" in properties["critique"]["description"]
+        and "design-critique/1" not in properties["critique"]["description"]
+        and "verdict and notes" in properties["critique"]["description"]
     )
+    assert "`design-critique/1`" in reference_text("playbook")
     assert properties["read_pictures"]["type"] == "boolean" and "$defs" not in schema
     assert "$ref" not in str(properties["critique"])

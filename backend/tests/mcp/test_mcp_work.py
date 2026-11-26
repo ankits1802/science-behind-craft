@@ -70,7 +70,7 @@ async def test_the_work_tools_are_listed_in_the_work_group_with_their_hints() ->
     for name in ("list_open_work", "my_work", "get_proposal"):
         assert tools[name]["annotations"]["readOnlyHint"] is True, name
     for name in ("reserve_tasks", "steward_craft"):
-        assert tools[name]["annotations"] == WRITES, name
+        assert tools[name]["annotations"] == {"title": tools[name]["title"], **WRITES}, name
     reserve = tools["reserve_tasks"]["inputSchema"]["properties"]
     assert reserve["claim"]["maxItems"] == reserve["release"]["maxItems"] == 10
     assert "new 5, established 10, proven 20" in tools["reserve_tasks"]["description"]

@@ -69,13 +69,13 @@ class SearchSources(Arguments):
         default=None,
         min_length=1,
         max_length=SLUG_MAX_CHARS,
-        description="A slug from find_crafts; the craft's name joins the query",
+        description="A craft's slug; the craft's name joins the query",
     )
     kinds: list[Literal[*SEARCH_KINDS]] = Field(
         default_factory=lambda: list(TEXT_KINDS),
         min_length=1,
         max_length=len(SEARCH_KINDS),
-        description="Any of scholarly, reference, web and pictures; the first three when absent",
+        description="Any of scholarly, reference, web and pictures; scholarly, reference and web when absent",
     )
 
 
@@ -103,7 +103,7 @@ class ReadSource(Arguments):
         max_length=PROPOSAL_QUOTES_MAX,
         description="Quotes to check as the QUOTES gate will, each {text (verbatim), locator}",
     )
-    archive: bool = Field(default=False, description="Ask the Wayback Machine to save the page too")
+    archive: bool = Field(default=False, description="True also has the Wayback Machine save the page")
 
     @model_validator(mode="after")
     def _one_address(self) -> Self:

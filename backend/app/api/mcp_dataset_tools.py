@@ -33,16 +33,16 @@ from .proposal_limits import refuse_tool_when_spent
 __all__ = ["DATASET_TOOLS", "PROPOSE_DATASET", "ProposeDataset"]
 
 DESCRIPTION = (
-    "Propose an open dataset whose rows a component draws: its record (code, title, publisher, edition, version, "
-    "period, native_resolution, crs, licence with licence_url, attribution, redistributable, citation with doi, "
-    "landing_url, url of the file, the file's sha256, and sheet when a workbook's table is not its first sheet). The "
-    "gates check the licence is open and redistributable, the code is new and the landing page is reachable, then "
-    "return a single-use upload slot: PUT the table (UTF-8 CSV, or an .xlsx workbook with its values saved and no "
-    "macros; a header row, at most 20000 rows) to upload_url within 30 minutes; it is scanned for malware and its "
-    "SHA-256 checked before the table is stored. A chart, fact_table or map_layer then names the dataset's code "
-    "as dataset and each value's row and column as its cell, and the gates check every value against its stored "
-    "row. A new map layer adds layer and PUTs WGS 84 GeoJSON, held for a reviewer (datasets guide, Map layers over "
-    "MCP)."
+    "Proposes an open dataset whose rows a component draws: its record (code, title, publisher, edition, "
+    "version, period, native_resolution, crs, licence with licence_url, attribution, redistributable, citation "
+    "with doi, landing_url, url of the file, the file's sha256, and sheet when a workbook's table is not its "
+    "first sheet). The gates check the licence is open and redistributable, the code is new and the landing "
+    "page is reachable, then return a single-use upload slot that takes the table by PUT to upload_url within "
+    "30 minutes (UTF-8 CSV, or an .xlsx workbook with its values saved and no macros; a header row, at most "
+    "20000 rows); it is scanned for malware and its SHA-256 checked before the table is stored. A chart, "
+    "fact_table or map_layer then names the dataset's code as dataset and each value's row and column as its "
+    "cell, and the gates check every value against its stored row. A new map layer adds layer and its slot "
+    "takes WGS 84 GeoJSON, held for a reviewer."
 )
 UPLOADS_OFF = "Dataset uploads are not open on this server right now."
 CHECKS_UNAVAILABLE = (
@@ -57,7 +57,7 @@ LAYER_UPLOAD_STEP = (
 REFUSED = "The dataset was not taken: {problems}."
 FILE_DESCRIPTION = (
     "The dataset's file itself, sent without passing through the chat: its table as UTF-8 CSV or an .xlsx "
-    "workbook (the sheet the record names, or the first), or a new map layer's GeoJSON, at most 5 MB, the very "
+    "workbook (the sheet the record names, or else its first sheet), or a new map layer's GeoJSON, at most 5 MB, the very "
     "file whose sha256 the record gives"
 )
 OTHER_FILE = "The file's SHA-256 is not the sha256 the record declares; send the dataset's own file."
@@ -67,7 +67,7 @@ LAYER_STORED = "The file arrived and passed its checks: the layer {code} is stor
 
 
 class ProposeDataset(SnakeBodyArguments):
-    proposal: DatasetProposal = Field(description="The dataset's record, as the datasets guide lists it")
+    proposal: DatasetProposal = Field(description="The dataset's record")
 
 
 async def _propose(context: ToolContext, arguments: ProposeDataset) -> DatasetReply:

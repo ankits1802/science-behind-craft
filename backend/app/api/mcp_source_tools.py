@@ -23,14 +23,14 @@ from .proposal_limits import refuse_tool_when_spent
 __all__ = ["PROPOSE_SOURCE", "SOURCE_TOOLS", "ProposeSource", "SourceToolReply", "source_proposed"]
 
 PROPOSE_DESCRIPTION = (
-    "Give a held or thinly supported fact a new source: the fact keeps its statement, and each quote you give "
+    "Gives a held or thinly supported fact a new source: the fact keeps its statement, and each quote given "
     "must state it. The gates fetch every source and re-find every quote verbatim, and grade the source; quotes "
     "that pass are added to the fact at once. A fact held from its page because its quotes are no longer found "
-    "returns to the page when a new quote passes. Use it for RESOURCE_FACT, CORROBORATE_FACT, "
-    "FIND_ANOTHER_SOURCE, SECOND_SOURCE and DEAD_SOURCE tasks, naming the task you claimed as task_key and the "
-    "fact as claim_id, its id from the task's fact ids or get_facts. An archived snapshot of a dead page "
-    "(https://web.archive.org/web/<timestamp>/<url>) is a source like any other. Every name inside the proposal "
-    "is snake_case; the old camelCase names work until the next release and say so in notices."
+    "returns to the page when a new quote passes. claim_id is the fact's id; a passing proposal completes the "
+    "RESOURCE_FACT, CORROBORATE_FACT, FIND_ANOTHER_SOURCE, SECOND_SOURCE or DEAD_SOURCE task named as task_key. "
+    "An archived snapshot of a dead page (https://web.archive.org/web/<timestamp>/<url>) is a source like any "
+    "other. Every name inside the proposal is snake_case; the old camelCase names work until the next release "
+    "and say so in notices."
 )
 NEEDS_PROPOSER = (
     "propose_source needs an account of Researcher or above; this account cannot propose sources."
@@ -43,8 +43,8 @@ CHECKS_UNAVAILABLE = (
 class ProposeSource(SnakeBodyArguments):
     proposal: SourceProposal = Field(
         description=(
-            "claim_id (the fact), sources [{url, title, licence, quotes [{text, locator}]}] and the task_key you "
-            "claimed"
+            "claim_id (the fact), sources [{url, title, licence, quotes [{text, locator}]}] and the task_key it "
+            "is for"
         )
     )
 

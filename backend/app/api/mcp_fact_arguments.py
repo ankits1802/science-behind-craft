@@ -35,7 +35,7 @@ class FactFields(RenamedArguments):
         default=None,
         min_length=1,
         max_length=SLUG_MAX_CHARS,
-        description="The craft's slug, from find_crafts",
+        description="The craft's slug",
     )
     category_slug: str | None = Field(
         default=None,
@@ -61,14 +61,14 @@ class FactFields(RenamedArguments):
         default=None,
         min_length=1,
         max_length=TASK_KEY_MAX_CHARS,
-        description="The field or corroboration task you claimed for this fact, from list_open_work",
+        description="The key of the field or corroboration task this fact is for, as the open work lists it",
     )
     idempotency_key: str | None = Field(
         default=None,
         pattern=IDEMPOTENCY_KEY_PATTERN,
         description=(
-            "Your key for this fact, 8 to 120 letters, digits, dots, dashes, underscores or colons: a call sent "
-            "again with the same key returns the first call's proposal and never adds the fact twice; without "
+            "The caller's key for this fact, 8 to 120 letters, digits, dots, dashes, underscores or colons: a call sent "
+            "again with the same key returns the earlier call's proposal and never adds the fact twice; without "
             "one, the fact's own content is its key"
         ),
     )
@@ -145,7 +145,9 @@ class ProposeFacts(Arguments):
 
 
 class GetProposal(Arguments):
-    proposal_id: uuid.UUID = Field(description="A proposal id from propose_facts, propose_page or my_work")
+    proposal_id: uuid.UUID = Field(
+        description="A proposal id, as a proposal's reply or this account's work gives it"
+    )
 
 
 def _key(item: Any) -> str | None:

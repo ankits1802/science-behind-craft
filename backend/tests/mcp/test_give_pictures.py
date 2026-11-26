@@ -9,6 +9,7 @@ import pytest
 from app.api import mcp_picture_tools
 from app.api.mcp_picture_arguments import GivePictures
 from app.api.mcp_tools import ToolContext, answer
+from app.data.contributor_kit import CONTRIBUTOR_SKILL_PATH
 from app.research.image_contributions_give import GivenPicture, GivenPictures
 from app.research.image_intake_fetch import FetchedPicture
 from app.research.image_screens import ScreenSummary, ScreenTools
@@ -217,11 +218,15 @@ def test_the_pictures_sent_in_one_call_are_capped_together() -> None:
         )
 
 
-async def test_the_description_asks_for_the_person_s_own_words_and_names_the_screens() -> None:
+async def test_the_description_states_the_declaration_is_the_person_s_own_and_names_the_screens() -> None:
     reply = await answer({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}, context(None))
     assert reply is not None
     (listed,) = [tool for tool in reply["result"]["tools"] if tool["name"] == "give_pictures"]
-    assert "Aadhaar" in listed["description"] and "never fill the declaration in" in listed["description"]
+    assert (
+        "Aadhaar" in listed["description"] and "declaration that is the person's own" in listed["description"]
+    )
+    assert "never fill" not in listed["description"].lower()
+    assert "Never fill in a picture's declaration" in CONTRIBUTOR_SKILL_PATH.read_text(encoding="utf-8")
     picture = listed["inputSchema"]["$defs"]["GivenOrUploaded"]["properties"]
     assert {"image_url", "image_base64", "upload", "task_key", "alt_text"} <= set(picture)
     assert {"confirmation", "declaration", "pictures", "craft_slug"} <= set(

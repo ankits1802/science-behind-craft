@@ -26,27 +26,25 @@ __all__ = ["READ_TOOLS"]
 FIND_DESCRIPTION = (
     "Up to five crafts for a name, a local name, a place, a kind or what a craft is made of or done with "
     "(bell metal casting, indigo resist), ranked by the names and places matched and by the concepts, cited "
-    "claims and components each craft holds, curated and covered crafts first; each with its slug, page and "
-    "its cited claims per field: which fields are covered, thin or missing."
+    "claims and components each craft holds, curated and covered crafts ahead of the rest; each with its slug, "
+    "page and its cited claims per field: which fields are covered, thin or missing."
 )
 FACTS_DESCRIPTION = (
     "The cited facts of one craft, family or category page whole, each with its evidence level, verbatim "
-    "quotes, locators, stored quantities and the figures resting on it, and the sources they cite. ids reads "
-    "the facts you name, up to 50, as the page's brief (get_page, parts brief) lists them; otherwise "
-    "optionally one field and ranked by words, grouped by field with counts, and every field the page holds "
-    "too few facts in named as open work with its task key. A category's are the facts its page links and "
-    "those proposed for it. Building a page (playbook/1), read the brief first: it lists every fact in one "
-    "line, and these are the full texts of the facts a figure will cite."
+    "quotes, locators, stored quantities and the figures resting on it, and the sources they cite. ids returns "
+    "the facts named, up to 50, by the ids the page's brief lists; otherwise one field's facts or every "
+    "field's, ranked by words when given, grouped by field with counts, with every field that holds too few "
+    "facts named as open work with its task key. A category's are the facts its page links and those "
+    "proposed for it."
 )
 ONE_PAGE = "name the page as subject {kind, slug} or give a craft_slug, one of them"
 IDS_ALONE = "ids name the facts to read; leave field and query out"
-IDS_DESCRIPTION = "The facts to read whole, by the ids the page's brief lists; field and query are left out"
+IDS_DESCRIPTION = "The facts to return whole, by the ids the page's brief lists; not with field or query"
 COMPONENTS_DESCRIPTION = (
     "The registered interactive components (players, maps, molecules, charts), each with its label, title, "
-    "description, kind, fields and the subjects it is keyed to. Search it before you fill a spec by hand: one "
-    "keyed to a concept, compound or place is "
-    "shared by every craft it applies to, so place it by its label rather than making another, but only when "
-    "its units cite facts this page holds. The component cookbook (cookbook/1) says which tool makes each kind."
+    "description, kind, fields and the subjects it is keyed to. A component keyed to a concept, compound or "
+    "place is shared by every craft it applies to and is placed on a page by its label, when its units cite "
+    "facts that page holds."
 )
 
 
@@ -64,7 +62,7 @@ class GetFacts(Arguments):
     )
     subject: PageSubject | None = Field(
         default=None,
-        description="The page instead: kind craft, family or category and its slug from find_crafts",
+        description="The page instead: its kind (craft, family or category) and its slug",
     )
     field: Discipline | None = Field(
         default=None, description="One of the sixteen fields; every field when absent"
@@ -103,7 +101,7 @@ class ListComponents(Arguments):
         default=None,
         min_length=1,
         max_length=SLUG_MAX_CHARS,
-        description="A slug from find_crafts; also brings the shared components of its concepts, compounds and districts",
+        description="A craft's slug; the shared components of its concepts, compounds and districts come too",
     )
     field: Discipline | None = Field(default=None, description="One of the sixteen fields")
     kind: PieceKind | None = Field(

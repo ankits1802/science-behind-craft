@@ -17,11 +17,11 @@ CRAFT = "craft"
 LIMIT_DEFAULT = 20
 LIMIT_MAX = 50
 DESCRIPTION = (
-    "List the field photographs from KalaVigyan's field portals that a craft's page may show: only those "
+    "Lists the field photographs from KalaVigyan's field portals that a craft's page may show: only those "
     "already published on the craft's page, never an artisan's identity photograph. Each comes with its label, "
-    "caption, alt text, credit and size. Place one with a layout entry naming its label (edit_draft's layout "
-    "or a bundle's): its chapter, order and role (HERO for the masthead, OPENER, PLATE or FIGURE), and a "
-    "size, crop or caption if you choose. The site draws it with its credit as listed."
+    "caption, alt text, credit and size. A page's layout entry places one by its label, with its chapter, "
+    "order and role (HERO for the masthead, OPENER, PLATE or FIGURE) and optionally a size, crop or caption. "
+    "The site draws it with its credit as listed."
 )
 PLACE_STEP = (
     "Place a photograph by its label in the page's layout, where its chapter's story needs it; a page shows "

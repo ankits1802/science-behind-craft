@@ -41,7 +41,7 @@ class SupplySourceArguments(StudioArguments):
     )
     access: SourceAccess = Field(
         description=(
-            "how you read it (SUBSCRIPTION, INSTITUTION, OWN_COPY, ARCHIVE or BLOCKED_SITE), accessed_on "
+            "how it was read (SUBSCRIPTION, INSTITUTION, OWN_COPY, ARCHIVE or BLOCKED_SITE), accessed_on "
             "(YYYY-MM-DD) and an optional note such as the library or database"
         )
     )
@@ -51,7 +51,7 @@ class SupplySourceArguments(StudioArguments):
     passages: list[SuppliedPassage] = Field(
         default_factory=list,
         max_length=PASSAGES_MAX,
-        description="The passages you will quote, each {text, locator}, copied verbatim with where they stand",
+        description="The passages to be quoted, each {text, locator}, copied verbatim with where they stand",
     )
     text: str | None = Field(
         default=None,
@@ -61,12 +61,12 @@ class SupplySourceArguments(StudioArguments):
     upload: Literal[*UPLOAD_KINDS] | None = Field(
         default=None,
         description=(
-            "Or pdf or text: a private upload slot is returned for the file; or none of these, and a client "
-            "that can ask the person collects the words in a form"
+            "Or pdf or text: a private upload slot is returned for the file; with none of these, a client that "
+            "shows forms collects the words from the person in one"
         ),
     )
     draft_id: uuid.UUID | None = Field(
-        default=None, description="A draft from edit_draft to attach the source to at once"
+        default=None, description="A page draft's id, to attach the source to it at once"
     )
 
     @model_validator(mode="after")

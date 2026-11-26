@@ -50,28 +50,29 @@ LIST_DESCRIPTION = (
     "or thin fields, sections to write from stored facts, missing components (What-if, molecules, map, reaction "
     "player, pictures), pages not yet in the monograph form, facts awaiting a second source, sources-differ "
     "entries, dead or unarchived sources, and for reviewers the review queues. Each task has its key, what is "
-    "needed, its acceptance rule, its priority and the prompt that fits it, highest priority first. Tasks "
-    "another account has reserved are left out."
+    "needed, its acceptance rule, its priority and the prompt that fits it, by priority from high to low. "
+    "Tasks another account has reserved are left out."
 )
 MINE_DESCRIPTION = (
     "This account's work in one view: the tasks it holds with their reservation ends and what each needs, the "
     "tasks it completed in the last 30 days, the outcomes of its latest proposals (queued, checking, published, "
     "waiting or refused, with each gate's reasons), its trust tier and how many tasks it may hold, and each "
-    "craft it stewards with its open work, the tasks opened since the last look first. Reading it records what "
-    "you have now seen, so the next call's new gaps are the ones opened after it."
+    "craft it stewards with its open work, the tasks opened since the last look ahead of the rest. Reading it "
+    "records what this account has now seen, so the next call's new gaps are the ones opened after it."
 )
 RESERVE_DESCRIPTION = (
-    "Reserve open tasks for this account for two hours each so no other agent does the same work, and give "
-    "back the ones you stop: release returns each at once, then claim reserves each key on its own, so a task "
+    "Reserves open tasks for this account for two hours each so no other agent does the same work, and gives "
+    "back the ones it stops: release returns each at once, then claim reserves each key on its own, so a task "
     "that is taken, closed or over this account's cap is refused and the rest are held. Claiming a held task "
     "again renews it; an expired reservation returns the task to the list. How many tasks an account holds at "
     f"once is set by its trust tier (new {TIER_TASKS_HELD[NEW]}, established {TIER_TASKS_HELD[ESTABLISHED]}, "
     f"proven {TIER_TASKS_HELD[PROVEN]})."
 )
 STEWARD_DESCRIPTION = (
-    "Adopt a craft or family as its steward, and its open work comes back as one package with the gaps opened "
-    "since your last look first; or drop it, and its open work stays open to everyone. Stewardship never "
-    f"reserves a task and never blocks anyone else. An account stewards at most {STEWARD_CRAFTS_MAX} crafts."
+    "Adopts a craft or family for this account as its steward, and its open work comes back as one package "
+    "with the gaps opened since the last look ahead of the rest; or drops it, and its open work stays open to "
+    "everyone. Stewardship never reserves a task and never blocks anyone else. An account stewards at most "
+    f"{STEWARD_CRAFTS_MAX} crafts."
 )
 
 TaskKey = Annotated[str, Field(min_length=1, max_length=TASK_KEY_MAX_CHARS)]
@@ -82,7 +83,7 @@ class ListOpenWork(Arguments):
         default=None,
         min_length=1,
         max_length=SLUG_MAX_CHARS,
-        description="One craft's tasks, from find_crafts",
+        description="One craft's tasks, by its slug",
     )
     family_slug: str | None = Field(
         default=None,
@@ -125,9 +126,7 @@ class ReserveTasks(Arguments):
 
 
 class StewardCraft(Arguments):
-    craft_slug: str = Field(
-        min_length=1, max_length=SLUG_MAX_CHARS, description="A craft's or family's slug from find_crafts"
-    )
+    craft_slug: str = Field(min_length=1, max_length=SLUG_MAX_CHARS, description="A craft's or family's slug")
     action: Literal[*STEWARD_ACTIONS] = Field(description="adopt or drop")
 
 

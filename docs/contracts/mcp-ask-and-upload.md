@@ -78,8 +78,9 @@ pipeline's own message (what was searched). The person's name is withheld from s
 site.
 
 **Timeout.** The run is bounded at 600 seconds (`ASK_TIMEOUT_SECONDS`); past it the tool refuses
-("The answer was not finished within 10 minutes") and returns nothing. The tool's description tells
-agents to allow up to ten minutes. A client that accepts an event stream gets the call as one
+("The answer was not finished within 10 minutes") and returns nothing. The tool's description states
+that a run takes several minutes and is stopped at ten (decision 0247: it describes, never orders).
+A client that accepts an event stream gets the call as one
 (`knowledge-api.md`): progress notifications for its `progressToken`, or comment heartbeats, at least
 every 15 seconds while the answer is written, then the result, so the edge in front of the API
 (CloudFront's 120-second and nginx's 300-second idle timeouts) never sees an idle origin. A client

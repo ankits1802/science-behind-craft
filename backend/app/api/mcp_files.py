@@ -103,7 +103,10 @@ def file_schema(accept: Sequence[str], max_size: int, description: str = "") -> 
             "size": {"type": "integer", "minimum": 0},
             "digest": {
                 "type": "object",
-                "properties": {"algorithm": {"const": "sha-256"}, "value": {"type": "string"}},
+                "properties": {
+                    "algorithm": {"type": "string", "const": "sha-256"},
+                    "value": {"type": "string"},
+                },
                 "required": ["algorithm", "value"],
             },
         },

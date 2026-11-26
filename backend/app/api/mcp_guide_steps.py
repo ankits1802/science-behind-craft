@@ -103,8 +103,8 @@ READ_TOKEN_MAX_CHARS = 64
 UNREAD = "GUIDE_UNREAD"
 HOW = f"Read any other page with get_page and guide set to its address; {CONTENTS_ADDRESS} lists every page."
 READ_TOKEN_DESCRIPTION = (
-    "The read_token a result gave with the design pages, sent once you have read them; a page's first "
-    "components wait for it"
+    "The read_token returned with KalaVigyan's design pages; components added to a draft that holds none, "
+    "and a bundle with components, are held back without it"
 )
 UNREAD_MESSAGE = (
     "Nothing was changed. Before a page's first components, read the design pages below, the design rules "

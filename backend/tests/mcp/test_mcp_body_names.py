@@ -127,7 +127,7 @@ def test_a_draft_s_parts_are_schemed_in_snake_case_too() -> None:
 
 
 @pytest.mark.parametrize("name", ["propose_page", "preview_page"])
-def test_a_bundle_names_its_parts_and_points_to_edit_draft_for_their_fields(name: str) -> None:
+def test_a_bundle_names_its_parts_and_points_to_a_draft_s_add_for_their_fields(name: str) -> None:
     schema = TOOLS[name].listed()["inputSchema"]
     bundle = schema["properties"]["bundle"]
     assert "$defs" not in schema and bundle["required"] == ["subject"]
@@ -142,7 +142,7 @@ def test_a_bundle_names_its_parts_and_points_to_edit_draft_for_their_fields(name
         "withdrawals",
         "note",
     }
-    assert bundle["properties"]["facts"]["maxItems"] == 20 and "edit_draft's add" in bundle["description"]
+    assert bundle["properties"]["facts"]["maxItems"] == 20 and "a page draft's add" in bundle["description"]
     assert bundle["properties"]["withdrawals"]["maxItems"] == 10 and "withdrawals" in bundle["description"]
     assert (
         bundle["properties"]["translation"] == {"type": "object"} and "translation" in bundle["description"]

@@ -9,6 +9,7 @@ from app.api.mcp_review_arguments import StagedChoice
 from app.api.mcp_review_tools import staged_decision
 from app.api.mcp_tools import TOOLS, ToolContext, answer
 from app.data.admin_guide import ADMIN_GUIDE_URI
+from app.data.contributor_kit import CONTRIBUTOR_SKILL_PATH
 from app.services.craft_resolver import CraftIndexStore
 
 SITE = "https://kalavigyan.example"
@@ -105,9 +106,10 @@ def test_a_staged_edit_carries_its_fields_and_a_structure_entry_its_kind() -> No
         StagedChoice.model_validate(DECISION | {"action": "edit", "edit": {}})
 
 
-async def test_the_admin_tools_point_to_the_served_guide_to_removing_and_editing() -> None:
+async def test_the_skill_not_the_admin_tools_points_to_the_served_guide_to_removing_and_editing() -> None:
     for tool in ("review_queue", "stage_reviews"):
-        assert ADMIN_GUIDE_URI in TOOLS[tool].description, tool
+        assert ADMIN_GUIDE_URI not in TOOLS[tool].description, tool
+    assert f"`{ADMIN_GUIDE_URI}`" in CONTRIBUTOR_SKILL_PATH.read_text(encoding="utf-8")
     read = await answer(
         {"jsonrpc": "2.0", "id": 2, "method": "resources/read", "params": {"uri": ADMIN_GUIDE_URI}},
         context("ADMIN", "read", "review"),

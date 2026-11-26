@@ -8,6 +8,7 @@ from app.api.mcp_guides import GUIDES, bar_text, guide_sheet, guide_sheets
 from app.api.mcp_page_texts import ADD, PREVIEW, READ_NEXT, REVIEWED, SUBMITTED
 from app.api.mcp_protocol import SERVER_INSTRUCTIONS
 from app.api.mcp_tools import TOOLS
+from app.data.contributor_kit import CONTRIBUTOR_SKILL_PATH
 from app.data.skill_library import DESIGN_SKILL, SKILL_FILES, reference_text, skill_file_text
 from app.models.component_kinds import (
     AUTHORED_ART_KINDS,
@@ -246,5 +247,10 @@ def test_the_design_skill_is_one_text_in_the_repository_on_the_server_and_on_the
 
 
 @pytest.mark.parametrize("name", sorted(NEXT_STEPS))
-def test_every_page_building_tool_s_description_says_where_it_sits_in_the_playbook(name: str) -> None:
-    assert NEXT_STEPS[name] in TOOLS[name].description, name
+def test_where_a_page_building_tool_sits_is_told_by_the_playbook_and_the_skill_not_its_description(
+    name: str,
+) -> None:
+    playbook = reference_text("playbook")
+    assert NEXT_STEPS[name] not in TOOLS[name].description, name
+    assert NEXT_STEPS[name] in SERVER_INSTRUCTIONS or NEXT_STEPS[name] in playbook, name
+    assert f"`{name}`" in playbook or f"`{name}`" in CONTRIBUTOR_SKILL_PATH.read_text(encoding="utf-8"), name

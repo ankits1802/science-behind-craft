@@ -65,7 +65,7 @@ class GivenOrUploaded(PictureTarget):
     upload: bool = Field(default=False, description="True for a single-use upload slot instead")
     page_url: HttpsUrl | None = Field(default=None, description=PAGE_FIELD)
     claim_ids: list[uuid.UUID] = Field(
-        default_factory=list, max_length=CLAIMS_MAX, description="The facts the picture shows, from get_facts"
+        default_factory=list, max_length=CLAIMS_MAX, description="The ids of the facts the picture shows"
     )
     caption: str | None = Field(default=None, min_length=3, max_length=IMAGE_TEXT_MAX_CHARS)
     alt_text: str | None = Field(default=None, min_length=3, max_length=IMAGE_TEXT_MAX_CHARS)
@@ -104,7 +104,7 @@ class GivenOrUploaded(PictureTarget):
 
 
 class GivePictures(StudioArguments):
-    craft_slug: str = Field(min_length=1, max_length=SLUG_MAX_CHARS, description="A slug from find_crafts")
+    craft_slug: str = Field(min_length=1, max_length=SLUG_MAX_CHARS, description="The craft's slug")
     declaration: SharedDeclaration | None = Field(default=None, description=DECLARATION_FIELD)
     confirmation: str | None = Field(
         default=None, min_length=2, max_length=CONFIRMATION_MAX_CHARS, description=CONFIRMATION_FIELD

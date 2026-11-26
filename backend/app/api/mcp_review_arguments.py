@@ -65,7 +65,8 @@ class ReviewQueueArguments(Arguments):
     limit: int = Field(default=10, ge=1, le=LIST_MAX)
     open: OpenItem | None = Field(default=None, description="One item to read whole, as its card shows it")
     published: PublishedArguments | None = Field(
-        default=None, description="Published content instead of the queue, as the guide resource says"
+        default=None,
+        description="Published content instead of the queue: a page's items of one kind, or one item",
     )
     page: uuid.UUID | None = Field(
         default=None, description="A page proposal's id: its page as it stands and as it will be"

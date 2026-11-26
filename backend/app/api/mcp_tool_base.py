@@ -161,7 +161,7 @@ class Tool:
             "title": self.title,
             "description": self.description,
             "inputSchema": schema,
-            "annotations": dict(self.annotations),
+            "annotations": {"title": self.title, **self.annotations},
             "_meta": self.meta(),
         }
         if self.shows_output:

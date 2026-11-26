@@ -31,14 +31,13 @@ __all__ = ["ASK_TOOLS", "Ask", "ask_tool"]
 
 NOT_KEPT = "The answer was written but could not be read back. Open your answers on the site."
 ASK_DESCRIPTION = (
-    "Ask KalaVigyan a question about a craft in the signed-in person's name, as they would on the site, and get "
-    "the finished answer: the question, the craft, each section with its cited sentences (each with the ids of "
-    "the facts and sources it rests on and its citation numbers), the registered components placed in it by "
-    "label, the sources with their licences, and the link to the same answer on the site. It runs our research "
-    "and writing pipeline to the end and counts against the person's asks and AI budget exactly like the site, "
-    "so it can take several minutes; allow up to ten. Clients that render MCP Apps draw it in KalaVigyan's "
-    "design from the ui resource it names; otherwise show the answer_url, or draw it yourself with the "
-    "kalavigyan://design/answer-kit.md resource. Name KalaVigyan and the Centre wherever you show it."
+    "Asks KalaVigyan a question about a craft in the signed-in person's name, as they would on the site, and "
+    "returns the finished answer: the question, the craft, each section with its cited sentences (each with the "
+    "ids of the facts and sources it rests on and its citation numbers), the registered components placed in "
+    "it by label, the sources with their licences, and the link to the same answer on the site. It runs "
+    "KalaVigyan's research and writing pipeline to the end and counts against the person's asks and AI budget "
+    "exactly like the site; a run takes several minutes and is stopped at ten. The result names the MCP Apps "
+    "view that draws it in KalaVigyan's design."
 )
 
 
@@ -50,9 +49,11 @@ class Ask(Arguments):
         default=None,
         min_length=1,
         max_length=SLUG_MAX_CHARS,
-        description="A slug from find_crafts; when absent the craft is found from the question",
+        description="A craft's slug; when absent the craft is found from the question",
     )
-    any_craft: bool = Field(default=False, description="Ask across crafts rather than about one craft")
+    any_craft: bool = Field(
+        default=False, description="True answers across crafts rather than about one craft"
+    )
     depth: Depth | None = Field(
         default=None, description="How deep to answer; the person's own default when absent"
     )

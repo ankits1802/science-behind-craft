@@ -795,7 +795,10 @@ and reading sources and Never:
 ### Guide pages (decision 0203)
 
 A client such as Claude.ai shows its model the instructions, the tool descriptions and the tools'
-results, never a resource the model did not choose to open, so the guide travels in the results:
+results, never a resource the model did not choose to open, so the guide travels in the results and
+the instructions. The tool descriptions only describe (decision 0247): they name no guide page, no
+other tool and no order of calls, so a page's place in the playbook is the playbook's and the
+results' `nextStep`, never a description's.
 
 - **The guides.** Every `text/markdown` resource but the index (the contributor skill, the datasets
   and interactives skills and their references, the design skill and SYSTEM.md, the eight

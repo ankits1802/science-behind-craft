@@ -32,23 +32,19 @@ SLUG = r"^[A-Za-z0-9-]+$"
 ONE_ABOUT = "name at most one of stage, reaction, material and compound"
 ABOUT_ONE_KIND = "about narrows one kind: name the kind as well, or leave about out to compose every kind"
 DESCRIPTION = (
-    "A helper of the page playbook's step 6 (playbook/1): it can save the work of a figure you designed, and its "
-    "result is yours to take, change or set aside for a coded figure. Compose a craft's own interactive from "
-    "the facts and structure its page holds, as the server builds "
-    "it: reaction_player from its stored reactions in the order of their stages, dip_player from its stages in "
-    "a bath with their colour after, drawn as the depicted colour of the dye, mordant or resist named, molecule_3d "
-    "from a compound its materials name with PubChem's 3D conformer (atoms, bonds, turned and zoomed by "
-    "pointer, touch and keyboard), experiment_lab from the alternatives its facts compare, with a toggle for "
-    "each. Every state and label cites only that craft's own facts; nothing is borrowed from another page. "
-    "about narrows it to one stage, reaction or material key (get_facts gives them) or a compound's CID. The "
-    "result is finished components ({proposal, cites}) to place with edit_draft's add, with your task_key set "
-    "on the proposal; preview_page, then propose_page. When the facts are not enough it composes nothing and "
-    "missing lists exactly which facts or structure to propose first; left_out names what it could not "
-    "draw, each a stage, reaction, material or compound to compose again with about once its facts are held, "
-    "or a figure to code. With no kind it composes every kind the craft's facts allow in one call, each "
-    "finished and ready for edit_draft, and missing names, kind by kind, what the rest still need: a shortcut "
-    "beside the figures you write, for the opportunities the preview's rule 29 reads from the craft's facts; "
-    "deliver the ones that serve the page. guide hands over the storyboard's pages."
+    "Composes a craft's own interactive from the facts and structure its page holds, as the server builds it: "
+    "reaction_player from its stored reactions in the order of their stages, dip_player from its stages in a "
+    "bath with their colour after, drawn as the depicted colour of the dye, mordant or resist named, "
+    "molecule_3d from a compound its materials name with PubChem's 3D conformer (atoms, bonds, turned and "
+    "zoomed by pointer, touch and keyboard), experiment_lab from the alternatives its facts compare, with a "
+    "toggle for each. Every state and label cites only that craft's own facts; nothing is borrowed from "
+    "another page. about narrows it to one stage, reaction or material key or a compound's CID. The result is "
+    "finished components ({proposal, cites}) in the shape a page draft's add takes; nothing is stored or "
+    "proposed. When the facts are not enough it composes nothing and missing lists the facts or structure each "
+    "kind still lacks; left_out names what it could not draw, each a stage, reaction, material or compound "
+    "that can be composed with about once its facts are held, or a figure that needs coding. With no kind it "
+    "composes every kind the craft's facts allow in one call, each finished, and missing names, kind by kind, "
+    "what the rest still need."
 )
 COMPOSED = "Composed {count} component{s} for {slug} from its own facts."
 EVERY = "Composed {count} component{s} for {slug} from its own facts: {kinds}."
@@ -87,7 +83,7 @@ class ComposeAbout(Arguments):
 class ComposeComponent(StudioArguments):
     craft: str = Field(min_length=1, max_length=SLUG_MAX_CHARS, pattern=SLUG, description="The craft's slug")
     kind: Literal[*COMPOSED_KINDS] | None = Field(
-        default=None, description=f"One of {', '.join(COMPOSED_KINDS)}; leave it out to compose every kind"
+        default=None, description=f"One of {', '.join(COMPOSED_KINDS)}; every kind when absent"
     )
     about: ComposeAbout | None = Field(default=None, description="What it is about, at most one key")
 

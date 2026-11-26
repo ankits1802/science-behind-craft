@@ -563,6 +563,8 @@ English and its `texts`.
 
 - Never propose prose or HTML: facts, structure, components, pictures and pages only.
 - Never propose a page you have not previewed.
+- Never tell the person a fact is on its page until `get_proposal` says `readers.shown` is true;
+  until then `readers` says why readers cannot see it and which write-section task is open.
 - Never propose a quote `read_source` refused, or one you did not copy from the text `read_source`
   returned or the source itself.
 - Never fill in a picture's declaration for the person, and never give a picture they do not hold
@@ -585,6 +587,7 @@ English and its `texts`.
 | It names each reference and restates none of their rules | `backend/tests/mcp/test_skill_references.py` |
 | The sections the prompts carry, and the phrases they rely on | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |
 | The resource that serves it | `test_mcp_prompts_resources.py` reads it back whole |
+| The guidance the tool descriptions leave to it, since they only describe (decision 0247) | `backend/tests/mcp/test_directory_listing.py` |
 
 Re-read it when a tool, a tier, an allowance, a prompt or a reference changes, and copy it to
 `frontend/public/skills/kalavigyan-contributor/SKILL.md` in the same change.

@@ -16,11 +16,11 @@ from .proposal_limits import refuse_tool_when_spent
 __all__ = ["DESCRIPTION", "GAP_TOOLS", "NEXT_STEP", "ReportSiteGap"]
 
 DESCRIPTION = (
-    "File what KalaVigyan could not do for a page you are building: a kind no component draws, a tool that is "
-    "missing, a bound that stops the page, or a part the site draws wrongly. Give the page, the gap's kind, what "
-    "the page needed, what you tried and the evidence: a refused call's message, the Kutch Ajrakh label it "
-    "would match, a preview's finding. It reaches the KalaVigyan team and its Admins; nothing on the page "
-    "changes. A gap is the site's, never the person's: say so once, then go on building."
+    "Files what KalaVigyan could not do for a page being built: a kind no component draws, a tool that is "
+    "missing, a bound that stops the page, or a part the site draws wrongly. It takes the page, the gap's kind, "
+    "what the page needed, what was tried and the evidence: a refused call's message, the Kutch Ajrakh label "
+    "it would match, a preview's finding. It reaches the KalaVigyan team and its Admins; nothing on the page "
+    "changes."
 )
 FILED = "Filed for the KalaVigyan team, who read it with the Admins: {meaning}."
 NEXT_STEP = (
@@ -31,12 +31,12 @@ KINDS_SAID = "; ".join(f"{kind}: {meaning}" for kind, meaning in GAP_MEANINGS.it
 
 
 class ReportSiteGap(Arguments):
-    subject: PageSubject | None = Field(default=None, description="The page {kind, slug} you were building")
+    subject: PageSubject | None = Field(default=None, description="The page {kind, slug} being built")
     kind: Literal[*GAP_KINDS] = Field(description=KINDS_SAID)
     wanted: str = Field(min_length=10, max_length=600, description="What the page needed and could not have")
-    tried: str | None = Field(default=None, min_length=1, max_length=600, description="What you tried")
+    tried: str | None = Field(default=None, min_length=1, max_length=600, description="What was tried")
     evidence: list[str] = Field(
-        min_length=1, max_length=EVIDENCE_MAX, description="Each piece of evidence, quoted as you met it"
+        min_length=1, max_length=EVIDENCE_MAX, description="Each piece of evidence, quoted as it was met"
     )
 
 

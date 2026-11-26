@@ -30,7 +30,7 @@ __all__ = ["NOT_ADMIN", "REPORT_TOOLS", "AdminReport", "AdminReportArguments", "
 NOT_ADMIN = "admin_reports is for Admins and Master Admins; this account cannot read them."
 UNFIT_FILTERS = "the {report} report takes no {filters}"
 DESCRIPTION = (
-    "Read-only reports for Admins. coverage: each craft's field standings. hidden_facts: the nightly count of "
+    "Reports for Admins, read only. coverage: each craft's field standings. hidden_facts: the nightly count of "
     "facts readers cannot see, by craft and reason. filing: each live-research fact's filing beside today's "
     "rule. sources: titles that are not a work's, authors that are a file's producer. mcp_activity: MCP calls "
     "by tool and client, and the newest failures. spend: settled AI spend by India day and task. evaluations: "

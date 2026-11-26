@@ -44,7 +44,7 @@ __all__ = ["LOOKUP_TOOLS", "LOOKUP_TOOL_NAMES", "lookup_tools"]
 
 SEARCH_SOURCES, READ_SOURCE, LOOKUP = LOOKUP_TOOL_NAMES = ("search_sources", "read_source", "lookup")
 SEARCH_DESCRIPTION = (
-    "Search the sources KalaVigyan itself searches, through the same adapters, keys and politeness: the "
+    "Searches the sources KalaVigyan itself searches, through the same adapters, keys and politeness: the "
     "scholarly registries (OpenAlex, Semantic Scholar, Crossref, Europe PMC, DOAJ, CORE, arXiv, Springer "
     "Nature, Elsevier), the reference works (Wikipedia, Wikidata), web search and, as kind pictures, "
     "Wikimedia Commons and Openverse. Each source carries the grade the source rubric gives it (the held grade "
@@ -56,25 +56,27 @@ SEARCH_DESCRIPTION = (
     "counts once against the account's source searches."
 )
 READ_DESCRIPTION = (
-    "Read a source through KalaVigyan's own fetcher exactly as the QUOTES gate will: the text in the gate's "
-    "normalisation, a page at a time from start, or every passage around the words you give, each with its "
-    "locator, the licence the page states, the grade the gates will record, whether KalaVigyan holds it and an "
-    "archived copy where one exists. A doi is read from its open-access copy when Unpaywall knows one; the url "
-    "returned is the one to cite, and a source given with supply_source is read from the text given. quotes "
-    "runs the gate's matcher on each without proposing: passed or failed with the gate's reasons, where it "
-    "stands, or the nearest passage and the share of its words it holds. archive asks the Wayback Machine to "
-    "save the page (up to two minutes). With quotes or archive the text comes back only when around or start "
-    "is named. Needs an account of Researcher or above; the text and each quote count as source reads, an "
-    "archive as a source archive."
+    "Reads a source through KalaVigyan's own fetcher exactly as the QUOTES gate will. It reads the "
+    "publisher's page at the https address given, or a DOI's open-access copy as the Unpaywall REST API "
+    "(https://unpaywall.org/products/api) finds it, and an archived copy where the Wayback Machine holds one "
+    "(its Availability API, https://archive.org/help/wayback_api.php). It returns the text in the gate's "
+    "normalisation, a page at a time from start, or every passage around the words given, each with its "
+    "locator, the licence the page states, the grade the gates will record, whether KalaVigyan holds it and "
+    "the archived copy; the url returned is the one to cite, and a source this account supplied is read from "
+    "the text it supplied. quotes runs the gate's matcher on each without proposing: passed or failed with "
+    "the gate's reasons, where it stands, or the nearest passage and the share of its words it holds. archive "
+    "has the Wayback Machine's Save Page Now (https://web.archive.org/save) save the page (up to two minutes). "
+    "With quotes or archive the text comes back only when around or start is named. Needs an account of "
+    "Researcher or above; the text and each quote count as source reads, an archive as a source archive."
 )
 LOOKUP_DESCRIPTION = (
-    "Look up a compound in PubChem as KalaVigyan's science engine does: its record (CID, formula, molecular "
+    "Looks up a compound in PubChem as KalaVigyan's science engine does: its record (CID, formula, molecular "
     "weight, IUPAC name, InChIKey, SMILES), its GHS hazards as PubChem's attributed sources report them, and "
-    "PubChem's synonyms and the name and synonyms KalaVigyan holds; or Wikidata items for a place, a plant or a craft: each item's "
-    "label, statements (a plant's taxon name, a place's coordinates and area), CC0 licence and grade. Give a "
-    "name (up to three items) or an id. subjects gives what KalaVigyan holds for each record by the key a "
-    "component proposal names it with: a compound's and a concept's id, a craft's slug, a district's lgd place. "
-    "Open to anyone; signed in, it counts as a source read."
+    "PubChem's synonyms and the name and synonyms KalaVigyan holds; or Wikidata items for a place, a plant or "
+    "a craft: each item's label, statements (a plant's taxon name, a place's coordinates and area), CC0 "
+    "licence and grade. It takes a name (up to three items) or an id. subjects gives what KalaVigyan holds for "
+    "each record by the key a component proposal names it with: a compound's and a concept's id, a craft's "
+    "slug, a district's lgd place. Anyone may call it; signed in, it counts as a source read."
 )
 
 Asker = Callable[[ToolContext, str], LookupAsk]

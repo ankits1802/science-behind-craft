@@ -9,7 +9,6 @@ from pydantic import Field, PrivateAttr, ValidationError
 from app.core.errors import InvalidInput
 from app.core.mcp_scopes import REVIEW_SCOPE
 from app.core.roles import Capability, can
-from app.data.admin_guide import ADMIN_GUIDE_URI
 from app.data.page_review_view import PAGE_REVIEW_VIEW_URI
 from app.models import ArtisanContribution, User
 from app.research.base import ContractModel
@@ -40,33 +39,31 @@ __all__ = ["REVIEW_TOOLS", "QueueReply", "RefreshReply", "StageReply", "staged_d
 NOT_AN_ADMIN = "{tool} is for Admin and Master Admin accounts signed in with the review scope."
 NO_TRANSCRIPTS = "Testimony is reviewed on the site, not over MCP."
 QUEUE_DESCRIPTION = (
-    "Admins: list the review queue (facts, components, layouts, structure, readings, map layers, stages, "
-    "searched pictures whose checks disagree), filtered by kinds, craft and origin, newest first; or open one "
+    "For Admins: the review queue (facts, components, layouts, structure, readings, map layers, stages, "
+    "searched pictures whose checks disagree), filtered by kinds, craft and origin, newest to oldest; or one "
     "item whole with everything its card on the Review page shows: quotes, sources, gate checks, filing "
     "verdict, held reason and suggested craft. Any checked picture's link opens by its id, and approving or "
-    "rejecting it reverses its verdicts. "
-    "With published instead, list a page's published items of one kind or open one with the fields an edit "
-    f"changes, as {ADMIN_GUIDE_URI} shows. Re-read a source and check a quote with read_source. Testimony and "
-    "waiting pictures are reviewed on the site. A page proposed whole is listed in pages; open it with page "
-    "to read it as it stands and as it will be, chapter by chapter with each sentence, component and picture "
-    "marked added, changed or removed, and its renderer's pictures."
+    "rejecting it reverses its verdicts. With published instead, a page's published items of one kind, or one "
+    "of them with the fields an edit changes. Testimony and waiting pictures are reviewed on the site. A page "
+    "proposed whole is listed in pages; page opens it as it stands and as it will be, chapter by chapter with "
+    "each sentence, component and picture marked added, changed or removed, and its renderer's pictures."
 )
 STAGE_DESCRIPTION = (
-    "Admins: stage up to 20 decisions for a person to confirm. Nothing is published, changed or shown to "
+    "For Admins: stages up to 20 decisions for a person to confirm. Nothing is published, changed or shown to "
     "readers until an Admin confirms the batch on the Review page; the server never applies what an app "
     "proposes. Each decision names the item's kind and id, an action the Review page allows (approve or "
     "reject; raise or retract a fact; approve a fact with craft or family to re-file it; correct a source's "
     "title, authors, year, journal or kind; clear a fact's sources-differ mark; remove or edit published "
-    f"content, kept in the record, as {ADMIN_GUIDE_URI} shows; approve or reject a page proposal, kind PAGES, "
+    "content, kept in the record; approve or reject a page proposal, kind PAGES, "
     "as a whole page, one chapter or one component with page) and a reason of at least 12 characters. Each "
     "is checked by the rules the Review page and the original gates apply; refused ones say why. "
     f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days. A client that shows "
     "forms asks the signed-in person at once to confirm all, some or none; only the person's answer confirms."
 )
 REFRESH_DESCRIPTION = (
-    "Admins: read the page refresh, or start one with start true: it rebuilds the pages and stored documents "
-    "that changed since the last refresh and refreshes them on the site, one job at a time, at most once in "
-    "ten minutes. It calls no model. The reply gives the job's progress and outcome; call again to follow it."
+    "For Admins: the page refresh's state, or with start true a new refresh, which rebuilds the pages and "
+    "stored documents that changed since the last refresh and refreshes them on the site, one job at a time, "
+    "at most once in ten minutes. It calls no model. Each reply gives the job's progress and outcome."
 )
 STAGED_MESSAGE = (
     "Nothing is published yet. {count} decisions wait in a staged batch until an Admin confirms them on "
@@ -116,7 +113,7 @@ class QueueReply(ContractModel):
 
 
 class RefreshArguments(Arguments):
-    start: bool = Field(default=False, description="Start a refresh of what changed")
+    start: bool = Field(default=False, description="True starts a refresh of what changed")
 
 
 class RefreshReply(ContractModel):

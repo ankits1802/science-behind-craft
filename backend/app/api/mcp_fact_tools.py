@@ -23,25 +23,25 @@ from .mcp_tool_base import (
 __all__ = ["FACT_TOOLS", "GET_PROPOSAL", "PROPOSE_FACTS", "ProposeFacts"]
 
 PROPOSE_DESCRIPTION = (
-    "Propose one to 25 facts about a craft (craft_slug) or a category (category_slug), each in one field with "
-    "the verbatim quotes and sources that state it and an idempotency_key of yours: a call sent again with the "
-    "same keys returns the same proposals. Read get_facts first: a held fact is refused. Each fact is checked "
-    "on its own, so a malformed fact, an unknown subject, a key used before for another fact or a spent hourly "
-    "allowance refuses that fact only. The gates run off the request in a queue: they fetch every source and "
-    "re-find every quote, grade the source and read its licence, refuse a fact the subject holds or one that "
-    "adds nothing to its section, and keep a disagreement with a held fact as sources differ; the judge is asked "
-    "only when quotes, source and held facts cannot decide. The reply gives each fact by index its proposal id "
-    "(QUEUED) or why it was refused; get_proposal or my_work report each outcome. Name the field or "
-    "corroboration task you claimed as task_key: a fact that passes completes it, a refused one gives it back."
+    "Proposes one to 25 facts about a craft (craft_slug) or a category (category_slug), each in one field with "
+    "the verbatim quotes and sources that state it and the caller's own idempotency_key: a call sent again "
+    "with the same keys returns the same proposals. Each fact is checked on its own, so a malformed fact, an "
+    "unknown subject, a key used before for another fact or a spent hourly allowance refuses that fact only. "
+    "The gates run off the request in a queue: they fetch every source and re-find every quote, grade the "
+    "source and read its licence, refuse a fact the subject already holds or one that adds nothing to its "
+    "section, and keep a disagreement with a held fact as sources differ; the judge is asked only when quotes, "
+    "source and held facts cannot decide. The reply gives each fact by index its proposal id (QUEUED) or why "
+    "it was refused. A fact that passes completes the field or corroboration task named as its task_key; a "
+    "refused one releases it."
 )
 GET_DESCRIPTION = (
     "The state of one of this account's proposals: QUEUED with the number of proposals ahead of it, CHECKING "
     "while the gates run, DONE with the reply (published, waiting for a reviewer or refused, each gate's "
-    "reasons, the fact's id, and readers: whether a signed-out reader sees the fact now, on which page and field, "
-    "whether a written section cites it or which write-section task is open, or why readers cannot see it) and "
-    "the model calls and cost the checks took, or FAILED when the checks could not run after five tries (nothing "
-    "was stored; send it again with the same idempotency_key). Tell a person a fact is on the page only when "
-    "readers.shown is true."
+    "reasons, the fact's id, and readers: whether a signed-out reader sees the fact now, on which page and "
+    "field, whether a written section cites it or which write-section task is open, or why readers cannot see "
+    "it; readers.shown is true only while a signed-out reader sees the fact) and the model calls and cost the "
+    "checks took, or FAILED when the checks could not run after five tries (nothing was stored, and the same "
+    "proposal sent again with its idempotency_key is checked anew)."
 )
 
 
