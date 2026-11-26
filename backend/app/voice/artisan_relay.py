@@ -21,7 +21,7 @@ from .artisan_records import AudioWrite, ConversationRecord, TurnWrite
 from .artisan_reply import ArtisanTools, KalaVigyanTurn, kalavigyan_turn, transcript_turn
 from .artisan_session import ArtisanRefused, ConversationDeps, end_conversation
 from .artisan_transcript import open_transcript, sealed_merge, words_from
-from .audio import upload_seconds
+from .audio import scanned_seconds
 from .audio_decode import Measure
 from .privacy import heard_text
 from .records import SessionRecord, TurnClaim, TurnHold
@@ -64,7 +64,7 @@ class ArtisanUpload:
     async def measured(
         cls, content: bytes, content_type: str, measure: Measure, *, continued: bool
     ) -> ArtisanUpload:
-        return cls(content, content_type, await upload_seconds(content, content_type, measure), continued)
+        return cls(content, content_type, await scanned_seconds(content, content_type, measure), continued)
 
 
 @dataclass(frozen=True)

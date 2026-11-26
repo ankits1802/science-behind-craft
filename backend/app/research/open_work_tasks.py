@@ -14,6 +14,7 @@ from .open_work import (
     REVIEW_QUEUES,
     SUBJECT_KINDS,
     TASK_PROMPTS,
+    UPGRADE_TASK,
     FieldStanding,
     Hold,
     OpenTask,
@@ -64,6 +65,7 @@ def subject_tasks(standing: SubjectStanding) -> list[OpenTask]:
         *_component_tasks(standing),
         *flagship_tasks(standing),
         *_page_tasks(standing),
+        *_upgrade_tasks(standing),
         *_corroboration_tasks(standing),
         *_link_tasks(standing),
     ]
@@ -205,6 +207,12 @@ def _page_tasks(standing: SubjectStanding) -> list[OpenTask]:
     if not standing.layout:
         return [_task(standing, "PAGE_LAYOUT", None, texts.page_layout_wording(standing))]
     return []
+
+
+def _upgrade_tasks(standing: SubjectStanding) -> list[OpenTask]:
+    if standing.upgrade is None:
+        return []
+    return [_task(standing, UPGRADE_TASK, None, texts.upgrade_wording(standing, standing.upgrade))]
 
 
 def _corroboration_tasks(standing: SubjectStanding) -> list[OpenTask]:

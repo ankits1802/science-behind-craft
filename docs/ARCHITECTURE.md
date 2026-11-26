@@ -125,7 +125,7 @@ The diagram is the stack from the top down; the edges that may really be importe
 | renderer | `renderer/` | the separate kv-renderer process (`python -m app.renderer`): one pinned chrome-headless-shell per render driven over the DevTools protocol, one render at a time, a request guard that lets the browser reach only the site and its picture host, the shared drawing checks (`data/design/drawing-checks.js`) and the screenshots; imports `research/`, `core/` and `data/` only, no DB, no AWS (decision 0195) |
 | curation | `curation/` | curated craft dossiers: the model, the offline rules, the check file and the index, read by `tools/curation` and the importer; imports `research/`, `models/` and `data/` only (decision 0051) |
 | contracts | `research/` | research and answering types, protocols, post-check rules; the explainer document, blocks, stored pieces and depth by role (decision 0030); dataset rows, rivers, the calendar words, reaction rules and the expert panel (decision 0042) |
-| shared | `core/` | settings, db, security (passwords, tokens, secret keys), the managed key store, roles, deps, logging, rate limits and allowances shared by every process, each process's connection budget and the retries of a full pooler (decision 0163), India time, HTTP revalidation, work shielded from a leaving caller |
+| shared | `core/` | settings, db, security (passwords, tokens, secret keys), the managed key store, roles, deps, logging, rate limits and allowances shared by every process, each process's connection budget and the retries of a full pooler (decision 0163), India time, HTTP revalidation, work shielded from a leaving caller, the one runner of a local program (`core/programs`, ffmpeg's for voice and clip stills) |
 | foundation | `models/`, `data/` | ORM tables; vendored datasets and pure loaders |
 
 The allowed import edges are the table `LAYER_IMPORTS` in `tools/hygiene/layers.py`, listed in
@@ -240,7 +240,10 @@ that a person confirms (`services/staged_published` and one `services/published_
 decision 0194), a borrowed component whose units cite facts the page does
 not hold is refused before it is proposed (`services/borrowed_placements`), and a whole page from
 an account whose proposals reach readers at once waits for that person's one confirmation
-(`services/page_holds`, decision 0193).
+(`services/page_holds`, decision 0193), keeping the agent's design critique for that person and the
+layout it proposes (decision 0245). A page a contributor built before the UX round is raised once by
+the nightly upkeep as open work naming what its facts could now show (`services/page_upgrades`,
+`PageUpgrade`, decision 0245).
 
 ```mermaid
 %%{init: {"theme":"base","fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif","themeVariables":{"fontSize":"15px","primaryColor":"#F2E9FE","primaryTextColor":"#1E1B2E","primaryBorderColor":"#9148D2","lineColor":"#AA69E9","textColor":"#857F9E","transitionColor":"#AA69E9","transitionLabelColor":"#857F9E","stateLabelColor":"#1E1B2E","stateBkg":"#F2E9FE","compositeBackground":"#F9F5FF","compositeTitleBackground":"#F2E9FE"}}}%%
@@ -596,7 +599,10 @@ sequenceDiagram
 4. On success the worker also writes a copy free of the requester (`media/craft/<sha256>/<fileName>`,
    `MediaAsset.pageKey`) and shares the asset unless it depicts a named cluster, which the craft
    page shows only after two professors' sign-off; shared assets join their craft's chapters as
-   `ai_media` and are read at `GET /api/crafts/media/{assetId}`. The worker writes its heartbeat
+   `ai_media` and are read at `GET /api/crafts/media/{assetId}`; a coded figure that names a shared
+   clip plays it through `GET /api/crafts/media/{assetId}/film`, a 300 s signed address for that one
+   object, and the export draws its still from `/still`, cut once by ffmpeg and kept beside the copy
+   (`services/coded_clips`, `services/clip_stills`, decision 0245). The worker writes its heartbeat
    every minute, and the media routes offer no kind and queue no job once it has been silent more
    than five minutes (decision 0154).
 

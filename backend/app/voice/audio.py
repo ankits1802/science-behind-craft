@@ -5,10 +5,11 @@ import struct
 
 from app.core.errors import InvalidInput, Refused
 from app.schemas.voice import RELAY_MAX_AUDIO_BYTES, RELAY_MAX_TURN_SECONDS, RELAY_MAX_WAV_BYTES
+from app.services.malware_scan import scanned_upload
 
 from .audio_decode import Measure
 
-__all__ = ["WAV_TYPE", "upload_seconds", "wav_seconds"]
+__all__ = ["WAV_TYPE", "scanned_seconds", "upload_seconds", "wav_seconds"]
 
 WAV_TYPE = "audio/wav"
 TOO_LONG = "too_long"
@@ -20,6 +21,11 @@ SAMPLE_RATES = range(8_000, 192_001)
 MAX_CHANNELS = 8
 FMT_BYTES = 16
 EXTENSIBLE_FMT_BYTES = 26
+
+
+async def scanned_seconds(content: bytes, content_type: str, measure: Measure) -> int:
+    await scanned_upload(content)
+    return await upload_seconds(content, content_type, measure)
 
 
 async def upload_seconds(content: bytes, content_type: str, measure: Measure) -> int:

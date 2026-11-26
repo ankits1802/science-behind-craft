@@ -11,6 +11,7 @@ import httpx
 
 from app.core.errors import ExternalFailure, InvalidInput
 from app.services.field_voices_items import FeedArea, ImageItem, SignedImage
+from app.services.malware_scan import scanned_upload
 from app.services.naming import PlaceParts, field_voice_file_name, field_voice_key
 from app.services.object_store import ObjectStore
 
@@ -60,6 +61,7 @@ class ImageCopier:
 
     async def copy(self, item: ImageItem) -> StoredCopy:
         raw = await self._download(item.image)
+        await scanned_upload(raw)
         made = await asyncio.to_thread(neutral_copy, raw, item.image)
         sha = hashlib.sha256(made.data).hexdigest()
         leaf = field_voice_file_name(

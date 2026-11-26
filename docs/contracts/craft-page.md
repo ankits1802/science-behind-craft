@@ -122,6 +122,8 @@ Last reviewed: 2026-11-23 (schema version 3 served; build status above).
 | PUT | `/api/crafts/{slug}/explainers/{pieceId}/hidden` | `HIDE_GENERATED` (Professor and above) | `{hidden}` body; hides or shows a generated explainer the job stored for this craft (`KnowledgePiece.hiddenAt`). A hidden explainer is placed on no page and reused by no answer. |
 | PUT | `/api/crafts/{slug}/pieces/{pieceId}/hidden`, `/api/crafts/{slug}/media/{assetId}/hidden` | `HIDE_GENERATED` | `{hidden}` body; hides or shows a piece of this craft (`KnowledgePiece.hiddenAt`, which also stops its reuse in answers and in the component library) or an AI asset on this page. |
 | GET | `/api/crafts/media/{assetId}` | public reading | 302 to a 15-minute presigned GET of the AI asset's page copy (`MediaAsset.pageKey`), as the field image route does; 404 unless the asset is `CRAFT_SHARED` with a page copy; 503 `{detail}` without the bucket. |
+| GET | `/api/crafts/media/{assetId}/film` | public asset (`public_asset_reader`) | `{url, expiresAt}`, a 5-minute presigned GET of one clip's page copy, for a coded figure's frame that names it (`component-specs-science.md`, coded_figure, decision 0245); `Cache-Control: no-store`. 404 `{detail}` unless the asset is a `CRAFT_SHARED` page copy of a `SUCCEEDED` `VIDEO` job with its model and alt text; 503 `{detail}` without the bucket. |
+| GET | `/api/crafts/media/{assetId}/still` | public asset | A JPEG frame from the middle of that clip, the still a page's export draws for it, cut once with ffmpeg (`services/clip_stills.py`) and kept beside the page copy (`naming.clip_still_key`: the leaf's `Video` becomes `Still`, `.mp4` becomes `.jpg`); `Cache-Control: private, max-age=300` and `X-Content-Type-Options: nosniff`. 404 `{detail}` for the same assets as `/film`, or when no still can be cut; 503 `{detail}` without the bucket or when it fails. |
 | GET | `/api/crafts/contributed/{contributionId}` | public asset (`public_asset_reader`) | The picture of an approved image contribution (`docs/contracts/image-contributions.md`), its bytes with its stored MIME type, `Cache-Control: private, max-age=300`, an `ETag` of the cleaned file's SHA-256 (304 on a match, without reading the bucket) and `X-Content-Type-Options: nosniff`, as the field image route does. 404 `{detail}` for anything not `APPROVED` and shared, or a file the bucket no longer holds; 503 `{detail}` without the bucket or when it fails. Never names the contributor. |
 | GET | `/api/crafts/{slug}/film-score` | public reading | The `FilmScore` (`schemas/film.py`) the job stored for the page's current film scenes, with fresh one-hour links; 404 when there is none. Never makes one. |
 
@@ -134,7 +136,8 @@ is drawn (`/api/molecules/{pubchemCid}/conformer`, `/api/map/layers/{layer}`,
 `/api/field-voices/recordings/{recordingId}` behind the `/voices/<id>` page a field quote links to,
 `/api/terms/{key}` for a stored summary, `/api/crafts/{slug}/shared-science`,
 `/api/shared-science/{termKey}`, `/api/shared-science/{termKey}/crafts`, `/api/categories/{slug}`,
-`/api/crafts/media/{assetId}`, `/api/crafts/contributed/{contributionId}`,
+`/api/crafts/media/{assetId}`, `/api/crafts/media/{assetId}/film`, `/api/crafts/media/{assetId}/still`,
+`/api/crafts/contributed/{contributionId}`,
 `/api/crafts/{slug}/film-score`).
 
 The body depends on the reader in one way only, a licence term, never a role: a reader holding

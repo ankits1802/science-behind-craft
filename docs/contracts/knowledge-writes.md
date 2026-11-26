@@ -654,6 +654,10 @@ as ISBN-13), `access {how (SUBSCRIPTION, INSTITUTION, OWN_COPY, ARCHIVE or BLOCK
   use and stops when the supplier's sessions end, the account goes or it loses the capability (404
   unknown, 410 used, expired or changed account, 413 too large, 422 unreadable). Without the API origin
   configured an upload is refused and the text is asked for instead.
+- **Malware scan**: a file sent to the slot is scanned before its words are read (decision 0241), and
+  `passages` or `text` given in the call are scanned whole, as they are kept, before the identity is
+  looked up or anything is stored (decision 0245); a found signature is refused by its name and a
+  scanner that does not answer refuses the call too, so nothing unscanned is kept.
 - **Limits**: supplying counts against the hour's `FACT_PROPOSALS`, like a source proposal; an account
   holds at most 300 supplied sources (`SUPPLIED_HELD_MAX`).
 

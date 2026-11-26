@@ -49,6 +49,7 @@ __all__ = [
     "TASK_KINDS",
     "TASK_PROMPTS",
     "UNRESERVABLE_KINDS",
+    "UPGRADE_TASK",
     "WRITE_SECTION_PROMPT",
     "CoverageTargets",
     "FieldStanding",
@@ -72,6 +73,7 @@ __all__ = [
 ]
 
 OPEN_WORK_SCHEMA_VERSION = 1
+UPGRADE_TASK = "UPGRADE_PAGE"
 TASK_KINDS = (
     "MISSING_FIELD",
     "THIN_FIELD",
@@ -80,6 +82,7 @@ TASK_KINDS = (
     FLAGSHIP_TASK,
     "PAGE_FORM",
     "PAGE_LAYOUT",
+    UPGRADE_TASK,
     "SECOND_SOURCE",
     "SOURCES_DIFFER",
     "DEAD_SOURCE",
@@ -188,6 +191,7 @@ TASK_PROMPTS: Mapping[str, str] = MappingProxyType(
         "SECTION": WRITE_SECTION_PROMPT,
         "MISSING_COMPONENT": PROPOSE_COMPONENT_PROMPT,
         FLAGSHIP_TASK: DELIVER_PAGE_PROMPT,
+        UPGRADE_TASK: DELIVER_PAGE_PROMPT,
         "MISSING_PICTURE": GIVE_PICTURE_PROMPT,
         GAP_TASK: RESEARCH_FIELD_PROMPT,
     }
@@ -307,6 +311,7 @@ class SubjectStanding:
     component_kinds: frozenset[str] = frozenset()
     new_form: bool = False
     layout: bool = False
+    upgrade: tuple[str, ...] | None = None
     dead_sources: Items = NO_ITEMS
     unarchived_sources: Items = NO_ITEMS
     gi: bool = False

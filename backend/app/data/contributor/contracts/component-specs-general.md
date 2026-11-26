@@ -526,14 +526,18 @@ cited steps.
   `{key, value, reading}`, every number it plots, animates or states, each stated by its `reading`
   unit; `texts`, up to 120 `{key, unit}`, the units whose words it shows; `libraries`, any of `d3`
   (7.9.2, global `d3`) and `three` (0.187.0, global `THREE`); `map {layers, districts}`; `films`, up
-  to 4 `{key, src}` with `src` a film the site serves under `/monographs/`; and `still`, an SVG of
+  to 4 `{key, src}` with `src` a film the site serves under `/monographs/`, or `{key, clip}` with `clip`
+  the id of an approved AI video of the media store made from a fact the figure cites; and `still`, an SVG of
   the figure at rest, sent only when the code draws no single `svg` (a canvas or WebGL scene).
 - **Data in**: `JSON.parse(document.getElementById("kv-data").textContent)` gives `{key: value}`.
 - **Words in**: an element with `data-unit="<key>"` shows that unit's words, `data-unit-label` gives
   them as its `aria-label`, and setting either to another key shows that unit's words. Labels,
   controls and decoration may be your own words; a fact is a unit, and every unit the figure shows
   is listed under it with its citations.
-- **Films**: `<video data-film="<key>">`; the frame sets the address.
+- **Films**: `<video data-film="<key>">`; the frame sets the address. A clip reaches the frame as a
+  signed address of that one file that lasts five minutes, and nothing else on its host; its credit
+  ("AI video, made with <model> on <day>") is written by the server and drawn under the figure, and
+  the page's export draws a still of the clip with that credit.
 - **Maps**: declare `map`, with `layers` any of `states`, `districts`, `rivers` and `relief` and
   `districts` the LGD codes to outline, and draw in an `svg data-map` whose `viewBox` is
   `kvMap.viewBox` or `kvMap.box(west, south, east, north, margin)`. The site draws its base and the
@@ -552,7 +556,7 @@ cited steps.
 Delivery refuses it only for: a number it shows that is not one of its values (a counting number up
 to 12 is free), a sentence of its own past 80 characters, or a key `texts` or `films` do not hold;
 anything that reaches past the frame (network, storage, cookies, other windows, navigation, loaded
-scripts, addresses, the frame's ids, a library or film off the list); a timed script that never
+scripts, addresses, the frame's ids, a library or film off the list, a clip the page does not hold); a timed script that never
 reads the flag, no still, or a map without its base; and code past 64 KiB. Each refusal names the
 fault.
 

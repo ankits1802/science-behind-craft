@@ -81,6 +81,9 @@ async def supply_source(
     )
     if (held or 0) >= SUPPLIED_HELD_MAX:
         raise InvalidInput(TOO_MANY.format(held=held))
+    words = _given_words(draft)
+    if words is not None:
+        await scanned_upload(words.encode("utf-8"))
     confirmed = await lookup(draft.identity)
     slot = new_secret(SLOT_PREFIX) if draft.upload is not None else None
     row = _row(user, draft, confirmed, slot, now)
@@ -131,7 +134,7 @@ def _row(
     user: User, draft: SupplySource, confirmed: EvidenceItem | None, slot: str | None, now: datetime
 ) -> SuppliedSource:
     grade, reason = supplied_grade(draft.identity, confirmed)
-    text = draft.text if draft.text is not None else supplied_text(draft.passages) if draft.passages else None
+    text = _given_words(draft)
     row = SuppliedSource(
         id=uuid.uuid4(),
         userId=user.id,
@@ -161,6 +164,12 @@ def _row(
     if text is not None:
         _ready(row, text, now)
     return row
+
+
+def _given_words(draft: SupplySource) -> str | None:
+    if draft.text is not None:
+        return draft.text
+    return supplied_text(draft.passages) if draft.passages else None
 
 
 def _ready(row: SuppliedSource, text: str, now: datetime) -> None:

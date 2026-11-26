@@ -61,6 +61,7 @@ from .open_work_picture_checks import picture_check_tasks
 from .open_work_pictures import picture_tasks
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key, work_subjects
 from .open_work_translations import translation_tasks
+from .open_work_upgrades import open_upgrades
 from .picture_check_links import disputed_link
 from .review_queue_readings import reading_standing
 from .review_queue_select import waiting_stage
@@ -105,6 +106,7 @@ class _Gathered:
     site: str
     healing: Mapping[uuid.UUID, Healing]
     gaps: Mapping[uuid.UUID, Sequence[OpenGap]]
+    upgrades: Mapping[uuid.UUID, tuple[str, ...]]
 
 
 async def list_open_work(
@@ -161,6 +163,7 @@ async def subject_standings(
         site=site,
         healing=await subject_healing(session, owners),
         gaps=await open_gaps(session, owners.crafts),
+        upgrades=await open_upgrades(session, subjects),
     )
     return [
         with_healing(_standing(subject, gathered), gathered.healing.get(subject.id)) for subject in subjects
@@ -221,6 +224,7 @@ def _standing(subject: WorkSubject, gathered: _Gathered) -> SubjectStanding:
         component_kinds=gathered.kinds.get(subject.id, frozenset()),
         new_form=subject.slug in gathered.layouts,
         layout=gathered.layouts.get(subject.slug, False),
+        upgrade=gathered.upgrades.get(subject.id),
         dead_sources=sources_in_state(links, DEAD_SOURCE),
         unarchived_sources=sources_in_state(links, UNARCHIVED_SOURCE),
         gi=subject.gi,

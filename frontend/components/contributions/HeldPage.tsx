@@ -5,6 +5,7 @@ import { useState } from "react";
 import { HeldResult } from "@/components/contributions/HeldResult";
 import { useConfirm } from "@/components/dialogs/ConfirmDialog";
 import type { StatusTone } from "@/components/records/statusTone";
+import { AgentCritique } from "@/components/review/AgentCritique";
 import { ReviewTerm } from "@/components/review/ReviewTerm";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ActionGroup } from "@/components/ui/ActionGroup";
@@ -27,6 +28,7 @@ export function HeldPage({ view, onDecided }: { view: PageHoldView; onDecided: D
     <div className="grid gap-8" data-testid="held-page" data-state={view.state}>
       <HeldSummary view={view} />
       <HeldParts view={view} />
+      {view.critique ? <AgentCritique critique={view.critique} level="h2" /> : null}
       {isWaiting(view) ? <Decision view={view} onDecided={onDecided} /> : <HeldResult view={view} />}
     </div>
   );

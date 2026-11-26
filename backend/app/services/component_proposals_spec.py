@@ -20,6 +20,7 @@ from app.research.component_specs_general_delivery import (
 )
 
 from . import knowledge_view
+from .coded_clips import filmed_spec
 from .dataset_cells import checked_cells
 from .timeline_maps import placed_spec
 
@@ -61,15 +62,17 @@ async def checked_drawing(
     cells = await checked_cells(session, checked)
     placed = await placed_spec(session, checked)
     claim_ids = delivered_claim_ids(given_units)
+    filmed = await filmed_spec(session, checked, claim_ids)
     shown = await shown_texts(session, [claim for claim in claim_ids if claim not in known])
     problems = [
         *cells.problems,
         *placed.problems,
+        *filmed.problems,
         *unit_problems(given_units, {**shown, **known}, cells.rows),
     ]
     if problems:
         raise InvalidInput(REFUSED.format(problems=problems_sentence(problems)))
-    spec = placed.spec if placed.spec is not None else checked.model_dump(mode="json")
+    spec = placed.spec or filmed.spec or checked.model_dump(mode="json")
     if cells.dataset is not None:
         spec["dataset"] = cells.dataset
     units = {ref: unit.model_dump(mode="json") for ref, unit in sorted(given_units.items())}

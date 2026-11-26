@@ -128,6 +128,23 @@ def test_a_canvas_figure_sends_its_still_and_a_film_is_one_the_site_serves() -> 
     assert "films.0.src" in spec_problems(KIND, {**filmed, "films": elsewhere}, _units())[0]
 
 
+def test_a_film_is_a_served_file_or_a_media_store_clip_never_both_nor_neither() -> None:
+    filmed = _code("<ul ", '<video data-film="dip" controls></video><ul ')
+    clip = "0b9f3c1e-2a4d-4e6f-8a1b-3c5d7e9f1a2b"
+    clipped = checked_spec(KIND, {**filmed, "films": [{"key": "dip", "clip": clip}]})
+    assert isinstance(clipped, CodedFigureSpec)
+    assert (str(clipped.films[0].clip), clipped.films[0].src) == (clip, None)
+    both = [{"key": "dip", "src": "/monographs/kit/films/bidri-dip.mp4", "clip": clip}]
+    neither = [{"key": "dip"}]
+    for films in (both, neither):
+        (problem,) = spec_problems(KIND, {**filmed, "films": films}, _units())
+        assert "either a file the site serves (src) or a clip of the media store (clip)" in problem
+    assert (
+        "films.0.clip"
+        in spec_problems(KIND, {**filmed, "films": [{"key": "dip", "clip": "dip"}]}, _units())[0]
+    )
+
+
 def test_a_map_figure_takes_the_site_base_and_a_hand_drawn_map_is_refused() -> None:
     mapped = _code('<svg viewBox="0 0 320 200"', '<svg viewBox="0 0 320 200" data-map=""')
     assert (

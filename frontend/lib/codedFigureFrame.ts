@@ -1,5 +1,5 @@
 import type { CodedDam, CodedRiverPath } from "@/components/map/codedStillCut";
-import { codedValues, type CodedFigureSpec, type CodedLibrary } from "@/lib/componentSpecsScienceCoded";
+import { clipFilms, codedValues, type CodedFigureSpec, type CodedLibrary } from "@/lib/componentSpecsScienceCoded";
 import { SANDBOX_ATTRIBUTE } from "@/lib/explainerPlay";
 import { sandboxDocument, type FrameLook, type FramePieces } from "@/lib/sandboxFrame";
 
@@ -13,6 +13,7 @@ export const LIBRARY_PATHS: Readonly<Record<CodedLibrary, string>> = {
   three: "/monographs/kit/vendor/three-0.187.0.min.js"
 };
 
+export type ClipLinks = Readonly<Record<string, string>>;
 export type MapBounds = { west: number; east: number; south: number; north: number };
 export type MapHome = { lgd: number; d: string; x: number; y: number };
 export type MapBase = {
@@ -112,10 +113,36 @@ export function libraryUrls(origin: string, libraries: readonly CodedLibrary[]):
   return libraries.map((name) => `${origin}${LIBRARY_PATHS[name]}`);
 }
 
-export function codedFrameCsp(origin: string, figure: Pick<CodedFigureSpec, "libraries" | "films">): string {
+const CSP_BREAKING = /[\s;,'"]/;
+
+export function clipSource(signed: string): string | null {
+  let parsed: URL;
+  try {
+    parsed = new URL(signed);
+  } catch {
+    return null;
+  }
+  const source = `${parsed.origin}${parsed.pathname}`;
+  const whole = parsed.protocol === "https:" && !parsed.username && !parsed.password && !parsed.hash;
+  return whole && !parsed.pathname.endsWith("/") && !CSP_BREAKING.test(source) ? source : null;
+}
+
+export function filmAddresses(origin: string, figure: Pick<CodedFigureSpec, "films">, clips: ClipLinks = {}): Record<string, string> {
+  const addresses: Record<string, string> = {};
+  for (const film of figure.films ?? []) {
+    if (film.src !== undefined) addresses[film.key] = `${origin}${film.src}`;
+  }
+  for (const film of clipFilms(figure)) {
+    const signed = Object.hasOwn(clips, film.key) ? clips[film.key] : undefined;
+    if (signed !== undefined && clipSource(signed) !== null) addresses[film.key] = signed;
+  }
+  return addresses;
+}
+
+export function codedFrameCsp(origin: string, figure: Pick<CodedFigureSpec, "libraries" | "films">, clips: ClipLinks = {}): string {
   const scripts = ["'unsafe-inline'", ...libraryUrls(origin, figure.libraries ?? [])].join(" ");
-  const films = (figure.films ?? []).map((film) => `${origin}${film.src}`);
-  const media = films.length ? films.join(" ") : "'none'";
+  const films = Object.values(filmAddresses(origin, figure, clips)).map((address) => clipSource(address) ?? address);
+  const media = films.length ? [...new Set(films)].join(" ") : "'none'";
   return `default-src 'none'; script-src ${scripts}; style-src 'unsafe-inline'; img-src data:; media-src ${media}; webrtc 'block'`;
 }
 
@@ -123,10 +150,10 @@ function jsonElement(id: string, value: unknown): string {
   return `<script type="application/json" id="${id}">${JSON.stringify(value).replace(/</g, "\\u003c")}</script>`;
 }
 
-export type CodedFrameAsk = { origin: string; figure: CodedFigureSpec; words: Readonly<Record<string, string>>; base: MapBase | null };
+export type CodedFrameAsk = { origin: string; figure: CodedFigureSpec; words: Readonly<Record<string, string>>; base: MapBase | null; clips?: ClipLinks };
 
 export function codedFramePieces(ask: CodedFrameAsk): FramePieces {
-  const films = Object.fromEntries((ask.figure.films ?? []).map((film) => [film.key, `${ask.origin}${film.src}`]));
+  const films = filmAddresses(ask.origin, ask.figure, ask.clips);
   const head = [
     jsonElement(WORDS_ELEMENT_ID, ask.words),
     jsonElement(FILMS_ELEMENT_ID, films),
@@ -135,7 +162,7 @@ export function codedFramePieces(ask: CodedFrameAsk): FramePieces {
     ask.base ? `<script>${FRAME_MAP}</script>` : "",
     ...libraryUrls(ask.origin, ask.figure.libraries ?? []).map((url) => `<script src="${url}"></script>`)
   ];
-  return { csp: codedFrameCsp(ask.origin, ask.figure), head: head.join("") };
+  return { csp: codedFrameCsp(ask.origin, ask.figure, ask.clips), head: head.join("") };
 }
 
 export function codedFrameHtml(figure: Pick<CodedFigureSpec, "code">): string {

@@ -251,7 +251,10 @@ The floor is the recording's length rounded up, at least 1 s: a WAV's from its h
 upload's as `ffmpeg` decodes it (`voice/audio_decode.py`, the last `out_time_us` of its progress),
 so an upload encoded below the asked bit rate that decodes past `RELAY_MAX_TURN_SECONDS` is refused
 413 before speech to text is paid; an upload `ffmpeg` cannot decode is refused 400, and a machine
-without `ffmpeg` answers 503 (decision 0140). The form is read by `python-multipart` through
+without `ffmpeg` answers 503 (decision 0140). Before a byte of it is measured or decoded, the
+recording passes the malware scan (`voice/audio.scanned_seconds`, decision 0245): a found signature
+is refused 422 by name ("The file was refused: the malware scan found ... in it.") and a scanner that
+does not answer 503, both before any second is claimed, so the turn is never taken. The form is read by `python-multipart` through
 Starlette's parser, with the body cut off at its limit as it streams (`api/multipart_form.read_form`).
 
 `POST /api/voice/session/{id}/turns` streams, in order: `heard {text, language}` (the speech to

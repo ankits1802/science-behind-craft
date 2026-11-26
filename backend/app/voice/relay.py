@@ -15,7 +15,7 @@ from app.schemas.voice import MAX_TURNS, RELAY_MAX_TURN_SECONDS, relay_frame, sp
 from app.services.interface_words import reviewed_words
 from app.services.status_lines import status_message
 
-from .audio import upload_seconds
+from .audio import scanned_seconds
 from .audio_decode import Measure
 from .privacy import TranscriptCipher, heard_text
 from .records import SessionRecord, TurnClaim, TurnHold, TurnSave, VoiceStore
@@ -55,7 +55,7 @@ class RelayAudio:
 
     @classmethod
     async def measured(cls, content: bytes, content_type: str, measure: Measure) -> RelayAudio:
-        return cls(content, content_type, await upload_seconds(content, content_type, measure))
+        return cls(content, content_type, await scanned_seconds(content, content_type, measure))
 
 
 @dataclass(frozen=True)

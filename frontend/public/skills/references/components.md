@@ -50,7 +50,7 @@ Choose by what the reader must see:
 | what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours; `swatch_cards` may show one swatch, none, and a `why`, and a page whose stages name their colours gets its key from the site |
 | sources that disagree | `source_disagreements` |
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
-| what no kind or composer draws: molecules meeting and a bond breaking, a bath scene, a route or map states on the site's base, a stage scene that moves, a three.js model | `coded_figure`, your own code run sandboxed over the page's cited data (`kalavigyan://contracts/component-specs-general.md`, A coded figure) |
+| what no kind or composer draws: molecules meeting and a bond breaking, a bath scene, a route or map states on the site's base, a stage scene that moves, a three.js model, a clip of the media store beside its cited steps | `coded_figure`, your own code run sandboxed over the page's cited data (`kalavigyan://contracts/component-specs-general.md`, A coded figure) |
 
 The 25 kinds a contributor delivers, by group:
 

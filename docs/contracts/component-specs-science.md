@@ -297,8 +297,20 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   and the named rivers and dams to the still's `viewBox` (served as `base`, which a delivered spec
   may not carry) and the page draws them under the still's four theme variants; state lines are left
   to the frame.
-- **`films`**, up to 4 `{key, src}`: a film the site serves under `/monographs/` (`.mp4`, `.webm`),
-  shown by `<video data-film="<key>">`, whose address the frame sets.
+- **`films`**, up to 4 `{key, src}` or `{key, clip}`, exactly one of the two (decision 0245): `src` a
+  film the site serves under `/monographs/` (`.mp4`, `.webm`), or `clip` the id of a clip of the media
+  store the page holds, shown by `<video data-film="<key>">`, whose address the frame sets. A clip is
+  held when it is a `MediaAsset` page copy (`pageKey`) shared with the craft's pages (`CRAFT_SHARED`)
+  of a `SUCCEEDED` `VIDEO` job, with its model and alt text, made from at least one fact the figure's
+  units cite (`services/coded_clips.filmed_spec`, at delivery in `component_proposals_spec.checked_drawing`);
+  any other is refused by its key and id. The server writes each clip's `credit` ("AI video, made
+  with <model> on <day>", the day in India time) into the stored spec and replaces any credit sent.
+  When the frame is about to run, the page asks `GET /api/crafts/media/{clip}/film` (craft-page.md)
+  for a 5-minute signed address of that one object (`lib/codedClips`) and hands it to the frame in
+  `kv-films`; the frame's `media-src` names that address's origin and path exactly, never its query,
+  a folder or the host, so the frame reaches that clip and nothing else. A clip whose address cannot
+  be had is left out of the frame, and the still stands for it. Each clip's credit is drawn under the
+  figure.
 - **`still`**: an SVG of the figure at rest. Without it the server cuts the still from the code's
   one `svg` (`coded_figure_still.code_still`); a figure drawn on a canvas or with WebGL sends it. The
   served spec adds the still and its four theme variants (`services/drawing_themes.themed_spec`); a
@@ -306,14 +318,18 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
 
 The frame (`lib/codedFigureFrame`, through `SandboxFrame` and `sandboxDocument`) has
 `sandbox="allow-scripts"` and no other permission, and its policy allows inline scripts and styles,
-the named library files and films, and `data:` images, nothing else, so the code reaches no network,
+the named library files, its films' own addresses (a clip's signed object, its path exact) and `data:`
+images, nothing else, so the code reaches no network,
 cookie, storage, other window or the page around it. It is given the page's tokens in the reader's
 theme, a sheet that draws buttons, `aria-pressed`, focus, status lines and the map base in the design
 (`FRAME_KIT_SHEET`), and the frame's stillness (decision 0218): under either reduced-motion switch no
 timer, animation frame, animation or film plays. On the page the server draws the still, its words
 filled from the units, and the frame's code loads within two screens of the viewport
 (`kinds/science/NearCodedFrame.tsx`), the frame starting at the still's height. The export draws the
-still with the figure's units beneath it (`services/page_export_coded`), and the Review page shows
+still with the figure's units beneath it (`services/page_export_coded`), and each clip's still (a
+JPEG frame from the clip's middle, `GET /api/crafts/media/{clip}/still`, cut once by ffmpeg in
+`services/clip_stills` and kept beside the page copy) with its credit; a clip whose still cannot be
+read keeps its credit line alone. The Review page shows
 the still beside a live run (`components/review/CodedFigureReview.tsx`).
 
 Delivery refuses a coded figure only for these, each with its reason:
@@ -326,7 +342,7 @@ Delivery refuses a coded figure only for these, each with its reason:
   `fetch` and every other network, storage, cookie, window, navigation and code-loading API, a
   `script` with attributes, a nested frame, a `link`, a `video` without `films`, an address; an
   element with one of the frame's ids (`kv-data`, `kv-words`, `kv-films`, `kv-map`); a library off
-  the list; a film off the site.
+  the list; a film off the site, or a clip the page does not hold.
 - **Not at rest.** A script that times motion without reading
   `document.documentElement.dataset.reducedMotion`, which it must read to draw its last state at
   once; no still (no single `svg` and no `still`); a map declared with no `svg[data-map]`, or a map
@@ -337,7 +353,8 @@ Delivery refuses a coded figure only for these, each with its reason:
 and a figure a declared kind or the kit draws is that kind's. A coded figure is for what no kind or
 composer expresses and Kutch Ajrakh shows: a reaction's molecules meeting and a bond breaking, a dye
 bath scene, a route or a sequence of map states on the site's base, a stage scene that moves, a
-three.js model, a film the site holds played beside its cited steps. Its code draws from its values
+three.js model, a film the site serves or a clip of the media store played beside its cited steps.
+Its code draws from its values
 and its units; it rests on its finished state, draws it at once under reduced motion, and gives the
 reader a pause.
 

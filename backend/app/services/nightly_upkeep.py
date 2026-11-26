@@ -24,6 +24,7 @@ from .open_work_refresh import FieldWorkReport, refresh_field_work
 from .orphan_concepts import OrphansReport, orphan_concepts, sweep_orphans
 from .page_refresh_jobs import claim_night, finish_job
 from .page_refresh_run import progress_of
+from .page_upgrades import PageUpgradesReport, raise_page_upgrades, upgrades_due
 from .shared_term_crafts import SharedTermsReport, refresh_shared_terms
 from .upkeep_allowances import AllowancesReport, sweep_allowances
 from .upkeep_archive import (
@@ -101,6 +102,7 @@ class UpkeepReport:
     shared_terms: SharedTermsReport = field(default_factory=SharedTermsReport)
     late_costs: LateCostsReport = field(default_factory=LateCostsReport)
     hidden: HiddenReport = field(default_factory=HiddenReport)
+    page_upgrades: PageUpgradesReport = field(default_factory=PageUpgradesReport)
 
     @property
     def ok(self) -> bool:
@@ -123,6 +125,7 @@ class UpkeepReport:
             "sharedTerms": self.shared_terms.as_dict(),
             "lateCosts": self.late_costs.as_dict(),
             "hiddenFacts": self.hidden.as_dict(),
+            "pageUpgrades": self.page_upgrades.as_dict(),
         }
 
 
@@ -139,6 +142,7 @@ async def run_nightly_upkeep(session: AsyncSession, tools: UpkeepTools, *, now: 
     report.mcp_activity = await keep_mcp_activity(session, now=now)
     report.mcp_tasks = await forget_expired_tasks(session, now=now)
     await _rebuild_pages(session, tools, report=report.pages, now=now)
+    report.page_upgrades = await raise_page_upgrades(session)
     report.field_work = await refresh_field_work(session, now=now)
     report.answer_gaps = await refresh_answer_gaps(session, tools.embed, now=now, names=tools.names)
     report.shared_terms = await refresh_shared_terms(session, now=now)
@@ -179,4 +183,5 @@ async def plan_nightly_upkeep(
         "orphans": [orphan.as_dict() for orphan in orphans],
         **await mcp_activity_plan(session, now=now),
         "mcpTasksExpired": await expired_task_count(session, now=now),
+        "pageUpgradesDue": await upgrades_due(session),
     }

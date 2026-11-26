@@ -26,6 +26,7 @@ __all__ = [
     "review_needed",
     "second_source_wording",
     "unarchived_wording",
+    "upgrade_wording",
 ]
 
 REVIEW_ACCEPTANCE = (
@@ -55,6 +56,16 @@ PAGE_FORM_ACCEPTANCE = (
 PAGE_LAYOUT_ACCEPTANCE = (
     "A layout record naming each section and component by its label with its chapter, order and role, "
     "pictures with their crop; editing it never touches a fact."
+)
+PLAYBOOK = "the page playbook (kalavigyan://skills/references/playbook.md, guide page playbook/1)"
+UPGRADE_ACCEPTANCE = (
+    "The page rebuilt in a draft from the page as it stands, previewed with preview_page until neither its "
+    "report nor your design critique holds anything you mean to fix, and proposed whole with propose_page; "
+    "the task drops once the rebuilt page's layout is written."
+)
+UPGRADE_NOTHING = (
+    "rule 29 finds nothing its facts state waiting for a figure, so read the page as it stands against the "
+    "design critique (design-critique/1)"
 )
 
 
@@ -129,6 +140,18 @@ def page_layout_wording(standing: SubjectStanding) -> Wording:
     return Wording(
         needed=f"{standing.subject.name}'s page is in the monograph form but has no layout record.",
         acceptance=PAGE_LAYOUT_ACCEPTANCE,
+    )
+
+
+def upgrade_wording(standing: SubjectStanding, lines: tuple[str, ...]) -> Wording:
+    shown = "; ".join(lines) if lines else UPGRADE_NOTHING
+    return Wording(
+        needed=(
+            f"{standing.subject.name}'s page was built before the site drew what its facts now allow, and "
+            f"nobody has rebuilt it. What its facts could now show: {shown}. Rebuild it by {PLAYBOOK}."
+        ),
+        acceptance=UPGRADE_ACCEPTANCE,
+        items=Items(count=len(lines)),
     )
 
 

@@ -82,6 +82,7 @@ class PageHold(Base):
     previewUrl: Mapped[str | None] = mapped_column(Text)
     state: Mapped[str] = mapped_column(String(STATE_CHARS), nullable=False, server_default=text("'WAITING'"))
     result: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    critique: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     createdAt: Mapped[datetime] = created_at()
     expiresAt: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     decidedAt: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

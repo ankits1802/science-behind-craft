@@ -186,8 +186,10 @@ zip, shipped as a release; the old directory stays beside it.
 
 ## Upload scanner
 
-Every uploaded file (a picture, a supplied PDF or text, a dataset's table or GeoJSON) is scanned by
-ClamAV before anything reads it (decision 0241). The API sends the bytes to clamd's `INSTREAM` over
+Every uploaded file (a picture, a supplied PDF or text, a dataset's table or GeoJSON, a voice call's
+or an artisan conversation's recorded turn, and a field photograph the daily sync copies from a
+portal) and the words a contributor gives `supply_source` in the call are scanned by ClamAV before
+anything reads or keeps them (decisions 0241 and 0245). The API sends the bytes to clamd's `INSTREAM` over
 its socket, `MALWARE_SCAN_SOCKET` (the default `/var/run/clamav/clamd.ctl` is the package's own, so
 nothing is set in Parameter Store), and waits at most 90 seconds.
 
@@ -198,7 +200,7 @@ nothing is set in Parameter Store), and waits at most 90 seconds.
 | Signatures | `clamav-freshclam` checks for new ones every hour (the package's 24 checks a day) into `/var/lib/clamav`, so they are never more than a day old |
 | The release's proof | a clean table passes and the EICAR test file is found (`clamdscan --stream`) before the build starts |
 | A file with malware | refused with its signature's name (422 on a route, a tool error over MCP); nothing is stored |
-| When it is down | every upload is refused: 503 on the upload routes, a tool error over MCP, the slot left open for another try; nothing else uses the scanner, so every other path keeps working |
+| When it is down | every upload is refused: 503 on the upload routes and the recorded-turn routes (no turn is taken or counted), a tool error over MCP, the slot left open for another try; the field voices sync stops its pictures stream for that run unread, with no refused page counted, and the next run reads it again; nothing else uses the scanner, so every other path keeps working |
 
 To look at it:
 

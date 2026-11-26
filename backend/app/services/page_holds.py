@@ -25,7 +25,8 @@ from app.research.page_holds import (
 from app.research.page_proposals import PageBundle, PageHeld, PageProposalResult, PageSubject
 
 from . import audit
-from .open_work_subjects import subject_by_key
+from .open_work_subjects import WorkSubject, subject_by_key
+from .page_critique import carry_critique, latest_critique, stored_critique
 from .page_drafts import record_submission
 from .page_layouts import page_path, subject_path
 from .page_renders import refuse_a_failed_drawing
@@ -81,16 +82,8 @@ async def hold_page(
 ) -> PageProposalResult:
     subject = await subject_by_key(session, bundle.subject.kind, bundle.subject.slug)
     await refuse_a_failed_drawing(session, user.id, subject, now=place.now)
-    await session.execute(
-        update(PageHold)
-        .where(
-            PageHold.userId == user.id,
-            PageHold.subjectKind == subject.kind,
-            PageHold.subjectSlug == subject.slug,
-            PageHold.state == WAITING,
-        )
-        .values(state=DISCARDED, decidedAt=place.now)
-    )
+    critique = await latest_critique(session, user.id, (subject.kind, subject.slug), now=place.now)
+    await _discard_waiting(session, user, subject, place.now)
     row = PageHold(
         userId=user.id,
         subjectKind=subject.kind,
@@ -100,6 +93,7 @@ async def hold_page(
         bundle=bundle.model_dump(mode="json", by_alias=True),
         clientName=place.client_name,
         previewUrl=_live_preview(draft, place.now),
+        critique=None if critique is None else critique.model_dump(mode="json"),
         createdAt=place.now,
         expiresAt=hold_expiry(place.now),
     )
@@ -129,6 +123,7 @@ async def confirm_hold(
 ) -> PageHoldView:
     row = await _waiting_hold(session, user, hold_id, place.now)
     result = await propose(PageBundle.model_validate(row.bundle))
+    await carry_critique(session, result, stored_critique(row.critique))
     row.state, row.decidedAt = CONFIRMED, place.now
     row.result = result.model_dump(mode="json", by_alias=True)
     await _settle_draft(session, row, result, place.now)
@@ -145,6 +140,19 @@ async def discard_hold(
     await session.flush()
     await _audited(session, DISCARDED_ACTION, user, row)
     return _view(row, site=place.site, now=place.now)
+
+
+async def _discard_waiting(session: AsyncSession, user: User, subject: WorkSubject, now: datetime) -> None:
+    await session.execute(
+        update(PageHold)
+        .where(
+            PageHold.userId == user.id,
+            PageHold.subjectKind == subject.kind,
+            PageHold.subjectSlug == subject.slug,
+            PageHold.state == WAITING,
+        )
+        .values(state=DISCARDED, decidedAt=now)
+    )
 
 
 async def _own_hold(session: AsyncSession, user: User, hold_id: uuid.UUID, *, lock: bool = False) -> PageHold:
@@ -210,6 +218,7 @@ def _view(row: PageHold, *, site: str, now: datetime) -> PageHoldView:
         parts=part_summaries(_parts(bundle)),
         preview_url=row.previewUrl if state == WAITING else None,
         result=None if row.result is None else PageProposalResult.model_validate(row.result),
+        critique=stored_critique(row.critique),
         message=DECIDED.get(state, WAITS if state == WAITING else EXPIRED_MESSAGE),
     )
 

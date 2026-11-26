@@ -29,6 +29,7 @@ XLSX = workbook(
     }
 )
 INFECTED = CSV + EICAR.encode("ascii") + b",1\n"
+WORDS = " ".join([PASSAGE] * 3)
 
 
 async def slot_for(session: AsyncSession, data: bytes, **changes: str) -> str:
@@ -91,3 +92,36 @@ async def test_a_supplied_file_is_scanned_before_its_text_is_read(
     upload_scanner.down = False
     filled = await supplied_sources.fill_supplied_slot(session, made.slot_token, PASSAGE.encode(), now=NOW)
     assert filled.state == "READY"
+
+
+async def supplied_rows(session: AsyncSession) -> int:
+    return len((await session.scalars(select(SuppliedSource.id))).all())
+
+
+async def test_words_supplied_in_the_call_are_scanned_whole_before_they_are_kept(
+    session: AsyncSession, upload_scanner: ScriptedScanner
+) -> None:
+    made = await supply(session, await person(session), passages=[], text=WORDS)
+    assert upload_scanner.scanned == [WORDS.encode("utf-8")]
+    assert (made.row.state, made.row.text) == ("READY", WORDS)
+
+
+async def test_words_carrying_the_eicar_test_file_are_refused_and_nothing_is_kept(
+    session: AsyncSession,
+) -> None:
+    researcher = await person(session)
+    before = await supplied_rows(session)
+    with pytest.raises(MalwareFound, match=EICAR_SIGNATURE):
+        await supply(session, researcher, passages=[], text=f"{WORDS} {EICAR}")
+    assert await supplied_rows(session) == before
+
+
+async def test_words_supplied_while_the_scanner_is_down_are_refused_and_nothing_is_kept(
+    session: AsyncSession, upload_scanner: ScriptedScanner
+) -> None:
+    researcher = await person(session)
+    before = await supplied_rows(session)
+    upload_scanner.down = True
+    with pytest.raises(ScannerDown):
+        await supply(session, researcher)
+    assert await supplied_rows(session) == before

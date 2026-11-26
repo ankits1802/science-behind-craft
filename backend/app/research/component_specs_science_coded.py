@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import uuid
 from collections.abc import Iterator, Sequence
 from typing import Annotated, Literal, Self
 
@@ -17,6 +18,7 @@ from .unit_ids import UNIT_REF
 __all__ = [
     "CODED_LIBRARIES",
     "CODE_KEY_PATTERN",
+    "CREDIT_MAX_CHARS",
     "FILMS_MAX",
     "FILM_PATTERN",
     "MAP_DISTRICTS_MAX",
@@ -39,6 +41,10 @@ MAP_LAYERS = ("states", "districts", "rivers", "relief")
 VALUES_MAX = 120
 TEXTS_MAX = 120
 FILMS_MAX = 4
+CREDIT_MAX_CHARS = 200
+ONE_SOURCE = (
+    "a film is either a file the site serves (src) or a clip of the media store (clip), one of the two"
+)
 MAP_DISTRICTS_MAX = 30
 MAP_WATERS_MAX = 6
 PROBLEMS_SHOWN = 8
@@ -60,7 +66,15 @@ class CodedText(SpecModel):
 
 class CodedFilm(SpecModel):
     key: CodeKey
-    src: str = Field(pattern=FILM_PATTERN, max_length=300)
+    src: str | None = Field(default=None, pattern=FILM_PATTERN, max_length=300, exclude_if=absent)
+    clip: uuid.UUID | None = Field(default=None, exclude_if=absent)
+    credit: SkipJsonSchema[str | None] = Field(default=None, max_length=CREDIT_MAX_CHARS, exclude_if=absent)
+
+    @model_validator(mode="after")
+    def _one_source(self) -> Self:
+        if (self.src is None) == (self.clip is None):
+            raise ValueError(ONE_SOURCE)
+        return self
 
 
 class CodedMap(SpecModel):
