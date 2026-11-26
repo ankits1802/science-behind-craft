@@ -16,7 +16,9 @@ __all__ = [
     "NATURAL_EARTH",
     "NATURAL_EARTH_CODE",
     "NATURAL_EARTH_SITE",
+    "OSM_WATERS",
     "REGISTRY",
+    "WATERS_EXPORT",
     "Downloads",
     "Source",
     "digest",
@@ -72,6 +74,14 @@ ETOPO = Source(
 
 MRDS = Source(code="USGS_MRDS", file="mrds-csv.zip", url="https://mrdata.usgs.gov/mrds/mrds-csv.zip")
 
+OSM_WATERS = Source(
+    code="OSM_WATERWAYS",
+    file="india-latest.osm.pbf",
+    url="https://download.geofabrik.de/asia/india-latest.osm.pbf",
+)
+WATERS_EXPORT = "india-waters.geojsonseq"
+DIGEST_CHUNK = 1 << 20
+
 
 @cache
 def _registry(path: Path = REGISTRY) -> dict[str, dict[str, Any]]:
@@ -85,7 +95,11 @@ def record(code: str) -> dict[str, Any]:
 
 
 def digest(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    found = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(DIGEST_CHUNK), b""):
+            found.update(chunk)
+    return found.hexdigest()
 
 
 @dataclass(frozen=True)

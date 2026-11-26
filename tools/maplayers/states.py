@@ -11,7 +11,7 @@ from shapely.strtree import STRtree
 
 from basemap.polyline import decode_records
 
-__all__ = ["state_locator"]
+__all__ = ["district_polygons", "state_locator"]
 
 
 def _district(rings: list[str]) -> BaseGeometry:
@@ -23,15 +23,19 @@ def _district(rings: list[str]) -> BaseGeometry:
     return shape
 
 
-def state_locator(shapes_file: Path, register_file: Path) -> Callable[[float, float], str]:
+def district_polygons(shapes_file: Path) -> list[tuple[BaseGeometry, int, int]]:
     shapes = json.loads(shapes_file.read_text(encoding="utf-8"))
-    register = json.loads(register_file.read_text(encoding="utf-8"))
-    names = {state["lgd"]: state["name"] for state in register["states"]}
     districts = [
-        (_district(district["rings"]), names.get(district["stateLgd"], ""))
+        (_district(district["rings"]), int(district["lgd"]), int(district["stateLgd"]))
         for district in shapes["districts"]
     ]
-    kept = [(shape, name) for shape, name in districts if not shape.is_empty]
+    return [found for found in districts if not found[0].is_empty]
+
+
+def state_locator(shapes_file: Path, register_file: Path) -> Callable[[float, float], str]:
+    register = json.loads(register_file.read_text(encoding="utf-8"))
+    names = {state["lgd"]: state["name"] for state in register["states"]}
+    kept = [(shape, names.get(state, "")) for shape, _, state in district_polygons(shapes_file)]
     tree = STRtree([shape for shape, _ in kept])
 
     def locate(longitude: float, latitude: float) -> str:
