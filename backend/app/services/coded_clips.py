@@ -48,6 +48,7 @@ class SharedClip:
 class ClipPlacement:
     problems: list[str] = field(default_factory=list)
     spec: dict[str, Any] | None = None
+    clips: tuple[SharedClip, ...] = ()
 
 
 def clip_credit(clip: SharedClip) -> str:
@@ -94,7 +95,8 @@ async def filmed_spec(
     if problems:
         return ClipPlacement(problems=problems)
     films = [_credited(film, clips) for film in checked.films]
-    return ClipPlacement(spec=checked.model_copy(update={"films": films}).model_dump(mode="json"))
+    held = tuple(dict.fromkeys(clips[film.clip] for film in checked.films if film.clip is not None))
+    return ClipPlacement(spec=checked.model_copy(update={"films": films}).model_dump(mode="json"), clips=held)
 
 
 def _held(clip: SharedClip | None, cited: frozenset[uuid.UUID]) -> bool:

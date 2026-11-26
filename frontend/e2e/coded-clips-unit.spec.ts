@@ -7,7 +7,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import { COMPONENT_VIEWS } from "@/components/monograph/componentViews";
-import { CLIP_LINK_PATH, clipLinks } from "@/lib/codedClips";
+import { ClipStills, CLIP_STILL_MISSING } from "@/components/review/ClipStills";
+import { CLIP_LINK_PATH, clipAddresses, clipEnds, clipLinks, clipStillHref } from "@/lib/codedClips";
 import { clipSource, codedFrameCsp, codedFrameDocument, codedFramePieces, FILMS_ELEMENT_ID } from "@/lib/codedFigureFrame";
 import { codedFigureShape, codedWords, ONE_FILM_SOURCE, type CodedFigureSpec } from "@/lib/componentSpecsScienceCoded";
 import type { ComponentView } from "@/lib/componentViewContract";
@@ -85,7 +86,9 @@ test("each clip's link is asked for at its own address, and one that fails leave
     return { url: SIGNED, expiresAt: "2026-11-26T10:05:00+00:00" };
   });
   expect(asked).toEqual([`/crafts/media/${CLIP}/film`, "/crafts/media/9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d/film"]);
-  expect(links).toEqual({ dip: SIGNED });
+  expect(links).toEqual({ dip: { url: SIGNED, expiresAt: "2026-11-26T10:05:00+00:00" } });
+  expect(clipAddresses(links)).toEqual({ dip: SIGNED });
+  expect(clipEnds(links)).toEqual({ dip: Date.parse("2026-11-26T10:05:00Z") });
 });
 
 test("in the frame the clip's element takes the signed address", async ({ page }) => {
@@ -102,4 +105,16 @@ test("the clip's credit is drawn under the figure", () => {
   expect(html).toContain(`<ul class="grid gap-1 font-ui text-caption text-ink-3" data-coded-credits=""><li>${CREDIT}</li></ul>`);
   const plain = { ...props, spec: parseShape(codedFigureShape, FIXTURE.spec) };
   expect(renderToStaticMarkup(createElement(() => view(plain)))).not.toContain("data-coded-credits");
+});
+
+test("the Review page shows each clip's still at the address paper reads it from, with its credit, and none for a figure without clips", () => {
+  const html = renderToStaticMarkup(createElement(ClipStills, { figure: CLIPPED, alt: "The alloy darkens in the bath." }));
+  expect(clipStillHref(CLIP)).toBe(`/api/crafts/media/${CLIP}/still`);
+  expect(html).toContain(`<figure class="grid gap-1" data-clip-still="${CLIP}"><img src="/api/crafts/media/${CLIP}/still" alt="The alloy darkens in the bath."`);
+  expect(html).toContain(`<figcaption class="font-ui text-caption text-ink-3">${CREDIT}</figcaption>`);
+  expect(html).not.toContain(CLIP_STILL_MISSING);
+  const plain = parseShape(codedFigureShape, FIXTURE.spec);
+  expect(renderToStaticMarkup(createElement(ClipStills, { figure: plain, alt: "x" }))).toBe("");
+  const served: CodedFigureSpec = { ...plain, films: [{ key: "dip", src: "/monographs/kit/films/dip.mp4" }] };
+  expect(renderToStaticMarkup(createElement(ClipStills, { figure: served, alt: "x" }))).toBe("");
 });

@@ -14,6 +14,7 @@ __all__ = [
     "DISTRICT_LINES_SHARE",
     "SITE_HEIGHT",
     "SITE_WIDTH",
+    "STEPS_ACROSS",
     "WHOLE_SITE",
     "BaseAsk",
     "BaseShapes",

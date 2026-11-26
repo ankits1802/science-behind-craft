@@ -11,7 +11,7 @@ import { DistrictFills } from "@/components/map/DistrictLayer";
 import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { IndiaMapBase } from "@/components/map/IndiaMap";
 import { showsDistrictLines, type MapLayerDrawn } from "@/components/map/mapLayerFrame";
-import { StillLines, StillNeighbours, StillValued, StillWatersLines } from "@/components/map/MapStillLayers";
+import { StillLines, StillNeighbours, StillStates, StillValued, StillWatersLines } from "@/components/map/MapStillLayers";
 import { PlaceHatchOrStill } from "@/components/map/PlaceHatch";
 import { PlacesKey, PlacesSource } from "@/components/map/PlacesMapKey";
 import { MapRings, MapRoutes, placedPins, type ValueMark } from "@/components/map/PlacesMapMarks";
@@ -33,6 +33,11 @@ function DistrictLinesOrStill({ still, frame }: { still: MapStill | null; frame:
   const loaded = useRemote(still?.lines || !showsDistrictLines(frame) ? null : load).data;
   if (still?.lines) return <StillLines still={still} d={still.lines} />;
   return loaded ? <path d={loaded} fill="none" stroke="var(--map-border-district)" strokeWidth={0.6} strokeLinejoin="round" vectorEffect="non-scaling-stroke" className="pointer-events-none" data-testid="map-district-lines" /> : null;
+}
+
+function stillStates(still: MapStill | null): ReactNode | undefined {
+  if (!still || still.states === undefined) return undefined;
+  return still.states ? <StillStates still={still} d={still.states} /> : null;
 }
 
 function valueMarks(spec: MapLayerSpec, centre: (lgd: number) => { x: number; y: number } | null): ValueMark[] {
@@ -89,7 +94,7 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
     <div className="grid min-w-0 gap-3" data-testid="places-map">
       <div className="relative min-w-0 overflow-hidden rounded-plate border border-rule">
         <svg ref={map} viewBox={viewBoxOf(frame)} role="img" aria-labelledby={labelledBy} className="block h-auto w-full [forced-color-adjust:none]" data-fit="" data-testid="general-map">
-          <IndiaMapBase underlay={underlay} frame={frame} />
+          <IndiaMapBase underlay={underlay} frame={frame} states={stillStates(still)} />
           <MapRings rings={spec.rings ?? []} places={spec.places} marks={marks} />
           <MapRoutes routes={spec.routes ?? []} pins={pins} marks={marks} scale={scale} />
         </svg>

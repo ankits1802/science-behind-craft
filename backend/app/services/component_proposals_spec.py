@@ -20,7 +20,7 @@ from app.research.component_specs_general_delivery import (
 )
 
 from . import knowledge_view
-from .coded_clips import filmed_spec
+from .coded_clips import SharedClip, filmed_spec
 from .dataset_cells import checked_cells
 from .timeline_maps import placed_spec
 
@@ -35,6 +35,7 @@ class CheckedDelivery:
     spec: dict[str, Any]
     units: dict[str, Any]
     claim_ids: tuple[uuid.UUID, ...]
+    clips: tuple[SharedClip, ...] = ()
 
 
 async def checked_delivery(
@@ -76,7 +77,7 @@ async def checked_drawing(
     if cells.dataset is not None:
         spec["dataset"] = cells.dataset
     units = {ref: unit.model_dump(mode="json") for ref, unit in sorted(given_units.items())}
-    return CheckedDelivery(spec=spec, units=units, claim_ids=tuple(claim_ids))
+    return CheckedDelivery(spec=spec, units=units, claim_ids=tuple(claim_ids), clips=filmed.clips)
 
 
 async def shown_texts(session: AsyncSession, claim_ids: Sequence[uuid.UUID]) -> dict[uuid.UUID, list[str]]:

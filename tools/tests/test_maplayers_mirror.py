@@ -12,8 +12,10 @@ from maplayers.mirror import (
     OUTLINE_FILE,
     mirror_base,
     mirror_measured,
+    mirror_waters,
     unmirrored,
     unmirrored_base,
+    unmirrored_waters,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -61,3 +63,25 @@ def test_a_build_mirrors_each_measured_layer_byte_for_byte(tmp_path: Path) -> No
     assert unmirrored(drawn, measured) == []
     (measured / "minerals.json").write_text("{}\n", encoding="utf-8")
     assert unmirrored(drawn, measured) == ["minerals.json"]
+
+
+def test_the_api_prints_the_small_waters_the_web_map_draws() -> None:
+    assert unmirrored_waters(REPO_ROOT) == [], "run tools/maplayers_mirror.py"
+
+
+def test_a_waters_mirror_follows_its_tiles_and_drops_a_tile_the_web_no_longer_draws(tmp_path: Path) -> None:
+    drawn = tmp_path / "frontend" / "public" / "layers"
+    (drawn / "waters").mkdir(parents=True)
+    (drawn / "waters.json").write_text('{"schemaVersion":1,"tiles":[]}\n', encoding="utf-8")
+    for tile in ("e070n22", "e074n26"):
+        (drawn / "waters" / f"{tile}.json").write_text(f'{{"tile":"{tile}"}}\n', encoding="utf-8")
+    assert unmirrored_waters(tmp_path) == ["waters.json", "waters/e070n22.json", "waters/e074n26.json"]
+    mirror_waters(tmp_path)
+    assert unmirrored_waters(tmp_path) == []
+    measured = tmp_path / MEASURED_OUTPUT / "waters"
+    (drawn / "waters" / "e074n26.json").unlink()
+    (drawn / "waters" / "e070n22.json").write_text('{"tile":"e070n22","renamed":true}\n', encoding="utf-8")
+    assert unmirrored_waters(tmp_path) == ["waters/e070n22.json", "waters/e074n26.json"]
+    mirror_waters(tmp_path)
+    assert sorted(path.name for path in measured.glob("*.json")) == ["e070n22.json"]
+    assert unmirrored_waters(tmp_path) == []

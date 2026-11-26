@@ -1,5 +1,6 @@
 import { CodedFrame } from "@/components/monograph/kinds/science/CodedFrame";
 import { CodedStill } from "@/components/monograph/kinds/science/CodedStill";
+import { ClipStills } from "@/components/review/ClipStills";
 import { parsedSpec } from "@/lib/componentSpecsGeneral";
 import { CODED_FIGURE_KIND, codedFigureShape, codedWords } from "@/lib/componentSpecsScienceCoded";
 import type { MonographDocument } from "@/lib/monographDocument";
@@ -22,6 +23,7 @@ export function CodedFigureReview({ document, label }: { document: MonographDocu
       <section className="grid content-start gap-2">
         <h4 className="font-ui text-h4 text-ink-1">{CODED_STILL_HEADING}</h4>
         <CodedStill figure={figure} words={words} />
+        <ClipStills figure={figure} alt={said(figure.alt)} />
       </section>
       <section className="grid content-start gap-2">
         <h4 className="font-ui text-h4 text-ink-1">{CODED_RUN_HEADING}</h4>

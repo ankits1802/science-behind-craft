@@ -21,6 +21,7 @@ export type MapStill = {
   minerals: MineralKeyRow[] | null;
   district: LayerLegend | null;
   lines?: string | null;
+  states?: string | null;
   neighbours?: string | null;
   valued?: StillDistrict[] | null;
   named?: string | null;

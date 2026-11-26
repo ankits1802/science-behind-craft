@@ -302,7 +302,10 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   (decision 0244). The page export draws the still on the API's own cut of the same base
   (`services/page_export_coded`, `services/export_map_base`: the outline, state lines, district lines,
   relief and rivers, the named districts outlined) with the layers' credits and the boundary note,
-  at 1800 pixels across in Word; the small waters stay on the web.
+  at 1800 pixels across in Word; in a frame of at most 35 per cent of India's width it also draws the
+  small waters when `map.layers` names `rivers`, and always the rivers `map.rivers` names, strong and
+  named, and the dams `map.dams` names, marked and named, with OpenStreetMap's credit, from the tiles
+  the API holds beside the web's (`app/geo/map_waters`, decision 0246).
 - **`films`**, up to 4 `{key, src}` or `{key, clip}`, exactly one of the two (decision 0245): `src` a
   film the site serves under `/monographs/` (`.mp4`, `.webm`), or `clip` the id of a clip of the media
   store the page holds, shown by `<video data-film="<key>">`, whose address the frame sets. A clip is
@@ -316,7 +319,14 @@ run in the answers' sandboxed frame over the page's cited data, as large as a ch
   `kv-films`; the frame's `media-src` names that address's origin and path exactly, never its query,
   a folder or the host, so the frame reaches that clip and nothing else. A clip whose address cannot
   be had is left out of the frame, and the still stands for it. Each clip's credit is drawn under the
-  figure.
+  figure. While the page is open the address is renewed a minute before it ends (`lib/clipRenewal`,
+  `RENEW_AHEAD_MS`; a failed renewal is tried again every 15 seconds while the address lasts) and
+  posted to the frame (`{kvFilms, kvFilmEnds}`), which takes it without a reload: a paused or failed
+  film moves to the new address at the time it had reached, and a film playing on keeps its own. A
+  play after the address ended, or a film that fails on an ended address, is held and the frame asks
+  the page (`{kvFilmAsk: key}`, heard only from the frame's own window) for a new one, then plays on
+  from where it was; the new address is the same object, so the frame's policy is unchanged (decision
+  0246).
 - **`still`**: an SVG of the figure at rest. Without it the server cuts the still from the code's
   one `svg` (`coded_figure_still.code_still`); a figure drawn on a canvas or with WebGL sends it. The
   served spec adds the still and its four theme variants (`services/drawing_themes.themed_spec`); a
@@ -335,8 +345,12 @@ filled from the units, and the frame's code loads within two screens of the view
 still with the figure's units beneath it (`services/page_export_coded`, on the base for a map), and each clip's still (a
 JPEG frame from the clip's middle, `GET /api/crafts/media/{clip}/still`, cut once by ffmpeg in
 `services/clip_stills` and kept beside the page copy) with its credit; a clip whose still cannot be
-read keeps its credit line alone. The Review page shows
-the still beside a live run (`components/review/CodedFigureReview.tsx`).
+read keeps its credit line alone. The still is cut when the figure is delivered
+(`component_proposals.propose_component` through `clip_stills.delivered_stills`, decision 0246), so the
+first export and the Review page have it at once; a cut that fails there never refuses the delivery
+and is tried again by the first export. The Review page shows the still beside a live run, and each
+clip's still with its credit under it as paper prints it (`components/review/CodedFigureReview.tsx`,
+`ClipStills.tsx`).
 
 Delivery refuses a coded figure only for these, each with its reason:
 
@@ -425,6 +439,8 @@ species an ink outline, dashed when no colour is recorded for it), so nothing is
 | On a generated page at 360 and 1440 px, each composed kind whole at rest and worked by the kit, under both reduced-motion switches | `frontend/e2e/composed-interactives-unit.spec.ts` |
 | A coded figure refused for a fact of its own, reaching out, not resting or its budget, with its reason, and accepted when it draws from its data with free labels; its still cut and served in four themes, and drawn on paper | `backend/tests/research/test_coded_figures.py`, `backend/tests/exports/test_coded_figure_export.py` |
 | A coded figure's still at first paint, its frame sandboxed with its words, data and pinned libraries and nothing reaching the network, at rest under reduced motion, played and paused with motion allowed, its map base and outline kept in the site's projection, and its still beside its run on the Review page | `frontend/e2e/coded-figure-unit.spec.ts` |
-| A coded map's still with its state lines and, in a zoomed frame, its district lines, and on paper on the site's base with its credits and boundary note | `frontend/e2e/map-waters-unit.spec.ts`, `backend/tests/exports/test_map_exports.py` |
+| A coded map's still with its state lines and, in a zoomed frame, its district lines, and on paper on the site's base with its credits and boundary note, and the small waters it names | `frontend/e2e/map-waters-unit.spec.ts`, `backend/tests/exports/test_map_exports.py` |
+| A clip's address renewed before it ends and on a play after it ended, the frame taking it without a reload, and only the frame's own window asking | `frontend/e2e/clip-renewal-unit.spec.ts`, `frontend/e2e/coded-clips-unit.spec.ts` |
+| A clip's still cut at delivery and kept, none cut for a figure without clips or without a bucket, and drawn on the Review page with its credit | `backend/tests/media/test_clip_routes.py`, `backend/tests/db/test_coded_clips_db.py`, `frontend/e2e/coded-clips-unit.spec.ts` |
 
 Re-read it when a science kind gains a field, a held passage becomes a unit, or the colour rule changes.

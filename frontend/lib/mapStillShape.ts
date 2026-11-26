@@ -24,6 +24,7 @@ export const mapStillShape: Shape<MapStill> = object<MapStill>({
   minerals: nullable(list(object<MineralKeyRow>({ id: text, label: text, count }))),
   district: nullable(object<LayerLegend>({ title: text, labels: list(text), caption: text, summary: text, dataset: datasetShape })),
   lines: optional(nullable(STILL_PATH)),
+  states: optional(nullable(STILL_PATH)),
   neighbours: optional(nullable(STILL_PATH)),
   valued: optional(nullable(list(object<StillDistrict>({ lgd: integer, d: STILL_PATH, x: number, y: number })))),
   named: optional(nullable(NAMED_FRAME)),

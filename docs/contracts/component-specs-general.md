@@ -294,7 +294,9 @@ gives every declared `map_layer` of a page a still cut to the frame the view dra
 (`components/map/mapLayerFrame.mapLayerFrame`, or for a named frame the shape's own box, sent as
 `still.named` so the view frames to it): the relief bands, rivers and lakes, the home districts, and
 beyond the timeline map's still the neighbouring land (`neighbours`), the district lines (`lines`),
-each valued district's shape and centre (`valued`), the layers' dataset credits (`credits`) and the
+the state lines (`states`, decision 0246, drawn from the still at first paint, so the view loads no
+border file for them), each valued district's shape and centre (`valued`), the layers' dataset
+credits (`credits`) and the
 boundary note read from `/map/layers` (`boundary`), and in a zoomed frame its small waters
 (`waters`: their lines, each emphasised river with the point its label sits at, each named dam's
 point) with OpenStreetMap's credit. The view draws it at first paint in the map tokens; the
@@ -306,7 +308,12 @@ declared map on the same base, cut by the API from the files it holds (`app/geo/
 into `app/data/layers` by `tools/maplayers_mirror.py`), the relief bands, Natural Earth's rivers and
 lakes, district lines in a zoomed frame and the home districts outlined, with the numbered places,
 the routes, each part's sentence, the layers' credits and the boundary note, at 1800 pixels across
-in Word (300 dots an inch over its 150 mm). OpenStreetMap's small waters stay on the web map.
+in Word (300 dots an inch over its 150 mm). In a frame of at most 35 per cent of India's width the
+paper map also draws OpenStreetMap's small waters, from the tiles the API holds beside the web's
+(`app/data/layers/waters`, mirrored by `tools/maplayers_mirror.py` and the map layers build;
+`app/geo/map_waters`), with each river `emphasis.rivers` names drawn strong over a halo and named
+at the middle of its longest run, each dam `emphasis.dams` names marked and named, and
+OpenStreetMap's credit (decision 0246).
 
 **Every sentence on the page.** Beside the map, the numbered places with their readings, each
 route's and ring's sentence under its label ("Move", "Within 20 km") and the district readings by
@@ -597,11 +604,11 @@ fault.
 | Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |
 | Every part in every material, each layout at phone and desktop, light and dark, motion off under both switches, and the kit sheet | `frontend/e2e/art-kit-unit.spec.ts` |
 | The places map's parts, their checks both ways and the old shape stored unchanged | `backend/tests/research/test_map_layer_parts.py` |
-| The places map drawn on the base, the outline always present, its still, a route, ring and sequence from the spec alone, and the map at 390 and 1440 px | `frontend/e2e/places-map-unit.spec.ts` |
+| The places map drawn on the base, the outline always present, its still with its state lines drawn at first paint, a route, ring and sequence from the spec alone, and the map at 390 and 1440 px | `frontend/e2e/places-map-unit.spec.ts` |
 | The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
 | Every text and pin of a timeline map at the caption size at 390, 1440 and 1920 px with JavaScript off and on, and no layer label outside its frame | `frontend/e2e/timeline-map-labels-unit.spec.ts` |
 | A river named through the register's cited alias drawn and labelled, and an alias without a source refused | `backend/tests/geo/test_river_aliases.py`, `tools/tests/test_maplayers_waters_names.py`, `tools/tests/test_maplayers_waters_files.py`, `frontend/e2e/map-waters-unit.spec.ts` |
-| A places map and a coded map on paper on the site's base, with their credits and boundary note, at print resolution | `backend/tests/exports/test_map_exports.py`, `backend/tests/geo/test_map_base.py` |
+| A places map and a coded map on paper on the site's base, with their credits and boundary note, at print resolution, and in a town's frame the small waters with the river and dam a map names (none in a wide frame, none named that the tiles lack) | `backend/tests/exports/test_map_exports.py`, `backend/tests/geo/test_map_base.py`, `backend/tests/geo/test_map_waters_base.py`, `tools/tests/test_maplayers_mirror.py` |
 | A coded figure refused and accepted, rule by rule, its frame, words, map base and still | `backend/tests/research/test_coded_figures.py`, `frontend/e2e/coded-figure-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |

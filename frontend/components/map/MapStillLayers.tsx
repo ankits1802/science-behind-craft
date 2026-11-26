@@ -83,6 +83,14 @@ export function StillLines({ still, d }: { still: MapStill; d: string }) {
   );
 }
 
+export function StillStates({ still, d }: { still: MapStill; d: string }) {
+  return (
+    <g className="pointer-events-none" transform={gridPlacement(still)} data-testid="still-states">
+      <path d={d} fill="none" stroke="var(--map-border-state)" strokeWidth={0.75} strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+    </g>
+  );
+}
+
 export function StillValued({ still, valued, toneOf }: { still: MapStill; valued: readonly StillDistrict[]; toneOf: (lgd: number) => string | null }) {
   return (
     <g className="pointer-events-none" transform={gridPlacement(still)} data-testid="still-valued">

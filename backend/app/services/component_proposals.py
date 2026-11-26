@@ -29,11 +29,13 @@ from app.research.crafts import QUESTION_MAX_CHARS
 from app.research.knowledge_api import ComponentSummary
 from app.research.open_work_texts import counted
 
+from .clip_stills import delivered_stills
 from .component_library import library_components
 from .component_proposals_register import register_component, registers
 from .component_proposals_spec import NO_KNOWN, CheckedDelivery, checked_delivery
 from .component_withdrawals import replacement_waits
 from .knowledge_api import known_craft
+from .object_store import media_bucket
 from .open_work_components import registered_pieces
 from .review_queue_errors import DecisionConflict
 from .task_reservations import complete_task
@@ -96,6 +98,8 @@ async def propose_component(
     approved = has_rank(user, PROFESSOR) and not waits
     row = _proposal(draft, user, None if owner is None else owner.id, delivery, now=now, approved=approved)
     await _stored(session, row)
+    if delivery is not None and delivery.clips:
+        await delivered_stills(media_bucket(), delivery.clips)
     if draft.task_key is not None:
         await complete_task(session, user.id, draft.task_key, now=now)
     if row.status == APPROVED and registers(row):

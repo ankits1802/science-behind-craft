@@ -12,6 +12,7 @@ __all__ = [
     "BOUNDS",
     "BREAKS",
     "ETOPO",
+    "FETCHED_NOTE",
     "MRDS",
     "NATURAL_EARTH",
     "NATURAL_EARTH_CODE",
@@ -22,6 +23,7 @@ __all__ = [
     "Downloads",
     "Source",
     "digest",
+    "natural_earth_addresses",
     "record",
 ]
 
@@ -31,6 +33,7 @@ REGISTRY = Path(__file__).resolve().parents[2] / "backend" / "app" / "data" / "d
 NATURAL_EARTH_CODE = "NATURAL_EARTH_10M_PHYSICAL"
 NATURAL_EARTH_SITE = "https://www.naturalearthdata.com"
 NATURAL_EARTH_DOWNLOADS = "https://naciscdn.org/naturalearth/10m"
+NATURAL_EARTH_MIRROR = "https://naturalearth.s3.amazonaws.com/10m_{theme}"
 NATURAL_EARTH = {
     "rivers": ("physical", "ne_10m_rivers_lake_centerlines"),
     "lakes": ("physical", "ne_10m_lakes"),
@@ -56,20 +59,23 @@ SHOWN_FIELDS = (
 )
 
 
+ETOPO_QUERY = "/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
+FETCHED_NOTE = "fetched.json"
+
+
 @dataclass(frozen=True)
 class Source:
     code: str
     file: str
     url: str
+    mirrors: tuple[str, ...] = ()
 
 
 ETOPO = Source(
     code="ETOPO1_ICE",
     file="etopo1_india.asc",
-    url=(
-        "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii"
-        "?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
-    ),
+    url=f"https://coastwatch.pfeg.noaa.gov{ETOPO_QUERY}",
+    mirrors=(f"https://upwell.pfeg.noaa.gov{ETOPO_QUERY}",),
 )
 
 MRDS = Source(code="USGS_MRDS", file="mrds-csv.zip", url="https://mrdata.usgs.gov/mrds/mrds-csv.zip")
@@ -78,6 +84,7 @@ OSM_WATERS = Source(
     code="OSM_WATERWAYS",
     file="india-latest.osm.pbf",
     url="https://download.geofabrik.de/asia/india-latest.osm.pbf",
+    mirrors=("https://download.openstreetmap.fr/extracts/asia/india-latest.osm.pbf",),
 )
 WATERS_EXPORT = "india-waters.geojsonseq"
 DIGEST_CHUNK = 1 << 20
@@ -92,6 +99,14 @@ def _registry(path: Path = REGISTRY) -> dict[str, dict[str, Any]]:
 def record(code: str) -> dict[str, Any]:
     entry = _registry()[code]
     return {field: entry[field] for field in SHOWN_FIELDS}
+
+
+def natural_earth_addresses(key: str) -> tuple[str, ...]:
+    theme, name = NATURAL_EARTH[key]
+    return (
+        f"{NATURAL_EARTH_DOWNLOADS}/{theme}/{name}.zip",
+        f"{NATURAL_EARTH_MIRROR.format(theme=theme)}/{name}.zip",
+    )
 
 
 def digest(path: Path) -> str:
@@ -112,12 +127,12 @@ class Downloads:
         return self.folder / name / f"{name}.shp"
 
     def natural_earth(self, key: str) -> dict[str, Any]:
-        theme, name = NATURAL_EARTH[key]
+        name = NATURAL_EARTH[key][1]
         version = (self.folder / name / f"{name}.VERSION.txt").read_text(encoding="utf-8").strip()
         return record(NATURAL_EARTH_CODE) | {
             "version": version,
             "file": name,
-            "url": f"{NATURAL_EARTH_DOWNLOADS}/{theme}/{name}.zip",
+            "url": self.address(f"{name}.zip", natural_earth_addresses(key)[0]),
             "readOn": self.read_on.isoformat(),
             "sha256": digest(self.folder / f"{name}.zip"),
         }
@@ -125,7 +140,12 @@ class Downloads:
     def source(self, source: Source) -> dict[str, Any]:
         return record(source.code) | {
             "file": source.file,
-            "url": source.url,
+            "url": self.address(source.file, source.url),
             "readOn": self.read_on.isoformat(),
             "sha256": digest(self.folder / source.file),
         }
+
+    def address(self, file: str, first: str) -> str:
+        note = self.folder / FETCHED_NOTE
+        fetched = json.loads(note.read_text(encoding="utf-8")) if note.is_file() else {}
+        return str(fetched.get(file) or first)

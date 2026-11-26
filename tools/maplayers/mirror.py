@@ -14,11 +14,15 @@ __all__ = [
     "MEASURED_FILES",
     "MEASURED_OUTPUT",
     "OUTLINE_FILE",
+    "WATERS_INDEX",
+    "WATERS_TILES",
     "mirror_base",
     "mirror_measured",
+    "mirror_waters",
     "outline_text",
     "unmirrored",
     "unmirrored_base",
+    "unmirrored_waters",
 ]
 
 MEASURED_OUTPUT = Path("backend/app/data/layers")
@@ -28,6 +32,9 @@ BASE_FILES = ("state-borders.json",)
 INDIA_SOURCE = Path("frontend/components/map/indiaGeometry.ts")
 OUTLINE_FILE = "india-outline.json"
 OUTLINE_SCHEMA_VERSION = 1
+DRAWN_LAYERS = Path("frontend/public/layers")
+WATERS_INDEX = "waters.json"
+WATERS_TILES = "waters"
 
 
 def mirror_measured(drawn: Path, measured: Path, names: Iterable[str] = MEASURED_FILES) -> list[Path]:
@@ -70,3 +77,31 @@ def unmirrored_base(root: Path) -> list[str]:
     if not outline.is_file() or outline.read_text(encoding="utf-8") != expected:
         stale.append(OUTLINE_FILE)
     return stale
+
+
+def mirror_waters(root: Path) -> list[Path]:
+    drawn, measured = root / DRAWN_LAYERS, root / MEASURED_OUTPUT
+    written = mirror_measured(drawn, measured, (WATERS_INDEX,))
+    tiles = measured / WATERS_TILES
+    tiles.mkdir(parents=True, exist_ok=True)
+    names = _tile_names(drawn)
+    for stale in tiles.glob("*.json"):
+        if stale.name not in names:
+            stale.unlink()
+    return [*written, *mirror_measured(drawn / WATERS_TILES, tiles, names)]
+
+
+def unmirrored_waters(root: Path) -> list[str]:
+    drawn, measured = root / DRAWN_LAYERS, root / MEASURED_OUTPUT
+    names = _tile_names(drawn)
+    held = {path.name for path in (measured / WATERS_TILES).glob("*.json")}
+    stale = unmirrored(drawn / WATERS_TILES, measured / WATERS_TILES, names)
+    return [
+        *unmirrored(drawn, measured, (WATERS_INDEX,)),
+        *(f"{WATERS_TILES}/{name}" for name in stale),
+        *(f"{WATERS_TILES}/{name}" for name in sorted(held - set(names))),
+    ]
+
+
+def _tile_names(drawn: Path) -> tuple[str, ...]:
+    return tuple(sorted(path.name for path in (drawn / WATERS_TILES).glob("*.json")))
