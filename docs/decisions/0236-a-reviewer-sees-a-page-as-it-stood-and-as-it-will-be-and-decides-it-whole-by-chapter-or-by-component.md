@@ -21,6 +21,7 @@ pictures, returned to the agent and now also kept) and [decision 0170](0170-revi
 | The preview, its renderer and its pictures | [decision 0195](0195-a-preview-drawn-seen-and-checked-before-it-is-proposed.md) |
 | Staged decisions a person confirms | [decision 0170](0170-review-over-mcp-staged-and-pages-refreshed-now.md) and [decision 0194](0194-an-admin-removes-and-edits-published-content-over-mcp.md) |
 | The preview card this view follows | [decision 0229](0229-a-preview-card-that-minimises-and-what-a-craft-s-facts-could-show-offered-to-judge.md) |
+| The elicitation seam filled: a staged page decision confirmed in the person's client | [decision 0243](0243-a-staged-decision-confirmed-in-the-person-s-own-mcp-client.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -32,11 +32,11 @@ from .mcp_page_review import opened_page, page_lines
 from .mcp_protocol import ToolImage
 from .mcp_published_read import PublishedRead, read_published
 from .mcp_review_arguments import ReviewQueueArguments, StageArguments, StagedChoice
+from .mcp_staged_confirm import CONFIRM_IN_CLIENT, REVIEW_PAGE, StagedLine, StageReply
 from .mcp_tool_base import ADMIN_GROUP, READ_ONLY, WRITES, Arguments, Tool, ToolContext
 
 __all__ = ["REVIEW_TOOLS", "QueueReply", "RefreshReply", "StageReply", "staged_decision"]
 
-REVIEW_PAGE = "/admin/review"
 NOT_AN_ADMIN = "{tool} is for Admin and Master Admin accounts signed in with the review scope."
 NO_TRANSCRIPTS = "Testimony is reviewed on the site, not over MCP."
 QUEUE_DESCRIPTION = (
@@ -60,7 +60,8 @@ STAGE_DESCRIPTION = (
     f"content, kept in the record, as {ADMIN_GUIDE_URI} shows; approve or reject a page proposal, kind PAGES, "
     "as a whole page, one chapter or one component with page) and a reason of at least 12 characters. Each "
     "is checked by the rules the Review page and the original gates apply; refused ones say why. "
-    f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days."
+    f"At most {STAGED_ITEMS_PER_DAY_MAX} a day; a batch expires after {BATCH_DAYS} days. A client that shows "
+    "forms asks the signed-in person at once to confirm all, some or none; only the person's answer confirms."
 )
 REFRESH_DESCRIPTION = (
     "Admins: read the page refresh, or start one with start true: it rebuilds the pages and stored documents "
@@ -112,27 +113,6 @@ class QueueReply(ContractModel):
 
     def tool_images(self) -> list[ToolImage]:
         return list(self._images)
-
-
-class StagedLine(ContractModel):
-    index: int
-    kind: str
-    id: uuid.UUID | None = None
-    action: str | None = None
-    label: str | None = None
-    reason: str | None = None
-
-
-class StageReply(ContractModel):
-    batch_id: uuid.UUID | None
-    staged: list[StagedLine]
-    refused: list[StagedLine]
-    staged_today: int
-    per_day_max: int = STAGED_ITEMS_PER_DAY_MAX
-    expires_at: datetime | None
-    confirm_at: str
-    published: bool = False
-    message: str
 
 
 class RefreshArguments(Arguments):
@@ -322,6 +302,7 @@ REVIEW_TOOLS: tuple[Tool, ...] = (
         REVIEW_SCOPE,
         WRITES,
         group=ADMIN_GROUP,
+        after=CONFIRM_IN_CLIENT,
     ),
     Tool(
         "refresh_pages",

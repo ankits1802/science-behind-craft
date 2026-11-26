@@ -26,6 +26,7 @@ item 6: published pictures over MCP) and
 | A sentence says no more than the quotes it cites | [decision 0120](0120-grounded-sentences.md) |
 | How the web reads a field or kind it does not know | [decision 0151](0151-a-release-the-live-side-can-read.md) and [decision 0167](0167-answer-leftovers-kept-true.md) |
 | A structure edit's quotes checked, and a layout's removal never restoring a removed one | [decision 0212](0212-a-steward-asks-an-admin-a-structure-edit-states-what-it-brings-and-a-removed-layout-stays-removed.md) |
+| A staged removal or edit confirmed by its person in their own MCP client | [decision 0243](0243-a-staged-decision-confirmed-in-the-person-s-own-mcp-client.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -1,7 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
+import { scrollToAnchor } from "@/components/motion/scrollToAnchor";
 import { ChapterChangeList } from "@/components/review/ChapterChangeList";
 import { PageShots } from "@/components/review/PageShots";
 import { ScopeDecision } from "@/components/review/ScopeDecision";
@@ -12,7 +13,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { TextLink } from "@/components/ui/TextLink";
 import { formatDateTime } from "@/lib/format";
 import type { DrawnSide, PageAction, PageProposalView, PageScope } from "@/lib/pageProposalContract";
-import { chapterCounts, partLine, waitingLine, WHOLE_PAGE } from "@/lib/pageProposalView";
+import { chapterCounts, partLine, proposalAnchor, waitingLine, WHOLE_PAGE } from "@/lib/pageProposalView";
 import { proposerLine } from "@/lib/reviewQueueView";
 
 export type PageCardHandlers = {
@@ -21,13 +22,25 @@ export type PageCardHandlers = {
   draw: (side: DrawnSide) => Promise<string | null>;
 };
 
-export function PageProposalCard({ summary, opened, handlers }: { summary: PageProposalView; opened: PageProposalView | null; handlers: PageCardHandlers }) {
-  const [open, setOpen] = useState(false);
+export type PageProposalCardProps = { summary: PageProposalView; opened: PageProposalView | null; handlers: PageCardHandlers; focused?: boolean };
+
+export function PageProposalCard({ summary, opened, handlers, focused = false }: PageProposalCardProps) {
+  const [open, setOpen] = useState(focused);
   const [problem, setProblem] = useState<string | null>(null);
   const panel = useId();
   const docs = useProposalDocuments(summary.id);
   const view = opened ?? summary;
   const proposer = proposerLine(view.proposer);
+  const anchor = proposalAnchor(summary.id);
+  const arrived = useRef(false);
+
+  useEffect(() => {
+    if (!focused || arrived.current) return;
+    arrived.current = true;
+    setOpen(true);
+    scrollToAnchor(anchor);
+    void handlers.open().then(setProblem);
+  }, [focused, anchor, handlers]);
 
   async function toggle() {
     const next = !open;
@@ -36,7 +49,7 @@ export function PageProposalCard({ summary, opened, handlers }: { summary: PageP
   }
 
   return (
-    <article className="grid gap-5" data-testid="page-proposal-card">
+    <article id={anchor} className="grid scroll-mt-24 gap-5" data-testid="page-proposal-card" data-focused={focused || undefined}>
       <header className="grid gap-1">
         <p className="kicker">Page proposal · {view.subject.kind}</p>
         <h3 className="font-headline text-h3 text-ink-1">

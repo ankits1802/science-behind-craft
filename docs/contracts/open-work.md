@@ -660,7 +660,10 @@ things more; a client on the 2025-11-25 handshake reaches everything above exact
   with its expiry (or that it has none); `supply_source` with no passages, text, upload or file asks
   for the source's words and where they stand. A decline sends nothing and opens nothing. A client
   without form elicitation is answered as before (`edit_draft` names the page "one of them",
-  `supply_source` takes its words "one way").
+  `supply_source` takes its words "one way"). One admin tool asks after it runs (decision 0243):
+  `stage_reviews`, once it has stored a batch, asks the Admin whose AI staged it to confirm all, some
+  or none of it, saying what each item will do; only the person's answer in the form confirms, and
+  what is left waits on the Review page (`review-queue.md`, Confirmed in the person's client).
 - **Files** (`io.modelcontextprotocol/files`, the experimental extension, `api/mcp_files.py`), on
   while `MCP_FILE_UPLOADS_ENABLED` is true. To a client that declares `upload`, `tools/list` adds
   `supply_source.file` (a PDF or text file, 20 MB), `give_pictures.files` (one photograph for each

@@ -125,8 +125,10 @@ that opens with it (the MCP client check among them).
   `io.modelcontextprotocol/skills {}`, `io.modelcontextprotocol/tasks {}` and, while
   `MCP_FILE_UPLOADS_ENABLED` is true (the default), `io.modelcontextprotocol/files {upload {}}`.
 - **What they do** (skills, tasks, the questions asked of the person, files): `open-work.md`,
-  Protocol 2026-07-28, and for photographs `mcp-ask-and-upload.md`. A request of the handshake
-  versions reaches none of them, and nothing a handshake client sees has changed.
+  Protocol 2026-07-28, for photographs `mcp-ask-and-upload.md`, and for the form that asks an Admin
+  to confirm the batch their AI just staged `review-queue.md`, Confirmed in the person's client
+  (decision 0243). A request of the handshake versions reaches none of them, and nothing a handshake
+  client sees has changed.
 
 ## Read tools
 

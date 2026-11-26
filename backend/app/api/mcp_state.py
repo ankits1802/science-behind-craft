@@ -18,6 +18,7 @@ from .mcp_protocol import INVALID_PARAMS, RequestError
 
 __all__ = [
     "ASKED",
+    "ASKED_AFTER",
     "UPLOADED",
     "SealedCall",
     "arguments_digest",
@@ -25,7 +26,7 @@ __all__ = [
     "sealed_state",
 ]
 
-ASKED, UPLOADED = "asked", "uploaded"
+ASKED, ASKED_AFTER, UPLOADED = "asked", "asked_after", "uploaded"
 STATE_CONTEXT = b"kalavigyan/mcp-request-state/1"
 SEPARATOR = "."
 REFUSED = "requestState is not one this server issued for this call; call the tool again without it"
@@ -38,7 +39,7 @@ class SealedCall(BaseModel):
     tool: str
     arguments: str
     principal: str | None
-    purpose: Literal["asked", "uploaded"]
+    purpose: Literal["asked", "asked_after", "uploaded"]
     keys: tuple[str, ...] = ()
     refs: Mapping[str, str] = Field(default_factory=dict)
     expires: int

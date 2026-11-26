@@ -19,7 +19,7 @@ from app.research.staged_reviews import (
     batch_status,
 )
 
-__all__ = ["batch_view", "open_batches"]
+__all__ = ["batch_items", "batch_view", "open_batches"]
 
 
 async def open_batches(session: AsyncSession, *, now: datetime) -> StagedBatchList:
@@ -35,11 +35,7 @@ async def open_batches(session: AsyncSession, *, now: datetime) -> StagedBatchLi
 async def batch_view(
     session: AsyncSession, batch: StagedReview, *, now: datetime, refresh: str | None = None
 ) -> StagedBatchView:
-    items = await session.scalars(
-        select(StagedReviewItem)
-        .where(StagedReviewItem.batchId == batch.id)
-        .order_by(StagedReviewItem.position)
-    )
+    items = await batch_items(session, batch.id)
     names = await _names(session, (batch.proposerId, batch.decidedById))
     return StagedBatchView(
         id=batch.id,
@@ -51,8 +47,17 @@ async def batch_view(
         decided_by=names.get(batch.decidedById) if batch.decidedById else None,
         decided_at=batch.decidedAt,
         refresh=refresh,
-        items=[_item_view(item) for item in items.all()],
+        items=[_item_view(item) for item in items],
     )
+
+
+async def batch_items(session: AsyncSession, batch_id: uuid.UUID) -> list[StagedReviewItem]:
+    items = await session.scalars(
+        select(StagedReviewItem)
+        .where(StagedReviewItem.batchId == batch_id)
+        .order_by(StagedReviewItem.position)
+    )
+    return list(items.all())
 
 
 def _item_view(item: StagedReviewItem) -> StagedItemView:

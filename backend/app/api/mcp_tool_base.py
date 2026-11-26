@@ -42,6 +42,8 @@ __all__ = [
     "WRITES",
     "Arguments",
     "Asks",
+    "AsksAfter",
+    "FollowUp",
     "NoArguments",
     "Sessions",
     "ShowsImages",
@@ -119,6 +121,18 @@ Asks = Callable[[ToolContext, Any], Awaitable[Sequence[Question]]]
 
 
 @dataclass(frozen=True)
+class FollowUp:
+    question: Question
+    refs: Mapping[str, str]
+
+
+@dataclass(frozen=True)
+class AsksAfter:
+    ask: Callable[[ToolContext, BaseModel], Awaitable[FollowUp | None]]
+    answered: Callable[[ToolContext, Any, Mapping[str, str]], Awaitable[BaseModel]]
+
+
+@dataclass(frozen=True)
 class Tool:
     name: str
     title: str
@@ -134,6 +148,7 @@ class Tool:
     shows_output: bool = False
     scope_of: ScopeOf | None = None
     asks: Asks | None = None
+    after: AsksAfter | None = None
     files: FileArgument | None = None
     runs_long: bool = False
 

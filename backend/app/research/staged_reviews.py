@@ -220,6 +220,10 @@ class StagedDecision(_Choice):
         target = {"kind": self.kind, "id": self.id, "entry": self.entry, "edit": self.edit, "page": self.page}
         return StagedDecision.model_validate({**fields, **target})
 
+    def as_staged(self, item_id: uuid.UUID) -> ConfirmedItem:
+        chosen = self.model_dump(include=set(_Choice.model_fields), exclude_none=True)
+        return ConfirmedItem.model_validate({**chosen, "id": item_id})
+
 
 class ConfirmedItem(_Choice):
     id: uuid.UUID
