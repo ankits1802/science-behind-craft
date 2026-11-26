@@ -19,6 +19,12 @@ and released together, each batch verified on production.
 
 ## Live now
 
+- **KalaVigyan `main` with the UX round** (2026-11-26, decisions 0225 to 0246, PROGRESS.md, UX
+  round): the page release `7f841c1c` (0227 to 0234, verified on production, migration head
+  `0121_coded_figures`) and the gap release of PR #234 (0235 to 0246, migration head
+  `0124_leftovers`). A contributor's AI builds a page from one line and the owner's rule holds: the
+  AI follows Ajrakh's thinking, never copies it, and may write its own code over cited data. File
+  uploads stay off until Anthropic approves the API host (RUNBOOK).
 - **KalaVigyan `main` at `f0f965b7`** (2026-11-25, decisions 0211 to 0224, PROGRESS.md, Quality
   round), verified on production: `/health` and `/api/version` on it, Vercel READY, CloudWatch
   without errors, migration head `0120_rest_after_removal`, Monograph parity, the post-deploy check

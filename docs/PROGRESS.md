@@ -1307,6 +1307,35 @@ Last updated: 2026-11-25.
     grace raised a false alarm, and is back at 45 after decision 0217 counted the grace from when
     main reached a commit.
 
+- **UX round (2026-11-26): a contributor's AI reaches the bar unaided.** The owner judged
+  Sanganeri, built over MCP after the quality round, below Kutch Ajrakh: a wall of text, players
+  that did not play, maps below Ajrakh's, a preview card that did not minimise. The rule since
+  (2026-11-26): a contributor only says what they want to contribute, presses allow and at most
+  reviews; the AI follows Ajrakh's design thinking, never copies it, and may write its own code;
+  the platform guarantees the research and the citations. Decisions 0225 to 0246.
+  - **The page release** (`7f841c1c`, decisions 0227 to 0234): a generated page set as its layout
+    places it, with margin, crop and figures in the prose (0227); players, molecules and timelines
+    that play, with Play and Pause and a timeline that jumps where it is pressed, and a reaction's
+    species drawn from the kit (0228); a preview card that minimises whole and rule 29's
+    opportunities offered to judge (0229); a playbook and cookbook that teach the thinking, and the
+    context the authors had served (0230); `coded_figure`, a contributor's AI writing a figure's
+    code over the page's cited data (0231); every places map on the site's own base (0232); room
+    for a whole page with its reading tools (0233); an acceptance run in which a fresh agent builds
+    a page from one line (0234).
+  - **The gap release** (PR #234, decisions 0235 to 0246, migrations 0122 to 0124): the MCP server
+    speaks 2026-07-28 with skills, tasks that outlive a deploy, elicitation and file uploads, every
+    upload scanned by ClamAV (0235, 0241); a reviewer sees a page before and after (0236), and an
+    Admin's AI's staged batch is confirmed in the person's own MCP client (0243); a preview's
+    pictures read as a designer (0237); an answer's figures and every moving figure play (0238,
+    0242); small rivers and dams, coded maps whole on paper, map labels and state lines at their
+    true size from first paint, and the Dravyavati named through a cited alias (0239, 0244, 0246);
+    a page's brief in one call for the agent (0240); voice recordings scanned, held pages keeping
+    the critique, films from the media store with renewed addresses, and upgrade work raised for
+    pages built before the round (0245). Parity finds a borrowed component by its authored
+    selector (PR #220).
+  - **Waiting on the owner:** Anthropic's approval of the API host for Claude's file uploads
+    (mcp-review@anthropic.com, RUNBOOK); `MCP_FILE_UPLOADS_ENABLED` stays false until then.
+
 ## Next
 
 0. The redesign, owner-approved 2026-11-18: Direction A "Alum & Indigo" as the system with
