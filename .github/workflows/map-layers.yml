@@ -22,6 +22,7 @@ env:
   NATURAL_EARTH_MIRROR: https://naturalearth.s3.amazonaws.com/10m_physical
   AGENT: "KalaVigyan map layers build (GitHub Actions)"
   ETOPO_URL: "https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
+  ETOPO_MIRROR: "https://upwell.pfeg.noaa.gov/erddap/griddap/etopo180.esriAscii?altitude%5B(37.6):1:(5.6)%5D%5B(65):1:(98.2)%5D"
   MRDS_URL: https://mrdata.usgs.gov/mrds/mrds-csv.zip
   OSM_URL: https://download.geofabrik.de/asia/india-latest.osm.pbf
 
@@ -52,7 +53,7 @@ jobs:
             unzip -q -o "downloads/$name.zip" -d "downloads/$name"
             test -f "downloads/$name/$name.shp" || { echo "::error::$name.zip holds no $name.shp"; exit 1; }
           done
-          fetch downloads/etopo1_india.asc "$ETOPO_URL"
+          fetch downloads/etopo1_india.asc "$ETOPO_URL" || fetch downloads/etopo1_india.asc "$ETOPO_MIRROR"
           head -c 200 downloads/etopo1_india.asc | grep -qi "ncols" || { echo "::error::the ETOPO1 download is not an ESRI ASCII grid"; exit 1; }
           fetch downloads/mrds-csv.zip "$MRDS_URL"
           fetch downloads/india-latest.osm.pbf "$OSM_URL"
@@ -85,8 +86,8 @@ jobs:
             echo
             echo "## Small waters"
             echo
-            du -sh frontend/public/layers/waters
-            ls frontend/public/layers/waters | wc -l
+            du -sh frontend/public/layers/waters || true
+            ls frontend/public/layers/waters | wc -l || true
             ls -S -l frontend/public/layers/waters | head -6 || true
             grep -l -e '"Suran"' -e 'Amanisha' frontend/public/layers/waters/*.json || true
             grep -o '"name":"[^"]*","kind":"[^"]*","districts":\[449[^]]*\][^}]*' frontend/public/layers/waters/e068n22.json frontend/public/layers/waters/e070n22.json | head -20 || true
