@@ -5,6 +5,10 @@ import { sandboxDocument, type FrameLook, type FramePieces } from "@/lib/sandbox
 
 export const WORDS_ELEMENT_ID = "kv-words";
 export const FILMS_ELEMENT_ID = "kv-films";
+export const FILM_ENDS_ELEMENT_ID = "kv-film-ends";
+export const FILMS_MESSAGE = "kvFilms";
+export const FILM_ENDS_MESSAGE = "kvFilmEnds";
+export const FILM_ASK_MESSAGE = "kvFilmAsk";
 export const MAP_ELEMENT_ID = "kv-map";
 export const DAM_SHARE = 0.012;
 export const CODED_SANDBOX = SANDBOX_ATTRIBUTE;
@@ -14,6 +18,8 @@ export const LIBRARY_PATHS: Readonly<Record<CodedLibrary, string>> = {
 };
 
 export type ClipLinks = Readonly<Record<string, string>>;
+export type FilmEnds = Readonly<Record<string, number>>;
+export type FilmsMessage = { [FILMS_MESSAGE]: Record<string, string>; [FILM_ENDS_MESSAGE]: Record<string, number> };
 export type MapBounds = { west: number; east: number; south: number; north: number };
 export type MapHome = { lgd: number; d: string; x: number; y: number };
 export type MapBase = {
@@ -59,6 +65,7 @@ export const FRAME_FILLS = [
   "const read = function (id) { const found = document.getElementById(id); return found ? JSON.parse(found.textContent) : {}; };",
   `const words = read(${JSON.stringify(WORDS_ELEMENT_ID)});`,
   `const films = read(${JSON.stringify(FILMS_ELEMENT_ID)});`,
+  `const ends = read(${JSON.stringify(FILM_ENDS_ELEMENT_ID)});`,
   "const own = function (held, key) { return Object.prototype.hasOwnProperty.call(held, key) ? held[key] : null; };",
   "const fill = function (node) {",
   'if (node.hasAttribute("data-unit")) { const said = own(words, node.getAttribute("data-unit")); if (said !== null && node.textContent !== said) node.textContent = said; }',
@@ -69,8 +76,51 @@ export const FRAME_FILLS = [
   "new MutationObserver(function (changes) {",
   'for (const change of changes) { if (change.type === "attributes") fill(change.target); else for (const node of change.addedNodes) fillAll(node); }',
   '}).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-unit", "data-unit-label", "data-film"] });',
+  'const filmOf = function (node) { const key = node && node.nodeType === 1 ? node.getAttribute("data-film") : null; return key !== null && own(films, key) !== null ? key : null; };',
+  'const expired = function (key) { const end = own(ends, key); return typeof end === "number" && end <= Date.now(); };',
+  `const ask = function (node, key) { node.kvWaits = true; parent.postMessage({ ${FILM_ASK_MESSAGE}: key }, "*"); };`,
+  "const swap = function (node, resume) {",
+  'const src = own(films, node.getAttribute("data-film")); const at = node.currentTime || 0;',
+  'if (src === null || node.getAttribute("src") === src) { if (resume) node.play(); return; }',
+  'node.setAttribute("src", src);',
+  'if (at || resume) node.addEventListener("loadedmetadata", function () { if (at) node.currentTime = at; if (resume) node.play(); }, { once: true });',
+  "};",
+  "const renewed = function (event) {",
+  "const node = event.target; const key = filmOf(node); if (key === null) return;",
+  'if (expired(key)) { if (event.type === "play") node.pause(); ask(node, key); return; }',
+  'if (node.getAttribute("src") !== films[key]) { if (event.type === "play") node.pause(); swap(node, true); }',
+  "};",
+  'document.addEventListener("play", renewed, true);',
+  'document.addEventListener("error", renewed, true);',
+  'window.addEventListener("message", function (event) {',
+  "const given = event.source === parent && event.data ? event.data : null;",
+  `const sent = given && given.${FILMS_MESSAGE}; const sentEnds = (given && given.${FILM_ENDS_MESSAGE}) || {};`,
+  'if (!sent || typeof sent !== "object") return;',
+  "for (const key of Object.keys(sent)) {",
+  'if (typeof sent[key] !== "string" || own(films, key) === null) continue;',
+  "films[key] = sent[key];",
+  'if (typeof sentEnds[key] === "number") ends[key] = sentEnds[key];',
+  'for (const node of document.querySelectorAll("[data-film]")) if (node.getAttribute("data-film") === key) {',
+  "const resume = node.kvWaits === true; node.kvWaits = false;",
+  "if (resume || node.paused || node.error) swap(node, resume);",
+  "}",
+  "}",
+  "});",
   "})();"
 ].join(" ");
+
+export function filmsMessage(key: string, url: string, end: number): FilmsMessage {
+  return { [FILMS_MESSAGE]: { [key]: url }, [FILM_ENDS_MESSAGE]: { [key]: end } };
+}
+
+export function filmAskFrom(event: { source: unknown; data: unknown }, frame: unknown): string | null {
+  if (frame === null || frame === undefined || event.source !== frame) return null;
+  const data = event.data;
+  if (typeof data !== "object" || data === null || Array.isArray(data)) return null;
+  const keys = Object.keys(data);
+  const key = (data as Record<string, unknown>)[FILM_ASK_MESSAGE];
+  return keys.length === 1 && typeof key === "string" ? key : null;
+}
 
 export const FRAME_MAP = [
   "(function () {",
@@ -150,13 +200,14 @@ function jsonElement(id: string, value: unknown): string {
   return `<script type="application/json" id="${id}">${JSON.stringify(value).replace(/</g, "\\u003c")}</script>`;
 }
 
-export type CodedFrameAsk = { origin: string; figure: CodedFigureSpec; words: Readonly<Record<string, string>>; base: MapBase | null; clips?: ClipLinks };
+export type CodedFrameAsk = { origin: string; figure: CodedFigureSpec; words: Readonly<Record<string, string>>; base: MapBase | null; clips?: ClipLinks; ends?: FilmEnds };
 
 export function codedFramePieces(ask: CodedFrameAsk): FramePieces {
   const films = filmAddresses(ask.origin, ask.figure, ask.clips);
   const head = [
     jsonElement(WORDS_ELEMENT_ID, ask.words),
     jsonElement(FILMS_ELEMENT_ID, films),
+    jsonElement(FILM_ENDS_ELEMENT_ID, ask.ends ?? {}),
     ask.base ? jsonElement(MAP_ELEMENT_ID, ask.base) : "",
     `<script>${FRAME_FILLS}</script>`,
     ask.base ? `<script>${FRAME_MAP}</script>` : "",
