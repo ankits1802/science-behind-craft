@@ -53,8 +53,8 @@ timeline map) and `docs/contracts/component-specs-science.md` (coded_figure); th
 ## Decision
 
 1. **One layer of screen pixels for every map.** `TimelinePins` hands `IndiaMap` a `screenLayer`;
-   `IndiaMap` then draws the pins there (`components/map/ScreenPins.tsx`, 10 px discs, the number at
-   the caption token) instead of in its `svg`, keeping the pin controls and hover card. The layer
+   `IndiaMap` then draws the pins there (`components/map/ScreenPins.tsx`, discs of 10 px radius, the
+   number at the caption token) instead of in its `svg`, keeping the pin controls and hover card. The layer
    (`MapLabelLayer`) also holds the scale (`LabelScale`) and the physical labels
    (`PhysicalLabels`, shared with `PlacesOverlay`: ranges, rivers with the emphasised ones strong,
    peaks), each drawn only inside the frame. `useTimelineMapLayers` gives `labels(frame)` beside an
