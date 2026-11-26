@@ -3,13 +3,15 @@
 import { useCallback, useMemo, type ReactNode } from "react";
 
 import { useRemote } from "@/components/hooks/useRemote";
+import type { MapBox } from "@/components/map/basemap";
 import { DistrictFills, PLACE_TONE } from "@/components/map/DistrictLayer";
+import { PhysicalLabels } from "@/components/map/MapLabelLayer";
 import { LayerStatus, useMapLayer, usePaletteFill } from "@/components/map/MapLayerView";
 import { PLAIN, StillHome, StillRelief, StillRivers, type Strength } from "@/components/map/MapStillLayers";
 import { MineralSymbols } from "@/components/map/physical/MineralsLayer";
 import { MineralKey, ReliefKey, RiversKey } from "@/components/map/physical/PhysicalSide";
-import { ReliefOver, ReliefUnder } from "@/components/map/physical/ReliefLayer";
-import { RiversOver, RiversUnder } from "@/components/map/physical/RiversLayer";
+import { ReliefUnder } from "@/components/map/physical/ReliefLayer";
+import { RiversUnder } from "@/components/map/physical/RiversLayer";
 import { loadShapes, shapePath, type DistrictShape } from "@/components/map/shapeGeometry";
 import type { LayerEmphasis, LayerNames, MapStill } from "@/components/map/timelineMapStill";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -20,7 +22,7 @@ export const DRAWING_MINERALS = "Drawing the mineral deposits";
 export const NO_EMPHASIS: LayerEmphasis = { layers: [], rivers: [] };
 
 export type LayerParts = { relief: ReactNode; fills: ReactNode; rivers: ReactNode; home: ReactNode };
-export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; key: ReactNode; parts: LayerParts; credits: RegionDataset[]; files: Physical };
+export type DrawnLayers = { underlay: ReactNode; overlay: (scale: number) => ReactNode; labels: (frame: MapBox) => ReactNode; key: ReactNode; parts: LayerParts; credits: RegionDataset[]; files: Physical };
 export type Physical = { relief: ReliefFile | null; rivers: RiversFile | null; minerals: MineralsFile | null; sites: readonly MineralSite[] };
 
 function usePhysical<K extends "relief" | "rivers" | "minerals">(id: K, names: LayerNames) {
@@ -70,16 +72,6 @@ export function PhysicalKey({ names, layers, still = null }: { names: LayerNames
   );
 }
 
-function PhysicalOver({ layers, scale, rivers }: { layers: Physical; scale: number; rivers: readonly string[] }) {
-  return (
-    <>
-      {layers.relief ? <ReliefOver file={layers.relief} scale={scale} /> : null}
-      {layers.rivers ? <RiversOver file={layers.rivers} named={rivers} /> : null}
-      {layers.minerals ? <MineralSymbols sites={layers.sites} scale={scale} /> : null}
-    </>
-  );
-}
-
 export function useTimelineMapLayers(names: LayerNames, still: MapStill | null = null): DrawnLayers {
   const relief = usePhysical("relief", names);
   const rivers = usePhysical("rivers", names);
@@ -112,5 +104,7 @@ export function useTimelineMapLayers(names: LayerNames, still: MapStill | null =
     </div>
   );
   const credits = layerCredits([...(relief?.datasets ?? []), ...(rivers?.datasets ?? [])]);
-  return { underlay, overlay: (scale) => <PhysicalOver layers={layers} scale={scale} rivers={emphasis.rivers} />, key, parts, credits, files: layers };
+  const overlay = (scale: number) => (minerals ? <MineralSymbols sites={sites} scale={scale} /> : null);
+  const labels = (frame: MapBox) => <PhysicalLabels files={layers} frame={frame} named={emphasis.rivers} />;
+  return { underlay, overlay, labels, key, parts, credits, files: layers };
 }

@@ -1,4 +1,5 @@
 import type { MapBox } from "@/components/map/basemap";
+import { drawsDistrictLines } from "@/components/map/mapLayerFrame";
 import { STILL_GRID, stillCut, type HeldWaters, type StillLayers } from "@/components/map/mapStillCut";
 import type { Projected } from "@/components/map/projection";
 import { cutLines, cutRings } from "@/components/map/stillGeometry";
@@ -7,7 +8,7 @@ import { answersTo } from "@/lib/mapWaters";
 
 export type CodedLayer = "states" | "districts" | "rivers" | "relief";
 export type CodedMapAsk = { layers: readonly CodedLayer[]; districts: readonly number[]; rivers?: readonly string[]; dams?: readonly string[] };
-export type CodedStillBase = { box: MapBox; grid: number; land: string | null; relief: string[] | null; rivers: string | null; districts: string | null; homes: string | null; waters: StillWaters | null };
+export type CodedStillBase = { box: MapBox; grid: number; land: string | null; relief: string[] | null; rivers: string | null; districts: string | null; states: string | null; homes: string | null; waters: StillWaters | null };
 export type CodedRiverPath = { name: string; d: string };
 export type CodedDam = { name: string; x: number; y: number };
 export type CodedBase = { still: CodedStillBase; rivers: CodedRiverPath[]; dams: CodedDam[] };
@@ -35,7 +36,8 @@ export function codedStillBase(layers: StillLayers, box: MapBox, ask: CodedMapAs
     land: cutRings(india, cut) || null,
     relief: ask.layers.includes("relief") ? bands.map((rings) => cutRings(rings, cut)) : null,
     rivers: ask.layers.includes("rivers") ? cutLines(layers.rivers.flatMap((group) => group.lines), cut) || null : null,
-    districts: ask.layers.includes("districts") ? cutLines([...layers.homes.values()].flat(), cut) || null : null,
+    districts: drawsDistrictLines(box, ask.layers) ? cutLines([...layers.homes.values()].flat(), cut) || null : null,
+    states: cutLines(layers.stateLines, cut) || null,
     homes: cutRings(homes, cut) || null,
     waters: stillWaters(held, box, ask)
   };

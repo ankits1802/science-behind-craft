@@ -8,6 +8,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { TimelinePins } from "@/components/answer/journey/TimelinePins";
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import { viewBoxOf, type MapBox, type NeighbourFile } from "@/components/map/basemap";
+import type { BordersFile } from "@/components/map/borderGeometry";
 import { WHOLE_MAP } from "@/components/map/layout";
 import { KM_PER_DEGREE_LATITUDE, ringRadii, SCALE_SHARE, SCALE_STEPS, scaleBar } from "@/components/map/mapDistance";
 import { framedPoints, mapLayerFrame } from "@/components/map/mapLayerFrame";
@@ -41,7 +42,8 @@ const FILES: StillFiles = {
   rivers: read<RiversFile>(FRONTEND, "public", "layers", "rivers.json"),
   minerals: read<MineralsFile>(FRONTEND, "public", "layers", "minerals.json"),
   shapes: read<ShapesFile>(FRONTEND, "public", "boundaries", "district-shapes.json"),
-  neighbours: read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json")
+  neighbours: read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json"),
+  stateBorders: read<BordersFile>(FRONTEND, "public", "boundaries", "state-borders.json")
 };
 const LAYERS = stillLayers(FILES);
 const RELIEF = read<ReliefFile>(FRONTEND, "public", "layers", "relief.json");

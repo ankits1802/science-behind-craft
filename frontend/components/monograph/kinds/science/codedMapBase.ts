@@ -5,6 +5,7 @@ import { bordersToPath, indiaOutlinePath, project, VIEW_BOX } from "@/components
 import { loadShapes, shapePath, type DistrictShape } from "@/components/map/shapeGeometry";
 import type { MapBase, MapHome } from "@/lib/codedFigureFrame";
 import type { CodedBase } from "@/components/map/codedStillCut";
+import { drawsDistrictLines } from "@/components/map/mapLayerFrame";
 import type { CodedMap, MapLayer } from "@/lib/componentSpecsScienceCoded";
 import { loadPhysical, type ReliefFile, type RiversFile } from "@/lib/mapPhysical";
 
@@ -44,9 +45,10 @@ function homes(shapes: readonly DistrictShape[] | null, wanted: readonly number[
 
 export async function codedMapBase(map: CodedMap, served?: CodedBase): Promise<MapBase> {
   const wants = (layer: MapLayer) => map.layers.includes(layer);
+  const districtLines = served ? drawsDistrictLines(served.still.box, map.layers) : wants("districts");
   const [states, districts, relief, rivers, shapes] = await Promise.all([
-    wants("states") ? loadBorders("state") : null,
-    wants("districts") ? loadBorders("district") : null,
+    loadBorders("state"),
+    districtLines ? loadBorders("district") : null,
     wants("relief") ? loadPhysical("relief") : null,
     wants("rivers") ? loadPhysical("rivers") : null,
     map.districts.length ? loadShapes() : null
@@ -55,7 +57,7 @@ export async function codedMapBase(map: CodedMap, served?: CodedBase): Promise<M
     ...mapFrame(),
     relief: reliefPaths(relief),
     rivers: riverPaths(rivers),
-    states: states ? bordersToPath(states) : null,
+    states: bordersToPath(states),
     districts: districts ? bordersToPath(districts) : null,
     homes: homes(shapes, map.districts),
     named: { rivers: served?.rivers ?? [], dams: served?.dams ?? [] }

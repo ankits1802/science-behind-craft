@@ -10,15 +10,25 @@ import { fitStyle, useFitScale } from "@/components/charts/useFitScale";
 import { AbroadInset, type InsetPin, type InsetRoute } from "@/components/map/AbroadInset";
 import type { MapBox } from "@/components/map/basemap";
 import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
-import { IndiaMap, type MapPoint } from "@/components/map/IndiaMap";
+import { IndiaMap, type MapPoint, type ScreenLayer } from "@/components/map/IndiaMap";
 import { frameScale, WHOLE_MAP } from "@/components/map/layout";
-import { MapScale } from "@/components/map/MapScale";
+import { LabelScale, MapLabelLayer } from "@/components/map/MapLabelLayer";
+import { ScreenPins } from "@/components/map/ScreenPins";
 import { listText } from "@/lib/format";
 import type { BoundaryNote } from "@/lib/regionContract";
 import { wikidataUrl } from "@/lib/supplyView";
 import { abroadSummary, type PlacedPlace, type TimelineRouteLine } from "@/lib/timelineView";
 
-export type TimelineMapParts = { frame?: MapBox; underlay?: ReactNode; overlay?: (scale: number) => ReactNode; key?: ReactNode; credits?: ReactNode; titled?: boolean; coordinates?: boolean };
+export type TimelineMapParts = {
+  frame?: MapBox;
+  underlay?: ReactNode;
+  overlay?: (scale: number) => ReactNode;
+  labels?: (frame: MapBox) => ReactNode;
+  key?: ReactNode;
+  credits?: ReactNode;
+  titled?: boolean;
+  coordinates?: boolean;
+};
 
 type Route = Pick<TimelineRouteLine<unknown>, "key" | "start" | "end">;
 
@@ -95,8 +105,14 @@ export function TimelinePins({ placed, reached, routes, boundary, parts = {} }: 
     <>
       {parts.overlay ? parts.overlay(scale) : null}
       <RouteLines routes={routes} ring={frameScale(frame)} />
-      {parts.frame ? <MapScale frame={frame} scale={scale} /> : null}
     </>
+  );
+  const screenLayer: ScreenLayer = (pins, active) => (
+    <MapLabelLayer>
+      {parts.labels ? parts.labels(frame) : null}
+      {parts.frame ? <LabelScale frame={frame} /> : null}
+      <ScreenPins frame={frame} pins={pins} active={active} />
+    </MapLabelLayer>
   );
   const source = (
     <>
@@ -108,7 +124,7 @@ export function TimelinePins({ placed, reached, routes, boundary, parts = {} }: 
   return (
     <AnswerFigure texts={texts} className="lg:sticky lg:top-24" data-testid="timeline-pins">
       <div ref={box} style={fitStyle(scale)} className="relative min-w-0">
-        <IndiaMap points={points} hoveredKey={hovered} selectedKey={pinned} onSelect={(key) => setPinned((current) => (current === key ? null : key))} onHover={setHovered} underlay={parts.underlay} overlay={overlay} frame={frame} />
+        <IndiaMap points={points} hoveredKey={hovered} selectedKey={pinned} onSelect={(key) => setPinned((current) => (current === key ? null : key))} onHover={setHovered} underlay={parts.underlay} overlay={overlay} screenLayer={screenLayer} frame={frame} />
         {parts.frame && parts.frame !== WHOLE_MAP ? <IndiaLocator marked={[]} frame={frame} label={locatorLabel([])} className={LOCATOR_INSET} /> : null}
       </div>
       {parts.key}

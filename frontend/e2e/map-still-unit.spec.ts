@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import { decodeRings, linesPath, ringsPath, viewBoxOf, type NeighbourFile } from "@/components/map/basemap";
+import type { BordersFile } from "@/components/map/borderGeometry";
 import { PLACE_TONE } from "@/components/map/DistrictLayer";
 import { DRAWING_DISTRICT_VALUES, LayerStatus } from "@/components/map/MapLayerView";
 import { cutStill, STILL_GRID, stillLayers, type StillFiles } from "@/components/map/mapStillCut";
@@ -38,7 +39,8 @@ const RIVERS = read<RiversFile>(FRONTEND, "public", "layers", "rivers.json");
 const MINERALS = read<MineralsFile>(FRONTEND, "public", "layers", "minerals.json");
 const SHAPES = read<ShapesFile>(FRONTEND, "public", "boundaries", "district-shapes.json");
 const NEIGHBOURS = read<NeighbourFile>(FRONTEND, "public", "boundaries", "neighbours.json");
-const FILES: StillFiles = { relief: RELIEF, rivers: RIVERS, minerals: MINERALS, shapes: SHAPES, neighbours: NEIGHBOURS };
+const STATE_BORDERS = read<BordersFile>(FRONTEND, "public", "boundaries", "state-borders.json");
+const FILES: StillFiles = { relief: RELIEF, rivers: RIVERS, minerals: MINERALS, shapes: SHAPES, neighbours: NEIGHBOURS, stateBorders: STATE_BORDERS };
 const LAYERS = stillLayers(FILES);
 const [BIDRIWARE] = parseKindFixtures({ fixtures: [read<unknown>(REPO, "backend", "app", "data", "kind_fixtures", "timeline_map.json")] });
 const KUTCH = read<Record<string, unknown>>(REPO, "backend", "app", "data", "monographs", "Kutch-Ajrakh", "specs", "kutch-ajrakh__history__dated-record-timeline-map.json");
@@ -59,7 +61,8 @@ const STILL_SOURCES = [
   "public/layers/relief.json",
   "public/layers/rivers.json",
   "public/layers/minerals.json",
-  "public/boundaries/district-shapes.json"
+  "public/boundaries/district-shapes.json",
+  "public/boundaries/state-borders.json"
 ];
 const CRAFT_ROUTE = ["app/layout.tsx", "app/(reading)/layout.tsx", "app/(reading)/crafts/[slug]/page.tsx"];
 const REST_CHUNKS = ["components/monograph/DeferredShell.tsx", "components/monograph/DeferredDocument.tsx"];
