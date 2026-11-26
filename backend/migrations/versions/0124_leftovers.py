@@ -30,7 +30,7 @@ $do$
 
 
 def upgrade() -> None:
-    op.add_column(HOLDS, sa.Column(CRITIQUE, postgresql.JSONB(astext_type=sa.Text()), nullable=True))
+    op.add_column("PageHold", sa.Column("critique", postgresql.JSONB(astext_type=sa.Text()), nullable=True))
     op.create_table(
         "PageUpgrade",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
