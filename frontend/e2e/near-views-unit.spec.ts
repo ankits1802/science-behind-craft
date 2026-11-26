@@ -187,7 +187,9 @@ test("a composed kit figure draws its panels and its Play at rest, and the Play'
   const kit = fixture("bidriware/process/white-to-black-in-the-bath");
   const html = drawn(COMPONENT_VIEWS.diagram as ComponentView, fixtureProps(kit));
   expect(html).toContain('<ol class="kv-kit-panels">');
-  expect(html).toContain('<div data-kv-near=""><div class="kv-kit-play">');
+  expect(html).toContain('<div data-kv-near=""><div class="kv-kit-play" data-testid="kit-play"');
   expect(html.match(/>Play</g)).toHaveLength(1);
   expect(html).not.toContain("data-playing");
+  expect(/<button[^>]*data-testid="kit-play-button"[^>]*>/.exec(html)?.[0]).not.toContain("aria-pressed");
+  expect(html).toContain('role="status" aria-live="polite"></p>');
 });

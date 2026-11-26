@@ -280,17 +280,17 @@ footer p{margin:0 0 8px}
     });
   }
 
-  function paint(value) {
+  function paintOf(value) {
     return typeof value === "string" && PAINT.test(value) ? value : null;
   }
 
   function swatch(step) {
-    var after = paint(step.after);
+    var after = paintOf(step.after);
     if (!after) return null;
     var box = el("span", "kv-swatch");
     box.setAttribute("aria-hidden", "true");
     var below = el("span", "kv-swatch-before");
-    below.style.background = paint(step.before) || "var(--dye-cloth)";
+    below.style.background = paintOf(step.before) || "var(--dye-cloth)";
     var over = el("span", "kv-swatch-after");
     over.style.background = after;
     box.appendChild(below);
