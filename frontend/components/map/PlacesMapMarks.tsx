@@ -3,7 +3,7 @@ import { HALO_WIDTH, LABEL_SIZE } from "@/components/map/MapCanvas";
 import { ringRadii } from "@/components/map/mapDistance";
 import { RotatedLabel } from "@/components/map/physical/RotatedLabel";
 import { project, type Projected } from "@/components/map/projection";
-import { placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
+import { largestValue, placeRadius, type MapPlace } from "@/lib/componentSpecsGeneral";
 import type { MapRingSpec, MapRouteSpec, ShownMarks } from "@/lib/componentSpecsMapLayer";
 import { formatNumber } from "@/lib/measure";
 
@@ -19,7 +19,7 @@ export type ValueMark = { lgd: number; x: number; y: number; text: string };
 const TEXT_STYLE = { fontSize: LABEL_SIZE, strokeWidth: HALO_WIDTH };
 
 export function placedPins(places: readonly MapPlace[], scale: number): PlacedPin[] {
-  const largest = Math.max(0, ...places.map((place) => place.value ?? 0));
+  const largest = largestValue(places);
   return places.map((place) => ({ ...project(place.longitude, place.latitude), r: Math.max(PIN_MIN, placeRadius(place.value, largest)) * scale }));
 }
 

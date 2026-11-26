@@ -5,10 +5,12 @@ import { expect, test } from "@playwright/test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { TimelinePins } from "@/components/answer/journey/TimelinePins";
 import { nearBlocksLoaded } from "@/components/answer/nearBlock";
 import type { NeighbourFile } from "@/components/map/basemap";
 import { KM_PER_DEGREE_LATITUDE, ringRadii, SCALE_SHARE, SCALE_STEPS, scaleBar } from "@/components/map/mapDistance";
 import { framedPoints, mapLayerFrame } from "@/components/map/mapLayerFrame";
+import { placesFrame } from "@/components/map/placesFrame";
 import { stillLayers, type StillFiles } from "@/components/map/mapStillCut";
 import { indiaOutlinePath, project } from "@/components/map/projection";
 import type { ShapesFile } from "@/components/map/shapeGeometry";
@@ -23,7 +25,7 @@ import { parsedMapLayer } from "@/lib/regionView";
 import { placesMaps, placesStilledDocument, stillOfPlaces } from "@/lib/server/mapStills";
 import { parseShape } from "@/lib/shape";
 
-import { attribute, shownText } from "./explainerRender";
+import { attribute, shownText, withApp } from "./explainerRender";
 import { primitivesPage } from "./primitivesPage";
 
 test.beforeAll(() => nearBlocksLoaded());
@@ -57,7 +59,10 @@ const TEXTS: Record<string, string> = {
   u0011: "Printers moved from Sanganer to Bagru.",
   u0012: "The printers worked within 20 km of Sanganer.",
   u0013: "Sanganer and Jaipur were the first centres.",
-  u0014: "The printers then moved out to Bagru."
+  u0014: "The printers then moved out to Bagru.",
+  u0015: "Rain a year, mm",
+  u0016: "Jaipur district receives 650 mm of rain a year.",
+  u0017: "The district to the west receives 410 mm of rain a year."
 };
 const SANGANERI = {
   head: { title: "u0001", caption: "u0002" },
@@ -79,7 +84,7 @@ const PARTS = {
   ]
 };
 const SHIM = [
-  ".absolute{position:absolute}.relative{position:relative}.block{display:block}.h-auto{height:auto}.w-full{width:100%}",
+  "figure{margin:0}.absolute{position:absolute}.relative{position:relative}.block{display:block}.h-auto{height:auto}.w-full{width:100%}",
   ".end-2{inset-inline-end:.5rem}.top-2{top:.5rem}.w-\\[22\\%\\]{width:22%}.min-w-16{min-width:4rem}.max-w-28{max-width:7rem}.p-1{padding:.25rem}",
   ".bg-raised{background:var(--raised)}.border{border:1px solid var(--rule)}.rounded-plate{border-radius:2px}.pointer-events-none{pointer-events:none}",
   ".font-ui{font-family:var(--font-ui)}.font-reading{font-family:var(--font-reading)}.italic{font-style:italic}.font-medium{font-weight:500}.font-semibold{font-weight:600}",
@@ -153,13 +158,25 @@ test("a route, a ring and a sequence are drawn only from the spec's own places, 
   expect(html).toContain(">20 km</text>");
   expect(attribute(html, "map-step", "aria-pressed")).toEqual(["false", "true"]);
   expect(attribute(html, "places-map-figure", "data-step")).toEqual(["1"]);
-  expect(html).toContain(TEXTS.u0014);
+  for (const ref of ["u0011", "u0012", "u0013", "u0014"]) expect(html).toContain(TEXTS[ref]);
+  expect(html.match(/<li[^>]*aria-current="step"/g)).toHaveLength(3);
   expect(html).toContain("<span>Play</span>");
   expect(html.match(/data-current=""/g)).toHaveLength(2);
   for (const wrong of [{ routes: [{ start: 0, end: 2, text: "moved to Bagru" }] }, { rings: [{ place: 0, radiusKm: 0, text: "u0012" }] }, { sequence: [PARTS.sequence[0]] }]) {
     expect(parsedSpec(mapLayerSpecShape, { ...PARTS, ...wrong })).toBeNull();
     expect(drawn({ ...PARTS, ...wrong })).not.toContain('data-testid="places-map"');
   }
+});
+
+test("district values fill their districts by class, print each value at its centre and list each cited reading by rank", () => {
+  const values = [{ district: 110, value: 410, reading: "u0017" }, { district: JAIPUR, value: 650, reading: "u0016" }];
+  const html = shownText(drawn(stilled({ ...SANGANERI, districts: { valueLabel: "u0015", values } })));
+  expect(html).toContain('data-testid="still-valued"');
+  expect([...html.matchAll(/data-testid="still-valued"[\s\S]*?<\/g>/g)][0]?.[0].match(/data-lgd="(\d+)"/g)).toEqual(['data-lgd="110"', `data-lgd="${JAIPUR}"`]);
+  for (const value of ["410", "650"]) expect(html).toContain(`>${value}</text>`);
+  const listed = html.split('data-testid="map-district-list"')[1] ?? "";
+  expect(listed.indexOf(TEXTS.u0016)).toBeLessThan(listed.indexOf(TEXTS.u0017));
+  expect(listed).toContain(TEXTS.u0015);
 });
 
 test("a sequence reveals its steps' marks in order, and a mark no step names is shown throughout", () => {
@@ -194,6 +211,17 @@ test("district values are classed by hand-countable groups and their ring and sc
   expect(bar.length / frame.width).toBeGreaterThan(SCALE_SHARE / 3);
 });
 
+test("a declared timeline map's frame carries the scale bar and the India locator, and an answer's whole-India map neither", () => {
+  const placed = [{ index: 0, name: "Bidar", wikidataId: null, latitude: 17.9, longitude: 77.55, pin: 1, beyond: false }];
+  const pins = (parts: { frame?: ReturnType<typeof placesFrame> }) => withApp(createElement(TimelinePins, { placed, reached: new Set([0]), routes: [], boundary: null, parts }));
+  const framed = pins({ frame: placesFrame(placed) });
+  expect(framed).toContain('data-testid="map-scale"');
+  expect(framed).toContain('data-testid="india-locator-frame"');
+  const whole = pins({});
+  expect(whole).not.toContain('data-testid="map-scale"');
+  expect(whole).not.toContain('data-testid="india-locator"');
+});
+
 test("the server's pass gives a declared places map its still, replaces one a spec brings and leaves an authored map alone", () => {
   const fixture = parseKindFixtures({ fixtures: [read<unknown>(REPO, "backend", "app", "data", "kind_fixtures", "map_layer.json")] })[0];
   const document = kindPreviewDocument([fixture]);
@@ -209,15 +237,20 @@ test("the server's pass gives a declared places map its still, replaces one a sp
   expect(placesMaps(authored)).toEqual([]);
 });
 
-test("at 390 and 1440 the map fills its column, nothing scrolls sideways, and the renderer's still is kept for the comparison", async ({ page }, testInfo) => {
+test("at 390 and 1440 the map fills its column and stays inside it, and the renderer's still is kept for the comparison", async ({ page }, testInfo) => {
   const shown = { sanganeri: drawn(stilled(SANGANERI)), parts: drawn(stilled(PARTS)) };
   for (const [viewport, column] of [[390, 358], [1440, 718]] as const) {
     await page.setViewportSize({ width: viewport, height: 1200 });
     for (const [name, html] of Object.entries(shown)) {
-      await page.setContent(primitivesPage(`<style>${SHIM}</style><main id="column" style="width:${column}px;padding:0">${html}</main>`));
-      const sizes = await page.evaluate(() => ({ map: document.querySelector('[data-testid="general-map"]')?.getBoundingClientRect().width ?? 0, page: document.documentElement.scrollWidth }));
-      expect(sizes.map, `${name} at ${viewport}`).toBeGreaterThan(column * 0.5);
-      expect(sizes.page, `${name} at ${viewport}`).toBeLessThanOrEqual(viewport);
+      await page.setContent(primitivesPage(`<style>${SHIM}</style><main id="column" style="width:${column}px;margin:0 16px">${html}</main>`));
+      const sizes = await page.evaluate(() => {
+        const map = document.querySelector('[data-testid="general-map"]')?.getBoundingClientRect();
+        const locator = document.querySelector('[data-testid="india-locator"]')?.getBoundingClientRect();
+        return { width: map?.width ?? 0, right: map?.right ?? 0, inset: locator ? locator.right <= (map?.right ?? 0) && locator.top >= (map?.top ?? 0) : false };
+      });
+      expect(sizes.width, `${name} at ${viewport}`).toBeGreaterThan(column * 0.9);
+      expect(sizes.right, `${name} at ${viewport}`).toBeLessThanOrEqual(16 + column + 1);
+      expect(sizes.inset, `${name} at ${viewport}`).toBe(true);
       await page.locator('[data-testid="places-map"]').screenshot({ path: testInfo.outputPath(`places-map-${viewport}-${name}.png`) });
     }
   }

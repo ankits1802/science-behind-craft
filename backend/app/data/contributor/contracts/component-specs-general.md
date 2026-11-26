@@ -227,7 +227,7 @@ rest, from the data the site holds. A spec of the old shape (`head`, `places`, `
 **The base**, for the map's frame: the relief bands of `relief.json` with their hillshade once the
 file lands, the rivers and lakes of `rivers.json` (Natural Earth, named from the file's own labels),
 the Survey of India outline (always drawn, with and without a still), neighbouring land, state lines
-and district lines, water and the Rann's salt flats in the design's map tokens, the page's home
+and, in a frame of at most 35 per cent of India's width (`DISTRICT_LINES_SHARE`), district lines, water and the Rann's salt flats in the design's map tokens, the page's home
 districts in the place hatch (every `place:lgd:<code>` subject of the component), place names with
 halos, a scale bar of a round number of kilometres at the frame's middle latitude, the India
 locator with the frame marked, and a key (the elevation and river keys, the home hatch, the salt
@@ -288,6 +288,11 @@ boundary note read from `/map/layers` (`boundary`). The view draws it at first p
 tokens; the hillshade and the river and range labels arrive with their files. Sanganeri's map's
 still is under 40 KB.
 
+**Every sentence on the page.** Beside the map, the numbered places with their readings, each
+route's and ring's sentence under its label ("Move", "Within 20 km") and the district readings by
+rank under the value label; under the map, every step's sentence with its number to press, the
+shown step marked by the 2 px ink rule and `aria-current="step"`, as are the places it shows.
+
 **Motion.** A sequence rests on its last step, with every mark shown. Where neither reduced-motion
 switch is on, it plays from its first step once when it comes into view, a step every four seconds,
 and stops on its last; Play plays it again, Pause stops it, and pressing a step's number jumps to
@@ -341,8 +346,9 @@ undated facts, pins on `IndiaMap` with keyboard pin controls, routes in terracot
 India in the abroad inset. The map is framed to the places (`components/map/placesFrame.ts`, pins
 and labels sized to the frame), the layers come from `components/map/TimelineMapLayers.tsx` (the
 physical layers' own drawings and keys, a district layer's fills and legend) with the home
-districts in the place hatch, and the source line gives the boundary note and every layer's
-dataset credit at first paint.
+districts in the place hatch, a scale bar and the India locator with the frame marked (decision
+0232, `components/map/MapScale.tsx` in `TimelinePins` whenever a frame is given), and the source
+line gives the boundary note and every layer's dataset credit at first paint.
 
 **The still** (decision 0220). When the site's web server reads a page
 (`lib/server/mapStills.withMapStills`, run by `lib/monographRenderServer.documentRead`, the preview

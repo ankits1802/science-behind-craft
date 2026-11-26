@@ -59,8 +59,7 @@ const STILL_SOURCES = [
   "public/layers/relief.json",
   "public/layers/rivers.json",
   "public/layers/minerals.json",
-  "public/boundaries/district-shapes.json",
-  "public/boundaries/neighbours.json"
+  "public/boundaries/district-shapes.json"
 ];
 const CRAFT_ROUTE = ["app/layout.tsx", "app/(reading)/layout.tsx", "app/(reading)/crafts/[slug]/page.tsx"];
 const REST_CHUNKS = ["components/monograph/DeferredShell.tsx", "components/monograph/DeferredDocument.tsx"];

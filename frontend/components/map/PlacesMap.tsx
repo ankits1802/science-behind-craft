@@ -12,7 +12,7 @@ import { choroplethColour, choroplethTone, MapLegend, placeExtra, SALT_EXTRA } f
 import { DistrictFills } from "@/components/map/DistrictLayer";
 import { IndiaLocator, LOCATOR_INSET, locatorLabel } from "@/components/map/IndiaLocator";
 import { IndiaMapBase } from "@/components/map/IndiaMap";
-import type { MapLayerDrawn } from "@/components/map/mapLayerFrame";
+import { showsDistrictLines, type MapLayerDrawn } from "@/components/map/mapLayerFrame";
 import { StillLines, StillNeighbours, StillValued } from "@/components/map/MapStillLayers";
 import { MapScale } from "@/components/map/MapScale";
 import { MapRings, MapRoutes, PlacePins, placedPins, ValueLabels, type ValueMark } from "@/components/map/PlacesMapMarks";
@@ -43,9 +43,9 @@ export function holdsSalt(frame: MapBox): boolean {
   return false;
 }
 
-function DistrictLinesOrStill({ still }: { still: MapStill | null }) {
+function DistrictLinesOrStill({ still, frame }: { still: MapStill | null; frame: MapBox }) {
   const load = useCallback(() => loadBorders("district").then(bordersToPath), []);
-  const loaded = useRemote(still?.lines ? null : load).data;
+  const loaded = useRemote(still?.lines || !showsDistrictLines(frame) ? null : load).data;
   if (still?.lines) return <StillLines still={still} d={still.lines} />;
   return loaded ? <path d={loaded} fill="none" stroke="var(--map-border-district)" strokeWidth={0.6} strokeLinejoin="round" vectorEffect="non-scaling-stroke" className="pointer-events-none" data-testid="map-district-lines" /> : null;
 }
@@ -119,7 +119,7 @@ export function PlacesMap({ spec, drawn, marks, labelledBy, nameOf, renderUnit }
       {still?.neighbours ? <StillNeighbours still={still} d={still.neighbours} /> : null}
       {layers.parts.relief}
       {marks.districts ? values.fills : null}
-      <DistrictLinesOrStill still={still} />
+      <DistrictLinesOrStill still={still} frame={frame} />
       {layers.parts.rivers}
       {layers.parts.home}
     </>

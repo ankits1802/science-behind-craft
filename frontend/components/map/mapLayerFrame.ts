@@ -1,5 +1,6 @@
 import type { MapBox } from "@/components/map/basemap";
 import { ringCorners } from "@/components/map/mapDistance";
+import { WHOLE_MAP } from "@/components/map/layout";
 import { placesFrame, type FramedPoint, type FrameZoom } from "@/components/map/placesFrame";
 import { sameBox, type LayerNames, type MapStill } from "@/components/map/timelineMapStill";
 import type { MapLayerSpec } from "@/lib/componentSpecsGeneral";
@@ -8,8 +9,13 @@ import { namedFrameKey } from "@/lib/componentSpecsMapLayer";
 export const MAP_LAYER_ZOOM: FrameZoom = { minShare: 0.08, paddingShare: 0.3 };
 export const NAMED_ZOOM: FrameZoom = { minShare: 0.08, paddingShare: 0.06 };
 export const BASE_LAYERS: readonly string[] = ["relief", "rivers"];
+export const DISTRICT_LINES_SHARE = 0.35;
 
 export type MapLayerDrawn = { frame: MapBox; names: LayerNames; still: MapStill | null };
+
+export function showsDistrictLines(frame: MapBox): boolean {
+  return frame.width <= WHOLE_MAP.width * DISTRICT_LINES_SHARE;
+}
 
 export function framedPoints(spec: MapLayerSpec): FramedPoint[] {
   const chosen = spec.frame?.places ?? spec.places.map((_, at) => at);

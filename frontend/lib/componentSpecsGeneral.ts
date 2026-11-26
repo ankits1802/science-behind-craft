@@ -150,6 +150,10 @@ export function eraYear(year: number): string {
   return year < 0 ? `${-year} BCE` : String(year);
 }
 
+export function largestValue(places: readonly MapPlace[]): number {
+  return Math.max(0, ...places.map((place) => place.value ?? 0));
+}
+
 export function placeRadius(value: number | null, largest: number): number {
   if (value === null || largest <= 0) return MARK_RADIUS;
   return MARK_RADIUS + (MARK_RADIUS_MAX - MARK_RADIUS) * Math.sqrt(Math.max(0, value) / largest);

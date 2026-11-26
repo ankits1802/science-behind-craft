@@ -10,14 +10,13 @@ import { mapLayerSpecShape, parsedSpec, type MapLayerSpec, type MapPlace } from 
 import { homeDistrictsOf, shownMarks, type ShownMarks } from "@/lib/componentSpecsMapLayer";
 import { cn } from "@/lib/utils";
 
+import { DistrictList, MarkNotes } from "./MapLayerNotes";
 import { MapSequence } from "./MapSequence";
 import { useMapSequence } from "./useMapSequence";
 
 const NO_TEXT = () => "";
 
-export function largestValue(places: readonly MapPlace[]): number {
-  return Math.max(0, ...places.map((place) => place.value ?? 0));
-}
+export { largestValue } from "@/lib/componentSpecsGeneral";
 
 function PlaceList({ places, valueLabel, marks, renderUnit }: { places: MapPlace[]; valueLabel: string | null; marks: ShownMarks; renderUnit: RenderUnit }) {
   return (
@@ -47,9 +46,13 @@ function PlacedLayer({ layer, home, labelledBy, renderUnit, nameOf }: { layer: M
     <div ref={watch} className="grid gap-5 md:grid-cols-[minmax(0,1.5fr)_minmax(15rem,1fr)] md:items-start" data-testid="places-map-figure" data-step={steps.length ? at : undefined}>
       <div className="grid min-w-0 gap-3">
         <PlacesMap spec={layer} drawn={drawn} marks={marks} labelledBy={labelledBy} nameOf={nameOf} renderUnit={renderUnit} />
-        {steps.length > 1 ? <MapSequence steps={steps} play={{ at, playing, choose, toggle }} renderUnit={renderUnit} nameOf={nameOf} /> : null}
+        {steps.length > 1 ? <MapSequence steps={steps} play={{ at, playing, choose, toggle }} renderUnit={renderUnit} /> : null}
       </div>
-      <PlaceList places={layer.places} valueLabel={layer.valueLabel} marks={marks} renderUnit={renderUnit} />
+      <div className="grid min-w-0 content-start gap-4">
+        <PlaceList places={layer.places} valueLabel={layer.valueLabel} marks={marks} renderUnit={renderUnit} />
+        <MarkNotes layer={layer} renderUnit={renderUnit} />
+        <DistrictList layer={layer} renderUnit={renderUnit} />
+      </div>
     </div>
   );
 }

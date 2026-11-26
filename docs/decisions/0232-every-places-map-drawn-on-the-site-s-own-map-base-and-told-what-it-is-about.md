@@ -52,10 +52,13 @@ layer credits and the boundary note). The contract is `docs/contracts/component-
 1. **One base under every places map.** `components/map/PlacesMap.tsx` draws a declared
    `map_layer` on `IndiaMapBase` for its frame, with the timeline map's own layers
    (`useTimelineMapLayers`: relief and rivers always, the home districts from the component's
-   `place:lgd:<code>` subjects), district lines, neighbouring land, the place pins with their names
-   beside them in the map label and halo tokens, a scale bar of a round number of kilometres at the
-   frame's middle latitude (`mapLayerFrame.scaleBar`), the India locator with the frame marked, a
-   key and the source line with the boundary note and each layer's dataset credit. The frame is cut
+   `place:lgd:<code>` subjects), district lines when the frame is zoomed in, neighbouring land, the
+   place pins with their names beside them in the map label and halo tokens, a scale bar of a round
+   number of kilometres at the frame's middle latitude (`mapDistance.scaleBar`, `MapScale.tsx`),
+   the India locator with the frame marked, a key and the source line with the boundary note and
+   each layer's dataset credit. Every cited sentence stays on the page: the places' readings, each
+   route's and ring's sentence and the district readings by rank beside the map, every step's
+   sentence under it. The frame is cut
    to the places at a tighter zoom than the timeline map's (`MAP_LAYER_ZOOM`, at least 8 per cent
    of India's width, about 2.4 degrees), so a craft's town and its neighbours fill the map.
 2. **The agent says what the map is about.** `MapParts` (`backend/app/research/component_specs_map_parts.py`)
@@ -98,8 +101,9 @@ layer credits and the boundary note). The contract is `docs/contracts/component-
   relief is ETOPO1's one arc-minute bands. A dam, a dry river and a caravan route along a road are
   drawn by Kutch Ajrakh's shell from OpenStreetMap and are not parts a spec can ask for. The
   declared timeline map keeps its own view (`TimelineMapDeclaredView`, owned by the players lane
-  this round) and draws relief and rivers only when it names them; its scale bar and locator are
-  left to that view. The map sequence uses the reaction player's playback rather than the timeline
+  this round) and draws relief and rivers only when it names them, as its stored dataset credits
+  cover only the layers it names; it gains the scale bar and the India locator through the
+  answers' `TimelinePins`, which draws them whenever a view gives it a frame. The map sequence uses the reaction player's playback rather than the timeline
   play the players lane adds this round; the two are to be joined once both are merged.
 
 ## How this record is kept true

@@ -12,7 +12,6 @@ from app.research.component_specs_general_delivery import DeliveredUnit, spec_pr
 from app.services.map_layer_places import held_map_problems
 
 FACT = uuid.UUID("5e000000-0000-4000-8000-000000000003")
-CITED = [str(FACT)]
 JAIPUR = 102
 RAJASTHAN = 8
 CONTRACT = (

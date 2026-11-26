@@ -1,6 +1,6 @@
 import { decodeRings, type MapBox, type NeighbourFile } from "@/components/map/basemap";
 import { decodePolyline, indiaRings, type Ring } from "@/components/map/indiaGeometry";
-import { NAMED_ZOOM } from "@/components/map/mapLayerFrame";
+import { NAMED_ZOOM, showsDistrictLines } from "@/components/map/mapLayerFrame";
 import { projectedFrame } from "@/components/map/placesFrame";
 import { project, type Projected } from "@/components/map/projection";
 import { decodeRing } from "@/components/map/shapeGeometry";
@@ -81,7 +81,7 @@ function valuedDistricts(layers: StillLayers, valued: readonly number[], cut: St
 }
 
 function baseParts(layers: StillLayers, names: LayerNames, cut: StillCut): Partial<StillGeometry> {
-  const districts = [...layers.homes.values()].flat();
+  const districts = showsDistrictLines(cut.box) ? [...layers.homes.values()].flat() : [];
   return {
     lines: cutLines(districts, cut) || null,
     neighbours: cutRings(layers.neighbours, cut) || null,
