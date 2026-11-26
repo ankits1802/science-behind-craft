@@ -19,6 +19,7 @@ colour, type and motion choices of decisions 0019, 0021 and 0048; their behaviou
 | What built on it | [0094 The design primitives: one citation cluster, one motion owner, the editorial folder](0094-design-primitives.md): its components, SYSTEM.md section 3 |
 | The chart title and the landing label follow the tokens on the boards, and an odd hub shelf follows the atlas shelf | [decision 0145](0145-monograph-pages-and-speed-without-debt.md) |
 | Players, molecules and timelines that play on their own in view, at the owner's instruction (amends this record) | [decision 0228](0228-players-molecules-and-timelines-that-play-and-a-reaction-s-species-drawn-from-the-kit.md) |
+| The answer's VatFigure plays in view and loops, with one Play/Pause in place of Dip again, at the owner's instruction (amends this record) | [decision 0242](0242-every-moving-figure-plays-the-vat-the-zoom-the-river-a-map-s-sequence-and-a-stored-explainer.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

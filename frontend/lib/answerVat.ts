@@ -1,7 +1,7 @@
 import { factsOnce, type SaidFact } from "@/lib/answerSignature";
 import type { ExplainerSentence } from "@/lib/explainerBlockBase";
 import type { IndigoVatBlock, VatDip } from "@/lib/explainerSignature";
-import type { VatPhase } from "@/lib/motion";
+import type { VatPhase, VatTimings } from "@/lib/motion";
 import { onceSaid } from "@/lib/sentenceGroups";
 
 export type Atoms = ReadonlyMap<string, number>;
@@ -104,8 +104,29 @@ export function vatText(block: IndigoVatBlock): VatText {
   return { dek, frames, facts };
 }
 
-export function currentFrame(phase: VatPhase): VatFrame["key"] {
-  return phase === "rest" ? "air" : phase;
+export type VatShown = { dip: number; frame: VatFrame["key"] };
+
+export const VAT_FRAMES: readonly VatFrame["key"][] = ["in", "lifted", "air"];
+export const VAT_BEATS = VAT_DIPS * VAT_FRAMES.length;
+export const VAT_REST = VAT_FRAMES.length - 1;
+
+const FRAME_MOTION: Record<VatFrame["key"], keyof VatTimings> = { in: "dip", lifted: "hold", air: "oxidise" };
+
+function beatIndex(at: number): number {
+  return Math.min(Math.max(0, Math.trunc(at)), VAT_BEATS - 1);
+}
+
+export function vatShown(at: number): VatShown {
+  const index = beatIndex(at);
+  return { dip: Math.floor(index / VAT_FRAMES.length) + 1, frame: VAT_FRAMES[index % VAT_FRAMES.length] };
+}
+
+export function vatFrameAt(dip: number, frame: number): number {
+  return beatIndex((dip - 1) * VAT_FRAMES.length + frame);
+}
+
+export function vatBeat(at: number, timings: VatTimings): number {
+  return timings[FRAME_MOTION[vatShown(at).frame]] + timings.hold;
 }
 
 const PHASE_WORDS: Record<VatPhase, string> = {
@@ -117,10 +138,6 @@ const PHASE_WORDS: Record<VatPhase, string> = {
 
 export function dipStatus(dip: number, phase: VatPhase): string {
   return `Dip ${dip} of ${VAT_DIPS}. ${PHASE_WORDS[phase]}`;
-}
-
-export function nextDip(dip: number): number {
-  return dip >= VAT_DIPS ? 1 : dip + 1;
 }
 
 export function pubchemHref(cid: number): string {

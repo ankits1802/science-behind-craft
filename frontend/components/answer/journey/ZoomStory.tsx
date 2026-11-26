@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import { useRef } from "react";
+import { ChevronRight } from "lucide-react";
 
 import { useFilmScene } from "@/components/answer/FilmScene";
 import { ZoomLevelView } from "@/components/answer/journey/ZoomLevelView";
 import { useAppReducedMotion } from "@/components/guide/useAppReducedMotion";
-import { ActionGroup } from "@/components/ui/ActionGroup";
-import { Button } from "@/components/ui/button";
+import { usePlayInView, type PlayInView } from "@/components/motion/usePlayInView";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
+import { StepStack } from "@/components/ui/StepStack";
 import type { ZoomStoryBlock } from "@/lib/explainerPlay";
 import { stepAt } from "@/lib/filmScenes";
-import { ZOOM_LEVEL_LABEL, zoomSummary } from "@/lib/zoomView";
+import { ZOOM_LEVEL_LABEL, zoomBeat, zoomStatus, zoomSummary } from "@/lib/zoomView";
 
 type Choose = ((index: number) => void) | null;
 
@@ -38,21 +39,6 @@ function ZoomRail({ block, at, onChoose }: { block: ZoomStoryBlock; at: number; 
   );
 }
 
-function ZoomSteps({ at, count, onChoose }: { at: number; count: number; onChoose: (index: number) => void }) {
-  return (
-    <ActionGroup align="start">
-      <Button variant="quiet" size="sm" disabled={at === 0} onClick={() => onChoose(at - 1)}>
-        <ZoomOut className="h-4 w-4" aria-hidden />
-        Zoom out
-      </Button>
-      <Button variant="quiet" size="sm" disabled={at >= count - 1} onClick={() => onChoose(at + 1)}>
-        <ZoomIn className="h-4 w-4" aria-hidden />
-        Zoom in
-      </Button>
-    </ActionGroup>
-  );
-}
-
 function ZoomList({ block }: { block: ZoomStoryBlock }) {
   return (
     <ol className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8" aria-label="Zoom levels" data-testid="zoom-list">
@@ -65,8 +51,13 @@ function ZoomList({ block }: { block: ZoomStoryBlock }) {
   );
 }
 
-export function ZoomStoryView({ block, reduce, at, onChoose }: { block: ZoomStoryBlock; reduce: boolean; at: number; onChoose: Choose }) {
-  const shown = Math.min(Math.max(0, at), block.levels.length - 1);
+function ZoomStage({ block, at }: { block: ZoomStoryBlock; at: number }) {
+  const steps = block.levels.map((level, index) => ({ key: level.level, node: <ZoomLevelView block={block} index={index} moving /> }));
+  return <StepStack steps={steps} at={at} testId="zoom-stage" />;
+}
+
+export function ZoomStoryView({ block, reduce, play, filmed }: { block: ZoomStoryBlock; reduce: boolean; play: PlayInView; filmed: boolean }) {
+  const shown = Math.min(Math.max(0, play.at), block.levels.length - 1);
   if (reduce) {
     return (
       <div className="min-w-0" data-testid="zoom-story" data-motion="none" data-level="all" role="group" aria-label={zoomSummary(block)}>
@@ -75,12 +66,15 @@ export function ZoomStoryView({ block, reduce, at, onChoose }: { block: ZoomStor
     );
   }
   return (
-    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4" data-testid="zoom-story" data-motion="zoom" data-level={block.levels[shown].level} role="group" aria-label={zoomSummary(block)}>
-      <ZoomRail block={block} at={shown} onChoose={onChoose} />
-      <div className="min-w-0" aria-live="polite">
-        <ZoomLevelView key={block.levels[shown].level} block={block} index={shown} moving />
+    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4" data-testid="zoom-story" data-motion="zoom" data-level={block.levels[shown].level} data-plays="view" role="group" aria-label={zoomSummary(block)}>
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+        <ZoomRail block={block} at={shown} onChoose={filmed ? null : play.choose} />
+        {filmed ? null : <PlayPauseButton playing={play.playing} motion={play.motion} onToggle={play.toggle} testId="zoom-play" />}
       </div>
-      {onChoose ? <ZoomSteps at={shown} count={block.levels.length} onChoose={onChoose} /> : null}
+      <ZoomStage block={block} at={shown} />
+      <p className="sr-only" role="status" aria-live={play.playing ? "off" : "polite"}>
+        {zoomStatus(block, shown)}
+      </p>
     </div>
   );
 }
@@ -88,7 +82,13 @@ export function ZoomStoryView({ block, reduce, at, onChoose }: { block: ZoomStor
 export function ZoomStory({ block }: { block: ZoomStoryBlock }) {
   const reduce = useAppReducedMotion();
   const film = useFilmScene();
-  const [chosen, setChosen] = useState(0);
-  const at = film ? stepAt(film.progress, block.levels.length) : chosen;
-  return <ZoomStoryView block={block} reduce={reduce} at={at} onChoose={film ? null : setChosen} />;
+  const watched = useRef<HTMLDivElement | null>(null);
+  const count = block.levels.length;
+  const play = usePlayInView(count, 0, watched, zoomBeat);
+  const at = film ? stepAt(film.progress, count) : play.at;
+  return (
+    <div ref={film ? undefined : watched} className="min-w-0">
+      <ZoomStoryView block={block} reduce={reduce} play={{ ...play, at }} filmed={film !== null} />
+    </div>
+  );
 }

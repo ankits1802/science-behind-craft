@@ -13,6 +13,7 @@ Date: 2026-11-17. Status: accepted.
 | The review that fixed it | [0050 Phase B review fixes](0050-phase-b-review-fixes.md) |
 | The contracts it names | [region.md](../contracts/region.md) |
 | What amended it | [0153 Rivers are named from Wikidata then OpenStreetMap, groundwater comes from the India data portal, a region place shows its headline values, and the geo ETL fails every gap it can see](0153-rivers-named-groundwater-loaded-and-region-values-chosen.md): a district's stretch from the basin file's reach districts |
+| The river story's water plays its reaches once in view, with one Play/Pause and a step to press (amends this record) | [decision 0242](0242-every-moving-figure-plays-the-vat-the-zoom-the-river-a-map-s-sequence-and-a-stored-explainer.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

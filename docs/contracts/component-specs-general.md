@@ -298,9 +298,12 @@ rank under the value label; under the map, every step's sentence with its number
 shown step marked by the 2 px ink rule and `aria-current="step"`, as are the places it shows.
 
 **Motion.** A sequence rests on its last step, with every mark shown. Where neither reduced-motion
-switch is on, it plays from its first step once when it comes into view, a step every four seconds,
-and stops on its last; Play plays it again, Pause stops it, and pressing a step's number jumps to
-it. Under either switch nothing moves and Play steps forward one state at a time.
+switch is on, it plays from its first step when it comes into view, a step every four seconds, and
+loops back to its first after its last, pausing out of view; one Play/Pause (`aria-pressed`) reads
+Pause while it plays, its status names the step (`aria-live="off"` while it plays), and pressing a
+step's number shows it at once and playing goes on from it (decision 0242: `useMapSequence` is the
+shared `usePlayInView`). Under either switch nothing moves and Play steps forward one state at a
+time.
 
 ## The declared timeline map (decision 0196)
 

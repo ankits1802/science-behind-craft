@@ -33,6 +33,7 @@ map) and `docs/contracts/mcp-ask-and-upload.md` (`AskedAnswer` and the answer vi
 | The timeline map and film mode | [decision 0060](0060-zoom-timeline-and-film-renderers.md) |
 | An answer's kit figure | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md) |
 | The design system's motion rules and the two switches | [decision 0092](0092-design-system.md) and the kalavigyan-design skill, section 6 |
+| The vat figure, the zoom and river stories, a places map's sequence and a stored explainer play too, and the MCP answer view places its timeline by year (amends this record) | [decision 0242](0242-every-moving-figure-plays-the-vat-the-zoom-the-river-a-map-s-sequence-and-a-stored-explainer.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -1,5 +1,6 @@
 import type { RegionStoryBlock, StoryStep } from "@/lib/explainerPlace";
 import { listText, numberRuns } from "@/lib/format";
+import { nextStop } from "@/lib/playInView";
 import { cumulativeLengths, joinLines, lineLength, orientDownstream, type Framing, type Point } from "@/lib/riverGeometry";
 import type { ReachDistrict } from "@/lib/riverTopology";
 
@@ -8,6 +9,10 @@ export const FLOW_EASE = [0.45, 0, 0.2, 1] as const;
 export const STORY_FRAMING: Framing = { aspect: 4 / 3, minSpan: 120, padding: 0.1 };
 export const NOT_YET = -1;
 export const ALL_PASSED = 1;
+export const STOP_HOLD_MS = 2400;
+export const ALL_REACHED = "The water has reached every district in the story.";
+
+const MS_PER_SECOND = 1000;
 
 export type Rings = readonly (readonly Point[])[];
 export type CourseReach = { line: readonly Point[]; districts: readonly ReachDistrict[] | null };
@@ -80,13 +85,39 @@ export function passedFraction(thresholds: readonly number[], value: number): nu
   return passed;
 }
 
-export function playingStep(fractions: readonly number[], passed: number): number | null {
-  if (passed < 0 || passed >= ALL_PASSED) return null;
-  let found: number | null = null;
-  fractions.forEach((fraction, index) => {
-    if (fraction <= passed && (found === null || fraction > fractions[found])) found = index;
+export function storyStops(steps: readonly StoryStep[], entries: ReadonlyMap<number, number>): number[] {
+  let reached = 0;
+  const stops = steps.map((step) => {
+    const entry = step.districtLgd === null ? undefined : entries.get(step.districtLgd);
+    if (entry !== undefined) reached = Math.max(reached, entry);
+    return reached;
   });
-  return found;
+  return [...stops, ALL_PASSED];
+}
+
+export function flowSeconds(from: number, to: number): number {
+  return Math.max(0, to - from) * FLOW_SECONDS;
+}
+
+export function stopBeat(stops: readonly number[], at: number): number {
+  const from = at > 0 ? (stops[at - 1] ?? 0) : 0;
+  return flowSeconds(from, stops[at] ?? ALL_PASSED) * MS_PER_SECOND + STOP_HOLD_MS;
+}
+
+export function flowsOn(previous: number | null, at: number, count: number, playing: boolean): boolean {
+  return playing && previous !== null && previous !== at && at === nextStop(previous, count);
+}
+
+export function flowStart(current: number, target: number): number {
+  return target < current ? 0 : current;
+}
+
+export function storyStatus(block: RegionStoryBlock, at: number): string {
+  const step = block.steps[at];
+  if (!step) return ALL_REACHED;
+  const place = districtLine(block, step.districtLgd);
+  const position = `Step ${at + 1} of ${block.steps.length}`;
+  return place ? `${position}: ${place}` : position;
 }
 
 export function stepBadges(steps: readonly StoryStep[]): StepBadge[] {

@@ -20,9 +20,9 @@ import { blockSentences, blockSourceIds, explainerSourceNumbers } from "@/lib/ex
 import { sceneStep, stepAt } from "@/lib/filmScenes";
 import { parseShape } from "@/lib/shape";
 import { entryState, placedPlaces, timelineEntries, timelineStops, yearSpanText } from "@/lib/timelineView";
-import { zoomSummary } from "@/lib/zoomView";
+import { ZOOM_LEVEL_MS, zoomBeat, zoomStatus, zoomSummary } from "@/lib/zoomView";
 
-import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownText, stillPlay, withApp } from "./explainerRender";
+import { attribute, FIXED_WIDE_WIDTH, gridTracks, SHRINKABLE_TRACK, shownStackStep, shownText, stillPlay, withApp } from "./explainerRender";
 import { eagerModules } from "./moduleGraph";
 import { PHASE_C, phaseCBlock } from "./playFixture";
 
@@ -77,8 +77,12 @@ function placedTimeline(): TimelineMapBlock {
   return parseShape(BLOCK_SHAPES.timeline_map, { ...block, places });
 }
 
-function disabledButtons(html: string): string[] {
-  return [...html.matchAll(/<button[^>]*disabled=""[^>]*>(.*?)<\/button>/g)].map((found) => found[1].replace(/<[^>]+>/g, ""));
+function zoomed(at: number, playing = false, reduce = false): string {
+  return drawn(createElement(ZoomStoryView, { block: zoom(), reduce, play: stillPlay(at, playing, playing), filmed: false }));
+}
+
+function zoomPlay(html: string): string {
+  return /<button[^>]*data-testid="zoom-play"[^>]*>[\s\S]*?<\/button>/.exec(html)?.[0] ?? "";
 }
 
 function pinLabels(html: string): string[] {
@@ -121,25 +125,46 @@ test("both kinds join the answer's one numbering: sentences in the server's orde
   expect([...explainerSourceNumbers(sections).keys()]).toEqual(PHASE_C.sources.map((source) => source.id));
 });
 
-test("the zoom draws one level at a time, the district first, with a rail of every level", () => {
-  const html = drawn(createElement(ZoomStoryView, { block: zoom(), reduce: false, at: 0, onChoose: () => undefined }));
-  const shown = shownText(html);
+test("the zoom rests on the district with a rail of every level and one Play, every level stacked in one box with only the district shown", () => {
+  const html = zoomed(0);
+  const shown = shownStackStep(html, "zoom-stage");
   expect(attribute(html, "zoom-story", "data-motion")).toEqual(["zoom"]);
   expect(attribute(html, "zoom-story", "data-level")).toEqual(["DISTRICT"]);
+  expect(attribute(html, "zoom-story", "data-plays")).toEqual(["view"]);
   expect(attribute(html, "zoom-story", "aria-label")).toEqual([zoomSummary(zoom())]);
   expect(zoomSummary(zoom())).toBe("Kachchh → Ajrak Printing Materials 1 → Alizarin");
   expect(attribute(html, "zoom-rail-level", "aria-pressed")).toEqual(["true", "false", "false"]);
   expect([...html.matchAll(/data-testid="zoom-rail-level"[^>]*>([^<]+)</g)].map((found) => found[1])).toEqual(["District", "Workshop", "Molecule"]);
-  expect(attribute(html, "zoom-level", "data-level")).toEqual(["DISTRICT"]);
-  expect(html).toContain(">District · 1 of 3<");
-  expect(html).toContain(">Kachchh</h3>");
-  expect(shown).toContain("Ajrakh printing is practised at Kachchh and Barmer.");
-  expect(html).toContain('data-testid="map-placeholder"');
-  expect(disabledButtons(html)).toEqual(["Zoom out"]);
+  expect(attribute(html, "zoom-level", "data-level")).toEqual(["DISTRICT", "WORKSHOP", "MOLECULE"]);
+  expect(attribute(html, "zoom-stage", "data-at")).toEqual(["0"]);
+  expect(html.match(/aria-hidden="true" inert=""/g)).toHaveLength(2);
+  expect(attribute(shown, "zoom-level", "data-level")).toEqual(["DISTRICT"]);
+  expect(shown).toContain(">District · 1 of 3<");
+  expect(shown).toContain(">Kachchh</h3>");
+  expect(shownText(shown)).toContain("Ajrakh printing is practised at Kachchh and Barmer.");
+  expect(shown).toContain('data-testid="map-placeholder"');
+  expect(zoomPlay(html)).toContain("<span>Play</span>");
+  expect(zoomPlay(html)).not.toContain("aria-pressed");
+  expect(html).toMatch(/role="status" aria-live="polite">District · 1 of 3: Kachchh</);
+  expect(html).not.toContain(">Zoom out<");
+  expect(html).not.toContain(">Zoom in<");
+});
+
+test("playing, the zoom reads Pause, moves its rail and its stack to the level it shows and says nothing while it moves", () => {
+  const html = zoomed(1, true);
+  expect(attribute(html, "zoom-story", "data-level")).toEqual(["WORKSHOP"]);
+  expect(attribute(html, "zoom-stage", "data-at")).toEqual(["1"]);
+  expect(attribute(html, "zoom-rail-level", "aria-pressed")).toEqual(["false", "true", "false"]);
+  expect(zoomPlay(html)).toContain('aria-pressed="true"');
+  expect(zoomPlay(html)).toContain("<span>Pause</span>");
+  expect(html).toMatch(/role="status" aria-live="off">Workshop · 2 of 3: Ajrak Printing Materials 1</);
+  expect(zoomStatus(zoom(), 2)).toBe("Molecule · 3 of 3: Alizarin");
+  expect(zoomStatus(zoom(), 9)).toBe("");
+  expect(zoomBeat()).toBe(ZOOM_LEVEL_MS);
 });
 
 test("the picture level carries its open licence and author, the molecule level its 3D view and PubChem record", () => {
-  const workshop = drawn(createElement(ZoomStoryView, { block: zoom(), reduce: false, at: 1, onChoose: () => undefined }));
+  const workshop = shownStackStep(zoomed(1), "zoom-stage");
   expect(attribute(workshop, "zoom-level", "data-level")).toEqual(["WORKSHOP"]);
   expect(workshop).toContain(">Ajrak Printing Materials 1</h3>");
   expect(workshop).toContain('alt="Sticky gums used during indigo printing."');
@@ -148,23 +173,23 @@ test("the picture level carries its open licence and author, the molecule level 
   expect(workshop).toContain(">CC BY-SA 4.0<");
   expect(workshop).toContain("Wikimedia Commons");
   expect(workshop).toContain('href="https://commons.wikimedia.org/wiki/File:Ajrak_Printing_Materials_1.jpg"');
-  const molecule = drawn(createElement(ZoomStoryView, { block: zoom(), reduce: false, at: 2, onChoose: () => undefined }));
+  const molecule = shownStackStep(zoomed(2), "zoom-stage");
   expect(attribute(molecule, "zoom-level", "data-level")).toEqual(["MOLECULE"]);
   expect(attribute(molecule, "molecule-3d", "data-status")).toEqual(["waiting"]);
   expect(molecule).toContain("PubChem CID 6293");
   expect(molecule).toMatch(/aria-label="Source 3[^"]*"[^>]*data-testid="source-chip"/);
   expect(molecule).not.toContain("</h3>");
-  expect(disabledButtons(molecule)).toEqual(["Zoom in"]);
-  const clamped = drawn(createElement(ZoomStoryView, { block: zoom(), reduce: false, at: 9, onChoose: () => undefined }));
+  const clamped = zoomed(9);
   expect(attribute(clamped, "zoom-story", "data-level")).toEqual(["MOLECULE"]);
 });
 
-test("reduced motion shows every level as a list, in zoom order, with no rail and no zoom buttons", () => {
-  const html = drawn(createElement(ZoomStoryView, { block: zoom(), reduce: true, at: 0, onChoose: () => undefined }));
+test("reduced motion shows every level as a list, in zoom order, with no rail, no Play and no zoom buttons", () => {
+  const html = zoomed(0, false, true);
   expect(attribute(html, "zoom-story", "data-motion")).toEqual(["none"]);
   expect(attribute(html, "zoom-level", "data-level")).toEqual(["DISTRICT", "WORKSHOP", "MOLECULE"]);
   expect(html).toContain('data-testid="zoom-list"');
   expect(html).not.toContain('data-testid="zoom-rail"');
+  expect(html).not.toContain('data-testid="zoom-play"');
   expect(html).not.toContain("Zoom in");
   for (const level of zoom().levels) expect(shownText(html)).toContain(level.sentence.text);
 });
@@ -176,8 +201,11 @@ test("in a film the zoom moves through its levels with the scene, and the rail o
   expect(middle).not.toContain('aria-pressed="');
   expect(attribute(middle, "zoom-rail-level", "aria-current")).toEqual(["", "step", ""]);
   expect(middle).not.toContain("Zoom in");
+  expect(middle).not.toContain('data-testid="zoom-play"');
   expect(attribute(filmed(createElement(ZoomStory, { block: zoom() }), 1), "zoom-story", "data-level")).toEqual(["MOLECULE"]);
-  expect(attribute(drawn(createElement(ZoomStory, { block: zoom() })), "zoom-story", "data-level")).toEqual(["DISTRICT"]);
+  const resting = drawn(createElement(ZoomStory, { block: zoom() }));
+  expect(attribute(resting, "zoom-story", "data-level")).toEqual(["DISTRICT"]);
+  expect(resting).toContain('data-testid="zoom-play"');
 });
 
 test("the district level zooms into the register's polygon under the boundary caption, holds still when not moving, and draws no map for a district the shapes lack", () => {
@@ -337,8 +365,8 @@ test("with nothing placed there is no map, and with one moment there is no track
 test("journey renderers lay out in shrinkable columns so nothing widens a phone page", () => {
   const block = zoom();
   const html = [
-    drawn(createElement(ZoomStoryView, { block, reduce: false, at: 1, onChoose: () => undefined })),
-    drawn(createElement(ZoomStoryView, { block, reduce: true, at: 0, onChoose: () => undefined })),
+    zoomed(1),
+    zoomed(0, false, true),
     drawn(createElement(ZoomDistrictMap, { shapes: shapes(), district: block.levels[0].district!, boundary: { caption: block.boundaryCaption!, dataset: block.datasets[0] }, moving: true })),
     drawn(createElement(TimelineMapView, { block: placedTimeline(), play: stillPlay(1) }))
   ].join("");

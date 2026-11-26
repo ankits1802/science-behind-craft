@@ -26,3 +26,14 @@ export function zoomLevelLine(level: ZoomLevel, index: number, count: number): s
 export function zoomMolecule(blockId: string, compound: ZoomCompound): Molecule3dBlock {
   return { id: `${blockId}.molecule`, kind: "molecule_3d", version: 1, reuse: null, ...compound };
 }
+
+export const ZOOM_LEVEL_MS = 4800;
+
+export function zoomBeat(): number {
+  return ZOOM_LEVEL_MS;
+}
+
+export function zoomStatus(block: ZoomStoryBlock, at: number): string {
+  const level = block.levels[at];
+  return level ? `${zoomLevelLine(level, at, block.levels.length)}: ${zoomLevelName(level)}` : "";
+}

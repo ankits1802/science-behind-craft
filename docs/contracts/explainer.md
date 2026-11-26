@@ -822,9 +822,15 @@ the river from `GET /api/rivers/{mainRiv}` (`lib/riverTopology.ts`) and the dist
 district shapes, lights each district as the water reaches it in `river.districtLgds` order, at
 the first path reach whose basin-file `districts` list it plus its entry along that reach, and
 outlines a step's district and draws its stretch, the path reaches listing it, when the step is
-chosen (a basin file without `districts` draws no stretch and lights each district at the
-source; decision 0153); under either
-reduced-motion switch the full course, every district and every step show at once. A layer the
+shown (a basin file without `districts` draws no stretch and lights each district at the
+source; decision 0153). A drawn river plays its reaches on its own once in view (decision 0242,
+`usePlayInView` over `regionStory.storyStops`): the water flows from the source to each step's
+district in turn, never back up the river (a step with no district holds the water where it is),
+then to the outlet, and loops, a stop lasting its flow at `FLOW_SECONDS` for the whole river and
+`STOP_HOLD_MS`; one Play/Pause, its status naming the step and its district, and a step or its
+badge pressed shows that step's water at once and playing goes on from it. It rests on the whole
+river; under either reduced-motion switch nothing flows, the full course, every district and every
+step show at once, and a step pressed or Play shows a stop's water at once. A layer the
 reader picks for the story redraws the districts on the map in that layer's values, classed by
 inclusive quantiles over the districts drawn (`lib/layerClasses.viewClasses`, the server's
 `geo/layers.quantile_classes` rule, decision 0085), with the legend saying so and each story
@@ -875,13 +881,22 @@ pressed is shown at once and playing goes on from it; under either reduced-motio
 plays and Play shows the next option (decision 0238). The sandboxed frame tells the explainer when
 the reader can see it: `data-in-view` on its root and a `kv-view` event on `document`
 (`sandboxFrame.FRAME_VIEW`), and the generated explainer is asked to play on its own while it is
-`"true"`, with one Pause and its stages to press (`composer/simulation.py`). `blockCitations` reads a simulation's values'
+`"true"`, with one Pause and its stages to press (`composer/simulation.py`). An explainer stored
+before that, which reads neither (`sandboxFrame.speaksInView`), gets the frame's shim
+(`explainerPieces`, `FRAME_PLAY`, decision 0242): once in view, with motion allowed, it presses the
+explainer's own Play (the first visible, enabled button whose name, `aria-label` or text, has the
+word Play) and out of view its Pause, reading playing from `aria-pressed`, else from which of the
+two words the control shows; a reader's own press of Pause holds until they press Play, and an
+explainer with no Play control is left as it is. Its stored HTML is never rewritten. `blockCitations` reads a simulation's values'
 citations and `blockSentences` a what-if's outcomes, so both join the one numbering.
 
 The zoom story and the timeline map (decision 0060) enter through
 `components/answer/journey/journeyRenderers.tsx`, each loading its code on demand (`lazyBlock`);
-they draw once their kinds are built. A zoom shows one level at a time under a rail of its levels,
-with Zoom out and Zoom in: the district on `IndiaMap` over the district shapes with the register's
+they draw once their kinds are built. A zoom shows one level at a time under a rail of its levels
+with one Play/Pause, every level stacked in one box so the tallest holds the height (`StepStack`),
+and plays its levels on its own once in view, one every 4.8 s (`zoomView.ZOOM_LEVEL_MS`), looping,
+a level pressed shown at once and playing going on from it (decision 0242): the district on
+`IndiaMap` over the district shapes with the register's
 polygon filled, outlined and tagged and the map moving into it (at most 3 times, never past the
 frame), a picture with its author, licence and site, the molecule through `MoleculeView` with its
 record chip; each level's cited sentence under it. Under either reduced-motion switch every level

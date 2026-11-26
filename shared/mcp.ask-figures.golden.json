@@ -720,7 +720,8 @@
           "title": "Through time",
           "stops": [
             {
-              "label": "1401–1500",
+              "label": "15th century",
+              "year": 1401,
               "places": [
                 "Fustat"
               ],
@@ -730,6 +731,7 @@
             },
             {
               "label": "1586",
+              "year": 1586,
               "places": [
                 "Dhamadka",
                 "Sindh",
@@ -742,6 +744,7 @@
             },
             {
               "label": "2001",
+              "year": 2001,
               "places": [
                 "Ajrakhpur"
               ],

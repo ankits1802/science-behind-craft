@@ -24,9 +24,7 @@ import {
   colourChange,
   colourChangeLine,
   DYE_FILL,
-  PLAYBACK_START,
   playable,
-  playbackStep,
   railKey,
   reactionBeat,
   reactionCast,
@@ -34,9 +32,7 @@ import {
   STEP_SECONDS,
   stepPosition,
   stepRoles,
-  stepSignal,
-  type Playback,
-  type PlaybackAction
+  stepSignal
 } from "@/lib/reactionPlayer";
 import { ShapeError } from "@/lib/shape";
 
@@ -51,45 +47,14 @@ const molecule = () => phaseBBlock("molecule_3d", "s4.b3");
 const RECORDED_SDF = readRepo("backend", "tests", "sources", "fixtures", "pubchem_conformer.sdf");
 const ALIZARIN_RECORD = "ffd974aa-9172-566a-8a38-dcc5c3c4f2d6";
 
-function played(actions: PlaybackAction[], count: number, from: Playback = PLAYBACK_START): Playback[] {
-  const seen: Playback[] = [];
-  actions.reduce((state, action) => {
-    const next = playbackStep(state, action, count);
-    seen.push(next);
-    return next;
-  }, from);
-  return seen;
-}
-
 test("the matter kinds and the expert view have one renderer each", () => {
   for (const kind of ["reaction_player", "material_card", "molecule_3d", "expert_view"] as const) expect(BLOCK_RENDERERS[kind]).toBeDefined();
 });
 
-test("playback plays the steps in order, stops on the last, replays from the first and a chosen step pauses", () => {
-  const tick = { type: "tick" } as const;
-  expect(played([{ type: "play" }, tick, tick, tick, tick], 4)).toEqual([
-    { at: 0, playing: true },
-    { at: 1, playing: true },
-    { at: 2, playing: true },
-    { at: 3, playing: false },
-    { at: 3, playing: false }
-  ]);
-  expect(played([{ type: "play" }, { type: "pause" }, tick], 4, { at: 3, playing: false })).toEqual([
-    { at: 0, playing: true },
-    { at: 0, playing: false },
-    { at: 0, playing: false }
-  ]);
-  expect(played([{ type: "next" }, { type: "previous" }, { type: "previous" }, { type: "choose", index: 9 }, { type: "choose", index: -2 }], 4)).toEqual([
-    { at: 1, playing: false },
-    { at: 0, playing: false },
-    { at: 0, playing: false },
-    { at: 3, playing: false },
-    { at: 0, playing: false }
-  ]);
-  expect(playbackStep({ at: 1, playing: true }, { type: "choose", index: 2 }, 4)).toEqual({ at: 2, playing: false });
-  expect(playbackStep(PLAYBACK_START, { type: "play" }, 1)).toEqual(PLAYBACK_START);
+test("a player plays with two steps or more and motion allowed, and names the step it shows by its place", () => {
   expect([playable(1, false), playable(4, true), playable(4, false)]).toEqual([false, false, true]);
   expect(stepPosition(2, 4)).toBe("Step 3 of 4");
+  expect([stepPosition(9, 4), stepPosition(-2, 4)]).toEqual(["Step 4 of 4", "Step 1 of 4"]);
 });
 
 test("the cast lists each species once in order of first appearance and a step lights its own by role", () => {
