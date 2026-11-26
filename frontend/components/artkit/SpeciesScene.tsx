@@ -17,7 +17,7 @@ const ONE_ACROSS_MOST = 2;
 const BEAD_MOST = 96;
 const PAIRED_MOST = 48;
 
-const rounded = (value: number) => Math.round(value * 100) / 100;
+const hundredths = (value: number) => Math.round(value * 100) / 100;
 
 function column(left: number, count: number): PartBox[] {
   if (count === 0) return [];
@@ -26,7 +26,7 @@ function column(left: number, count: number): PartBox[] {
   const size = Math.min(across === 1 ? BEAD_MOST : PAIRED_MOST, (FRAME_HEIGHT - GAP * (rows - 1)) / rows);
   const x0 = left + (COLUMN_WIDTH - (across * size + GAP * (across - 1))) / 2;
   const y0 = FRAME_TOP + (FRAME_HEIGHT - (rows * size + GAP * (rows - 1))) / 2;
-  return Array.from({ length: count }, (_, at) => ({ x: rounded(x0 + (at % across) * (size + GAP)), y: rounded(y0 + Math.floor(at / across) * (size + GAP)), size: rounded(size) }));
+  return Array.from({ length: count }, (_, at) => ({ x: hundredths(x0 + (at % across) * (size + GAP)), y: hundredths(y0 + Math.floor(at / across) * (size + GAP)), size: hundredths(size) }));
 }
 
 export function speciesBoxes(parts: readonly SpeciesPart[]): PartBox[] {

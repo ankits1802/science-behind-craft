@@ -40,7 +40,7 @@ async function kitBound(page: Page): Promise<void> {
   await page.locator(".mol[data-cid]").scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.mol-dial [data-a="0"] circle').getAttribute("cy")).not.toBe(SSR_OXYGEN_CY);
   await expect(page.locator(".mol-dial")).toHaveAttribute("aria-valuetext", /^Turned \d+ degrees$/);
-  await expect(page.locator("figure.rp .rp-text")).toHaveAttribute("style", /min-height/);
+  await expect(page.locator("figure.rp .rp-status")).toContainText(/Step \d of 2/);
 }
 
 test("every composed spec parses as the view the site draws it with", () => {

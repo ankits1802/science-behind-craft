@@ -112,7 +112,7 @@ async function generated(page: Page, motion: "allowed" | (typeof SWITCHES)[numbe
   const head = `<meta charset="utf-8"><style>${PRIMITIVE_CSS}</style><style>${KIT_CSS}</style><style>${PAGE_CSS}</style><style>${ARTKIT_CSS}</style>`;
   await page.setContent(`<!doctype html><html lang="en" data-theme="light"${switched}><head>${head}</head><body>${body}</body></html>`, { waitUntil: "domcontentloaded" });
   await page.addScriptTag({ content: KIT_JS });
-  await expect(page.locator("figure.rp .rp-text")).toHaveAttribute("style", /min-height/);
+  await expect(page.locator("figure.rp .rp-status")).toContainText(/Step \d of 2/);
 }
 
 test("the five kinds that take a kit scene are the backend's", () => {

@@ -76,8 +76,8 @@ players, `molecule_3d`, Composed from a craft's own facts).
    at once and announces it, and nothing loops. A switch turned on while a player plays stops it
    (`KV.onMotion`).
 4. **A player holds its height.** The kit reserves each player's text, lane and scene box at the
-   height of its tallest step (`KV.stack`: its steps share one grid cell and those not shown are
-   hidden by `visibility`, so no layout is read and the page's load does no more work), the
+   height of its tallest step (`KV.steady`, every box of a player measured in one pass once the
+   player is within 300 px below the viewport, so a page's load does no more work), the
    status line three lines, and a dip key and a stage label card the height they have reached
    (`KV.ratchet`), so a player that plays on its own moves nothing around it.
 5. **A molecule turns slowly** (15 degrees a second) once in view, holds still under the pointer,

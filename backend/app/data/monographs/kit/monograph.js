@@ -42,15 +42,28 @@
     });
   };
 
-  KV.stack = function (box, items) {
-    if (!box || items.length < 2) return;
-    box.classList.add('kv-stack');
-    items.forEach(function (el) { if (el.hidden) { el.hidden = false; el.classList.add('kv-off'); } });
-  };
-
-  KV.shown = function (el, on) {
-    if (el.parentElement && el.parentElement.classList.contains('kv-stack')) el.classList.toggle('kv-off', !on);
-    else el.hidden = !on;
+  KV.steady = function (el, pairs) {
+    pairs = pairs.filter(function (p) { return p[0] && p[1].length > 1; });
+    if (!el || !pairs.length) return;
+    function hold() {
+      var boxes = pairs.map(function (p) { return p[0]; }), aligns = boxes.map(function (b) { return b.style.alignSelf; });
+      var shown = pairs.map(function (p) { return p[1].filter(function (i) { return !i.hidden; })[0] || null; });
+      boxes.forEach(function (b) { b.style.minHeight = ''; b.style.alignSelf = 'start'; });
+      var bases = boxes.map(function (b, k) { return b.offsetHeight - (shown[k] ? shown[k].offsetHeight : 0); });
+      var hid = [];
+      pairs.forEach(function (p) { p[1].forEach(function (i) { if (i.hidden) { i.hidden = false; hid.push(i); } }); });
+      var most = pairs.map(function (p) { return Math.max.apply(null, p[1].map(function (i) { return i.offsetHeight; })); });
+      hid.forEach(function (i) { i.hidden = true; });
+      boxes.forEach(function (b, k) { b.style.alignSelf = aligns[k]; b.style.minHeight = Math.ceil(bases[k] + most[k]) + 'px'; });
+    }
+    var width = 0;
+    function first() {
+      width = el.offsetWidth; hold();
+      if ('ResizeObserver' in window) new ResizeObserver(function () { if (el.offsetWidth !== width) { width = el.offsetWidth; hold(); } }).observe(el);
+    }
+    if (!('IntersectionObserver' in window)) { first(); return; }
+    var o = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { o.disconnect(); first(); } }, { rootMargin: '0px 0px 300px 0px' });
+    o.observe(el);
   };
 
   KV.ratchet = function (el) {
@@ -276,7 +289,7 @@
       var g = b.getAttribute('data-g'), n = b.querySelector('b').textContent;
       $$('.kcite').forEach(function (c) {
         if ((' ' + c.getAttribute('data-g') + ' ').indexOf(' ' + g + ' ') < 0) return;
-        if (c.closest('.kv-sources') || c.closest('[hidden], .kv-off')) return;
+        if (c.closest('.kv-sources') || c.closest('[hidden]')) return;
         var s = c.closest('.s') || c.parentNode;
         if (lit.indexOf(s) < 0) { s.classList.add('is-src'); lit.push(s); }
       });
@@ -885,9 +898,9 @@ KV.boot('chem', function (document) {
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
         b.tabIndex = on ? 0 : -1;
       });
-      panels.forEach(function (p, i) { KV.shown(p, i + 1 === s); });
-      chems.forEach(function (c, i) { KV.shown(c, i + 1 === s); c.classList.remove('run'); });
-      rxs.forEach(function (r, i) { KV.shown(r, i + 1 === s); r.classList.remove('run'); });
+      panels.forEach(function (p, i) { p.hidden = i + 1 !== s; });
+      chems.forEach(function (c, i) { c.hidden = i + 1 !== s; c.classList.remove('run'); });
+      rxs.forEach(function (r, i) { r.hidden = i + 1 !== s; r.classList.remove('run'); });
       var moves = opts.user && !reduced();
       if (rxs.length) {
         arr(rxs[s - 1].querySelectorAll('svg[data-fit]')).forEach(fit);
@@ -942,11 +955,9 @@ KV.boot('chem', function (document) {
         if (t != null) { e.preventDefault(); go(t, { focus: true, user: true }); schedule(); }
       });
     });
-    KV.stack(fig.querySelector('.rp-text'), panels);
-    KV.stack(fig.querySelector('.rp-chems'), chems);
-    if (rxs.length) KV.stack(fig.querySelector('.rp-scene'), rxs);
     go(step, {});
     paint();
+    KV.steady(fig, [[fig.querySelector('.rp-text'), panels], [fig.querySelector('.rp-chems'), chems], [rxs.length ? fig.querySelector('.rp-scene') : null, rxs]]);
     KV.seen(fig, function (on) { seen = on; sync(); });
     KV.onMotion(sync);
   }

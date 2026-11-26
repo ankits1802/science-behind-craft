@@ -104,14 +104,14 @@ test("a long species name, formula and state wrap inside the lane at 320px and n
       const scrolling = /(auto|scroll)/.test(style.overflowX + style.overflowY);
       return scrolling && (node.scrollWidth > node.clientWidth + 1 || node.scrollHeight > node.clientHeight + 1);
     });
-    const outside = [...figure.querySelectorAll(".rp-chem:not(.kv-off) *")].filter((node) => {
+    const outside = [...figure.querySelectorAll(".rp-chem:not([hidden]) *")].filter((node) => {
       const rect = node.getBoundingClientRect();
       return rect.width > 0 && (rect.right > box.right + 0.5 || rect.left < box.left - 0.5);
     });
     return { scrolls: scrolls.length, outside: outside.map((node) => node.className) };
   });
   expect(found).toEqual({ scrolls: 0, outside: [] });
-  const lines = await player.locator(".rp-chem:not(.kv-off) .lane .spc").evaluateAll((cards) =>
+  const lines = await player.locator(".rp-chem:not([hidden]) .lane .spc").evaluateAll((cards) =>
     cards.map((card) => {
       const name = card.querySelector(".nm")!;
       return Math.round(name.getBoundingClientRect().height / parseFloat(getComputedStyle(name).lineHeight));
@@ -119,7 +119,7 @@ test("a long species name, formula and state wrap inside the lane at 320px and n
   );
   expect(lines[0]).toBeGreaterThan(1);
   expect(lines[lines.length - 1]).toBe(1);
-  await expect(player.locator(".rp-chem:not(.kv-off) .nm").first()).toHaveText(LONG_NAME);
+  await expect(player.locator(".rp-chem:not([hidden]) .nm").first()).toHaveText(LONG_NAME);
 });
 
 test("a dip player plays its dips on its own in view, its one button pausing it", async ({ page }) => {

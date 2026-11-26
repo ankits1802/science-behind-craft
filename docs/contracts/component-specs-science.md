@@ -63,8 +63,8 @@ Engineers changing a player, a drawing or the lab, and a contributor's agent del
   when it does not (`aria-pressed`; a dip player's Dip again is that button); a step, stage or
   dip pressed is shown at once and a playing player plays on from it; the status is
   `aria-live="off"` while it plays. The kit holds a player's text, lane and scene at the height
-  of its tallest step (`KV.stack`: its steps share one grid cell, the ones not shown `kv-off`,
-  hidden by `visibility`, with no layout read) and a dip key and stage label card at the height they have
+  of its tallest step (`KV.steady`, measured in one pass once the player is within 300 px below
+  the viewport, never while the page loads) and a dip key and stage label card at the height they have
   reached (`KV.ratchet`), so playing moves nothing around it. Under either reduced-motion switch
   nothing plays: the player rests on its `current` step with every end state drawn and each
   press of its button shows the next state at once and says it.
