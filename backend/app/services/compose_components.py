@@ -8,7 +8,7 @@ from typing import Protocol
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import ExternalFailure, NotConfigured
+from app.core.errors import ExternalFailure, InvalidInput, NotConfigured
 from app.sources.reference.pubchem import PubChemAdapter
 
 from .compose_dip import dip_player
@@ -26,6 +26,7 @@ __all__ = [
     "ComposeDeps",
     "ConformerReader",
     "compose_component",
+    "compose_every_kind",
     "stored_conformers",
 ]
 
@@ -76,9 +77,31 @@ async def compose_component(
     held = await deps.held(session, craft_slug)
     if held is None:
         return refused(NO_PAGE.format(slug=craft_slug))
+    return await _composed(held, kind, about, deps)
+
+
+async def compose_every_kind(
+    session: AsyncSession, deps: ComposeDeps, craft_slug: str
+) -> dict[str, Composition]:
+    held = await deps.held(session, craft_slug)
+    if held is None:
+        return dict.fromkeys(COMPOSED_KINDS, refused(NO_PAGE.format(slug=craft_slug)))
+    return {kind: await _settled(held, kind, deps) for kind in COMPOSED_KINDS}
+
+
+async def _composed(held: CraftHeld, kind: str, about: About, deps: ComposeDeps) -> Composition:
     if kind == MOLECULE_3D:
         return await _molecules(held, about, deps)
     return COMPOSERS[kind](held, about)
+
+
+async def _settled(held: CraftHeld, kind: str, deps: ComposeDeps) -> Composition:
+    try:
+        return await _composed(held, kind, About(), deps)
+    except NotConfigured as missing:
+        return refused(missing.message)
+    except InvalidInput as unstated:
+        return refused(str(unstated))
 
 
 async def _molecules(held: CraftHeld, about: About, deps: ComposeDeps) -> Composition:

@@ -76,7 +76,7 @@ async def test_a_draft_s_preview_returns_the_private_link_the_report_and_its_pic
     result = await call("preview_page", {"draft_id": str(DRAFT_ID)}, context(session=session))
     content = result["structuredContent"]
     assert content["previewUrl"] == f"{SITE}/preview/token" and content["draftId"] == str(DRAFT_ID)
-    assert (content["report"]["failed"], len(content["report"]["rules"])) == (report.failed + 1, 28)
+    assert (content["report"]["failed"], len(content["report"]["rules"])) == (report.failed + 1, 29)
     assert content["report"]["drawing"]["state"] == "FAILED"
     assert recorded == [(DRAFT_ID, report.failed + 1)] and session.commits == 1
     assert result["content"][1:] == [

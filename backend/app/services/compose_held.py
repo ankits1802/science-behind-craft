@@ -91,6 +91,11 @@ class HeldReaction:
     claim_ids: tuple[uuid.UUID, ...] = ()
     coefficients: tuple[int, ...] | None = None
 
+    def balanced(self) -> bool:
+        species = (*self.reactants, *self.products)
+        counted = self.coefficients is not None and len(self.coefficients) == len(species)
+        return counted and all(each.formula for each in species)
+
 
 @dataclass(frozen=True)
 class CraftHeld:

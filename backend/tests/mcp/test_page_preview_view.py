@@ -72,10 +72,17 @@ async def test_the_view_carries_the_answer_view_s_theme_and_the_status_colours()
     assert ':root[data-theme="dark"]' in page
 
 
-async def test_only_the_newest_preview_opens_and_opening_one_folds_the_others() -> None:
+async def test_every_preview_starts_minimised_and_opening_one_minimises_the_others() -> None:
     page = (await view())["text"]
     assert "new BroadcastChannel(CHANNEL)" in page and '"kalavigyan-page-preview"' in page
-    assert "Show the full report" in page and "Hide the full report" in page
+    assert "Show the full preview" in page and "Minimise the preview" in page
     assert 'setAttribute("aria-expanded"' in page and 'setAttribute("aria-controls", "kv-full")' in page
     assert 'post("opened")' in page and "message.at > shown.at" in page
-    assert "setOpen(Boolean(channel))" in page
+    assert "setOpen(keep)" in page and "setOpen(Boolean(channel))" not in page
+    assert 'el("header", "kv-line")' in page and "Open the private preview" in page
+
+
+async def test_the_card_reports_the_height_of_what_it_shows_so_a_minimised_card_shrinks() -> None:
+    page = (await view())["text"]
+    assert "ui/notifications/size-changed" in page and "root.getBoundingClientRect()" in page
+    assert "scrollHeight" not in page and "new ResizeObserver(report_size)" in page

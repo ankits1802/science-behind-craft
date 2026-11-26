@@ -574,7 +574,7 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
 | `edit_draft` | pages | contribute | writes | `DraftView` (below) with `notices` and, when the call adds components, `guide` (`HandedGuide`, Guide pages below) |
 | `preview_page` | pages | contribute | read-only (a preview, never a proposal; the dispatch keeps the preview it records) | `PagePreviewResult {schemaVersion, subject, pageUrl, previewUrl, expiresAt, chapters[], components, sources, parts[], message}` with `draftId`, `report` (`PageReport`, below), `nextStep` (the playbook's step 9: fix each failed rule, design the figure a chapter's story still needs, preview again, then propose; decision 0230), `notices` and, when a rule fails, `guide` (the checklist page of each failed rule), and the rendered pictures as image content (the first screen at 390 and 1440 px and each chapter, Drawn as a reader sees it, below); `_meta.ui` names `ui://kalavigyan/page-preview.html` |
 | `propose_page` | pages | contribute | writes | `PageProposalResult {schemaVersion, subject, pageUrl, accepted, refused, parts[], message, held?}` with `draftId`, `nextStep` and `notices`; a component part's report carries its close `matches` and `waysOn`; `held {id, confirmUrl, expiresAt}` when the page waits for one confirmation |
-| `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind, composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices, guide}` (`guide`: the storyboard's pages), each component in the snake_case `edit_draft`'s add takes (decision 0198) |
+| `compose_component` | pages | contribute | read-only, open-world (PubChem's conformer, kept in the bucket) | `ComposeReply {craft, kind (null when none was named), composed, components[{proposal, cites}], missing[], leftOut[], message, nextStep, notices, guide}` (`guide`: the storyboard's pages), each component in the snake_case `edit_draft`'s add takes (decision 0198); with no kind, every kind at once, `missing` and `leftOut` each prefixed with its kind (decision 0229) |
 | `supply_source` | sources | contribute | writes | `SuppliedSourceReply` with `draftId` and `notices` (`knowledge-writes.md`, Supplied sources) |
 | `search_sources` | sources | contribute (read for pictures alone) | read-only, open-world | `SourceSearch` (`knowledge-api.md`, Source tools) |
 | `read_source` | sources | contribute | read-only, open-world | `SourceReading` |
@@ -607,7 +607,12 @@ The page, draft and source tools need an account of Researcher or above (`PROPOS
   or `experiment_lab` with a `choice_toggle` for each of two or three materials with a stated
   alternative. Every unit cites only those facts. With too little it composes nothing and
   `missing` names each fact or structure item to propose; what it composed without is `leftOut`.
-  The result is placed with `edit_draft`'s add as it is; nothing is stored.
+  The result is placed with `edit_draft`'s add as it is; nothing is stored. With no `kind` (and no
+  `about`) one call composes every kind of the registry, `COMPOSED_KINDS` with `COMPOSERS` in
+  `services/compose_components.py` (`compose_every_kind`), so a kind added there joins it at once; a
+  kind the server cannot make here (no media store or PubChem for a molecule) is missing with the
+  reason, never an error. It is a shortcut beside the figures a contributor writes, never the path a
+  page must take (decision 0229).
 - Review queues reach `list_open_work` only on a connection holding the review scope, and then by
   the account's role.
 - `initialize` declares `tools`, `prompts` (`listChanged` false) and `resources` (`subscribe` and
@@ -682,8 +687,11 @@ and reading sources and Never:
   one self-contained page, `default-src 'none'` and its one script allowed by hash, the four themes'
   colours and the status colours inlined from `tokens.json`, every text set as text, `https` links
   opened through `ui/open-link`; it draws a `preview_page` result: the private link, the rules failed
-  first with their evidence, coverage by field, figures, sources by grade, pictures by licence and
-  each part's outcome.
+  first with their evidence, what the craft's facts could show, coverage by field, figures, sources
+  by grade, pictures by licence, one quiet line of the page's counts beside Kutch Ajrakh's and each
+  part's outcome. Each card starts as one line (the page's name, its counts passed, failed and yours
+  to judge, Open the private preview and Show the full preview) and minimises back to it, Escape
+  included, telling the host its height at every change (decision 0229).
 - `resources/templates/list` gives `kalavigyan://components/{kind}.schema.json`, and every kind a
   contributor may deliver is also listed as its own resource (`api/mcp_component_schemas.py`): the
   JSON schema of the kind's spec, the model the server checks a delivered spec with. It gives
@@ -916,18 +924,27 @@ cannot be read back carries `report: null`. The rule titles are read from the ch
 then decided by the render (`research/page_report_drawing.with_drawing`), and the counts are recounted.
 
 `PageReport {schemaVersion 1, passed, failed, judged, rules[{rule, title, verdict PASS | FAIL | JUDGE,
-evidence[] (at most 12 lines)}] (all 28, in order), sentences, ledeSentences, fields[{field, chapter,
+evidence[] (at most 12 lines)}] (all 29, in order), sentences, ledeSentences, fields[{field, chapter,
 sentences, figures, held, standing DENSE | THIN | ABSENT}] (the sixteen, in vocabulary order),
 figures[{number, label, kind, title, field, chapter, cited}] (every component but pictures, numbered in
 reading order), figureKinds, sources, sourcesByGrade (A to D, or UNGRADED for a source the gates grade
 when it is proposed), suppliedSources, pictures[{label, chapter, caption, credit, licence}],
-picturesByLicence, message, drawing?, bar?}`. `drawing` is the render's `DrawingReport {state
+picturesByLicence, message, drawing?, bar?, opportunities[]}`. `drawing` is the render's `DrawingReport {state
 CHECKED | FAILED | UNMADE, widths[], problems[], images[{name, caption, width, height, bytes}],
 blocked[], reason?}`; `bar` is `BarCounts {barSlug Kutch-Ajrakh, page, bar, chapters[{chapter, page,
 bar}], note}`, each count `{pictures, figures, interactives, maps}` (a figure is any component but a
 picture plate; interactives and maps are figures too), the bar read from Kutch Ajrakh's content with
 its authored chapters under the generated page's names (`research/page_counts.py`); guidance only,
-never a verdict. A sentence is a placed `p` unit with facts outside a component; the lede
+never a verdict. `opportunities` are what the craft's own facts could show that the page leaves in
+words, each `{shows REACTION | STAGES | PLACES_AND_DATES | QUANTITIES, chapter, what, facts[], ways[]}`
+(`research/page_report_drawable.py`, decision 0229): a reaction the server balanced (`HeldReaction.balanced`)
+that no figure drawing a reaction cites; two stages or more whose facts no player or drawing cites;
+two dated sentences or more and a sentence of places with no map that moves through them
+(`timeline_map`, `map_sequence`); two sentences or more of one field stating a quantity with a unit
+and no chart, table, tiles or drawing of that field. The craft's reactions and stages are read
+through `services/page_report_held.held_shapes` (a craft's page only); `ways` names the figure a
+contributor writes and, where the registry has a composer for it, `compose_component` with that kind
+as a shortcut. A sentence is a placed `p` unit with facts outside a component; the lede
 is the sentences of the opening; a picture is a `picture_plate`.
 
 | Rule | Checked |
@@ -952,6 +969,7 @@ is the sentences of the opening; a picture is a `picture_plate`.
 | 26 | no text admits a gap ("not yet", "coming soon", "no data") and no field heading stands without a sentence |
 | 5 | judged, with the counts the masthead draws: the sources of the page's own sentences and, apart, those only a `related_crafts` component's sentences cite (`research/page_report_sources.py`) |
 | 28 | the render's problems at either width fail it, each as `<width> px, <label>: <problem>`; a render with none passes it; pictures that could not be made leave it judged with the reason, never passed |
+| 29 | judged, with each opportunity's chapter, what, facts and ways; passed when there is none; never failed, and `propose_page` never refuses on it |
 | 8, 11, 12, 13, 16, 19, 22 | judged, each with what to look at |
 
 ## Drafts (decision 0110)
@@ -1067,7 +1085,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | Stewardship | `backend/tests/db/test_stewardship_db.py` |
 | Component proposals and their delivery | `backend/tests/research/test_component_proposals.py`, `backend/tests/db/test_component_proposals_db.py` and `test_delivered_components_db.py` |
 | Bundles, previews and the checklist report | `backend/tests/research/test_page_proposals.py`, `test_page_report.py`, `backend/tests/db/test_page_bundles_db.py`, `backend/tests/pages/test_page_preview_links.py` and `backend/tests/mcp/test_page_preview_view.py` |
-| The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
+| The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing; rule 29's opportunities and the one-call composition (`test_page_report_drawable.py`, `backend/tests/pages/test_page_report_held.py`, `backend/tests/mcp/test_compose_tool.py`) and the card (`frontend/e2e/page-preview-card-unit.spec.ts`) | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
 | Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
 | A craft's own interactive, composed and placed as `edit_draft` takes it | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
