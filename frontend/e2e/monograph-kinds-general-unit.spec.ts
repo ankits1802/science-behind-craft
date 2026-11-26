@@ -177,19 +177,23 @@ test("crowded points are spread to stay apart and in the axis, in their order", 
 test("a timeline plays from its first event once seen, loops, jumps to a pressed point and pauses; reduced, Play steps one", () => {
   const run = (actions: PlayAction[], rest = 2) => actions.reduce(played, restingPlay(rest));
   expect([nextStop(0, 3), nextStop(2, 3), nextStop(0, 0)]).toEqual([1, 0, 0]);
-  expect(isPlaying(restingPlay(2), true, 3)).toBe(false);
-  const seen = run([{ type: "seen", on: true }, { type: "start" }]);
-  expect([seen.at, isPlaying(seen, true, 3), isPlaying(seen, false, 3), isPlaying(seen, true, 1)]).toEqual([0, true, false, false]);
-  expect(run([{ type: "seen", on: true }, { type: "start" }, { type: "tick", count: 3 }, { type: "tick", count: 3 }, { type: "tick", count: 3 }]).at).toBe(0);
-  const jumped = run([{ type: "seen", on: true }, { type: "start" }, { type: "choose", at: 2 }, { type: "start" }]);
-  expect([jumped.at, isPlaying(jumped, true, 3)]).toEqual([2, true]);
+  const SEEN: PlayAction = { type: "seen", on: true, motion: true };
+  const resting = restingPlay(2);
+  expect(isPlaying(resting, 3)).toBe(false);
+  expect(played(resting, { type: "seen", on: false, motion: true })).toBe(resting);
+  const seen = run([SEEN, { type: "start" }]);
+  expect([seen.at, isPlaying(seen, 3), isPlaying(seen, 1)]).toEqual([0, true, false]);
+  expect(isPlaying(run([{ type: "seen", on: true, motion: false }]), 3)).toBe(false);
+  expect(run([SEEN, { type: "start" }, { type: "tick", count: 3 }, { type: "tick", count: 3 }, { type: "tick", count: 3 }]).at).toBe(0);
+  const jumped = run([SEEN, { type: "start" }, { type: "choose", at: 2 }, { type: "start" }]);
+  expect([jumped.at, isPlaying(jumped, 3)]).toEqual([2, true]);
   const paused = played(jumped, { type: "toggle", motion: true, count: 3 });
-  expect([paused.at, isPlaying(paused, true, 3)]).toEqual([2, false]);
-  expect(isPlaying(played(paused, { type: "toggle", motion: true, count: 3 }), true, 3)).toBe(true);
-  const away = played(seen, { type: "seen", on: false });
-  expect(isPlaying(away, true, 3)).toBe(false);
+  expect([paused.at, isPlaying(paused, 3)]).toEqual([2, false]);
+  expect(isPlaying(played(paused, { type: "toggle", motion: true, count: 3 }), 3)).toBe(true);
+  expect(isPlaying(played(seen, { type: "seen", on: false, motion: true }), 3)).toBe(false);
+  expect(isPlaying(played(seen, { type: "still" }), 3)).toBe(false);
   const still = played(restingPlay(2), { type: "toggle", motion: false, count: 3 });
-  expect([still.at, still.wanted, isPlaying(still, false, 3)]).toEqual([0, true, false]);
+  expect([still.at, still.wanted, still.motion, isPlaying(still, 3)]).toEqual([0, true, false, false]);
 });
 
 test("a map layer marks each place on India's outline with a disc sized by its value and lists them", () => {

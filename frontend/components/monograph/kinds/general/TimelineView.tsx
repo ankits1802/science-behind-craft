@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useId, useMemo, useRef } from "react";
 
 import { GeneralFigure, type RenderUnit } from "@/components/monograph/kinds/general/GeneralFigure";
 import type { ComponentViewProps } from "@/lib/componentViewContract";
@@ -22,11 +22,11 @@ function trackPoints(events: readonly TimelineEvent[], renderUnit: RenderUnit, t
 }
 
 function Played({ events, renderUnit, textOf }: { events: TimelineEvent[]; renderUnit: RenderUnit; textOf: (ref: string) => string }) {
-  const [watched, watch] = useState<HTMLDivElement | null>(null);
+  const watched = useRef<HTMLDivElement | null>(null);
   const play = useTimelinePlay(events.length, events.length - 1, watched);
   const points = useMemo(() => trackPoints(events, renderUnit, textOf), [events, renderUnit, textOf]);
   return (
-    <div className="grid gap-3" ref={watch} data-testid="general-timeline-play" data-at={play.at}>
+    <div className="grid gap-3" ref={watched} data-testid="general-timeline-play" data-at={play.at}>
       <TimelineTrack points={points} play={play} label={POINTS_LABEL} first={eraYear(events[0].year)} last={eraYear(events[events.length - 1].year)} />
       <ol className="grid" data-testid="general-timeline">
         {events.map((event, at) => {

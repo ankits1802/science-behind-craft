@@ -4,9 +4,10 @@ export const POINT_GAP_PERCENT = 6;
 const FULL = 100;
 const MIDDLE = 50;
 
-export type PlayState = { at: number; wanted: boolean; seen: boolean; started: boolean };
+export type PlayState = { at: number; wanted: boolean; seen: boolean; started: boolean; motion: boolean };
 export type PlayAction =
-  | { type: "seen"; on: boolean }
+  | { type: "seen"; on: boolean; motion: boolean }
+  | { type: "still" }
   | { type: "start" }
   | { type: "tick"; count: number }
   | { type: "choose"; at: number }
@@ -34,17 +35,20 @@ export function nextStop(at: number, count: number): number {
 }
 
 export function restingPlay(rest: number): PlayState {
-  return { at: rest, wanted: true, seen: false, started: false };
+  return { at: rest, wanted: true, seen: false, started: false, motion: false };
 }
 
-export function isPlaying(state: PlayState, motion: boolean, count: number): boolean {
-  return motion && state.wanted && state.seen && count > 1;
+export function isPlaying(state: PlayState, count: number): boolean {
+  return state.motion && state.wanted && state.seen && count > 1;
 }
 
 export function played(state: PlayState, action: PlayAction): PlayState {
   switch (action.type) {
     case "seen":
-      return { ...state, seen: action.on };
+      if (state.seen === action.on && (!action.on || state.motion === action.motion)) return state;
+      return { ...state, seen: action.on, motion: action.on ? action.motion : state.motion };
+    case "still":
+      return state.motion ? { ...state, motion: false } : state;
     case "start":
       return state.started ? state : { ...state, at: 0, started: true };
     case "tick":
@@ -52,8 +56,8 @@ export function played(state: PlayState, action: PlayAction): PlayState {
     case "choose":
       return { ...state, at: action.at, started: true };
     case "toggle":
-      if (!action.motion) return { ...state, at: nextStop(state.at, action.count) };
-      if (isPlaying(state, action.motion, action.count)) return { ...state, wanted: false };
-      return { ...state, wanted: true, seen: true };
+      if (!action.motion) return { ...state, motion: false, at: nextStop(state.at, action.count) };
+      if (isPlaying(state, action.count)) return { ...state, wanted: false };
+      return { ...state, wanted: true, seen: true, motion: true };
   }
 }

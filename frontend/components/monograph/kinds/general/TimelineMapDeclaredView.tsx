@@ -1,6 +1,6 @@
 "use client";
 
-import { isValidElement, useId, useMemo, useState, type ReactNode } from "react";
+import { isValidElement, useId, useMemo, useRef, type ReactNode } from "react";
 
 import { TimelineMapFrame, type TimelineControl, type TimelineMapDrawing } from "@/components/answer/journey/TimelineMap";
 import type { TimelineTexts } from "@/components/answer/journey/TimelineEntries";
@@ -52,7 +52,7 @@ function Credits({ map }: { map: TimelineMapSpec }) {
 function PlacedMap({ map, renderUnit, textOf }: { map: TimelineMapSpec; renderUnit: RenderUnit; textOf: (ref: string) => string }) {
   const source = useMemo(() => timelineMapSource(map, textOf), [map, textOf]);
   const count = useMemo(() => timelineStops(timelineEntries(source)).length, [source]);
-  const [watched, watch] = useState<HTMLDivElement | null>(null);
+  const watched = useRef<HTMLDivElement | null>(null);
   const play = useTimelinePlay(count, count - 1, watched);
   const drawn = useMemo(() => timelineMapDrawn(map), [map]);
   const layers = useTimelineMapLayers(drawn.names, drawn.still);
@@ -61,7 +61,7 @@ function PlacedMap({ map, renderUnit, textOf }: { map: TimelineMapSpec; renderUn
   const parts = { frame: drawn.frame, underlay: layers.underlay, overlay: layers.overlay, key: layers.key, credits: <Credits map={map} />, titled: false, coordinates };
   const drawing: TimelineMapDrawing<UnitSaid> = { texts, boundary: boundaryNote(map.boundaryCaption ?? "", map.datasets ?? []), placeable: SHOWN, pinUndated: true, parts, control: (shown) => playedTrack(play, shown) };
   return (
-    <div ref={watch} className="min-w-0" data-testid="timeline-map-play" data-at={play.at}>
+    <div ref={watched} className="min-w-0" data-testid="timeline-map-play" data-at={play.at}>
       <TimelineMapFrame source={source} at={play.at} onChoose={play.choose} drawing={drawing} />
     </div>
   );
