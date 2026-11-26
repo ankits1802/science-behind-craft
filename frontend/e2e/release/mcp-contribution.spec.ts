@@ -1,10 +1,7 @@
-import { auth } from "@modelcontextprotocol/client";
 import { expect, test, type Page } from "@playwright/test";
 
-import { roleCredentials, type Credentials } from "../production/run";
+import { roleCredentials } from "../production/run";
 
-import { approveInBrowser } from "./consent";
-import { MCP_PATH } from "./mcpContract";
 import {
   CONTRIBUTION_CRAFT,
   CONTRIBUTION_FIELD,
@@ -24,10 +21,10 @@ import {
   sourceChoices,
   type SourceChoice
 } from "./mcpContribution";
-import { ExchangeLog, MemoryOAuthProvider, REDIRECT_URI, callbackOf } from "./mcpOAuth";
+import { signIn } from "./mcpSignIn";
 import { callTool, getJson } from "./mcpWire";
 import { checkRecord, keepRecord } from "./report";
-import { apiOrigin, siteOrigin } from "./site";
+import { siteOrigin } from "./site";
 
 type Json = Record<string, unknown>;
 type Run = { api: string; server: string; token: string };
@@ -64,21 +61,6 @@ async function tool(run: Run, name: string, args: Json, signedIn: boolean): Prom
   const { content, problems } = await callTool(run.server, name, args, signedIn ? run.token : undefined);
   if (!content) throw new Error(`${name}: ${problems.join("; ")}`);
   return content;
-}
-
-async function signedInRun(page: Page, account: Credentials): Promise<Run> {
-  const api = apiOrigin();
-  const server = new URL(MCP_PATH, api);
-  const provider = new MemoryOAuthProvider(CONTRIBUTION_SCOPE);
-  const log = new ExchangeLog();
-  const first = await auth(provider, { serverUrl: server, scope: CONTRIBUTION_SCOPE, fetchFn: log.fetch });
-  if (first !== "REDIRECT" || !provider.authorizationUrl) throw new Error(`auth answered ${first}; a first sign-in redirects`);
-  const { redirectTo } = await approveInBrowser(page, provider.authorizationUrl, account, REDIRECT_URI);
-  const back = callbackOf(redirectTo);
-  const second = await auth(provider, { serverUrl: server, authorizationCode: back.code, iss: back.iss ?? undefined, fetchFn: log.fetch });
-  const token = provider.tokens()?.access_token;
-  if (second !== "AUTHORIZED" || !token) throw new Error(`the token exchange answered ${second}`);
-  return { api, server: server.href, token };
 }
 
 async function closedSource(run: Run): Promise<{ source: SourceChoice; quote: string }> {
@@ -151,7 +133,7 @@ test("a Professor's fact proposed through MCP from a closed page is seen by a si
   test.setTimeout(RUN_TIMEOUT_MS);
   const account = roleCredentials("PROFESSOR");
   if (!account) throw new Error(PROFESSOR_SECRETS);
-  const run = await test.step("the Professor signs an MCP client in with the contribute scope", () => signedInRun(page, account));
+  const run = await test.step("the Professor signs an MCP client in with the contribute scope", () => signIn(page, account, CONTRIBUTION_SCOPE));
   const before = await coverageClaims(run);
   const made = await test.step("propose_facts queues a test fact quoting a closed page", () => proposed(run));
   try {

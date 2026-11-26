@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "api": "https://api.example",
+  "server": "https://api.example/api/mcp",
+  "clientId": "0b7f6f0e-3c1a-4c55-9a43-0f2b6a1e9d11",
+  "accessToken": "kvmcp_at_golden-not-a-token",
+  "refreshToken": "kvmcp_rt_golden-not-a-token",
+  "expiresAt": "2026-11-26T11:00:00.000Z"
+}

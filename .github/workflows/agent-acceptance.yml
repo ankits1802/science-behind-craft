@@ -1,0 +1,151 @@
+name: Agent acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      craft:
+        description: The craft's slug; the request names the craft
+        required: true
+        type: string
+        default: Sanganeri-Hand-Block-Printing
+      request:
+        description: The one line a contributor types to their AI
+        required: true
+        type: string
+        default: Deepen this craft's page to the KalaVigyan bar.
+      cap:
+        description: The run's cap in US dollars, above 1 and at most 50; 1 of it is kept for the second opinion
+        required: true
+        type: string
+        default: "12"
+      model:
+        description: The Claude model the contributor's AI runs
+        required: true
+        type: string
+        default: claude-opus-5-5
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-acceptance
+  cancel-in-progress: false
+
+jobs:
+  run:
+    name: A contributor's AI builds a page over MCP from one line, and the run keeps what it made
+    if: github.repository == 'cxacraftecosystem-ui/KalaVigyan'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    env:
+      E2E_BASE_URL: ${{ vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
+      E2E_API_URL: ${{ vars.API_BASE_URL }}
+      E2E_REPORT_TITLE: Agent acceptance sign-in
+      E2E_WORKERS: "1"
+      PYTHON_VERSION: "3.15"
+      UV_LOCKED: "1"
+      RUN_DIR: agent-acceptance-run
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check the secrets and the API variable
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          E2E_PROFESSOR_EMAIL: ${{ secrets.E2E_PROFESSOR_EMAIL }}
+          E2E_PROFESSOR_PASSWORD: ${{ secrets.E2E_PROFESSOR_PASSWORD }}
+          E2E_PROFESSOR_TOTP_SECRET: ${{ secrets.E2E_PROFESSOR_TOTP_SECRET }}
+        run: |
+          set -euo pipefail
+          missing=""
+          [ -n "$ANTHROPIC_API_KEY" ] || missing="$missing ANTHROPIC_API_KEY"
+          [ -n "$E2E_PROFESSOR_EMAIL" ] || missing="$missing E2E_PROFESSOR_EMAIL"
+          [ -n "$E2E_PROFESSOR_PASSWORD" ] || missing="$missing E2E_PROFESSOR_PASSWORD"
+          [ -n "$E2E_PROFESSOR_TOTP_SECRET" ] || missing="$missing E2E_PROFESSOR_TOTP_SECRET"
+          [ -z "$missing" ] || { echo "::error::Set the repository secrets:$missing (docs/RUNBOOK.md, Agent acceptance)"; exit 1; }
+          [ -n "$E2E_API_URL" ] || { echo "::error::repository variable API_BASE_URL is not set (docs/RUNBOOK.md)"; exit 1; }
+          echo "::add-mask::$E2E_PROFESSOR_PASSWORD"
+          echo "::add-mask::$E2E_PROFESSOR_TOTP_SECRET"
+          echo "ACCEPTANCE_TOKEN_FILE=$RUNNER_TEMP/agent-acceptance-token.json" >> "$GITHUB_ENV"
+          echo "E2E_REPORT_DIR=$RUNNER_TEMP/agent-acceptance-sign-in" >> "$GITHUB_ENV"
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install npm 12
+        working-directory: frontend
+        run: npm install --global npm@12 && npm --version
+
+      - name: Install the web client's packages
+        working-directory: frontend
+        run: npm ci
+
+      - name: Install Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Sign the Professor in through the consent page, as a contributor's MCP client does
+        working-directory: frontend
+        env:
+          E2E_PROFESSOR_EMAIL: ${{ secrets.E2E_PROFESSOR_EMAIL }}
+          E2E_PROFESSOR_PASSWORD: ${{ secrets.E2E_PROFESSOR_PASSWORD }}
+          E2E_PROFESSOR_TOTP_SECRET: ${{ secrets.E2E_PROFESSOR_TOTP_SECRET }}
+        run: npx playwright test -c e2e/release/release.config.ts --project=agent-acceptance
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+
+      - name: Install the backend's packages
+        working-directory: backend
+        run: uv sync --locked
+
+      - name: Let the model build the page through the API's MCP connector
+        timeout-minutes: 150
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CRAFT: ${{ inputs.craft }}
+          REQUEST: ${{ inputs.request }}
+          CAP: ${{ inputs.cap }}
+          MODEL: ${{ inputs.model }}
+        run: >-
+          backend/.venv/bin/python tools/agent_acceptance.py run
+          --craft "$CRAFT" --request "$REQUEST" --cap "$CAP" --model "$MODEL"
+          --token-file "$ACCEPTANCE_TOKEN_FILE" --out "$RUN_DIR"
+
+      - name: Say what the model made
+        if: always()
+        run: |
+          if [ -f "$RUN_DIR/summary.md" ]; then
+            cat "$RUN_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No summary was written; the steps above say where the run stopped." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Revoke the run's MCP connection
+        if: always()
+        run: |
+          if [ -x backend/.venv/bin/python ] && [ -n "${ACCEPTANCE_TOKEN_FILE:-}" ]; then
+            backend/.venv/bin/python tools/agent_acceptance.py revoke --token-file "$ACCEPTANCE_TOKEN_FILE"
+          fi
+          rm -f "${ACCEPTANCE_TOKEN_FILE:-}"
+
+      - name: Keep what the model made
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: agent-acceptance-${{ github.run_id }}
+          path: ${{ env.RUN_DIR }}
+          if-no-files-found: warn
+          retention-days: 30
