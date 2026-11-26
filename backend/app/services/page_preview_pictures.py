@@ -84,7 +84,7 @@ async def shown_picture_file(
     found = await own_picture_file(session, user, contribution_id)
     if found is not None or not can(user, Capability.REVIEW_CONTRIBUTIONS):
         return found
-    return await _picture_file(session, contribution_id, _given())
+    return await _picture_file(session, contribution_id, _a_given_file())
 
 
 async def pass_picture_file(
@@ -131,10 +131,10 @@ async def _picture_file(
 
 
 def _own(user: User) -> ColumnElement[bool]:
-    return and_(ImageContribution.contributorId == user.id, _given())
+    return and_(ImageContribution.contributorId == user.id, _a_given_file())
 
 
-def _given() -> ColumnElement[bool]:
+def _a_given_file() -> ColumnElement[bool]:
     return and_(
         ImageContribution.status.in_(GIVEN_STATUSES),
         ImageContribution.sha256.is_not(None),
