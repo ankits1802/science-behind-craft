@@ -126,26 +126,26 @@ test("only the frame's own window may ask, and only with a film's key", () => {
   expect(filmAskFrom({ source: frame, data: { [FILM_ASK_MESSAGE]: "dip" } }, null)).toBeNull();
 });
 
+const LISTENER = `<script>window.heard=[];addEventListener("message",function(event){if(event.data&&typeof event.data==="object"&&${JSON.stringify(FILM_ASK_MESSAGE)} in event.data)window.heard.push(event.data);});</script>`;
+
 async function frameWith(page: Page, end: number) {
   const held = { dip: link("a", end) };
   await page.route("**/*", (route) => route.abort());
-  await page.setContent(codedFrameDocument({ origin: ORIGIN, figure: FIGURE, words: WORDS, base: null, clips: clipAddresses(held), ends: clipEnds(held) }, MOVING));
-  await page.evaluate((key) => {
-    const heard: unknown[] = [];
-    Object.assign(window, { heard });
-    window.addEventListener("message", (event) => {
-      if (event.data && typeof event.data === "object" && key in event.data) heard.push(event.data);
-    });
-  }, FILM_ASK_MESSAGE);
+  const html = codedFrameDocument({ origin: ORIGIN, figure: FIGURE, words: WORDS, base: null, clips: clipAddresses(held), ends: clipEnds(held) }, MOVING);
+  await page.setContent(html.replace("<head>", `<head>${LISTENER}`));
 }
 
 const heard = (page: Page) => page.evaluate(() => (window as unknown as { heard: unknown[] }).heard);
 const src = (page: Page, key: string) => page.locator(`video[data-film="${key}"]`).getAttribute("src");
+const played = (page: Page) =>
+  page.evaluate(() => {
+    void document.querySelector<HTMLVideoElement>('video[data-film="dip"]')?.play().catch(() => undefined);
+  });
 
 test("in the frame a play after the address ended waits, asks the page, and plays the renewed address without a reload", async ({ page }) => {
   await frameWith(page, Date.now() - 1_000);
   expect(await src(page, "dip")).toBe(signed("a"));
-  await page.evaluate(() => document.querySelector<HTMLVideoElement>('video[data-film="dip"]')?.play().catch(() => undefined));
+  await played(page);
   await expect.poll(() => heard(page)).toContainEqual({ [FILM_ASK_MESSAGE]: "dip" });
   await page.evaluate(() => Object.assign(window, { kept: "the same document" }));
   await page.evaluate((message) => window.postMessage(message, "*"), filmsMessage("dip", signed("b"), Date.now() + FIVE_MINUTES));
@@ -156,7 +156,7 @@ test("in the frame a play after the address ended waits, asks the page, and play
 
 test("in the frame an address that has not ended asks nothing, and a renewal for a film that is no clip changes nothing", async ({ page }) => {
   await frameWith(page, Date.now() + FIVE_MINUTES);
-  await page.evaluate(() => document.querySelector<HTMLVideoElement>('video[data-film="dip"]')?.play().catch(() => undefined));
+  await played(page);
   await page.waitForTimeout(200);
   expect(await heard(page)).toEqual([]);
   await page.evaluate((message) => window.postMessage(message, "*"), { [FILMS_MESSAGE]: { air: signed("x"), loop: 7 } });
