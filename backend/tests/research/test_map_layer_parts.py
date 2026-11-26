@@ -182,15 +182,18 @@ def test_a_frame_district_state_or_river_the_site_does_not_hold_is_refused_and_o
     assert "Chambal" in held_river_names()
     assert held_map_problems(checked_spec("map_layer", MAP)) == []
     held = checked_spec(
-        "map_layer", {**MAP, "frame": {"state": RAJASTHAN}, "emphasis": {"rivers": ["Chambal"]}}
+        "map_layer",
+        {**MAP, "frame": {"state": RAJASTHAN}, "emphasis": {"rivers": ["Chambal", "Dravyavati"]}},
     )
     assert held_map_problems(held) == []
     unheld = checked_spec(
-        "map_layer", {**MAP, "frame": {"district": 99999}, "emphasis": {"rivers": ["Dravyavati"]}}
+        "map_layer", {**MAP, "frame": {"district": 99999}, "emphasis": {"rivers": ["Saraswati of Sanganer"]}}
     )
     problems = held_map_problems(unheld)
     assert "the site holds no shape for the district with LGD code 99999" in problems
-    assert any(problem.startswith("the site's rivers name no river 'Dravyavati'") for problem in problems)
+    assert any(
+        problem.startswith("the site's rivers name no river 'Saraswati of Sanganer'") for problem in problems
+    )
     stateless = held_map_problems(checked_spec("map_layer", {**MAP, "frame": {"state": 999}}))
     assert stateless == ["the site holds no shape for the state with LGD code 999"]
 
