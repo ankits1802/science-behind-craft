@@ -47,7 +47,7 @@ def test_a_reaction_player_plays_each_step_with_its_species_its_colours_and_its_
     assert [step.label for step in player.steps] == [
         "Scrap iron dissolving into iron acetate",
         "Indigo reduced to soluble leucoindigo in the vat",
-        "Leucoindigo oxidised back to blue indigo",
+        "Leucoindigo oxidised back to blue indigo in air",
         "Alizarin binding to the alum mordant",
     ]
     assert [step.said for step in player.steps] == [[0, 1, 2], [3, 4, 5], [6, 7], [8, 9, 10, 11]]
