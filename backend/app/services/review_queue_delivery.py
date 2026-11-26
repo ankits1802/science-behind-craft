@@ -23,6 +23,7 @@ from app.research.review_queue_delivery import (
 
 from . import knowledge_view
 from .component_proposals_drawn import drawn_delivery
+from .drawing_themes import themed_spec
 from .knowledge_view import ClaimView
 from .monograph_generated_units import DraftUnit, SourceBook, cited_unit, stored_source
 from .page_preview_parts import SUBJECT_PREFIXES
@@ -114,7 +115,7 @@ def _drawing(
             title=row.title,
             version=DOCUMENT_VERSION,
             content=content,
-            specs={row.label: drawn.spec},
+            specs={row.label: themed_spec(row.kind, drawn.spec)},
             page_url=page[1],
         )
     except ValidationError:

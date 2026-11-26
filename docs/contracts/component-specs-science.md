@@ -3,7 +3,9 @@
 Twelve science component kinds move from the approved Kutch Ajrakh template to typed specs and
 React views. A spec holds everything a view needs that is not a text unit; the view draws the same
 elements, classes and text as the approved page, so the kit's `monograph.css` styles it as before.
-Engineers changing a player, a drawing or the lab, and a contributor's agent delivering one, read it.
+A thirteenth, `coded_figure`, is a contributor's own code run in a sandboxed frame over the page's
+cited data (decision 0231). Engineers changing a player, a drawing or the lab, and a contributor's
+agent delivering one, read it.
 
 | For | Read |
 |---|---|
@@ -230,6 +232,80 @@ their grade, and the sections written with what each drew. Ajrakh:
 `kutch-ajrakh/overview/how-this-answer-was-made`; its heading `u1055` is the summary of the fold
 around the anchor, outside it, and is not drawn by the view.
 
+## coded_figure
+
+`CodedFigureSpec {head, alt, code, values, texts, libraries?, map?, films?, still?}`
+(`research/component_specs_science_coded`, decision 0231): a contributor's own HTML, CSS and script,
+run in the answers' sandboxed frame over the page's cited data, as large as a chapter section.
+
+- **`head {title, caption?}` and `alt`**: units; `alt` says what the figure shows and is drawn under it.
+- **`code`**: an HTML fragment of at most 64 KiB (`coded_figure_code.CODE_MAX_BYTES`): markup, `style`
+  elements and plain `script` elements (no attributes). Its geometry, colours, faces, labels,
+  controls and decoration are its own; it is never refused for its look.
+- **`values`**, up to 120 `{key, value, reading}`: every number the figure plots, animates or states.
+  The frame passes them as `{key: value}` in `#kv-data` (`JSON.parse(document.getElementById("kv-data").textContent)`),
+  and each `value` is stated by its `reading`, a unit citing the facts that state it.
+- **`texts`**, up to 120 `{key, unit}`: the units whose words the figure shows. An element with
+  `data-unit="<key>"` shows the unit's words and `data-unit-label="<key>"` gives them as its
+  `aria-label`; when the code sets either attribute to another key, the frame shows that unit's
+  words. Every unit the figure shows is listed beneath it with its citations ("Words and sources in
+  this figure").
+- **`libraries`**: `d3` (7.9.2, the global `d3`) and `three` (0.187.0, the global `THREE`), served
+  from `/monographs/kit/vendor/` and loaded before the code.
+- **`map {layers, districts}`**: `layers` any of `states`, `districts`, `rivers` and `relief`,
+  `districts` up to 30 LGD codes. The frame draws the site's base as the first group of every
+  `svg[data-map]`, and again if the code removes it: the land, the relief bands, the rivers, the
+  district and state lines, the named districts outlined in place colour, the Rann and the Survey of
+  India outline, in the India frame of `components/map/projection.ts` (`kvMap.viewBox`).
+  `kvMap.project(longitude, latitude)` gives a point's `{x, y}` in that frame,
+  `kvMap.box(west, south, east, north, margin?)` a `viewBox` for a part of it, and `kvMap.places`
+  each named district's centre `{lgd, x, y}`. The base's classes (`kv-map-land`, `kv-map-outline`,
+  `kv-map-state`, `kv-map-district`, `kv-map-river`, `kv-map-relief-1` to `-7`, `kv-map-home`,
+  `kv-map-salt`) are drawn in the map tokens by the frame's sheet.
+- **`films`**, up to 4 `{key, src}`: a film the site serves under `/monographs/` (`.mp4`, `.webm`),
+  shown by `<video data-film="<key>">`, whose address the frame sets.
+- **`still`**: an SVG of the figure at rest. Without it the server cuts the still from the code's
+  one `svg` (`coded_figure_still.code_still`); a figure drawn on a canvas or with WebGL sends it. The
+  served spec adds the still and its four theme variants (`services/drawing_themes.themed_spec`); a
+  spec that sends `themes` is refused.
+
+The frame (`lib/codedFigureFrame`, through `SandboxFrame` and `sandboxDocument`) has
+`sandbox="allow-scripts"` and no other permission, and its policy allows inline scripts and styles,
+the named library files and films, and `data:` images, nothing else, so the code reaches no network,
+cookie, storage, other window or the page around it. It is given the page's tokens in the reader's
+theme, a sheet that draws buttons, `aria-pressed`, focus, status lines and the map base in the design
+(`FRAME_KIT_SHEET`), and the frame's stillness (decision 0218): under either reduced-motion switch no
+timer, animation frame, animation or film plays. On the page the server draws the still, its words
+filled from the units, and the frame's code loads within two screens of the viewport
+(`kinds/science/NearCodedFrame.tsx`), the frame starting at the still's height. The export draws the
+still with the figure's units beneath it (`services/page_export_coded`), and the Review page shows
+the still beside a live run (`components/review/CodedFigureReview.tsx`).
+
+Delivery refuses a coded figure only for these, each with its reason:
+
+- **A fact of its own.** A number it shows (in its markup, a text attribute, a stylesheet's `content`,
+  a prose string in its script, or its still) that is neither one of its values nor a counting
+  number up to 12; a run of free text past a label's 80 characters and six words, which is a unit;
+  a `data-unit`, `data-unit-label` or `data-film` key its `texts` or `films` do not hold.
+- **Reaching out.** Anything the sandbox's safety rules refuse (`sandbox.sandbox_safety_problems`):
+  `fetch` and every other network, storage, cookie, window, navigation and code-loading API, a
+  `script` with attributes, a nested frame, a `link`, a `video` without `films`, an address; an
+  element with one of the frame's ids (`kv-data`, `kv-words`, `kv-films`, `kv-map`); a library off
+  the list; a film off the site.
+- **Not at rest.** A script that times motion without reading
+  `document.documentElement.dataset.reducedMotion`, which it must read to draw its last state at
+  once; no still (no single `svg` and no `still`); a map declared with no `svg[data-map]`, or a map
+  drawn by hand without `map` (`drawn_maps`).
+- **Past its budget**: code past 64 KiB.
+
+**When to use it.** Compose first: a reaction, a dip, a molecule or a what-if is `compose_component`'s,
+and a figure a declared kind or the kit draws is that kind's. A coded figure is for what no kind or
+composer expresses and Kutch Ajrakh shows: a reaction's molecules meeting and a bond breaking, a dye
+bath scene, a route or a sequence of map states on the site's base, a stage scene that moves, a
+three.js model, a film the site holds played beside its cited steps. Its code draws from its values
+and its units; it rests on its finished state, draws it at once under reduced motion, and gives the
+reader a pause.
+
 ## Composed from a craft's own facts
 
 `compose_component {craft, kind, about?}` (MCP, the pages group; `services/compose_components`,
@@ -282,5 +358,7 @@ nothing is painted by hand.
 | Each of the five kinds that take a kit scene takes it beside its free drawing, a scene at rest names no motion, every kit scene label cites a fact, and a free scene painting what a kit part draws is refused | `backend/tests/research/test_kit_scenes.py`, `backend/tests/research/test_drawn_art.py` |
 | Each of the five kinds draws its kit scenes and its free drawing, at 360 and 1440 px in light and dark, plays a shown part's motion and none under either reduced-motion switch, and Kutch Ajrakh's authored players draw no kit part | `frontend/e2e/kit-players-unit.spec.ts` |
 | On a generated page at 360 and 1440 px, each composed kind whole at rest and worked by the kit, under both reduced-motion switches | `frontend/e2e/composed-interactives-unit.spec.ts` |
+| A coded figure refused for a fact of its own, reaching out, not resting or its budget, with its reason, and accepted when it draws from its data with free labels; its still cut and served in four themes, and drawn on paper | `backend/tests/research/test_coded_figures.py`, `backend/tests/exports/test_coded_figure_export.py` |
+| A coded figure's still at first paint, its frame sandboxed with its words, data and pinned libraries and nothing reaching the network, at rest under reduced motion, played and paused with motion allowed, its map base and outline kept in the site's projection, and its still beside its run on the Review page | `frontend/e2e/coded-figure-unit.spec.ts` |
 
 Re-read it when a science kind gains a field, a held passage becomes a unit, or the colour rule changes.

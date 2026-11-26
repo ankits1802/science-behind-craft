@@ -11,6 +11,8 @@ from pydantic import Field, ValidationError, model_validator
 from app.core.errors import InvalidInput
 
 from .base import ContractModel
+from .coded_figure_code import CODED_FIGURE
+from .coded_figure_still import served_still
 from .component_specs import checked_spec, not_contributable, withheld_form
 from .component_specs_general import (
     GENERAL_CHART,
@@ -26,14 +28,16 @@ from .component_specs_general import (
 )
 from .component_specs_kit import DeclaredDiagramSpec, kit_label_problems
 from .component_specs_kit_scene import kit_scene_label_problems
+from .component_specs_science_coded import CodedFigureSpec
 from .component_specs_timeline_map import TIMELINE_MAP, DeclaredTimelineMapSpec, server_parts_sent
 from .component_specs_timeline_map_delivery import SERVER_SENT, timeline_map_problems
 from .component_specs_tools import spec_unit_refs
-from .drawing_spec_rules import THEMES_KEY, spec_design_problems
+from .drawing_spec_rules import SVG_KEY, THEMES_KEY, spec_design_problems
 from .drawn_art import drawn_art_problems
 from .drawn_maps import drawn_map_problems
 from .quotes import numbers_in, unsupported_figures
 from .unit_ids import UNIT_REF, UNIT_REF_PATTERN
+from .unit_labels import LABEL_MAX_CHARS
 
 __all__ = [
     "CLAIMS_PER_UNIT_MAX",
@@ -57,7 +61,6 @@ __all__ = [
 
 UNITS_MAX = 400
 UNIT_TEXT_MAX = 600
-LABEL_MAX_CHARS = 80
 CLAIMS_PER_UNIT_MAX = 20
 CITE_MARK = "cite"
 DELIVERED_KEY = "delivered"
@@ -121,9 +124,18 @@ def spec_problems(kind: str, spec: Mapping[str, Any], units: Mapping[str, Delive
     if kind == TIMELINE_MAP and server_parts_sent(spec):
         problems.append(SERVER_SENT)
     texts = {ref: unit.text for ref, unit in units.items()}
-    problems += drawn_map_problems(kind, dumped) + drawn_art_problems(kind, dumped, texts)
+    problems += _drawn_maps(kind, checked, dumped) + drawn_art_problems(kind, dumped, texts)
     problems += spec_design_problems(dumped)
     return problems + _value_problems(kind, checked, units)
+
+
+def _drawn_maps(kind: str, spec: Any, dumped: dict[str, Any]) -> list[str]:
+    if not isinstance(spec, CodedFigureSpec):
+        return drawn_map_problems(kind, dumped)
+    still = served_still(dumped)
+    if spec.map is not None or still is None:
+        return []
+    return drawn_map_problems(kind, {SVG_KEY: still})
 
 
 def unit_problems(
@@ -187,6 +199,8 @@ def _stated_values(kind: str, spec: Any) -> list[tuple[float, str]]:
         return [(float(abs(event.year)), event.when) for event in spec.events]
     if kind == GENERAL_MAP_LAYER and isinstance(spec, GeneralMapLayerSpec):
         return [(place.value, place.reading) for place in spec.places if place.value is not None]
+    if kind == CODED_FIGURE and isinstance(spec, CodedFigureSpec):
+        return [(value.value, value.reading) for value in spec.values]
     return []
 
 

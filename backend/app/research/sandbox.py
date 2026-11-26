@@ -29,6 +29,7 @@ __all__ = [
     "URL_ATTRIBUTES",
     "SandboxProblem",
     "sandbox_problems",
+    "sandbox_safety_problems",
 ]
 
 SANDBOX_ATTRIBUTE = "allow-scripts"
@@ -138,12 +139,19 @@ API_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 
 def sandbox_problems(html: str, values: Mapping[str, float]) -> list[SandboxProblem]:
+    return _problems(html, frozenset(abs(float(value)) for value in values.values()))
+
+
+def sandbox_safety_problems(html: str) -> list[SandboxProblem]:
+    return _problems(html, None)
+
+
+def _problems(html: str, data: frozenset[float] | None) -> list[SandboxProblem]:
     if len(html.encode("utf-8")) > SANDBOX_MAX_BYTES:
         return [SandboxProblem("SIZE", f"larger than {SANDBOX_MAX_BYTES} bytes")]
     markup = SandboxMarkup()
     markup.feed(html)
     markup.close()
-    data = frozenset(abs(float(value)) for value in values.values())
     problems = [
         *markup.problems,
         *_data_element_problems(markup.ids),
@@ -151,7 +159,7 @@ def sandbox_problems(html: str, values: Mapping[str, float]) -> list[SandboxProb
         *_script_problems(markup.scripts, data),
         *_style_problems(markup.styles),
         *_attribute_problems(markup),
-        *_number_problems(markup, data),
+        *(_number_problems(markup, data) if data is not None else ()),
     ]
     return list(dict.fromkeys(problems))
 
@@ -168,7 +176,7 @@ def _raw_problems(html: str) -> Iterator[SandboxProblem]:
         yield SandboxProblem("ELEMENT", f"<{match.group(1).casefold()}>")
 
 
-def _script_problems(scripts: Iterable[str], data: frozenset[float]) -> Iterator[SandboxProblem]:
+def _script_problems(scripts: Iterable[str], data: frozenset[float] | None) -> Iterator[SandboxProblem]:
     for script in scripts:
         code = _without_namespaces(script)
         for name, pattern in API_PATTERNS:
@@ -178,7 +186,8 @@ def _script_problems(scripts: Iterable[str], data: frozenset[float]) -> Iterator
             yield SandboxProblem("ELEMENT", f"<{match.group(2).casefold()}>")
         for match in SCRIPT_SCHEME.finditer(code):
             yield SandboxProblem("URL", match.group(0))
-        yield from code_number_problems(code, data)
+        if data is not None:
+            yield from code_number_problems(code, data)
 
 
 def _without_namespaces(script: str) -> str:

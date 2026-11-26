@@ -1,12 +1,13 @@
 # Component specs: delivered components and the declared kinds
 
 A component arrives finished: its kind's spec data and the texts it places, each resting on shown
-facts. The 23 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
+facts. The 24 contributable kinds (`component_specs.CONTRIBUTABLE_KINDS`) can be delivered this
 way; five of them (`drawing`, `chart`, `fact_table`, `timeline`, `map_layer`) also take a declared
 spec that draws anything new from data, `diagram` also takes a declared spec that composes a
 figure from the site's kit of designed parts (decision 0199), and `timeline_map` is delivered only
-in its declared form, a map the site draws from places it resolves (decision 0196). Nothing a
-contributor sends is ever run as code. A
+in its declared form, a map the site draws from places it resolves (decision 0196). The one kind
+whose code runs is a `coded_figure` (A coded figure, below; decision 0231), and it runs only in a
+sandboxed frame; nothing else a contributor sends is run as code. A
 contributor's agent reads this over MCP before it delivers one, and engineers before they change a kind.
 
 | For | Read |
@@ -57,7 +58,7 @@ which reads them from `GET /api/design/kind-fixtures` with each drawing's four t
 `services/drawing_themes.themed_spec`, as a delivered drawing is served (decision 0177), so the
 preview draws its drawing in every theme at first paint.
 
-Last reviewed: 2026-11-24.
+Last reviewed: 2026-11-26.
 
 | Side | File |
 |---|---|
@@ -101,7 +102,8 @@ and a count of the rest):
    unit citing nothing is a label of at most 80 characters and states no number;
 7. the general kinds' values: a chart point's value is a number its `reading` unit states, a
    timeline event's year (without its sign) is stated by its `when` unit, a map place's value by its
-   `reading` unit, and a numeric table column's cells state a number; a timeline map's years,
+   `reading` unit, a coded figure's value by its `reading` unit, and a numeric table column's cells
+   state a number; a timeline map's years,
    places, moves and coordinates are stated by their units (The declared timeline map, below); a
    composed diagram's every part label and section layer label cites a fact, and so does every part
    label of a kit scene in a player, a toggle's stage box or a label card's seal (The figure kit,
@@ -405,6 +407,51 @@ the bar.
 Kutch Ajrakh's authored figures and players are its page's own and never pass through the delivery
 check, so the bar does not re-check them.
 
+## A coded figure (decision 0231)
+
+A `coded_figure` is your own HTML, CSS and script, as large as a chapter section, beside the values
+and cited units it shows; the site runs it in a sandboxed frame. Compose first: a reaction, a dip, a
+molecule or a what-if is `compose_component`'s, and what a declared kind or the kit draws is that
+kind's. Write code for what no kind or composer expresses and Kutch Ajrakh shows: a reaction's
+molecules meeting and a bond breaking, a dye bath scene, a route or a sequence of map states on the
+site's base, a stage scene that moves, a three.js model, a film the site holds played beside its
+cited steps.
+
+- **The spec**: `head {title, caption?}`; `alt`, a unit saying what it shows; `code`, an HTML
+  fragment of at most 64 KiB with `style` and plain `script` elements; `values`, up to 120
+  `{key, value, reading}`, every number it plots, animates or states, each stated by its `reading`
+  unit; `texts`, up to 120 `{key, unit}`, the units whose words it shows; `libraries`, any of `d3`
+  (7.9.2, global `d3`) and `three` (0.187.0, global `THREE`); `map {layers, districts}`; `films`, up
+  to 4 `{key, src}` with `src` a film the site serves under `/monographs/`; and `still`, an SVG of
+  the figure at rest, sent only when the code draws no single `svg` (a canvas or WebGL scene).
+- **Data in**: `JSON.parse(document.getElementById("kv-data").textContent)` gives `{key: value}`.
+- **Words in**: an element with `data-unit="<key>"` shows that unit's words, `data-unit-label` gives
+  them as its `aria-label`, and setting either to another key shows that unit's words. Labels,
+  controls and decoration may be your own words; a fact is a unit, and every unit the figure shows
+  is listed under it with its citations.
+- **Films**: `<video data-film="<key>">`; the frame sets the address.
+- **Maps**: declare `map`, with `layers` any of `states`, `districts`, `rivers` and `relief` and
+  `districts` the LGD codes to outline, and draw in an `svg data-map` whose `viewBox` is
+  `kvMap.viewBox` or `kvMap.box(west, south, east, north, margin)`. The site draws its base and the
+  Survey of India outline into it first, and again if the code removes them; place your marks with
+  `kvMap.project(longitude, latitude)`, which returns `{x, y}`, and `kvMap.places`, each named
+  district's `{lgd, x, y}`. Never draw India yourself.
+- **The look**: the frame holds the page's tokens in the reader's theme (`var(--ink-1)`, `var(--indigo)`
+  for what can be pressed, `var(--map-*)`, `var(--elevation-*)` and the rest) and styles buttons,
+  `aria-pressed`, focus and `role="status"`; reach for them. Nothing is refused for its look.
+- **At rest**: the figure's markup is its finished state. Read
+  `document.documentElement.dataset.reducedMotion`; when it is `"true"` no timer, animation frame,
+  animation or film runs, so draw the last state at once and let each press step one state. With
+  motion allowed it may play on its own; give it a button with `aria-pressed` that pauses it. A
+  three.js scene renders its rest once directly, not only from its animation loop.
+
+Delivery refuses it only for: a number it shows that is not one of its values (a counting number up
+to 12 is free), a sentence of its own past 80 characters, or a key `texts` or `films` do not hold;
+anything that reaches past the frame (network, storage, cookies, other windows, navigation, loaded
+scripts, addresses, the frame's ids, a library or film off the list); a timed script that never
+reads the flag, no still, or a map without its base; and code past 64 KiB. Each refusal names the
+fault.
+
 ## How this document is kept true
 
 | Claim | Kept true by |
@@ -426,6 +473,7 @@ check, so the bar does not re-check them.
 | Each of the five kinds takes a kit scene beside its free drawing, its labels cited, a hand-painted scene refused naming the part, and the composer's scenes built from the kit | `backend/tests/research/test_kit_scenes.py`, `backend/tests/compose/test_compose_kit.py`, `frontend/e2e/kit-players-unit.spec.ts` |
 | Every part in every material, each layout at phone and desktop, light and dark, motion off under both switches, and the kit sheet | `frontend/e2e/art-kit-unit.spec.ts` |
 | The declared timeline map drawn from its fixture, framed, hatched and at phone and desktop widths | `frontend/e2e/timeline-map-declared-unit.spec.ts` |
+| A coded figure refused and accepted, rule by rule, its frame, words, map base and still | `backend/tests/research/test_coded_figures.py`, `frontend/e2e/coded-figure-unit.spec.ts` |
 | The same limits, as the component guide states them to contributors | `backend/tests/mcp/test_reference_limits.py` reads them from the constants, not from this page |
 | The copy a contributor's agent reads | `backend/tests/mcp/test_skill_references.py` holds `backend/app/data/contributor/contracts/component-specs-general.md` byte for byte equal to this file |
 

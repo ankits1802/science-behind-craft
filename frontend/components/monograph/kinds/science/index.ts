@@ -1,6 +1,7 @@
 import type { ComponentViews } from "@/lib/componentViewContract";
 
 import { ChoiceToggle } from "./ChoiceToggle";
+import { CodedFigure } from "./CodedFigure";
 import { Diagram } from "./Diagram";
 import { DipPlayer } from "./DipPlayer";
 import { EquationCard } from "./EquationCard";
@@ -15,6 +16,7 @@ import { StructureDiagram } from "./StructureDiagram";
 
 export const VIEWS: ComponentViews = {
   choice_toggle: ChoiceToggle,
+  coded_figure: CodedFigure,
   diagram: Diagram,
   dip_player: DipPlayer,
   equation_card: EquationCard,

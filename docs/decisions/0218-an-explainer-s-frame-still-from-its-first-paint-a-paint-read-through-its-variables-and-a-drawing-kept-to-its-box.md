@@ -31,6 +31,7 @@ figure), `docs/contracts/component-specs-plates.md` (`DrawingElement`) and
 | The rule every drawing attribute meets on both sides | [decision 0216](0216-a-contributed-drawing-loads-nothing-a-timeline-map-s-key-holds-its-place-and-download-fails-gently.md) |
 | The explainer's frame and its look | [decision 0201](0201-an-answer-s-figures-composed-from-the-kit-and-its-generated-art-held-to-the-bar.md), [decision 0059](0059-sandbox-and-what-if-renderers.md) |
 | Why no model call or input token is added | [decision 0165](0165-answers-counted-as-settled-asked-as-asked.md) |
+| The frame's stillness also holds a film (amends this record) | [decision 0231](0231-a-contributor-s-ai-writes-a-figure-s-code-over-the-page-s-cited-data.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

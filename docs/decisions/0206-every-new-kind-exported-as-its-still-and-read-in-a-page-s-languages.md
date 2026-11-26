@@ -24,6 +24,7 @@ other languages), `docs/contracts/component-specs-science.md` (Rules) and
 | The Download on every page, its pictures, its fixed words and the family and category exports | [decision 0208](0208-every-page-downloaded-from-the-page-with-its-pictures-and-its-words.md) |
 | The kinds this export draws | [decision 0196](0196-a-contributor-s-map-drawn-by-the-site-from-places-it-resolves.md), [0197](0197-a-colour-key-from-cited-colours-and-a-masthead-that-names-the-craft-once.md), [0198](0198-a-craft-s-own-interactives-composed-and-played-on-every-page.md), [0199](0199-a-kit-of-figure-parts-and-hand-drawn-art-held-to-the-bar.md), [0202](0202-a-dip-s-colours-from-its-facts-the-crafts-dyes-and-pigments-and-twenty-atoms.md) |
 | A page file filed by what it is made from alone, its day only in the download name, and the rebuild its read claims queued (amends item 1) | [decision 0214](0214-a-page-export-filed-once-built-in-its-own-slots-at-a-caller-s-pace-and-its-rebuild-queued.md) |
+| The coded figure's still on paper (amends this record) | [decision 0231](0231-a-contributor-s-ai-writes-a-figure-s-code-over-the-page-s-cited-data.md) |
 | Every decision, by group | [README.md](README.md) |
 
 ## Context

@@ -314,7 +314,8 @@ not tracked (`.gitignore`).
   enforces it across the whole repository (`tools/hygiene/comments.py`): Python comments and
   docstrings; `//` and `/* */` in TypeScript, JavaScript and CSS; `#` lines in YAML, shell, TOML,
   Terraform, systemd units, `.gitignore` and `.env.example`; and `<!--` in HTML, XML and SVG.
-  Vendored code (`reveal.js`, the security-audit skill) is exempt.
+  Vendored code (`reveal.js`, the security-audit skill, the coded figures' pinned `d3` and `three` in
+  `frontend/public/monographs/kit/vendor/`, decision 0231) is exempt.
 - Latest stable dependency versions.
 - Secret values are never printed, logged, committed or put in fixtures: names only.
 - Nothing heavy runs locally; agents never stop, restart or deploy anything.

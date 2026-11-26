@@ -55,6 +55,7 @@ KIND_GROUPS = {
         "material_cards",
         "experiment_lab",
         "choice_toggle",
+        "coded_figure",
     ),
     "Built by the site for every page": PAGE_TOOL_KINDS,
     "The authored page's own": (*AUTHORED_ART_KINDS, *AUTHORED_SCRIPT_KINDS),

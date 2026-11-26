@@ -3,7 +3,8 @@
 A component is a figure, table, map, timeline, player or card that draws a page's stored facts. A
 contributor delivers it finished: the spec of its kind (its data) and the units it places (every
 text a reader sees), each unit resting on shown facts. The site draws it with its kind's own view,
-in the design system, and nothing a contributor sends is ever run as code. This guide is drawn from
+in the design system, and nothing a contributor sends is run as code but a `coded_figure`'s, in a
+sandboxed frame (decision 0231). This guide is drawn from
 the design system (Alum & Indigo, the tokens at `kalavigyan://design/tokens.json`) and the
 component contracts; where it is silent, they decide.
 
@@ -49,14 +50,16 @@ Choose by what the reader must see:
 | what each material is and does | `material_cards`, and `swatch_cards` or `swatch_pair` for its colours; `swatch_cards` may show one swatch, none, and a `why`, and a page whose stages name their colours gets its key from the site |
 | sources that disagree | `source_disagreements` |
 | a what-if experiment | `experiment_lab` holding one `choice_toggle` per experiment |
+| what no kind or composer draws: molecules meeting and a bond breaking, a bath scene, a route or map states on the site's base, a stage scene that moves, a three.js model | `coded_figure`, your own code run sandboxed over the page's cited data (`kalavigyan://contracts/component-specs-general.md`, A coded figure) |
 
-The 23 kinds a contributor delivers, by group:
+The 24 kinds a contributor delivers, by group:
 
 - **Figures from data** (5): `drawing`, `chart`, `fact_table`, `timeline`, `map_layer`.
 - **Data and place** (4): `stat_tiles`, `map_sequence`, `source_disagreements`, `timeline_map`.
 - **Plates and voices** (4): `label_card`, `swatch_cards`, `swatch_pair`, `voice`.
-- **Science** (10): `reaction_player`, `dip_player`, `stage_player`, `diagram`, `molecule_3d`,
-  `structure_diagram`, `equation_card`, `material_cards`, `experiment_lab`, `choice_toggle`.
+- **Science** (11): `reaction_player`, `dip_player`, `stage_player`, `diagram`, `molecule_3d`,
+  `structure_diagram`, `equation_card`, `material_cards`, `experiment_lab`, `choice_toggle`,
+  `coded_figure`.
 
 Each has been drawn for a craft other than Kutch Ajrakh (Bidriware, Blue Pottery of Jaipur,
 Bastar Dhokra, cane and bamboo) from that craft's stored facts, and none needs Kutch Ajrakh's
@@ -81,7 +84,7 @@ Five kinds also take a declared spec, which the site draws in the design system 
 and which is the form for anything new: use one of the five kinds that also take a declared spec:
 `drawing`, `chart`, `fact_table`, `timeline`, `map_layer`. A spec with a `head` is declared; the
 same kind without one is the authored figure of a page such as Kutch Ajrakh's. A one-off visual is
-a declared kind, never free-form HTML.
+a declared kind; what no kind draws is a `coded_figure`, whose code the site runs sandboxed.
 
 ## The declared kinds
 
@@ -242,6 +245,9 @@ and serves is in `kalavigyan://contracts/component-specs-general.md` (The figure
 `/design/kit` shows every part in every material.
 
 ## The design rules for a contributed figure
+
+A `coded_figure` is held to none of these, only to its facts, its frame, its rest and its budget
+(`kalavigyan://contracts/component-specs-general.md`, A coded figure); it reaches for the same tokens.
 
 - **At the bar.** Text at 12, 13, 14 or 16 px at 320 px wide; six shapes or more; line work in
   ink (a stroke whose colour is `--ink-1` to `--ink-3`, `currentColor` counting as the `color` it

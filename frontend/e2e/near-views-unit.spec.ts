@@ -25,6 +25,7 @@ test.beforeAll(() => nearBlocksLoaded());
 const REPO = join(__dirname, "..", "..");
 const NEAR_VIEWS = "components/monograph/kinds/nearViews.tsx";
 const NEAR_KIT_PLAY = "components/artkit/NearKitPlay.tsx";
+const NEAR_CODED = "components/monograph/kinds/science/NearCodedFrame.tsx";
 const HEAVY_PACKAGES = [`${PACKAGE}3dmol`, `${PACKAGE}katex`, `${PACKAGE}@elevenlabs/client`];
 const CRAFT_ROUTE = ["app/layout.tsx", "app/(reading)/layout.tsx", "app/(reading)/crafts/[slug]/page.tsx"];
 const REST_CHUNKS = ["components/monograph/DeferredShell.tsx", "components/monograph/DeferredDocument.tsx"];
@@ -159,7 +160,8 @@ test("the craft page reaches a heavy view or library only through an import made
     "components/monograph/kinds/tools/GeneratorView.tsx"
   ]);
   expect(dynamicImports(NEAR_KIT_PLAY)).toEqual(["components/artkit/KitPlay.tsx"]);
-  const nearLoaded = [...nearModules, ...dynamicImports(NEAR_KIT_PLAY)];
+  expect(dynamicImports(NEAR_CODED)).toEqual(["components/monograph/kinds/science/CodedFrame.tsx"]);
+  const nearLoaded = [...nearModules, ...dynamicImports(NEAR_KIT_PLAY), ...dynamicImports(NEAR_CODED)];
   const heavy = (node: string) => nearLoaded.includes(node) || HEAVY_PACKAGES.includes(node);
   const entries = [...clientBoundaries(CRAFT_ROUTE), ...REST_CHUNKS];
   expect(entries).toContain("components/monograph/BundleView.tsx");
@@ -175,7 +177,7 @@ test("a registry that imports a heavy view outright is named with the imports th
 });
 
 test("no view brings a stylesheet of its own: the root layout holds them all, so a heavy view's still state is styled at first paint", () => {
-  const views = [...clientBoundaries(CRAFT_ROUTE), ...REST_CHUNKS, ...dynamicImports(NEAR_VIEWS), ...dynamicImports(NEAR_KIT_PLAY)];
+  const views = [...clientBoundaries(CRAFT_ROUTE), ...REST_CHUNKS, ...dynamicImports(NEAR_VIEWS), ...dynamicImports(NEAR_KIT_PLAY), ...dynamicImports(NEAR_CODED)];
   const own = views.flatMap((view) => reachedStyles(view).map((sheet) => `${view} > ${sheet}`));
   expect(own).toEqual([]);
   expect(reachedStyles("app/layout.tsx")).toEqual(["app/component-views.css", "app/globals.css"]);

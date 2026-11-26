@@ -15,6 +15,7 @@ from app.research.translation_passages import NAME_UNITS
 from app.research.vocabulary import ANSWER_LANGUAGE_SPECS
 
 from .monograph_document import component_specs, has_authored_content
+from .page_export_coded import coded_figure_figure
 from .page_export_figures import FigureAsk, PaperPage, generic_figure
 from .page_export_kit import kit_diagram_figure, label_card_figure, swatch_cards_figure, timeline_map_figure
 from .page_export_labs import choice_toggle_figure, experiment_lab_figure
@@ -49,6 +50,7 @@ FIGURES: Mapping[str, FigureBuilder] = MappingProxyType(
         "molecule_3d": molecule_figure,
         "experiment_lab": experiment_lab_figure,
         "choice_toggle": choice_toggle_figure,
+        "coded_figure": coded_figure_figure,
     }
 )
 

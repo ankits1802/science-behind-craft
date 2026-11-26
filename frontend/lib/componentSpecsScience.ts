@@ -1,3 +1,4 @@
+import { codedFigureShape } from "@/lib/componentSpecsScienceCoded";
 import { materialCardsShape, modelExplainerShape, processReplayShape } from "@/lib/componentSpecsScienceExplainers";
 import { diagramShape, equationCardShape, molecule3dShape, structureDiagramShape } from "@/lib/componentSpecsScienceFigures";
 import { choiceToggleShape, experimentLabShape } from "@/lib/componentSpecsScienceLab";
@@ -6,6 +7,7 @@ import type { Shape } from "@/lib/shape";
 
 export const SCIENCE_KINDS = [
   "choice_toggle",
+  "coded_figure",
   "diagram",
   "dip_player",
   "equation_card",
@@ -23,6 +25,7 @@ export type ScienceKind = (typeof SCIENCE_KINDS)[number];
 
 export const SPEC_SHAPES_SCIENCE: Readonly<Record<ScienceKind, Shape<unknown>>> = {
   choice_toggle: choiceToggleShape,
+  coded_figure: codedFigureShape,
   diagram: diagramShape,
   dip_player: dipPlayerShape,
   equation_card: equationCardShape,

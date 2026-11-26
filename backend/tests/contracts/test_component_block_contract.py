@@ -117,7 +117,7 @@ def test_migration_0035_widens_the_piece_kinds_by_the_component_kind_only() -> N
         == before.COMPONENT_KINDS
         == load("0056_datasets_and_materials").COMPONENT_KINDS_BEFORE
     )
-    assert set(COMPONENT_KINDS) - set(before.COMPONENT_KINDS) == {"drawing"}
+    assert set(load("0121_coded_figures").COMPONENT_KINDS_BEFORE) - set(before.COMPONENT_KINDS) == {"drawing"}
     assert after.BLOCK_KINDS == load("0072_quantities_kind").BLOCK_KINDS_BEFORE
     assert set(after.BLOCK_KINDS) - set(before.BLOCK_KINDS) == {"component"}
     assert after.CONSTRAINT == before.CONSTRAINT == "KnowledgePiece_kind_check"
@@ -131,7 +131,7 @@ def test_migration_0072_widens_both_kind_checks_by_the_quantities_table_only() -
     )
     assert migration.BLOCK_KINDS == load("0111_answer_figures").BLOCK_KINDS_BEFORE
     assert set(migration.BLOCK_KINDS) - set(migration.BLOCK_KINDS_BEFORE) == {"quantities"}
-    assert migration.COMPONENT_KINDS == COMPONENT_KINDS
+    assert migration.COMPONENT_KINDS == load("0121_coded_figures").COMPONENT_KINDS_BEFORE
     assert migration.KIND_CHECKS == ("KnowledgePiece", "ComponentProposal")
 
 
@@ -144,7 +144,8 @@ def test_migration_0111_widens_both_kind_checks_by_the_kit_figure_only() -> None
     assert migration.BLOCK_KINDS == enums.BLOCK_KINDS
     assert set(migration.BLOCK_KINDS) - set(migration.BLOCK_KINDS_BEFORE) == {"kit_figure"}
     assert migration.BLOCK_KINDS[-2:] == ("kit_figure", "component")
-    assert migration.COMPONENT_KINDS == COMPONENT_KINDS
+    assert migration.COMPONENT_KINDS == load("0121_coded_figures").COMPONENT_KINDS_BEFORE
+    assert load("0121_coded_figures").COMPONENT_KINDS == COMPONENT_KINDS
     assert migration.KIND_CHECKS == ("KnowledgePiece", "ComponentProposal")
 
 
