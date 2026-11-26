@@ -43,7 +43,7 @@ WATERS_SOURCE = "OpenStreetMap rivers, streams and dams, India extract by Geofab
 WATERS_SITE = "https://www.openstreetmap.org/copyright"
 WATERS_LICENCE = "ODbL 1.0"
 TILES_MODULE = (
-    'import type { WatersTile } from "@/lib/mapWaters";\n\n'
+    'import type {{ WatersTile }} from "@/lib/mapWaters";\n\n'
     "export const WATERS_TILES: Readonly<Record<string, () => Promise<WatersTile>>> = {{\n{rows}}};\n"
 )
 TILE_ROW = '  {tile}: () => import("@/public/layers/waters/{tile}.json").then((tile) => tile.default),\n'
@@ -101,19 +101,20 @@ def _tile(tiles: dict[str, dict[str, Any]], cell: tuple[int, int]) -> dict[str, 
             "bounds": list(tile_bounds(*cell)),
             "rivers": [],
             "dams": [],
+            "plain": "",
         }
     return tiles[key]
 
 
-def _tiles(
-    rivers: Iterable[River], dams: Iterable[Dam], register: Register, districts: Districts
-) -> dict[str, dict[str, Any]]:
+def _tiles(features: WaterFeatures, register: Register, districts: Districts) -> dict[str, dict[str, Any]]:
     tiles: dict[str, dict[str, Any]] = {}
-    for river in rivers:
+    for river in rivers_of(features.ways):
         row = _river_row(river, register, districts)
-        for cell, parts in river_parts(river, WATERS_TOLERANCE).items():
+        for cell, parts in river_parts(river.lines, WATERS_TOLERANCE).items():
             _tile(tiles, cell)["rivers"].append({**row, "lines": encode_records(parts)})
-    for dam in dams:
+    for cell, parts in river_parts(features.plain, WATERS_TOLERANCE).items():
+        _tile(tiles, cell)["plain"] = encode_records(parts)
+    for dam in named_dams(features.dams, features.reservoirs):
         _tile(tiles, cell_of(dam.longitude, dam.latitude))["dams"].append(_dam_row(dam, districts))
     return dict(sorted(tiles.items()))
 
@@ -137,8 +138,7 @@ def _names(tiles: Mapping[str, Mapping[str, Any]], dataset: Mapping[str, Any]) -
 def waters_build(
     features: WaterFeatures, register: Register, districts: Districts, dataset: Mapping[str, Any]
 ) -> WatersBuild:
-    dams = named_dams(features.dams, features.reservoirs)
-    tiles = _tiles(rivers_of(features.ways), dams, register, districts)
+    tiles = _tiles(features, register, districts)
     index = {
         "schemaVersion": WATERS_SCHEMA_VERSION,
         "source": WATERS_SOURCE,

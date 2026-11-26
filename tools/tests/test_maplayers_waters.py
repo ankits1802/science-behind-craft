@@ -41,22 +41,22 @@ FEATURES = [
     ("n204", {"waterway": "dam"}, {"type": "Point", "coordinates": [73.0, 22.0]}),
     ("w205", {"waterway": "dam"}, _line((74.0, 22.0), (74.0, 22.02))),
     (
-        "w301",
+        "a602",
         {"natural": "water", "water": "reservoir", "name": "Tappar Reservoir"},
         _area(70.10, 23.245, 70.14, 23.27),
     ),
     (
-        "w302",
+        "a604",
         {"natural": "water", "water": "reservoir", "name": "Alpha Lake"},
         _area(73.99, 22.0, 74.0, 22.02),
     ),
     (
-        "w303",
+        "a606",
         {"natural": "water", "water": "reservoir", "name": "Beta Reservoir"},
         _area(74.0, 22.0, 74.01, 22.02),
     ),
-    ("w304", {"natural": "water", "water": "reservoir"}, _area(76.0, 20.0, 76.1, 20.1)),
-    ("r305", {"landuse": "reservoir", "name": "Gamma Reservoir"}, _area(77.0, 20.0, 77.1, 20.1)),
+    ("a608", {"natural": "water", "water": "reservoir"}, _area(76.0, 20.0, 76.1, 20.1)),
+    ("a611", {"landuse": "reservoir", "name": "Gamma Reservoir"}, _area(77.0, 20.0, 77.1, 20.1)),
 ]
 
 
@@ -78,17 +78,28 @@ def test_an_osm_id_reads_as_its_type_and_number() -> None:
     assert waters.osm_ref("w141195150") == "way/141195150"
     assert waters.osm_ref("n12") == "node/12"
     assert waters.osm_ref("r7") == "relation/7"
-    assert waters.osm_ref("a12") is None
+    assert waters.osm_ref("a1122080054") == "way/561040027"
+    assert waters.osm_ref("a611") == "relation/305"
+    assert waters.osm_ref("x12") is None
     assert waters.osm_ref("w12x") is None
 
 
-def test_only_named_rivers_and_streams_dams_and_named_reservoirs_are_read(tmp_path: Path) -> None:
+def test_rivers_and_streams_by_name_dams_named_reservoirs_and_unnamed_rivers_are_read(tmp_path: Path) -> None:
     found = waters.read_features(_export(tmp_path))
     assert [way.way for way in found.ways] == [101, 102, 103, 104]
     assert [dam.ref for dam in found.dams] == ["way/201", "way/202", "way/203", "node/204", "way/205"]
     names = ["Tappar Reservoir", "Alpha Lake", "Beta Reservoir", "Gamma Reservoir"]
     assert [reservoir.name for reservoir in found.reservoirs] == names
-    assert found.reservoirs[-1].ref == "relation/305"
+    assert [reservoir.ref for reservoir in found.reservoirs] == [
+        "way/301",
+        "way/302",
+        "way/303",
+        "relation/305",
+    ]
+    assert [list(line.coords) for line in found.plain] == [
+        [(70.0, 23.0), (70.1, 23.0)],
+        [(70.0, 23.1), (70.1, 23.1)],
+    ]
 
 
 def test_ways_of_one_name_that_meet_end_to_end_are_one_river(tmp_path: Path) -> None:
@@ -115,7 +126,7 @@ def test_a_river_is_cut_into_the_two_degree_tiles_it_crosses() -> None:
     assert waters.tile_id(70, 6) == "e070n06"
     assert waters.tile_bounds(64, 4) == (64.7, 5.3, 66.0, 6.0)
     line = geometry.LineString([(69.5, 23.1), (70.5, 23.1)])
-    parts = waters.river_parts(waters.River(1, "Suran", "river", (line,)), waters.WATERS_TOLERANCE)
+    parts = waters.river_parts((line,), waters.WATERS_TOLERANCE)
     assert sorted(parts) == [(68, 22), (70, 22)]
     assert sorted(parts[(68, 22)][0]) == [(69.5, 23.1), (70.0, 23.1)]
     assert sorted(parts[(70, 22)][0]) == [(70.0, 23.1), (70.5, 23.1)]
@@ -140,6 +151,7 @@ def test_a_build_names_each_river_by_the_dataset_and_by_the_register_where_they_
         ("e074n26", 1, 1),
     ]
     assert done.index["datasets"] == [DATASET]
+    assert done.tiles["e070n22"]["plain"] and done.tiles["e074n26"]["plain"] == ""
 
 
 def test_the_server_imports_each_tile_by_its_own_literal_path() -> None:

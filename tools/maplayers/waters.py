@@ -49,6 +49,8 @@ RIVER_KINDS = frozenset({"river", "stream"})
 RESERVOIR_TAGS = (("water", "reservoir"), ("landuse", "reservoir"))
 AREAS = frozenset({"Polygon", "MultiPolygon"})
 OSM_TYPES = {"n": "node", "w": "way", "r": "relation"}
+AREA = "a"
+UNNAMED_KIND = "river"
 
 
 @dataclass(frozen=True)
@@ -78,6 +80,7 @@ class WaterFeatures:
     ways: list[WaterWay] = field(default_factory=list)
     dams: list[DamSite] = field(default_factory=list)
     reservoirs: list[Reservoir] = field(default_factory=list)
+    plain: list[BaseGeometry] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -98,8 +101,13 @@ class Dam:
 
 
 def osm_ref(value: str) -> str | None:
+    if not value[1:].isdigit():
+        return None
+    number = int(value[1:])
+    if value[:1] == AREA:
+        return f"way/{number // 2}" if number % 2 == 0 else f"relation/{(number - 1) // 2}"
     kind = OSM_TYPES.get(value[:1])
-    return f"{kind}/{value[1:]}" if kind and value[1:].isdigit() else None
+    return f"{kind}/{number}" if kind else None
 
 
 def read_features(path: Path) -> WaterFeatures:
@@ -120,8 +128,11 @@ def _sort(feature: Mapping[str, Any], found: WaterFeatures) -> None:
         return
     name = shown_name(tags)
     waterway = tags.get("waterway")
-    if waterway in RIVER_KINDS and name and geometry.get("type") == "LineString" and ref.startswith("way/"):
+    line = geometry.get("type") == "LineString" and ref.startswith("way/")
+    if waterway in RIVER_KINDS and name and line:
         found.ways.append(WaterWay(int(ref.removeprefix("way/")), name, str(waterway), shape(geometry)))
+    elif waterway == UNNAMED_KIND and line:
+        found.plain.append(shape(geometry))
     elif waterway == "dam":
         found.dams.append(DamSite(ref, name, shape(geometry)))
     elif (
@@ -234,14 +245,13 @@ def _held(bounds: tuple[float, float, float, float]) -> bool:
     return west < east and south < north
 
 
-def river_parts(river: River, tolerance: float) -> dict[tuple[int, int], list[list[tuple[float, float]]]]:
-    simplified = [shapely.simplify(line, tolerance) for line in river.lines]
-    parts: dict[tuple[int, int], list[list[tuple[float, float]]]] = {}
-    for cell in _cells(shapely.total_bounds(simplified)):
-        cut = box(*tile_bounds(*cell))
-        kept = [
-            list(part.coords) for line in simplified for part in lines_of(shapely.intersection(line, cut))
-        ]
-        if kept:
-            parts[cell] = kept
-    return parts
+def river_parts(
+    lines: Iterable[BaseGeometry], tolerance: float
+) -> dict[tuple[int, int], list[list[tuple[float, float]]]]:
+    parts: dict[tuple[int, int], list[list[tuple[float, float]]]] = defaultdict(list)
+    for line in lines:
+        simple = shapely.simplify(line, tolerance)
+        for cell in _cells(simple.bounds):
+            cut = box(*tile_bounds(*cell))
+            parts[cell] += [list(part.coords) for part in lines_of(shapely.intersection(simple, cut))]
+    return {cell: kept for cell, kept in parts.items() if kept}
