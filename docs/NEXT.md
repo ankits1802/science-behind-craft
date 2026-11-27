@@ -19,12 +19,21 @@ and released together, each batch verified on production.
 
 ## Live now
 
-- **KalaVigyan `main` with the UX round** (2026-11-26, decisions 0225 to 0246, PROGRESS.md, UX
-  round): the page release `7f841c1c` (0227 to 0234, verified on production, migration head
-  `0121_coded_figures`) and the gap release of PR #234 (0235 to 0246, migration head
-  `0124_leftovers`). A contributor's AI builds a page from one line and the owner's rule holds: the
-  AI follows Ajrakh's thinking, never copies it, and may write its own code over cited data. File
-  uploads stay off until Anthropic approves the API host (RUNBOOK).
+- **KalaVigyan `main` at `5d41a13e` with the UX round** (2026-11-26, decisions 0225 to 0248,
+  PROGRESS.md, UX round): the page release `7f841c1c` (0227 to 0234, migration head
+  `0121_coded_figures`), the gap release of PR #234 (0235 to 0246, migration head
+  `0124_leftovers`) and the listing release of PR #237 (0247 and 0248). A contributor's AI builds a
+  page from one line and the owner's rule holds: the AI follows Ajrakh's thinking, never copies it,
+  and may write its own code over cited data. The owner submitted KalaVigyan to Anthropic's
+  Connectors Directory on 2026-11-27; file uploads stay off until Anthropic approves the API host
+  (RUNBOOK).
+  - **Open: the post-deploy check and Monograph parity fail on `5d41a13e`.** Decision 0248 draws a
+    borrowed figure only on a page that holds every fact it cites. On production that left every
+    category page without a figure (Textiles had four shared chemistry figures), against the
+    decision's own text that a category still draws a shared figure on its crafts' science. Craft
+    pages lost the shared figures whose facts they do not hold: Bagru five, Kutch Bandhani three
+    Kachchh figures, Sanganeri two. Bagru's control check still expects its dip player, and parity
+    finds no borrowed component to compare (it found 13 before).
 - **KalaVigyan `main` at `f0f965b7`** (2026-11-25, decisions 0211 to 0224, PROGRESS.md, Quality
   round), verified on production: `/health` and `/api/version` on it, Vercel READY, CloudWatch
   without errors, migration head `0120_rest_after_removal`, Monograph parity, the post-deploy check
