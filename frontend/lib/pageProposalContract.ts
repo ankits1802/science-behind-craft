@@ -11,8 +11,8 @@ export const PART_STATES = ["WAITING", "APPROVED", "REJECTED", "CLOSED"] as cons
 export const PART_OUTCOMES = ["APPLIED", "REFUSED", "SKIPPED"] as const;
 export const CHANGE_MARKS = ["ADDED", "CHANGED", "REMOVED"] as const;
 export const CHANGE_KINDS = ["SENTENCE", "COMPONENT", "PICTURE"] as const;
-export const PART_KINDS = ["fact", "structure", "picture", "component", "layout"] as const;
-export const PART_QUEUES = ["FACTS", "STRUCTURE", "IMAGES", "COMPONENTS", "LAYOUTS"] as const;
+export const PART_KINDS = ["fact", "structure", "picture", "component", "layout", "section"] as const;
+export const PART_QUEUES = ["FACTS", "STRUCTURE", "IMAGES", "COMPONENTS", "LAYOUTS", "SECTIONS"] as const;
 export const PAGE_ACTIONS = ["approve", "reject"] as const;
 
 export type DrawnSide = (typeof DRAWN_SIDES)[number];

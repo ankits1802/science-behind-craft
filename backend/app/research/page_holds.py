@@ -55,6 +55,7 @@ class PageHoldCounts(ContractModel):
     pictures: int = Field(ge=0)
     withdrawals: int = Field(ge=0)
     translations: int = Field(ge=0)
+    sections: int = Field(default=0, ge=0)
 
 
 class PageHoldView(ContractModel):

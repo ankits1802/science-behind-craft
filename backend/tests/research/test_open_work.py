@@ -346,6 +346,7 @@ ALL_QUEUES = (
     "LAYERS",
     "STAGES",
     "PICTURE_CHECKS",
+    "SECTIONS",
 )
 
 
@@ -356,7 +357,7 @@ ALL_QUEUES = (
         ("STUDENT", ()),
         ("ARTISAN", ()),
         ("RESEARCHER", ()),
-        ("PROFESSOR", ("FACTS", "TESTIMONY", "STRUCTURE", "READINGS", "STAGES")),
+        ("PROFESSOR", ("FACTS", "TESTIMONY", "STRUCTURE", "READINGS", "STAGES", "SECTIONS")),
         ("ADMIN", ALL_QUEUES),
         ("MASTER_ADMIN", ALL_QUEUES),
     ],

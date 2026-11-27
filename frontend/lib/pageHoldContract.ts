@@ -13,7 +13,16 @@ export const HOLD_SUBJECT_KINDS = ["craft", "family", "category"] as const;
 export type HoldState = (typeof HOLD_STATES)[number];
 export type HoldDecision = (typeof HOLD_DECISIONS)[number];
 export type HoldSubject = { kind: (typeof HOLD_SUBJECT_KINDS)[number]; slug: string };
-export type HoldCounts = { facts: number; structure: number; components: number; layout: number; pictures: number; withdrawals: number; translations: number };
+export type HoldCounts = {
+  facts: number;
+  structure: number;
+  components: number;
+  layout: number;
+  pictures: number;
+  withdrawals: number;
+  translations: number;
+  sections?: number;
+};
 export type HeldPart = { part: string; index: number; summary: string };
 export type PageHeld = { id: string; confirmUrl: string; expiresAt: string };
 export type PageProposalResult = {
@@ -60,7 +69,8 @@ const countsShape: Shape<HoldCounts> = object<HoldCounts>({
   layout: count,
   pictures: count,
   withdrawals: count,
-  translations: count
+  translations: count,
+  sections: optional(count)
 });
 
 const resultShape: Shape<PageProposalResult> = object<PageProposalResult>({
@@ -112,7 +122,8 @@ export function countsLine(counts: HoldCounts): string {
     counts.layout ? "a layout" : "",
     counts.pictures ? countNoun(counts.pictures, "picture") : "",
     counts.withdrawals ? countNoun(counts.withdrawals, "withdrawal") : "",
-    counts.translations ? countNoun(counts.translations, "translated passage") : ""
+    counts.translations ? countNoun(counts.translations, "translated passage") : "",
+    counts.sections ? countNoun(counts.sections, "written section") : ""
   ].filter(Boolean);
   return listText(named);
 }

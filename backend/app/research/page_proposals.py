@@ -21,6 +21,7 @@ from .monograph_document import SUBJECT_KINDS
 from .own_proposals import ComponentProposalBody
 from .page_layout import LAYOUT_ENTRIES_MAX, PageLayoutEntry, check_entries
 from .page_translations import PageTranslationPart
+from .section_proposals import SECTIONS_MAX, SectionPart
 from .structure_proposals import StructureProposal
 from .upload_links import CLAIMS_MAX, SlotDeclaration, UploadStart
 
@@ -42,6 +43,7 @@ __all__ = [
     "PREVIEW_OUTCOMES",
     "PROPOSAL_OUTCOMES",
     "REFUSED",
+    "SECTION",
     "SHOWN",
     "STRUCTURE",
     "STRUCTURE_PER_CALL_MAX",
@@ -77,7 +79,7 @@ PICTURES_PER_CALL_MAX = 10
 WITHDRAWALS_PER_CALL_MAX = 10
 NOTE_MAX_CHARS = 500
 WITHDRAW_REASON_MIN_CHARS = 3
-FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION, WITHDRAWAL = PART_KINDS = (
+FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION, WITHDRAWAL, SECTION = PART_KINDS = (
     "fact",
     "structure",
     "component",
@@ -85,6 +87,7 @@ FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, TRANSLATION, WITHDRAWAL = PART_KIND
     "picture",
     "translation",
     "withdrawal",
+    "section",
 )
 ACCEPTED, REFUSED = PROPOSAL_OUTCOMES = ("ACCEPTED", "REFUSED")
 SHOWN, LISTED = "SHOWN", "LISTED"
@@ -190,6 +193,7 @@ class PageBundle(ContractModel):
     withdrawals: list[PageWithdrawal] = Field(
         default_factory=list, max_length=WITHDRAWALS_MAX, exclude_if=empty
     )
+    sections: list[SectionPart] = Field(default_factory=list, max_length=SECTIONS_MAX, exclude_if=empty)
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
     def counts(self) -> dict[str, int]:
@@ -198,11 +202,14 @@ class PageBundle(ContractModel):
     @model_validator(mode="after")
     def _holds_work(self) -> Self:
         held = (self.facts, self.structure, self.components, self.layout, self.pictures, self.translation)
-        if not any(held) and not self.withdrawals:
+        if not any(held) and not self.withdrawals and not self.sections:
             raise ValueError(
                 "a page bundle holds at least one fact, structure item, component, layout, picture, "
-                "translation or withdrawal"
+                "translation, withdrawal or section"
             )
+        written = [section.field for section in self.sections]
+        if len(set(written)) != len(written):
+            raise ValueError("a bundle writes each field's section once")
         withdrawn = [withdrawal.label for withdrawal in self.withdrawals]
         if len(set(withdrawn)) != len(withdrawn):
             raise ValueError("a bundle withdraws each component once")

@@ -51,6 +51,7 @@ def test_mcp_review_leaves_testimony_and_pictures_to_the_site() -> None:
         "LAYERS",
         "STAGES",
         "PICTURE_CHECKS",
+        "SECTIONS",
     )
     assert set(MCP_QUEUE_KINDS) == set(QUEUE_KINDS) - {"TESTIMONY", "IMAGES"}
 

@@ -7,7 +7,7 @@ from typing import Annotated, Any, Literal, Self
 
 from pydantic import Field, ValidationError, model_validator
 
-from .base import ContractModel
+from .base import ContractModel, empty
 from .knowledge_writes import FactProposal
 from .page_proposals import (
     COMPONENTS_MAX,
@@ -26,6 +26,7 @@ from .page_proposals import (
     PageWithdrawal,
     fact_index,
 )
+from .section_proposals import SECTIONS_MAX, SectionPart
 from .structure_proposals import StructureProposal
 
 __all__ = [
@@ -62,7 +63,7 @@ SUPPLIED_PER_DRAFT_MAX = 40
 LIST_ITEMS_MAX = 12
 SUMMARY_CHARS = 140
 OPEN, SUBMITTED = DRAFT_STATES = ("OPEN", "SUBMITTED")
-FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, SUPPLIED, WITHDRAWAL = DRAFT_PARTS = (
+FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, SUPPLIED, WITHDRAWAL, SECTION = DRAFT_PARTS = (
     "fact",
     "structure",
     "component",
@@ -70,6 +71,7 @@ FACT, STRUCTURE, COMPONENT, LAYOUT, PICTURE, SUPPLIED, WITHDRAWAL = DRAFT_PARTS 
     "picture",
     "supplied_source",
     "withdrawal",
+    "section",
 )
 STILL_CITED = (
     "fact:{index} is still named by {by}; remove or change that part first, so no part points at a fact "
@@ -94,6 +96,7 @@ class DraftParts(ContractModel):
     pictures: list[PagePicture] = Field(default_factory=list, max_length=PICTURES_MAX)
     supplied_sources: list[uuid.UUID] = Field(default_factory=list, max_length=SUPPLIED_PER_DRAFT_MAX)
     withdrawals: list[PageWithdrawal] = Field(default_factory=list, max_length=WITHDRAWALS_MAX)
+    sections: list[SectionPart] = Field(default_factory=list, max_length=SECTIONS_MAX, exclude_if=empty)
     lists: PageLists | None = None
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
@@ -103,7 +106,8 @@ class DraftAddition(DraftParts):
     def _adds_something(self) -> Self:
         if not any(parts_counts(self).model_dump().values()) and self.lists is None and self.note is None:
             raise ValueError(
-                "add at least one fact, structure item, component, layout, picture, source, withdrawal or list"
+                "add at least one fact, structure item, component, layout, picture, source, withdrawal, section "
+                "or list"
             )
         return self
 
@@ -116,6 +120,7 @@ class DraftCounts(ContractModel):
     pictures: int = Field(ge=0)
     supplied_sources: int = Field(ge=0)
     withdrawals: int = Field(default=0, ge=0)
+    sections: int = Field(default=0, ge=0)
 
 
 LIMITS = DraftCounts(
@@ -126,6 +131,7 @@ LIMITS = DraftCounts(
     pictures=PICTURES_MAX,
     supplied_sources=SUPPLIED_PER_DRAFT_MAX,
     withdrawals=WITHDRAWALS_MAX,
+    sections=SECTIONS_MAX,
 )
 
 
@@ -173,6 +179,7 @@ def parts_counts(parts: DraftParts) -> DraftCounts:
         pictures=len(parts.pictures),
         supplied_sources=len(parts.supplied_sources),
         withdrawals=len(parts.withdrawals),
+        sections=len(parts.sections),
     )
 
 
@@ -185,6 +192,7 @@ def with_added(held: DraftParts, added: DraftAddition) -> DraftParts:
         "pictures": [*held.pictures, *added.pictures],
         "supplied_sources": list(dict.fromkeys([*held.supplied_sources, *added.supplied_sources])),
         "withdrawals": _withdrawn_once([*held.withdrawals, *added.withdrawals]),
+        "sections": _written_once([*held.sections, *added.sections]),
         "lists": added.lists if added.lists is not None else held.lists,
         "note": added.note if added.note is not None else held.note,
     }
@@ -204,6 +212,7 @@ def without(held: DraftParts, part: str, index: int) -> DraftParts:
         PICTURE: "pictures",
         SUPPLIED: "supplied_sources",
         WITHDRAWAL: "withdrawals",
+        SECTION: "sections",
     }
     held_list: list[Any] = list(getattr(held, field[part]))
     if not 0 <= index < len(held_list):
@@ -221,6 +230,7 @@ def draft_bundle(subject: PageSubject, parts: DraftParts) -> PageBundle:
         layout=parts.layout,
         pictures=list(parts.pictures),
         withdrawals=list(parts.withdrawals),
+        sections=list(parts.sections),
         note=parts.note,
     )
 
@@ -233,6 +243,7 @@ def part_summaries(parts: DraftParts) -> list[DraftPart]:
         *(_part(PICTURE, n, _picture_line(picture)) for n, picture in enumerate(parts.pictures)),
         *(_part(SUPPLIED, n, f"supplied source {ident}") for n, ident in enumerate(parts.supplied_sources)),
         *(_part(WITHDRAWAL, n, f"withdraw {gone.label}") for n, gone in enumerate(parts.withdrawals)),
+        *(_part(SECTION, n, _section_line(section)) for n, section in enumerate(parts.sections)),
     ]
     if parts.layout is not None:
         layout = parts.layout
@@ -270,6 +281,11 @@ def _naming(held: DraftParts, ref: str) -> list[str]:
 
 def _withdrawn_once(withdrawals: list[PageWithdrawal]) -> list[PageWithdrawal]:
     latest = {withdrawal.label: withdrawal for withdrawal in withdrawals}
+    return list(latest.values())
+
+
+def _written_once(sections: list[SectionPart]) -> list[SectionPart]:
+    latest = {section.field: section for section in sections}
     return list(latest.values())
 
 
@@ -326,6 +342,11 @@ def _structure_line(item: StructureProposal) -> str:
 def _component_line(component: PageComponent) -> str:
     proposal = component.proposal
     return f"{proposal.kind} {proposal.label}: {proposal.title}"
+
+
+def _section_line(section: SectionPart) -> str:
+    count = len(section.sentences)
+    return f"{section.field} section, {count} {'sentence' if count == 1 else 'sentences'}: {section.sentences[0].text}"
 
 
 def _picture_line(picture: PagePicture) -> str:

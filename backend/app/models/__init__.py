@@ -137,6 +137,7 @@ from app.models.science import (
     StageMaterial,
     StageReview,
 )
+from app.models.section_proposals import SectionProposal
 from app.models.sharing import SharedExportFile
 from app.models.source_upkeep import SourceUpkeep
 from app.models.state_values import StateEnvValue
@@ -282,6 +283,7 @@ __all__ = [
     "RoutePolicy",
     "SavedItem",
     "SecretTestResult",
+    "SectionProposal",
     "SharedExportFile",
     "SharedTermCraft",
     "Source",

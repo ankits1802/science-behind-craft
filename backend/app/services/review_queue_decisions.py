@@ -27,6 +27,7 @@ from app.research.review_queue import (
     READINGS,
     REJECT,
     RETRACT,
+    SECTIONS,
     STAGES,
     STRUCTURE,
     TESTIMONY,
@@ -47,6 +48,7 @@ from .review_queue_layouts import approve_layout, reject_layout
 from .review_queue_picture_checks import approve_check, reject_check
 from .review_queue_readings import decide_reading
 from .review_queue_refile import refiling_problem
+from .review_queue_sections import approve_section_item, reject_section_item
 from .review_queue_stages import approve_stage_item, reject_stage_item
 from .review_queue_structure import approve_structure_item, reject_structure_item
 from .testimony_store import MoveRefused, OwnContribution, StaleContribution, UnknownContribution
@@ -157,6 +159,18 @@ async def _reject_structure(
     session: AsyncSession, item_id: uuid.UUID, reviewer: User, decision: QueueRejection, *, now: datetime
 ) -> QueueDecision:
     return await reject_structure_item(session, item_id, reviewer, reason=decision.stated(), now=now)
+
+
+async def _approve_section(
+    session: AsyncSession, item_id: uuid.UUID, reviewer: User, decision: QueueApproval, *, now: datetime
+) -> QueueDecision:
+    return await approve_section_item(session, item_id, reviewer, note=decision.note, now=now)
+
+
+async def _reject_section(
+    session: AsyncSession, item_id: uuid.UUID, reviewer: User, decision: QueueRejection, *, now: datetime
+) -> QueueDecision:
+    return await reject_section_item(session, item_id, reviewer, reason=decision.stated(), now=now)
 
 
 async def _approve_reading(
@@ -301,6 +315,7 @@ _APPROVERS: Mapping[str, Decide] = MappingProxyType(
         LAYERS: _approve_layer,
         STAGES: approve_stage_item,
         PICTURE_CHECKS: approve_check,
+        SECTIONS: _approve_section,
     }
 )
 _REJECTERS: Mapping[str, Decide] = MappingProxyType(
@@ -315,5 +330,6 @@ _REJECTERS: Mapping[str, Decide] = MappingProxyType(
         LAYERS: _reject_layer,
         STAGES: reject_stage_item,
         PICTURE_CHECKS: reject_check,
+        SECTIONS: _reject_section,
     }
 )

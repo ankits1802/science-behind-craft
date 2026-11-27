@@ -23,6 +23,7 @@ NEW_SECTION_VERSION = 0
 @dataclass(frozen=True)
 class PageAdditions:
     sentences: Mapping[str, tuple[Mapping[str, Any], ...]] = field(default_factory=dict)
+    written: Mapping[str, tuple[Mapping[str, Any], ...]] = field(default_factory=dict)
     claims: Mapping[uuid.UUID, ClaimView] = field(default_factory=dict)
     sources: Mapping[str, CitedSource] = field(default_factory=dict)
     delivered: tuple[RegisteredComponent, ...] = ()
@@ -36,11 +37,11 @@ class PageAdditions:
 
     def sections(self, stored: Sequence[StoredSection]) -> list[StoredSection]:
         by_field = {section.field: section for section in stored}
-        for name, sentences in self.sentences.items():
+        for name in dict.fromkeys([*self.written, *self.sentences]):
             held = by_field.get(name)
             version = held.version if held is not None else NEW_SECTION_VERSION
-            kept = held.sentences if held is not None else ()
-            by_field[name] = StoredSection(name, version, (*kept, *sentences))
+            kept = self.written.get(name, held.sentences if held is not None else ())
+            by_field[name] = StoredSection(name, version, (*kept, *self.sentences.get(name, ())))
         return sorted(by_field.values(), key=lambda section: FIELD_ORDER.get(section.field, len(FIELD_ORDER)))
 
     def components(self, found: Sequence[RegisteredComponent]) -> tuple[RegisteredComponent, ...]:

@@ -17,13 +17,14 @@ import {
   type StructureKind
 } from "@/lib/structureReviewContract";
 import { readingShape, type ReadingReview } from "@/lib/readingReviewContract";
+import { sectionReviewShape, type SectionReview } from "@/lib/sectionReviewContract";
 import { sourceShape, type FactSource, type SourceQuote, type SuppliedProvenance } from "@/lib/reviewSources";
 import { reviewEntryShape, type ClosedReviewItem, type RejectReason, type ReviewItem } from "@/lib/testimonyContract";
 
-export type { FactSource, ReadingReview, SourceQuote, SuppliedProvenance };
+export type { FactSource, ReadingReview, SectionReview, SourceQuote, SuppliedProvenance };
 
 export const REVIEW_QUEUE_PATH = "/review-queue";
-export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS"] as const;
+export const QUEUE_KINDS = ["FACTS", "TESTIMONY", "IMAGES", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS", "SECTIONS"] as const;
 export const REVIEW_ORIGINS = ["RESEARCH", "CONTRIBUTION", "AGENT", "TESTIMONY"] as const;
 export const QUEUE_ACTIONS = ["approve", "raise", "reject", "retract"] as const;
 export const LAYOUT_CHANGES = ["ADDED", "CHANGED", "REMOVED"] as const;
@@ -154,6 +155,7 @@ export type ReadingItem = ItemBase & { kind: "READINGS"; reading: ReadingReview 
 export type LayerItem = ItemBase & { kind: "LAYERS"; layer: LayerReview };
 export type StageItem = ItemBase & { kind: "STAGES"; stage: StagePlacing };
 export type PictureCheckItem = ItemBase & { kind: "PICTURE_CHECKS"; check: PictureCheckReview };
+export type SectionItem = ItemBase & { kind: "SECTIONS"; section: SectionReview };
 export type QueueItem =
   | FactItem
   | TestimonyItem
@@ -164,7 +166,8 @@ export type QueueItem =
   | ReadingItem
   | LayerItem
   | StageItem
-  | PictureCheckItem;
+  | PictureCheckItem
+  | SectionItem;
 
 export type ReviewQueuePage = {
   schemaVersion: 1;
@@ -320,7 +323,8 @@ export const queueItemShape: Shape<QueueItem> = tagged<QueueItem>("kind", {
   READINGS: object<ReadingItem>({ ...base, kind: oneOf(["READINGS"] as const), reading: readingShape }),
   LAYERS: object<LayerItem>({ ...base, kind: oneOf(["LAYERS"] as const), layer: layerReviewShape }),
   STAGES: object<StageItem>({ ...base, kind: oneOf(["STAGES"] as const), stage: placingShape }),
-  PICTURE_CHECKS: object<PictureCheckItem>({ ...base, kind: oneOf(["PICTURE_CHECKS"] as const), check: pictureCheckShape })
+  PICTURE_CHECKS: object<PictureCheckItem>({ ...base, kind: oneOf(["PICTURE_CHECKS"] as const), check: pictureCheckShape }),
+  SECTIONS: object<SectionItem>({ ...base, kind: oneOf(["SECTIONS"] as const), section: sectionReviewShape })
 });
 
 export function isQueueKind(value: unknown): value is QueueKind {

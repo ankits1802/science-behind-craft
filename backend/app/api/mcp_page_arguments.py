@@ -27,6 +27,7 @@ from app.research.page_proposals import (
     PageWithdrawal,
     one_call_problem,
 )
+from app.research.section_proposals import SECTIONS_MAX, SectionPart
 from app.research.structure_proposals import StructureProposal
 
 from .mcp_guide_steps import ReadToken
@@ -51,7 +52,8 @@ __all__ = [
 FACT = "fact"
 BUNDLE = (
     "One page's parts: subject {kind, slug} and any of facts, structure, components ({proposal, cites}), "
-    "layout {base_version, entries}, pictures, withdrawals and a note, each part in the same shape as a page "
+    "layout {base_version, entries}, pictures, withdrawals, sections ({field, sentences [{text, claim_ids}]}) "
+    "and a note, each part in the same shape as a page "
     "draft's add, whose input schema holds every part's fields, and translation; one part alone works"
 )
 NEEDS_SPEC = (
@@ -85,7 +87,14 @@ def _bundle_problem(bundle: PageBundle) -> str | None:
 
 
 def bundle_parts(bundle: PageBundle) -> int:
-    held = (bundle.facts, bundle.structure, bundle.components, bundle.pictures, bundle.withdrawals)
+    held = (
+        bundle.facts,
+        bundle.structure,
+        bundle.components,
+        bundle.pictures,
+        bundle.withdrawals,
+        bundle.sections,
+    )
     translated = 0 if bundle.translation is None else len(bundle.translation.passages)
     return sum(len(part) for part in held) + int(bundle.layout is not None) + translated
 
@@ -122,6 +131,15 @@ class DraftAdd(Arguments):
         max_length=WITHDRAWALS_PER_CALL_MAX,
         description="{label, reason} of this account's registered components",
     )
+    sections: list[SectionPart] = Field(
+        default_factory=list,
+        max_length=SECTIONS_MAX,
+        description=(
+            "A field's written section, one a field, {field, sentences}: its sentences in order, each "
+            "{text, claim_ids} naming the stored facts of the page and the field it rests on; it takes the "
+            "place of the field's published section once approved, and replaces the draft's own for that field"
+        ),
+    )
     note: str | None = Field(default=None, min_length=1, max_length=NOTE_MAX_CHARS)
 
     @model_validator(mode="after")
@@ -139,6 +157,7 @@ class DraftAdd(Arguments):
             self.pictures,
             self.supplied_sources,
             self.withdrawals,
+            self.sections,
         )
         return any(listed) or self.layout is not None or self.note is not None
 
@@ -221,6 +240,7 @@ def bundle_schema() -> dict[str, Any]:
         "layout": {"type": "object"},
         "pictures": _parts(PICTURES_PER_CALL_MAX),
         "withdrawals": _parts(WITHDRAWALS_PER_CALL_MAX),
+        "sections": _parts(SECTIONS_MAX),
         "translation": {"type": "object"},
         "note": {"type": "string", "maxLength": NOTE_MAX_CHARS},
     }

@@ -5,7 +5,7 @@ import { REASON_MAX } from "@/lib/reviewQueueContract";
 import { anything, count, dictionary, integer, knownOnly, list, nullable, object, oneOf, optional, parseShape, text, type Shape } from "@/lib/shape";
 
 export const STAGED_PATH = "/review-queue/staged";
-export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS", "SOURCES", "SOURCES_DIFFER", "IMAGES", "PAGES"] as const;
+export const STAGED_KINDS = ["FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "STAGES", "PICTURE_CHECKS", "SECTIONS", "SOURCES", "SOURCES_DIFFER", "IMAGES", "PAGES"] as const;
 export const STAGED_ACTIONS = ["approve", "reject", "raise", "retract", "correct", "clear", "remove", "edit"] as const;
 export const SOURCE_KINDS = [
   "PAPER",

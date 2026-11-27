@@ -15,6 +15,7 @@ from .review_queue_components import ComponentReview
 from .review_queue_layers import LayerReview
 from .review_queue_parts import FactSource, GateCheck
 from .review_queue_readings import ReadingReview
+from .review_queue_sections import SectionReview
 from .review_queue_stages import StagePlacing
 from .review_queue_structure import StructureReview
 from .review_switch import PROPOSAL_ORIGINS
@@ -36,6 +37,7 @@ __all__ = [
     "QueueItem",
     "ReadingQueueItem",
     "ReviewOrigin",
+    "SectionQueueItem",
     "StageQueueItem",
     "StructureQueueItem",
     "TestimonyItem",
@@ -133,6 +135,11 @@ class PictureCheckItem(_QueueItem):
     check: PictureCheckReview
 
 
+class SectionQueueItem(_QueueItem):
+    kind: Literal["SECTIONS"] = "SECTIONS"
+    section: SectionReview
+
+
 QueueItem = Annotated[
     FactItem
     | TestimonyItem
@@ -143,6 +150,7 @@ QueueItem = Annotated[
     | ReadingQueueItem
     | LayerQueueItem
     | StageQueueItem
-    | PictureCheckItem,
+    | PictureCheckItem
+    | SectionQueueItem,
     Field(discriminator="kind"),
 ]

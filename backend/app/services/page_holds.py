@@ -231,6 +231,7 @@ def _parts(bundle: PageBundle) -> DraftParts:
         layout=bundle.layout,
         pictures=list(bundle.pictures),
         withdrawals=list(bundle.withdrawals),
+        sections=list(bundle.sections),
         note=bundle.note,
     )
 
@@ -244,4 +245,5 @@ def _counts(bundle: PageBundle) -> PageHoldCounts:
         pictures=len(bundle.pictures),
         withdrawals=len(bundle.withdrawals),
         translations=0 if bundle.translation is None else len(bundle.translation.passages),
+        sections=len(bundle.sections),
     )

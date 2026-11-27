@@ -23,6 +23,7 @@ from app.models import (
     MediaRefClaim,
     Process,
     ProcessStage,
+    SectionProposal,
     StageReview,
     StructureProposal,
 )
@@ -36,6 +37,7 @@ from app.research.review_queue import (
     LAYOUTS,
     PENDING_FACT_STATUSES,
     PICTURE_CHECKS,
+    SECTIONS,
     STAGES,
     STRUCTURE,
     TESTIMONY,
@@ -48,6 +50,7 @@ from app.research.review_queue import (
     QueueEntry,
     QueueKey,
     ReadingQueueItem,
+    SectionQueueItem,
     StageQueueItem,
     StructureQueueItem,
     TestimonyItem,
@@ -91,6 +94,7 @@ QUEUE_MODELS: Mapping[str, Any] = MappingProxyType(
         LAYERS: MapLayerProposal,
         STAGES: Concept,
         PICTURE_CHECKS: MediaRefClaim,
+        SECTIONS: SectionProposal,
     }
 )
 
@@ -106,6 +110,7 @@ RenderedItem = (
     | LayerQueueItem
     | StageQueueItem
     | PictureCheckItem
+    | SectionQueueItem
 )
 
 
@@ -252,6 +257,18 @@ def _structure_conditions(scope: QueueScope) -> list[ColumnElement[bool]]:
     return conditions
 
 
+def _section_conditions(scope: QueueScope) -> list[ColumnElement[bool]]:
+    conditions = [
+        SectionProposal.status == PENDING,
+        SectionProposal.proposerId.is_distinct_from(scope.viewer_id),
+    ]
+    if scope.craft is not None:
+        conditions.append(SectionProposal.craftId == scope.craft.id)
+    if scope.origin is not None:
+        conditions.append(SectionProposal.origin == scope.origin)
+    return conditions
+
+
 def _layer_conditions(scope: QueueScope) -> list[ColumnElement[bool]]:
     conditions = [
         MapLayerProposal.status == PENDING,
@@ -291,5 +308,6 @@ _CONDITIONS: Mapping[str, Callable[[QueueScope], list[ColumnElement[bool]]]] = M
         LAYERS: _layer_conditions,
         STAGES: _stage_conditions,
         PICTURE_CHECKS: _check_conditions,
+        SECTIONS: _section_conditions,
     }
 )

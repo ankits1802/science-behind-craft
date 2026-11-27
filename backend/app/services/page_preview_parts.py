@@ -31,6 +31,7 @@ class PreviewDraft:
     digest: str
     facts: BundleFacts = field(default_factory=BundleFacts)
     sentences: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    written: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
     claims: dict[uuid.UUID, ClaimView] = field(default_factory=dict)
     sources: dict[str, CitedSource] = field(default_factory=dict)
     components: list[RegisteredComponent] = field(default_factory=list)
@@ -61,6 +62,7 @@ class PreviewDraft:
     def additions(self) -> PageAdditions:
         return PageAdditions(
             sentences={name: tuple(sentences) for name, sentences in self.sentences.items()},
+            written={name: tuple(sentences) for name, sentences in self.written.items()},
             claims=dict(self.claims),
             sources=dict(self.sources),
             delivered=tuple(self.components),
