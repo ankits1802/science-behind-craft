@@ -35,9 +35,11 @@ facts support, and each step says what to read before it.
 ## What you deliver
 
 You deliver finished work: facts with their quotes and sources, structure, new sources for held
-facts, components with their full spec and units, whole pages, and pictures. Never published
-prose: our gates fetch each source and find each quote again themselves, check that the fact is new
-and not trivial, and rebuild the section prose on our side from the facts that pass.
+facts, components with their full spec and units, whole pages, a field's written section from the
+facts its page shows, and pictures. Never free prose: our gates fetch each source and find each
+quote again themselves and check that the fact is new and not trivial, and a section you write is
+checked sentence by sentence against the facts it cites and reviewed before it replaces the
+published one (Writing a section).
 
 ## The references
 
@@ -124,7 +126,7 @@ them all), the design system
 6. Propose: `propose_facts` for new facts, `propose_source` for a new source of a held fact,
    `propose_structure` for a curated page's structure, `give_pictures` for pictures; and a page's
    parts in `edit_draft`, seen with `preview_page` and proposed once with `propose_page`, which also
-   takes a single component or layout. A craft's reaction player, dip player, 3D molecule or what-if
+   takes a single component or layout and a field's written section. A craft's reaction player, dip player, 3D molecule or what-if
    lab comes from `compose_component`, built from that craft's own facts.
 7. `get_proposal` with each proposal id, or `my_work`, for the outcome. A page proposed whole is
    reviewed as one: a reviewer approves or rejects it whole, by chapter or by component, and each
@@ -198,7 +200,7 @@ own kind:
 a draft, or with a bundle of more than one part, counts as a page bundle, and each part against
 its kind's hour sized for one whole page (200 facts, 100 structure items, 200 components and
 withdrawals); a bundle of one part counts against that part's kind alone. A withdrawal counts
-against the component proposals.
+against the component proposals, and a section against the structure proposals.
 
 A spent allowance says how long to wait; nothing was stored.
 
@@ -382,9 +384,10 @@ Whatever your client draws looks like the site, whether it stays in your chat or
 - A bundle is for one craft, family or category page: facts (each with its subject, field,
   statement, sources and task), structure items (as `propose_structure` takes them), components
   (each `{proposal, cites}`, the cites naming the bundle's facts a unit rests on as `fact:0`,
-  `fact:1` and on), the layout (built on the version `get_page` gave) and pictures: a new one with
-  the facts it shows, or one you gave with `give_pictures`, named by its `contribution_id`. One part
-  alone is a bundle too, such as a layout or a component.
+  `fact:1` and on), the layout (built on the version `get_page` gave), pictures (a new one with
+  the facts it shows, or one you gave with `give_pictures`, named by its `contribution_id`) and
+  sections (a field's written section, Writing a section, below). One part alone is a bundle too,
+  such as a layout, a component or a section.
 - The preview proposes nothing. It returns a private link, for your account only and for 24 hours,
   to the page drawn exactly as the site draws it, a picture you gave in its place, and says for
   each part whether it is shown, listed or would be refused. Open it, check it against the page
@@ -427,7 +430,8 @@ job in order.
   the page's lists first: its mechanisms, its ambiguous terms and its signature fact (`fact:N` of the
   draft, or a stored fact's id).
 - `add` takes facts, structure items, components and dataset figures (`{proposal, cites}`), the
-  layout, pictures (`{contribution_id}` for one you gave) and supplied sources; `remove` takes parts
+  layout, pictures (`{contribution_id}` for one you gave), supplied sources and sections (a later
+  section for a field replaces the draft's); `remove` takes parts
   by kind and index and renumbers the later facts. A call with nothing to change returns the draft
   whole, and `draft_id` reads one, a proposed one with its outcome too.
 - `preview_page` with the `draft_id` draws the draft's page behind a private link with its checklist
@@ -496,11 +500,20 @@ your text, and supplying a source counts against the hour's fact proposals.
 
 ## Writing a section
 
-- A section is built only from stored facts: each sentence cites every fact it uses (`[c:<fact
-  id>]`) and adds no duration, degree or link between facts that they do not state.
-- At least three sentences, in the order of the craft's process or history, tense as in the facts.
-- A sentence the facts cannot support is not written: research the missing fact and propose it.
-- KalaVigyan publishes section prose only through its own rebuild from the facts that pass.
+- A section is built only from facts its page shows in that field: each sentence names every fact
+  it uses in `claim_ids` and adds no duration, degree, cause, place or link between facts that they
+  do not state. A fact of another field is cited only when its own record names this field too.
+- At least three sentences, in the order of the craft's process or history, tense as in the facts;
+  a field that holds fewer facts takes as many sentences as they allow.
+- A sentence the facts cannot support is not written: research the missing fact, propose it, and
+  cite it once `get_proposal` says `readers.shown` is true.
+- Give it as `sections [{field, sentences [{text, claim_ids}]}]` in the page's draft
+  (`edit_draft`'s add) or a bundle. `preview_page` draws it in place of the field's published
+  section and names each refused sentence and why; `propose_page` then asks a judge for anything a
+  sentence says that its facts do not. One refused sentence refuses the whole section.
+- A section that passes waits for a Professor or Admin beside the published one (an account that
+  reviews sections writes it at once). Approved, it replaces the published section, which is kept
+  in the record, completes the SECTION task, and shows on the page after its next refresh.
 - From a draft, a field's prose is written with facts: each fact added with `edit_draft` (or a
   bundle's facts) is drawn as a sentence of its field's section in the preview, so three facts in
   a thin field make it dense (rules 23 to 26). A figure that shows a fact keeps its sentence in the
@@ -566,7 +579,8 @@ English and its `texts`.
 
 ## Never
 
-- Never propose prose or HTML: facts, structure, components, pictures and pages only.
+- Never propose prose or HTML but a field's section built from the facts its page shows: facts,
+  structure, components, sections, pictures and pages only.
 - Never propose a page you have not previewed.
 - Never tell the person a fact is on its page until `get_proposal` says `readers.shown` is true;
   until then `readers` says why readers cannot see it and which write-section task is open.

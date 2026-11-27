@@ -63,7 +63,7 @@ $do$
 
 def upgrade() -> None:
     op.create_table(
-        TABLE,
+        "SectionProposal",
         sa.Column("id", sa.UUID(), server_default=sa.text("gen_random_uuid()"), nullable=False),
         sa.Column("proposerId", sa.UUID(), nullable=True),
         sa.Column("craftId", sa.UUID(), nullable=True),

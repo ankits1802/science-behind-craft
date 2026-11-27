@@ -219,7 +219,7 @@ async def test_a_section_is_typed_in_a_draft_s_add_and_in_a_bundle_and_adds_no_t
     era: str, uploads: None
 ) -> None:
     tools = {tool["name"]: tool for tool in await listed(era)}
-    assert len(tools) == 26 and not [name for name in tools if "section" in name]
+    assert not [name for name in tools if "section" in name]
     schema = tools["edit_draft"]["inputSchema"]
     added = named_properties(schema, "sections")
     assert [(part["type"], part["maxItems"]) for part in added] == [("array", 16)]

@@ -65,7 +65,9 @@ structure, reading, map layer and stage decisions), `review_queue_decisions.py`,
 `review_queue_facts.py` (decisions),
 `review_queue_refresh.py` (the signed-out pages a decision refreshes) and `review_queue_errors.py`;
 a picture check's body is `research/picture_checks.PictureCheckReview`, rendered and decided by
-`services/review_queue_picture_checks.py` (decision 0222).
+`services/review_queue_picture_checks.py` (decision 0222); a section proposal's body is
+`research/review_queue_sections.SectionReview`, rendered and decided by
+`services/review_queue_sections.py` over `services/section_proposals.py` (decision 0250).
 Route: `api/routes/review_queue.py`. The queue reads the rows each kind already keeps; a reading keeps
 its decision on its own row (`ConditionReading.reviewStatus`, `reviewedById`, `reviewedAt`,
 `reviewNote`; migration 0092), and its one table is `StageReview` (decision 0167): one row per
@@ -88,9 +90,10 @@ Each kind follows the capability its queue names in `research/open_work.py` (`RE
 | `LAYERS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
 | `STAGES` | `MARK_CLAIM_LEVEL` | Professor and above |
 | `PICTURE_CHECKS` | `REVIEW_CONTRIBUTIONS` | Admin and above |
+| `SECTIONS` | `MARK_CLAIM_LEVEL` | Professor and above |
 
 So an Admin or Master Admin sees every kind (item 12); a Professor sees facts, testimony,
-structure, readings and stages. An
+structure, readings, stages and sections. An
 account that reviews no kind is refused the route (403).
 
 **Who proposed it is kept privately** (item 13). An item carries `proposer {name, role}` only when
@@ -112,13 +115,15 @@ review already shows.
 | `READINGS` | `ConditionReading` | no `reviewStatus` yet, its process live, and `OUTSIDE` its stage's usual range: a bound, converted to the quantity's unit, falls below or above the stage type's envelope (`science/reading_checks.reading_check`, the same check the process view shows, `science.md`); the viewer did not write the fact it is read from. The envelope is computed when the queue is read, so a changed envelope changes what waits |
 | `LAYERS` | `MapLayerProposal` | `status` `PENDING` (its file passed the layer checks when it was uploaded), not the viewer's |
 | `STAGES` | `Concept` | a `PROCESS_STAGE` concept the write-back made for a craft (`originRef` `live_research`), with a shown fact about it, no `ProcessStage` naming it and no `StageReview`, whose craft has a live process with stages that is not the curated one (`review_queue_select.waiting_stage`) |
+| `SECTIONS` | `SectionProposal` | `status` `PENDING` (it passed its checks and its judge; a refused one is `REFUSED`), not the viewer's (`knowledge-writes.md`, Section proposals) |
 | `PICTURE_CHECKS` | `MediaRefClaim` | a searched picture's link to a fact holding a `shows` and a `does_not_show` from two accounts and no Admin's ruling (`picture_check_links.disputed_link`; `open-work.md`, Picture checks); its origin is `AGENT`, it has no proposer, and a craft filter keeps the links whose fact the craft's page shows. Any checked link opens by its id, waiting or not |
 
 **Origins.** A fact's origin is `RESEARCH` when it was written back from an answer's research
 (`Claim.origin` `LIVE_RESEARCH`), `AGENT` when a source was found by an agent
 (`ClaimSource.foundBy` `AGENT`), else `CONTRIBUTION`. Testimony is `TESTIMONY`, a picture
 `CONTRIBUTION`, a component proposal `AGENT`, a layout proposal its own `origin` (`CONTRIBUTION`
-from the site or the Knowledge API, `AGENT` from the MCP server), a structure proposal likewise. A
+from the site or the Knowledge API, `AGENT` from the MCP server), a structure proposal and a section
+proposal likewise. A
 reading is `AGENT` when its source was found by an agent, `CONTRIBUTION` when its fact was
 contributed, else `RESEARCH`: the science seed, the dossiers and live research are KalaVigyan's own
 (`research/review_queue_readings.reading_origin`). A map layer proposal is `CONTRIBUTION`, a stage
@@ -127,13 +132,13 @@ contributed, else `RESEARCH`: the science seed, the dossiers and live research a
 **Craft.** A fact belongs to a craft through its concept (the craft's own concepts and edges, as
 retrieval scopes them); testimony and pictures by `craftId`; a component proposal by `craftId` or a
 `CRAFT` subject naming the craft's slug; a layout proposal by `craftId` (a craft's or family's page;
-a category's page has no craft); a structure proposal by `craftId` (a category's has none) and a
+a category's page has no craft); a structure proposal and a section proposal by `craftId` (a category's has none) and a
 stage by `craftId`; a reading by the craft of its stage's process (a reaction's condition by the
 reaction's stage). A map layer proposal belongs to no craft, so a craft filter selects none.
 
 ## `GET /api/review-queue`
 
-Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES`, `PICTURE_CHECKS`), `craft` (a craft slug), `origin`
+Query: `kind` (`FACTS`, `TESTIMONY`, `IMAGES`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES`, `PICTURE_CHECKS`, `SECTIONS`), `craft` (a craft slug), `origin`
 (`RESEARCH`, `CONTRIBUTION`, `AGENT`, `TESTIMONY`), `cursor`, `limit` (1 to 50, default 25).
 
 Answer `ReviewQueuePage`:
@@ -184,6 +189,14 @@ Each item has `id`, `kind`, `origin`, `submittedAt`, `craft {slug, name, path}` 
   the kept source), `checks [{check, passed, reasons}]` (STATED, QUOTES, SOURCE), `conflicting [{id,
   text}]` (a conflict's facts) and `stale`: why approval would be refused now (the page moved on), or
   `null`.
+- `section` (decision 0250): `subject {kind craft | family | category, slug}`, `subjectName`,
+  `pageUrl`, `field`, `proposed [{text, facts [{id, text}]}]` (the sentences in order, each with the
+  facts it cites), `published` (the field's published section now, the same shape, empty for none)
+  and `publishedVersion` (or `null`), `note`, `taskKey` (the SECTION task), `checks [{check, passed,
+  reasons}]` (HELD, FIELD, SENTENCES, STATED, FAITHFUL) and `stale`: why approval would be refused
+  now (a cited fact no longer shown or of the field, or a figure or name it no longer states), or
+  `null`. Approval writes the section in place of the published one, which is kept superseded,
+  and completes the proposer's SECTION task; rejection keeps the published one and the reason.
 - `reading`: `stated` (as the fact states it), `quantity`, `unit` (the quantity's unit), `min` and
   `max` (the bounds converted to it), `envelopeMin` and `envelopeMax` (the stage type's usual range),
   `condition` (its label), `stage`, `stageType`, `claimId`, `statement` (the fact's text) and
@@ -332,7 +345,7 @@ fact is raised or retracted). Every refusal rolls the session back.
 Once a decision is committed, the route asks the web app to refresh the signed-out pages it changed
 (`review_queue_refresh.refresh_after_decision`, `services/page_revalidation.py`): every fact decision
 (approved, raised, rejected or retracted: each changes what the page shows; round 7), testimony rejected (approved words are retracted with it), a
-structure proposal approved, a stage placed (its craft), and (round 7) a component approved (its craft, the crafts its CRAFT
+structure proposal approved, a section proposal approved (its craft, or its category alone), a stage placed (its craft), and (round 7) a component approved (its craft, the crafts its CRAFT
 subjects name, the crafts and sub-category members of its CONCEPT subjects, and the pages of the
 facts its units rest on), a layout approved (its craft or family, or its category alone), a
 picture approved (its craft) and a reading rejected (its craft). The pages are those of the fact's concept, or of the item's craft: the
@@ -417,8 +430,9 @@ instruction hidden in a quote or a contributed statement that the app reads and 
 most put a decision in front of a person, who sees it with its reason and the app that proposed it
 (decision 0170).
 
-- **Kinds.** `FACTS`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES` and
-  `PICTURE_CHECKS` (decision 0222, whose `StagedReviewItem` kind check migration `0119_picture_checks` widens), with
+- **Kinds.** `FACTS`, `COMPONENTS`, `LAYOUTS`, `STRUCTURE`, `READINGS`, `LAYERS`, `STAGES`,
+  `PICTURE_CHECKS` (decision 0222, whose `StagedReviewItem` kind check migration `0119_picture_checks` widens) and
+  `SECTIONS` (decision 0250, migration `0125_section_proposals`), with
   the actions the routes above allow; `TESTIMONY` and `IMAGES` stay on the site, because they carry
   people's own voices, words and pictures, whose consent covers KalaVigyan's reviewers and not a
   third party's model. Two corrections are staged the same way: `SOURCES` (`correct` a source's
@@ -595,6 +609,10 @@ kept in the address (`?kind=&origin=&craft=`). A card per item:
   the proposer's note, which version it builds on and what approving writes, and each change ("Placed",
   "Moved from ... to ...", "Taken out"), the first 12 and then "Show all N changes"; a stale proposal
   offers Reject only (`frontend/lib/layoutReviewView.ts`);
+- a section proposal (`SectionReviewCard.tsx`, rules in `frontend/lib/sectionReviewView.ts`, shapes in
+  `frontend/lib/sectionReviewContract.ts`): the field's section, the page, the proposer's note, the
+  proposed sentences beside the published ones, each with the facts it cites, the automatic checks,
+  what approving writes, and Reject only when the page has moved on;
 - a structure proposal (`StructureReviewCard.tsx`, rules in `frontend/lib/structureReviewView.ts`,
   shapes in `frontend/lib/structureReviewContract.ts`): the kind, the page and the stage or material
   it changes, the proposer's note, the item's parts (a native name or term in its own language and
