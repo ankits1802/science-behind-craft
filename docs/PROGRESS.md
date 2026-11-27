@@ -11,7 +11,7 @@ section 17. Everyone building KalaVigyan reads it; a new session starts at [NEXT
 | What was left below standard | [TECH_DEBT.md](TECH_DEBT.md) |
 | The rounds at a glance | [README.md](../README.md#status) |
 
-Last updated: 2026-11-25.
+Last updated: 2026-11-27.
 
 ## Done
 
@@ -1333,8 +1333,23 @@ Last updated: 2026-11-25.
     the critique, films from the media store with renewed addresses, and upgrade work raised for
     pages built before the round (0245). Parity finds a borrowed component by its authored
     selector (PR #220).
-  - **Waiting on the owner:** Anthropic's approval of the API host for Claude's file uploads
-    (mcp-review@anthropic.com, RUNBOOK); `MCP_FILE_UPLOADS_ENABLED` stays false until then.
+  - **The listing release** (PR #237, `5d41a13e`, decisions 0247 and 0248). The tool list as
+    Anthropic's Connectors Directory reads it: every parameter typed, every tool titled in
+    `annotations.title`, and descriptions that only describe, with the guidance they carried left
+    in the server's instructions, the playbook and the contributor skill (0247). What the acceptance
+    run's fresh agent could not fix on Sanganeri (run 45833659342: $14.84 of $25, 20 components,
+    10 rules failing): unit words drawn, stat tiles and bars at their size, borrowed figures held to
+    the page's facts, toggles checked in their lab, prose kept, pictures given and read, and
+    `preview_page` naming the tool for each failed rule (0248). On production: `/health` and
+    `/api/version` on it, migration head `0124_leftovers`, CloudWatch without errors, the MCP client
+    green. The post-deploy check and Monograph parity fail after the backend deploy: the held-facts
+    rule left the category pages without figures and took the shared figures off craft pages that
+    do not hold their facts (NEXT.md, Live now).
+  - **Submitted to the Connectors Directory** (2026-11-27): 26 tools, 13 of them read-only, sign-in
+    asked only when a tool needs it, with a Client ID Metadata Document. The request to approve the
+    file host went to mcp-review@anthropic.com from the newsletter sender.
+  - **Waiting on Anthropic:** the directory's review, and approval of the API host for Claude's file
+    uploads (mcp-review@anthropic.com, RUNBOOK); `MCP_FILE_UPLOADS_ENABLED` stays false until then.
 
 ## Next
 
