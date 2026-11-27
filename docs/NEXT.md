@@ -19,21 +19,24 @@ and released together, each batch verified on production.
 
 ## Live now
 
-- **KalaVigyan `main` at `5d41a13e` with the UX round** (2026-11-26, decisions 0225 to 0248,
+- **KalaVigyan `main` with the UX round** (2026-11-26 to 2026-11-27, decisions 0225 to 0249,
   PROGRESS.md, UX round): the page release `7f841c1c` (0227 to 0234, migration head
   `0121_coded_figures`), the gap release of PR #234 (0235 to 0246, migration head
-  `0124_leftovers`) and the listing release of PR #237 (0247 and 0248). A contributor's AI builds a
+  `0124_leftovers`), the listing release of PR #237 (`5d41a13e`, 0247 and 0248) and its fix
+  (PR #240, 0249). A contributor's AI builds a
   page from one line and the owner's rule holds: the AI follows Ajrakh's thinking, never copies it,
   and may write its own code over cited data. The owner submitted KalaVigyan to Anthropic's
   Connectors Directory on 2026-11-27; file uploads stay off until Anthropic approves the API host
   (RUNBOOK).
-  - **Open: the post-deploy check and Monograph parity fail on `5d41a13e`.** Decision 0248 draws a
-    borrowed figure only on a page that holds every fact it cites. On production that left every
-    category page without a figure (Textiles had four shared chemistry figures), against the
-    decision's own text that a category still draws a shared figure on its crafts' science. Craft
-    pages lost the shared figures whose facts they do not hold: Bagru five, Kutch Bandhani three
-    Kachchh figures, Sanganeri two. Bagru's control check still expects its dip player, and parity
-    finds no borrowed component to compare (it found 13 before).
+  - **The fix of PR #240 (decision 0249).** Decision 0248 drew a borrowed figure only on a page
+    that holds every fact it cites. On production that left every category page without a figure
+    (Textiles had four shared chemistry figures) and took Kutch Bandhani's three Kachchh figures
+    off it, so the post-deploy check and Monograph parity failed after `5d41a13e`'s backend
+    deploy. A category now holds the facts about concepts its own crafts and shelves own, so a
+    shared figure on its crafts' science draws again. A craft draws a shared figure bound to its
+    own districts or states. Every other craft page keeps only figures on facts it holds, so Bagru
+    and Sanganeri build their own. Both checks now wait until the API's `/health` names the
+    release, not only the site.
 - **KalaVigyan `main` at `f0f965b7`** (2026-11-25, decisions 0211 to 0224, PROGRESS.md, Quality
   round), verified on production: `/health` and `/api/version` on it, Vercel READY, CloudWatch
   without errors, migration head `0120_rest_after_removal`, Monograph parity, the post-deploy check

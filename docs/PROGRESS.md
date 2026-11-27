@@ -1342,9 +1342,16 @@ Last updated: 2026-11-27.
     the page's facts, toggles checked in their lab, prose kept, pictures given and read, and
     `preview_page` naming the tool for each failed rule (0248). On production: `/health` and
     `/api/version` on it, migration head `0124_leftovers`, CloudWatch without errors, the MCP client
-    green. The post-deploy check and Monograph parity fail after the backend deploy: the held-facts
-    rule left the category pages without figures and took the shared figures off craft pages that
-    do not hold their facts (NEXT.md, Live now).
+    green. The post-deploy check and Monograph parity failed after the backend deploy: the
+    held-facts rule left the category pages without figures and took Kutch Bandhani's Kachchh
+    figures off it. Both checks had read only the site's version, so their first wave passed
+    before the API was deployed.
+  - **The fix** (PR #240, decision 0249): a category holds the facts about concepts its own crafts
+    and shelves own, and a craft holds a shared figure bound to its own districts or states, on the
+    published page and in a draft alike. Every other craft page keeps only figures on facts it
+    holds, as 0248 decided. Bagru's control check reads its own players, and the dip player stays
+    required on Kutch Ajrakh. The post-deploy check and Monograph parity read pages only once the
+    API's `/health` names the release.
   - **Submitted to the Connectors Directory** (2026-11-27): 26 tools, 13 of them read-only, sign-in
     asked only when a tool needs it, with a Client ID Metadata Document. The request to approve the
     file host went to mcp-review@anthropic.com from the newsletter sender.
