@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import ArticleSection, Claim, ClaimSource, Concept, SectionProposal, TaskReservation, User
 from app.research.article_sections import SectionSentence
 from app.research.page_proposals import PageBundle
+from app.research.page_report_read import node_text
 from app.research.review_queue import QueueApproval, QueueRejection, SectionQueueItem
 from app.services.monograph_generated_sections import SectionOwner, publish_section
 from app.services.page_preview import preview_page
@@ -334,7 +335,8 @@ async def test_the_preview_draws_a_bundle_s_section_in_place_of_the_published_on
     assert "Drawn in place of the chemistry section" in previewed.parts[0].message
     token = previewed.preview_url.rsplit("/", 1)[1]
     document = await preview_document(session, user, token, now=NOW)
-    assert any(RETOLD in str(unit["nodes"]) for unit in document["content"]["units"].values())
+    drawn = [node_text(unit["nodes"]) for unit in document["content"]["units"].values()]
+    assert any(RETOLD.rstrip(".") in text for text in drawn), drawn
     assert await session.scalar(select(SectionProposal.id)) is None
     assert [(section.version, section.status) for section in await chemistry(session)] == [(1, "PUBLISHED")]
     refused = await preview_page(session, user, bundle(sentences[:2]), site=SITE, now=NOW)
