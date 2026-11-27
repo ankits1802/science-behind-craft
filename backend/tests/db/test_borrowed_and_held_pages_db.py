@@ -154,19 +154,23 @@ async def _shared(session: AsyncSession) -> list[KnowledgePiece]:
     return sorted(rows.all(), key=lambda row: str(row.label))
 
 
-async def test_a_family_or_category_page_draws_a_shared_figure_on_the_science_its_own_facts_tell(
+async def test_a_family_page_draws_a_shared_figure_on_the_science_its_own_facts_tell(
     session: AsyncSession,
 ) -> None:
     shared = await _shared(session)
-    for kind, slug, told in (
-        ("family", FAMILY_SLUG, FAMILY_CLAIM),
-        ("category", CATEGORY_SLUG, CATEGORY_CLAIM),
-    ):
-        subject = await subject_by_key(session, kind, slug)
-        assert [row.label for row in await held_rows(session, subject, shared, [told])] == [CONCEPT_PLAYER], (
-            kind
-        )
-        assert await held_rows(session, subject, shared, []) == [], kind
+    family = await subject_by_key(session, "family", FAMILY_SLUG)
+    assert [row.label for row in await held_rows(session, family, shared, [FAMILY_CLAIM])] == [CONCEPT_PLAYER]
+    assert await held_rows(session, family, shared, []) == []
+
+
+async def test_a_category_page_holds_the_facts_of_the_crafts_on_its_shelves_whatever_its_own_facts_tell(
+    session: AsyncSession,
+) -> None:
+    shared = await _shared(session)
+    category = await subject_by_key(session, "category", CATEGORY_SLUG)
+    for told in ([CATEGORY_CLAIM], []):
+        drawn = [row.label for row in await held_rows(session, category, shared, told)]
+        assert drawn == [CONCEPT_PLAYER, FOREIGN], told
 
 
 async def test_a_craft_page_holds_a_shared_figure_by_its_own_facts_whatever_science_it_tells(

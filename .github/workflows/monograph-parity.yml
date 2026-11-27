@@ -51,6 +51,7 @@ jobs:
           commit: ${{ github.event.workflow_run.head_sha }}
           trigger-run: ${{ github.event.workflow_run.id }}
           web-origin: ${{ vars.WEB_ORIGIN || 'https://kalavigyan.vercel.app' }}
+          api-origin: ${{ vars.API_BASE_URL }}
           wait-seconds: "2400"
           token: ${{ github.token }}
 
@@ -59,15 +60,16 @@ jobs:
           BUILT: ${{ steps.await.outputs.built }}
           REACHED: ${{ steps.await.outputs.reached }}
           HAVE: ${{ steps.await.outputs.served }}
+          HAVE_API: ${{ steps.await.outputs.api }}
           WAITED: ${{ steps.await.outputs.waited }}
           EXPECTED: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
           case "$BUILT:$REACHED" in
-            success:yes) echo "production serves $HAVE, so its parity is compared" ;;
+            success:yes) echo "production serves $HAVE and its API ${HAVE_API:-names no release}, so its parity is compared" ;;
             none:*) echo "::notice::this deploy started no web build, so parity waits for the deploy that does" ;;
             failure:*) echo "::error::the deploy hook did not start the build of ${EXPECTED:0:12}, so parity was not compared against an older build"; exit 1 ;;
-            *) echo "::error::production still serves ${HAVE:-no commit}, not ${EXPECTED:0:12} or a later commit of main, after waiting ${WAITED:-0}s: its Vercel build failed or never finished, so parity was not compared against an older build"; exit 1 ;;
+            *) echo "::error::production still serves ${HAVE:-no commit} on the site and ${HAVE_API:-no release} on the API, not ${EXPECTED:0:12} or a later commit of main with the API it needs, after waiting ${WAITED:-0}s: its Vercel build or the backend deploy it needs failed or never finished, so parity was not compared against an older build or API"; exit 1 ;;
           esac
 
   parity:

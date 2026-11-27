@@ -94,7 +94,8 @@ Each curated craft's first `PageLayout` comes from its dossier's picture placeme
 `python -m app.scripts.backfill_layouts` on the box once after the deploy that adds migration 0042.
 
 The parity proof of decision 0106 is the **Monograph parity** workflow, which runs after every
-deploy of main once production serves it, and by hand (optionally on a preview URL, or with
+deploy of main once production serves it (the site's `/api/version` names the commit or a later one
+and the API's `/health` release is that build's API, decision 0249), and by hand (optionally on a preview URL, or with
 `check` set to `monograph` or `borrowed` for one part). It compares `/crafts/Kutch-Ajrakh/monograph`
 with the approved static page at 360, 834 and 1440 in light and dark, text, chapters and the first
 citation and figure, then every component borrowed from Kutch Ajrakh on the pages that place it
@@ -867,7 +868,10 @@ fixture or the category page (`docs/contracts/category-page.md`).
 ## Release gate (round 7)
 
 - **Post-deploy check** (`.github/workflows/post-deploy.yml`): runs after Deploy web app and Deploy
-  backend on main, hourly (is production serving the newest main commit, or did that commit reach
+  backend on main once production serves the deployed commit (the site's `/api/version` names it or a
+  later commit, and the API's `/health` names that release, a later one, or one since which main
+  changes nothing the API serves, `.github/actions/await-build/served.sh`, decision 0249), hourly (is
+  production serving the newest main commit, or did that commit reach
   main less than 90 minutes ago, counted from its newest run of Backend checks, Deploy backend or
   Deploy web app?), in full daily at 03:17
   UTC, and by hand: `gh workflow run post-deploy.yml -R cxacraftecosystem-ui/KalaVigyan -f

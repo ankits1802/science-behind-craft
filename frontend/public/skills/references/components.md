@@ -241,7 +241,8 @@ stated by their units.
   (`SUBJECT_LINK`) or naming its label in the page's layout is refused when its units cite facts the
   page does not hold, and the refusal names them: build the page's own component of that kind on the
   page's own facts. One resting on facts the page holds (its own, its family's science, its shared
-  concepts) is placed as before, and the preview draws it.
+  concepts; on a category's page also its crafts' facts), or a shared figure keyed to the craft's own
+  district, is placed as before, and the preview draws it.
 - **An Admin's removal.** An Admin may stage a component's removal from every page or from one page;
   nothing changes until a person confirms it on the Review page.
 - **A page held for you.** When this account's proposals reach readers at once, `propose_page` with a

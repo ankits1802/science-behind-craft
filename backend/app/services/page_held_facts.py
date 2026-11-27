@@ -6,7 +6,16 @@ from collections.abc import Collection
 from sqlalchemy import ColumnElement, and_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import ArticleSection, Claim, Concept, CuratedCategoryClaim
+from app.models import (
+    ArticleSection,
+    Claim,
+    Concept,
+    ConceptEdge,
+    Craft,
+    CraftSubCategory,
+    CuratedCategoryClaim,
+)
+from app.research.retrieval import VISIBLE_SENSITIVITY
 from app.retrieval.hybrid import craft_scope
 from app.retrieval.statements import family_science, scope_claims
 
@@ -15,6 +24,7 @@ from .open_work_subjects import CATEGORY, WorkSubject
 __all__ = ["held_claims"]
 
 CONCEPT_SUBJECT = "CONCEPT"
+EDGE_SUBJECT = "EDGE"
 PUBLISHED = "PUBLISHED"
 
 
@@ -37,7 +47,23 @@ async def _held_by(session: AsyncSession, subject: WorkSubject) -> ColumnElement
     curated = select(CuratedCategoryClaim.claimId).where(CuratedCategoryClaim.categoryId == subject.id)
     science = select(Concept.id).where(family_science(subject.id))
     return or_(
-        Claim.id.in_(curated), and_(Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId.in_(science))
+        Claim.id.in_(curated),
+        and_(Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId.in_(science)),
+        _crafts_science(subject.id),
+    )
+
+
+def _crafts_science(category_id: uuid.UUID) -> ColumnElement[bool]:
+    shelves = select(CraftSubCategory.id).where(CraftSubCategory.categoryId == category_id)
+    crafts = select(Craft.id).where(Craft.subCategoryId.in_(shelves))
+    owned = select(Concept.id).where(
+        or_(Concept.craftId.in_(crafts), Concept.subCategoryId.in_(shelves)),
+        Concept.sensitivity == VISIBLE_SENSITIVITY,
+    )
+    edges = select(ConceptEdge.id).where(or_(ConceptEdge.srcId.in_(owned), ConceptEdge.dstId.in_(owned)))
+    return or_(
+        and_(Claim.subjectType == CONCEPT_SUBJECT, Claim.subjectId.in_(owned)),
+        and_(Claim.subjectType == EDGE_SUBJECT, Claim.subjectId.in_(edges)),
     )
 
 

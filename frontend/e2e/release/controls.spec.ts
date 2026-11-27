@@ -8,7 +8,7 @@ import { ControlWatch } from "./controlWatch";
 import { documentSession, phoneDocumentSession } from "./documentControls";
 import { walkMapLayers } from "./mapControls";
 import { darkStillSession } from "./placeControls";
-import { darkTouchSession, playerSession, whatIf } from "./playerControls";
+import { DIP_UNBORROWED, darkTouchSession, playerSession, whatIf } from "./playerControls";
 import { atlasControls, compareControls, landingControls, readingLink } from "./readingControls";
 import { bypassToken, siteOrigin } from "./site";
 
@@ -78,10 +78,10 @@ test.describe("a reader operates every control", () => {
     settled(watch);
   });
 
-  test("a generated document, Bagru Hand Block Print: rail, citations, players and the 3D molecule", async ({ page }) => {
+  test("a generated document, Bagru Hand Block Print: rail, citations, players, the 3D molecule and no borrowed vat dip", async ({ page }) => {
     const watch = await opened(page, "Bagru Hand Block Print", GENERATED);
     await documentSession(watch, page);
-    await playerSession(watch, page);
+    await playerSession(watch, page, DIP_UNBORROWED);
     settled(watch);
   });
 

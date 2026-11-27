@@ -23,6 +23,7 @@ from app.research.page_proposals import (
 )
 
 from .component_library_applies import registered_pieces
+from .component_places_held import held_by_place
 from .open_work_subjects import CATEGORY, WorkSubject, subject_by_key
 from .page_held_facts import held_claims
 from .page_layouts import subject_path
@@ -73,7 +74,8 @@ async def borrowed_problem(session: AsyncSession, subject: WorkSubject, labels: 
     if not borrowed:
         return None
     held = await held_claims(session, subject, [claim for piece, _ in borrowed for claim in piece.claimIds])
-    found = [_problem(piece, owner, subject, held) for piece, owner in borrowed]
+    placed = await held_by_place(session, subject, [piece for piece, _ in borrowed])
+    found = [_problem(piece, owner, subject, held) for piece, owner in borrowed if piece.id not in placed]
     return " ".join(problem for problem in found if problem is not None) or None
 
 

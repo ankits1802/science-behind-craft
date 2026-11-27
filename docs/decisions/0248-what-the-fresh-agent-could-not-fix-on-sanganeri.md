@@ -22,6 +22,8 @@ the page), [decision 0234](0234-a-contributor-s-ai-builds-a-page-over-mcp-from-o
 `docs/contracts/open-work.md` (the server's read; the `give_picture` prompt) and the contributor
 skill (pictures by `page_url`; a field's prose from a draft).
 
+Amended by [decision 0249](0249-a-category-draws-its-crafts-shared-figures-a-craft-its-own-place-s-and-the-checks-wait-for-the-api.md): a category's page also holds its crafts' facts, and a craft's page draws a shared figure keyed to its own place.
+
 | For | Read |
 |---|---|
 | The run | GitHub run 45833659342 (`agent-acceptance.yml`), its summary, transcript, preview and pictures |

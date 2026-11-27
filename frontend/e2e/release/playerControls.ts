@@ -15,6 +15,8 @@ const MOLECULE_MS = 30_000;
 const KIT_PLAYER = "figure.rp";
 const ANSWER_PLAYER = '[data-testid="reaction-player"]';
 const DIP_PLAYER = "figure.vat";
+const SHARED_DIP = '[data-component="shared/chemistry/indigo-vat-dip"]';
+const BORROWED_DIP = "the page draws the shared indigo vat dip, whose facts it does not hold";
 const CHOICE = '.seg[data-choice] button[data-v][aria-pressed="false"]';
 const EXPERIMENT = '[data-x][aria-pressed="false"]';
 const KIT_MOLECULE = ".mol[data-cid]";
@@ -27,6 +29,7 @@ const DARK = "dark";
 const DRAG_SHARES = [0.3, 0.45, 0.6, 0.75];
 
 export type Present = { kit: boolean; answer: boolean };
+export type DipCheck = { step: string; problems: (page: Page) => Promise<string[]> };
 type CanvasRead = { corner: number; drawn: number; checksum: string; backdrop: string };
 type WellRead = { theme: string; sunk: string; well: string; frame: string };
 
@@ -169,13 +172,26 @@ export async function answerMolecule(page: Page): Promise<string[]> {
   return expectedProblems("the figure's 3D molecule", "ready", status);
 }
 
-export async function playerSession(watch: ControlWatch, page: Page): Promise<void> {
+async function drawnDip(page: Page): Promise<string[]> {
+  return (await page.locator(DIP_PLAYER).count()) ? dipPlayer(page) : ["the document draws no dip player"];
+}
+
+async function unborrowedDip(page: Page): Promise<string[]> {
+  const borrowed = (await page.locator(SHARED_DIP).count()) ? [BORROWED_DIP] : [];
+  const own = (await page.locator(DIP_PLAYER).count()) ? await dipPlayer(page) : [];
+  return [...borrowed, ...own];
+}
+
+const DIP_DRAWN: DipCheck = { step: "Dip player", problems: drawnDip };
+export const DIP_UNBORROWED: DipCheck = { step: "No borrowed dip player", problems: unborrowedDip };
+
+export async function playerSession(watch: ControlWatch, page: Page, dip: DipCheck = DIP_DRAWN): Promise<void> {
   const reaction = await present(page, KIT_PLAYER, ANSWER_PLAYER);
   const molecule = await present(page, KIT_MOLECULE, ANSWER_MOLECULE);
   if (!reaction.kit && !reaction.answer) await watch.step("Reaction player", async () => ["the document draws no reaction player"]);
   if (reaction.kit) await watch.step("Reaction player steps and play", () => kitReactionPlayer(page));
   if (reaction.answer) await watch.step("Figure reaction player steps and play", () => answerReactionPlayer(page));
-  await watch.step("Dip player", async () => ((await page.locator(DIP_PLAYER).count()) ? dipPlayer(page) : ["the document draws no dip player"]));
+  await watch.step(dip.step, () => dip.problems(page));
   if (molecule.kit) await watch.step("3D molecule turns", () => kitMolecule(page));
   if (molecule.answer) await watch.step("Figure 3D molecule reports ready", () => answerMolecule(page));
   if (!molecule.kit && !molecule.answer) await watch.step("3D molecule", async () => ["the document draws no 3D molecule"]);

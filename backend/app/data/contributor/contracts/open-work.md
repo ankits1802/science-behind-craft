@@ -63,7 +63,7 @@ stateDiagram-v2
 | Stewardship | `services/stewardship.py`, contract `research/stewardship.py`, table `CraftSteward` (`models/contributions.py`, migration `0048_contribution_queue`) |
 | A component proposal | `services/component_proposals.py`; the delivered spec `component_proposals_spec.py`, registration `component_proposals_register.py` (`component-specs-general.md`) |
 | Withdrawing, replacing and taking a component off a page | `services/component_lifecycle.py` (`take_off_pages`, `withdraw_registered`, `retire_replaced`), `component_retirers.py` (who may), `component_withdrawals.py` (at once or asked, and the bundle's page), `component_layout_swaps.py`; tables `KnowledgePieceUnlink` and `PageHold` (`models/component_lifecycle.py`, migration `0103_component_lifecycle`) |
-| Borrowed components and the facts a page holds | `services/borrowed_placements.py`, `services/page_held_facts.py`; the preview's links and withdrawals `services/page_preview_lifecycle.py` |
+| Borrowed components and the facts a page holds | `services/borrowed_placements.py`, `services/page_held_facts.py`, `services/component_places_held.held_by_place`; the preview's links and withdrawals `services/page_preview_lifecycle.py` |
 | A page held for one confirmation | `research/page_holds.py`, `services/page_holds.py`, `services/trust_tiers.publishes_at_once`; routes `api/routes/page_holds.py` |
 | `propose_page` and `preview_page` | `research/page_proposals.py` (the bundle and its reports), `services/page_proposals.py` with `page_proposals_parts.py`, `services/page_preview.py` with `page_preview_parts.py`, `page_preview_additions.py` and `page_preview_links.py` |
 | Tables | `models/open_work.py` (`TaskReservation`, `ComponentProposal`), migration `0038_open_work`; the delivered spec's columns and `models/page_previews.py` (`PagePreview`), migration `0049_delivered_components` |
@@ -557,11 +557,16 @@ The delivery, `spec` and `units`, is required on MCP except for a `SUBJECT_LINK`
   (on a category's page, every component is). It is refused when its units' facts
   (`KnowledgePiece.claimIds`) include any the page does not hold (`page_held_facts.held_claims`: a
   craft's claim scope with its family's science, merged crafts and linked shared concepts, and the
-  facts its published sections cite; a category's curated facts, family science and sections), with
-  one sentence naming every such fact and the way on: build the page's own component of that kind on
-  its own facts. `edit_draft` refuses the addition, and `preview_page` and `propose_page` refuse that
-  part (`borrowed_placements.borrowed_problem`). One whose facts the page holds is placed as before,
-  and the preview now draws a held link (the registered component, where the page will draw it).
+  facts its published sections cite; a category's curated facts, family science, sections and the
+  facts of the crafts on its shelves, decision 0249), with one sentence naming every such fact and
+  the way on: build the page's own component of that kind on its own facts. A shared component keyed
+  to a place (`KnowledgePieceSubject.placeKey`) whose place binding meets a craft's own districts or
+  states is held by that craft's page whatever it cites (`component_places_held.held_by_place`).
+  `edit_draft` refuses the addition, and `preview_page` and `propose_page` refuse that part
+  (`borrowed_placements.borrowed_problem`); the published page draws a borrowed component by the
+  same rule (`monograph_generated_parts.held_rows`). One whose facts the page holds is placed as
+  before, and the preview now draws a held link (the registered component, where the page will draw
+  it).
 - **A whole page waits for one confirmation** when the account's proposals reach readers at once
   (`trust_tiers.publishes_at_once`: the very placement a fact of this account would get from the
   agent switch, so a Professor or above, a `PROVEN` account, or an `ESTABLISHED` one under `AUTO`).
@@ -1209,7 +1214,7 @@ differs from `docs/contracts`. After editing one of the five contracts, copy it 
 | The agent's critique and the server's read (decision 0237) | `backend/tests/pages/test_page_critique.py`, `test_page_design_read.py`, `backend/tests/research/test_design_read.py`, `backend/tests/images/test_design_vision.py`, `backend/tests/mcp/test_mcp_preview_critique.py`, `backend/tests/db/test_design_feedback_db.py`, `frontend/e2e/page-preview-card-unit.spec.ts` and `frontend/e2e/design-critique-unit.spec.ts` |
 | The render, rule 28, the counts beside Kutch Ajrakh and the refusal after a failed drawing; rule 29's opportunities and the one-call composition (`test_page_report_drawable.py`, `backend/tests/pages/test_page_report_held.py`, `backend/tests/mcp/test_compose_tool.py`) and the card (`frontend/e2e/page-preview-card-unit.spec.ts`) | `backend/tests/research/test_page_render.py`, `test_page_report_drawing.py`, `test_page_counts.py`, `backend/tests/renderer/`, `backend/tests/pages/test_page_renders.py`, `backend/tests/db/test_render_review_db.py`, `frontend/e2e/parity/parity-drawing-unit.spec.ts` and `frontend/e2e/preview-render-pass-unit.spec.ts` |
 | Drafts | `backend/tests/research/test_page_drafts.py`, `backend/tests/db/test_page_drafts_db.py` and `backend/tests/mcp/test_mcp_page_tools.py` |
-| Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
+| Withdrawn, replaced, borrowed and held | `backend/tests/research/test_component_lifecycle_rules.py`, `backend/tests/db/test_component_lifecycle_db.py`, `test_borrowed_and_held_pages_db.py`, `test_shared_figures_held_db.py` and `backend/tests/mcp/test_mcp_page_holds.py` |
 | A craft's own interactive, composed and placed as `edit_draft` takes it | `backend/tests/compose/` and `backend/tests/mcp/test_compose_tool.py` |
 | The HTTP routes | `backend/tests/test_open_work_routes.py` and `backend/tests/public/test_route_inventory.py` |
 | The prompts and resources | `backend/tests/mcp/test_mcp_prompts_resources.py` and `test_mcp_prompt_curate.py` |

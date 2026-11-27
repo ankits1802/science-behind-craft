@@ -25,10 +25,18 @@ from .component_places import PlaceBinding, PlacesHeld, component_binding, joine
 from .component_proposals_drawn import stored_delivery
 from .measure_regions import district_states
 from .monograph_generated_drawings import Drawings
-from .open_work_subjects import CATEGORY, WorkSubject
+from .open_work_subjects import CATEGORY, CRAFT, WorkSubject
 from .region_records import located_places
 
-__all__ = ["PieceFacts", "held_pieces", "piece_facts", "piece_texts", "places_held", "subject_places"]
+__all__ = [
+    "PieceFacts",
+    "held_by_place",
+    "held_pieces",
+    "piece_facts",
+    "piece_texts",
+    "places_held",
+    "subject_places",
+]
 
 UNIT_TEXTS_CACHED = 512
 DRAWINGS = Drawings()
@@ -107,6 +115,24 @@ async def held_pieces(session: AsyncSession, pairs: Sequence[Pair]) -> set[tuple
         if piece.owner == craft
         or _bound(piece, places.get(piece.id, ()), texts.get(piece.id, ())).held_by(held[craft])
     }
+
+
+async def held_by_place(
+    session: AsyncSession, subject: WorkSubject, pieces: Sequence[KnowledgePiece]
+) -> frozenset[uuid.UUID]:
+    shared = [piece for piece in pieces if piece.craftId is None]
+    if subject.kind != CRAFT or not shared:
+        return frozenset()
+    keyed = await _piece_places(session, [piece.id for piece in shared])
+    if not keyed:
+        return frozenset()
+    held = await subject_places(session, subject)
+    return frozenset(
+        piece.id
+        for piece in shared
+        if piece.id in keyed
+        and _bound(piece_facts(piece), keyed[piece.id], piece_texts(piece.label, piece.payload)).held_by(held)
+    )
 
 
 def _bound(piece: PieceFacts, places: Sequence[str], units: Sequence[str]) -> PlaceBinding:

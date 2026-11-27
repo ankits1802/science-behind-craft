@@ -23,6 +23,7 @@ from app.research.component_specs_general_delivery import DeliveredComponent
 
 from .component_library import library_components
 from .component_places import PlaceBinding, component_binding, subject_place_keys
+from .component_places_held import held_by_place
 from .component_proposals_drawn import stored_delivery
 from .craft_page_family import family_names, family_place, reader_name
 from .knowledge_export import EXPORT_COMPONENTS_MAX
@@ -145,11 +146,17 @@ async def held_rows(
     session: AsyncSession, subject: WorkSubject, rows: list[KnowledgePiece], page_claims: Sequence[uuid.UUID]
 ) -> list[KnowledgePiece]:
     owner = None if subject.kind == CATEGORY else subject.id
-    cited = [claim for row in rows if _borrowed(row, owner) for claim in row.claimIds or ()]
+    borrowed = [row for row in rows if _borrowed(row, owner)]
+    cited = [claim for row in borrowed for claim in row.claimIds or ()]
     held = await held_claims(session, subject, cited)
     if subject.kind != CRAFT:
         held |= await _told_alike(session, cited, page_claims)
-    return [row for row in rows if not _borrowed(row, owner) or set(row.claimIds or ()) <= held]
+    placed = await held_by_place(session, subject, borrowed)
+    return [
+        row
+        for row in rows
+        if not _borrowed(row, owner) or row.id in placed or set(row.claimIds or ()) <= held
+    ]
 
 
 async def _told_alike(

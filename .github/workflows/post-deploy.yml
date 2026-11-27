@@ -51,6 +51,7 @@ jobs:
       trigger: ${{ steps.want.outputs.trigger }}
       verdict: ${{ steps.verdict.outputs.verdict }}
       served: ${{ steps.await.outputs.served }}
+      api: ${{ steps.await.outputs.api }}
     steps:
       - name: Check out the repository with its history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -114,6 +115,7 @@ jobs:
           commit: ${{ steps.want.outputs.expected }}
           trigger-run: ${{ steps.want.outputs.run }}
           web-origin: ${{ env.WEB_ORIGIN }}
+          api-origin: ${{ vars.API_BASE_URL }}
           wait-seconds: ${{ steps.want.outputs.wait }}
           token: ${{ github.token }}
 
@@ -126,6 +128,7 @@ jobs:
           BUILT: ${{ steps.await.outputs.built }}
           REACHED: ${{ steps.await.outputs.reached }}
           HAVE: ${{ steps.await.outputs.served }}
+          HAVE_API: ${{ steps.await.outputs.api }}
           WAITED: ${{ steps.await.outputs.waited }}
           GRACE_SECONDS: "5400"
         run: bash .github/scripts/post_deploy_verdict.sh
@@ -234,6 +237,7 @@ jobs:
           VERDICT: ${{ needs.served.outputs.verdict }}
           EXPECTED: ${{ needs.served.outputs.expected }}
           SERVED: ${{ needs.served.outputs.served }}
+          SERVED_API: ${{ needs.served.outputs.api }}
           TRIGGER: ${{ needs.served.outputs.trigger }}
         run: |
           set -euo pipefail
@@ -245,7 +249,7 @@ jobs:
             *) commit=unchanged ;;
           esac
           case "$VERDICT" in
-            behind) why="Production still serves \`${SERVED:-no commit}\` after waiting: the Vercel production build of \`$EXPECTED\` failed or never started." ;;
+            behind) why="Production still serves \`${SERVED:-no commit}\` on the site and \`${SERVED_API:-no release}\` on the API after waiting: the Vercel production build of \`$EXPECTED\`, or the backend deploy it needs, failed or never finished." ;;
             silent) why="$WEB_ORIGIN/api/version reports no commit, so nobody can tell what production serves." ;;
             refused) why="The deploy hook did not start the production build of \`$EXPECTED\`." ;;
             served) why="Production serves \`$SERVED\`, which is \`$EXPECTED\` or a later commit of main." ;;
@@ -256,6 +260,7 @@ jobs:
             echo ""
             echo "- Commit production should serve: \`${EXPECTED:-unknown}\`"
             echo "- Commit production serves: \`${SERVED:-none}\`"
+            echo "- Release its API runs: \`${SERVED_API:-none}\`"
             [ -z "$TRIGGER" ] || echo "- After: $TRIGGER"
             echo "- Check: $RUN_URL"
           } > "$commit_md"
