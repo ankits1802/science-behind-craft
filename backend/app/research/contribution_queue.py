@@ -4,15 +4,16 @@ import hashlib
 import json
 import uuid
 from datetime import datetime, timedelta
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import Field
+from pydantic import Field, RootModel
 
 from app.models.contributions import IDEMPOTENCY_KEY_CHARS, QUEUE_STATES
 
 from .base import ContractModel
 from .knowledge_writes import FactProposal, ProposalReply, ProposalSubject
 from .review_switch import ProposalOutcome
+from .section_proposals import SectionTicket
 from .vocabulary import Discipline
 
 __all__ = [
@@ -30,6 +31,7 @@ __all__ = [
     "STREAM_REQUEST_PREFIX",
     "BatchItem",
     "FactBatchBody",
+    "FollowedProposal",
     "ProposalBatch",
     "ProposalTicket",
     "ProposalTickets",
@@ -81,6 +83,10 @@ class ProposalTicket(ContractModel):
     cost_usd: float = Field(default=0.0, ge=0.0)
     message: str
     notices: list[str] = Field(default_factory=list)
+
+
+class FollowedProposal(RootModel[Annotated[ProposalTicket | SectionTicket, Field(discriminator="kind")]]):
+    pass
 
 
 class ProposalTickets(ContractModel):

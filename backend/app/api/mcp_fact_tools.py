@@ -3,9 +3,9 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE
-from app.research.contribution_queue import ProposalBatch, ProposalTicket
+from app.research.contribution_queue import FollowedProposal, ProposalBatch
 from app.research.review_switch import AGENT
-from app.services import contribution_queue, contribution_queue_tickets
+from app.services import contribution_queue, section_tickets
 from app.services.contribution_queue import QueuedFact
 
 from .mcp_fact_arguments import GetProposal, ProposeFacts
@@ -35,13 +35,17 @@ PROPOSE_DESCRIPTION = (
     "refused one releases it."
 )
 GET_DESCRIPTION = (
-    "The state of one of this account's proposals: QUEUED with the number of proposals ahead of it, CHECKING "
-    "while the gates run, DONE with the reply (published, waiting for a reviewer or refused, each gate's "
-    "reasons, the fact's id, and readers: whether a signed-out reader sees the fact now, on which page and "
-    "field, whether a written section cites it or which write-section task is open, or why readers cannot see "
-    "it; readers.shown is true only while a signed-out reader sees the fact) and the model calls and cost the "
-    "checks took, or FAILED when the checks could not run after five tries (nothing was stored, and the same "
-    "proposal sent again with its idempotency_key is checked anew)."
+    "The state of one of this account's proposals, a fact's or a field's section's, by the proposal id its "
+    "proposal's reply gave. A fact (kind FACT) is QUEUED with the number of proposals ahead of "
+    "it, CHECKING while the gates run, DONE with the reply (published, waiting for a reviewer or refused, each "
+    "gate's reasons, the fact's id, and readers: whether a signed-out reader sees the fact now, on which page "
+    "and field, whether a written section cites it or which write-section task is open, or why readers cannot "
+    "see it; readers.shown is true only while a signed-out reader sees the fact) and the model calls and cost "
+    "the checks took, or FAILED when the checks could not run after five tries (nothing was stored, and the "
+    "same proposal sent again with its idempotency_key is checked anew). A field's section (kind SECTION) is "
+    "PENDING while it waits for a reviewer, APPROVED, REJECTED or REFUSED, with its sentences, every check "
+    "with its reasons, the reviewer's note, and once approved the published section it became: its version, "
+    "its status now and its page."
 )
 
 
@@ -58,9 +62,9 @@ async def _propose_many(context: ToolContext, arguments: ProposeFacts) -> Propos
     return contribution_queue.batch_of(items).model_copy(update={"notices": arguments.notices()})
 
 
-async def _get_proposal(context: ToolContext, arguments: GetProposal) -> ProposalTicket:
+async def _get_proposal(context: ToolContext, arguments: GetProposal) -> FollowedProposal:
     user = signed_in(context)
-    return await contribution_queue_tickets.own_ticket(context.session, user, arguments.proposal_id)
+    return await section_tickets.followed_proposal(context.session, user, arguments.proposal_id)
 
 
 PROPOSE_FACTS = Tool(
@@ -79,7 +83,7 @@ GET_PROPOSAL = Tool(
     title="Get a proposal's progress",
     description=GET_DESCRIPTION,
     arguments=GetProposal,
-    output=ProposalTicket,
+    output=FollowedProposal,
     run=_get_proposal,
     scope=CONTRIBUTE_SCOPE,
     annotations=READ_ONLY,

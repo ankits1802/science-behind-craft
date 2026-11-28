@@ -8,8 +8,9 @@ from app.api import mcp_fact_tools
 from app.api.mcp_tools import ToolContext, answer
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE, READ_SCOPE
 from app.models import User
-from app.research.contribution_queue import BatchItem, ProposalTicket
+from app.research.contribution_queue import BatchItem, FollowedProposal, ProposalTicket
 from app.research.knowledge_writes import FactProposal
+from app.research.section_proposals import SectionCheck, SectionTicket
 from app.services import contribution_queue
 from app.services.contribution_queue import QueuedFact
 from app.services.craft_resolver import CraftIndexStore
@@ -234,3 +235,76 @@ async def test_a_batch_of_more_than_twenty_five_facts_is_refused_whole(
 async def test_a_proposal_s_progress_needs_a_signed_in_connection() -> None:
     result = await call("get_proposal", {"proposal_id": str(uuid.UUID(int=5))}, context(None))
     assert result["isError"] is True and "signed-in connection" in result["content"][0]["text"]
+
+
+def followed(found: ProposalTicket | SectionTicket, asked: list[uuid.UUID]) -> Any:
+    async def follow(session: Any, user: User, proposal_id: uuid.UUID) -> FollowedProposal:
+        asked.append(proposal_id)
+        return FollowedProposal(found)
+
+    return follow
+
+
+async def test_get_proposal_follows_a_section_proposal_by_its_id(monkeypatch: pytest.MonkeyPatch) -> None:
+    asked: list[uuid.UUID] = []
+    section = SectionTicket(
+        proposal_id=uuid.UUID(int=77),
+        status="REJECTED",
+        subject={"kind": "craft", "slug": "Kutch-Ajrakh"},
+        field="CHEMISTRY",
+        sentences=[{"text": STATEMENT, "claim_ids": [str(uuid.UUID(int=78))]}],
+        checks=[SectionCheck(check="HELD", passed=True, reasons=["every cited fact is held"])],
+        proposed_at=QUEUED_AT,
+        reviewed_at=QUEUED_AT,
+        review_note="It retells the list.",
+        message="Rejected by its reviewer: It retells the list.",
+    )
+    monkeypatch.setattr(mcp_fact_tools.section_tickets, "followed_proposal", followed(section, asked))
+    result = await call("get_proposal", {"proposal_id": str(uuid.UUID(int=77))}, context("RESEARCHER"))
+    assert result["isError"] is False
+    structured = result["structuredContent"]
+    assert (structured["kind"], structured["status"], structured["reviewNote"]) == (
+        "SECTION",
+        "REJECTED",
+        "It retells the list.",
+    )
+    assert structured["checks"][0]["reasons"] == ["every cited fact is held"]
+    assert structured["section"] is None and asked == [uuid.UUID(int=77)]
+
+
+async def test_get_proposal_still_follows_a_fact_proposal(monkeypatch: pytest.MonkeyPatch) -> None:
+    fact = QueuedFact(
+        index=0,
+        proposal=FactProposal.model_validate(
+            {
+                "subject": {"kind": "craft", "slug": "Kutch-Ajrakh"},
+                "field": "PROCESS",
+                "statement": STATEMENT,
+                "sources": [SOURCE],
+            }
+        ),
+        key="agent-run-7:fact-1",
+    )
+    monkeypatch.setattr(mcp_fact_tools.section_tickets, "followed_proposal", followed(ticket(fact), []))
+    result = await call("get_proposal", {"proposal_id": str(uuid.UUID(int=1000))}, context("RESEARCHER"))
+    structured = result["structuredContent"]
+    assert (structured["kind"], structured["state"], structured["idempotencyKey"]) == (
+        "FACT",
+        "QUEUED",
+        "agent-run-7:fact-1",
+    )
+
+
+def test_a_section_ticket_names_a_published_section_only_once_approved() -> None:
+    with pytest.raises(ValueError, match="only once it was approved"):
+        SectionTicket(
+            proposal_id=uuid.UUID(int=79),
+            status="PENDING",
+            subject={"kind": "craft", "slug": "Kutch-Ajrakh"},
+            field="CHEMISTRY",
+            sentences=[{"text": STATEMENT, "claim_ids": [str(uuid.UUID(int=78))]}],
+            checks=[],
+            proposed_at=QUEUED_AT,
+            section={"version": 2, "status": "PUBLISHED"},
+            message="Waiting.",
+        )
