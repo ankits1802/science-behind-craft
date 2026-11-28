@@ -53,6 +53,7 @@ ALL_KINDS = (
     "LAYERS",
     "STAGES",
     "PICTURE_CHECKS",
+    "SECTIONS",
 )
 NOON = datetime(2026, 11, 19, 12, 0, 0, 123456, tzinfo=UTC)
 
@@ -63,7 +64,7 @@ NOON = datetime(2026, 11, 19, 12, 0, 0, 123456, tzinfo=UTC)
         ("STUDENT", ()),
         ("ARTISAN", ()),
         ("RESEARCHER", ()),
-        ("PROFESSOR", ("FACTS", "TESTIMONY", "STRUCTURE", "READINGS", "STAGES")),
+        ("PROFESSOR", ("FACTS", "TESTIMONY", "STRUCTURE", "READINGS", "STAGES", "SECTIONS")),
         ("ADMIN", ALL_KINDS),
         ("MASTER_ADMIN", ALL_KINDS),
     ],
@@ -81,8 +82,8 @@ def test_only_admins_and_master_admins_see_who_proposed(role: str, shown: bool) 
     ("origin", "kinds"),
     [
         ("RESEARCH", ("FACTS", "READINGS", "STAGES")),
-        ("CONTRIBUTION", ("FACTS", "IMAGES", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS")),
-        ("AGENT", ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "PICTURE_CHECKS")),
+        ("CONTRIBUTION", ("FACTS", "IMAGES", "LAYOUTS", "STRUCTURE", "READINGS", "LAYERS", "SECTIONS")),
+        ("AGENT", ("FACTS", "COMPONENTS", "LAYOUTS", "STRUCTURE", "READINGS", "PICTURE_CHECKS", "SECTIONS")),
         ("TESTIMONY", ("TESTIMONY",)),
         (None, ALL_KINDS),
     ],
@@ -117,6 +118,8 @@ def test_a_kind_filter_never_reaches_past_the_viewers_kinds() -> None:
         (STAGES, REJECT, Capability.MARK_CLAIM_LEVEL),
         ("PICTURE_CHECKS", APPROVE, Capability.REVIEW_CONTRIBUTIONS),
         ("PICTURE_CHECKS", REJECT, Capability.REVIEW_CONTRIBUTIONS),
+        ("SECTIONS", APPROVE, Capability.MARK_CLAIM_LEVEL),
+        ("SECTIONS", REJECT, Capability.MARK_CLAIM_LEVEL),
     ],
 )
 def test_each_decision_needs_its_kinds_capability(kind: str, action: str, capability: Capability) -> None:
@@ -133,6 +136,7 @@ def test_each_decision_needs_its_kinds_capability(kind: str, action: str, capabi
         (STRUCTURE, RAISE),
         (STAGES, RAISE),
         ("PICTURE_CHECKS", RETRACT),
+        ("SECTIONS", RAISE),
     ],
 )
 def test_only_a_fact_is_raised_or_retracted(kind: str, action: str) -> None:
@@ -322,6 +326,7 @@ def test_each_item_names_its_kind_by_the_queue_it_belongs_to() -> None:
             contract.LayerQueueItem,
             contract.StageQueueItem,
             contract.PictureCheckItem,
+            contract.SectionQueueItem,
         )
     ]
     assert kinds == list(ALL_KINDS)

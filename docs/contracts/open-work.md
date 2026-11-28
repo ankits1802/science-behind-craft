@@ -92,7 +92,7 @@ at most 20 ids; `count` is the whole number.
 |---|---|---|---|---|
 | `MISSING_FIELD` | a field holds no cited facts and no section | `MISSING_FIELD:<subject>:<slug>:<FIELD>` | facts wanted | `research_field` |
 | `THIN_FIELD` | a field holds facts or a section but fewer facts than the target | `THIN_FIELD:...:<FIELD>` | facts still wanted | `research_field` |
-| `SECTION` | a field meets its facts target, but its published section is missing or shorter than the target | `SECTION:...:<FIELD>` | facts held | `write_section` |
+| `SECTION` | a field meets its facts target, but its published section is missing or shorter than the target; done by a section part of `propose_page` (Pages delivered whole, below), hidden from others while one waits for review, and completed when it is approved | `SECTION:...:<FIELD>` | facts held | `write_section` |
 | `MISSING_COMPONENT` | a craft or family has no registered component of a need's kinds | `MISSING_COMPONENT:...:<need>` | 0 | `propose_component` |
 | `FLAGSHIP` | one of the nine family pages draws no `reaction_player`, `dip_player`, `stage_player` or `experiment_lab` (The family flagships, below) | `FLAGSHIP:category:<slug>` | the backlog's facts | `deliver_page` |
 | `PAGE_FORM` | the page is not in the monograph form | `PAGE_FORM:<subject>:<slug>` | 0 | none |
@@ -738,6 +738,8 @@ and reading sources and Never:
   component, the source steps (`search_sources`, then `lookup`, `read_source` for the text the gates
   will read and with `quotes` on every quote, with the agent's own search where they find nothing;
   `write_section`, `propose_component` and `deliver_dataset` name the same tools in their own steps,
+  `write_section` ending on `preview_page` with a bundle holding the field's section and
+  `propose_page` with it (decision 0250),
   and `give_picture` ends on `search_sources` with kinds pictures for open pictures given by their
   `page_url` with `give_pictures`),
   `propose_facts` with idempotency keys and the claimed task as `task_key`, then `get_proposal` or
@@ -908,7 +910,8 @@ flowchart LR
 ```
 
 One bundle builds one page, `PageBundle {schemaVersion 1, subject, facts[], structure[],
-components[], layout?, pictures[], translation?, withdrawals[], note?}`, holding at least one part:
+components[], layout?, pictures[], translation?, withdrawals[], sections[], note?}`, holding at least
+one part:
 
 | Part | Holds | At most |
 |---|---|---|
@@ -920,6 +923,7 @@ components[], layout?, pictures[], translation?, withdrawals[], note?}`, holding
 | `pictures[]` | `{stageId?, claimIds, declaration?}` | 10 |
 | `translation?` | a page's passages in one language (Pages in other languages, above; `monograph-document.md`) | one |
 | `withdrawals[]` | `{label, reason?}`, each a registered component of the page that the account may retire or, as its craft's steward, ask to have retired, once each | 10 |
+| `sections[]` | `{field, sentences [{text, claimIds}], note?}`, a field's written section, its sentences in order, each citing the stored facts it rests on (`knowledge-writes.md`, Section proposals; decision 0250), once a field | 16 |
 | `note?` | a note | one |
 
 Over MCP it is `propose_page`'s and `preview_page`'s `bundle`, in snake_case, and a draft's parts make
@@ -936,9 +940,11 @@ structure item through its checks, a component through the delivery checks and t
 the layout against the page's current version (stored for review, or written at once by an
 Admin), and a picture by starting its upload (the link and slot of `give_pictures`'s `upload:
 true`, `mcp_picture_tools.start_picture`, reported in the part's `upload`); a translation's passages
-are checked next, each reported on its own, and withdrawals last, each taking its component off every
+are checked next, each reported on its own, then withdrawals, each taking its component off every
 page (`status WITHDRAWN`, its piece's id) or, for a steward, asking an Admin to (`status STAGED`),
-and counting as a component proposal. A `SUBJECT_LINK` or
+and counting as a component proposal, and sections last, each through its checks and its judge,
+stored refused, waiting for review or written at once (`status REFUSED`, `PENDING` or `APPROVED`, its
+proposal's id) and counting as a structure item. A `SUBJECT_LINK` or
 a layout placing a borrowed component that cannot pass is refused (Withdrawn, replaced, borrowed and
 held, above), and a whole page from an account that publishes at once is held instead of run. Each
 part of a bundle of more than one part counts against its kind's hour sized for one whole page
@@ -970,6 +976,7 @@ plus the bundle (`PageAdditions` into `monograph_generated.generated_parts`):
 | A fact, and a structure item that states a fact | one more sentence at the end of its field's section, citing its proposed sources (unstored sources, numbered after the page's); a conflict is listed only |
 | A component | drawn from its delivered spec where the page will draw it once registered; the delivery checks run, so a component that would be refused is refused here; a `SUBJECT_LINK` whose facts the page holds is drawn as the registered component (listed when another craft owns it, since only that craft's page draws it) |
 | A withdrawal | the component is left off the page, checked as `propose_page` would check who may retire it |
+| A section | drawn in place of its field's published section, the bundle's facts in that field after it, once its first four checks pass (`knowledge-writes.md`, Section proposals); refused with their reasons otherwise; its judge reads it when it is proposed |
 | The layout | replaces the page's own as its next version, refused when its base version is stale |
 | Pictures | listed: they are drawn once uploaded and approved |
 
@@ -1108,18 +1115,18 @@ A draft is a page bundle built over many calls (`research/page_drafts.py`, `serv
   as `preview_page` finds it), and every later one works on the open one; an account holds at most
   10 open drafts (`DRAFTS_OPEN_MAX`), and its drafts past their expiry are deleted when it opens one.
   With `draft_id` instead it works on that draft.
-- `add {facts?, structure?, components?, layout?, pictures?, supplied_sources?, withdrawals?, note?}`
-  and `lists` append parts (a layout, lists or note replaces the draft's, and a withdrawal of a label
-  the draft holds replaces it) and refuse an add past one call's bound (20 facts, 20 structure items,
+- `add {facts?, structure?, components?, layout?, pictures?, supplied_sources?, withdrawals?, sections?,
+  note?}` and `lists` append parts (a layout, lists or note replaces the draft's, a withdrawal of a
+  label the draft holds replaces it, and so does a section of a field the draft holds) and refuse an add past one call's bound (20 facts, 20 structure items,
   10 components, 10 pictures, 10 withdrawals, `*_PER_CALL_MAX`, the bound of a bundle sent whole in
   one call too), a draft past the room of a whole page (200 facts, 100 structure items, 100
-  components, 40 pictures, 100 withdrawals; decision 0233), 40 supplied sources, 4,000,000 bytes of
+  components, 40 pictures, 100 withdrawals, 16 sections; decision 0233), 40 supplied sources, 4,000,000 bytes of
   JSON (`DRAFT_BYTES_MAX`), a `fact:N` beyond its facts, a supplied source of another account, a
   component without its spec (but a `SUBJECT_LINK`), a withdrawal of a component the account may not
   retire, or a placed borrowed component that cannot pass. `lists {mechanisms (up to 12),
   ambiguous_terms (up to 12), signature (fact:N or a fact id)}`.
 - `remove [{part, index}]` (up to 20): `part` one of `fact`, `structure`, `component`, `layout`,
-  `picture`, `supplied_source`, `withdrawal`; the removals run before the additions, other parts first and facts
+  `picture`, `supplied_source`, `withdrawal`, `section`; the removals run before the additions, other parts first and facts
   last, each kind from the highest index down, so every index is the one the draft listed; removing
   `fact:i` refuses while a component, picture or the signature names it, and renumbers every later
   `fact:N`.

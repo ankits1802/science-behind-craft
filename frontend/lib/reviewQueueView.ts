@@ -35,7 +35,8 @@ export const KIND_LABELS: Record<QueueKind, string> = {
   READINGS: "Readings",
   LAYERS: "Map layers",
   STAGES: "Process stages",
-  PICTURE_CHECKS: "Picture checks"
+  PICTURE_CHECKS: "Picture checks",
+  SECTIONS: "Sections"
 };
 
 export const KIND_NOUNS: Record<QueueKind, string> = {
@@ -48,7 +49,8 @@ export const KIND_NOUNS: Record<QueueKind, string> = {
   READINGS: "Reading outside its range",
   LAYERS: "Map layer proposal",
   STAGES: "Process stage",
-  PICTURE_CHECKS: "Searched picture beside a fact"
+  PICTURE_CHECKS: "Searched picture beside a fact",
+  SECTIONS: "Section proposal"
 };
 
 export const ORIGIN_LABELS: Record<ReviewOrigin, string> = {

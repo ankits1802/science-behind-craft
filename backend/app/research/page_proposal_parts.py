@@ -9,12 +9,13 @@ from dataclasses import dataclass
 from .coverage_chapters import field_chapter
 from .monograph_document import MonographDocument
 from .page_proposal_review import PART_QUEUES, TITLE_MAX_CHARS, ProposalPart
-from .page_proposals import ACCEPTED, COMPONENT, FACT, LAYOUT, STRUCTURE, PageBundle, PartReport
+from .page_proposals import ACCEPTED, COMPONENT, FACT, LAYOUT, SECTION, STRUCTURE, PageBundle, PartReport
 from .page_report_rules import PICTURE_KIND
 
 __all__ = ["LAYOUT_TITLE", "PICTURE_TITLE", "proposal_parts"]
 
 LAYOUT_TITLE = "The page's layout: where each chapter's parts are placed"
+SECTION_TITLE = "The {field} section, {count} sentences: {opening}"
 PICTURE_TITLE = "A picture given to the page"
 ELLIPSIS = "…"
 UUID_TEXT = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
@@ -61,6 +62,12 @@ def _part(
         return _made(COMPONENT, ident, (chapter, body.label), body.title)
     if report.part == LAYOUT:
         return _made(LAYOUT, ident, (None, None), LAYOUT_TITLE)
+    if report.part == SECTION:
+        section = bundle.sections[report.index]
+        title = SECTION_TITLE.format(
+            field=section.field.lower(), count=len(section.sentences), opening=section.sentences[0].text
+        )
+        return _made(SECTION, ident, (field_chapter(section.field), None), title)
     plate = plates.get(str(ident))
     if plate is None:
         return _made(report.part, ident, (None, None), PICTURE_TITLE)

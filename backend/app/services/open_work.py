@@ -20,6 +20,7 @@ from app.models import (
     LayoutProposal,
     MapLayerProposal,
     MediaRefClaim,
+    SectionProposal,
     StructureProposal,
     TaskReservation,
 )
@@ -47,7 +48,7 @@ from app.research.open_work_gap_tasks import OpenGap
 from app.research.open_work_links import DEAD_SOURCE, UNARCHIVED_SOURCE, sources_in_state
 from app.research.open_work_tasks import chosen_tasks, open_tasks, reviewed_queues, subject_tasks
 from app.research.picture_checks import CHECKED_QUEUE
-from app.research.review_queue import READINGS
+from app.research.review_queue import READINGS, SECTIONS
 
 from .claim_holds import held_in_queue
 from .coverage import owners_of, subject_coverage
@@ -181,6 +182,7 @@ async def review_queues(session: AsyncSession, queues: Sequence[str]) -> dict[st
         "LAYERS": (MapLayerProposal.createdAt, MapLayerProposal.status == PENDING),
         "STAGES": (Concept.createdAt, waiting_stage()),
         CHECKED_QUEUE: (MediaRefClaim.createdAt, disputed_link()),
+        SECTIONS: (SectionProposal.createdAt, SectionProposal.status == PENDING),
     }
     return {
         queue: await reading_standing(session)
@@ -200,12 +202,17 @@ async def live_holds(session: AsyncSession, *, now: datetime) -> dict[str, Hold]
 
 
 async def proposed_tasks(session: AsyncSession) -> frozenset[str]:
-    keys = await session.scalars(
+    components = await session.scalars(
         select(ComponentProposal.taskKey).where(
             ComponentProposal.taskKey.is_not(None), ComponentProposal.status.in_(LIVE_PROPOSALS)
         )
     )
-    return frozenset(key for key in keys.all() if key is not None)
+    sections = await session.scalars(
+        select(SectionProposal.taskKey).where(
+            SectionProposal.taskKey.is_not(None), SectionProposal.status == PENDING
+        )
+    )
+    return frozenset(key for key in [*components.all(), *sections.all()] if key is not None)
 
 
 async def _queue(session: AsyncSession, created: Any, condition: ColumnElement[bool]) -> QueueStanding:

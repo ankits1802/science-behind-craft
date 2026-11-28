@@ -23,6 +23,7 @@ the page), [decision 0234](0234-a-contributor-s-ai-builds-a-page-over-mcp-from-o
 skill (pictures by `page_url`; a field's prose from a draft).
 
 Amended by [decision 0249](0249-a-category-draws-its-crafts-shared-figures-a-craft-its-own-place-s-and-the-checks-wait-for-the-api.md): a category's page also holds its crafts' facts, and a craft's page draws a shared figure keyed to its own place.
+Amended by [decision 0250](0250-a-contributor-s-ai-proposes-a-field-s-section-from-the-facts-its-page-holds.md): a field's prose is also written over MCP as a reviewed section proposal, which What is left asked for.
 
 | For | Read |
 |---|---|

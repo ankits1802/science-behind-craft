@@ -12,7 +12,7 @@ from app.models.page_proposals import DRAWN_SIDES
 
 from .base import ContractModel, absent
 from .page_changes import ChapterChanges
-from .page_proposals import COMPONENT, FACT, LAYOUT, PICTURE, STRUCTURE, PageSubject
+from .page_proposals import COMPONENT, FACT, LAYOUT, PICTURE, SECTION, STRUCTURE, PageSubject
 from .review_queue import (
     APPROVE,
     COMPONENTS,
@@ -22,6 +22,7 @@ from .review_queue import (
     REASON_MAX_CHARS,
     REASON_MIN_CHARS,
     REJECT,
+    SECTIONS,
     STRUCTURE as STRUCTURE_QUEUE,
 )
 from .review_queue_items import Proposer
@@ -80,7 +81,14 @@ APPLIED, REFUSED, SKIPPED = PART_OUTCOMES
 PAGE_ACTIONS = (APPROVE, REJECT)
 TITLE_MAX_CHARS = 300
 PART_QUEUES: Mapping[str, str] = MappingProxyType(
-    {FACT: FACTS, STRUCTURE: STRUCTURE_QUEUE, PICTURE: IMAGES, COMPONENT: COMPONENTS, LAYOUT: LAYOUTS}
+    {
+        FACT: FACTS,
+        STRUCTURE: STRUCTURE_QUEUE,
+        PICTURE: IMAGES,
+        COMPONENT: COMPONENTS,
+        LAYOUT: LAYOUTS,
+        SECTION: SECTIONS,
+    }
 )
 DECIDED_ORDER: tuple[str, ...] = tuple(PART_QUEUES)
 PART_QUEUE_KINDS: tuple[str, ...] = tuple(PART_QUEUES.values())

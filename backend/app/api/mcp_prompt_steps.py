@@ -78,13 +78,24 @@ def section_steps(values: Mapping[str, str]) -> list[str]:
         f'Call `list_open_work` with craft_slug "{craft}", field "{field}" and kind "SECTION".',
         CLAIM_STEP,
         f'Call `get_facts` with craft_slug "{craft}", field "{field}" and limit 50, and '
-        f'{_page("craft", craft, "[sections]")} and field "{field}": the facts are all a section may say.',
-        "Write the section from those facts only, by Writing a section below.",
+        f'{_page("craft", craft, "[sections]")} and field "{field}": the facts are all a section may say, and the '
+        "published section is the one yours will replace.",
         "Where a sentence the section needs has no fact, find a source with `search_sources` or yourself, "
         "read it with `read_source`, check each quote with its quotes, and call `propose_facts` with the facts "
-        "it needs, each with an idempotency_key and the task as task_key; the section is published only "
-        "through KalaVigyan's own rebuild from the facts that pass.",
+        "it needs, each with an idempotency_key and the task as task_key; a section cites a fact only once it is "
+        "shown on the page.",
         FOLLOW_STEP,
+        "Write the section by Writing a section below: its sentences in order, each {text, claim_ids} naming the "
+        "id of every shown fact of this page and field it uses, saying nothing those facts do not, at least three "
+        "sentences or as many as the field's facts allow.",
+        f'Call `preview_page` with a bundle {{subject {{kind "craft", slug "{craft}"}}, sections [{{field '
+        f'"{field}", sentences}}]}}, or add the section to the page\'s draft with `edit_draft`: the preview draws '
+        "it in place of the published one and checks it by the page checklist, and a refused sentence names "
+        "why. Fix it and preview again.",
+        "Call `propose_page` with the same bundle or draft: the judge reads each sentence against its facts, "
+        "one refused sentence refuses the whole section, and a section that passes waits for a reviewer, "
+        "unless your account reviews sections. Approved, it replaces the published section, which is kept in "
+        "the record, completes the task, and shows on the page after its next refresh.",
     ]
 
 

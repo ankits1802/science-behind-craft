@@ -3,7 +3,8 @@
   "floors": {
     "duplicateAccuracy": 0.8,
     "distinctKept": 0.85,
-    "noveltyAccuracy": 0.8
+    "noveltyAccuracy": 0.8,
+    "faithfulAccuracy": 0.8
   },
   "duplicate": [
     {
@@ -202,6 +203,76 @@
       "label": "NOT_ADDS",
       "why": "Too general to teach a reader anything about the craft.",
       "origin": "constructed for the evaluation"
+    }
+  ],
+  "faithful": [
+    {
+      "key": "dabu-restated",
+      "field": "MATERIALS",
+      "sentence": "Dabu, the mud resist of the printers, is made of black clay, gum and wheat chaff.",
+      "facts": [
+        "Dabu is a mud resist made of black clay, gum and wheat chaff."
+      ],
+      "label": "FAITHFUL",
+      "why": "The sentence says what the fact says in other words.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
+    },
+    {
+      "key": "washed-then-dried",
+      "field": "PROCESS",
+      "sentence": "The printed cloth is washed in the river and then dried in the sun.",
+      "facts": [
+        "Sanganer printers wash the printed cloth in the river.",
+        "The printed cloth is dried in the sun after it is washed."
+      ],
+      "label": "FAITHFUL",
+      "why": "Two facts joined in the order the second one states.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
+    },
+    {
+      "key": "length-of-cloth",
+      "field": "DESIGN",
+      "sentence": "Each printed length of cloth runs to about 18 metres.",
+      "facts": [
+        "A printed length of Sanganer cloth is about 18 metres long."
+      ],
+      "label": "FAITHFUL",
+      "why": "The same figure for the same length.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
+    },
+    {
+      "key": "harda-soak-duration",
+      "field": "PROCESS",
+      "sentence": "The cloth is soaked in a harda solution for two days before it is printed.",
+      "facts": [
+        "The cloth is soaked in a harda solution before it is printed."
+      ],
+      "label": "UNFAITHFUL",
+      "why": "The two days are in no fact.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
+    },
+    {
+      "key": "alum-fixes-madder",
+      "field": "CHEMISTRY",
+      "sentence": "Alum is printed before the madder bath because it fixes the red to the cotton.",
+      "facts": [
+        "Alum is printed on the cloth before it goes into the madder bath.",
+        "Madder gives a red colour on cotton."
+      ],
+      "label": "UNFAITHFUL",
+      "why": "Neither fact says alum fixes the red: the cause is the sentence's own.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
+    },
+    {
+      "key": "blocks-carved-elsewhere",
+      "field": "DESIGN",
+      "sentence": "Sanganer printers use teak blocks carved by the block makers of Pethapur.",
+      "facts": [
+        "Sanganer printers use blocks of teak wood."
+      ],
+      "label": "UNFAITHFUL",
+      "why": "Pethapur and its block makers are in no fact.",
+      "origin": "constructed for the evaluation of section proposals (decision 0250)"
     }
   ]
 }

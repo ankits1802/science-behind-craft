@@ -56,6 +56,7 @@ route queue the fact first (The contribution queue, below).
 | The limits | `core/rate_limit.py` and `api/proposal_limits.py` |
 | Layout proposals | `research/layout_proposals.py`, `services/page_layout_proposals.py`, `services/review_queue_layouts.py`, `api/mcp_page_tools.py`, `models/layout_proposals.py` |
 | Structure proposals | `research/structure_proposals.py` (the contract), `research/structure_proposals_values.py` (the STATED check), `services/structure_proposals.py` (the proposal), `services/structure_proposals_dossier.py` (the dossier's own rules), `services/structure_proposals_page.py` (where an item lands on the page index), `services/structure_proposals_write.py`, `services/structure_proposals_claims.py` and `services/structure_proposals_rows.py` (what approval writes), `services/structure_proposals_review.py` (approve, reject), `api/routes/structure_proposals.py`, `api/mcp_structure_tools.py`, `api/structure_proposal_deps.py`, `models/structure_proposals.py` |
+| Section proposals (decision 0250) | `research/section_proposals.py` (the part, the checks, the outcome), `services/section_gates.py` (the checks and the judge), `services/section_proposals.py` (the proposal, approve, reject), `services/monograph_generated_sections.py` (what approval writes), `services/review_queue_sections.py`, `models/section_proposals.py` |
 | Supplied sources (decision 0110) | `research/supplied_sources.py` (the contract, the cite url, the grade and the identity match), `services/supplied_sources.py` (storing and the upload slot), `services/supplied_sources_identity.py` (the index lookups), `services/supplied_sources_pdf.py` (a file's text), `services/supplied_sources_gate.py` (what the gates read and keep), `services/supplied_sources_review.py` (the review queue's provenance), `services/supplied_sources_views.py`, `api/mcp_studio_sources.py`, `api/routes/supplied_sources.py`, `models/studio.py` |
 
 ## Who may do what
@@ -171,7 +172,8 @@ The judges are scored every night on labelled cases (`app/data/eval/judge_cases.
 `app.scripts.eval_judges`, `.github/workflows/judge-eval.yml`), asked as the queue asks them (the
 cheapest priced model first, then the default route), and the run fails below the floors in that
 file: duplicate accuracy 0.80, compatible pairs kept DISTINCT 0.85, novelty accuracy 0.80
-(decision 0149). `app.scripts.rejudge_differing` re-judges every live pair flagged sources differ
+(decision 0149), and the novelty question's `newDetails` read for a section's sentence against its
+cited facts, faithful accuracy 0.80 (`faithful`, decision 0250). `app.scripts.rejudge_differing` re-judges every live pair flagged sources differ
 and writes nothing.
 
 The subject's facts are the craft's (its own concepts and its sub-category's), or a category's
@@ -319,7 +321,7 @@ once in Postgres for every process (`core/allowances`, table `AllowanceBucket`):
 | `FACT_PROPOSALS` | `FACT_PROPOSALS_PER_WINDOW` = 30; for a queued fact the account's tier allowance (`TIER_FACTS_PER_HOUR`: 30, 60, 150) | `POST /api/knowledge/facts` (after the terms); each new fact queued by MCP `propose_facts` and `POST /api/knowledge/proposals/facts` (`core/rate_limit.proposal_slots`: a batch takes what is left of the same hour, and each fact beyond it is refused on its own; a fact sent again with its key takes nothing); MCP `supply_source`, one a supplied source (decision 0110) |
 | `COMPONENT_PROPOSALS` | `COMPONENT_PROPOSALS_PER_WINDOW` = 10 | `POST /api/contributions/proposals/components`, each component part of MCP `propose_page` |
 | `LAYOUT_PROPOSALS` | `LAYOUT_PROPOSALS_PER_WINDOW` = 10 | `POST /api/knowledge/layouts` (after the terms), the layout part of MCP `propose_page` |
-| `STRUCTURE_PROPOSALS` | `STRUCTURE_PROPOSALS_PER_WINDOW` = 20 | `POST /api/knowledge/structure` (after the terms), MCP `propose_structure` |
+| `STRUCTURE_PROPOSALS` | `STRUCTURE_PROPOSALS_PER_WINDOW` = 20 | `POST /api/knowledge/structure` (after the terms), MCP `propose_structure`, each structure and section part of MCP `propose_page` |
 | `IMAGE_UPLOADS` | `IMAGE_UPLOADS_PER_WINDOW` = 20 | `POST /api/contributions/images` (a picture declared on the site), MCP `give_pictures` (each picture given, and each link and slot issued for `upload: true`; the picture given through it is not counted again) |
 | `PAGE_PROPOSALS` | `PAGE_PROPOSALS_PER_WINDOW` = 10 | `POST /api/knowledge/pages`, MCP `propose_page` with a draft or a bundle of more than one part (each part also counts against its own kind; a bundle of one part counts against that part's kind alone, decision 0111) |
 | `PAGE_PREVIEWS` | `PAGE_PREVIEWS_PER_WINDOW` = 30 | `POST /api/knowledge/pages/preview`, MCP `preview_page`, of a bundle or a draft |
@@ -583,6 +585,59 @@ MCP `propose_structure` (`api/mcp_structure_tools.py`, in `STRUCTURE_TOOLS`), sc
 errors. Approving a structure proposal, at once or from the queue, refreshes the craft's or the
 category's signed-out pages (`review-queue.md`, Refreshing signed-out pages). A page bundle
 (`propose_page`) carries a craft's structure only; a category's is proposed on its own.
+
+## Section proposals (decision 0250)
+
+A field's written section, its prose, is proposed as a part of a page bundle or draft
+(`propose_page`; `open-work.md`, Page bundles), never on its own: `sections [{field, sentences
+[{text, claim_ids}], note?}]` (`research/section_proposals.SectionPart`), one a field and at most
+16, 1 to 24 sentences in order, each of 1 to 1,000 characters citing 1 to 8 stored facts by id, each
+once. A section cites stored facts only, never a bundle's `fact:N`. The checks run in order and stop
+at the first that fails; one refused sentence refuses the whole section, and each reason names its
+sentence (`services/section_gates.py`):
+
+1. **HELD.** Every cited fact is held by the page (`page_held_facts.held_claims`, the test a
+   borrowed figure meets) and shown to readers (a visible fact not held for a failed quote).
+2. **FIELD.** Every cited fact names the section's field as its primary or a secondary field.
+3. **SENTENCES.** At least 3 sentences (`SECTION_SENTENCES_MIN`), or as many as the facts the page
+   holds in the field allow (the field coverage's count, or the field's cited facts if more); the
+   passing reason says how many when the field allows fewer than 3.
+4. **STATED.** The composer's prose checks (`section_blocks.prose_problems`): every cited fact is a
+   fact, not a hypothesis, and no figure, formula, month, season, place or river is stated that the
+   cited facts and their quotes do not state.
+5. **FAITHFUL.** The novelty judge's question (`candidate_judge.novelty_request`) asked of each
+   sentence against the texts of the facts it cites, and read for its `newDetails` alone
+   (`parsed_new_details`): a sentence passes exactly when the judge lists nothing it says that its
+   facts do not, whether or not the judge calls a detail specific. A sentence that restates the
+   fact it cites, once case and final stops are folded, is not asked. The judges are the thrifty
+   ladder (`providers/judge_routes.thrifty_judges`): each provider's cheapest priced model first,
+   the default route only for an unusable reply. A judge that fails or is missing refuses the part
+   with "The checks could not run just now", storing nothing.
+
+`preview_page` runs the first four and draws a passing section in place of the field's published
+one, the draft's new facts after it; the judge runs when the page is proposed.
+
+`propose_page` stores every checked section as a `SectionProposal` (migration
+`0125_section_proposals`: `proposerId`, `craftId` or `categoryId`, `field`, `sentences`, `checks`,
+`taskKey` (the SECTION task of the page and field, `SECTION:<subject>:<slug>:<FIELD>`), `note`,
+`origin` `CONTRIBUTION` or `AGENT`, `status`, `reviewedById`, `reviewedAt`, `reviewNote`,
+`sectionId`), row level security on and no grants to the public roles, and reports the part:
+
+| Case | Status | Part outcome | Message |
+|---|---|---|---|
+| A check refused it | `REFUSED`, kept for the record | `REFUSED` | the check and every reason |
+| Passed, a Professor's, Admin's or Master Admin's account | `APPROVED` | `ACCEPTED` | written at once |
+| Passed, any other account | `PENDING`, in the review queue as `SECTIONS` | `ACCEPTED` | stored for review |
+
+Each section counts against `STRUCTURE_PROPOSALS`. A pending section hides its SECTION task from
+other contributors (`open_work.proposed_tasks`). Approval, at once or from the queue
+(`review-queue.md`, Sections), checks HELD, FIELD and STATED again (`stale_section` when the page
+has moved on), writes the section as the field's next `ArticleSection` version, `PUBLISHED`, with
+`writtenByKind` `USER`, `writtenById` the proposer and the reviewer and time, supersedes the one it
+replaces (kept in the record), completes the proposer's reservation of the task and refreshes the
+page's signed-out views. The dossier import's rebuild (`publish_section`, `retire_sections`) leaves a
+section a person wrote and a reviewer approved standing. Rejection keeps the published section and
+the reason.
 
 ## Source proposals (round 7)
 
@@ -873,6 +928,7 @@ field, or changes its meaning, is a new schema version.
 | The hourly limits | `backend/tests/mcp/test_proposal_limits.py`, `backend/tests/test_allowances.py` and `backend/tests/db/test_shared_allowances_db.py` |
 | Layout proposals | `backend/tests/layouts/test_layout_proposal_rules.py`, `test_layout_proposal_routes.py` and `backend/tests/db/test_layout_proposals_db.py` |
 | Structure proposals and what approval writes | `backend/tests/structure/`, `backend/tests/db/test_structure_proposals_db.py`, `test_structure_writes_db.py` and `test_structure_export_db.py` |
+| Section proposals, their checks and what approval writes | `backend/tests/sections/`, `backend/tests/db/test_section_proposals_db.py` and the faithful cases in `backend/tests/knowledge_writes/test_judge_eval.py` |
 | Source proposals | `backend/tests/db/test_source_proposals_db.py` and `backend/tests/mcp/test_mcp_source_tools.py` |
 | Supplied sources | `backend/tests/db/test_supplied_sources_db.py` |
 | Citations and their passages | `backend/tests/db/test_quote_relinks_db.py` and `test_quote_visibility_db.py` |

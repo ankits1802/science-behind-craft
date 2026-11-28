@@ -39,6 +39,7 @@ from .review_queue_items import (
     QueueItem,
     ReadingQueueItem,
     ReviewOrigin,
+    SectionQueueItem,
     StageQueueItem,
     StructureQueueItem,
     TestimonyItem,
@@ -92,6 +93,7 @@ __all__ = [
     "REVIEWED_LEVEL",
     "REVIEW_ORIGINS",
     "REVIEW_QUEUE_SCHEMA_VERSION",
+    "SECTIONS",
     "STAGES",
     "STRUCTURE",
     "TESTIMONY",
@@ -123,6 +125,7 @@ __all__ = [
     "ReviewFilters",
     "ReviewOrigin",
     "ReviewQueuePage",
+    "SectionQueueItem",
     "SourceQuote",
     "StageQueueItem",
     "StructureQueueItem",
@@ -141,9 +144,19 @@ __all__ = [
 
 REVIEW_QUEUE_SCHEMA_VERSION = 1
 QUEUE_KINDS: tuple[str, ...] = tuple(REVIEW_QUEUES)
-FACTS, TESTIMONY, IMAGES, COMPONENTS, LAYOUTS, STRUCTURE, READINGS, LAYERS, STAGES, PICTURE_CHECKS = (
-    QUEUE_KINDS
-)
+(
+    FACTS,
+    TESTIMONY,
+    IMAGES,
+    COMPONENTS,
+    LAYOUTS,
+    STRUCTURE,
+    READINGS,
+    LAYERS,
+    STAGES,
+    PICTURE_CHECKS,
+    SECTIONS,
+) = QUEUE_KINDS
 KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
     {
         FACTS: PROPOSAL_ORIGINS,
@@ -156,6 +169,7 @@ KIND_ORIGINS: Mapping[str, tuple[str, ...]] = MappingProxyType(
         LAYERS: (CONTRIBUTION,),
         STAGES: (RESEARCH,),
         PICTURE_CHECKS: (AGENT,),
+        SECTIONS: (CONTRIBUTION, AGENT),
     }
 )
 APPROVE, REJECT, RAISE, RETRACT = "approve", "reject", "raise", "retract"

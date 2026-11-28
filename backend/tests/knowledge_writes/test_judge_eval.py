@@ -5,6 +5,8 @@ from app.research.judge_eval import (
     JudgeCases,
     duplicate_asks,
     duplicate_scores,
+    faithful_asks,
+    faithful_scores,
     floor_checks,
     novelty_asks,
     novelty_scores,
@@ -30,8 +32,10 @@ def test_the_shipped_set_holds_the_sanganeri_cases_with_their_labels_and_its_flo
     labelled = {case.key: case.label for case in cases.duplicate}
     assert {labelled[key] for key in CLEARED_ON_2026_11_22} == {"DISTINCT"}
     assert {case.key: case.label for case in cases.novelty}["sanganer-indigofera"] == "ADDS"
+    assert Counter(case.label for case in cases.faithful) == {"FAITHFUL": 3, "UNFAITHFUL": 3}
     floors = cases.floors
     assert (floors.duplicate_accuracy, floors.distinct_kept, floors.novelty_accuracy) == (0.8, 0.85, 0.8)
+    assert floors.faithful_accuracy == 0.8
 
 
 def test_scores_are_shares_of_cases_judged_as_labelled() -> None:
@@ -45,11 +49,15 @@ def test_scores_are_shares_of_cases_judged_as_labelled() -> None:
     ]
     novelty = novelty_scores(cases.novelty, {case.key: True for case in cases.novelty})
     assert novelty.measures == {"novelty.accuracy": 0.5714}
-    checks = floor_checks({**scores.measures, **novelty.measures}, cases.floors)
+    faithful = faithful_scores(cases.faithful, {case.key: () for case in cases.faithful})
+    assert faithful.measures == {"faithful.accuracy": 0.5}
+    assert {wrong["label"] for wrong in faithful.wrong} == {"UNFAITHFUL"}
+    checks = floor_checks({**scores.measures, **novelty.measures, **faithful.measures}, cases.floors)
     assert [(check.measure, check.held) for check in checks] == [
         ("duplicate.accuracy", True),
         ("duplicate.distinctKept", True),
         ("novelty.accuracy", False),
+        ("faithful.accuracy", False),
     ]
 
 
@@ -62,7 +70,11 @@ def labelled_replies(cases: JudgeCases, relation: dict[str, str] | None = None) 
         verdict(ask.candidate.ref, adds=case.label == "ADDS", reason=case.why)
         for case, ask in zip(cases.novelty, novelty_asks(cases.novelty), strict=True)
     ]
-    return [{"comparisons": comparisons}, {"verdicts": verdicts}]
+    faithful = [
+        verdict(ask.candidate.ref, adds=case.label == "UNFAITHFUL", reason=case.why)
+        for case, ask in zip(cases.faithful, faithful_asks(cases.faithful), strict=True)
+    ]
+    return [{"comparisons": comparisons}, {"verdicts": verdicts}, {"verdicts": faithful}]
 
 
 async def test_a_judge_that_answers_as_labelled_holds_every_floor() -> None:
@@ -73,8 +85,9 @@ async def test_a_judge_that_answers_as_labelled_holds_every_floor() -> None:
         "duplicate.accuracy": 1.0,
         "duplicate.distinctKept": 1.0,
         "novelty.accuracy": 1.0,
+        "faithful.accuracy": 1.0,
     }
-    assert report["models"] == {"duplicate": JUDGE_MODEL, "novelty": JUDGE_MODEL}
+    assert report["models"] == {"duplicate": JUDGE_MODEL, "novelty": JUDGE_MODEL, "faithful": JUDGE_MODEL}
 
 
 async def test_a_judge_that_calls_compatible_facts_a_disagreement_breaks_the_floor() -> None:
@@ -90,3 +103,13 @@ async def test_a_judge_that_cannot_answer_is_a_failed_run_not_a_score() -> None:
     report = await judge_report(judge_cases(), (FakeJudge({"comparisons": []}),))
     assert (report["ok"], report["belowFloor"]) == (False, False)
     assert "unanswered" in report["error"]
+
+
+async def test_a_judge_that_finds_a_detail_in_a_faithful_sentence_breaks_the_faithful_floor() -> None:
+    cases = judge_cases()
+    replies = labelled_replies(cases)
+    replies[2] = {"verdicts": [{**entry, "newDetails": ["a detail"]} for entry in replies[2]["verdicts"]]}
+    report = await judge_report(cases, (FakeJudge(*replies),))
+    assert (report["ok"], report["belowFloor"]) == (True, True)
+    assert report["measures"]["faithful.accuracy"] == 0.5
+    assert {wrong["label"] for wrong in report["wrong"]} == {"FAITHFUL"}

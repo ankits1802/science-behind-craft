@@ -21,6 +21,7 @@ from app.research.page_proposals import (
     LISTED,
     PICTURE,
     REFUSED,
+    SECTION,
     SHOWN,
     STRUCTURE,
     PageBundle,
@@ -30,6 +31,7 @@ from app.research.page_proposals import (
     PageSubject,
     PartReport,
 )
+from app.research.section_proposals import SENTENCES, SectionPart, first_refusal
 from app.research.structure_proposals import CONFLICT, StructureProposal
 from app.research.structure_proposals_values import stated_check
 
@@ -56,6 +58,7 @@ from .page_proposals_parts import (
     structure_subject_problem,
 )
 from .page_translation_preview import only_translation, preview_translation, previewed_translation
+from .section_gates import field_facts, section_checks
 from .structure_proposals import curated_subject
 from .structure_proposals_dossier import dossier_problem
 from .structure_proposals_page import target_problem
@@ -81,6 +84,10 @@ LISTED_NAME = (
     "A name kept out of AI pictures changes no sentence and is never shown, so the preview lists it only."
 )
 SHOWN_COMPONENT = "Drawn from its spec where the page will draw it once it is registered."
+SHOWN_SECTION = (
+    "Drawn in place of the {field} section the page publishes now, by the page checklist like the rest: "
+    "{said}. The judge reads each sentence against its facts when it is proposed."
+)
 NO_SPEC = "A component of a page bundle carries its spec, so that it is drawn as delivered."
 SHOWN_LAYOUT = "The page is ordered by this layout, as the next version would order it."
 LISTED_PICTURE = (
@@ -162,6 +169,9 @@ async def _reports(
     if bundle.layout is not None:
         work = partial(_layout, session, (bundle, subject), draft, bundle.layout)
         reports.append(await checked_part(session, LAYOUT, 0, work))
+    for index, section in enumerate(bundle.sections):
+        work = partial(_section, session, subject, draft, index, section)
+        reports.append(await checked_part(session, SECTION, index, work))
     return reports
 
 
@@ -253,6 +263,22 @@ async def _layout(
         subject_kind=subject.kind, subject_slug=subject.slug, version=current + 1, entries=list(part.entries)
     )
     return _report(LAYOUT, 0, SHOWN, SHOWN_LAYOUT)
+
+
+async def _section(
+    session: AsyncSession, subject: WorkSubject, draft: PreviewDraft, index: int, part: SectionPart
+) -> PartReport:
+    checks = section_checks(part, await field_facts(session, subject, part))
+    refused = first_refusal(checks)
+    if refused is not None:
+        raise InvalidInput(
+            f"The {refused.check} check refuses the whole section: {'; '.join(refused.reasons)}."
+        )
+    draft.written[part.field] = [
+        sentence.model_dump(mode="json", by_alias=True) for sentence in part.sentences
+    ]
+    said = next(check for check in checks if check.check == SENTENCES).reasons[0]
+    return _report(SECTION, index, SHOWN, SHOWN_SECTION.format(field=part.field.lower(), said=said))
 
 
 def _report(part: str, index: int, outcome: str, message: str) -> PartReport:

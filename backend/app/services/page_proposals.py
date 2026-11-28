@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
 from functools import partial
@@ -20,6 +20,7 @@ from app.research.page_proposals import (
     LAYOUT,
     PICTURE,
     REFUSED,
+    SECTION,
     STRUCTURE,
     WITHDRAWAL,
     PageBundle,
@@ -32,7 +33,9 @@ from app.research.page_proposals import (
     PartReport,
 )
 from app.research.review_switch import REFUSED as FACT_REFUSED
+from app.research.section_proposals import REFUSED as SECTION_REFUSED, SectionPart
 from app.research.structure_proposals import REFUSED as STRUCTURE_REFUSED, StructureProposal
+from app.research.structured import StructuredModel
 from app.research.upload_links import OPEN, SlotDeclaration, UploadSlot, UploadStart
 
 from .borrowed_placements import borrowed_problem, linked_labels, placed_labels
@@ -59,6 +62,7 @@ from .page_proposals_parts import (
 )
 from .page_renders import refuse_a_failed_drawing
 from .page_translations import checked_translation
+from .section_proposals import SectionContext, propose_section
 from .structure_proposals import propose_structure
 
 __all__ = ["PageTools", "PictureStarter", "propose_page"]
@@ -79,6 +83,7 @@ class PageTools:
     spend: Callable[[str], Awaitable[None]]
     origin: str
     site: str
+    judges: Sequence[StructuredModel] = ()
 
 
 @dataclass
@@ -115,6 +120,8 @@ async def propose_page(
         )
     for index, withdrawal in enumerate(bundle.withdrawals):
         await _record(run, WITHDRAWAL, index, partial(_withdrawal, run, index, withdrawal))
+    for index, section in enumerate(bundle.sections):
+        await _record(run, SECTION, index, partial(_section, run, index, section))
     count = sum(report.outcome == REFUSED for report in run.reports)
     total = len(run.reports)
     return PageProposalResult(
@@ -182,6 +189,14 @@ async def _layout(run: _Run, part: PageLayoutPart) -> PartReport:
         run.session, run.user, draft, origin=run.tools.origin, site=run.tools.site, now=run.now
     )
     return accepted(LAYOUT, 0, status=result.status, ident=result.proposal_id, message=result.message)
+
+
+async def _section(run: _Run, index: int, part: SectionPart) -> PartReport:
+    await run.tools.spend(STRUCTURE_PROPOSALS)
+    context = SectionContext(origin=run.tools.origin, judges=run.tools.judges, site=run.tools.site)
+    result = await propose_section(run.session, run.user, run.subject, part, context=context, now=run.now)
+    made = refused if result.outcome == SECTION_REFUSED else accepted
+    return made(SECTION, index, status=result.status, ident=result.proposal_id, message=result.message)
 
 
 async def _withdrawal(run: _Run, index: int, withdrawal: PageWithdrawal) -> PartReport:

@@ -140,8 +140,10 @@ def test_a_bundle_names_its_parts_and_points_to_a_draft_s_add_for_their_fields(n
         "pictures",
         "translation",
         "withdrawals",
+        "sections",
         "note",
     }
+    assert bundle["properties"]["sections"]["maxItems"] == 16 and "sections (" in bundle["description"]
     assert bundle["properties"]["facts"]["maxItems"] == 20 and "a page draft's add" in bundle["description"]
     assert bundle["properties"]["withdrawals"]["maxItems"] == 10 and "withdrawals" in bundle["description"]
     assert (

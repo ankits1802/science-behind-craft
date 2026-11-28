@@ -8,6 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.mcp_scopes import CONTRIBUTE_SCOPE
 from app.models import User
+from app.providers.judge_routes import thrifty_judges
+from app.providers.router import Principal
 from app.research.page_proposals import ACCEPTED, STRUCTURE, PageBundle, PageProposalResult, PartReport
 from app.services.candidate_sources import proposal_fetcher
 from app.services.craft_resolver import CraftIndexStore
@@ -40,6 +42,7 @@ async def page_proposed(
             spend=partial(_spend, user, whole=whole),
             origin=origin,
             site=site,
+            judges=thrifty_judges(Principal(user_id=user.id, role=user.role)).models,
         )
         result = await propose_page(session, user, bundle, tools=tools, now=datetime.now(UTC))
     if whole:

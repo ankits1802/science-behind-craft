@@ -9,12 +9,15 @@ from app.research.candidate_judge import (
     comparison_request,
     novelty_request,
     parsed_comparisons,
+    parsed_new_details,
     parsed_novelty,
 )
 from app.research.judge_eval import (
     JudgeCases,
     duplicate_asks,
     duplicate_scores,
+    faithful_asks,
+    faithful_scores,
     floor_checks,
     novelty_asks,
     novelty_scores,
@@ -36,23 +39,29 @@ async def judge_report(cases: JudgeCases, ladder: Sequence[StructuredModel]) -> 
     try:
         relations, compare_model = await _relations(cases, ladder)
         adds, novelty_model = await _novelty(cases, ladder)
+        details, faithful_model = await _faithful(cases, ladder)
     except AppError as error:
         return {"ok": False, "error": str(error), "belowFloor": False}
     duplicate = duplicate_scores(cases.duplicate, relations)
     novelty = novelty_scores(cases.novelty, adds)
-    measures = {**duplicate.measures, **novelty.measures}
+    faithful = faithful_scores(cases.faithful, details)
+    measures = {**duplicate.measures, **novelty.measures, **faithful.measures}
     checks = floor_checks(measures, cases.floors)
     return {
         "ok": True,
         "belowFloor": any(not check.held for check in checks),
-        "models": {"duplicate": compare_model, "novelty": novelty_model},
-        "cases": {"duplicate": len(cases.duplicate), "novelty": len(cases.novelty)},
+        "models": {"duplicate": compare_model, "novelty": novelty_model, "faithful": faithful_model},
+        "cases": {
+            "duplicate": len(cases.duplicate),
+            "novelty": len(cases.novelty),
+            "faithful": len(cases.faithful),
+        },
         "measures": measures,
         "floors": [
             {"measure": check.measure, "value": check.value, "floor": check.floor, "held": check.held}
             for check in checks
         ],
-        "wrong": [*duplicate.wrong, *novelty.wrong],
+        "wrong": [*duplicate.wrong, *novelty.wrong, *faithful.wrong],
     }
 
 
@@ -74,3 +83,10 @@ async def _novelty(
         ladder, novelty_request(asks), lambda reply: parsed_novelty(reply, asks)
     )
     return {key: verdict.adds for key, verdict in verdicts.items()}, model
+
+
+async def _faithful(
+    cases: JudgeCases, ladder: Sequence[StructuredModel]
+) -> tuple[dict[str, tuple[str, ...]], str | None]:
+    asks = faithful_asks(cases.faithful)
+    return await asked_judges(ladder, novelty_request(asks), lambda reply: parsed_new_details(reply, asks))

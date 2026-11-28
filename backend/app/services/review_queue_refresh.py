@@ -16,6 +16,7 @@ from app.models import (
     ImageContribution,
     LayoutProposal,
     MediaRefClaim,
+    SectionProposal,
     StructureProposal,
 )
 from app.models.science import READING_REJECTED
@@ -27,6 +28,7 @@ from app.research.review_queue import (
     LAYOUTS,
     PICTURE_CHECKS,
     READINGS,
+    SECTIONS,
     STAGES,
     STRUCTURE,
     TESTIMONY,
@@ -62,6 +64,8 @@ async def decision_owners(session: AsyncSession, decided: QueueDecision) -> Page
         return await _layout_owners(session, decided.id)
     if decided.kind == STRUCTURE and decided.status == APPROVED_STATUS:
         return await _structure_owners(session, decided.id)
+    if decided.kind == SECTIONS and decided.status == APPROVED:
+        return await _section_owners(session, decided.id)
     craft = _owning_craft(decided)
     if craft is None:
         return PageOwners()
@@ -84,6 +88,16 @@ def _owning_craft(decided: QueueDecision) -> Select[Any] | None:
 async def _structure_owners(session: AsyncSession, proposal_id: uuid.UUID) -> PageOwners:
     row = await session.get(StructureProposal, proposal_id)
     if row is None or row.kind == GROUP_NAME:
+        return PageOwners()
+    if row.categoryId is not None:
+        slug = await session.scalar(select(CraftCategory.slug).where(CraftCategory.id == row.categoryId))
+        return PageOwners(categories=(slug,)) if slug else PageOwners()
+    return await craft_owners(session, [row.craftId] if row.craftId is not None else [])
+
+
+async def _section_owners(session: AsyncSession, proposal_id: uuid.UUID) -> PageOwners:
+    row = await session.get(SectionProposal, proposal_id)
+    if row is None:
         return PageOwners()
     if row.categoryId is not None:
         slug = await session.scalar(select(CraftCategory.slug).where(CraftCategory.id == row.categoryId))

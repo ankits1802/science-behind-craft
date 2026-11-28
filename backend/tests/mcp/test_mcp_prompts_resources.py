@@ -142,8 +142,16 @@ async def test_write_a_section_and_deliver_a_component_add_their_own_rules() -> 
     section = await prompt_text("write_section", {"craft_slug": "Kutch-Ajrakh", "field": "HISTORY"})
     assert "## Writing a section" in section and all(heading in section for heading in METHOD)
     assert in_order(
-        section, "`list_open_work`", "`reserve_tasks`", "`get_facts`", "`get_page`", "`propose_facts`"
+        section,
+        "`list_open_work`",
+        "`reserve_tasks`",
+        "`get_facts`",
+        "`get_page`",
+        "`propose_facts`",
+        "`preview_page` with a bundle",
+        "Call `propose_page` with the same bundle or draft",
     )
+    assert 'sections [{field "HISTORY", sentences}]' in section and "one refused sentence refuses" in section
     component = await prompt_text("propose_component", {"craft_slug": "Kutch-Ajrakh", "need": "molecules"})
     assert component.startswith("Find or deliver a 3D molecule for the craft Kutch-Ajrakh")
     assert "## Components" in component and "## Pages" in component

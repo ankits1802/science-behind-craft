@@ -41,6 +41,7 @@ def test_every_kind_an_admin_reviews_takes_removal_or_edit_beside_its_queue_acti
         "LAYERS": ("approve", "reject", "remove"),
         "STAGES": ("approve", "reject", "remove"),
         "PICTURE_CHECKS": ("approve", "reject"),
+        "SECTIONS": ("approve", "reject"),
         "SOURCES": ("correct", "remove"),
         "SOURCES_DIFFER": ("clear",),
         "IMAGES": ("remove", "edit"),

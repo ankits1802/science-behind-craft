@@ -31,6 +31,7 @@ __all__ = [
     "comparison_request",
     "novelty_request",
     "parsed_comparisons",
+    "parsed_new_details",
     "parsed_novelty",
 ]
 
@@ -195,6 +196,21 @@ def parsed_novelty(reply: Mapping[str, Any], asks: Sequence[JudgeAsk]) -> dict[s
             reason=novelty_reason(item.new_details, specific=item.specific, said=item.reason),
         )
     missing = set(held) - set(found)
+    if missing:
+        raise ExternalFailure(
+            f"the judge left {len(missing)} candidate(s) without a verdict", service=MODEL_SERVICE
+        )
+    return found
+
+
+def parsed_new_details(reply: Mapping[str, Any], asks: Sequence[JudgeAsk]) -> dict[str, tuple[str, ...]]:
+    parsed = _validated(_Verdicts, reply, "novelty")
+    asked = {ask.candidate.ref for ask in asks}
+    found: dict[str, tuple[str, ...]] = {}
+    for item in parsed.verdicts:
+        if item.candidate in asked and item.candidate not in found:
+            found[item.candidate] = tuple(detail.strip() for detail in item.new_details if detail.strip())
+    missing = asked - set(found)
     if missing:
         raise ExternalFailure(
             f"the judge left {len(missing)} candidate(s) without a verdict", service=MODEL_SERVICE

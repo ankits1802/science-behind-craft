@@ -7,6 +7,7 @@ from .review_queue_items import (
     LayoutItem,
     PictureCheckItem,
     ReadingQueueItem,
+    SectionQueueItem,
     StageQueueItem,
     StructureQueueItem,
 )
@@ -25,6 +26,7 @@ Labelled = (
     | LayerQueueItem
     | StageQueueItem
     | PictureCheckItem
+    | SectionQueueItem
 )
 
 
@@ -44,6 +46,9 @@ def queue_label(item: Labelled) -> str:
         return cut_label(f"Map layer: {item.layer.dataset.title}")
     if isinstance(item, PictureCheckItem):
         return cut_label(f"Picture: {item.check.media.title}, beside: {item.check.fact}")
+    if isinstance(item, SectionQueueItem):
+        opening = item.section.proposed[0].text if item.section.proposed else ""
+        return cut_label(f"{item.section.subject_name}, {item.section.field.lower()} section: {opening}")
     return cut_label(f"Stage: {item.stage.name}")
 
 

@@ -202,3 +202,37 @@ def test_no_prompt_is_listed_as_a_tool_or_lends_a_tool_its_description() -> None
     assert {prompt["description"] for prompt in prompts}.isdisjoint(
         tool.description for tool in TOOLS.values()
     )
+
+
+def named_properties(node: Any, name: str) -> list[dict[str, Any]]:
+    if isinstance(node, list):
+        return [found for item in node for found in named_properties(item, name)]
+    if not isinstance(node, dict):
+        return []
+    own = node.get("properties")
+    found = [own[name]] if isinstance(own, dict) and isinstance(own.get(name), dict) else []
+    return found + [each for value in node.values() for each in named_properties(value, name)]
+
+
+@pytest.mark.parametrize("era", ERAS)
+async def test_a_section_is_typed_in_a_draft_s_add_and_in_a_bundle_and_adds_no_tool(
+    era: str, uploads: None
+) -> None:
+    tools = {tool["name"]: tool for tool in await listed(era)}
+    assert not [name for name in tools if "section" in name]
+    schema = tools["edit_draft"]["inputSchema"]
+    added = named_properties(schema, "sections")
+    assert [(part["type"], part["maxItems"]) for part in added] == [("array", 16)]
+    assert "takes the place of the field's published section" in added[0]["description"]
+    sentences = named_properties(schema, "sentences")
+    assert sentences and all(found["type"] == "array" for found in sentences)
+    assert named_properties(schema, "claim_ids") and not named_properties(schema, "claimIds")
+    for name in ("preview_page", "propose_page"):
+        bundle = tools[name]["inputSchema"]["properties"]["bundle"]
+        assert bundle["properties"]["sections"] == {
+            "type": "array",
+            "items": {"type": "object"},
+            "maxItems": 16,
+        }
+        assert "sections ({field, sentences [{text, claim_ids}]})" in bundle["description"]
+        assert "section" in tools[name]["description"]
