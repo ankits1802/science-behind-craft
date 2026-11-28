@@ -1352,6 +1352,19 @@ Last updated: 2026-11-27.
     holds, as 0248 decided. Bagru's control check reads its own players, and the dip player stays
     required on Kutch Ajrakh. The post-deploy check and Monograph parity read pages only once the
     API's `/health` names the release.
+  - **The section release** (PR #243 and PR #242, decision 0250, migration
+    `0125_section_proposals`, 2026-11-28). A contributor's AI writes a field's section over MCP
+    without a new tool: a `sections` part in a draft or a page bundle, drawn by `preview_page` in
+    place of the published section. Every sentence cites facts the page holds and shows, of the
+    section's field; a section has at least three sentences or as many as the field's facts allow;
+    its numbers, names, months and places are in its facts; and the cheapest reliable judge finds
+    nothing a sentence adds. The first failure refuses the whole section. It is reviewed as
+    `SECTIONS` beside the published one (Review page, or `review_queue` and `stage_reviews`),
+    approved at once from a Professor or Admin; approval keeps the replaced section, completes the
+    SECTION task, and the deploy's dossier rebuild never overwrites it. The skills say the owner's
+    rules of 2026-11-28: page agents run on Opus only, and a comic's panels come only from
+    Gemini's or ChatGPT's image generation, made by the team; the craft-pages skill names the
+    field portals' photographs and the section part.
   - **Submitted to the Connectors Directory** (2026-11-27): 26 tools, 13 of them read-only, sign-in
     asked only when a tool needs it, with a Client ID Metadata Document. The request to approve the
     file host went to mcp-review@anthropic.com from the newsletter sender.

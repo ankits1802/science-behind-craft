@@ -19,11 +19,12 @@ and released together, each batch verified on production.
 
 ## Live now
 
-- **KalaVigyan `main` with the UX round** (2026-11-26 to 2026-11-27, decisions 0225 to 0249,
+- **KalaVigyan `main` with the UX round** (2026-11-26 to 2026-11-27, decisions 0225 to 0250,
   PROGRESS.md, UX round): the page release `7f841c1c` (0227 to 0234, migration head
   `0121_coded_figures`), the gap release of PR #234 (0235 to 0246, migration head
   `0124_leftovers`), the listing release of PR #237 (`5d41a13e`, 0247 and 0248) and its fix
-  (PR #240, 0249). A contributor's AI builds a
+  (PR #240, 0249), then the section release (PR #243 and #242, 0250, migration head
+  `0125_section_proposals`). A contributor's AI builds a
   page from one line and the owner's rule holds: the AI follows Ajrakh's thinking, never copies it,
   and may write its own code over cited data. The owner submitted KalaVigyan to Anthropic's
   Connectors Directory on 2026-11-27; file uploads stay off until Anthropic approves the API host
@@ -37,6 +38,13 @@ and released together, each batch verified on production.
     own districts or states. Every other craft page keeps only figures on facts it holds, so Bagru
     and Sanganeri build their own. Both checks now wait until the API's `/health` names the
     release, not only the site.
+  - **The section release (decision 0250).** A field's written section is a `sections` part of a
+    draft or page bundle: each sentence cites facts the page holds of that field, at least three
+    sentences or as many as its facts allow, nothing stated that its facts do not say (the
+    composer's checks, then the cheapest reliable judge). It is reviewed as `SECTIONS` and replaces
+    the published section on approval, the old one kept. Open: `get_proposal` does not follow a
+    section proposal, and dossiers do not carry sections. The skills carry the owner's rules of
+    2026-11-28: page agents on Opus only, comic panels only from Gemini or ChatGPT image generation.
 - **KalaVigyan `main` at `f0f965b7`** (2026-11-25, decisions 0211 to 0224, PROGRESS.md, Quality
   round), verified on production: `/health` and `/api/version` on it, Vercel READY, CloudWatch
   without errors, migration head `0120_rest_after_removal`, Monograph parity, the post-deploy check
