@@ -5,13 +5,14 @@ from collections.abc import Collection
 from typing import Any
 
 from pydantic import ValidationError
-from sqlalchemy import ColumnElement, select
+from sqlalchemy import ColumnElement, and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import InvalidInput
 from app.curation.checks import CheckContext
 from app.curation.dossier import CATEGORY_SCOPE
 from app.models import (
+    ArticleSection,
     Claim,
     ClaimSource,
     Concept,
@@ -43,6 +44,7 @@ from .dossier_export_records import (
     MEDIA_COLUMNS,
     PRICE_COLUMNS,
     QUOTE_COLUMNS,
+    SECTION_COLUMNS,
     SOURCE_COLUMNS,
     STAGE_COLUMNS,
     USE_COLUMNS,
@@ -58,6 +60,8 @@ CRAFT_SCOPE = "CRAFT"
 FAMILY_SCOPE = "FAMILY"
 SUBJECT_COLUMNS = ("id", "originRef")
 PIECE_COLUMNS = ("id", "payload")
+PUBLISHED = "PUBLISHED"
+PERSON = "USER"
 
 
 async def stored_craft(session: AsyncSession, slug: str, context: CheckContext) -> StoredCuration:
@@ -85,6 +89,7 @@ async def stored_craft(session: AsyncSession, slug: str, context: CheckContext) 
         stages=await stored_values(session, ProcessStage, stage_ids, STAGE_COLUMNS),
         uses=await _where(session, StageMaterial, StageMaterial.stageId.in_(stage_ids), USE_COLUMNS),
         market=await _market(session, craft.id),
+        sections=await _reviewed(session, ArticleSection.craftId == craft.id),
     )
 
 
@@ -106,6 +111,7 @@ async def stored_category(session: AsyncSession, slug: str) -> StoredCuration:
         **await _evidence(session, slug, page, (claim_ids, CuratedCategoryClaim)),
         scope=CATEGORY_SCOPE,
         page=page,
+        sections=await _reviewed(session, ArticleSection.categoryId == category.id),
     )
 
 
@@ -165,6 +171,11 @@ async def _market(session: AsyncSession, craft_id: uuid.UUID) -> StoredMarket:
             session, CraftWorkforce, CraftWorkforce.craftId == craft_id, WORKFORCE_COLUMNS
         ),
     )
+
+
+async def _reviewed(session: AsyncSession, owned: ColumnElement[bool]) -> tuple[dict[str, Any], ...]:
+    written = and_(ArticleSection.status == PUBLISHED, ArticleSection.writtenByKind == PERSON)
+    return await _where(session, ArticleSection, and_(owned, written), SECTION_COLUMNS)
 
 
 async def _where(

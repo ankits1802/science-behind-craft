@@ -14,7 +14,7 @@ export type CheckRecord = {
   numbers: CheckNumbers;
 };
 
-type RecordExtra = Partial<Pick<CheckRecord, "subject" | "variant" | "notes" | "numbers">>;
+export type RecordExtra = Partial<Pick<CheckRecord, "subject" | "variant" | "notes" | "numbers">>;
 
 export const SUMMARY_FILE = "summary.md";
 

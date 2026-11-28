@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 import uuid
+from datetime import datetime
 from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from app.models.enums import DISCIPLINES
+from app.models.enums import DISCIPLINES, SECTION_STATUSES
 from app.models.section_proposals import SECTION_PROPOSAL_STATUSES, SECTION_REVIEW_NOTE_CHARS
 
 from .article_sections import SectionSentence
 from .base import ContractModel
+from .knowledge_writes import ProposalSubject
 from .vocabulary import Discipline
 
 __all__ = [
@@ -27,13 +29,16 @@ __all__ = [
     "SECTION_NOTE_MAX_CHARS",
     "SECTION_OUTCOMES",
     "SECTION_SENTENCES_MAX",
+    "SECTION_TICKET_KIND",
     "SENTENCES",
     "STATED",
     "STORED",
     "WRITTEN",
+    "PublishedSection",
     "SectionCheck",
     "SectionOutcome",
     "SectionPart",
+    "SectionTicket",
     "first_refusal",
 ]
 
@@ -51,6 +56,9 @@ HELD, FIELD, SENTENCES, STATED, FAITHFUL = SECTION_CHECKS = (
 )
 STORED, WRITTEN, REFUSED = SECTION_OUTCOMES = ("STORED", "WRITTEN", "REFUSED")
 MANY_FACTS = "a sentence cites at most {most} facts"
+SECTION_TICKET_KIND = "SECTION"
+SECTION_TICKET_SCHEMA_VERSION = 1
+BECAME_ON_APPROVAL = "a section proposal became a published section only once it was approved"
 
 
 class SectionPart(ContractModel):
@@ -80,6 +88,36 @@ class SectionOutcome(ContractModel):
     status: Literal[*SECTION_PROPOSAL_STATUSES]
     checks: list[SectionCheck]
     message: str
+
+
+class PublishedSection(ContractModel):
+    version: int = Field(ge=1)
+    status: Literal[*SECTION_STATUSES]
+    page_url: str | None = None
+
+
+class SectionTicket(ContractModel):
+    schema_version: Literal[1] = SECTION_TICKET_SCHEMA_VERSION
+    proposal_id: uuid.UUID
+    kind: Literal["SECTION"] = SECTION_TICKET_KIND
+    status: Literal[*SECTION_PROPOSAL_STATUSES]
+    subject: ProposalSubject
+    field: Discipline
+    sentences: list[SectionSentence] = Field(min_length=1)
+    checks: list[SectionCheck]
+    task_key: str | None = None
+    note: str | None = None
+    proposed_at: datetime
+    reviewed_at: datetime | None = None
+    review_note: str | None = None
+    section: PublishedSection | None = None
+    message: str
+
+    @model_validator(mode="after")
+    def _a_section_only_once_approved(self) -> Self:
+        if self.section is not None and self.status != APPROVED_STATUS:
+            raise ValueError(BECAME_ON_APPROVAL)
+        return self
 
 
 def first_refusal(checks: list[SectionCheck]) -> SectionCheck | None:

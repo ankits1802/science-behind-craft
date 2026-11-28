@@ -13,6 +13,7 @@ from .limits import PICTURES_MAX
 from .overview import Overview
 from .parts import Claim, Conflict, OpenQuestion, Search, Source
 from .records import EnvironmentLink, Market, NativeName, Picture, Term
+from .reviewed_sections import ReviewedSection, one_section_a_field
 from .vocabulary import CURATOR, DOSSIER_SCHEMA_VERSION, CoverageClass, Scope
 
 __all__ = [
@@ -56,6 +57,7 @@ class Dossier(ContractModel):
     pictures: list[Picture] = Field(default_factory=list, max_length=PICTURES_MAX)
     native_names: list[NativeName] = Field(default_factory=list)
     overview: Overview
+    sections: list[ReviewedSection] = Field(default_factory=list)
 
     @model_validator(mode="before")
     @classmethod
@@ -76,6 +78,13 @@ class Dossier(ContractModel):
                 "a CATEGORY dossier names its categorySlug and no craftSlug; "
                 "a CRAFT or FAMILY dossier names its craftSlug and no categorySlug"
             )
+        return self
+
+    @model_validator(mode="after")
+    def _one_reviewed_section_a_field(self) -> Self:
+        problem = one_section_a_field(self.sections)
+        if problem is not None:
+            raise ValueError(problem)
         return self
 
     @property

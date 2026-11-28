@@ -19,6 +19,8 @@ contracts are `docs/contracts/knowledge-writes.md` (Section proposals, and the j
 `preview_page` and `propose_page`) and `docs/contracts/review-queue.md` (Sections), with the
 contributor skill (Pages, Drafts, Writing a section and Never).
 
+Amended by [decision 0251](0251-the-release-check-s-fact-goes-where-no-fact-is-held-a-section-is-followed-and-dossiers-carry-reviewed-sections.md): `get_proposal` follows a section proposal, and the dossiers carry reviewed sections, which What is left asked for.
+
 | For | Read |
 |---|---|
 | The gap it closes | [decision 0248](0248-what-the-fresh-agent-could-not-fix-on-sanganeri.md), What is left; the research agent's `report_site_gap` of 2026-11-28 |

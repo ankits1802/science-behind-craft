@@ -33,6 +33,7 @@ OLD_DESCRIPTIONS = (
         "declaration in for them.",
     ),
     ("get_proposal", "Tell a person a fact is on the page only when readers.shown is true."),
+    ("get_proposal", "A section's id comes from propose_page: follow it with get_proposal."),
     (
         "edit_draft",
         "Its place in the page playbook (playbook/1): open it at step 4; next_step names what follows.",
@@ -50,6 +51,11 @@ DESCRIBING = (
     ("preview_page", "It returns pictures of the first screen at both widths and of each chapter."),
     ("read_source", "Reads a source, a DOI's open copy as the Unpaywall REST API finds it."),
     ("lookup", "A PubChem CID, or a Wikidata qid such as Q12345"),
+    (
+        "get_proposal",
+        "A field's section (kind SECTION) is PENDING while it waits for a reviewer, APPROVED, REJECTED or "
+        "REFUSED, with the reviewer's note.",
+    ),
 )
 LEFT_TO_THE_PLAYBOOK = (
     "`design-critique/1`",
@@ -60,6 +66,7 @@ LEFT_TO_THE_PLAYBOOK = (
 )
 LEFT_TO_THE_SKILL = (
     "`readers.shown` is true",
+    "A section's id, as `propose_page` reported its part, works with `get_proposal` too",
     "Never fill in a picture's declaration",
     "test every quote before you propose it",
     "`list_components` first",

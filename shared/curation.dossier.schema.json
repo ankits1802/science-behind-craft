@@ -1291,6 +1291,73 @@
       "title": "Reaction",
       "type": "object"
     },
+    "ReviewedSection": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "enum": [
+            "OVERVIEW",
+            "PROCESS",
+            "CHEMISTRY",
+            "PHYSICS",
+            "MATERIALS",
+            "GEOGRAPHY",
+            "GEOLOGY",
+            "CLIMATE",
+            "ECOLOGY",
+            "BOTANY",
+            "HISTORY",
+            "ECONOMICS",
+            "DESIGN",
+            "HEALTH",
+            "SOCIETY",
+            "POLICY"
+          ],
+          "title": "Field",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "sentences": {
+          "items": {
+            "$ref": "#/$defs/SectionSentence"
+          },
+          "maxItems": 24,
+          "minItems": 1,
+          "title": "Sentences",
+          "type": "array"
+        },
+        "reviewedBy": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewedby"
+        },
+        "reviewedAt": {
+          "format": "date-time",
+          "title": "Reviewedat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "version",
+        "sentences",
+        "reviewedAt"
+      ],
+      "title": "ReviewedSection",
+      "type": "object"
+    },
     "Search": {
       "additionalProperties": false,
       "properties": {
@@ -1312,6 +1379,32 @@
         "site"
       ],
       "title": "Search",
+      "type": "object"
+    },
+    "SectionSentence": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "claimIds": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claimids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "claimIds"
+      ],
+      "title": "SectionSentence",
       "type": "object"
     },
     "Source": {
@@ -2060,6 +2153,13 @@
     },
     "overview": {
       "$ref": "#/$defs/Overview"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/ReviewedSection"
+      },
+      "title": "Sections",
+      "type": "array"
     }
   },
   "required": [

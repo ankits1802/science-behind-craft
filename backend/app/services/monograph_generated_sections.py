@@ -18,6 +18,7 @@ __all__ = [
     "SUPERSEDED",
     "ReviewedBy",
     "SectionOwner",
+    "person_wrote",
     "publish_reviewed_section",
     "publish_section",
     "published_section",
@@ -52,7 +53,7 @@ class SectionOwner:
 @dataclass(frozen=True)
 class ReviewedBy:
     writer_id: uuid.UUID | None
-    reviewer_id: uuid.UUID
+    reviewer_id: uuid.UUID | None
     at: datetime
 
 
@@ -81,6 +82,8 @@ async def publish_reviewed_section(
     field: str,
     sentences: Sequence[SectionSentence],
     reviewed: ReviewedBy,
+    *,
+    at_least: int = 1,
 ) -> uuid.UUID:
     row = ArticleSection(
         id=uuid.uuid4(),
@@ -92,9 +95,18 @@ async def publish_reviewed_section(
         reviewedById=reviewed.reviewer_id,
         reviewedAt=reviewed.at,
     )
-    await _replace(session, owner, await published_section(session, owner, field), row)
+    await _replace(session, owner, await published_section(session, owner, field), row, at_least=at_least)
     await session.flush()
     return row.id
+
+
+async def person_wrote(session: AsyncSession, owner: SectionOwner, field: str) -> bool:
+    found = await session.scalar(
+        select(ArticleSection.id)
+        .where(owner.owns(), ArticleSection.field == field, ArticleSection.writtenByKind == PERSON)
+        .limit(1)
+    )
+    return found is not None
 
 
 async def retire_sections(session: AsyncSession, owner: SectionOwner, kept: Collection[str]) -> list[str]:
@@ -116,7 +128,12 @@ async def retire_sections(session: AsyncSession, owner: SectionOwner, kept: Coll
 
 
 async def _replace(
-    session: AsyncSession, owner: SectionOwner, current: ArticleSection | None, row: ArticleSection
+    session: AsyncSession,
+    owner: SectionOwner,
+    current: ArticleSection | None,
+    row: ArticleSection,
+    *,
+    at_least: int = 1,
 ) -> None:
     latest = await session.scalar(
         select(func.max(ArticleSection.version)).where(owner.owns(), ArticleSection.field == row.field)
@@ -125,7 +142,7 @@ async def _replace(
         current.status = SUPERSEDED
         await session.flush()
     setattr(row, owner.column, owner.id)
-    row.version = (latest or 0) + 1
+    row.version = max((latest or 0) + 1, at_least)
     session.add(row)
 
 

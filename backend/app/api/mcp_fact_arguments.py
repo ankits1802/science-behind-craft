@@ -146,7 +146,7 @@ class ProposeFacts(Arguments):
 
 class GetProposal(Arguments):
     proposal_id: uuid.UUID = Field(
-        description="A proposal id, as a proposal's reply or this account's work gives it"
+        description="A fact's or a section's proposal id, as its proposal's reply or this account's work gives it"
     )
 
 

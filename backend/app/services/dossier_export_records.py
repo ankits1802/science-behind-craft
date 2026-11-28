@@ -21,6 +21,7 @@ __all__ = [
     "MEDIA_COLUMNS",
     "PRICE_COLUMNS",
     "QUOTE_COLUMNS",
+    "SECTION_COLUMNS",
     "SOURCE_COLUMNS",
     "STAGE_COLUMNS",
     "USE_COLUMNS",
@@ -73,6 +74,7 @@ GI_COLUMNS = (
 )
 PRICE_COLUMNS = ("id", "claimId", "pricedOn", "placeName")
 WORKFORCE_COLUMNS = ("claimId", "year")
+SECTION_COLUMNS = ("field", "version", "sentences", "reviewedById", "reviewedAt")
 EMPTY: Mapping[uuid.UUID, Row] = MappingProxyType({})
 
 
@@ -114,6 +116,7 @@ class StoredCuration:
     stages: Mapping[uuid.UUID, Row] = field(default_factory=lambda: EMPTY)
     uses: tuple[Row, ...] = ()
     market: StoredMarket = field(default_factory=StoredMarket)
+    sections: tuple[Row, ...] = ()
 
 
 def id_number(key: str) -> int:

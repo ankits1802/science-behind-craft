@@ -5,7 +5,7 @@ The database is the source of truth for curated knowledge. The dossiers in
 database holds, and the way to bulk import. New facts are written through the Knowledge API, where
 they pass the four gates. Curators and the engineers who run an export or a bulk import read it.
 
-Last reviewed: 2026-11-23.
+Last reviewed: 2026-11-28.
 
 | For | Read |
 |---|---|
@@ -43,7 +43,8 @@ flowchart LR
 
 Exporting a dossier the import stored, then importing the export, changes nothing: the same
 claims, quotes, sources, concepts, stages, materials, reactions, pictures with their placement and
-focal box, GI, price and workforce records, overview pieces and page index. When the dossier in git
+focal box, GI, price and workforce records, overview pieces, page index and the sections a person
+wrote and a reviewer approved (decision 0251). When the dossier in git
 is the version the database holds, the export is that file byte for byte, except a file laid out
 by hand (`LAYOUT`, below), whose content is the same. Tested on every curated dossier through the
 import's own plan (`tests/curation/test_dossier_export.py`) and through the database
@@ -70,6 +71,7 @@ and a bulk import is built on that export (`curation.md`, The import).
 | pictures | the page index (caption, claims, placement, focal box, size, stand-in) with `MediaRef` address, page, author and licence |
 | overview | the stored `KnowledgePiece` prose of the lede and each section |
 | market | `CraftGiRecord` (with `market.imitation` from its `imitationClaimIds`), `CraftPrice` (its place found by name and id) and `CraftWorkforce` |
+| sections | the craft's or category's `PUBLISHED` `ArticleSection` rows with `writtenByKind` `USER` (a reviewed section, decision 0250), in field order: `{field, version, sentences [{text, claimIds}], reviewedBy, reviewedAt}` (Reviewed sections, below) |
 
 ## What the dossier in git still gives
 
@@ -86,6 +88,29 @@ Each such use is listed in the report's `keptFromGit`.
 - A category's places, communities, stages, materials, tools, environment, native names, market
   and its reactions' stages, which the category import does not store. A category is therefore
   exported only beside its dossier in git, of the version and `curatedAt` the database holds.
+
+## Reviewed sections (decision 0251)
+
+A section a person wrote and a reviewer approved (`propose_page`, `knowledge-writes.md`, Section
+proposals) lives in `ArticleSection` and is no longer rebuilt from the dossier's facts. The export
+writes each published one as `sections [{field, version, sentences [{text, claimIds}], reviewedBy,
+reviewedAt}]` (`curation/reviewed_sections.ReviewedSection`, at most one a field): its sentences as
+published, the stored ids of the facts each cites (a section may cite facts the dossier does not hold,
+such as a contributed fact, so they are the database's ids, not dossier keys), the section's version,
+and the reviewer's account id and time. Who wrote it is kept privately and never exported. A section
+the machine rebuilds from facts is not exported: the import writes it again from the claims.
+
+The import (`services/curation_reviewed_sections.restore_reviewed_sections`, run by
+`publish_dossier_sections` before the rebuild, so on every craft and category import and on the
+deploy's `publish_curated_sections`) writes a dossier's reviewed section only when the database holds
+no section a person wrote in that field, in any status, and every fact it cites is shown to readers:
+then it is written `PUBLISHED`, `writtenByKind` `USER`, at its exported version or the field's next if
+that is higher, with the reviewer when that account is held and its review time, superseding the
+machine's section. Otherwise it is left: an exported section imported again changes nothing, a file
+never replaces or brings back a section a review replaced or retracted, and a section citing a fact
+readers cannot see is logged and left to the machine's section. A file without `sections` leaves every
+reviewed section in place, as the rebuild always has (`publish_section`, `retire_sections`). The diff
+names them by field (`sections: added CHEMISTRY`, `changed CHEMISTRY (sentences)`).
 
 ## Refusals
 
@@ -175,6 +200,8 @@ page in the same change.
 | Kutch Ajrakh exports as its file, and a full round trip writes no row | `backend/tests/db/test_dossier_export_db.py` |
 | What differs from git | `backend/tests/curation/test_dossier_diff.py` |
 | Approved structure exports under its keys, and an older file never undoes it | `backend/tests/db/test_structure_export_db.py` |
+| A reviewed section exports with its facts, version and reviewer and never its writer; imported again it changes nothing; a file without it leaves it in place; one the database lost is restored; a file never replaces one a person wrote, nor restores one citing a fact readers cannot see | `backend/tests/db/test_reviewed_sections_export_db.py` |
+| The part's shape, one a field, its text and its diff | `backend/tests/curation/test_reviewed_sections.py` |
 | The proposing client | `tools/tests/test_curation_propose.py` |
 
 Re-read it when the dossier schema version changes, or a kind of structure moves from bulk import to MCP.

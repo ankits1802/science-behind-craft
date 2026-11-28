@@ -35,7 +35,7 @@ the decisions in its section 14 are the owner's). The code is the Pydantic model
 fails when it is stale). Change the model, the schema file, this page and the tests
 (`backend/tests/curation/`, `tools/tests/test_curation_*.py`) together.
 
-Last reviewed: 2026-11-18.
+Last reviewed: 2026-11-28.
 
 ## Files
 
@@ -277,6 +277,13 @@ Every sentence is one sentence, cites claims (never a hypothesis), carries no nu
 unit or formula that no quote of its claims holds, and at least half of its content words
 occur in its claims and their quotes (`research/quotes.quote_overlap`, the composer's rule).
 The import runs the answer engine's prose validator and drops a failing sentence.
+
+### Reviewed sections (`sections`; `curation/reviewed_sections.py`)
+
+`[{field, version, sentences [{text, claimIds}], reviewedBy, reviewedAt}]`, at most one a field: the
+sections a person wrote and a reviewer approved over MCP (decision 0250), written by the export, never
+by hand; `claimIds` are stored fact ids. The import writes one only where the database holds no section
+a person wrote in that field (decision 0251, `dossier-export.md`, Reviewed sections).
 
 ### Coverage (`curation/coverage.py`)
 
@@ -633,6 +640,7 @@ Ids are `uuid5(ID_NAMESPACE, "curation:<slug>:<id>")` for claims and sources and
 | prices | `CraftPrice {id, craftId, claimId, pricedOn (partial date), placeName, stateLgd, districtLgd}` |
 | workforce | `CraftWorkforce {id, craftId, claimId, year}` |
 | names kept out of AI pictures | `CraftGroupName {id, craftId, name, nameKey, kind, origin, sourceTitle, sourceUrl, quote, locator, proposalId, createdAt}` (migration `0099_craft_group_names`, decision 0181): each name and local name of a `COMMUNITY` or `PERSON` group that one of the group's own quotes states (the `STATED` check of a structure proposal, `curation/group_names.stated_group_names`), origin `DOSSIER`, with that quote and its source; a name already listed for the craft (`nameKey`, case-folded) is kept once and never removed by a later version; reported as `changed.groupNames`. Read only by the AI picture checks, never by a page or an export |
+| sections | `ArticleSection` `PUBLISHED`, `writtenByKind` `USER`, only for a field where the database holds no section a person wrote and every cited fact is shown (decision 0251); the other fields' sections are rebuilt from the claims, one sentence a shown claim, and never over a reviewed one |
 | overview | `KnowledgePiece` `prose` blocks, `EXPERT`, no answer id: the lede (facet `OVERVIEW`) and one per section, topic as answers compute it, sentences checked by the answer engine's prose validator (a failing one is dropped) and marked with the dossier's glossary |
 | the rest | `CuratedCraft {craftId, version, curatedAt, coverage, digest, page, importedAt}`: `page` is `services/curated_index.CuratedPage`, the references the craft page needs (key facts, conflicts, open questions, places, communities, stage details with each stage's `after` and why claim, picture captions with their placement (dossier stage and material keys), focal box, size and stand-in, the native names, the overview's piece ids, environment links; claim ids are the stored claim ids); `digest` is the SHA-256 of the dossier and its check file |
 
