@@ -1,7 +1,5 @@
 type Json = Record<string, unknown>;
 
-export const CONTRIBUTION_CRAFT = "Sanganeri-Hand-Block-Printing";
-export const CONTRIBUTION_FIELD = "POLICY";
 export const CONTRIBUTION_SCOPE = "read contribute";
 export const CONTRIBUTION_STATEMENT = "KalaVigyan release check, withdrawn within minutes: the cited page states the words quoted from it.";
 export const RETRACTION_REASON = "A release check's test fact, withdrawn once a signed-out reader was seen to read it.";
@@ -10,9 +8,13 @@ export const QUOTE_MAX_CHARS = 240;
 export const TITLE_WORDS_MIN = 3;
 export const KEY_PREFIX = "release-check:";
 export const SOURCES_TRIED_MAX = 6;
+export const SOURCE_CRAFTS_MAX = 3;
+export const PAGE_KINDS = ["document", "record", "authored"] as const;
 
 export type SourceChoice = { url: string; title: string; licence: string | null };
 export type ProposalState = { state: string; reply: Json | null };
+export type ContributionSlot = { slug: string; field: string };
+export type PageKind = (typeof PAGE_KINDS)[number];
 
 function record(value: unknown): Json | null {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? (value as Json) : null;
@@ -20,6 +22,45 @@ function record(value: unknown): Json | null {
 
 function records(value: unknown): Json[] {
   return Array.isArray(value) ? value.map(record).filter((item): item is Json => item !== null) : [];
+}
+
+function bySlug(first: string, second: string): number {
+  return first < second ? -1 : first > second ? 1 : 0;
+}
+
+function slugs(items: Json[], key: string): string[] {
+  return items.map((item) => item[key]).filter((slug): slug is string => typeof slug === "string" && slug.length > 0);
+}
+
+export function freeField(coverage: Json): string | null {
+  const free = records(coverage.fields).find((count) => count.claims === 0 && typeof count.field === "string");
+  return free ? String(free.field) : null;
+}
+
+export function pageSlots(listing: Json): ContributionSlot[] {
+  return records(listing.crafts)
+    .map((coverage) => ({ slug: coverage.subjectSlug, field: freeField(coverage) }))
+    .filter((slot): slot is ContributionSlot => typeof slot.slug === "string" && slot.field !== null)
+    .sort((first, second) => bySlug(first.slug, second.slug));
+}
+
+export function unlistedSlugs(catalogue: Json, listing: Json): string[] {
+  const listed = new Set(slugs(records(listing.crafts), "subjectSlug"));
+  return slugs(records(catalogue.crafts), "slug")
+    .filter((slug) => !listed.has(slug))
+    .sort(bySlug);
+}
+
+export function sourceCrafts(chosen: string, listing: Json): string[] {
+  const listed = slugs(records(listing.crafts), "subjectSlug").sort(bySlug);
+  return [chosen, ...listed.filter((slug) => slug !== chosen)].slice(0, SOURCE_CRAFTS_MAX);
+}
+
+export function pageKind(status: number, document: unknown): PageKind | null {
+  if (status === 404) return "record";
+  const body = record(document);
+  if (status !== 200 || !body) return null;
+  return typeof body.shell === "string" ? "authored" : "document";
 }
 
 function titled(title: unknown): title is string {
@@ -47,12 +88,12 @@ export function quoteFrom(reading: Json): string | null {
   return fit ?? null;
 }
 
-export function proposalArguments(source: SourceChoice, quote: string, key: string): Json {
+export function proposalArguments(slot: ContributionSlot, source: SourceChoice, quote: string, key: string): Json {
   return {
     facts: [
       {
-        craft_slug: CONTRIBUTION_CRAFT,
-        field: CONTRIBUTION_FIELD,
+        craft_slug: slot.slug,
+        field: slot.field,
         statement: CONTRIBUTION_STATEMENT,
         sources: [{ url: source.url, title: source.title, licence: source.licence, quotes: [{ text: quote }] }],
         idempotency_key: `${KEY_PREFIX}${key}`
@@ -98,6 +139,10 @@ export function readerFactProblems(facts: Json, claimId: string, source: SourceC
 export function documentHolds(document: Json, claimId: string): boolean {
   const content = record(document.content);
   return Object.values(record(content?.units) ?? {}).some((unit) => (record(unit)?.claimIds as unknown[] | undefined)?.includes(claimId) ?? false);
+}
+
+export function recordHolds(page: Json, claimId: string): boolean {
+  return records(page.claims).some((claim) => claim.id === claimId);
 }
 
 export function fieldClaims(coverage: Json, field: string): number | null {

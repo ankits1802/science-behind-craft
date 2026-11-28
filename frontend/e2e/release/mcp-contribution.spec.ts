@@ -3,14 +3,15 @@ import { expect, test, type Page } from "@playwright/test";
 import { roleCredentials } from "../production/run";
 
 import {
-  CONTRIBUTION_CRAFT,
-  CONTRIBUTION_FIELD,
   CONTRIBUTION_SCOPE,
   RETRACTION_REASON,
   closedReading,
   documentHolds,
   fieldClaims,
+  freeField,
   listedCitations,
+  pageKind,
+  pageSlots,
   proposalArguments,
   proposalState,
   queuedProposal,
@@ -18,16 +19,23 @@ import {
   readerFactProblems,
   readerProblems,
   readText,
+  recordHolds,
   sourceChoices,
+  sourceCrafts,
+  unlistedSlugs,
+  type ContributionSlot,
+  type PageKind,
   type SourceChoice
 } from "./mcpContribution";
 import { signIn } from "./mcpSignIn";
 import { callTool, getJson } from "./mcpWire";
-import { checkRecord, keepRecord } from "./report";
+import { checkRecord, keepRecord, type RecordExtra } from "./report";
 import { siteOrigin } from "./site";
 
 type Json = Record<string, unknown>;
 type Run = { api: string; server: string; token: string };
+type Slot = ContributionSlot & { page: PageKind };
+type Choice = { slot: Slot; listing: Json };
 type Proposal = { claimId: string; source: SourceChoice; reply: Json | null };
 
 const CHECK = "mcp-contribution";
@@ -38,9 +46,12 @@ const PAGE_WAIT_MS = 6 * 60_000;
 const FINISHED = new Set(["DONE", "FAILED"]);
 const PROFESSOR_SECRETS = "Set E2E_PROFESSOR_EMAIL, E2E_PROFESSOR_PASSWORD and E2E_PROFESSOR_TOTP_SECRET: only a Professor's fact is published at once";
 const FACT_QUERY = "release check withdrawn";
+const UNLISTED_TRIED_MAX = 12;
+const READ_PAGES: readonly PageKind[] = ["document", "record"];
+const NO_SLOT = "no public craft has a page that is not authored and a field that holds no fact";
 
-function settled(name: string, problems: string[]): void {
-  keepRecord(checkRecord(CHECK, name, problems));
+function settled(name: string, problems: string[], extra: RecordExtra = {}): void {
+  keepRecord(checkRecord(CHECK, name, problems, extra));
   expect(problems, `${name}: ${problems.join("; ")}`).toEqual([]);
 }
 
@@ -63,20 +74,55 @@ async function tool(run: Run, name: string, args: Json, signedIn: boolean): Prom
   return content;
 }
 
-async function closedSource(run: Run): Promise<{ source: SourceChoice; quote: string }> {
-  const facts = await tool(run, "get_facts", { craft_slug: CONTRIBUTION_CRAFT, limit: 50 }, true);
-  for (const source of sourceChoices(facts)) {
-    const answer = await tool(run, "read_source", { url: source.url }, true).catch(() => null);
-    const reading = answer ? readText(answer) : null;
-    const quote = reading && closedReading(reading) ? quoteFrom(reading) : null;
-    if (quote) return { source, quote };
-  }
-  throw new Error(`no source of ${CONTRIBUTION_CRAFT} without an open licence could be read for a quote`);
+async function jsonAt(run: Run, path: string): Promise<Json> {
+  const answer = await getJson(`${run.api}${path}`);
+  if (answer.status !== 200 || typeof answer.body !== "object" || answer.body === null) throw new Error(`${path} answered HTTP ${answer.status}`);
+  return answer.body as Json;
 }
 
-async function coverageClaims(run: Run): Promise<number | null> {
-  const answer = await getJson(`${run.api}/api/crafts/${CONTRIBUTION_CRAFT}/coverage`);
-  return answer.status === 200 && typeof answer.body === "object" && answer.body ? fieldClaims(answer.body as Json, CONTRIBUTION_FIELD) : null;
+async function readPage(run: Run, slot: ContributionSlot): Promise<Slot | null> {
+  const answer = await getJson(`${run.api}/api/crafts/${slot.slug}/monograph`);
+  const page = pageKind(answer.status, answer.body);
+  return page !== null && READ_PAGES.includes(page) ? { ...slot, page } : null;
+}
+
+async function unlistedSlot(run: Run, listing: Json): Promise<Slot | null> {
+  const catalogue = await jsonAt(run, "/api/crafts/catalogue");
+  for (const slug of unlistedSlugs(catalogue, listing).slice(0, UNLISTED_TRIED_MAX)) {
+    const field = freeField(await jsonAt(run, `/api/crafts/${slug}/coverage`));
+    const slot = field ? await readPage(run, { slug, field }) : null;
+    if (slot) return slot;
+  }
+  return null;
+}
+
+async function chosen(run: Run): Promise<Choice> {
+  const listing = await jsonAt(run, "/api/crafts/coverage");
+  for (const free of pageSlots(listing)) {
+    const slot = await readPage(run, free);
+    if (slot) return { slot, listing };
+  }
+  const slot = await unlistedSlot(run, listing);
+  if (!slot) throw new Error(NO_SLOT);
+  return { slot, listing };
+}
+
+async function closedSource(run: Run, crafts: string[]): Promise<{ source: SourceChoice; quote: string }> {
+  for (const craft of crafts) {
+    const facts = await tool(run, "get_facts", { craft_slug: craft, limit: 50 }, true);
+    for (const source of sourceChoices(facts)) {
+      const answer = await tool(run, "read_source", { url: source.url }, true).catch(() => null);
+      const reading = answer ? readText(answer) : null;
+      const quote = reading && closedReading(reading) ? quoteFrom(reading) : null;
+      if (quote) return { source, quote };
+    }
+  }
+  throw new Error(`no source of ${crafts.join(", ")} without an open licence could be read for a quote`);
+}
+
+async function coverageClaims(run: Run, slot: ContributionSlot): Promise<number | null> {
+  const answer = await getJson(`${run.api}/api/crafts/${slot.slug}/coverage`);
+  return answer.status === 200 && typeof answer.body === "object" && answer.body ? fieldClaims(answer.body as Json, slot.field) : null;
 }
 
 async function finishedReply(run: Run, proposalId: string): Promise<Json | null> {
@@ -87,30 +133,32 @@ async function finishedReply(run: Run, proposalId: string): Promise<Json | null>
   return done?.reply ?? null;
 }
 
-async function proposed(run: Run): Promise<Proposal> {
-  const { source, quote } = await closedSource(run);
-  const batch = await tool(run, "propose_facts", proposalArguments(source, quote, `${Date.now()}`), true);
+async function proposed(run: Run, { slot, listing }: Choice): Promise<Proposal> {
+  const { source, quote } = await closedSource(run, sourceCrafts(slot.slug, listing));
+  const batch = await tool(run, "propose_facts", proposalArguments(slot, source, quote, `${Date.now()}`), true);
   const queued = queuedProposal(batch);
   settled("propose_facts queues a fact quoting a page with no open licence", queued.problems);
   const reply = await finishedReply(run, queued.id ?? "");
   return { claimId: typeof reply?.claimId === "string" ? reply.claimId : "", source, reply };
 }
 
-async function readerFacts(run: Run): Promise<Json> {
-  return tool(run, "get_facts", { craft_slug: CONTRIBUTION_CRAFT, field: CONTRIBUTION_FIELD, query: FACT_QUERY, limit: 20 }, false);
+async function readerFacts(run: Run, slot: ContributionSlot): Promise<Json> {
+  return tool(run, "get_facts", { craft_slug: slot.slug, field: slot.field, query: FACT_QUERY, limit: 20 }, false);
 }
 
-async function pageHolds(run: Run, claimId: string): Promise<boolean> {
-  const answer = await getJson(`${run.api}/api/crafts/${CONTRIBUTION_CRAFT}/monograph`);
-  return answer.status === 200 && typeof answer.body === "object" && answer.body !== null && documentHolds(answer.body as Json, claimId);
+async function pageHolds(run: Run, slot: Slot, claimId: string): Promise<boolean> {
+  const record = slot.page === "record";
+  const answer = await getJson(`${run.api}/api/crafts/${slot.slug}/${record ? "page" : "monograph"}`);
+  if (answer.status !== 200 || typeof answer.body !== "object" || answer.body === null) return false;
+  return record ? recordHolds(answer.body as Json, claimId) : documentHolds(answer.body as Json, claimId);
 }
 
-async function readersSee(run: Run, made: Proposal, before: number | null): Promise<void> {
-  settled("get_facts shows the fact to a signed-out reader with its citation and no quote", readerFactProblems(await readerFacts(run), made.claimId, made.source));
-  const counted = await coverageClaims(run);
-  settled("the coverage count of the field grows by the fact", before !== null && counted === before + 1 ? [] : [`the ${CONTRIBUTION_FIELD} count went from ${before} to ${counted}`]);
-  const shown = await polled(async () => ((await pageHolds(run, made.claimId)) ? true : null), PAGE_WAIT_MS);
-  settled("the craft page lists the fact for a signed-out reader", shown ? [] : [`the ${CONTRIBUTION_CRAFT} page did not list fact ${made.claimId} within ${PAGE_WAIT_MS / 60_000} minutes`]);
+async function readersSee(run: Run, slot: Slot, made: Proposal, before: number | null): Promise<void> {
+  settled("get_facts shows the fact to a signed-out reader with its citation and no quote", readerFactProblems(await readerFacts(run, slot), made.claimId, made.source));
+  const counted = await coverageClaims(run, slot);
+  settled("the coverage count of the field grows by the fact", before !== null && counted === before + 1 ? [] : [`the ${slot.field} count went from ${before} to ${counted}`]);
+  const shown = await polled(async () => ((await pageHolds(run, slot, made.claimId)) ? true : null), PAGE_WAIT_MS);
+  settled("the craft page lists the fact for a signed-out reader", shown ? [] : [`the ${slot.slug} page did not list fact ${made.claimId} within ${PAGE_WAIT_MS / 60_000} minutes`]);
 }
 
 async function retract(page: Page, claimId: string): Promise<number> {
@@ -121,11 +169,11 @@ async function retract(page: Page, claimId: string): Promise<number> {
   );
 }
 
-async function goneFromReaders(run: Run, claimId: string, before: number | null): Promise<void> {
-  const facts = await readerFacts(run);
-  const counted = await coverageClaims(run);
+async function goneFromReaders(run: Run, slot: Slot, claimId: string, before: number | null): Promise<void> {
+  const facts = await readerFacts(run, slot);
+  const counted = await coverageClaims(run, slot);
   const problems = listedCitations(facts, claimId) ? [`get_facts still shows the retracted fact ${claimId}`] : [];
-  if (counted !== before) problems.push(`the ${CONTRIBUTION_FIELD} count is ${counted} after the retraction, not ${before}`);
+  if (counted !== before) problems.push(`the ${slot.field} count is ${counted} after the retraction, not ${before}`);
   settled("the retracted fact is gone from readers and from the count", problems);
 }
 
@@ -134,14 +182,17 @@ test("a Professor's fact proposed through MCP from a closed page is seen by a si
   const account = roleCredentials("PROFESSOR");
   if (!account) throw new Error(PROFESSOR_SECRETS);
   const run = await test.step("the Professor signs an MCP client in with the contribute scope", () => signIn(page, account, CONTRIBUTION_SCOPE));
-  const before = await coverageClaims(run);
-  const made = await test.step("propose_facts queues a test fact quoting a closed page", () => proposed(run));
+  const choice = await test.step("the test fact goes to the first craft page with a field that holds no fact", () => chosen(run));
+  const { slot } = choice;
+  settled("a craft and a field that hold no fact are chosen from coverage", [], { subject: slot.slug, notes: [`${slot.field} of ${slot.slug}, read on its ${slot.page} page`] });
+  const before = await coverageClaims(run, slot);
+  const made = await test.step("propose_facts queues a test fact quoting a closed page", () => proposed(run, choice));
   try {
     settled("the reply says the fact is published and where a signed-out reader sees it", readerProblems(made.reply));
-    await test.step("get_facts, the coverage count and the craft page show it to a signed-out reader", () => readersSee(run, made, before));
+    await test.step("get_facts, the coverage count and the craft page show it to a signed-out reader", () => readersSee(run, slot, made, before));
   } finally {
     const status = made.claimId ? await retract(page, made.claimId) : 0;
     settled("the Professor retracts the test fact", status === 200 || made.reply?.outcome === "REFUSED" ? [] : [`the retraction answered ${status}`]);
   }
-  await test.step("the retracted fact is gone for readers", () => goneFromReaders(run, made.claimId, before));
+  await test.step("the retracted fact is gone for readers", () => goneFromReaders(run, slot, made.claimId, before));
 });

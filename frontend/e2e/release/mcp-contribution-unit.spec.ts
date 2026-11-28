@@ -1,25 +1,36 @@
 import { expect, test } from "@playwright/test";
 
 import {
-  CONTRIBUTION_CRAFT,
-  CONTRIBUTION_FIELD,
   CONTRIBUTION_STATEMENT,
+  SOURCE_CRAFTS_MAX,
   closedReading,
   documentHolds,
   fieldClaims,
+  freeField,
+  pageKind,
+  pageSlots,
   proposalArguments,
   queuedProposal,
   quoteFrom,
   readerFactProblems,
   readerProblems,
   readText,
-  sourceChoices
+  recordHolds,
+  sourceChoices,
+  sourceCrafts,
+  unlistedSlugs
 } from "./mcpContribution";
 
 const STUDY = { id: "s1", url: "https://www.jeb.co.in/journal_issues/200701_jan07/paper_14.pdf", title: "Genotoxicity of textile dyes used in Sanganer", licence: null };
 const JUNK = { id: "s2", url: "https://example.org/aa.pdf", title: "aa.MDI", licence: null };
 const PLAIN = { id: "s3", url: "http://example.org/plain", title: "A plain web page here", licence: null };
 const CLAIM = "0d7c0000-0000-4000-8000-000000000001";
+const SLOT = { slug: "Agates-Of-Cambay", field: "CLIMATE" };
+const HELD = ["OVERVIEW", "PROCESS", "CLIMATE", "POLICY"];
+
+function coverage(slug: string, free: string[]): Record<string, unknown> {
+  return { subjectSlug: slug, fields: HELD.map((field) => ({ field, claims: free.includes(field) ? 0 : 4 })) };
+}
 const SHOWN_REPLY = {
   outcome: "PUBLISHED",
   claimId: CLAIM,
@@ -44,10 +55,46 @@ test("a quote is a digit-free sentence of a closed reading, cut at a sentence en
   expect(quoteFrom({ passages: [{ text: "Only 12 of 13 dyes, said in 2007." }] })).toBeNull();
 });
 
-test("the proposal is one test fact of the craft's field with its own key and the quote", () => {
-  const body = proposalArguments({ url: STUDY.url, title: STUDY.title, licence: null }, "a quote of forty characters or more, word for word", "1732");
+test("a craft with a field that holds no fact is chosen, at its first free field", () => {
+  const listing = { crafts: [coverage("Bagru-Hand-Block-Print", ["POLICY", "CLIMATE"]), coverage("Agates-Of-Cambay", ["CLIMATE"])] };
+  expect(pageSlots(listing)).toEqual([SLOT, { slug: "Bagru-Hand-Block-Print", field: "CLIMATE" }]);
+  expect(freeField(coverage("Agates-Of-Cambay", ["POLICY"]))).toBe("POLICY");
+});
+
+test("a craft whose every field holds a fact is passed over, and the choice never depends on the listing's order", () => {
+  const full = coverage("Agates-Of-Cambay", []);
+  expect(freeField(full)).toBeNull();
+  const listing = { crafts: [coverage("Sanganeri-Hand-Block-Printing", []), full, coverage("Bidriware", ["HISTORY", "POLICY"])] };
+  expect(pageSlots(listing)).toEqual([{ slug: "Bidriware", field: "POLICY" }]);
+  expect(pageSlots({ crafts: [...(listing.crafts as unknown[])].reverse() })).toEqual(pageSlots(listing));
+  expect(pageSlots({ crafts: [full] })).toEqual([]);
+});
+
+test("past the listed pages, the catalogue's other crafts are tried in slug order", () => {
+  const listing = { crafts: [coverage("Bidriware", [])] };
+  const catalogue = { crafts: [{ slug: "Tharu-Embroidery" }, { slug: "Bidriware" }, { slug: "Aipan-Art" }] };
+  expect(unlistedSlugs(catalogue, listing)).toEqual(["Aipan-Art", "Tharu-Embroidery"]);
+});
+
+test("a generated page is read and a record page stands in for a craft with none, but an authored page is passed over", () => {
+  expect(pageKind(200, { shell: null, content: { units: {} } })).toBe("document");
+  expect(pageKind(404, { detail: "No document" })).toBe("record");
+  expect(pageKind(200, { shell: "<main></main>" })).toBe("authored");
+  expect(pageKind(503, null)).toBeNull();
+  expect(recordHolds({ claims: [{ id: CLAIM }] }, CLAIM)).toBe(true);
+  expect(recordHolds({ claims: [] }, CLAIM)).toBe(false);
+});
+
+test("the closed source is sought on the chosen craft first, then on the listed pages", () => {
+  const listing = { crafts: [coverage("Bidriware", []), coverage("Agates-Of-Cambay", ["CLIMATE"]), coverage("Bagru-Hand-Block-Print", [])] };
+  expect(sourceCrafts("Tharu-Embroidery", listing)).toEqual(["Tharu-Embroidery", "Agates-Of-Cambay", "Bagru-Hand-Block-Print"].slice(0, SOURCE_CRAFTS_MAX));
+  expect(sourceCrafts("Bagru-Hand-Block-Print", listing)).toEqual(["Bagru-Hand-Block-Print", "Agates-Of-Cambay", "Bidriware"]);
+});
+
+test("the proposal is one test fact of the chosen craft's free field with its own key and the quote", () => {
+  const body = proposalArguments(SLOT, { url: STUDY.url, title: STUDY.title, licence: null }, "a quote of forty characters or more, word for word", "1732");
   const [fact] = body.facts as Record<string, unknown>[];
-  expect([fact.craft_slug, fact.field, fact.statement, fact.idempotency_key]).toEqual([CONTRIBUTION_CRAFT, CONTRIBUTION_FIELD, CONTRIBUTION_STATEMENT, "release-check:1732"]);
+  expect([fact.craft_slug, fact.field, fact.statement, fact.idempotency_key]).toEqual([SLOT.slug, SLOT.field, CONTRIBUTION_STATEMENT, "release-check:1732"]);
   expect(/\d/u.test(CONTRIBUTION_STATEMENT)).toBe(false);
   expect(queuedProposal({ items: [{ accepted: true, ticket: { proposalId: "p1" } }] })).toEqual({ id: "p1", problems: [] });
   expect(queuedProposal({ items: [{ accepted: false, problem: "terms needed" }] }).problems).toEqual(["propose_facts did not queue the fact: terms needed"]);
