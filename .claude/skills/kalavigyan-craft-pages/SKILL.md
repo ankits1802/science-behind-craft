@@ -68,6 +68,7 @@ component's spec, place and the sentences around it), the design skill and SYSTE
 | Reading it and taking quotes | `read_source`, which returns the text the gates will match, page by page or `around` given words, with locators; `read_source` with archive for a snapshot of a page that may vanish |
 | A quote before it is sent | `read_source` with the quote in its `quotes`: the QUOTES gate's verdict, and the nearest passage when it misses |
 | A compound's record and hazards, a plant's taxon name, a place's or craft's item | `lookup`, with kind compound or entity |
+| A photograph from KalaVigyan's own field portals | `list_field_photos`, then place it by its label in the draft's layout (HERO for the masthead, OPENER, PLATE or FIGURE), captioned from what a preview shows it holds; these come before any searched picture |
 | Finding open pictures | `search_sources` with kinds pictures (Commons and Openverse, open licences only, with author, credit and the site's widths), then `give_pictures` with its `page_url` |
 | A figure of a stage, a material or a section | a composed `diagram` from the figure kit (`components.md`); a player's or card's scene as a kit scene in its slot |
 | A map of the page's places, their years and moves | a declared `timeline_map` in the draft or bundle (the dataset guide, Maps of places); never a drawing |
@@ -229,9 +230,12 @@ fact from being sent twice. Never edit `index.json`.
 ## Cost rules (owner, 2026-11-18: a whole plan was spent on agents that ran too long)
 
 - **One page per agent.** Never two pages in one agent, never two agents on one page.
-- **Sonnet, not Opus**, for deepening; the gates, the verifier, the checker and the preview are the
-  judges, so no critic or judge agents.
-- **Stop at about 60 turns.** Send what stands, follow it to its outcome, report the rest as open.
+- **Opus only** (owner, 2026-11-28), for every agent that researches, deepens or builds a page; the
+  gates, the verifier, the checker and the preview are the judges, so no critic or judge agents.
+- **Stop at about 60 turns** for research and structure, and at about 150 for a page build. Send
+  what stands, follow it to its outcome, report the rest as open.
+- **Comics**: their panels come only from Gemini or ChatGPT (owner, 2026-11-28). A page agent never
+  makes one; the team does, for a page the owner has chosen.
 - **Read narrowly**: one field of the exemplar, one reference or contract section, one source page
   at a time. Never read a whole dossier into context when a field will do; never open application
   code.
@@ -265,8 +269,9 @@ are archived in `docs/design/monograph-build.zip` (`build.py` reads the boards a
 
 Minister-facing first: the GI crafts with the most visual stages (Bidriware, Blue Pottery of
 Jaipur, Kutch Bandhani, Machilipatnam Kalamkari, Madhubani, Orissa Pattachitra, Bastar Dhokra,
-Channapatna), then the rest of the crafts, then the nine categories. The three with no pictures
-(Bareilly Cane Bamboo, Sanganeri, Varanasi Soft Stone Jali) need pictures first.
+Channapatna), then the rest of the crafts, then the nine categories. A craft whose open-licence
+search finds little may still have field photographs: Sanganeri has 31, taken in Jaipur in June
+2026 at 1800 by 2400 px, where searches found almost none of Sanganer itself.
 
 ## How this skill is kept true
 

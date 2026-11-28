@@ -72,7 +72,8 @@ IIT Kharagpur and its Centre of Excellence for Unified AI-Enabled Craft Ecosyste
 8. **Names in their own scripts, at equal standing, only where a source states them and names
    this craft.** Never transliterate a name ourselves.
 9. **Pictures are plates.** Caption first, credit after, standard Commons widths, no repeats on a
-   page, no stock, shopping or AI imagery.
+   page, no stock, shopping or AI imagery. A comic is the one generated picture a page may hold,
+   and its panels come from the image models of Gemini or ChatGPT alone (owner, 2026-11-28).
 10. **Dense with every field** (owner, 2026-11-20). Every field a page's sources cover is on the
     page with cited quantities, mechanisms, names and dates; margin notes, fact grids, small
     multiples and tables carry detail beside the prose; every screen earns its height, never at

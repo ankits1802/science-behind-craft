@@ -555,7 +555,9 @@ and dates with no map, quantities with no figure); it is yours to judge, never a
 - **When a page needs it**: the authored page's own.
 - **In Kutch Ajrakh**: the indigo dip retold for a younger reader in six panels
   (`ajrakh-reading/1`): `kutch-ajrakh/chemistry/indigo-dip-story-panels` (`[data-role="comic"]`).
-- **Made by**: the authored page; a `coded_figure` may tell a moment in steps instead.
+- **Made by**: the team for the authored page, every panel generated with Gemini or ChatGPT image
+  generation and no other image tool (owner, 2026-11-28); a `coded_figure` may tell a moment in
+  steps instead.
 - **Facts**: none to propose.
 - **Place**: not placed by a contribution.
 - **Check**: nothing to check.
