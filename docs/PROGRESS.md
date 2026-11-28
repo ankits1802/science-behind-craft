@@ -1364,7 +1364,17 @@ Last updated: 2026-11-27.
     SECTION task, and the deploy's dossier rebuild never overwrites it. The skills say the owner's
     rules of 2026-11-28: page agents run on Opus only, and a comic's panels come only from
     Gemini's or ChatGPT's image generation, made by the team; the craft-pages skill names the
-    field portals' photographs and the section part.
+    field portals' photographs and the section part. On production: `/health` and `/api/version`
+    on `6c727f45`, migration `0125_section_proposals`, Monograph parity and the MCP client green,
+    answers 0.978 rubric, 0.85 judge, $0.29 for four questions. The post-deploy check failed one
+    job: its test fact on Sanganeri's POLICY field, a note about the check itself, now had a held
+    fact near it (the GI record published that day), so the novelty judge was asked and refused
+    it as too general.
+  - **Its leftovers** (PR #245, decision 0251): `get_proposal` follows a section proposal by the
+    id `propose_page` returned (its status, checks, the reviewer's note and the section it
+    became), the dossiers carry the sections a person wrote and an import restores one only
+    where the database holds none, and the post-deploy check proposes its test fact on the first
+    public page, in slug order, with a field that holds no fact, read afresh each run.
   - **Submitted to the Connectors Directory** (2026-11-27): 26 tools, 13 of them read-only, sign-in
     asked only when a tool needs it, with a Client ID Metadata Document. The request to approve the
     file host went to mcp-review@anthropic.com from the newsletter sender.
