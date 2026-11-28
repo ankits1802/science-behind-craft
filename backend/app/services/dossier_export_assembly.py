@@ -11,6 +11,8 @@ from app.core.errors import InvalidInput
 from app.curation.dossier import Dossier
 from app.curation.entities import Place
 from app.curation.parts import Search
+from app.curation.reviewed_sections import ReviewedSection
+from app.models.enums import DISCIPLINES
 
 from .curated_category_index import CuratedCategoryPage
 from .curated_index import CuratedPage
@@ -35,10 +37,11 @@ from .dossier_export_parts import (
 )
 from .dossier_export_records import StoredCuration
 
-__all__ = ["CATEGORY_KEPT_PARTS", "ExportedDossier", "exported_dossier"]
+__all__ = ["CATEGORY_KEPT_PARTS", "ExportedDossier", "exported_dossier", "reviewed_sections"]
 
 CATEGORY_KEPT_PARTS = ("places", "communities", "stages", "materials", "tools", "environment", "native_names")
 CATEGORY_KEPT_NOTE = "kept as the dossier in git gives them: the category import does not store them"
+FIELD_ORDER = {field: index for index, field in enumerate(DISCIPLINES)}
 
 
 @dataclass(frozen=True)
@@ -147,7 +150,22 @@ def _assembled(
         open_questions=page_questions(page, keys),
         pictures=page_pictures(page, stored.media, keys),
         overview=overview.overview,
+        sections=reviewed_sections(stored),
         **parts,
     )
     carried = (*notes, *evidence.carried, *overview.carried)
     return ExportedDossier(dossier=dossier, carried=carried, failed_quotes=evidence.failed_quotes)
+
+
+def reviewed_sections(stored: StoredCuration) -> list[ReviewedSection]:
+    rows = sorted(stored.sections, key=lambda row: FIELD_ORDER.get(row["field"], len(FIELD_ORDER)))
+    return [
+        ReviewedSection(
+            field=row["field"],
+            version=row["version"],
+            sentences=row["sentences"],
+            reviewed_by=row["reviewedById"],
+            reviewed_at=row["reviewedAt"],
+        )
+        for row in rows
+    ]

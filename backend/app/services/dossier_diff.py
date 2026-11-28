@@ -21,6 +21,7 @@ ITEM_PARTS = (
     "glossary",
     "open_questions",
     "pictures",
+    "sections",
 )
 WHOLE_PARTS = ("searched", "environment", "market", "conflicts", "native_names", "overview")
 NAMES_SHOWN = 12

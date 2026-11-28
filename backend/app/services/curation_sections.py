@@ -17,6 +17,7 @@ from app.research.article_sections import SectionSentence
 
 from . import knowledge_view
 from .curation_keys import HYPOTHESIS_LEVEL, curated_id
+from .curation_reviewed_sections import restore_reviewed_sections
 from .knowledge_view import ClaimView
 from .monograph_document import has_authored_content
 from .monograph_generated_sections import SectionOwner, publish_section, retire_sections
@@ -57,11 +58,11 @@ def dossier_sections(
 async def publish_dossier_sections(session: AsyncSession, dossier: Dossier, owner: SectionOwner) -> int:
     if has_authored_content(dossier.slug):
         return 0
+    written = await restore_reviewed_sections(session, dossier, owner)
     shown, _ = await knowledge_view.claims_by_id(
         session, [curated_id(dossier.slug, claim.id) for claim in dossier.claims]
     )
     sections = dossier_sections(dossier, shown)
-    written = 0
     for discipline, sentences in sections.items():
         written += await publish_section(session, owner, discipline, sentences)
     retired = await retire_sections(session, owner, sections)
