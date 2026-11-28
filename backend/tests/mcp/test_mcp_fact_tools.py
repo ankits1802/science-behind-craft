@@ -97,6 +97,9 @@ async def test_the_fact_tools_are_listed_with_their_scopes_groups_and_hints() ->
     assert tools["propose_facts"]["_meta"]["kalavigyan/group"] == "proposing"
     assert tools["get_proposal"]["annotations"]["readOnlyHint"] is True
     assert tools["get_proposal"]["_meta"]["kalavigyan/group"] == "work"
+    followed = tools["get_proposal"]
+    assert "kind FACT" in followed["description"] and "kind SECTION" in followed["description"]
+    assert "section's proposal id" in followed["inputSchema"]["properties"]["proposal_id"]["description"]
     batch = tools["propose_facts"]["inputSchema"]
     assert batch["properties"]["facts"]["maxItems"] == 25
     single = batch["$defs"]["FactFields"]
