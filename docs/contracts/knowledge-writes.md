@@ -300,7 +300,7 @@ of one.
 | Tool | Arguments | Result | Hints |
 |---|---|---|---|
 | `propose_facts` | `facts` (1 to 25, each `craft_slug` or `category_slug` (one), `field`, `fields?`, `statement`, `sources`, `task_key?`, `idempotency_key?`) | `ProposalBatch` | writes |
-| `get_proposal` | `proposal_id` | `ProposalTicket` (the account's own; an admin's any) | read-only |
+| `get_proposal` | `proposal_id` | `FollowedProposal`: a fact's `ProposalTicket` (`kind` `FACT`) or a section's `SectionTicket` (`kind` `SECTION`, Section proposals below), the account's own; an admin's any (decision 0251) | read-only |
 
 - **Old names.** The camelCase names inside a fact
   (`craftSlug`, `categorySlug`, `taskKey`, `idempotencyKey`) keep working until the next release, and
@@ -637,7 +637,20 @@ has moved on), writes the section as the field's next `ArticleSection` version, 
 replaces (kept in the record), completes the proposer's reservation of the task and refreshes the
 page's signed-out views. The dossier import's rebuild (`publish_section`, `retire_sections`) leaves a
 section a person wrote and a reviewer approved standing. Rejection keeps the published section and
-the reason.
+the reason. A dossier carries the reviewed sections and restores one only where the database holds
+none (`dossier-export.md`, Reviewed sections; decision 0251).
+
+**Following a section** (decision 0251). `get_proposal` with the section part's `proposal_id` (the id
+`propose_page` reported) reads `SectionTicket {schemaVersion 1, proposalId, kind SECTION, status
+(PENDING, APPROVED, REJECTED or REFUSED), subject {kind, slug}, field, sentences [{text, claimIds}],
+checks [{check, passed, reasons}] (every check run, in order), taskKey, note, proposedAt, reviewedAt,
+reviewNote (the reviewer's note on an approval, the reason of a rejection, or "approved at once" for an
+account that reviews sections), section {version, status, pageUrl} (the `ArticleSection` it became,
+once approved, with its status now: `PUBLISHED`, or `SUPERSEDED` once a later section replaced it),
+message}` (`research/section_proposals.SectionTicket`, `services/section_tickets.py`). A contributor
+reads only its own; an Admin or Master Admin any; another id is read as a fact proposal's, and one
+neither holds is the same tool error as an unknown fact proposal. A fact's ticket is unchanged; the
+two are one result, `FollowedProposal`, told apart by `kind`.
 
 ## Source proposals (round 7)
 
@@ -929,6 +942,7 @@ field, or changes its meaning, is a new schema version.
 | Layout proposals | `backend/tests/layouts/test_layout_proposal_rules.py`, `test_layout_proposal_routes.py` and `backend/tests/db/test_layout_proposals_db.py` |
 | Structure proposals and what approval writes | `backend/tests/structure/`, `backend/tests/db/test_structure_proposals_db.py`, `test_structure_writes_db.py` and `test_structure_export_db.py` |
 | Section proposals, their checks and what approval writes | `backend/tests/sections/`, `backend/tests/db/test_section_proposals_db.py` and the faithful cases in `backend/tests/knowledge_writes/test_judge_eval.py` |
+| A section followed with `get_proposal` | `backend/tests/db/test_section_tickets_db.py` (waiting, approved with the section it became, rejected with its reason, refused with its check, written at once, another contributor refused and an Admin reading any, an unknown id read as a fact's) and `backend/tests/mcp/test_mcp_fact_tools.py` |
 | Source proposals | `backend/tests/db/test_source_proposals_db.py` and `backend/tests/mcp/test_mcp_source_tools.py` |
 | Supplied sources | `backend/tests/db/test_supplied_sources_db.py` |
 | Citations and their passages | `backend/tests/db/test_quote_relinks_db.py` and `test_quote_visibility_db.py` |

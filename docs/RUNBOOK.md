@@ -930,7 +930,10 @@ fixture or the category page (`docs/contracts/category-page.md`).
 - **MCP contribution round trip** (the `contribution` job of `post-deploy.yml`): after a release is
   served, the Professor E2E account (`E2E_PROFESSOR_*` secrets) proposes a marked test fact through
   MCP quoting a page with no open licence, checks that `get_facts`, the field's coverage count and the
-  craft page show it to a signed-out reader without the quote, retracts it and checks it is gone.
+  craft page show it to a signed-out reader without the quote, retracts it and checks it is gone. The
+  craft and field are chosen when it runs (decision 0251): the first craft page in slug order that is
+  not authored and holds no fact in some field (`GET /api/crafts/coverage`), at its first such field,
+  or past them the catalogue's other crafts read on their record page; the summary names the choice.
 - **Lead scripts for contributions** (on the box, as `kalavigyan` with the box's `.env`):
   `python -m app.scripts.rejudge_differing` re-judges every live pair flagged sources differ and
   writes nothing; `python -m app.scripts.retitle_sources` prints `{titles, authors}`: the sources whose title is a

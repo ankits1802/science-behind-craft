@@ -142,6 +142,10 @@ them all), the design system
   with the reply (published, waiting for a reviewer or refused, each gate's reasons and the fact's
   id), or `FAILED` when the checks could not run after five tries: nothing was stored, so send it
   again with the same idempotency key.
+- A section's id, as `propose_page` reported its part, works with `get_proposal` too (its `kind` is
+  `SECTION`): `PENDING` while it waits for a reviewer, `APPROVED` with the published section it became
+  (its version, its status now and its page), `REJECTED` with the reviewer's note, or `REFUSED` with
+  the check that refused it; every check comes with its reasons.
 - `propose_facts` takes one to 25 facts. Each is checked on its own: a malformed fact, an unknown
   subject, a reused key or a spent allowance refuses that fact only, and the rest are queued.
 - Give every fact an `idempotency_key` of your own, 8 to 120 letters, digits, dots, dashes,
@@ -513,7 +517,8 @@ your text, and supplying a source counts against the hour's fact proposals.
   sentence says that its facts do not. One refused sentence refuses the whole section.
 - A section that passes waits for a Professor or Admin beside the published one (an account that
   reviews sections writes it at once). Approved, it replaces the published section, which is kept
-  in the record, completes the SECTION task, and shows on the page after its next refresh.
+  in the record, completes the SECTION task, and shows on the page after its next refresh. Follow it
+  with `get_proposal` by its part's id, and act on the reviewer's note it brings back.
 - From a draft, a field's prose is written with facts: each fact added with `edit_draft` (or a
   bundle's facts) is drawn as a sentence of its field's section in the preview, so three facts in
   a thin field make it dense (rules 23 to 26). A figure that shows a fact keeps its sentence in the
